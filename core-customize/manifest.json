@@ -4,7 +4,7 @@
     "extensions": [
 		"kiwi",
 		"tiger",
-     	"adaptivesearchsolr",
+    	"adaptivesearchsolr",
 		"adaptivesearchbackoffice",
 		"adaptivesearchsamplesaddon",
 		"adaptivesearchwebservices",
@@ -53,18 +53,18 @@
 		"personalizationsearchsmartedit",
 		"personalizationsearchweb",
 		"personalizationsearchsamplesaddon",
-        "personalizationintegration",
+		"personalizationintegration",
 		"personalizationintegrationbackoffice",
 		"personalizationyprofile",
-        "personalizationaddon",
-        "profileservices",
+    	"personalizationaddon",
+    	"profileservices",
 		"profiletagaddon",
 		"textfieldconfiguratortemplatebackoffice",
 		"textfieldconfiguratortemplateaddon",
 		"assistedservicestorefront",
 		"assistedservicewebservices",
 		"assistedservicepromotionaddon",
-        "pcmbackofficesamplesaddon",
+    	"pcmbackofficesamplesaddon",
 		"kymaintegrationbackoffice",
 		"ordermanagementaddon",
 		"ordermanagementfacades",
@@ -88,14 +88,14 @@
 		"odata2webservicesfeaturetests",
 		"integrationbackoffice",
 		"integrationmonitoringbackoffice",
-        "outboundsyncbackoffice",
-        "modeltacceleratorservices",
-        "azurecloudhotfolder",
-        "xyformsbackoffice",
-        "xyformssamples",
-        "xyformsstorefrontcommons",
-        "xyformsweb",
-        "orbeonweb"
+    	"outboundsyncbackoffice",
+    	"modeltacceleratorservices",
+    	"azurecloudhotfolder",
+    	"xyformsbackoffice",
+    	"xyformssamples",
+    	"xyformsstorefrontcommons",
+    	"xyformsweb",
+    	"orbeonweb"
     ],
 	"storefrontAddons": [
 		{
@@ -215,17 +215,17 @@
                 }
 	],
     "properties": [
-        {
-            "key": "lang.packs",
-            "value": "de,en,es,es_CO,fr,it,ja,ko,pl,pt,ru,zh,zh_TW,hi,id,cs,cy"
+    	{
+        	"key": "lang.packs",
+        	"value": "de,en,es,es_CO,fr,it,ja,ko,pl,pt,ru,zh,zh_TW,hi,id,cs,cy"
         },
 		{
-		    "key": "endpoint.hac.platform.init.disabled",
-		    "value": "true"
+			"key": "endpoint.hac.platform.init.disabled",
+			"value": "true"
 		},
 		{
-		    "key": "endpoint.hac.platform.update.disabled",
-		    "value": "true"
+			"key": "endpoint.hac.platform.update.disabled",
+			"value": "true"
 		},
         {
             "key": "test.property.1",
@@ -258,17 +258,17 @@
 			"value": "false"
 		},
 		{
-            		"key": "orbeonweb.orbeon.persistence.uri",
-            		"value": "https://localhost:8088/xyformsweb/fr/service/hybris"
-        	},
-        	{
-            		"key": "xyformsservices.orbeon.url.address",
-            		"value": "http://localhost:8081/web-orbeon"
-        	},
+        	"key": "orbeonweb.orbeon.persistence.uri",
+        	"value": "https://localhost:8088/xyformsweb/fr/service/hybris"
+        },
+        {
+            "key": "xyformsservices.orbeon.url.address",
+            "value": "http://localhost:8081/web-orbeon"
+        },
 		{
-            		"key": "xyformsstorefrontcommons.orbeon.keystoreFile",
-            		"value": "/opt/hybris/bin/platform/tomcat/lib/keystore"
-        	}
+            "key": "xyformsstorefrontcommons.orbeon.keystoreFile",
+            "value": "/opt/hybris/bin/platform/tomcat/lib/keystore"
+        }
     ],
     "aspects": [
         {
@@ -430,10 +430,10 @@
 	                }
             ],
             "webapps": [
-                			{
-                    				"name": "mediaweb",
-                    				"contextPath": "/medias"
-                			},
+					{
+						"name": "mediaweb",
+						"contextPath": "/medias"
+					},
 					{
 						"name": "adaptivesearchwebservices",
 						"contextPath": "/adaptivesearchwebservices"
@@ -541,7 +541,7 @@
     "extensions": [
 		"kiwi",
 		"tiger",
-     	"adaptivesearchsolr",
+    	"adaptivesearchsolr",
 		"adaptivesearchbackoffice",
 		"adaptivesearchsamplesaddon",
 		"adaptivesearchwebservices",
