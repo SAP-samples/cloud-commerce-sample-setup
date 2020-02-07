@@ -26,11 +26,11 @@ The following folders and files are included in the sample repository.
 
 Root level 
 - core-customize folder: The folder that contains all of the folders and files that support Commerce Cloud.
+- js-storefront: A project Spartacus JS Storefront configured with Server Side Rendering (SSR). For more on project Spartacus see [project Spartacus documentation](https://sap.github.io/cloud-commerce-spartacus-storefront-docs/)
 
 core-customize folder
-- manifest.json: The Commerce Cloud manifest.json file, which defines Commerce Platform customizations.
-- kiwi folder: An example custom extension.
-- tiger folder: An example custom extension.
+- manifest.json: The Commerce Cloud manifest.json file, which defines how your code will be built and deployed in the Public Cloud environments. The manifest is set up to leverage [confiuration reuse](https://help.sap.com/viewer/1be46286b36a4aa48205be5a96240672/SHIP/en-US/2311d89eef9344fc81ef168ac9668307.html) to better allow for consistency between local and cloud builds.
+- hybris folder: contains a sample custom folder for storing any custom extensions as well as the config folder for storing local and cloud properties, localextensions.xml and any local solr/tomcat configurations
 - other sample manifests: A collection of tested and verified manifest files that you can use as starting points for your Commerce Cloud environments.
 
 ### Clone Repository
@@ -39,10 +39,9 @@ Clone the sample repository ([instructions can be found here](https://help.githu
 
 ### Update the Custom Extensions
 
-1. If you don’t have custom extensions, you can delete the kiwi & tiger sample folders.
-2. If you do have custom extensions, create a folder for each custom extension and add your extension files.
-3. List the custom extensions in the manifest.json file that is inside the core-customize directory. 
-4. If you have custom extensions with dependencies, list the source extension first, then the dependent extension. Extensions are built in the order in which they appear in the manifest file.
+1. If you don’t have custom extensions, you can delete the kiwi & tiger sample folders. If you wish to use these extensions you'll have to uncomment them in your hybris/config/localextensions.xml folder
+2. List any extensions you're using (custom and any from Commerce runtime) in the core-customize/hybris/config/localextensions.xml file
+3. If you have custom extensions with dependencies, list the source extension first, then the dependent extension. Extensions are built in the order in which they appear in your localextension.xml and manifest.json files
 
 ### Update the Commerce Cloud manifest.json
 
@@ -54,11 +53,13 @@ Clone the sample repository ([instructions can be found here](https://help.githu
  
 In the sample repository, verify that you have the following files in the core-customize folder.
  - manifest.json:  This is the manifest.json for Commerce Cloud.
- - <custom extension> folders (optional)
+ 
+ In the sample repository, verify that you have the following files in the js-storefront folder.
+ - manifest.json: This is the file that tells Cloud Automation the name and path of the JavaScript storefronts you want to build and deploy
 
 ### Push the Commerce Cloud Configuration to Code Repository
 
-Push the core-customize folder from your local machine to the root level of your Commerce Cloud repository.  
+Push all the contents from your local machine to the root level of your Commerce Cloud repository.
 
 ### Access the Cloud Portal
 
@@ -70,7 +71,9 @@ Log in to the Cloud Portal and verify that your code repository is connected.
 3. Create a new build.
 4. Deploy the build to the environment using the *Initialze Database* option.
 
-### Final Steps - Validating an example Electronics Storefront
+You may also wish to see [this video](https://enable.cx.sap.com/playlist/dedicated/116161351/1_6tm85g61/1_df6ptanl) which provides a walkthrough of how to connect your repository, as well as [this video](https://enable.cx.sap.com/playlist/dedicated/116161351/1_6tm85g61/1_9ogbv7hz) which outlines how to build and deploy
+
+### Final Steps - Validating an example Electronics Storefront and Javascript Storefront
 
 Use the Cloud Portal to create a build and then deploy the build to an environment. 
 
@@ -81,6 +84,19 @@ Use the Cloud Portal to create a build and then deploy the build to an environme
 5. Click on the URL listed next to the *Storefront* public endpoint. You will receive a server error.
 6. In your browser's address, append the endpoint address with */?site=electronics* and reload the page
 7. Verify that you see a basic electronics storefront.
+
+If you're using the Javascript Storefront ensure the following:
+
+1. After the build is deployed, you can find the 'API' endpoint in the *Environments* page of the Cloud Portal listed under *Public Endpoints*.
+2. Click on the *API* hyperlink to access the details page for endpoint.
+3. Either add an IP Filter Set for your IP address OR change the Base Rule from 'Deny All' to 'Allow All' in order to receive traffic on your APIs
+4. Save the changes.
+5. Repeat the following for the *JS-Storefront* endpoint
+6. Copy the URL of your *API* endpoint into the "baseUrl" property of js-storefront/spartacusstore/src/app/app.module.ts file
+7. Commit your changes, rebuild and deploy
+8. Click on the URL listed next to the *JS-Storefront* public endpoint.
+9. Verify that you see the project Spartacus basic electronics storefront.
+ 
 
 # Limitations
 
@@ -99,9 +115,4 @@ Find more information about SAP Commerce Cloud Setup on our [help site](https://
 # License
 Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
 This file is licensed under the “SAP Sample Code License” except as noted otherwise in the [LICENSE file](https://github.wdf.sap.corp/staging-for-SAP-samples-public/cloud-commerce-sample-setup/blob/master/LICENSE).
-
-
-
-
-
 

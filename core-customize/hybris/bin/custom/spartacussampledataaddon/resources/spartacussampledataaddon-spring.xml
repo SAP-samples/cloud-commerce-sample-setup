@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+ The files in this addon are licensed under the Apache Software License, v. 2 
+ except as noted otherwise in the LICENSE file.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd">
+           
+    <context:annotation-config/> 
+
+	<bean id="spartacussampledataaddonCoreDataImportedEventListener" parent="abstractCoreDataImportedEventListener">
+		<property name="supportedChannels">
+			<list value-type="de.hybris.platform.commerceservices.enums.SiteChannel">
+				<value>B2C</value>
+				<!--
+								<value>B2B</value>
+				-->
+			</list>
+		</property>
+		<property name="addonExtensionMetadata">
+			<bean class="de.hybris.platform.addonsupport.data.AddonExtensionMetadata">
+				<property name="suffixChannel" value="false"/>
+				<property name="baseExtensionName" value="spartacussampledataaddon"/>
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="spartacussampledataaddonSampleDataEventListener" parent="abstractGenericAddOnSampleDataEventListener"  >
+		<property name="extensionName" value="spartacussampledataaddon" />
+		<property name="addOnSampleDataImportService" ref="spaSampleAddOnSampleDataImportService" />
+	</bean>
+	
+	<bean id="spaSampleAddOnSampleDataImportService" parent="defaultAddonSampleDataImportService" class="de.hybris.platform.spartacussampledataaddon.setup.impl.SpaSampleAddOnSampleDataImportService">
+		<property name="modelService" ref="modelService" />
+	</bean>
+
+</beans>

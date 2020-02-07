@@ -1,0 +1,9 @@
+{
+    "applications": [
+        {
+            "name": "spartacusstore",
+            "path": "spartacusstore",
+            "enableSSR": true
+        }
+    ]
+}
