@@ -383,13 +383,13 @@
                     "name": "hac",
                     "contextPath": "/hac"
                 },
-		{
+				{
                     "name": "orbeonweb",
-		    "contextPath": "/web-orbeon"
+		    		"contextPath": "/web-orbeon"
                 },
-		{
+				{
                     "name": "xyformsweb",
-		    "contextPath": "/xyformsweb"
+		    		"contextPath": "/xyformsweb"
                 }
             ]
         },
@@ -449,10 +449,10 @@
 					    "name": "acceleratorservices",
 					    "contextPath": "/acceleratorservices"
 					},
-	                {
-	                    "name": "ycommercewebservices",
-	                    "contextPath": "/rest"
-	                },
+	            	{
+	                	"name": "ycommercewebservices",
+	                	"contextPath": "/rest"
+	            	},
 					{
 					    "name": "smartedit",
 					    "contextPath": "/smartedit"
