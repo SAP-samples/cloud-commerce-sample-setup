@@ -45,7 +45,7 @@ config folder
 2. Open the datahub-environment-[environment_code].conf file.
 3. Add environment properties for each unique property that you want to apply to the environment.
 4. Name the file datahub-environment[environment_code].conf.
- - To find the environment code for an environment, see the instructions in the SAP Commerce Cloud help at https://help.hybris.com/scc/pcd/1f6dfab4981347db8ab221acaf37960f.html.
+ - To find the environment code for an environment, see the instructions in the [SAP Commerce Cloud help](https://help.sap.com/viewer/0fa6bcf4736c46f78c248512391eb467/SHIP/en-US/1f6dfab4981347db8ab221acaf37960f.html).
 5. Create a separate datahub-environment-[environment_code].conf file for each environment that requires unique properties.
 6. If you do not need unique environment variables, delete the datahub-environment[environment_code].conf file.
 
