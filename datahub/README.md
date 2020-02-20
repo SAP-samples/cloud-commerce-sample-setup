@@ -65,6 +65,7 @@ Pre-compiled extensions are extensions such as Marketplace extensions.  If neede
 4. If you are not using pre-compiled extensions, delete the lib folder.
 
 ### Create the encryption key
+# Do NOT use the encryption key in this sample repository for productive use!
 
 1. Make sure that you have openSSL installed on your local machine.
 2. Open a terminal window and run the following command to generate a 128-bit AES key.
@@ -80,6 +81,7 @@ $ openssl enc -aes-128-ecb -k secret -P -md sha1
 7. Move the file to the config folder.
 
 ### Add an SSL Certificate for Secure Communication between Data Hub and Third-Party Systems
+# Do NOT use the sample google certificate for productive use!
 
 1. Open the config folder.
 2. Create a folder named “trusted-certificates”.

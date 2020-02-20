@@ -1,6 +1,6 @@
-# SAP Commerce Cloud Sample Repository
+# SAP Commerce Cloud with Data Hub Sample Repository
 
-This sample repository contains the files and folders that are required to set up SAP Commerce Cloud.  You can clone this repository and then follow the instructions in the readme to update the example files with your specific details. 
+This sample repository contains the files and folders that are required to set up SAP Commerce Cloud with Data Hub.  You can clone this repository and then follow the instructions in the readme to update the example files with your specific details. 
 
 When your files are ready, push them to your SAP Commerce Cloud repository.  
 
@@ -8,7 +8,8 @@ When your files are ready, push them to your SAP Commerce Cloud repository.
 
 - You have a public-facing code repository.
 - You have an active SAP Commerce Cloud subscription.
-- You have a license for SAP Commerce & Data Hub version 6.7 or higher.
+- You have a license for SAP Commerce 6.7 or higher
+- You have a license for Data Hub on Commerce Cloud version 6.7 or higher.
 - You have not set up SAP Commerce Cloud yet.
 
 # Supported Versions
@@ -59,13 +60,17 @@ Clone the sample repository ([instructions can be found here](https://help.githu
 
 ### Prepare to Push the Sample Repository
  
-In the sample repository, verify that you have the following files in the core-customize folder.
+1. In the sample repository, verify that you have the following files in the *core-customize* folder.
  - manifest.json:  This is the manifest.json for Commerce Cloud.
- - <custom extension> folders (optional)
+ - \<custom extension> folders (optional)
+2. Verify that you have the following files in the *datahub* folder.
+ - manifest.json: This is the manifest.json for Data Hub.
+ - \<config> folder: This is the folder which contains configuration information specific to Data Hub (see [Data Hub](https://github.com/SAP-samples/cloud-commerce-sample-setup/blob/1905-datahub/datahub/README.md) readme for details). 
+ - \<custom extension> folders (optional)
 
 ### Push the Commerce Cloud Configuration to Code Repository
 
-Push the core-customize folder from your local machine to the root level of your Commerce Cloud repository.  
+Push the core-customize & datahub folder from your local machine to the root level of your Commerce Cloud repository.  
 
 ### Access the Cloud Portal
 
@@ -75,7 +80,7 @@ Log in to the Cloud Portal and verify that your code repository is connected.
 2. Select *Repository* and verify that you are connected to the correct code repository.
 3. Find the environments that were provisioned for your subscription.
 3. Create a new build.
-4. Deploy the build to the environment using the *Initialze Database* option.
+4. Deploy the build to the environment using the *Initialize Database* option.
 
 ### Final Steps - Validating an example Electronics Storefront
 
