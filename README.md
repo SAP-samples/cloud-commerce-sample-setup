@@ -22,6 +22,14 @@ Not applicable.
 
 These instructions walk you through the process of cloning the repository and then updating the sample files with your specific requirements. 
 
+## Select the Appropriate Sample Branch
+
+There are multiple branches to choose from based on your specific configuration needs.
+- master: This branch contains a sample Commerce Cloud only configuration. This should be used in MOST cases.
+- [1905-datahub](https://github.com/SAP-samples/cloud-commerce-sample-setup/tree/1905-datahub): This branch contains the contents from master in additional to configuration files used for Data Hub. Data Hub is an add-on purchase for Commerce Cloud. 
+- [1905-spartacus](https://github.com/SAP-samples/cloud-commerce-sample-setup/tree/1905-spartacus): This branch contains the configuration necessary to use Commerce Cloud with the Spartacus JavaScript storefront.
+
+
 The following folders and files are included in the sample repository.
 
 Root level 
@@ -68,7 +76,7 @@ Log in to the Cloud Portal and verify that your code repository is connected.
 2. Select *Repository* and verify that you are connected to the correct code repository.
 3. Find the environments that were provisioned for your subscription.
 3. Create a new build.
-4. Deploy the build to the environment using the *Initialze Database* option.
+4. Deploy the build to the environment using the *Initialize Database* option.
 
 ### Final Steps - Validating an example Electronics Storefront
 
