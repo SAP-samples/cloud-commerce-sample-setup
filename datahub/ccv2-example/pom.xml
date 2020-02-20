@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  ~ [y] hybris Platform
+  ~
+  ~ Copyright (c) 2018 SAP SE or an SAP affiliate company.
+  ~ All rights reserved.
+  ~
+  ~ This software is the confidential and proprietary information of SAP
+  ~ ("Confidential Information"). You shall not disclose such Confidential
+  ~ Information and shall use it only in accordance with the terms of the
+  ~ license agreement you entered into with SAP.
+  -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>ccv2-example</artifactId>
+	<groupId>com.example</groupId>
+	<version>0.2-SNAPSHOT</version>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<jre.source.version>1.8</jre.source.version>
+		<jre.target.version>1.8</jre.target.version>
+		<maven.compiler.plugin.version>3.1</maven.compiler.plugin.version>
+		<spring.version>4.3.11.RELEASE</spring.version>
+		<prometheus.version>0.0.21</prometheus.version>
+		<additionalparam>-Xdoclint:none</additionalparam>
+	</properties>
+
+	<dependencies>
+		<!-- 
+		This is how you access the Datahub SDK Jar in your maven repo 
+		The datahub builder will set 2 maven properties: 
+			- ${datahub.sdk.jar} to the absolute path to the sdk jar from the
+			  datahub-suite.zip 
+			- ${datahub.sdk.version} to the version of datahub requested
+			  in the manifest. 
+		Copy the bit dependency declaration below to include datahub-sdk.jar in
+		your project.
+		-->
+		<dependency>
+			<artifactId>datahub-extension-sdk</artifactId>
+			<groupId>com.hybris.datahub</groupId>
+			<version>${datahub.sdk.version}</version>
+			<scope>system</scope>
+			<systemPath>${datahub.sdk.jar}</systemPath>
+		</dependency>
+
+		<!-- You may also add more jars-->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.5</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<scope>compile</scope>
+			<version>1.2.3</version>
+		</dependency>
+		<dependency>
+    		<groupId>javax.annotation</groupId>
+    		<artifactId>javax.annotation-api</artifactId>
+    		<version>1.3.2</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven.compiler.plugin.version}</version>
+				<configuration>
+					<source>${jre.source.version}</source>
+					<target>${jre.target.version}</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.2</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>3.1.0</version>
+				<configuration>
+					<artifactSet>
+						<includes>
+							<include>io.prometheus:*</include>
+						</includes>
+					</artifactSet>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

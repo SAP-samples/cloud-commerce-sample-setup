@@ -1,0 +1,38 @@
+<configuration>
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender"> <!-- DO NOT CHANGE THIS VALUE -->
+    <encoder>
+      <pattern>%d [%level] [%logger{20}] %msg%n</pattern>
+    </encoder>
+  </appender>
+
+<!-- SET YOUR LOGGING LEVELS HERE -->
+  <logger name="com.hybris.kernel" level="info" />
+  <logger name="com.hybris.kernel.typesystem" level="info" />
+    <logger name="com.hybris.datahub.performance.rest.PrometheusResource" level="warn"/>
+    <logger name="com.hybris.datahub.rest.resources.StatusResource" level="error"/>
+    <!-- <logger name="com.hybris.datahub.command" level="trace" /> -->
+  <logger name="com.hybris.datahub.config.SystemInformationLogger" level="info"/>
+  <logger name="com.hybris.datahub" level="info" />
+    <logger name="com.hybris.datahub.sapidocintegration.spring.HttpInboundService" level="warn" />
+  <logger name="com.hybris.datahub.jms.CustomMessageListenerContainer" level="info" />
+  <logger name="com.hybris.datahub.jms.MultiDestinationJmsTemplate" level="info" />
+  <logger name="com.hybris.datahub.service.integration.impl" level="info" />
+  <logger name="org.springframework" level="info" />
+  <logger name="org.springframework.integration.handler.LoggingHandler" level="warn" />
+  <logger name="org.reflections.Reflections" level="off" />
+  <logger name="org.hibernate" level="WARN" />
+  <logger name="org.hibernate.engine.jdbc.spi" level="error" />
+  <logger name="org.hibernate.engine.internal" level="error" />
+  <logger name="akka" level="WARN" />
+  <logger name="io.netty.handler.logging.LoggingHandler" level="warn" />
+  <logger name="com.hybris.datahub.service.publication.impl.DeletePublicationRetryEventListener" level="WARN" />
+  <logger name="com.hybris.charon" level="ERROR" />
+  <logger name="com.hybris.datahub.modelt" level="DEBUG" />
+
+  <root level="warn">
+    <appender-ref ref="STDOUT" /> <!-- DO NOT CHANGE THIS VALUE -->
+  </root>
+  <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
+    <resetJUL>true</resetJUL>
+  </contextListener>
+</configuration>
