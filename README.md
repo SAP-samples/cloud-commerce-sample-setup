@@ -8,7 +8,7 @@ When your files are ready, push them to your SAP Commerce Cloud repository.
 
 - You have a public-facing code repository.
 - You have an active SAP Commerce Cloud subscription.
-- You have a license for SAP Commerce version 1808 or higher.
+- You have a license for SAP Commerce & Data Hub version 6.7 or higher.
 - You have not set up SAP Commerce Cloud yet.
 
 # Supported Versions
@@ -26,12 +26,19 @@ The following folders and files are included in the sample repository.
 
 Root level 
 - core-customize folder: The folder that contains all of the folders and files that support Commerce Cloud.
+- datahub folder: The folder that contains all of the folders and files that support Data Hub.
 
 core-customize folder
 - manifest.json: The Commerce Cloud manifest.json file, which defines Commerce Platform customizations.
 - kiwi folder: An example custom extension.
 - tiger folder: An example custom extension.
 - other sample manifests: A collection of tested and verified manifest files that you can use as starting points for your Commerce Cloud environments.
+
+datahub folder
+- manifest.json: The Data Hub manifest.json file that defines the Data Hub application and extensions.
+- ccv2 example folder: A generic folder that you can build out for custom extensions.
+- config folder: The folder that contains the Data Hub configuration files and folders.
+- README.md: Specific readme for Data Hub specific configuration.
 
 ### Clone Repository
 
@@ -81,6 +88,8 @@ Use the Cloud Portal to create a build and then deploy the build to an environme
 5. Click on the URL listed next to the *Storefront* public endpoint. You will receive a server error.
 6. In your browser's address, append the endpoint address with */?site=electronics* and reload the page
 7. Verify that you see a basic electronics storefront.
+
+After the build is deployed, you can find the Data Hub endpoint in the Environments page of the Cloud Portal.
 
 # Limitations
 
