@@ -29,7 +29,11 @@ There are multiple branches to choose from based on your specific configuration 
 - [1905-datahub](https://github.com/SAP-samples/cloud-commerce-sample-setup/tree/1905-datahub): This branch contains the contents from master in additional to configuration files used for Data Hub. Data Hub is an add-on purchase for Commerce Cloud. 
 - [1905-spartacus](https://github.com/SAP-samples/cloud-commerce-sample-setup/tree/1905-spartacus): This branch contains the configuration necessary to use Commerce Cloud with the Spartacus JavaScript storefront.
 
+### Clone Repository
 
+Clone the sample repository ([instructions can be found here](https://help.github.com/articles/cloning-a-repository/)). The files are copied to your local machine.
+
+### Default Folder Structure
 The following folders and files are included in the sample repository.
 
 Root level 
@@ -40,10 +44,6 @@ core-customize folder
 - kiwi folder: An example custom extension.
 - tiger folder: An example custom extension.
 - other sample manifests: A collection of tested and verified manifest files that you can use as starting points for your Commerce Cloud environments.
-
-### Clone Repository
-
-Clone the sample repository ([instructions can be found here](https://help.github.com/articles/cloning-a-repository/)). The files are copied to your local machine.
 
 ### Update the Custom Extensions
 
