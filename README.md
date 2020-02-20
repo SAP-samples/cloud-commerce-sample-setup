@@ -65,7 +65,7 @@ Clone the sample repository ([instructions can be found here](https://help.githu
  - \<custom extension> folders (optional)
 2. Verify that you have the following files in the *datahub* folder.
  - manifest.json: This is the manifest.json for Data Hub.
- - \<config> folder: This is the folder which contains configuration information specific to Data Hub (see [Data Hub](https://github.com/SAP-samples/cloud-commerce-sample-setup/blob/1905-datahub/datahub/README.md) readme for details). 
+ - \<config> folder: This is the folder which contains configuration information specific to Data Hub (see [Data Hub](datahub/README.md) readme for details). 
  - \<custom extension> folders (optional)
 
 ### Push the Commerce Cloud Configuration to Code Repository
