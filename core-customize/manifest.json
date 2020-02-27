@@ -1,102 +1,49 @@
-{ 
-	"commerceSuiteVersion":"1905",
-	"useCloudExtensionPack":true,
-	"extensions":[ 
-	   "kiwi",
-	   "tiger",
-	   "adaptivesearchsolr",
-	   "adaptivesearchbackoffice",
-	   "adaptivesearchsamplesaddon",
-	   "adaptivesearchwebservices",
-	   "commerceservicesbackoffice",
-	   "solrfacetsearchbackoffice",
-	   "solrserver",
-	   "yacceleratorinitialdata",
-	   "yacceleratorstorefront",
-	   "electronicsstore",
-	   "apparelstore",
-	   "acceleratorwebservicesaddon",
-	   "orderselfserviceaddon",
-	   "customersupportbackoffice",
-	   "customerticketingaddon",
-	   "commerceorgsamplesaddon",
-	   "multicountrysampledataaddon",
-	   "rulebuilderbackoffice",
-	   "couponbackoffice",
-	   "droolsruleengineservices",
-	   "couponfacades",
-	   "couponservices",
-	   "promotionenginesamplesaddon",
-	   "cmswebservices",
-	   "smarteditwebservices",
-	   "cmssmarteditwebservices",
-	   "permissionswebservices",
-	   "ycommercewebservices",
-	   "ycommercewebservicestest",
-	   "smarteditaddon",
-	   "smartedit",
-	   "cmssmartedit",
-	   "cmsbackoffice",
-	   "cmsoccaddon",
-	   "previewpersonalizationweb",
-	   "personalizationcmsweb",
-	   "personalizationsmartedit",
-	   "personalizationsampledataaddon",
-	   "personalizationpromotionssmartedit",
-	   "personalizationpromotions",
-	   "personalizationpromotionsweb",
-	   "personalizationpromotionssampledataaddon",
-	   "personalizationpromotionsbackoffice",
-	   "personalizationservicesbackoffice",
-	   "personalizationcmsbackoffice",
-	   "personalizationsearchbackoffice",
-	   "personalizationsearchsmartedit",
-	   "personalizationsearchweb",
-	   "personalizationsearchsamplesaddon",
-	   "personalizationintegration",
-	   "personalizationintegrationbackoffice",
-	   "personalizationyprofile",
-	   "personalizationaddon",
-	   "profileservices",
-	   "profiletagaddon",
-	   "textfieldconfiguratortemplatebackoffice",
-	   "textfieldconfiguratortemplateaddon",
-	   "assistedservicestorefront",
-	   "assistedservicewebservices",
-	   "assistedservicepromotionaddon",
-	   "pcmbackofficesamplesaddon",
-	   "kymaintegrationbackoffice",
-	   "ordermanagementaddon",
-	   "ordermanagementfacades",
-	   "ordermanagementwebservices",
-	   "warehousing",
-	   "warehousingbackoffice",
-	   "warehousingfacades",
-	   "warehousingwebservices",
-	   "yacceleratorordermanagement",
-	   "merchandisingaddon",
-	   "merchandisingcmswebservices",
-	   "merchandisingsmartedit",
-	   "merchandisingservices",
-	   "merchandisingservicesbackoffice",
-	   "merchandisingstorefrontsampledataaddon",
-	   "ondemandcommon",
-	   "ondemandsampledata",
-	   "outboundservices",
-	   "outboundsync",
-	   "odata2webservices",
-	   "odata2webservicesfeaturetests",
-	   "integrationbackoffice",
-	   "integrationmonitoringbackoffice",
-	   "outboundsyncbackoffice",
-	   "modeltacceleratorservices",
-	   "azurecloudhotfolder",
-	   "xyformsbackoffice",
-	   "xyformssamples",
-	   "xyformsstorefrontcommons",
-	   "xyformsweb",
-	   "orbeonweb"
+{
+    "commerceSuiteVersion": "1905",
+    "enableImageProcessingService": true,
+    "extensions": [
+        "cloudmediaconversion",  
+        "mediaconversionbackoffice"
 	],
+	"useConfig": {
+        "properties": [
+            {
+                "location": "/hybris/config/environments/local-dev.properties",
+                "persona": "development"
+            },
+            {
+                "location": "/hybris/config/environments/local-stage.properties",
+                "persona": "staging"
+            },
+            {
+                "location": "/hybris/config/environments/local-prod.properties",
+                "persona": "production"
+            },
+            {
+                "location": "/hybris/config/environments/common.properties"
+             },
+             {
+                "aspect": "accstorefront",
+                "location": "/hybris/config/environments/accstorefront.properties"
+             },
+             {
+                "aspect": "api",
+                "location": "/hybris/config/environments/api.properties"
+             },
+             {
+                "aspect": "backoffice",
+                "location": "/hybris/config/environments/backoffice.properties"
+             }
+        ],
+        "extensions": {
+            "location": "/hybris/config/localextensions.xml",
+            "exclude": [
+                "azurecloudhotfolder",
+                "cloudcommons",
+                "cloudhotfolder"
+            ]
+        }
+    },
 	"storefrontAddons":[ 
 	   { 
 		  "addon":"commerceorgsamplesaddon",
@@ -217,7 +164,7 @@
 	"properties":[ 
 	   { 
 		  "key":"lang.packs",
-		  "value":"de,en,es,es_CO,fr,it,ja,ko,pl,pt,ru,zh,zh_TW,hi,id,cs,cy"
+		  "value":"de,en"
 	   },
 	   { 
 		  "key":"endpoint.hac.platform.init.disabled",
