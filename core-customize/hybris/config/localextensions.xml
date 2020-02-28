@@ -89,7 +89,6 @@
 	  <extension name= 'integrationbackoffice' />
 	  <extension name= 'integrationmonitoringbackoffice' />
 	  <extension name= 'outboundsyncbackoffice' />
-	  <extension name= 'modeltacceleratorservices' />
 	  <extension name= 'azurecloudhotfolder' />
 	  <extension name= 'xyformsbackoffice' />
 	  <extension name= 'xyformssamples' />
