@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { translations, translationChunksConfig } from '@spartacus/assets';
 import { B2cStorefrontModule } from '@spartacus/storefront';
+import { environment } from './../environments/environment';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,9 @@ import { B2cStorefrontModule } from '@spartacus/storefront';
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     B2cStorefrontModule.withConfig({
       backend: {
-        occ: {baseUrl: 'https://localhost:9002',
+        occ: {
+          baseUrl: environment.occBaseUrl,
+          legacy: false,
           prefix: '/rest/v2/'
         }
       },

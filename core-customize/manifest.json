@@ -277,6 +277,10 @@
                     "contextPath": "/cmssmarteditwebservices"
                 },
                 {
+                    "name": "acceleratorservices",
+                    "contextPath": "/acceleratorservices"
+                },
+                {
                     "name": "oauth2",
                     "contextPath": "/authorizationserver"
                 },
