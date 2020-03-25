@@ -69,5 +69,8 @@
     "tslint": "~5.15.0",
     "typescript": "~3.5.3",
     "webpack-cli": "^3.3.2"
+  },
+  "resolutions": {
+    "@babel/compat-data": "7.8.0"
   }
 }
