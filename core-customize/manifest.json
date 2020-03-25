@@ -205,14 +205,6 @@
 		  "value":"false"
 	   },
 	   { 
-		  "key":"orbeonweb.orbeon.persistence.uri",
-		  "value":"https://localhost:8088/xyformsweb/fr/service/hybris"
-	   },
-	   { 
-		  "key":"xyformsservices.orbeon.url.address",
-		  "value":"http://localhost:8081/web-orbeon"
-	   },
-	   { 
 		  "key":"xyformsstorefrontcommons.orbeon.keystoreFile",
 		  "value":"/opt/hybris/bin/platform/tomcat/lib/keystore"
 	   }
@@ -277,30 +269,6 @@
 				"value":""
 			 },
 			 { 
-				"key":"website.electronics.http",
-				"value":"http://electronics.c4fq-eccommerc1-p1-public.model-t.cc.commerce.ondemand.com"
-			 },
-			 { 
-				"key":"website.electronics.https",
-				"value":"https://electronics.c4fq-eccommerc1-p1-public.model-t.cc.commerce.ondemand.com"
-			 },
-			 { 
-				"key":"website.apparel-uk.http",
-				"value":"https://apparel-uk.c4fq-eccommerc1-p1-public.model-t.cc.commerce.ondemand.com"
-			 },
-			 { 
-				"key":"website.apparel-uk.https",
-				"value":"https://apparel-uk.c4fq-eccommerc1-p1-public.model-t.cc.commerce.ondemand.com"
-			 },
-			 { 
-				"key":"website.apparel-de.http",
-				"value":"https://apparel-de.c4fq-eccommerc1-p1-public.model-t.cc.commerce.ondemand.com"
-			 },
-			 { 
-				"key":"website.apparel-de.https",
-				"value":"https://apparel-de.c4fq-eccommerc1-p1-public.model-t.cc.commerce.ondemand.com"
-			 },
-			 { 
 				"key":"xss.filter.header.X-Frame-Options",
 				"value":""
 			 },
@@ -350,30 +318,6 @@
 			 { 
 				"key":"storefrontContextRoot",
 				"value":"/yacceleratorstorefront"
-			 },
-			 { 
-				"key":"website.electronics.http",
-				"value":"http://electronics.c4fq-eccommerc1-p1-public.model-t.cc.commerce.ondemand.com"
-			 },
-			 { 
-				"key":"website.electronics.https",
-				"value":"https://electronics.c4fq-eccommerc1-p1-public.model-t.cc.commerce.ondemand.com"
-			 },
-			 { 
-				"key":"website.apparel-uk.http",
-				"value":"https://apparel-uk.c4fq-eccommerc1-p1-public.model-t.cc.commerce.ondemand.com"
-			 },
-			 { 
-				"key":"website.apparel-uk.https",
-				"value":"https://apparel-uk.c4fq-eccommerc1-p1-public.model-t.cc.commerce.ondemand.com"
-			 },
-			 { 
-				"key":"website.apparel-de.http",
-				"value":"https://apparel-de.c4fq-eccommerc1-p1-public.model-t.cc.commerce.ondemand.com"
-			 },
-			 { 
-				"key":"website.apparel-de.https",
-				"value":"https://apparel-de.c4fq-eccommerc1-p1-public.model-t.cc.commerce.ondemand.com"
 			 }
 		  ],
 		  "webapps":[ 
@@ -473,7 +417,7 @@
 		  "webapps":[ 
 			 { 
 				"name":"hac",
-				"contextPath":""
+				"contextPath":"/hac"
 			 },
 			 { 
 				"name":"mediaweb",
