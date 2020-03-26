@@ -3,9 +3,18 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { translations, translationChunksConfig } from '@spartacus/assets';
+import { OccConfig } from '@spartacus/core';
 import { B2cStorefrontModule } from '@spartacus/storefront';
 import { environment } from './../environments/environment';
 
+const occConfig: OccConfig = { backend: { occ: {} } };
+
+// only provide the `occ.baseUrl` key if it is explicitly configured, otherwise the value of
+// <meta name="occ-backend-base-url" > is ignored.
+// This in turn breaks the call to the API aspect in public cloud environments
+if (environment.occBaseUrl) {
+  occConfig.backend.occ.baseUrl = environment.occBaseUrl;
+}
 @NgModule({
   declarations: [
     AppComponent
@@ -13,13 +22,7 @@ import { environment } from './../environments/environment';
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     B2cStorefrontModule.withConfig({
-      backend: {
-        occ: {
-          baseUrl: environment.occBaseUrl,
-          legacy: false,
-          prefix: '/rest/v2/'
-        }
-      },
+      backend: occConfig.backend,
       context: {
         baseSite: ['electronics-spa']
       },
