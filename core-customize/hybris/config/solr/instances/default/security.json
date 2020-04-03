@@ -1,0 +1,147 @@
+{
+	"authentication": {
+		"class": "solr.BasicAuthPlugin",
+		"blockUnknown": true,
+		"credentials": {
+			"solrclient": "2NtmibBImstZ5S07bQ2TdRkNdNEsXkv/JCkp8YeiwIU= riWS4qMkR+caBGL1uuUToIIYEz/bxDN5LycQ44BprNs=",
+			"solrindexingclient": "Op+mSXqBgJlMEixH25vTnCgC8KayBgKNGRP3i3bLr/4= uFXwaAKtYXjwy32QfkKL/ASA3X3Vlq1XW4DykYexNTw=",
+			"solrserver": "E7h3Zq+hgRyA+1Nx28jL+AArUlf6JbJRR+6cOAqfQHA= 481lwUYp4qmY6Li+oakSVnXwYoXy0mWYN/1sWE5YNdc=",
+			"solradmin": "Hbs0wnLz1WErQHXQUzm5AHrvc2ZkWPl5iHXPeJOgp8I= Lz4KoANtWA/UqKy8yAVZmapQ3UJPlg0MjlBZEJT/kak="
+		}
+	},
+	"authorization": {
+		"class": "solr.RuleBasedAuthorizationPlugin",
+		"permissions": [
+			{
+				"path": "read",
+				"role": "index-read"
+			},
+			{
+				"name": "read",
+				"role": "index-read"
+			},
+			{
+				"name": "update",
+				"role": "index-write"
+			},
+			{
+				"name": "core-admin-read",
+				"role": "index-write"
+			},
+			{
+				"name": "core-admin-edit",
+				"role": "index-write"
+			},
+			{
+				"name": "collection-admin-read",
+				"role": "index-write"
+			},
+			{
+				"name": "collection-admin-edit",
+				"role": "index-write"
+			},
+			{
+				"name": "schema-read",
+				"role": "index-write"
+			},
+			{
+				"name": "schema-edit",
+				"role": "index-write"
+			},
+			{
+				"collection": "*",
+				"path": "/schema/managed/*",
+				"role": "index-write"
+			},
+			{
+				"collection": "*",
+				"path": "/schema/analysis/*",
+				"role": "index-write"
+			},
+			{
+				"collection": "*",
+				"path": "/admin/luke",
+				"role": "index-write"
+			},
+			{
+				"collection": null,
+				"path": "/admin/cores",
+				"params": {
+					"action": [
+						"STATUS"
+					]
+				},
+				"role": "index-write"
+			},
+			{
+				"collection": null,
+				"path": "/admin/collections",
+				"params": {
+					"action": [
+						"LIST"
+					]
+				},
+				"role": "index-write"
+			},
+			{
+				"name": "config-read",
+				"role": "admin"
+			},
+			{
+				"name": "config-edit",
+				"role": "admin"
+			},
+			{
+				"name": "security-read",
+				"role": "admin"
+			},
+			{
+				"name": "security-edit",
+				"role": "admin"
+			},
+			{
+				"path": "/",
+				"role": null
+			},
+			{
+				"path": "/libs/*",
+				"role": null
+			},
+			{
+				"path": "/js/*",
+				"role": null
+			},
+			{
+				"path": "/img/*",
+				"role": null
+			},
+			{
+				"path": "/css/*",
+				"role": null
+			},
+			{
+				"name": "all",
+				"role": "admin"
+			}
+		],
+		"user-role": {
+			"solrclient": [
+				"index-read"
+			],
+			"solrindexingclient": [
+				"index-read",
+				"index-write"
+			],
+			"solrserver": [
+				"index-read",
+				"index-write",
+				"admin"
+			],
+			"solradmin": [
+				"index-read",
+				"index-write",
+				"admin"
+			]
+		}
+	}
+}

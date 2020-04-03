@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- 
+ For more details about configurations options that may appear in this file, see https://lucene.apache.org/solr/guide/7_5/configuring-solrconfig-xml.html. 
+-->
+<config>
+	<luceneMatchVersion>7.5.0</luceneMatchVersion>
+
+	<lib dir="${solr.install.dir:../../../..}/contrib/analysis-extras/lib" regex=".*\.jar" />
+	<lib dir="${solr.install.dir:../../../..}/contrib/analysis-extras/lucene-libs" regex=".*\.jar" />
+	<lib dir="${solr.install.dir:../../../..}/dist/" regex="solr-analysis-extras-\d.*\.jar" />
+
+	<lib dir="${solr.install.dir:../../../..}/contrib/hybris/lib" regex=".*\.jar" />
+
+	<!-- RestManager storage should be index specific -->
+	<restManager>
+		<str name="storageIO">de.hybris.platform.solr.rest.IndexAwareStorageIO</str>
+	</restManager>
+
+	<directoryFactory name="DirectoryFactory"
+		class="${solr.directoryFactory:solr.NRTCachingDirectoryFactory}" />
+	<codecFactory class="solr.SchemaCodecFactory" />
+	<schemaFactory class="ClassicIndexSchemaFactory" />
+
+	<indexConfig>
+		<lockType>${solr.lock.type:native}</lockType>
+	</indexConfig>
+
+	<jmx />
+
+	<updateHandler class="solr.DirectUpdateHandler2">
+		<updateLog>
+			<str name="dir">${solr.ulog.dir:}</str>
+			<int name="numVersionBuckets">${solr.ulog.numVersionBuckets:65536}</int>
+		</updateLog>
+
+		<autoCommit>
+			<maxDocs>${solr.autoCommit.maxDocs:25000}</maxDocs>
+			<maxTime>${solr.autoCommit.maxTime:-1}</maxTime>
+			<openSearcher>false</openSearcher>
+		</autoCommit>
+
+		<autoSoftCommit>
+			<maxDocs>${solr.autoSoftCommit.maxDocs:-1}</maxDocs>
+			<maxTime>${solr.autoSoftCommit.maxTime:-1}</maxTime>
+		</autoSoftCommit>
+	</updateHandler>
+
+	<query>
+		<maxBooleanClauses>1024</maxBooleanClauses>
+
+		<filterCache class="solr.FastLRUCache" size="512" initialSize="512" autowarmCount="0" />
+		<queryResultCache class="solr.LRUCache" size="512" initialSize="512" autowarmCount="0" />
+		<documentCache class="solr.LRUCache" size="512" initialSize="512" autowarmCount="0" />
+		<cache name="perSegFilter" class="solr.search.LRUCache" size="10" initialSize="0" autowarmCount="10"
+			regenerator="solr.NoOpRegenerator" />
+
+		<enableLazyFieldLoading>true</enableLazyFieldLoading>
+
+		<queryResultWindowSize>20</queryResultWindowSize>
+		<queryResultMaxDocsCached>200</queryResultMaxDocsCached>
+
+		<useColdSearcher>false</useColdSearcher>
+	</query>
+
+	<requestDispatcher handleSelect="false">
+		<httpCaching never304="true" />
+	</requestDispatcher>
+
+	<requestHandler name="/select" class="solr.SearchHandler">
+		<lst name="defaults">
+			<str name="echoParams">explicit</str>
+			<int name="rows">10</int>
+			<str name="spellcheck.onlyMorePopular">true</str>
+		</lst>
+		<arr name="last-components">
+			<str>spellcheck</str>
+		</arr>
+	</requestHandler>
+
+	<requestHandler name="/suggest" class="solr.SearchHandler">
+		<lst name="defaults">
+			<str name="spellcheck">true</str>
+			<str name="spellcheck.dictionary">default</str>
+			<str name="spellcheck.onlyMorePopular">true</str>
+			<str name="spellcheck.count">5</str>
+			<str name="spellcheck.collate">true</str>
+		</lst>
+		<arr name="components">
+			<str>suggest</str>
+		</arr>
+	</requestHandler>
+
+	<searchComponent name="spellcheck" class="solr.SpellCheckComponent">
+		<str name="queryAnalyzerFieldType">text_spell</str>
+		<lst name="spellchecker">
+			<str name="name">default</str>
+			<str name="classname">solr.DirectSolrSpellChecker</str>
+			<str name="field">spellcheck</str>
+		</lst>
+		<lst name="spellchecker">
+			<str name="name">en</str>
+			<str name="classname">solr.DirectSolrSpellChecker</str>
+			<str name="field">spellcheck_en</str>
+		</lst>
+		<lst name="spellchecker">
+			<str name="name">cs</str>
+			<str name="classname">solr.DirectSolrSpellChecker</str>
+			<str name="field">spellcheck_cs</str>
+		</lst>
+		<lst name="spellchecker">
+			<str name="name">de</str>
+			<str name="classname">solr.DirectSolrSpellChecker</str>
+			<str name="field">spellcheck_de</str>
+		</lst>
+		<lst name="spellchecker">
+			<str name="name">es</str>
+			<str name="classname">solr.DirectSolrSpellChecker</str>
+			<str name="field">spellcheck_es</str>
+		</lst>
+		<lst name="spellchecker">
+			<str name="name">es_CO</str>
+			<str name="classname">solr.DirectSolrSpellChecker</str>
+			<str name="field">spellcheck_es_co</str>
+		</lst>
+		<lst name="spellchecker">
+			<str name="name">fr</str>
+			<str name="classname">solr.DirectSolrSpellChecker</str>
+			<str name="field">spellcheck_fr</str>
+		</lst>
+		<lst name="spellchecker">
+			<str name="name">hi</str>
+			<str name="classname">solr.DirectSolrSpellChecker</str>
+			<str name="field">spellcheck_hi</str>
+		</lst>
+		<lst name="spellchecker">
+			<str name="name">hu</str>
+			<str name="classname">solr.DirectSolrSpellChecker</str>
+			<str name="field">spellcheck_hu</str>
+		</lst>
+		<lst name="spellchecker">
+			<str name="name">id</str>
+			<str name="classname">solr.DirectSolrSpellChecker</str>
+			<str name="field">spellcheck_id</str>
+		</lst>
+		<lst name="spellchecker">
+			<str name="name">it</str>
+			<str name="classname">solr.DirectSolrSpellChecker</str>
+			<str name="field">spellcheck_it</str>
+		</lst>
+		<lst name="spellchecker">
+			<str name="name">ja</str>
+			<str name="classname">solr.DirectSolrSpellChecker</str>
+			<str name="field">spellcheck_ja</str>
+		</lst>
+		<lst name="spellchecker">
+			<str name="name">ko</str>
+			<str name="classname">solr.DirectSolrSpellChecker</str>
+			<str name="field">spellcheck_ko</str>
+		</lst>
+		<lst name="spellchecker">
+			<str name="name">pl</str>
+			<str name="classname">solr.DirectSolrSpellChecker</str>
+			<str name="field">spellcheck_pl</str>
+		</lst>
+		<lst name="spellchecker">
+			<str name="name">pt</str>
+			<str name="classname">solr.DirectSolrSpellChecker</str>
+			<str name="field">spellcheck_pt</str>
+		</lst>
+		<lst name="spellchecker">
+			<str name="name">ru</str>
+			<str name="classname">solr.DirectSolrSpellChecker</str>
+			<str name="field">spellcheck_ru</str>
+		</lst>
+		<lst name="spellchecker">
+			<str name="name">zh</str>
+			<str name="classname">solr.DirectSolrSpellChecker</str>
+			<str name="field">spellcheck_zh</str>
+		</lst>
+		<lst name="spellchecker">
+			<str name="name">zh_TW</str>
+			<str name="classname">solr.DirectSolrSpellChecker</str>
+			<str name="field">spellcheck_zh_tw</str>
+		</lst>
+	</searchComponent>
+
+	<searchComponent name="suggest" class="solr.SpellCheckComponent">
+		<str name="queryAnalyzerFieldType">text_spell</str>
+		<lst name="spellchecker">
+			<str name="name">default</str>
+			<str name="classname">org.apache.solr.spelling.suggest.Suggester</str>
+			<str name="lookupImpl">org.apache.solr.spelling.suggest.tst.TSTLookup</str>
+			<str name="field">autosuggest</str>
+			<str name="buildOnCommit">true</str>
+			<str name="buildOnOptimize">true</str>
+			<str name="accuracy">0.35</str>
+		</lst>
+		<lst name="spellchecker">
+			<str name="name">en</str>
+			<str name="classname">org.apache.solr.spelling.suggest.Suggester</str>
+			<str name="lookupImpl">org.apache.solr.spelling.suggest.tst.TSTLookup</str>
+			<str name="field">autosuggest_en</str>
+			<str name="buildOnCommit">true</str>
+			<str name="buildOnOptimize">true</str>
+			<str name="accuracy">0.35</str>
+		</lst>
+		<lst name="spellchecker">
+			<str name="name">cs</str>
+			<str name="classname">org.apache.solr.spelling.suggest.Suggester</str>
+			<str name="lookupImpl">org.apache.solr.spelling.suggest.tst.TSTLookup</str>
+			<str name="field">autosuggest_cs</str>
+			<str name="buildOnCommit">true</str>
+			<str name="buildOnOptimize">true</str>
+			<str name="accuracy">0.35</str>
+		</lst>
+		<lst name="spellchecker">
+			<str name="name">de</str>
+			<str name="classname">org.apache.solr.spelling.suggest.Suggester</str>
+			<str name="lookupImpl">org.apache.solr.spelling.suggest.tst.TSTLookup</str>
+			<str name="field">autosuggest_de</str>
+			<str name="buildOnCommit">true</str>
+			<str name="buildOnOptimize">true</str>
+			<str name="accuracy">0.35</str>
+		</lst>
+		<lst name="spellchecker">
+			<str name="name">es</str>
+			<str name="classname">org.apache.solr.spelling.suggest.Suggester</str>
+			<str name="lookupImpl">org.apache.solr.spelling.suggest.tst.TSTLookup</str>
+			<str name="field">autosuggest_es</str>
+			<str name="buildOnCommit">true</str>
+			<str name="buildOnOptimize">true</str>
+			<str name="accuracy">0.35</str>
+		</lst>
+		<lst name="spellchecker">
+			<str name="name">es_CO</str>
+			<str name="classname">org.apache.solr.spelling.suggest.Suggester</str>
+			<str name="lookupImpl">org.apache.solr.spelling.suggest.tst.TSTLookup</str>
+			<str name="field">autosuggest_es_co</str>
+			<str name="buildOnCommit">true</str>
+			<str name="buildOnOptimize">true</str>
+			<str name="accuracy">0.35</str>
+		</lst>
+		<lst name="spellchecker">
+			<str name="name">fr</str>
+			<str name="classname">org.apache.solr.spelling.suggest.Suggester</str>
+			<str name="lookupImpl">org.apache.solr.spelling.suggest.tst.TSTLookup</str>
+			<str name="field">autosuggest_fr</str>
+			<str name="buildOnCommit">true</str>
+			<str name="buildOnOptimize">true</str>
+			<str name="accuracy">0.35</str>
+		</lst>
+		<lst name="spellchecker">
+			<str name="name">hi</str>
+			<str name="classname">org.apache.solr.spelling.suggest.Suggester</str>
+			<str name="lookupImpl">org.apache.solr.spelling.suggest.tst.TSTLookup</str>
+			<str name="field">autosuggest_hi</str>
+			<str name="buildOnCommit">true</str>
+			<str name="buildOnOptimize">true</str>
+			<str name="accuracy">0.35</str>
+		</lst>
+		<lst name="spellchecker">
+			<str name="name">hu</str>
+			<str name="classname">org.apache.solr.spelling.suggest.Suggester</str>
+			<str name="lookupImpl">org.apache.solr.spelling.suggest.tst.TSTLookup</str>
+			<str name="field">autosuggest_hu</str>
+			<str name="buildOnCommit">true</str>
+			<str name="buildOnOptimize">true</str>
+			<str name="accuracy">0.35</str>
+		</lst>
+		<lst name="spellchecker">
+			<str name="name">id</str>
+			<str name="classname">org.apache.solr.spelling.suggest.Suggester</str>
+			<str name="lookupImpl">org.apache.solr.spelling.suggest.tst.TSTLookup</str>
+			<str name="field">autosuggest_id</str>
+			<str name="buildOnCommit">true</str>
+			<str name="buildOnOptimize">true</str>
+			<str name="accuracy">0.35</str>
+		</lst>
+		<lst name="spellchecker">
+			<str name="name">it</str>
+			<str name="classname">org.apache.solr.spelling.suggest.Suggester</str>
+			<str name="lookupImpl">org.apache.solr.spelling.suggest.tst.TSTLookup</str>
+			<str name="field">autosuggest_it</str>
+			<str name="buildOnCommit">true</str>
+			<str name="buildOnOptimize">true</str>
+			<str name="accuracy">0.35</str>
+		</lst>
+		<lst name="spellchecker">
+			<str name="name">ja</str>
+			<str name="classname">org.apache.solr.spelling.suggest.Suggester</str>
+			<str name="lookupImpl">org.apache.solr.spelling.suggest.tst.TSTLookup</str>
+			<str name="field">autosuggest_ja</str>
+			<str name="buildOnCommit">true</str>
+			<str name="buildOnOptimize">true</str>
+			<str name="accuracy">0.35</str>
+		</lst>
+		<lst name="spellchecker">
+			<str name="name">ko</str>
+			<str name="classname">org.apache.solr.spelling.suggest.Suggester</str>
+			<str name="lookupImpl">org.apache.solr.spelling.suggest.tst.TSTLookup</str>
+			<str name="field">autosuggest_ko</str>
+			<str name="buildOnCommit">true</str>
+			<str name="buildOnOptimize">true</str>
+			<str name="accuracy">0.35</str>
+		</lst>
+		<lst name="spellchecker">
+			<str name="name">pl</str>
+			<str name="classname">org.apache.solr.spelling.suggest.Suggester</str>
+			<str name="lookupImpl">org.apache.solr.spelling.suggest.tst.TSTLookup</str>
+			<str name="field">autosuggest_pl</str>
+			<str name="buildOnCommit">true</str>
+			<str name="buildOnOptimize">true</str>
+			<str name="accuracy">0.35</str>
+		</lst>
+		<lst name="spellchecker">
+			<str name="name">pt</str>
+			<str name="classname">org.apache.solr.spelling.suggest.Suggester</str>
+			<str name="lookupImpl">org.apache.solr.spelling.suggest.tst.TSTLookup</str>
+			<str name="field">autosuggest_pt</str>
+			<str name="buildOnCommit">true</str>
+			<str name="buildOnOptimize">true</str>
+			<str name="accuracy">0.35</str>
+		</lst>
+		<lst name="spellchecker">
+			<str name="name">ru</str>
+			<str name="classname">org.apache.solr.spelling.suggest.Suggester</str>
+			<str name="lookupImpl">org.apache.solr.spelling.suggest.tst.TSTLookup</str>
+			<str name="field">autosuggest_ru</str>
+			<str name="buildOnCommit">true</str>
+			<str name="buildOnOptimize">true</str>
+			<str name="accuracy">0.35</str>
+		</lst>
+		<lst name="spellchecker">
+			<str name="name">zh</str>
+			<str name="classname">org.apache.solr.spelling.suggest.Suggester</str>
+			<str name="lookupImpl">org.apache.solr.spelling.suggest.tst.TSTLookup</str>
+			<str name="field">autosuggest_zh</str>
+			<str name="buildOnCommit">true</str>
+			<str name="buildOnOptimize">true</str>
+			<str name="accuracy">0.35</str>
+		</lst>
+		<lst name="spellchecker">
+			<str name="name">zh_TW</str>
+			<str name="classname">org.apache.solr.spelling.suggest.Suggester</str>
+			<str name="lookupImpl">org.apache.solr.spelling.suggest.tst.TSTLookup</str>
+			<str name="field">autosuggest_zh_tw</str>
+			<str name="buildOnCommit">true</str>
+			<str name="buildOnOptimize">true</str>
+			<str name="accuracy">0.35</str>
+		</lst>
+	</searchComponent>
+
+	<!--
+	 Solr Replication
+
+	 The SolrReplicationHandler supports replicating indexes from a
+	 "master" used for indexing and "slaves" used for queries.
+
+	 http://wiki.apache.org/solr/SolrReplication 
+
+	 It is also necessary for SolrCloud to function (in Cloud mode, the
+	 replication handler is used to bulk transfer segments when nodes 
+	 are added or need to recover).
+
+	 https://wiki.apache.org/solr/SolrCloud/
+	-->
+	<requestHandler name="/replication" class="solr.ReplicationHandler"> 
+		<!--
+		 To enable simple master/slave replication, uncomment one of the 
+		 sections below, depending on whether this solr instance should be
+		 the "master" or a "slave".  If this instance is a "slave" you will 
+		 also need to fill in the masterUrl to point to a real machine.
+		-->
+		<!--
+		<lst name="master">
+			<str name="replicateAfter">commit</str>
+			<str name="replicateAfter">startup</str>
+			<str name="confFiles">schema.xml,stopwords.txt</str>
+		</lst>
+		-->
+		<!--
+		<lst name="slave">
+			<str name="masterUrl">http://your-master-hostname:port/solr/${solr.core.name}/replication</str>
+			<str name="pollInterval">00:00:60</str>
+		</lst>
+		-->
+	</requestHandler>
+
+	<queryParser name="multiMaxScore" class="de.hybris.platform.solr.search.MultiMaxScoreQParserPlugin" />
+
+</config>
