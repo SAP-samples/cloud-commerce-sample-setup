@@ -1,6 +1,6 @@
 # SAP Commerce Cloud Sample Repository
 
-This sample repository contains the files and folders that are required to set up SAP Commerce Cloud.  You can clone this repository and then follow the instructions in the readme to update the example files with your specific details. 
+This sample repository contains the files and folders that are required to set up SAP Commerce Cloud. There are multiple branches covering different scenarios for Commerce Cloud (e.g. project Spartacus, data hub, solr customizations).  You can clone/download this repository, checkout the branch of interest and then follow the instructions in the readme to update the example files with your specific details. 
 
 When your files are ready, push them to your SAP Commerce Cloud repository.  
 
@@ -22,35 +22,25 @@ Not applicable.
 
 These instructions walk you through the process of cloning the repository and then updating the sample files with your specific requirements. 
 
-## Select the Appropriate Sample Branch
-
-There are multiple branches to choose from based on your specific configuration needs.
-- master: This branch contains a sample Commerce Cloud only configuration. This should be used in MOST cases.
-- [1905-datahub](https://github.com/SAP-samples/cloud-commerce-sample-setup/tree/1905-datahub): This branch contains the contents from master in additional to configuration files used for Data Hub. Data Hub is an add-on purchase for Commerce Cloud. 
-- [1905-spartacus](https://github.com/SAP-samples/cloud-commerce-sample-setup/tree/1905-spartacus): This branch contains the configuration necessary to use Commerce Cloud with the Spartacus JavaScript storefront.
-
-### Clone Repository
-
-Clone the sample repository ([instructions can be found here](https://help.github.com/articles/cloning-a-repository/)). The files are copied to your local machine.
-
-### Default Folder Structure
 The following folders and files are included in the sample repository.
 
 Root level 
 - core-customize folder: The folder that contains all of the folders and files that support Commerce Cloud.
 
 core-customize folder
-- manifest.json: The Commerce Cloud manifest.json file, which defines Commerce Platform customizations.
-- kiwi folder: An example custom extension.
-- tiger folder: An example custom extension.
+- manifest.json: The Commerce Cloud manifest.json file, which defines how your code will be built and deployed in the Public Cloud environments. The manifest is set up to leverage [confiuration reuse](https://help.sap.com/viewer/1be46286b36a4aa48205be5a96240672/SHIP/en-US/2311d89eef9344fc81ef168ac9668307.html) to better allow for consistency between local and cloud builds.
+- hybris folder: contains a sample custom folder for storing any custom extensions as well as the config folder for storing local and cloud properties, localextensions.xml and any local solr/tomcat configurations
 - other sample manifests: A collection of tested and verified manifest files that you can use as starting points for your Commerce Cloud environments.
+
+### Clone Repository
+
+Clone the sample repository ([instructions can be found here](https://help.github.com/articles/cloning-a-repository/)). The files are copied to your local machine.
 
 ### Update the Custom Extensions
 
-1. If you don’t have custom extensions, you can delete the kiwi & tiger sample folders.
-2. If you do have custom extensions, create a folder for each custom extension and add your extension files.
-3. List the custom extensions in the manifest.json file that is inside the core-customize directory. 
-4. If you have custom extensions with dependencies, list the source extension first, then the dependent extension. Extensions are built in the order in which they appear in the manifest file.
+1. If you don’t have custom extensions, you can delete the kiwi & tiger sample folders. If you wish to use these extensions you'll have to uncomment them in your hybris/config/localextensions.xml folder
+2. List any extensions you're using (custom and any from Commerce runtime) in the core-customize/hybris/config/localextensions.xml file
+3. If you have custom extensions with dependencies, list the source extension first, then the dependent extension. Extensions are built in the order in which they appear in your localextension.xml and manifest.json files
 
 ### Update the Commerce Cloud manifest.json
 
@@ -62,11 +52,10 @@ core-customize folder
  
 In the sample repository, verify that you have the following files in the core-customize folder.
  - manifest.json:  This is the manifest.json for Commerce Cloud.
- - <custom extension> folders (optional)
-
+ 
 ### Push the Commerce Cloud Configuration to Code Repository
 
-Push the core-customize folder from your local machine to the root level of your Commerce Cloud repository.  
+Push all the contents from your local machine to the root level of your Commerce Cloud repository.
 
 ### Access the Cloud Portal
 
@@ -76,9 +65,11 @@ Log in to the Cloud Portal and verify that your code repository is connected.
 2. Select *Repository* and verify that you are connected to the correct code repository.
 3. Find the environments that were provisioned for your subscription.
 3. Create a new build.
-4. Deploy the build to the environment using the *Initialize Database* option.
+4. Deploy the build to the environment using the *Initialze Database* option.
 
-### Final Steps - Validating an example Electronics Storefront
+You may also wish to see [this video](https://enable.cx.sap.com/playlist/dedicated/116161351/1_6tm85g61/1_df6ptanl) which provides a walkthrough of how to connect your repository, as well as [this video](https://enable.cx.sap.com/playlist/dedicated/116161351/1_6tm85g61/1_9ogbv7hz) which outlines how to build and deploy
+
+### Final Steps - Validating an example Electronics Storefront and Javascript Storefront
 
 Use the Cloud Portal to create a build and then deploy the build to an environment. 
 

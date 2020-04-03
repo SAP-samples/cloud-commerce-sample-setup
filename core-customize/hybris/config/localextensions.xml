@@ -1,0 +1,122 @@
+<hybrisconfig xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:noNamespaceSchemaLocation='../bin/platform/resources/schemas/extensions.xsd'>
+  <extensions>
+    <!-- Uncomment the following if you have enabled Cloud Extension Pack-->
+    <!--<path dir='${HYBRIS_BIN_DIR}/modules-cep'  autoload='false' />-->
+    
+    <path dir='${HYBRIS_BIN_DIR}' autoload='false' />
+    <extension name='adaptivesearchsolr' />
+    <extension name='adaptivesearchbackoffice' />
+    <extension name='adaptivesearchsamplesaddon' />
+    <extension name='adaptivesearchwebservices' />
+    <extension name='commerceservicesbackoffice' />
+    <extension name='solrfacetsearchbackoffice' />
+    <extension name='solrserver' />
+    <extension name='yacceleratorinitialdata' />
+	  <extension name= 'yacceleratorstorefront' />
+	  <extension name= 'electronicsstore' />
+	  <extension name= 'apparelstore' />
+	  <extension name= 'acceleratorwebservicesaddon' />
+	  <extension name= 'orderselfserviceaddon' />
+	  <extension name= 'customersupportbackoffice' />
+	  <extension name= 'customerticketingaddon' />
+	  <extension name= 'commerceorgsamplesaddon' />
+	  <extension name= 'multicountrysampledataaddon' />
+	  <extension name= 'rulebuilderbackoffice' />
+	  <extension name= 'couponbackoffice' />
+	  <extension name= 'droolsruleengineservices' />
+	  <extension name= 'couponfacades' />
+	  <extension name= 'couponservices' />
+	  <extension name= 'promotionenginesamplesaddon' />
+	  <extension name= 'cmswebservices' />
+	  <extension name= 'smarteditwebservices' />
+	  <extension name= 'cmssmarteditwebservices' />
+	  <extension name= 'permissionswebservices' />
+	  <extension name= 'ycommercewebservices' />
+	  <extension name= 'ycommercewebservicestest' />
+	  <extension name= 'smarteditaddon' />
+	  <extension name= 'smartedit' />
+	  <extension name= 'cmssmartedit' />
+	  <extension name= 'cmsbackoffice' />
+	  <extension name= 'cmsoccaddon' />
+	  <extension name= 'previewpersonalizationweb' />
+	  <extension name= 'personalizationcmsweb' />
+	  <extension name= 'personalizationsmartedit' />
+	  <extension name= 'personalizationsampledataaddon' />
+	  <extension name= 'personalizationpromotionssmartedit' />
+	  <extension name= 'personalizationpromotions' />
+	  <extension name= 'personalizationpromotionsweb' />
+	  <extension name= 'personalizationpromotionssampledataaddon' />
+	  <extension name= 'personalizationpromotionsbackoffice' />
+	  <extension name= 'personalizationservicesbackoffice' />
+	  <extension name= 'personalizationcmsbackoffice' />
+	  <extension name= 'personalizationsearchbackoffice' />
+	  <extension name= 'personalizationsearchsmartedit' />
+	  <extension name= 'personalizationsearchweb' />
+	  <extension name= 'personalizationsearchsamplesaddon' />
+	  <extension name= 'personalizationintegration' />
+	  <extension name= 'personalizationintegrationbackoffice' />
+	  <extension name= 'personalizationyprofile' />
+	  <extension name= 'personalizationaddon' />
+	  <extension name= 'profileservices' />
+	  <extension name= 'profiletagaddon' />
+	  <extension name= 'textfieldconfiguratortemplatebackoffice' />
+	  <extension name= 'textfieldconfiguratortemplateaddon' />
+	  <extension name= 'assistedservicestorefront' />
+	  <extension name= 'assistedservicewebservices' />
+	  <extension name= 'assistedservicepromotionaddon' />
+	  <extension name= 'pcmbackofficesamplesaddon' />
+	  <extension name= 'kymaintegrationbackoffice' />
+	  <extension name= 'ordermanagementaddon' />
+	  <extension name= 'ordermanagementfacades' />
+	  <extension name= 'ordermanagementwebservices' />
+	  <extension name= 'warehousing' />
+	  <extension name= 'warehousingbackoffice' />
+	  <extension name= 'warehousingfacades' />
+	  <extension name= 'warehousingwebservices' />
+	  <extension name= 'yacceleratorordermanagement' />
+	  <extension name= 'merchandisingaddon' />
+	  <extension name= 'merchandisingcmswebservices' />
+	  <extension name= 'merchandisingsmartedit' />
+	  <extension name= 'merchandisingservices' />
+	  <extension name= 'merchandisingservicesbackoffice' />
+	  <extension name= 'merchandisingstorefrontsampledataaddon' />
+	  <extension name= 'ondemandcommon' />
+	  <extension name= 'ondemandsampledata' />
+	  <extension name= 'outboundservices' />
+	  <extension name= 'outboundsync' />
+	  <extension name= 'odata2webservices' />
+	  <extension name= 'odata2webservicesfeaturetests' />
+	  <extension name= 'integrationbackoffice' />
+	  <extension name= 'integrationmonitoringbackoffice' />
+	  <extension name= 'outboundsyncbackoffice' />
+	  <extension name= 'azurecloudhotfolder' />
+	  <extension name= 'xyformsbackoffice' />
+	  <extension name= 'xyformssamples' />
+	  <extension name= 'xyformsstorefrontcommons' />
+	  <extension name= 'xyformsweb' />
+	  <extension name= 'orbeonweb' />
+
+
+<!-- Sample Custom Extensions -->
+    <extension name='kiwi' />
+    <extension name='tiger'/>
+
+<!-- Download the Cloud Extension Pack to get these extensions locally https://help.sap.com/viewer/dc198ac31ba24dce96149c8480be955f/1905/en-US/d6bf3abf8b974544a139c49dd3ca12a9.html?q=cloud%20extension%20pack#loioc2a6297b1b094f0cb735c12ef812d96c -->
+    <extension name='azurecloudhotfolder' />
+    <extension name='cloudcommons' />
+    <extension name='cloudhotfolder' />
+
+
+<!-- Configuring Required Extensions and AddOns for SAP Commerce integration with SAP Cloud Platform Integration - https://help.sap.com/viewer/50c996852b32456c96d3161a95544cdb/1905/en-US/7f87b6adbab74635b744a1bc38ce8d3c.html-->
+    <!--<extension name='sapcpiadapter'/>
+    <extension name='sapcpiorderexchange'/>
+    <extension name='ysaporderfulfillment'/>
+    <extension name='integrationbackoffice'/>
+    <extension name='sapcoreconfigurationbackoffice'/>
+    <extension name='sapmodelbackoffice'/>
+    <extension name='saporderexchangebackoffice'/>
+    <extension name='sapcoreaddon'/>-->
+
+
+  </extensions>
+</hybrisconfig>
