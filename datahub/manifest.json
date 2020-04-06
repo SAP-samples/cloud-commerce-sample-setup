@@ -1,5 +1,5 @@
 {
-    "datahub_version" : "1905.9",
+    "datahub_version" : "1905.12",
     "extensions" : [
         "ccv2-example",
         
