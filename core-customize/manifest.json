@@ -427,52 +427,17 @@
 		  ]
 	   }
 	],
-	"tests":{ 
-	   "extensions":[ 
-		  "kiwi",
-		  "tiger",
-		  "adaptivesearchsolr",
-		  "adaptivesearchbackoffice",
-		  "adaptivesearchsamplesaddon",
-		  "adaptivesearchwebservices",
-		  "commerceservicesbackoffice",
-		  "solrfacetsearchbackoffice",
-		  "solrserver",
-		  "yacceleratorinitialdata",
-		  "yacceleratorstorefront",
-		  "electronicsstore",
-		  "apparelstore",
-		  "acceleratorwebservicesaddon",
-		  "orderselfserviceaddon",
-		  "customersupportbackoffice",
-		  "customerticketingaddon",
-		  "commerceorgsamplesaddon",
-		  "multicountrysampledataaddon",
-		  "rulebuilderbackoffice",
-		  "couponbackoffice",
-		  "droolsruleengineservices",
-		  "couponfacades",
-		  "couponservices",
-		  "promotionenginesamplesaddon",
-		  "cmswebservices",
-		  "smarteditwebservices",
-		  "cmssmarteditwebservices",
-		  "permissionswebservices",
-		  "ycommercewebservices",
-		  "ycommercewebservicestest",
-		  "smarteditaddon",
-		  "smartedit",
-		  "cmssmartedit",
-		  "cmsbackoffice",
-		  "cmsoccaddon"
-	   ],
-	   "annotations":[ 
-		  "UnitTests",
-		  "IntegrationTests"
-	   ],
-	   "packages":[ 
-		  "de.hybris.*",
-		  "com.hybris.*"
-	   ]
-	}
+	"tests": {
+        "extensions": [
+            "kiwi",
+            "tiger"
+        ],
+        "annotations": [
+            "UnitTests",
+            "IntegrationTests"
+        ],
+        "packages": [
+            "com.acme.*"
+        ]
+    }
  }
