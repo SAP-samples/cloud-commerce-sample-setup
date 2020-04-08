@@ -318,5 +318,18 @@
                 }
             ]
         }
-    ]
+    ],
+    "tests": {
+        "extensions": [
+            "kiwi",
+            "tiger"
+        ],
+        "annotations": [
+            "UnitTests",
+            "IntegrationTests"
+        ],
+        "packages": [
+            "com.acme.*"
+        ]
+    }
 }
