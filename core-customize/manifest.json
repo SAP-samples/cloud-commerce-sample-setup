@@ -320,10 +320,7 @@
         }
     ],
     "tests": {
-        "extensions": [
-            "kiwi",
-            "tiger"
-        ],
+        "extensions": [],
         "annotations": [
             "UnitTests",
             "IntegrationTests"
