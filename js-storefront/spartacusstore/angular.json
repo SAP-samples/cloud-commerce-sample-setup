@@ -130,7 +130,7 @@
           "builder": "@angular-devkit/build-angular:server",
           "options": {
             "outputPath": "dist/spartacusstore-server",
-            "main": "src/main.server.ts",
+            "main": "server.ts",
             "tsConfig": "tsconfig.server.json",
             "fileReplacements": [
               {
@@ -138,6 +138,32 @@
                 "with": "src/environments/environment.prod.ts"
               }
             ]
+          }
+        },
+        "serve-ssr": {
+          "builder": "@nguniversal/builders:ssr-dev-server",
+          "options": {
+            "browserTarget": "spartacusstore:build",
+            "serverTarget": "spartacusstore:server"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "spartacusstore:build:production",
+              "serverTarget": "spartacusstore:server:production"
+            }
+          }
+        },
+        "prerender": {
+          "builder": "@nguniversal/builders:prerender",
+          "options": {
+            "browserTarget": "spartacusstore:build:production",
+            "serverTarget": "spartacusstore:server:production",
+            "routes": [
+              "/"
+            ]
+          },
+          "configurations": {
+            "production": {}
           }
         }
       }
