@@ -6,12 +6,13 @@
     "module": "commonjs",
     "types": []
   },
-  "exclude": [
-    "test.ts",
-    "e2e/src/app.e2e-spec.ts",
-    "**/*.spec.ts"
-  ],
   "angularCompilerOptions": {
     "entryModule": "src/app/app.server.module#AppServerModule"
-  }
+  },
+  "files": [
+    "src/main.server.ts"
+  ],
+  "include": [
+    "src/**/*.d.ts"
+  ]
 }
