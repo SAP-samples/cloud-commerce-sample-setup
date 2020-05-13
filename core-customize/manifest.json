@@ -112,11 +112,6 @@
             "template": "yacceleratorstorefront"
         },
         {
-            "addon": "hybrisanalyticsaddon",
-            "storefront": "yacceleratorstorefront",
-            "template": "yacceleratorstorefront"
-        },
-        {
             "addon": "eventtrackingwsaddon",
             "storefront": "yacceleratorstorefront",
             "template": "yacceleratorstorefront"
