@@ -1,0 +1,31 @@
+# -----------------------------------------------------------------------
+# [y] hybris Platform
+#
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# The files in this addon are licensed under the Apache Software License, v. 2 
+# except as noted otherwise in the LICENSE file.
+# -----------------------------------------------------------------------
+#
+# Import the CMS content for the Powertools site emails
+#
+# CMS components velocity templates
+INSERT_UPDATE RendererTemplate;code[unique=true];contextClass;rendererType(code)[default='velocity']
+;powertools-spa-CMSImageComponent-template;java.util.Map
+;powertools-spa-BannerComponent-template;java.util.Map
+;powertools-spa-SimpleBannerComponent-template;java.util.Map
+;powertools-spa-CMSLinkComponent-template;java.util.Map
+;powertools-spa-CMSParagraphComponent-template;java.util.Map
+
+UPDATE GenericItem[processor=de.hybris.platform.commerceservices.impex.impl.ConfigPropertyImportProcessor];pk[unique=true]
+$emailResource=$config-emailResourceValue
+
+# Language
+$lang=en
+
+# CMS components and Email velocity templates
+UPDATE RendererTemplate;code[unique=true];description[lang=$lang];templateScript[lang=$lang,translator=de.hybris.platform.commerceservices.impex.impl.FileLoaderValueTranslator]
+ ;powertools-spa-BannerComponent-template;"CMSBannerComponent Template";$emailResource/email-bannerComponentTemplate.vm
+ ;powertools-spa-CMSImageComponent-template;"CMSImageComponent Template";$emailResource/email-cmsImageComponentTemplate.vm
+ ;powertools-spa-CMSLinkComponent-template;"CMSLinkComponent Template";$emailResource/email-cmsLinkComponentTemplate.vm
+ ;powertools-spa-CMSParagraphComponent-template;"CMSParagraphComponent Template";$emailResource/email-cmsParagraphComponentTemplate.vm
+ ;powertools-spa-SimpleBannerComponent-template;"CMSSimpleBannerComponent Template";$emailResource/email-bannerComponentTemplate.vm

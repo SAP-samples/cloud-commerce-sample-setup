@@ -1,5 +1,5 @@
 {
-    "commerceSuiteVersion": "1905",
+    "commerceSuiteVersion": "2005",
     "enableImageProcessingService": true,
     "extensions": [
         "cloudmediaconversion",  
@@ -125,16 +125,6 @@
             "addon": "personalizationsearchsamplesaddon",
             "storefront": "yacceleratorstorefront",
             "template": "yacceleratorstorefront"
-        },
-        {
-            "addon": "acceleratorwebservicesaddon",
-            "storefront": "ycommercewebservices",
-            "template": "ycommercewebservices"
-        },
-        {
-            "addon": "cmsoccaddon",
-            "storefront": "ycommercewebservices",
-            "template": "ycommercewebservices"
         },
         {
             "addon": "personalizationaddon",

@@ -1,0 +1,18 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+#
+# ImpEx for Consents for Apparel Store
+#
+
+# Language
+\$lang=$lang.toLowerCase()
+
+\$siteUid=apparel-uk-spa
+
+#set( $consents = $query.load('consents') )
+UPDATE ConsentTemplate;id[unique=true];name[lang=\$lang];description[lang=\$lang];version[unique=true];baseSite(uid)[unique=true,default=\$siteUid];exposed
+#foreach( $consent in $consents )
+;$consent.key;"$consent.values.name";"$consent.values.description";0;;$consent.values.exposed
+#end
+

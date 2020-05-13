@@ -11,9 +11,8 @@
         		
         <!-- you should add all required extensions to this list, except platform extensions which are automatically required -->
                  
-		
         <requires-extension name="addonsupport"/>
-        		
+        
         <coremodule generated="true" manager="de.hybris.platform.jalo.extension.GenericManager" packageroot="de.hybris.platform.spartacussampledataaddon"/>
         		
 		

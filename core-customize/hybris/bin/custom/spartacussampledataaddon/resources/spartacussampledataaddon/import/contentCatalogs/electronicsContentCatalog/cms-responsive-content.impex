@@ -17,9 +17,11 @@ INSERT_UPDATE Media;$contentCV[unique=true];code[unique=true];mime;realfilename;
 UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];previewImage(code, $contentCV)
 ;;homepage;homepagePreview-spa
 
+
 ####### Update MiniCartSlot ######
 UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid, $contentCV)
 ;;MiniCartSlot;MiniCart
+
 
 ###### SiteContext Slot and Components ######
 INSERT_UPDATE CMSSiteContextComponent;$contentCV[unique=true];uid[unique=true];name;context(code);&componentRef
@@ -90,6 +92,7 @@ INSERT_UPDATE CMSParagraphComponent;$contentCV[unique=true];uid[unique=true];nam
 ;;ContactUsParagraphComponent;Contact Us Paragraph Component;"Contact"
 ;;CloseAccountParagraphComponent;Close Account Paragraph Component;"When you close your account, your profile information will be kept for the retention period mandated by the laws and regulations of your country. Customer Support will be able to assist you with any order history or proof of purchase needs during this time.<br/><br/>At the end of the retention period, the following profile information will be deleted and will no longer be accessible to you or anyone else:<br/><br/><ul><li>email addresses</li><li>contact information</li><li>shipping details</li><li>delivery preferences</li><li>consent management settings</li><li>account history</li><li>payment details</li><li>order history</li></ul>"
 
+
 INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(uid,$contentCV)
 ;;Section2A-Sale;Section 2A Slot for Sales Page;true;SaleParagraphComponent
 ;;Section2A-ContactUs;Section 2A Slot for Contact Us Page;true;ContactUsParagraphComponent
@@ -100,13 +103,14 @@ INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];positi
 ;;Section2A-ContactUs;Section2A;contactUs;Section2A-ContactUs
 ;;BodyContent-close-account;BodyContent;close-account;BodyContentSlot-close-account
 
-INSERT_UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];name;url;&linkRef;&componentRef;target(code)[default='sameWindow']
+INSERT_UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];name;url;&linkRef;&componentRef;target(code)[default='sameWindow'];restrictions(uid,$contentCV)
 ;;HelpLink;Help Link;/faq;HelpLink;HelpLink;
 ;;ContactUsLink;Contact Us Link;/contact;ContactUsLink;ContactUsLink
-;;SaleLink;Sale Link;/sale;SaleLink;SaleLink
+;;WishListLink;Wish List Link;/my-account/wishlist;WishListLink;WishListLink;;loggedInUser
+;;OrdersLink;Orders Link;/my-account/orders;OrdersLink;OrdersLink;;loggedInUser
 
 INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(uid,$contentCV)
-;;SiteLinksSlot;Slot contains some links;true;StoreFinderLink,SaleLink,ContactUsLink,HelpLink
+;;SiteLinksSlot;Slot contains some links;true;OrdersLink,WishListLink,StoreFinderLink,ContactUsLink,HelpLink
 
 INSERT_UPDATE ContentSlotName;name[unique=true];template(uid,$contentCV)[unique=true];validComponentTypes(code);compTypeGroup(code)
 ;SiteLinks;ProductDetailsPageTemplate;CMSLinkComponent;;
@@ -180,28 +184,40 @@ INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];positi
 ;;BottomContent-Errorpage;BottomContent;notFound;BottomContent-Errorpage
 
 
-###### My Account Section ######
+###### My Account Navigation Section ######
 # Create additional links
 INSERT_UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];name;url;&linkRef;target(code)[default='sameWindow']
 ;;SignOutLink;SignOutLink;/logout;SignOutLink;
+;;NotificationPreferenceLink;Notification Preference Link;/my-account/notification-preference;NotificationPreferenceLink;
+;;MyInterestsLink;My Interests Link;/my-account/my-interests;MyInterestsLink;
+;;MyCouponsLink;My Coupons Link;/my-account/coupons;MyCouponsLink;
 
-# Create additional Navvigation Nodes
+
+# Create additional Navigation Nodes
 INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;parent(uid, $contentCV);links(&linkRef);&nodeRef
 ;SignOutNavNode;;Sign Out;MyAccountNavNode;;SignOutNavNode
+;WishListNavNode;;Wish List;MyAccountNavNode;;WishListNavNode
+;NotificationPreferenceNavNode;;Notification Preference Nav Node;MyAccountNavNode;;NotificationPreferenceNavNode
+;MyInterestsNavNode;;My Interests Nav Node;MyAccountNavNode;;MyInterestsNavNode
+;MyCouponsNavNode;;Coupons Navigation Node;MyAccountNavNode;;MyCouponsNavNode
 
 # Create additional cms navigation entries
 INSERT_UPDATE CMSNavigationEntry;uid[unique=true];$contentCV[unique=true];name;navigationNode(&nodeRef);item(&linkRef);
 ;SignOutNavNodeEntry;;SignOutNavNodeEntry;SignOutNavNode;SignOutLink;
+;WishListNavNodeEntry;;WishListNavNodeEntry;WishListNavNode;WishListLink;
+;NotificationPreferenceNavNodeEntry;;Notification Preference Nav Node Entry;NotificationPreferenceNavNode;NotificationPreferenceLink
+;MyInterestsNavNodeEntry;;MyInterests Nav Node Entry;MyInterestsNavNode;MyInterestsLink
+;MyCouponsNavNodeEntry;;My Coupons Navigation Node Entry;MyCouponsNavNode;MyCouponsLink;
 
 # Set the order or the items in the My Account Menu
 UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];children(uid,$contentCV)
-;MyAccountNavNode;;OrderHistoryNavNode,AddressBookNavNode,PaymentDetailsNavNode,PersonalDetailsNavNode,ChangePasswordNavNode,UpdateEmailNavNode,ConsentManagementNavNode,CloseAccountNavNode,SignOutNavNode
+;MyAccountNavNode;;OrderHistoryNavNode,WishListNavNode,AddressBookNavNode,PaymentDetailsNavNode,PersonalDetailsNavNode,ChangePasswordNavNode,UpdateEmailNavNode,ConsentManagementNavNode,CloseAccountNavNode,MyInterestsNavNode,NotificationPreferenceNavNode,MyCouponsNavNode,SignOutNavNode
 
 
 ###### Create Forgot/Reset Password Pages and Components ######
 INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid,$contentCV);label;defaultPage[default='true'];approvalStatus(code)[default='approved'];homepage[default='false']
 ;;forgotPassword;Forgot Password Page;LoginPageTemplate;/login/forgot-password
-;;resetPassword;Reset Password Page;LoginPageTemplate;/login/reset-password
+;;resetPassword;Reset Forgotten Password Page;LoginPageTemplate;/login/pw/change
 
 INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef)
 ;;LeftContentSlot-forgotPassword;Left Content Slot for Forgot Password;true;ForgotPasswordComponent
@@ -214,6 +230,10 @@ INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];positi
 INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType;&componentRef
 ;;ForgotPasswordComponent;Forgot Password Component;ForgotPasswordComponent;ForgotPasswordComponent
 ;;ResetPasswordComponent;Reset New Password Component;ResetPasswordComponent;ResetPasswordComponent
+
+UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];name
+;;updatePassword;My Account Update Password Page
+
 
 ###### Breadcrumb in SPA ######
 # remove breadcrumb from NavigationBar
@@ -260,8 +280,7 @@ INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;fle
 UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];label
 ;;login;/login
 ;;notFound;/not-found
-# TODO:#2811 - uncomment to enable
-# ;;storefinderPage;/store-finder
+;;storefinderPage;/store-finder
 ;;update-email;/my-account/update-email
 ;;updatePassword;/my-account/update-password
 ;;update-profile;/my-account/update-profile
@@ -273,6 +292,7 @@ UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];label
 ;;cartPage;/cart
 ;;orderConfirmationPage;/order-confirmation
 ;;order;/my-account/order
+;;termsAndConditions;/terms-and-conditions
 
 
 ###### Reconfig searchbox component config ######
@@ -282,7 +302,6 @@ INSERT_UPDATE SearchBoxComponent;uid;minCharactersBeforeRequest;maxProducts;maxS
 
 
 ###### Pages related to checkout ######
-
 # add some ContentSlotName into MultiStepCheckoutSummaryPageTemplate
 INSERT_UPDATE ContentSlotName;name[unique=true];template(uid,$contentCV)[unique=true][default='MultiStepCheckoutSummaryPageTemplate'];validComponentTypes(code);compTypeGroup(code)
 ;BodyContent;;;wide
@@ -380,13 +399,150 @@ INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;fle
 ;;CheckoutPlaceOrderComponent;CheckoutPlaceOrderComponent;CheckoutPlaceOrder
 ;;CheckoutReviewOrderComponent;CheckoutReviewOrderComponent;CheckoutReviewOrder
 
-# TODO:#2811 - delete
-INSERT_UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];visible
-;;StoreFinderLink;false
+
+###### MY-ACCOUNT ######
+## Wish List page (/my-account/wishlist)
+INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid,$contentCV);label;defaultPage[default='true'];approvalStatus(code)[default='approved'];homepage[default='false']
+;;WishListPage;Wish List Page;AccountPageTemplate;/my-account/wishlist
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef)
+;;BodyContentSlot-wishList;Body Content Slot for Wish List;true;WishListComponent
+
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true];contentSlot(uid,$contentCV)[unique=true]
+;;BodyContent-wishList;BodyContent;WishListPage;BodyContentSlot-wishList
+
+# Wish List rendering component
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType;&componentRef
+;;WishListComponent;WishListComponent;WishListComponent;WishListComponent
+
+## Notification Preference Page (/my-account/notification-preference) and My Interests Page (/my-account/my-interests)
+INSERT_UPDATE ContentPage;uid[unique=true];masterTemplate(uid,$contentCV);label;name;defaultPage[default='true'];approvalStatus(code)[default='approved'];homepage[default='false'];$contentCV[unique=true]
+;notification-preference;AccountPageTemplate;/my-account/notification-preference;Notification Preference Page;;;;
+;my-interests;AccountPageTemplate;/my-account/my-interests;My Interests Page;;;;
+
+INSERT_UPDATE ContentSlot;uid[unique=true];name;active;cmsComponents(uid,$contentCV);$contentCV[unique=true]
+;BodyContent-Notification-Preference;Body Content Slot for Notification Preference Page;true;NotificationPreferenceComponent;
+;BodyContent-My-Interests;Body Content Slot for My Interests;true;MyInterestsComponent;
+
+INSERT_UPDATE ContentSlotForPage;uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true];contentSlot(uid,$contentCV)[unique=true];$contentCV[unique=true]
+;BodyContent-Notification-Preference;BodyContent;notification-preference;BodyContent-Notification-Preference;
+;BodyContent-My-Interests;BodyContent;my-interests;BodyContent-My-Interests;
+
+# Notification Preference & My Interests rendering components
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType;&componentRef
+;;NotificationPreferenceComponent;Notification Preference Component;NotificationPreferenceComponent;NotificationPreferenceComponent
+;;MyInterestsComponent;Account My Interests Component;MyInterestsComponent;MyInterestsComponent
+
+#customer coupon
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType;&componentRef
+;;MyCouponsComponent;Customer Coupon List Component;MyCouponsComponent;MyCouponsComponent
+;;CouponClaimComponent;Customer Coupon List Component;CouponClaimComponent;CouponClaimComponent
+
+INSERT_UPDATE ContentPage;uid[unique=true];masterTemplate(uid,$contentCV);label;name;title[lang=en];defaultPage[default='true'];approvalStatus(code)[default='approved'];homepage[default='false'];$contentCV[unique=true]
+;coupons;AccountPageTemplate;/my-account/coupons;My Coupons Page;My Coupons;;
+;couponClaim;AccountPageTemplate;/my-account/coupon/claim;My Coupon Claim Page;;
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef)
+;;BodyContent-My-Coupons;Body Content Slot for My Coupons;true;MyCouponsComponent;
+;;BodyContent-My-Coupon-Claim;Body Content Slot for My Coupons Claim;true;CouponClaimComponent;
+
+INSERT_UPDATE ContentSlotForPage;uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true];contentSlot(uid,$contentCV)[unique=true];$contentCV[unique=true]
+;BodyContent-My-Coupons;BodyContent;coupons;BodyContent-My-Coupons;
+;BodyContent-My-Coupon-Claim;BodyContent;couponClaim;BodyContent-My-Coupon-Claim;
+
+## Cancel Order Page ##
+INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid,$contentCV);label;defaultPage[default='true'];approvalStatus(code)[default='approved'];homepage[default='false']
+;;CancelOrderPage;Cancel Order Page;AccountPageTemplate;/my-account/order/cancel
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef)
+;;BodyContentSlot-cancelOrder;Body Content Slot for Cancel Order;true;CancelOrderComponent
+
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true];contentSlot(uid,$contentCV)[unique=true]
+;;BodyContent-cancelOrder;BodyContent;CancelOrderPage;BodyContentSlot-cancelOrder
+
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType;&componentRef
+;;CancelOrderComponent;Cancel Order Component;CancelOrderComponent;CancelOrderComponent
+
+## Return Order Page ##
+INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid,$contentCV);label;defaultPage[default='true'];approvalStatus(code)[default='approved'];homepage[default='false']
+;;ReturnOrderPage;Return Order Page;AccountPageTemplate;/my-account/order/return
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef)
+;;BodyContentSlot-returnOrder;Body Content Slot for Return Order;true;ReturnOrderComponent
+
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true];contentSlot(uid,$contentCV)[unique=true]
+;;BodyContent-returnOrder;BodyContent;ReturnOrderPage;BodyContentSlot-returnOrder
+
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType;&componentRef
+;;ReturnOrderComponent;Return Order Component;ReturnOrderComponent;ReturnOrderComponent
+
+
+## Amend Order Content ##
+INSERT_UPDATE CMSParagraphComponent;$contentCV[unique=true];uid[unique=true];name;content
+;;CancelOrderConfirmationIntro;CancelOrderConfirmationIntro;"<h4>The following items will be included in the cancellation request.</h4>"
+;;ReturnOrderConfirmationIntro;ReturnOrderConfirmationIntro;"<h4>The following items will be included in the return request.</h4>"
+;;AmendOrderConfirmationOutro;AmendOrderConfirmationOutro;"<h4>Please note that it may take a few moments for your order to reflect the request.</h4>";
+
+## Cancel Order Confirmation Page ##
+INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid,$contentCV);label;defaultPage[default='true'];approvalStatus(code)[default='approved'];homepage[default='false']
+;;ConfirmCancelOrderPage;Cancel Order Confirmation Page;AccountPageTemplate;/my-account/order/cancel/confirmation
+
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType;&componentRef
+;;CancelOrderConfirmationComponent;Cancel Order Confirmation Component;CancelOrderConfirmationComponent;CancelOrderConfirmationComponent
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(uid,$contentCV)
+;;BodyContentSlot-confirmCancelOrder;Body Content Slot for Cancel Order Confirmation;true;CancelOrderConfirmationIntro,CancelOrderConfirmationComponent,AmendOrderConfirmationOutro
+
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true];contentSlot(uid,$contentCV)[unique=true]
+;;BodyContent-confirmCancelOrder;BodyContent;ConfirmCancelOrderPage;BodyContentSlot-confirmCancelOrder
+
+## Return Order Confirmation Page ##
+INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid,$contentCV);label;defaultPage[default='true'];approvalStatus(code)[default='approved'];homepage[default='false']
+;;ConfirmReturnOrderPage;Return Order Confirmation Page;AccountPageTemplate;/my-account/order/return/confirmation
+
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType;&componentRef
+;;ReturnOrderConfirmationComponent;Return Order Confirmation Component;ReturnOrderConfirmationComponent;ReturnOrderConfirmationComponent
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(uid,$contentCV)
+;;BodyContentSlot-confirmReturnOrder;Body Content Slot for Return Order Confirmation;true;ReturnOrderConfirmationIntro,ReturnOrderConfirmationComponent,AmendOrderConfirmationOutro
+
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true];contentSlot(uid,$contentCV)[unique=true]
+;;BodyContent-confirmReturnOrder;BodyContent;ConfirmReturnOrderPage;BodyContentSlot-confirmReturnOrder
+
+## Return Request Details page ##
+INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid,$contentCV);label;defaultPage[default='true'];approvalStatus(code)[default='approved'];homepage[default='false']
+;;ReturnRequestDetailsPage;Return Request Details Page;AccountPageTemplate;/my-account/return-request
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef)
+;;BodyContentSlot-returnRequestDetails;Body Content Slot for Return Request Details;true;ReturnRequestOverviewComponent,ReturnRequestItemsComponent,ReturnRequestTotalsComponent
+
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true];contentSlot(uid,$contentCV)[unique=true]
+;;BodyContent-returnRequestDetails;BodyContent;ReturnRequestDetailsPage;BodyContentSlot-returnRequestDetails
+
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType;&componentRef
+;;ReturnRequestOverviewComponent;Return Request Details Overview Component;ReturnRequestOverviewComponent;ReturnRequestOverviewComponent
+;;ReturnRequestItemsComponent;Return Request Details Items Component;ReturnRequestItemsComponent;ReturnRequestItemsComponent
+;;ReturnRequestTotalsComponent;Return Request Details Totals Component;ReturnRequestTotalsComponent;ReturnRequestTotalsComponent
+
+## OrderHistory Tab ##
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType;&componentRef
+;;OrderReturnRequestListComponent;Order Return Request List Component;OrderReturnRequestListComponent;OrderReturnRequestListComponent
+
+INSERT_UPDATE CMSTabParagraphContainer;$contentCV[unique=true];uid[unique=true];simpleCMSComponents(uid, $contentCV);&componentRef
+;;AccountOrderHistoryTabContainer;AccountOrderHistoryComponent,OrderReturnRequestListComponent;AccountOrderHistoryTabContainer
+
+# Make AccountOrderDetailsActionsComponent invisible
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];visible
+;;AccountOrderDetailsActionsComponent;false
+
+# This UPDATE will make the order history page contain tabs
+#UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid, $contentCV)
+#;;BodyContent-orders;AccountOrderHistoryTabContainer
+
 
 ###### Product Details ######
 INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;cmsComponents(uid, $contentCV)
-;;ProductSummarySlot;Summary for product details;ProductIntroComponent,ProductImagesComponent,ProductSummaryComponent,VariantSelector,AddToCart
+;;ProductSummarySlot;Summary for product details;ProductImagesComponent,ProductIntroComponent,ProductSummaryComponent,VariantSelector,AddToCart,AddToWishListComponent,StockNotificationComponent
 
 INSERT_UPDATE ContentSlotForTemplate;$contentCV[unique=true];uid[unique=true];position[unique=true];pageTemplate(uid,$contentCV)[unique=true];contentSlot(uid,$contentCV)[unique=true];allowOverwrite
 ;;Summary-ProductDetails;Summary;ProductDetailsPageTemplate;ProductSummarySlot;true
@@ -398,3 +554,20 @@ INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;fle
 ;;ProductImagesComponent;ProductImagesComponent;ProductImagesComponent
 ;;ProductIntroComponent;ProductIntroComponent;ProductIntroComponent
 ;;ProductSummaryComponent;ProductSummaryComponent;ProductSummaryComponent
+;;AddToWishListComponent;AddToWishListComponent;AddToWishListComponent
+;;StockNotificationComponent;StockNotificationComponent;StockNotificationComponent
+
+
+###### Anonymous Consents ######
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType;&componentRef;restrictions(uid,$contentCV)
+;;AnonymousConsentManagementBannerComponent;Anonymous Consent Management Banner Component;AnonymousConsentManagementBannerComponent;AnonymousConsentManagementBannerComponent;anonymousUserRestriction
+;;AnonymousConsentOpenDialogComponent;Anonymous Consent Open Dialog Component;AnonymousConsentOpenDialogComponent;AnonymousConsentOpenDialogComponent;anonymousUserRestriction
+
+
+###### Footer ######
+# Footer notice
+INSERT_UPDATE CMSParagraphComponent;$contentCV[unique=true];uid[unique=true];name;&componentRef;
+;;NoticeTextParagraph;Notice Text Paragraph;NoticeTextParagraph;
+
+UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid, $contentCV)
+;;FooterSlot;FooterNavigationComponent,AnonymousConsentOpenDialogComponent,NoticeTextParagraph,AnonymousConsentManagementBannerComponent

@@ -1,9 +1,13 @@
 /*
  * Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
- * The files in this addon are licensed under the Apache Software License, v. 2 
+ * The files in this addon are licensed under the Apache Software License, v. 2
  * except as noted otherwise in the LICENSE file.
  */
 package de.hybris.platform.spartacussampledataaddon.setup.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Required;
 
 import de.hybris.platform.addonsupport.setup.impl.DefaultAddonSampleDataImportService;
 import de.hybris.platform.catalog.jalo.SyncItemCronJob;
@@ -16,10 +20,6 @@ import de.hybris.platform.cronjob.enums.CronJobStatus;
 import de.hybris.platform.servicelayer.cronjob.PerformResult;
 import de.hybris.platform.servicelayer.model.ModelService;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Required;
-
 
 /**
  * This class extends {@link DefaultAddonSampleDataImportService} and specifies how to import sample data spartacus
@@ -28,22 +28,20 @@ import org.springframework.beans.factory.annotation.Required;
 public class SpaSampleAddOnSampleDataImportService extends DefaultAddonSampleDataImportService
 {
 	private static final String SYNC_CONTENT_CATALOG = "electronics->spa";
+	private static final String STORES_URL = "/stores/";
 
 	private ModelService modelService;
 
 	@Override
 	protected void importContentCatalog(final SystemSetupContext context, final String importRoot, final String catalogName)
 	{
-		if (catalogName.equals("electronics"))
+		if (catalogName.equals("electronics") || catalogName.equals("powertools") || catalogName.equals("apparel-uk"))
 		{
 			// 1- create new catalog
 			importImpexFile(context, importRoot + "/contentCatalogs/" + catalogName + "ContentCatalog/catalog.impex", false);
 
-			// 2- sync
-			// electronicsContentCatalog:Staged->electronics-spaContentCatalog:Staged
-
-			final CatalogVersionModel catalog = getCatalogVersionService().getCatalogVersion("electronics-spaContentCatalog",
-					"Staged");
+			// 2- sync xxxContentCatalog:Staged->xxx-spaContentCatalog:Staged
+			final CatalogVersionModel catalog = getCatalogVersionService().getCatalogVersion(catalogName + "-spaContentCatalog", "Staged");
 			List<SyncItemJobModel> synItemsJobs = catalog.getIncomingSynchronizations();
 			if (synItemsJobs.size() > 0)
 			{
@@ -54,15 +52,18 @@ public class SpaSampleAddOnSampleDataImportService extends DefaultAddonSampleDat
 
 			// 3- perform some cleaning
 			importImpexFile(context, importRoot + "/contentCatalogs/" + catalogName + "ContentCatalog/cleaning.impex", false);
+
+			// 4- solr ammendments
+			importImpexFile(context, importRoot + "/productCatalogs/" + catalogName + "ProductCatalog/solr.impex", false);
 		}
 
 		// 4- import content catalog from impex
 		super.importContentCatalog(context, importRoot, catalogName);
 
-		if (catalogName.equals("electronics"))
+		if (catalogName.equals("electronics") || catalogName.equals("powertools") || catalogName.equals("apparel-uk"))
 		{
 			// 5- synchronize spaContentCatalog:staged->online
-			synchronizeContentCatalog(context, "electronics-spa", true);
+			synchronizeContentCatalog(context, catalogName + "-spa", true);
 
 			// 6- give permission to cmsmanager to do the sync
 			importImpexFile(context, importRoot + "/contentCatalogs/" + catalogName + "ContentCatalog/sync.impex", false);
@@ -72,7 +73,15 @@ public class SpaSampleAddOnSampleDataImportService extends DefaultAddonSampleDat
 		}
 	}
 
-	private void synchronizeSpaContentCatalog(final SystemSetupContext context, SyncItemJob syncJobItem)
+
+	@Override
+	protected void importStoreLocations(final SystemSetupContext context, final String importRoot, final String storeName)
+	{
+		super.importStoreLocations(context, importRoot, storeName);
+	}
+
+
+	private void synchronizeSpaContentCatalog(final SystemSetupContext context, final SyncItemJob syncJobItem)
 	{
 		logInfo(context, "Begin synchronizing Content Catalog [" + SYNC_CONTENT_CATALOG + "] - synchronizing");
 
@@ -89,7 +98,7 @@ public class SpaSampleAddOnSampleDataImportService extends DefaultAddonSampleDat
 		final CronJobResult result = modelService.get(syncCronJob.getResult());
 		final CronJobStatus status = modelService.get(syncCronJob.getStatus());
 
-		PerformResult syncCronJobResult = new PerformResult(result, status);
+		final PerformResult syncCronJobResult = new PerformResult(result, status);
 		if (isSyncRerunNeeded(syncCronJobResult))
 		{
 			logInfo(context, "Catalog catalog [" + SYNC_CONTENT_CATALOG + "] sync has issues.");
@@ -104,7 +113,7 @@ public class SpaSampleAddOnSampleDataImportService extends DefaultAddonSampleDat
 	}
 
 	@Required
-	public void setModelService(ModelService modelService)
+	public void setModelService(final ModelService modelService)
 	{
 		this.modelService = modelService;
 	}

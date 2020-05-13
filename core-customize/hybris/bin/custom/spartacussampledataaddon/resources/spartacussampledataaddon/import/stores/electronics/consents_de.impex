@@ -1,0 +1,17 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+#
+# ImpEx for Consents for Electronics Store
+#
+
+# Language
+$lang=de
+
+$siteUid=electronics-spa
+
+UPDATE ConsentTemplate;id[unique=true];name[lang=$lang];description[lang=$lang];version[unique=true];baseSite(uid)[unique=true,default=$siteUid];exposed
+;MARKETING_NEWSLETTER;"Ich stimme dieser Einwilligung zum Muster-MARKETING zu";"Dies ist eine beispielhafte Beschreibung der Marketing-Einwilligung, die basierend auf der erforderlichen gültigen Registrierungs-Einwilligung aktualisiert oder ersetzt werden muss.";0;;true
+;PROFILE;"Ermöglichen Sie die kontextgesteuerte Verfolgung von SAP Commerce Cloud-Diensten";"Wir möchten Ihr Surfverhalten so speichern, dass unsere Website Ihnen dynamisch ein personalisiertes Surferlebnis bietet und unsere Kundenbetreuer Ihnen kontextbezogenen Kundensupport bieten können.";0;;true
+;STORE_USER_INFORMATION;"Ich stimme diesem Beispiel zu. STORE USER INFORMATION Zustimmung";"Dies ist ein Beispiel für eine Beschreibung der Einwilligung zum Speichern von Benutzerinformationen, die aktualisiert oder ersetzt werden muss.";0;;true
+

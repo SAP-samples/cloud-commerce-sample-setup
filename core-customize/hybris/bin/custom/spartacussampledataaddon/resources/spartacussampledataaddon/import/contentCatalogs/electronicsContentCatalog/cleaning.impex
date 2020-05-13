@@ -131,57 +131,25 @@ REMOVE CMSLinkComponent;$contentCV[unique=true];uid[unique=true]
 ;;QuickOrderLink
 ;;ImportSavedCartLink
 
+# Add all brands category url 
 UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];url
 ;;AllBrandsCategoryLink;/Brands/all/c/brands
 
+# change category navigation structure 
+UPDATE CMSNavigationNode;uid[unique=true];parent(uid,$contentCV);$contentCV[unique=true,virtual=true];
+;FlashMemoryNavNode;AccessoriesNavNode
+;PowerSuppliesNavNode;AccessoriesNavNode
+
+# rename existing content
+UPDATE CMSNavigationNode;uid[unique=true];title;$contentCV[unique=true,virtual=true];
+;CameraAccessoriesNavNode;Accessories
+;HandheldCamcordersNavNode;Camcorders
+;AccessoriesNavNode;Gear
 
 ###### Replace JspIncludeComponent to CMSFlexComponent ######
 # Remove JspIncludeComponent
-REMOVE JspIncludeComponent;$contentCV[unique=true];uid[unique=true]
-;;AccountAddEditAddressComponent
-;;AccountAddressBookComponent
-;;AccountOrderDetailsActionsComponent
-;;AccountOrderDetailsHeadlineComponent
-;;AccountOrderDetailsItemsComponent
-;;AccountOrderDetailsOverviewComponent
-;;AccountOrderDetailsShippingComponent
-;;AccountOrderDetailsTotalsComponent
-;;AccountOrderHistoryComponent
-;;AccountPaymentDetailsComponent
-;;AccountProfileComponent
-;;AccountSavedCartDetailsActionComponent
-;;AccountSavedCartDetailsHeadlineComponent
-;;AccountSavedCartDetailsItemsComponent
-;;AccountSavedCartDetailsOverviewComponent
-;;AnonymousConsentManagementComponent
-;;CartComponent
-;;CartTotalsComponent
-;;CheckoutComponent
-;;CloseAccountComponent
-;;ConsentManagementComponent
-;;CookieNotificationComponent
-;;GuestCheckoutLoginComponent
-;;ImportCSVSavedCartComponent
-;;NewCustomerCheckoutLoginComponent
-;;NewCustomerLoginComponent
-;;OrderConfirmationContinueButtonComponent
-;;OrderConfirmationItemsComponent
-;;OrderConfirmationOverviewComponent
-;;OrderConfirmationShippingComponent
-;;OrderConfirmationThankMessageComponent
-;;OrderConfirmationTotalsComponent
-;;PotentialPromotionsComponent
-;;ProductDetailsTabComponent
-;;ProductReviewsTabComponent
-;;ProductSpecsTabComponent
-;;PromotionsComponent
-;;ReturningCustomerCheckoutLoginComponent
-;;ReturningCustomerLoginComponent
-;;SavedCartsComponent
-;;StoreFinderComponent
-;;UpdateEmailComponent
-;;UpdatePasswordComponent
-;;UpdateProfileComponent
+REMOVE JspIncludeComponent[batchmode=true];$contentCV[unique=true];itemtype(code)[unique=true]
+;;JspIncludeComponent
 
 # Create CMSFlexComponent
 INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType;&componentRef
@@ -195,13 +163,11 @@ INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;fle
 ;;AccountOrderDetailsTotalsComponent;Account Order Details Order Totals Component;AccountOrderDetailsTotalsComponent;AccountOrderDetailsTotalsComponent
 ;;AccountOrderHistoryComponent;Account History Component;AccountOrderHistoryComponent;AccountOrderHistoryComponent
 ;;AccountPaymentDetailsComponent;Account Payment Details Component;AccountPaymentDetailsComponent;AccountPaymentDetailsComponent
-;;AnonymousConsentManagementComponent;Anonymous Consent Management Component;AnonymousConsentManagementComponent;AnonymousConsentManagementComponent
 ;;CartComponent;Cart Display Component;CartComponent;CartComponent
 ;;CartTotalsComponent;Cart Totals Display Component;CartTotalsComponent;CartTotalsComponent
 ;;CheckoutComponent;Checkout Display Component;CheckoutComponent;CheckoutComponent
 ;;CloseAccountComponent;Close Account Component;CloseAccountComponent;CloseAccountComponent
 ;;ConsentManagementComponent;Consent Management Component;ConsentManagementComponent;ConsentManagementComponent
-;;CookieNotificationComponent;Cookie Notification Component;CookieNotificationComponent;CookieNotificationComponent	
 ;;GuestCheckoutLoginComponent;Guest Checkout Login Component;GuestCheckoutLoginComponent;GuestCheckoutLoginComponent
 ;;OrderConfirmationContinueButtonComponent;Order Confirmation Continue Button Component;OrderConfirmationContinueButtonComponent;OrderConfirmationContinueButtonComponent
 ;;OrderConfirmationItemsComponent;Order Confirmation Items Info Component;OrderConfirmationItemsComponent;OrderConfirmationItemsComponent
@@ -220,11 +186,14 @@ INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;fle
 ;;UpdateEmailComponent;Update Email Component;UpdateEmailComponent;UpdateEmailComponent
 ;;UpdatePasswordComponent;Update Password Component;UpdatePasswordComponent;UpdatePasswordComponent
 ;;UpdateProfileComponent;Update Profile Component;UpdateProfileComponent;UpdateProfileComponent
+;;CartApplyCouponComponent;Cart Apply Coupon Component;CartApplyCouponComponent;CartApplyCouponComponent
+;;SaveForLaterComponent;SaveForLater Component;SaveForLaterComponent;SaveForLaterComponent
+
 
 # Update slots
 UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid, $contentCV)
 ;;BodyContent-address-book;AccountAddressBookComponent
-;;BodyContent-orderdetail;AccountOrderDetailsHeadlineComponent,AccountOrderDetailsOverviewComponent,AccountOrderDetailsItemsComponent,AccountOrderDetailsShippingComponent,AccountOrderDetailsTotalsComponent,AccountOrderDetailsActionsComponent
+;;BodyContent-orderdetail;AccountOrderDetailsHeadlineComponent,AccountOrderDetailsOverviewComponent,AccountOrderDetailsItemsComponent,AccountOrderDetailsTotalsComponent,AccountOrderDetailsShippingComponent,AccountOrderDetailsActionsComponent
 ;;BodyContent-orders;AccountOrderHistoryComponent
 ;;BodyContent-payment-details;AccountPaymentDetailsComponent
 ;;BodyContentSlot-close-account;CloseAccountComponent
@@ -233,10 +202,9 @@ UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid, $
 ;;BodyContent-updatePassword;UpdatePasswordComponent
 ;;BodyContent-update-profile;UpdateProfileComponent
 ;;BodyContent-orderConfirmation;OrderConfirmationThankMessageComponent,OrderConfirmationOverviewComponent,OrderConfirmationItemsComponent,OrderConfirmationShippingComponent,OrderConfirmationTotalsComponent,OrderConfirmationContinueButtonComponent
-;;TopHeaderSlot;CookieNotificationComponent,AnonymousConsentManagementComponent
-;;TopContent-cartPage;CartComponent
+;;TopContent-cartPage;CartComponent,SaveForLaterComponent
 ;;CenterLeftContentSlot-cartPage;PromotionsComponent,PotentialPromotionsComponent
-;;CenterRightContentSlot-cartPage;CartTotalsComponent
+;;CenterRightContentSlot-cartPage;CartTotalsComponent,CartApplyCouponComponent
 ;;BottomContentSlot-cartPage;CheckoutComponent,CartSuggestions
 ;;RightContentSlot-checkout-login;GuestCheckoutLoginComponent
 ;;LeftContentSlot-checkout-login;ReturningCustomerCheckoutLoginComponent
@@ -247,3 +215,13 @@ UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid, $
 UPDATE CMSTabParagraphContainer;$contentCV[unique=true];uid[unique=true];simpleCMSComponents(uid, $contentCV);&componentRef
 ;;TabPanelContainer;ProductDetailsTabComponent,ProductSpecsTabComponent,ProductReviewsTabComponent,deliveryTab;TabPanelContainer
 
+# CMS Assisted Service Components and Sub-Components
+
+REMOVE AssistedServiceComponent;$contentCV[unique=true];uid[unique=true]
+;;AssistedServiceComponent
+
+REMOVE ASMDevicesUsedComponent;$contentCV[unique=true];uid[unique=true]
+;;ASMDevicesUsedComponent
+
+REMOVE ASMFavoriteColorsComponent;$contentCV[unique=true];uid[unique=true]
+;;ASMFavoriteColorsComponent

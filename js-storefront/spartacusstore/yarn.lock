@@ -1446,17 +1446,17 @@
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.14.0.tgz#9fb3a3cf3132328151f353de4632e01e52102bea"
   integrity sha512-9NET910DNaIPngYnLLPeg+Ogzqsi9uM4mSboU5y6p8S5DzMTVEsJZrawi+BoDNUVBa2DhJqQYUFvMDfgU062LQ==
 
-"@spartacus/assets@^2.0.0":
+"@spartacus/assets@2.0.0-rc.1":
   version "2.0.0-rc.1"
   resolved "https://registry.yarnpkg.com/@spartacus/assets/-/assets-2.0.0-rc.1.tgz#f149f603f355d40b2a7e1e9aef10532a85aa1f53"
   integrity sha512-lnCV+h+8+45ozV4R7xOarssqYU5H/27AcV/mP0BL71JOL5nPBMTBejj9GoX7zOU1Tikn4Chx3vwOsAeKdPBmTA==
 
-"@spartacus/core@^2.0.0":
+"@spartacus/core@2.0.0-rc.1":
   version "2.0.0-rc.1"
   resolved "https://registry.yarnpkg.com/@spartacus/core/-/core-2.0.0-rc.1.tgz#b90b25257324691c85ea933380837492081933da"
   integrity sha512-OQ2sRg11cakYGNQGyKxgW98a/cJYGXShr/HosHbychv2BFtHvcI3uJ2E+hQ/9LeryUvfnsTX5AxSP9ZgoYhXsw==
 
-"@spartacus/schematics@^2.0.0":
+"@spartacus/schematics@2.0.0-rc.1":
   version "2.0.0-rc.1"
   resolved "https://registry.yarnpkg.com/@spartacus/schematics/-/schematics-2.0.0-rc.1.tgz#ca5b5b9e6efd5d30cbd6209000a5a9b079a25a68"
   integrity sha512-qwGJupuzyGtnDr5z6/eAoK1VGfjaw4grSTVW985Emp4BoJd30RaJ1wnDJ3gIWFNQzx3Wkbyd5No1FOf3EOws+Q==
@@ -1476,12 +1476,12 @@
     shelljs "^0.8.3"
     typescript "~3.8.3"
 
-"@spartacus/storefront@^2.0.0":
+"@spartacus/storefront@2.0.0-rc.1":
   version "2.0.0-rc.1"
   resolved "https://registry.yarnpkg.com/@spartacus/storefront/-/storefront-2.0.0-rc.1.tgz#f1b339d4db5cb0f4392b8fce4685c0338ddca22f"
   integrity sha512-ebaEc6wPi8AliNnDi5G2jAz+aMyrsXVL8RPuhP9YuUh2bOBk3GJY8yErGzC+NLKUtaGbpIGEo95FCuorjFgZNQ==
 
-"@spartacus/styles@^2.0.0":
+"@spartacus/styles@2.0.0-rc.1":
   version "2.0.0-rc.1"
   resolved "https://registry.yarnpkg.com/@spartacus/styles/-/styles-2.0.0-rc.1.tgz#24f56a0103bd6b901ec574f64e4b06fb20010aa0"
   integrity sha512-/r8nVyZT4V01y1Ko2dGTOOJf7qugbBF83k1Wc2LEoNihXkQooEcGZq2pC9ZwziziAHeWQmpa+skJEE+YVxjJoA==

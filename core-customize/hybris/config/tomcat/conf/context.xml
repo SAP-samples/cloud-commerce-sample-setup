@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- The contents of this file will be loaded for each web application -->
+<Context>
+
+    <!-- Default set of monitored resources. If one of these changes, the    -->
+    <!-- web application will be reloaded.                                   -->
+    <WatchedResource>WEB-INF/web.xml</WatchedResource>
+    <WatchedResource>${catalina.base}/conf/web.xml</WatchedResource>
+
+    <Resources cacheTtl="${tomcat.resources.caching.ttl}" cachingAllowed="${tomcat.resources.caching.allowed}" cacheMaxSize="${tomcat.resources.caching.maxSize}" />
+
+    <!-- Uncomment this to disable session persistence across Tomcat restarts -->
+    <!--
+    <Manager pathname="" />
+    -->
+    <CookieProcessor className="de.hybris.tomcat.ConfigurableRfc6265CookieProcessor" />
+</Context>

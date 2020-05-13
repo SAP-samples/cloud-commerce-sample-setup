@@ -20,9 +20,13 @@ UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];linkName[lang=j
  ;;CartLink;"Cart"
  ;;FAQLink;"Frequently Asked Questions"
  ;;HelpLink;"Help"
- ;;SaleLink;"Sale"
+ ;;MyCouponsLink;"My Coupons"
+ ;;MyInterestsLink;"My Interests"
+ ;;NotificationPreferenceLink;"Notification Preference"
+ ;;OrdersLink;"Orders"
  ;;SignOutLink;"Sign Out"
  ;;StoreFinderLink;"Find a Store"
+ ;;WishListLink;"Wish List"
 
 # Site Logo Media
 INSERT_UPDATE Media;$contentCV[unique=true];code[unique=true];realfilename;@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator];mime[default='image/jpeg'];folder(qualifier)[default='images'];altText
@@ -37,6 +41,7 @@ UPDATE CMSParagraphComponent;$contentCV[unique=true];uid[unique=true];content[la
 ;;CloseAccountParagraphComponent;"When you close your account, your profile information will be kept for the retention period mandated by the laws and regulations of your country. Customer Support will be able to assist you with any order history or proof of purchase needs during this time.<br/><br/>At the end of the retention period, the following profile information will be deleted and will no longer be accessible to you or anyone else:<br/><br/><ul><li>email addresses</li><li>contact information</li><li>shipping details</li><li>delivery preferences</li><li>consent management settings</li><li>account history</li><li>payment details</li><li>order history</li></ul>"
 ;;ContactUsParagraphComponent;"Contact"
 ;;HelpParagraphComponent;"<strong>Need Help with your checkout process?</strong> <span>Contact Us or Call phone number.</span>"
+;;NoticeTextParagraph;"<div class=""cx-notice"">Copyright © 2020 SAP SE or an SAP affiliate company. All rights reserved.</div>"
 ;;PageNotFoundParagraphComponent;"<h2>Oops!</h2><h3>We couldn't find the page you are looking for.</h3><p>Here are some useful links instead:</p>"
 ;;SaleParagraphComponent;"Sale"
 
@@ -59,18 +64,27 @@ UPDATE SimpleResponsiveBannerComponent;$contentCV[unique=true];uid[unique=true];
     
 # Content Pages
 UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];title[lang=$lang]
+ ;;CancelOrderPage;"Cancel Order"
  ;;Checkout;"Checkout"
  ;;CheckoutDeliveryMode;"Checkout Delivery Mode"
  ;;CheckoutPaymentDetails;"Checkout Payment Details"
  ;;CheckoutReviewOrder;"Checkout Review Order"
  ;;CheckoutShippingAddress;"Checkout Shipping Address"
+ ;;ConfirmCancelOrderPage;"Cancel Order Confirmation"
+ ;;ConfirmReturnOrderPage;"Return Order Confirmation"
+ ;;ReturnOrderPage;"Return Order"
+ ;;ReturnRequestDetailsPage;"Return Request Details"
+ ;;WishListPage;"Wish List"
  ;;close-account;"Close Account"
  ;;contactUs;"Contact Us"
  ;;forgotPassword;"Reset Password"
  ;;help;"Help"
- ;;register;"Register"
+ ;;my-interests;"My Interests"
+ ;;notification-preference;"Notification Preference"
+ ;;register;"Create an Account"
  ;;resetPassword;"Reset Password"
  ;;sale;"Sale"
+ ;;storefinderPage;"Find a Store"
  ;;update-profile;"Update Personal Details"
  ;;updatePassword;"Update Password"
 
