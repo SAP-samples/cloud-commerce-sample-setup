@@ -182,7 +182,7 @@
 <!--<extension name='kiwi' />
     <extension name='tiger'/> -->
 
-<!-- Download the Cloud Extension Pack to get these extensions locally see INSERT LINK TO SAP NOTE HERE-->
+<!-- If you want to test Cloud Hot Folders locally download the extensions from https://launchpad.support.sap.com/#/notes/2817992 and uncomment the following -->
     <!--<extension name='azurecloudhotfolder' />
     <extension name='cloudcommons' />
     <extension name='cloudhotfolder' />-->
