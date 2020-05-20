@@ -9,8 +9,8 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "compile:server": "webpack --config webpack.server.config.js --progress --colors",
-    "serve:ssr": "node dist/server",
-    "build:ssr": "npm run build:client-and-server-bundles && npm run compile:server",
+    "serve:ssr": "node dist/spartacusstore/main.js",
+    "build:ssr": "ng build --prod && ng run spartacusstore:server:production",
     "build:client-and-server-bundles": "ng build --prod && ng run spartacusstore:server",
     "dev:ssr": "ng run spartacusstore:serve-ssr",
     "prerender": "ng run spartacusstore:prerender"
