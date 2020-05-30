@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-  occBaseUrl: null
+  occBaseUrl: null,
+  prefix: '/occ/v2/'
 };

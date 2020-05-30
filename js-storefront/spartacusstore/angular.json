@@ -22,7 +22,7 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-            "aot": true,
+            "aot": false,
             "assets": [
               "src/favicon.ico",
               "src/assets",
@@ -46,13 +46,14 @@
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
+              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "3mb",
+                  "maximumWarning": "2mb",
                   "maximumError": "5mb"
                 },
                 {
@@ -130,48 +131,14 @@
           "builder": "@angular-devkit/build-angular:server",
           "options": {
             "outputPath": "dist/spartacusstore-server",
-            "main": "server.ts",
-            "tsConfig": "tsconfig.server.json"
-          },
-          "configurations": {
-            "production": {
-              "outputHashing": "media",
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
-                }
-              ],
-              "sourceMap": false,
-              "optimization": true,
-              "tsConfig": "tsconfig.server.prod.json"
-            }
-          }
-        },
-        "serve-ssr": {
-          "builder": "@nguniversal/builders:ssr-dev-server",
-          "options": {
-            "browserTarget": "spartacusstore:build",
-            "serverTarget": "spartacusstore:server"
-          },
-          "configurations": {
-            "production": {
-              "browserTarget": "spartacusstore:build:production",
-              "serverTarget": "spartacusstore:server:production"
-            }
-          }
-        },
-        "prerender": {
-          "builder": "@nguniversal/builders:prerender",
-          "options": {
-            "browserTarget": "spartacusstore:build:production",
-            "serverTarget": "spartacusstore:server:production",
-            "routes": [
-              "/"
+            "main": "src/main.server.ts",
+            "tsConfig": "tsconfig.server.json",
+            "fileReplacements": [
+              {
+                "replace": "src/environments/environment.ts",
+                "with": "src/environments/environment.prod.ts"
+              }
             ]
-          },
-          "configurations": {
-            "production": {}
           }
         }
       }

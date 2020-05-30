@@ -14,6 +14,7 @@ const occConfig: OccConfig = { backend: { occ: {} } };
 // This in turn breaks the call to the API aspect in public cloud environments
 if (environment.occBaseUrl) {
   occConfig.backend.occ.baseUrl = environment.occBaseUrl;
+  occConfig.backend.occ.prefix = environment.prefix;
 }
 @NgModule({
   declarations: [
