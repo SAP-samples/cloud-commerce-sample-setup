@@ -239,7 +239,7 @@
                 },
                 {
                     "name": "ycommercewebservices",
-                    "contextPath": "/rest"
+                    "contextPath": "/occ"
                 },
                 {
                     "name": "yacceleratorstorefront",
