@@ -3,8 +3,8 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { translations, translationChunksConfig } from '@spartacus/assets';
-import { OccConfig } from '@spartacus/core';
 import { B2cStorefrontModule } from '@spartacus/storefront';
+import { OccConfig } from '@spartacus/core';
 import { environment } from './../environments/environment';
 
 const occConfig: OccConfig = { backend: { occ: {} } };
@@ -18,16 +18,22 @@ if (environment.occBaseUrl) {
 if (environment.prefix) {
   occConfig.backend.occ.prefix = environment.prefix;
 }
+else {
+  occConfig.backend.occ.prefix = '/occ/v2/';
+}
+
 
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
-    BrowserModule.withServerTransition({ appId: 'serverApp' }),
+    BrowserModule,
     B2cStorefrontModule.withConfig({
       backend: occConfig.backend,
       context: {
+        currency: ['USD'],
+        language: ['en'],
         baseSite: ['electronics-spa']
       },
       i18n: {
@@ -36,7 +42,7 @@ if (environment.prefix) {
         fallbackLang: 'en'
       },
       features: {
-        level: '1.2'
+        level: '2.0'
       }
     }),
   ],

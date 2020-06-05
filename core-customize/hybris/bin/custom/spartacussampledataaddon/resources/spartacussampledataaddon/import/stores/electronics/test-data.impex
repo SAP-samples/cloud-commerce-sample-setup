@@ -8,8 +8,8 @@ $previewModule="promotions-preview-module"
 $defaultRuleGroup=couponPromotionRuleGroup
 
 ## ConsignmentTracking E2E test data
-INSERT_UPDATE Customer;groups(uid);uid[unique=true];name;password[default='Password123.'];customerId
-;customergroup;test-user-with-orders@ydev.hybris.com;Test User;;test-user-with-orders@ydev.hybris.com;
+INSERT_UPDATE Customer;groups(uid);uid[unique=true];name;customerId
+;customergroup;test-user-with-orders@ydev.hybris.com;Test User;test-user-with-orders@ydev.hybris.com;
 
 INSERT_UPDATE Address;owner(Customer.uid)[unique=true];streetname[unique=true];postalcode;town[default='Washington'];region(isocode)[default='US-WA'];country(isocode)[default='US'];shippingAddress[default=true];firstname;lastname;title(code)[default='mr']
 ;test-user-with-orders@ydev.hybris.com;Address line0;100000;;;;;User;Test;
@@ -132,8 +132,8 @@ INSERT_UPDATE CustomerCoupon;couponId(id)[unique=true];startDate[default=01-05-2
 ;customerCoupon10
 ;customerCoupon11;01-05-2019;01-06-9999
 
-INSERT_UPDATE Customer;groups(uid);uid[unique=true];name;password[default='Password123.'];customerId
-;customergroup;test-user-with-coupons@ydev.hybris.com;Test User;;test-user-with-coupons@ydev.hybris.com;
+INSERT_UPDATE Customer;groups(uid);uid[unique=true];name;customerId
+;customergroup;test-user-with-coupons@ydev.hybris.com;Test User;test-user-with-coupons@ydev.hybris.com;
 
 INSERT_UPDATE Address;owner(Customer.uid)[unique=true];streetname[unique=true];postalcode;town[default='Washington'];region(isocode)[default='US-WA'];country(isocode)[default='US'];shippingAddress[default=true];firstname;lastname;title(code)[default='mr']
 ;test-user-with-coupons@ydev.hybris.com;Address line0;100000;;;;;User;Test;

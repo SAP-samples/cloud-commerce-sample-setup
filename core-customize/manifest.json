@@ -238,7 +238,7 @@
                     "contextPath": "/hac"
                 },
                 {
-                    "name": "ycommercewebservices",
+                    "name": "commercewebservices",
                     "contextPath": "/occ"
                 },
                 {

@@ -533,11 +533,11 @@ INSERT_UPDATE CMSTabParagraphContainer;$contentCV[unique=true];uid[unique=true];
 
 # Make AccountOrderDetailsActionsComponent invisible
 INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];visible
-;;AccountOrderDetailsActionsComponent;false
+;;AccountOrderDetailsActionsComponent;true
 
-# This UPDATE will make the order history page contain tabs
-#UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid, $contentCV)
-#;;BodyContent-orders;AccountOrderHistoryTabContainer
+# Make the order history page contain tabs
+UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid, $contentCV)
+;;BodyContent-orders;AccountOrderHistoryTabContainer
 
 
 ###### Product Details ######
