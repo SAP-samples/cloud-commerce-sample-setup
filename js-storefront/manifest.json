@@ -2,8 +2,8 @@
     "applications": [
         {
             "name": "spartacusstore",
-            "path": "spartacusstore",
-            "enableSSR": true
+            "path": "spartacusstore"
         }
-    ]
+    ],
+        "nodeVersion": "12"
 }
