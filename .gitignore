@@ -5,7 +5,6 @@
 #IDE files
 .gradle
 .idea
-.reuse
 idea-module-files
 *.iml
 com.springsource.sts.config.flow.prefs
