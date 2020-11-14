@@ -187,26 +187,26 @@ INSERT_UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];url
 ;;WLDLink;/Brands/WLD/c/WLD
 ;;ZimtsternLink;/Brands/Zimtstern/c/Zimtstern
 
-# temporary fix for broken links in header navigation
+# fix for link with params to be supported by spartacus
 # (see https://github.com/SAP/cloud-commerce-spartacus-storefront/issues/5237)
 INSERT_UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];url
-;;StreetwearMensBeltsLink;/Collections/Streetwear/c/251100
-;;StreetwearYouthBoardshortsBillabongLink;/Categories/Streetwear-youth/Boardshorts-youth/c/270600
-;;StreetwearYouthBoardshorts69SlamLink;/Categories/Streetwear-youth/Boardshorts-youth/c/270600
-;;StreetwearYouthBoardshortsQuiksilverLink;/Categories/Streetwear-youth/Boardshorts-youth/c/270600
-;;StreetwearYouthBoardshortsVolcomLink;/Categories/Streetwear-youth/Boardshorts-youth/c/270600
-;;StreetwearYouthTShirtsBillabongLink;/Categories/Streetwear-youth/T-Shirts-youth/c/270100
-;;StreetwearYouthTShirtsBlueTomatoLink;/Categories/Streetwear-youth/T-Shirts-youth/c/270100
-;;StreetwearYouthTShirtsBurtonLink;/Categories/Streetwear-youth/T-Shirts-youth/c/270100
-;;StreetwearYouthTShirtsDCLink;/Categories/Streetwear-youth/T-Shirts-youth/c/270100
-;;StreetwearYouthTShirtsQuiksilverLink;/Categories/Streetwear-youth/T-Shirts-youth/c/270100
+;;StreetwearMensBeltsLink;/Collections/Streetwear/c/251100?sortCode=topRated
+;;StreetwearYouthBoardshortsBillabongLink;/Categories/Streetwear-youth/Boardshorts-youth/c/270600?query=:relevance:category:270600:brand:Billabong
+;;StreetwearYouthBoardshorts69SlamLink;/Categories/Streetwear-youth/Boardshorts-youth/c/270600?query=:relevance:category:270600:brand:69%2BSlam
+;;StreetwearYouthBoardshortsQuiksilverLink;/Categories/Streetwear-youth/Boardshorts-youth/c/270600?query=:relevance:category:270600:brand:Quiksilver
+;;StreetwearYouthBoardshortsVolcomLink;/Categories/Streetwear-youth/Boardshorts-youth/c/270600?query=:relevance:category:270600:brand:Volcom
+;;StreetwearYouthTShirtsBillabongLink;/Categories/Streetwear-youth/T-Shirts-youth/c/270100?query=:relevance:category:270100:brand:Billabong
+;;StreetwearYouthTShirtsBlueTomatoLink;/Categories/Streetwear-youth/T-Shirts-youth/c/270100?query=:relevance:category:270100:brand:Blue%2BTomato
+;;StreetwearYouthTShirtsBurtonLink;/Categories/Streetwear-youth/T-Shirts-youth/c/270100?query=:relevance:category:270100:brand:Burton
+;;StreetwearYouthTShirtsDCLink;/Categories/Streetwear-youth/T-Shirts-youth/c/270100?query=:relevance:category:270100:brand:DC
+;;StreetwearYouthTShirtsQuiksilverLink;/Categories/Streetwear-youth/T-Shirts-youth/c/270100?query=:relevance:category:270100:brand:Quiksilver
 
 ###### Replace JspIncludeComponent to CMSFlexComponent ######
 # Remove JspIncludeComponent
 REMOVE JspIncludeComponent[batchmode=true];$contentCV[unique=true];itemtype(code)[unique=true]
 ;;JspIncludeComponent
 
-# Create CMSFlexComponent
+# Create CMSFlexComponents
 INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType;&componentRef
 ;;AccountAddEditAddressComponent;Account Add Edit Address Component;AccountAddEditAddressComponent;AccountAddEditAddressComponent
 ;;AccountAddressBookComponent;Account Address Book Component;AccountAddressBookComponent;AccountAddressBookComponent
@@ -237,6 +237,7 @@ INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;fle
 ;;PromotionsComponent;Promotions Component;PromotionsComponent;PromotionsComponent
 ;;ReturningCustomerCheckoutLoginComponent;Returning Customer Checkout Login Component;ReturningCustomerCheckoutLoginComponent;ReturningCustomerCheckoutLoginComponent
 ;;ReturningCustomerLoginComponent;Returning Customer Login Component;ReturningCustomerLoginComponent;ReturningCustomerLoginComponent
+;;ReturningCustomerRegisterComponent;Returning Customer Register Component;ReturningCustomerRegisterComponent;ReturningCustomerRegisterComponent
 ;;StoreFinderComponent;Store Finder Component;StoreFinderComponent;StoreFinderComponent
 ;;UpdateEmailComponent;Update Email Component;UpdateEmailComponent;UpdateEmailComponent
 ;;UpdatePasswordComponent;Update Password Component;UpdatePasswordComponent;UpdatePasswordComponent
@@ -263,7 +264,7 @@ UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid, $
 ;;RightContentSlot-checkout-login;GuestCheckoutLoginComponent
 ;;LeftContentSlot-checkout-login;ReturningCustomerCheckoutLoginComponent
 ;;RightContentSlot-login;
-;;LeftContentSlot-login;ReturningCustomerLoginComponent
+;;LeftContentSlot-login;ReturningCustomerLoginComponent,ReturningCustomerRegisterComponent
 ;;MiddleContentSlot-StoreFinder;StoreFinderComponent
 
 UPDATE CMSTabParagraphContainer;$contentCV[unique=true];uid[unique=true];simpleCMSComponents(uid, $contentCV);&componentRef

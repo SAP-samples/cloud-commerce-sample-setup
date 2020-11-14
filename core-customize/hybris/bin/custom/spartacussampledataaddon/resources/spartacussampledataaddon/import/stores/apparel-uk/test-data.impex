@@ -179,7 +179,7 @@ INSERT_UPDATE MerchandisingCarouselComponent;$contentCV[unique=true];uid[unique=
 ;;CategoryPageE2EMerchandisingCarousel;Category Page E2E Merchandising Carousel;Category Page E2E Merchandising Carousel;10;00000000-0000-0000-0000-000000000000;CategoryPageE2EMerchandisingCarousel
 
 # Add the component to the slot
-INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid,$contentCV)
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid,$contentCV)[mode=append]
 ;;BottomHeaderSlot;CategoryPageE2EMerchandisingCarousel
 
 # SLR Page carousel
@@ -190,4 +190,10 @@ INSERT_UPDATE MerchandisingCarouselComponent;$contentCV[unique=true];uid[unique=
 # Add the component to the slot
 INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid,$contentCV)
 ;;SLRCamerasBottomHeaderSlot;SLRCategoryPageE2EMerchandisingCarousel
-############################################################################
+
+############# Qualtrics Integration E2E test data ###################
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType
+;;QualtricsComponent;A Qualtrics Component;QualtricsComponent
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid,$contentCV)[mode=append]
+;;UpSellingSlot;QualtricsComponent

@@ -1,5 +1,5 @@
 {
-    "commerceSuiteVersion": "2005",
+    "commerceSuiteVersion": "2011",
     "enableImageProcessingService": true,
     "extensions": [
         "cloudmediaconversion",  
@@ -57,11 +57,6 @@
             "template": "yacceleratorstorefront"
         },
         {
-            "addon": "commerceorgsamplesaddon",
-            "storefront": "yacceleratorstorefront",
-            "template": "yacceleratorstorefront"
-        },
-        {
             "addon": "promotionenginesamplesaddon",
             "storefront": "yacceleratorstorefront",
             "template": "yacceleratorstorefront"
@@ -108,16 +103,6 @@
         },
         {
             "addon": "pcmbackofficesamplesaddon",
-            "storefront": "yacceleratorstorefront",
-            "template": "yacceleratorstorefront"
-        },
-        {
-            "addon": "eventtrackingwsaddon",
-            "storefront": "yacceleratorstorefront",
-            "template": "yacceleratorstorefront"
-        },
-        {
-            "addon": "personalizationsearchsamplesaddon",
             "storefront": "yacceleratorstorefront",
             "template": "yacceleratorstorefront"
         },

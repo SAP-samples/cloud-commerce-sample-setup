@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
@@ -22,19 +22,18 @@ else {
   occConfig.backend.occ.prefix = '/occ/v2/';
 }
 
-
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     B2cStorefrontModule.withConfig({
       backend: occConfig.backend,
       context: {
-        currency: ['USD'],
-        language: ['en'],
-        baseSite: ['electronics-spa']
+        urlParameters: ['baseSite', 'language', 'currency'],
+        baseSite: ['electronics-spa'],
+        currency: ['USD', 'GBP',]
       },
       i18n: {
         resources: translations,
@@ -45,6 +44,7 @@ else {
         level: '2.0'
       }
     }),
+    BrowserTransferStateModule
   ],
   providers: [],
   bootstrap: [AppComponent]

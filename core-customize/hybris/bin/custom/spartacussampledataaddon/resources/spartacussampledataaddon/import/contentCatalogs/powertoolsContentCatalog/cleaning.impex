@@ -148,7 +148,7 @@ INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;fle
 ;;AccountOrderDetailsOverviewComponent;Account Order Details Overview Info Component;AccountOrderDetailsOverviewComponent;AccountOrderDetailsOverviewComponent
 ;;AccountOrderDetailsShippingComponent;Account Order Details Shipping Info Component;AccountOrderDetailsShippingComponent;AccountOrderDetailsShippingComponent
 ;;AccountOrderDetailsTotalsComponent;Account Order Details Order Totals Component;AccountOrderDetailsTotalsComponent;AccountOrderDetailsTotalsComponent
-;;AccountOrderDetailsReorderComponent;Account Order Details Reorder Component;AccountOrderDetailsTotalsComponent;AccountOrderDetailsReorderComponent
+;;AccountOrderDetailsReorderComponent;Account Order Details Reorder Component;AccountOrderDetailsReorderComponent;AccountOrderDetailsReorderComponent
 ;;AccountOrderDetailsApprovalDetailsComponent;Account Order Details Approval Details Component;AccountOrderDetailsApprovalDetailsComponent;AccountOrderDetailsApprovalDetailsComponent	
 ;;AccountOrderHistoryComponent;Account History Component;AccountOrderHistoryComponent;AccountOrderHistoryComponent
 ;;AccountPaymentDetailsComponent;Account Payment Details Component;AccountPaymentDetailsComponent;AccountPaymentDetailsComponent
@@ -177,7 +177,7 @@ INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;fle
 # Update slots
 UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid, $contentCV)
 ;;BodyContent-address-book;AccountAddressBookComponent
-;;BodyContent-orderdetail;AccountOrderDetailsHeadlineComponent,AccountOrderDetailsOverviewComponent,AccountOrderDetailsItemsComponent,AccountOrderDetailsShippingComponent,AccountOrderDetailsApprovalDetailsComponent,AccountOrderDetailsTotalsComponent,AccountOrderDetailsReorderComponent                
+;;BodyContent-orderdetail;AccountOrderDetailsHeadlineComponent,AccountOrderDetailsOverviewComponent,AccountOrderDetailsItemsComponent,AccountOrderDetailsTotalsComponent,AccountOrderDetailsApprovalDetailsComponent,AccountOrderDetailsShippingComponent,AccountOrderDetailsReorderComponent                
 ;;BodyContent-orders;AccountOrderHistoryComponent
 ;;BodyContent-payment-details;AccountPaymentDetailsComponent
 ;;BodyContent-update-email;UpdateEmailComponent

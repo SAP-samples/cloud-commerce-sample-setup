@@ -151,7 +151,7 @@ UPDATE CMSNavigationNode;uid[unique=true];title;$contentCV[unique=true,virtual=t
 REMOVE JspIncludeComponent[batchmode=true];$contentCV[unique=true];itemtype(code)[unique=true]
 ;;JspIncludeComponent
 
-# Create CMSFlexComponent
+# Create CMSFlexComponents
 INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType;&componentRef
 ;;AccountAddEditAddressComponent;Account Add Edit Address Component;AccountAddEditAddressComponent;AccountAddEditAddressComponent
 ;;AccountAddressBookComponent;Account Address Book Component;AccountAddressBookComponent;AccountAddressBookComponent
@@ -182,6 +182,7 @@ INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;fle
 ;;PromotionsComponent;Promotions Component;PromotionsComponent;PromotionsComponent
 ;;ReturningCustomerCheckoutLoginComponent;Returning Customer Checkout Login Component;ReturningCustomerCheckoutLoginComponent;ReturningCustomerCheckoutLoginComponent
 ;;ReturningCustomerLoginComponent;Returning Customer Login Component;ReturningCustomerLoginComponent;ReturningCustomerLoginComponent
+;;ReturningCustomerRegisterComponent;Returning Customer Register Component;ReturningCustomerRegisterComponent;ReturningCustomerRegisterComponent
 ;;StoreFinderComponent;Store Finder Component;StoreFinderComponent;StoreFinderComponent
 ;;UpdateEmailComponent;Update Email Component;UpdateEmailComponent;UpdateEmailComponent
 ;;UpdatePasswordComponent;Update Password Component;UpdatePasswordComponent;UpdatePasswordComponent
@@ -209,7 +210,7 @@ UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid, $
 ;;RightContentSlot-checkout-login;GuestCheckoutLoginComponent
 ;;LeftContentSlot-checkout-login;ReturningCustomerCheckoutLoginComponent
 ;;RightContentSlot-login;
-;;LeftContentSlot-login;ReturningCustomerLoginComponent
+;;LeftContentSlot-login;ReturningCustomerLoginComponent,ReturningCustomerRegisterComponent
 ;;MiddleContent-StoreFinderPage;StoreFinderComponent
 
 UPDATE CMSTabParagraphContainer;$contentCV[unique=true];uid[unique=true];simpleCMSComponents(uid, $contentCV);&componentRef

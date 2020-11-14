@@ -22,6 +22,9 @@
     <extension name='electronicsstore' />
     <extension name='multicountrysampledataaddon' />
     <extension name='pcmbackofficesamplesaddon' />
+    <extension name='classificationgroupsservices' />
+    <extension name='patchesbackoffice' />
+    <extension name='patches' />
     <extension name='pcmbackoffice' />
     <extension name='backoffice' />
     <extension name='backofficesolrsearch' />
@@ -45,7 +48,6 @@
     <extension name='configurablebundlebackoffice' />
     <extension name='configurablebundlefacades' />
     <extension name='configurablebundleservices' />
-    <extension name='commerceorgsamplesaddon' />
     <!--<extension name='acceleratorbackoffice' />
     <extension name='acceleratorcms' />
     <extension name='acceleratorfacades' />
@@ -72,13 +74,9 @@
     <extension name='customerticketingfacades' />
     <extension name='ticketsystem' />
     <extension name='ticketsystembackoffice' />
-    <extension name='eventtrackingmodel' />
-    <extension name='eventtrackingpublisher' />
-    <extension name='eventtrackingservices' />
-    <extension name='eventtrackingwsaddon' />
     <extension name='inboundservices' />
     <extension name='integrationbackoffice' />
-    <!--<extension name='integrationbackofficetest' />-->
+    <extension name='integrationbackofficetest' />
     <extension name='integrationmonitoringbackoffice' />
     <extension name='integrationservices' />
     <extension name='odata2services' />
@@ -87,6 +85,8 @@
     <extension name='outboundservices' />
     <extension name='outboundsync' />
     <extension name='outboundsyncbackoffice' />
+    <extension name='webhookbackoffice' />
+    <extension name='webhookservices' />
     <extension name='messagecentercsfacades' />
     <extension name='messagecentercsocc' />
     <extension name='messagecentercsservices' />
