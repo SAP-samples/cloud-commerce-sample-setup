@@ -1,3 +1,5 @@
+[![REUSE status](https://api.reuse.software/badge/github.com/SAP-samples/cloud-commerce-sample-setup)](https://api.reuse.software/info/github.com/SAP-samples/cloud-commerce-sample-setup)
+
 # SAP Commerce Cloud Sample Repository
 
 This sample repository contains the files and folders that are required to set up SAP Commerce Cloud. There are multiple branches covering different scenarios for Commerce Cloud (e.g. project Spartacus, data hub, solr customizations).  You can clone/download this repository, checkout the branch of interest and then follow the instructions in the readme to update the example files with your specific details. 
@@ -98,4 +100,3 @@ Find more information about SAP Commerce Cloud Setup on our [help site](https://
 # License
 Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. This project is licensed under the Apache Software License, version 2.0 except as noted otherwise in the [LICENSE file](https://github.com/SAP-samples/cloud-commerce-sample-setup/blob/master-license-update/LICENSES/Apache-2.0.txt).
 
-[![REUSE status](https://api.reuse.software/badge/github.com/SAP-samples/cloud-commerce-sample-setup)](https://api.reuse.software/info/github.com/SAP-samples/cloud-commerce-sample-setup)
