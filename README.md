@@ -2,7 +2,9 @@
 
 This sample repository contains the files and folders that are required to set up SAP Commerce Cloud.  You can clone this repository and then follow the instructions in the readme to update the example files with your specific details. 
 
-When your files are ready, push them to your SAP Commerce Cloud repository.  
+NOTE: There are [different branches](https://github.com/SAP-samples/cloud-commerce-sample-setup/branches) covering the various versions and configurations of an SAP Commerce Cloud solution, so make sure to choose the right one.
+
+When your files are ready, push them to your SAP Commerce Cloud repository. 
 
 # Requirements
 
@@ -13,7 +15,7 @@ When your files are ready, push them to your SAP Commerce Cloud repository.
 
 # Supported Versions
 
-You can find the supported SAP Commerce versions listed in the [Compatibility help topic](https://help.sap.com/viewer/1be46286b36a4aa48205be5a96240672/SHIP/en-US/31ac209eb08f41bc92e9bbe5772fb949.html).
+You can find the supported SAP Commerce versions listed in the [Compatibility help topic](https://help.sap.com/viewer/1be46286b36a4aa48205be5a96240672/latest/en-US/31ac209eb08f41bc92e9bbe5772fb949.html).
 
 # Download and Installation
 Not applicable.
@@ -26,12 +28,12 @@ The following folders and files are included in the sample repository.
 
 Root level 
 - core-customize folder: The folder that contains all of the folders and files that support Commerce Cloud.
-- js-storefront: A project Spartacus JS Storefront configured with Server Side Rendering (SSR). For more on project Spartacus see [project Spartacus documentation](https://sap.github.io/cloud-commerce-spartacus-storefront-docs/)
+- js-storefront: A project Spartacus JS Storefront configured with Server Side Rendering (SSR). For more on project Spartacus see [project Spartacus documentation](https://sap.github.io/spartacus-docs/)
 
 core-customize folder
-- manifest.json: The Commerce Cloud manifest.json file, which defines how your code will be built and deployed in the Public Cloud environments. The manifest is set up to leverage [confiuration reuse](https://help.sap.com/viewer/1be46286b36a4aa48205be5a96240672/SHIP/en-US/2311d89eef9344fc81ef168ac9668307.html) to better allow for consistency between local and cloud builds.
+- manifest.json: The Commerce Cloud manifest.json file, which defines how your code will be built and deployed in the Public Cloud environments. The manifest is set up to leverage [confiuration reuse](https://help.sap.com/viewer/1be46286b36a4aa48205be5a96240672/latest/en-US/2311d89eef9344fc81ef168ac9668307.html) to better allow for consistency between local and cloud builds.
 - hybris folder: contains a sample custom folder for storing any custom extensions as well as the config folder for storing local and cloud properties, localextensions.xml and any local solr/tomcat configurations
-- other sample manifests: A collection of tested and verified manifest files that you can use as starting points for your Commerce Cloud environments.
+
 
 ### Clone Repository
 
@@ -75,28 +77,7 @@ You may also wish to see [this video](https://enable.cx.sap.com/playlist/dedicat
 
 ### Final Steps - Validating an example Electronics Storefront and Javascript Storefront
 
-Use the Cloud Portal to create a build and then deploy the build to an environment. 
-
-1. After the build is deployed, you can find the 'Storefront' endpoint in the *Environments* page of the Cloud Portal listed under *Public Endpoints*.
-2. Click on the *Storefront* hyperlink to access the details page for endpoint.
-3. Either add an IP Filter Set for your IP address OR change the Base Rule from 'Deny All' to 'Allow All' in order to receive traffic to this example storefront.
-4. Save the changes.
-5. Click on the URL listed next to the *Storefront* public endpoint. You will receive a server error.
-6. In your browser's address, append the endpoint address with */?site=electronics* and reload the page
-7. Verify that you see a basic electronics storefront.
-
-If you're using the Javascript Storefront ensure the following:
-
-1. After the build is deployed, you can find the 'API' endpoint in the *Environments* page of the Cloud Portal listed under *Public Endpoints*.
-2. Click on the *API* hyperlink to access the details page for endpoint.
-3. Either add an IP Filter Set for your IP address OR change the Base Rule from 'Deny All' to 'Allow All' in order to receive traffic on your APIs
-4. Save the changes.
-5. Repeat the following for the *JS-Storefront* endpoint
-6. Copy the URL of your *API* endpoint into the "baseUrl" property of js-storefront/spartacusstore/src/app/app.module.ts file
-7. Commit your changes, rebuild and deploy
-8. Click on the URL listed next to the *JS-Storefront* public endpoint.
-9. Verify that you see the project Spartacus basic electronics storefront.
- 
+See [Build and Deploy your First SAP Commerce Cloud Project](https://www.sap.com/cxworks/article/486232623/Build_and_Deploy_Your_First_SAP_Commerce_Cloud_Project) for all the steps to build and deploy. 
 
 # Limitations
 
