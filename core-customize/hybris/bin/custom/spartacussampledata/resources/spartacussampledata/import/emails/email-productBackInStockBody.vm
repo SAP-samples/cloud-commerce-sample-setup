@@ -1,0 +1,168 @@
+## messageSource=classpath:/spartacussampledata/messages/email-productBackInStock_$lang.properties
+#macro( genHtmlBoldFont $text )
+<font color="#414a4f" size="2" face="Arial, Helvetica, sans-serif"><b>$text</b></font>
+#end
+#macro(genHtmlLinkStartTag $url)
+<a href="$url"><font color="#666666">
+#end
+#macro(genHtmlLinkEndTag)
+</font></a>
+#end
+#macro(genHtmlLink $url $textColor $bodyContent)
+<a href="$url"><font color="$textColor">$bodyContent</font></a>
+#end
+
+<html>
+<head>
+</head>
+<body bgcolor="#ffffff"
+
+#set ($myinterestUrl = "${ctx.secureBaseUrl}/my-account/my-interests")
+#set ($productUrl = "${ctx.secureBaseUrl}${ctx.productData.url}")
+#set ($isForceInStock = ${ctx.productData.stock.stockLevelStatus.code} == "inStock" && !$ctx.productData.stock.stockLevel)
+
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#ffffff"
+<tr>
+	<td>&nbsp;</td>
+</tr>
+<tr>
+<td align="center" valign="top">
+<table width="610" border="0" align="center" cellpadding="0" cellspacing="0" bordercolor="#fff">
+<tr>
+<td align="center" valign="top" bgcolor="#FFFFFF">
+<table width="570" cellpadding="0" cellspacing="0" border="0" align="center">
+<tr>
+	<td valign="middle">&nbsp;</td>
+</tr>
+<tr>
+	<td height="30" align="right" valign="middle" bgcolor="#000000">
+		#if (! $ctx.order.guestCustomer )
+		<font color="#FFFFFF" size="2" face="Arial, Helvetica, sans-serif">
+		#end <a href="${ctx.secureBaseUrl}/store-finder"><font color="#FFFFFF">${ctx.messages.storeFinder}</font></a> &nbsp;&nbsp;</font>
+	</td>
+</tr>
+<tr>
+	<td align="center" valign="middle">
+		<font color="#666666" size="2" face="Arial, Helvetica, sans-serif">
+			<a href="${ctx.secureBaseUrl}" style="display:block; margin-top:10px;margin-bottom:10px;">${ctx.cmsSlotContents.TopContent}</a>
+		</font>
+	</td>
+</tr>
+<tr>
+	<td>&nbsp;</td>
+</tr>
+<tr>
+<td align="left" valign="top">
+#set ($spaceHolderPosition = "")
+
+<p style="margin:2px 0"><font color="#666666" size="3" face="Arial, Helvetica, sans-serif"><b>${ctx.messages.emailSubject}</b></font></p>
+<br/>
+<p style="margin:2px 0"><font color="#666666" size="2" face="Arial, Helvetica, sans-serif"><b>${ctx.messages.getMessage('salutation', ${ctx.title},${ctx.displayName})}</b>,</font></p>
+<br/>
+#if($isForceInStock)
+<p style="margin:2px 0"><font color="#666666" size="2" face="Arial, Helvetica, sans-serif">${ctx.messages.getMessage('productForceInStockAvaiable', "#genHtmlLinkStartTag($productUrl)", "#genHtmlBoldFont(${ctx.productData.name})", "#genHtmlLinkEndTag()")}</font></p>
+#else
+<p style="margin:2px 0"><font color="#666666" size="2" face="Arial, Helvetica, sans-serif">${ctx.messages.getMessage('productAvaiable', "#genHtmlLinkStartTag($productUrl)", "#genHtmlBoldFont(${ctx.productData.name})", "#genHtmlLinkEndTag()", "${ctx.productData.stock.stockLevel}")}</font></p>
+#end
+
+<br/>
+	<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" bordercolor="#51585c" class="products" style="border: 1px solid #51585c;">
+
+						<tr>
+							<td valign="top" width="110px" style="width:110px;padding-left:10px;padding-right:10px">
+								<a href="${ctx.secureBaseUrl}${ctx.productData.url}" style="text-decoration:none">
+										#foreach($image in $ctx.productData.images) #if($image.imageType == "PRIMARY" && $image.format == "thumbnail" )
+											<img src="${ctx.mediaBaseUrl}$image.url" alt="" title="$ctx.productData.name"/>
+										#end #end
+										</a>
+										&nbsp;
+							</td>
+							<td valign="top">
+								<p><font color="#666666" size="2" face="Arial, Helvetica, sans-serif">
+									<a href="${ctx.secureBaseUrl}${ctx.productData.url}"><font color="#666666"><b>${ctx.productData.name}</b></font></a>
+								</p>
+							</td>
+							<td valign="top">
+								<p><font color="#666666" size="2" face="Arial, Helvetica, sans-serif">
+										<a href="${ctx.secureBaseUrl}${ctx.productData.url}"><font color="#666666"><b>${ctx.messages.shopNow}</b></font></a>
+								</p>
+							</td>
+							<td width="10%">
+							</td>																					
+						</tr>
+						
+   </table>						
+<br/>
+#if(!$ctx.productReferences.isEmpty())
+	<p><font color="#666666" size="4" face="Arial, Helvetica, sans-serif">${ctx.messages.getMessage('product_recommendation_title')}</font></p>
+#end
+<table>
+<tr>
+#foreach($reference in $ctx.productReferences)
+		<td style="width:110px;padding-left:10px;padding-right:10px">	
+			<a href="${ctx.secureBaseUrl}${ctx.productData.url}" style="text-decoration:none">
+					#foreach($image in $reference.images) #if($image.imageType == "PRIMARY" && $image.format == "thumbnail" )
+						<img src="${ctx.mediaBaseUrl}$image.url" alt="" title="$reference.name"/>
+					#end #end
+			</a>
+			&nbsp;
+		</td>
+#end
+</tr>
+<tr>
+#foreach($reference in $ctx.productReferences)
+		<td style="width:110px;padding-left:10px;padding-right:10px>
+			<p><font color="#666666" size="2" face="Arial, Helvetica, sans-serif">
+				<a href="${ctx.secureBaseUrl}${reference.url}"><font color="#666666"><b>${reference.name}</b></font></a>
+			</p>
+		</td>
+#end
+</tr>
+<tr>
+#foreach($reference in $ctx.productReferences)
+		<td valign="bottom" style="height:30px">
+			<p><font color="#666666" size="2" face="Arial, Helvetica, sans-serif">
+				<a href="${ctx.secureBaseUrl}${reference.url}"><font color="#666666"><b>${ctx.messages.shopNow}</b></font></a>
+			</p>
+		</td>
+#end
+</tr>
+</table>
+<br/>
+<p style="margin:2px 0"><font color="#666666" size="2" face="Arial, Helvetica, sans-serif">${ctx.messages.getMessage('manageNotification', "#genHtmlLinkStartTag($myinterestUrl)", "#genHtmlBoldFont(${ctx.messages.myInterests})", "#genHtmlLinkEndTag()")}</font></p>
+	
+<p><font color="#666666" size="2" face="Arial, Helvetica, sans-serif">${ctx.messages.getMessage('paragraphContactUs', "#genHtmlLinkStartTag(${ctx.messages.contactUsPage})", "#genHtmlLinkEndTag()")}</font></p>
+
+<p><font color="#666666" size="2" face="Arial, Helvetica, sans-serif">${ctx.messages.complimentaryClosing}</font></p>
+
+<p><font color="#666666" size="2" face="Arial, Helvetica, sans-serif">${ctx.messages.signature}</font></p>
+</td>
+</tr>
+<tr>
+	<td>&nbsp;</td>
+</tr>
+<tr>
+	<td align="center" valign="middle">
+		<a href="${ctx.secureBaseUrl}" style="display:block; margin-top:10px;margin-bottom:10px;">${ctx.cmsSlotContents.BottomContent}</a>
+	</td>
+</tr>
+<tr>
+	<td height="30" align="right" valign="middle" bgcolor="#000000">
+		<font color="#FFFFFF" size="2" face="Arial, Helvetica, sans-serif"><a href="${ctx.secureBaseUrl}"><font color="#FFFFFF">${ctx.messages.help}</font></a> | <a href="${ctx.messages.contactUsPage}"><font color="#FFFFFF">${ctx.messages.contactUs}</font></a> | <a href="${ctx.secureBaseUrl}"><font color="#FFFFFF">${ctx.messages.termsAndCondition}</font></a> &nbsp;&nbsp;</font>
+	</td>
+</tr>
+<tr>
+	<td>&nbsp;</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+	<td>&nbsp;</td>
+</tr>
+</table>
+</body>
+</html>

@@ -178,7 +178,7 @@
     <extension name='ywebservices' />
 
 <!-- Sample Extensions -->
-    <extension name='spartacussampledataaddon' />
+    <extension name='spartacussampledata' />
 <!--<extension name='kiwi' />
     <extension name='tiger'/> -->
 

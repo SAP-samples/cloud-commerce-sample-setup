@@ -1,0 +1,27 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+#
+# ImpEx for Consents for Electronics Store
+#
+
+# Language
+\$lang=$lang.toLowerCase()
+
+#set( $data = $query.load('user-groups', 'B2BUnit') )
+UPDATE B2BUnit;uid[unique=true];locname[lang=\$lang]
+#foreach( $row in $data )
+ ;$row.key;"$row.values.locname"
+#end
+
+#set( $data = $query.load('user-groups', 'B2BCostCenter') )
+UPDATE B2BCostCenter;code[unique=true];name[lang=\$lang]
+#foreach( $row in $data )
+ ;$row.key;"$row.values.name"
+#end
+
+#set( $data = $query.load('user-groups', 'B2BBudget') )
+UPDATE B2BBudget;code[unique=true];name[lang=\$lang]
+#foreach( $row in $data )
+ ;$row.key;"$row.values.name"
+#end
