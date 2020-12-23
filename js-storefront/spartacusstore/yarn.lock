@@ -1195,10 +1195,10 @@
   dependencies:
     tslib "^1.10.0"
 
-"@spartacus/schematics@^2.0.8":
-  version "2.1.3"
-  resolved "https://registry.yarnpkg.com/@spartacus/schematics/-/schematics-2.1.3.tgz#8d6735efa41026ec8feefa5265b578894c2a710a"
-  integrity sha512-lnk7o0olXGtZggyAD59xxdzI72tUZdZPAWeRc61mk3WwMmK9UJi7oGjJETFqFKnIRyzRpmU6EalA5nwbtJWBuQ==
+"@spartacus/schematics@^2.1.0":
+  version "2.1.5"
+  resolved "https://registry.yarnpkg.com/@spartacus/schematics/-/schematics-2.1.5.tgz#8a9e1e5fe9e32c22354112069ffb9494a050da78"
+  integrity sha512-ZVvIF53a0b0GoyrXltWqb2H0L8hsvVgR3cbAdISWYkjeaI5djrtqAJr9p/ULgpsnOxVup4pyRYIwGX1gJOgJZA==
   dependencies:
     "@angular-devkit/core" "^9.1.7"
     "@angular-devkit/schematics" "^9.1.7"
