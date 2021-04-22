@@ -571,6 +571,30 @@ INSERT_UPDATE CMSParagraphComponent;$contentCV[unique=true];uid[unique=true];nam
 UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid, $contentCV)
 ;;FooterSlot;FooterNavigationComponent,AnonymousConsentOpenDialogComponent,NoticeTextParagraph,AnonymousConsentManagementBannerComponent
 
+###### My Company Menu Update ######
+## MyCompanyComponent is not in HeaderLinksSlot any more
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid,$contentCV)
+;;HeaderLinksSlot;MyAccountComponent
+
+## Remove MyCompanyComponent
+REMOVE NavigationComponent;$contentCV[unique=true];uid[unique=true]
+;;MyCompanyComponent
+
+REMOVE CMSNavigationNode;$contentCV[unique=true];uid[unique=true]
+;;BudgetNavNode
+;;CostCenterNavNode
+;;UnitsNavNode
+;;UsersNavNode
+;;UserGroupsNavNode
+;;PermissionsNavNode
+
+REMOVE CMSNavigationEntry;$contentCV[unique=true];uid[unique=true]
+;;BudgetNavNodeEntry
+;;CostCenterNavNodeEntry
+;;UnitsNavNodeEntry
+;;UsersNavNodeEntry
+;;UserGroupsNavNodeEntry
+;;PermissionsNavNodeEntry
 
 ###### modules/commerce-services: Common Configurator  ######
 
@@ -700,16 +724,16 @@ INSERT_UPDATE ContentSlotForTemplate;$contentCV;uid[unique=true];position[unique
 INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];label;name;masterTemplate(uid,$contentCV);defaultPage;approvalStatus(code)[default='approved']
 ;;variantConfig;/configure/vc;Variant Configuration;VariantConfigurationTemplate;true
 
-INSERT_UPDATE ElementsForSlot;source($contentCV,uid)[unique=true];target(&componentRef)[unique=true];
-;VariantConfigHeaderSlot;ConfiguratorUpdateMessage;
-;VariantConfigHeaderSlot;ConfiguratorProductTitle;
-;VariantConfigHeaderSlot;ConfiguratorTabBar
-;VariantConfigMenuSlot;ConfiguratorMenu
-;VariantConfigContentSlot;ConfiguratorGroupTitle
-;VariantConfigContentSlot;ConfiguratorForm
-;VariantConfigContentSlot;ConfiguratorPrevNext
-;VariantConfigBottombarSlot;ConfiguratorPriceSummary
-;VariantConfigBottombarSlot;ConfiguratorAddToCartButton
+INSERT_UPDATE ElementsForSlot;source($contentCV,uid)[unique=true];target(&componentRef)[unique=true];sequencenumber[default=10]
+;VariantConfigHeaderSlot;ConfiguratorUpdateMessage;10
+;VariantConfigHeaderSlot;ConfiguratorProductTitle;20
+;VariantConfigHeaderSlot;ConfiguratorTabBar;30
+;VariantConfigMenuSlot;ConfiguratorMenu;
+;VariantConfigContentSlot;ConfiguratorGroupTitle;10
+;VariantConfigContentSlot;ConfiguratorForm;20
+;VariantConfigContentSlot;ConfiguratorPrevNext;30
+;VariantConfigBottombarSlot;ConfiguratorPriceSummary;10
+;VariantConfigBottombarSlot;ConfiguratorAddToCartButton;20
 
 INSERT_UPDATE PageTemplate;$contentCV[unique=true];uid[unique=true];name;frontendTemplateName;restrictedPageTypes(code);active[default=true]
 ;;VariantConfigurationOverviewTemplate;Variant Configuration Overview Template;configuration/variantConfigurationOverviewPage;ContentPage
@@ -755,10 +779,10 @@ INSERT_UPDATE ContentSlotForTemplate;$contentCV;uid[unique=true];position[unique
 INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];label;name;masterTemplate(uid,$contentCV);defaultPage;approvalStatus(code)[default='approved']
 ;;variantConfigOverview;/configure-overview/vc;Variant Configuration Overview;VariantConfigurationOverviewTemplate;true
 
-INSERT_UPDATE ElementsForSlot;source($contentCV,uid)[unique=true];target(&componentRef)[unique=true];
+INSERT_UPDATE ElementsForSlot;source($contentCV,uid)[unique=true];target(&componentRef)[unique=true];sequencenumber[default=10]
 ;VariantConfigOverviewBannerContentSlot;ConfiguratorOverviewBanner;
-;VariantConfigOverviewHeaderSlot;ConfiguratorProductTitle;
-;VariantConfigOverviewHeaderSlot;ConfiguratorTabBar
-;VariantConfigOverviewContentSlot;ConfiguratorOverviewForm
-;VariantConfigOverviewBottombarSlot;ConfiguratorPriceSummary
-;VariantConfigOverviewBottombarSlot;ConfiguratorAddToCartButton
+;VariantConfigOverviewHeaderSlot;ConfiguratorProductTitle;10
+;VariantConfigOverviewHeaderSlot;ConfiguratorTabBar;20
+;VariantConfigOverviewContentSlot;ConfiguratorOverviewForm;
+;VariantConfigOverviewBottombarSlot;ConfiguratorPriceSummary;10
+;VariantConfigOverviewBottombarSlot;ConfiguratorAddToCartButton;20

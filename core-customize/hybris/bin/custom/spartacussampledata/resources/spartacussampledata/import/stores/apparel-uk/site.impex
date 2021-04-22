@@ -2,7 +2,7 @@
 # [y] hybris Platform
 #
 # Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
-# The files in this addon are licensed under the Apache Software License, v. 2 
+# The files in this addon are licensed under the Apache Software License, v. 2
 # except as noted otherwise in the LICENSE file.
 # -----------------------------------------------------------------------
 #
@@ -22,12 +22,22 @@ $fullPathApparel=https://localhost:4200
 $language=en
 $currency=GBP
 
-$urlPatterns=(?i)^https?://[^/]+(/[^?]*)?\?(.*\&)?(site=$spaSiteUid)(|\&.*)$,(?i)^https?://$spaSiteUid\.[^/]+(|/.*|\?.*)$,(?i)^https?://api\.hybrisdev\.com(:[\d]+)?/rest/.*$,(?i)^https?://localhost(:[\d]+)?/rest/.*$,(?i)^https?://[^/]+/$spaSiteUid(|/.|?.)$
+$urlPatterns=(?i)^https?://[^/]+(/[^?]*)?\?(.*\&)?(site=$spaSiteUid)(|\&.*)$,(?i)^https?://$spaSiteUid\.[^/]+(|/.*|\?.*)$,(?i)^https?://api\.hybrisdev\.com(:[\d]+)?/rest/.*$,(?i)^https?://localhost(:[\d]+)?/rest/.*$,(?i)^https?://[^/]+/$spaSiteUid(|/.|\?.)$
 $urlEncodingAttributes=storefront,language,currency
+
+### Update SiteTheme ###
+INSERT_UPDATE SiteTheme;code[unique=true]
+;blue
+;sparta
+
+# Remove alpha and lambda themes for spartacus
+REMOVE SiteTheme;code[unique=true]
+;alpha
+;lambda
 
 ### Site for spartacus
 INSERT_UPDATE CMSSite;uid[unique=true];theme(code);channel(code);stores(uid);contentCatalogs(id);defaultCatalog(id);defaultLanguage(isoCode);siteMapConfig(configId);urlPatterns;active;previewURL;startingPage(uid,$spaContentCV);urlEncodingAttributes;defaultPromotionGroup(Identifier)[default=apparelUKPromoGrp]
-;$spaSiteUid;;B2C;$storeUid;$spaContentCatalog;$productCatalog;$language;apparel-ukSiteMapConfig;$urlPatterns;true;$fullPathApparel/$spaSiteUid/$language/$currency;homepage;$urlEncodingAttributes
+;$spaSiteUid;sparta;B2C;$storeUid;$spaContentCatalog;$productCatalog;$language;apparel-ukSiteMapConfig;$urlPatterns;true;$fullPathApparel/$spaSiteUid/$language/$currency;homepage;$urlEncodingAttributes
 
 UPDATE CMSSite;uid[unique=true];name[lang=$language]
 ;$spaSiteUid;"Spartacus Apparel UK Site"

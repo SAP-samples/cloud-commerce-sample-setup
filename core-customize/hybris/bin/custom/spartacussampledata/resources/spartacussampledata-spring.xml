@@ -10,12 +10,15 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans.xsd
            http://www.springframework.org/schema/aop
            http://www.springframework.org/schema/aop/spring-aop.xsd
            http://www.springframework.org/schema/context
-           http://www.springframework.org/schema/context/spring-context.xsd">
+           http://www.springframework.org/schema/context/spring-context.xsd
+           http://www.springframework.org/schema/util
+           http://www.springframework.org/schema/util/spring-util.xsd">
            
     <context:annotation-config/> 
 
@@ -43,6 +46,13 @@
 	
 	<bean id="spaSampleDataImportService" parent="defaultAddonSampleDataImportService" class="de.hybris.platform.spartacussampledata.setup.impl.SpaSampleDataImportService">
 		<property name="modelService" ref="modelService" />
+		<property name="additionalSampleDataImports" ref="additionalSampleDataImports" />
 	</bean>
+	
+	
+	<!--  A map containing key and value pair, where key is the extension name and value is the file which will be imported if the extension is part of the build  -->
+	<util:map id="additionalSampleDataImports" key-type="java.lang.String" value-type="java.lang.String" >
+		<entry key="gigyaloginaddon" value="cdc-content.impex" />
+	</util:map>
 
 </beans>

@@ -51,30 +51,6 @@ REMOVE ContentSlot;$contentCV[unique=true];uid[unique=true]
 REMOVE ContentPage;$contentCV[unique=true];uid[unique=true]
 ;;importCSVSavedCartPage
 
-# Saved Cart Details Page
-REMOVE ContentSlotForPage;$contentCV[unique=true];uid[unique=true]
-;;SideContent-savedCartDetailsPage
-;;BodyContent-savedCartDetailsPage
-
-REMOVE ContentSlot;$contentCV[unique=true];uid[unique=true]
-;;SideContent-savedCartDetailsPage
-;;BodyContent-savedCartDetailsPage
-
-REMOVE ContentPage;$contentCV[unique=true];uid[unique=true]
-;;savedCartDetailsPage
-
-# Account Saved Carts Page
-REMOVE ContentSlotForPage;$contentCV[unique=true];uid[unique=true]
-;;SideContent-saved-carts
-;;BodyContent-saved-carts
-
-REMOVE ContentSlot;$contentCV[unique=true];uid[unique=true]
-;;SideContent-saved-carts
-;;BodyContent-saved-carts
-
-REMOVE ContentPage;$contentCV[unique=true];uid[unique=true]
-;;saved-carts
-
 # Add-Edit address
 REMOVE ContentSlotForPage;$contentCV[unique=true];uid[unique=true]
 ;;SideContent-add-edit-address
@@ -104,17 +80,14 @@ REMOVE ContentSlotName;name[unique=true];template(uid,$contentCV)[unique=true];v
 ###### Remove unused navigation nodes ######
 # Account navigation nodes
 REMOVE CMSNavigationNode;uid[unique=true];$contentCV[unique=true]
-;SavedCartsNavNode;
 ;MyQuotesNavNode;
 ;MyReturnsHistoryNavNode;
 
 REMOVE CMSNavigationEntry;uid[unique=true];$contentCV[unique=true];
-;SavedCartsNavNodeEntry;
 ;MyQuotesNavNodeEntry;
 ;MyReturnsHistoryNavNodeEntry;
 
 REMOVE CMSLinkComponent;$contentCV[unique=true];uid[unique=true]
-;;SavedCartsLink
 ;;MyQuotesLink
 ;;MyReturnsHistoryLink
 
@@ -196,6 +169,7 @@ UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid, $
 ;;LeftContentSlot-checkout-login;ReturningCustomerCheckoutLoginComponent
 ;;LeftContentSlot-login;ReturningCustomerLoginComponent
 ;;MiddleContent-StoreFinderPage;StoreFinderComponent
+;;Section4Slot-search;
 
 UPDATE CMSTabParagraphContainer;$contentCV[unique=true];uid[unique=true];simpleCMSComponents(uid, $contentCV);&componentRef
 ;;TabPanelContainer;ProductDetailsTabComponent,ProductSpecsTabComponent,ProductReviewsTabComponent,deliveryTab;TabPanelContainer

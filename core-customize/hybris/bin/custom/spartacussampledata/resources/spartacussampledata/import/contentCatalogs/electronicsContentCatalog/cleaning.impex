@@ -211,6 +211,7 @@ UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid, $
 ;;RightContentSlot-login;
 ;;LeftContentSlot-login;ReturningCustomerLoginComponent,ReturningCustomerRegisterComponent
 ;;MiddleContent-StoreFinderPage;StoreFinderComponent
+;;Section4Slot-search;
 
 UPDATE CMSTabParagraphContainer;$contentCV[unique=true];uid[unique=true];simpleCMSComponents(uid, $contentCV);&componentRef
 ;;TabPanelContainer;ProductDetailsTabComponent,ProductSpecsTabComponent,ProductReviewsTabComponent,deliveryTab;TabPanelContainer

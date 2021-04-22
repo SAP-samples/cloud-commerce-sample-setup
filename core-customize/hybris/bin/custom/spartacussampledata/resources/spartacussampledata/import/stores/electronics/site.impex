@@ -23,12 +23,22 @@ $language=en
 $currency=USD
 
 ### The last url pattern below is a wildcard for http(s)://localhost.* and should not be used in other sites than `electronics-spa`
-$urlPatterns=(?i)^https?://[^/]+(/[^?]*)?\?(.*\&)?(site=$spaSiteUid)(|\&.*)$,(?i)^https?://$spaSiteUid\.[^/]+(|/.*|\?.*)$,(?i)^https?://api\.hybrisdev\.com(:[\d]+)?/rest/.*$,(?i)^https?://localhost(:[\d]+)?/rest/.*$,(?i)^https?://localhost(:[\d]+)?(|/.*|\?.*)$,(?i)^https?://[^/]+/$spaSiteUid(|/.|?.)$
+$urlPatterns=(?i)^https?://[^/]+(/[^?]*)?\?(.*\&)?(site=$spaSiteUid)(|\&.*)$,(?i)^https?://$spaSiteUid\.[^/]+(|/.*|\?.*)$,(?i)^https?://api\.hybrisdev\.com(:[\d]+)?/rest/.*$,(?i)^https?://localhost(:[\d]+)?/rest/.*$,(?i)^https?://localhost(:[\d]+)?(|/.*|\?.*)$,(?i)^https?://[^/]+/$spaSiteUid(|/.|\?.)$
 $urlEncodingAttributes=storefront,language,currency
+
+### Update SiteTheme ###
+INSERT_UPDATE SiteTheme;code[unique=true]
+;blue
+;sparta
+
+# Remove alpha and lambda themes for spartacus
+REMOVE SiteTheme;code[unique=true]
+;alpha
+;lambda
 
 ### Site for spartacus
 INSERT_UPDATE CMSSite;uid[unique=true];theme(code);channel(code);stores(uid);contentCatalogs(id);defaultCatalog(id);defaultLanguage(isoCode);siteMapConfig(configId);urlPatterns;active;previewURL;startingPage(uid,$spaContentCV);urlEncodingAttributes;defaultPromotionGroup(Identifier)[default=electronicsPromoGrp]
-;$spaSiteUid;;B2C;$storeUid;$spaContentCatalog;$productCatalog;$language;electronicsSiteMapConfig;$urlPatterns;true;$fullPathElectronics/$spaSiteUid/$language/$currency;homepage;$urlEncodingAttributes
+;$spaSiteUid;sparta;B2C;$storeUid;$spaContentCatalog;$productCatalog;$language;electronicsSiteMapConfig;$urlPatterns;true;$fullPathElectronics/$spaSiteUid/$language/$currency;homepage;$urlEncodingAttributes
 
 UPDATE CMSSite;uid[unique=true];name[lang=$language]
 ;$spaSiteUid;"Spartacus Electronics Site"
@@ -36,7 +46,7 @@ UPDATE CMSSite;uid[unique=true];name[lang=$language]
 UPDATE CMSSite;uid[unique=true];defaultPreviewCategory(code, $productCV);defaultPreviewProduct(code, $productCV);defaultPreviewCatalog(id)
 ;$spaSiteUid;575;2053367;$productCatalog
 
-### Put spartacus into smart edit whitelist 
+### Put spartacus into smart edit whitelist
 INSERT_UPDATE SmartEditConfiguration;key[unique=true];value
 ;whiteListedStorefronts;"[""$fullPathElectronics""]"
 

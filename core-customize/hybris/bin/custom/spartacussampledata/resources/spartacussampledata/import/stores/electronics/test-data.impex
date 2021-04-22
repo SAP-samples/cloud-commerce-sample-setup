@@ -7,13 +7,12 @@ $promotionsModule="promotions-module"
 $previewModule="promotions-preview-module"
 $defaultRuleGroup=couponPromotionRuleGroup
 
-## ConsignmentTracking E2E test data
+## Consignment Tracking E2E test data
 INSERT_UPDATE Customer;groups(uid);uid[unique=true];name;customerId
 ;customergroup;test-user-with-orders@ydev.hybris.com;Test User;test-user-with-orders@ydev.hybris.com;
 
 INSERT_UPDATE Address;owner(Customer.uid)[unique=true];streetname[unique=true];postalcode;town[default='Washington'];region(isocode)[default='US-WA'];country(isocode)[default='US'];shippingAddress[default=true];firstname;lastname;title(code)[default='mr']
 ;test-user-with-orders@ydev.hybris.com;Address line0;100000;;;;;User;Test;
-
 
 INSERT_UPDATE Order;code[unique=true];user(uid);date[dateformat=dd.MM.yyyy HH:mm];currency(isocode)[default='USD'];net[default=false];deliveryMode(code)[default='standard-gross'];Discounts(code);calculated[default=false];store(uid);site(uid);deliveryCost;totalPrice
 ;100000;test-user-with-orders@ydev.hybris.com;10.01.2019 10:40;;;;;;electronics;;5.26;754.66
@@ -26,12 +25,10 @@ INSERT_UPDATE OrderEntry;order(code)[unique=true];product(code,catalogVersion(ca
 ;100001;300938:electronicsProductCatalog:Online;;;;0;114.12;114.12
 ;100001;1992693:electronicsProductCatalog:Online;;;;1;541.34;541.43
 
-
 INSERT_UPDATE Consignment;code[unique=true];status(code)[default='SHIPPED'];order(code);shippingAddress(owner(Customer.uid));warehouse(code);trackingID;carrierDetails(code)[default='MockCarrier']
 ;100000a;;100000;test-user-with-orders@ydev.hybris.com;warehouse_e;2019031500001;
 ;100000b;;100000;test-user-with-orders@ydev.hybris.com;warehouse_s;;;
 ;100000c;WAITING;100000;test-user-with-orders@ydev.hybris.com;warehouse_n;;;
-
 
 INSERT_UPDATE ConsignmentEntry;consignment(code)[unique=true];orderEntry(order(code),entryNumber);quantity[default=1];shippedQuantity[default=1]
 ;100000a;100000:0
@@ -87,40 +84,39 @@ UPDATE StockLevel;productCode[unique=true];warehouse(code)[default='warehouse_e'
 ;872912;warehouse_e;forceOutOfStock
 
 
-######## COUPONS test data ##########
+######## COUPONS E2E test data ##########
 
-## Coupon E2E test data
+$defaultPromoGrp=electronicsPromoGrp
+$defaultRuleGroup=couponPromotionRuleGroup
+$promotionsModule="promotions-module"
+$previewModule="promotions-preview-module"
+$lang=en
+
 INSERT_UPDATE SingleCodeCoupon;couponId(id)[unique=true];maxRedemptionsPerCustomer;maxTotalRedemptions;active[default=true]
 ;CouponForProduct;;;
 ;CouponForCart;;;
 ;FreeGiftCoupon;;;
 
 INSERT_UPDATE PromotionSourceRule[$ruleImportProcessor];code[unique=true];name[lang=en];description[lang=en];messageFired[lang=en];
-;CouponForProductProm;Coupon For Product Promotion;Coupon For Product Promotion description;Coupon For Product Promotion message
-;CouponForCartProm;Coupon For Cart Promotion;Coupon For Cart Promotion description;Coupon For Cart Promotion message
-;FreeGiftCouponProm;Free Gift Coupon Promotion;Free Gift Coupon Promotion description;Free Gift Coupon Promotion message
+;CouponForProductProm;Coupon For Product Promotion;Coupon For Product Promotion description;Get 25% off in all camera lenses
+;CouponForCartProm;Coupon For Cart Promotion;Coupon For Cart Promotion description;Get $25 off your order
+;FreeGiftCouponProm;Free Gift Coupon Promotion;Free Gift Coupon Promotion description;Free Gift with any purchase above $200
 
 INSERT_UPDATE PromotionSourceRule;code[unique=true];priority;maxAllowedRuns;ruleGroup(code);conditions;actions;website(Identifier)[default=$defaultPromoGrp];excludeFromStorefrontDisplay[default=false];status(code)[unique=true,default=UNPUBLISHED]
 "#% afterEach: de.hybris.platform.core.Registry.getApplicationContext().getBean(""ruleEngineSystemSetup"").registerSourceRuleForDeployment(impex.getLastImportedItem(), new String[]{$promotionsModule,$previewModule});"
-;CouponForCartProm;25;1;couponPromotionRuleGroup;"[{""definitionId"":""y_qualifying_coupons"",""parameters"":{""coupons"":{""uuid"":""9644b8a6-ad94-4990-afca-2a132e1bd171"",""type"":""List(ItemType(AbstractCoupon))"",""value"":[""CouponForCart""]}},""children"":[]}]";"[{""definitionId"":""y_order_fixed_discount"",""parameters"":{""value"":{""uuid"":""b4dfe431-e526-42e2-bb08-0dea08f310db"",""type"":""Map(ItemType(Currency),java.math.BigDecimal)"",""value"":{""USD"":10}}}}]";;
+;CouponForCartProm;25;1;couponPromotionRuleGroup;"[{""definitionId"":""y_qualifying_coupons"",""parameters"":{""coupons"":{""uuid"":""9644b8a6-ad94-4990-afca-2a132e1bd171"",""type"":""List(ItemType(AbstractCoupon))"",""value"":[""CouponForCart""]}},""children"":[]}]";"[{""definitionId"":""y_order_fixed_discount"",""parameters"":{""value"":{""uuid"":""b4dfe431-e526-42e2-bb08-0dea08f310db"",""type"":""Map(ItemType(Currency),java.math.BigDecimal)"",""value"":{""USD"":10}}}}]";
 
 INSERT_UPDATE PromotionSourceRule;code[unique=true];priority;maxAllowedRuns;ruleGroup(code);conditions;actions;website(Identifier)[default=$defaultPromoGrp];excludeFromStorefrontDisplay[default=false];status(code)[unique=true,default=UNPUBLISHED]
 "#% afterEach: de.hybris.platform.core.Registry.getApplicationContext().getBean(""ruleEngineSystemSetup"").registerSourceRuleForDeployment(impex.getLastImportedItem(), new String[]{$promotionsModule,$previewModule});"
-;FreeGiftCouponProm;160;1;couponPromotionRuleGroup;"[{""definitionId"":""y_qualifying_coupons"",""parameters"":{""coupons"":{""uuid"":""ff7280f8-3272-4ddb-9e92-d26a083ec234"",""type"":""List(ItemType(AbstractCoupon))"",""value"":[""FreeGiftCoupon""]}},""children"":[]},{""definitionId"":""y_cart_total"",""parameters"":{""value"":{""uuid"":""b4959112-d22e-4bc3-a87c-80c4116ba887"",""type"":""Map(ItemType(Currency),java.math.BigDecimal)"",""value"":{""USD"":200}},""operator"":{""uuid"":""677a62d0-c8cd-4c47-af0b-91d19b6daa9d"",""type"":""Enum(de.hybris.platform.ruledefinitions.AmountOperator)"",""value"":""GREATER_THAN_OR_EQUAL""}},""children"":[]}]";"[{""definitionId"":""y_free_gift"",""parameters"":{""product"":{""uuid"":""5c9f025c-b351-46ee-bc49-662d8746ce56"",""type"":""ItemType(Product)"",""value"":""443175""},""quantity"":{""uuid"":""395a45d1-6f14-4ddd-ae48-d6ef8dc9c468"",""type"":""java.lang.Integer"",""value"":1}}}]";;
+;FreeGiftCouponProm;160;1;couponPromotionRuleGroup;"[{""definitionId"":""y_qualifying_coupons"",""parameters"":{""coupons"":{""uuid"":""ff7280f8-3272-4ddb-9e92-d26a083ec234"",""type"":""List(ItemType(AbstractCoupon))"",""value"":[""FreeGiftCoupon""]}},""children"":[]},{""definitionId"":""y_cart_total"",""parameters"":{""value"":{""uuid"":""b4959112-d22e-4bc3-a87c-80c4116ba887"",""type"":""Map(ItemType(Currency),java.math.BigDecimal)"",""value"":{""USD"":200}},""operator"":{""uuid"":""677a62d0-c8cd-4c47-af0b-91d19b6daa9d"",""type"":""Enum(de.hybris.platform.ruledefinitions.AmountOperator)"",""value"":""GREATER_THAN_OR_EQUAL""}},""children"":[]}]";"[{""definitionId"":""y_free_gift"",""parameters"":{""product"":{""uuid"":""5c9f025c-b351-46ee-bc49-662d8746ce56"",""type"":""ItemType(Product)"",""value"":""443175""},""quantity"":{""uuid"":""395a45d1-6f14-4ddd-ae48-d6ef8dc9c468"",""type"":""java.lang.Integer"",""value"":1}}}]";
 
 INSERT_UPDATE PromotionSourceRule;code[unique=true];priority;maxAllowedRuns;ruleGroup(code);conditions;actions;website(Identifier)[default=$defaultPromoGrp];excludeFromStorefrontDisplay[default=false];status(code)[unique=true,default=UNPUBLISHED]
 "#% afterEach: de.hybris.platform.core.Registry.getApplicationContext().getBean(""ruleEngineSystemSetup"").registerSourceRuleForDeployment(impex.getLastImportedItem(), new String[]{$promotionsModule,$previewModule});"
-;CouponForProductProm;155;1;couponPromotionRuleGroup;"[{""definitionId"":""y_qualifying_coupons"",""parameters"":{""coupons"":{""uuid"":""baa9d67e-66ec-4989-b3c4-7589346db224"",""type"":""List(ItemType(AbstractCoupon))"",""value"":[""CouponForProduct""]}},""children"":[]},{""definitionId"":""y_qualifying_categories"",""parameters"":{""quantity"":{""uuid"":""20fd1aab-396d-4f36-a397-7d11d4549012"",""type"":""java.lang.Integer"",""value"":1},""categories_operator"":{""uuid"":""504c05f5-9092-4827-9950-29b60dd30d3d"",""type"":""Enum(de.hybris.platform.ruledefinitions.CollectionOperator)"",""value"":""CONTAINS_ANY""},""excluded_categories"":{""uuid"":""671ae763-e0c7-4fb9-bb34-c6367f684622"",""type"":""List(ItemType(Category))""},""excluded_products"":{""uuid"":""7f1a0063-0625-437c-90c4-ec00b5e6a3d4"",""type"":""List(ItemType(Product))""},""categories"":{""uuid"":""fe873025-b08c-452c-a649-906cde3fab06"",""type"":""List(ItemType(Category))"",""value"":[""588""]},""operator"":{""uuid"":""6a1f11ef-8bc0-490d-aa69-6e9b70d37e4c"",""type"":""Enum(de.hybris.platform.ruledefinitions.AmountOperator)"",""value"":""GREATER_THAN_OR_EQUAL""}},""children"":[]}]";"[{""definitionId"":""y_order_entry_percentage_discount"",""parameters"":{""value"":{""uuid"":""7850ea3a-cd43-4a94-b12d-c2ef6b81937a"",""type"":""java.math.BigDecimal"",""value"":25}}}]";;
+;CouponForProductProm;155;1;couponPromotionRuleGroup;"[{""definitionId"":""y_qualifying_coupons"",""parameters"":{""coupons"":{""uuid"":""baa9d67e-66ec-4989-b3c4-7589346db224"",""type"":""List(ItemType(AbstractCoupon))"",""value"":[""CouponForProduct""]}},""children"":[]},{""definitionId"":""y_qualifying_categories"",""parameters"":{""quantity"":{""uuid"":""20fd1aab-396d-4f36-a397-7d11d4549012"",""type"":""java.lang.Integer"",""value"":1},""categories_operator"":{""uuid"":""504c05f5-9092-4827-9950-29b60dd30d3d"",""type"":""Enum(de.hybris.platform.ruledefinitions.CollectionOperator)"",""value"":""CONTAINS_ANY""},""excluded_categories"":{""uuid"":""671ae763-e0c7-4fb9-bb34-c6367f684622"",""type"":""List(ItemType(Category))""},""excluded_products"":{""uuid"":""7f1a0063-0625-437c-90c4-ec00b5e6a3d4"",""type"":""List(ItemType(Product))""},""categories"":{""uuid"":""fe873025-b08c-452c-a649-906cde3fab06"",""type"":""List(ItemType(Category))"",""value"":[""588""]},""operator"":{""uuid"":""6a1f11ef-8bc0-490d-aa69-6e9b70d37e4c"",""type"":""Enum(de.hybris.platform.ruledefinitions.AmountOperator)"",""value"":""GREATER_THAN_OR_EQUAL""}},""children"":[]}]";"[{""definitionId"":""y_order_entry_percentage_discount"",""parameters"":{""value"":{""uuid"":""7850ea3a-cd43-4a94-b12d-c2ef6b81937a"",""type"":""java.math.BigDecimal"",""value"":25}}}]";electronicsPromoGrp;
 
-
-################Notification feature E2E test data###################################################################
-UPDATE CronJob;code[unique=true];active[default=false]
-;stockLevelStatusCronJob
-;expiredInterestsCleanUpJob
-
-#test data for customer coupon
-INSERT_UPDATE CustomerCoupon;couponId(id)[unique=true];startDate[default=01-05-2017,dateformat=dd-MM-yyyy];endDate[default=01-05-9999,dateformat=dd-MM-yyyy];active[default=true];assignable[default=true]
-;customerCoupon1;01-05-2000;01-05-9000
+# Customer coupons (for my coupons e2e test)
+INSERT_UPDATE CustomerCoupon;couponId(id)[unique=true];startDate[default=01-05-2017,dateformat=dd-MM-yyyy];endDate[default=01-05-2099,dateformat=dd-MM-yyyy];active[default=true];assignable[default=true]
+;customerCoupon1;01-05-2000;01-05-2099
 ;customerCoupon2
 ;customerCoupon3
 ;customerCoupon4
@@ -130,31 +126,26 @@ INSERT_UPDATE CustomerCoupon;couponId(id)[unique=true];startDate[default=01-05-2
 ;customerCoupon8
 ;customerCoupon9
 ;customerCoupon10
-;customerCoupon11;01-05-2019;01-06-9999
+;customerCoupon11;01-05-2019;01-06-2099
 
 INSERT_UPDATE Customer;groups(uid);uid[unique=true];name;customerId
-;customergroup;test-user-with-coupons@ydev.hybris.com;Test User;test-user-with-coupons@ydev.hybris.com;
+;customergroup;test-user-with-coupons@sap.cx.com;Test User;test-user-with-coupons@sap.cx.com;
 
 INSERT_UPDATE Address;owner(Customer.uid)[unique=true];streetname[unique=true];postalcode;town[default='Washington'];region(isocode)[default='US-WA'];country(isocode)[default='US'];shippingAddress[default=true];firstname;lastname;title(code)[default='mr']
-;test-user-with-coupons@ydev.hybris.com;Address line0;100000;;;;;User;Test;
-INSERT_UPDATE CustomerCoupon2Customer;source(CustomerCoupon.couponId)[unique=true];target(Customer.uid)[unique=true]
-;customerCoupon1;test-user-with-coupons@ydev.hybris.com;
-;customerCoupon2;test-user-with-coupons@ydev.hybris.com;
-;customerCoupon3;test-user-with-coupons@ydev.hybris.com;
-;customerCoupon4;test-user-with-coupons@ydev.hybris.com;
-;customerCoupon5;test-user-with-coupons@ydev.hybris.com;
-;customerCoupon6;test-user-with-coupons@ydev.hybris.com;
-;customerCoupon7;test-user-with-coupons@ydev.hybris.com;
-;customerCoupon8;test-user-with-coupons@ydev.hybris.com;
-;customerCoupon9;test-user-with-coupons@ydev.hybris.com;
-;customerCoupon10;test-user-with-coupons@ydev.hybris.com;
-;customerCoupon11;test-user-with-coupons@ydev.hybris.com;
+;test-user-with-coupons@sap.cx.com;Address line0;100000;;;;;User;Test;
 
-$defaultPromoGrp=electronicsPromoGrp
-$defaultRuleGroup=couponPromotionRuleGroup
-$promotionsModule="promotions-module"
-$previewModule="promotions-preview-module"
-$lang=en
+INSERT_UPDATE CustomerCoupon2Customer;source(CustomerCoupon.couponId)[unique=true];target(Customer.uid)[unique=true]
+;customerCoupon1;test-user-with-coupons@sap.cx.com;
+;customerCoupon2;test-user-with-coupons@sap.cx.com;
+;customerCoupon3;test-user-with-coupons@sap.cx.com;
+;customerCoupon4;test-user-with-coupons@sap.cx.com;
+;customerCoupon5;test-user-with-coupons@sap.cx.com;
+;customerCoupon6;test-user-with-coupons@sap.cx.com;
+;customerCoupon7;test-user-with-coupons@sap.cx.com;
+;customerCoupon8;test-user-with-coupons@sap.cx.com;
+;customerCoupon9;test-user-with-coupons@sap.cx.com;
+;customerCoupon10;test-user-with-coupons@sap.cx.com;
+;customerCoupon11;test-user-with-coupons@sap.cx.com;
 
 INSERT_UPDATE CustomerCoupon;couponId(id)[unique=true];startDate[default=01-05-2017,dateformat=dd-MM-yyyy];active[default=true];assignable[default=true]
 ;midautumn
@@ -238,6 +229,15 @@ INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents
 ############# Qualtrics Integration E2E test data ###################
 INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType
 ;;QualtricsComponent;A Qualtrics Component;QualtricsComponent
+;;QualtricsEmbeddedFeedbackComponent;Qualtrics Embedded Feedback Component;QualtricsEmbeddedFeedbackComponent
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid,$contentCV)
+;;ProductSummarySlot;ProductImagesComponent,ProductIntroComponent,QualtricsEmbeddedFeedbackComponent,ProductSummaryComponent,VariantSelector,AddToCart,ConfigureProductComponent,AddToWishListComponent,StockNotificationComponent
 
 INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid,$contentCV)[mode=append]
 ;;UpSellingSlot;QualtricsComponent
+
+################Notification feature E2E test data###################################################################
+UPDATE CronJob;code[unique=true];active[default=false]
+;stockLevelStatusCronJob
+;expiredInterestsCleanUpJob

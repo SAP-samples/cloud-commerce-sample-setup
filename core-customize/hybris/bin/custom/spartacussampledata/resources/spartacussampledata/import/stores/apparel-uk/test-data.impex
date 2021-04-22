@@ -201,6 +201,10 @@ INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents
 ############# Qualtrics Integration E2E test data ###################
 INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType
 ;;QualtricsComponent;A Qualtrics Component;QualtricsComponent
+;;QualtricsEmbeddedFeedBackComponent;Qualtrics Embedded Feedback Component;QualtricsEmbeddedFeedBackComponent
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid,$contentCV)
+;;ProductSummarySlot;ProductImagesComponent,ProductIntroComponent,QualtricsEmbeddedFeedbackComponent,ProductSummaryComponent,VariantSelector,AddToCart,ConfigureProductComponent,AddToWishListComponent,StockNotificationComponent
 
 INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid,$contentCV)[mode=append]
 ;;UpSellingSlot;QualtricsComponent

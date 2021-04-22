@@ -484,7 +484,7 @@ UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid, $
 
 ###### Product Details ######
 INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;cmsComponents(uid, $contentCV)
-;;ProductSummarySlot;Summary for product details;ProductImagesComponent,ProductIntroComponent,ProductSummaryComponent,VariantSelector,AddToCart,ConfigureProductComponent
+;;ProductSummarySlot;Summary for product details;ProductImagesComponent,ProductIntroComponent,ProductSummaryComponent,VariantSelector,BulkPricingTableComponent,AddToCart,ConfigureProductComponent
 
 INSERT_UPDATE ContentSlotForTemplate;$contentCV[unique=true];uid[unique=true];position[unique=true];pageTemplate(uid,$contentCV)[unique=true];contentSlot(uid,$contentCV)[unique=true];allowOverwrite
 ;;Summary-ProductDetails;Summary;ProductDetailsPageTemplate;ProductSummarySlot;true
@@ -496,6 +496,7 @@ INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;fle
 ;;ProductImagesComponent;ProductImagesComponent;ProductImagesComponent
 ;;ProductIntroComponent;ProductIntroComponent;ProductIntroComponent
 ;;ProductSummaryComponent;ProductSummaryComponent;ProductSummaryComponent
+;;BulkPricingTableComponent;BulkPricingTableComponent;BulkPricingTableComponent
 
 ## Replenishment History Page ##
 INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType
@@ -911,3 +912,37 @@ INSERT_UPDATE ElementsForSlot;source($contentCV,uid)[unique=true];target(&compon
 ;VariantConfigOverviewContentSlot;ConfiguratorOverviewForm
 ;VariantConfigOverviewBottombarSlot;ConfiguratorPriceSummary
 ;VariantConfigOverviewBottombarSlot;ConfiguratorAddToCartButton
+
+###### Saved carts ######
+# my-account dropdown for saved carts
+INSERT_UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];name;url;&linkRef;&componentRef;target(code)[default='sameWindow'];restrictions(uid,$contentCV)
+;;SavedCartsLink;Saved Carts Link;/my-account/saved-carts;SavedCartsLink;SavedCartsLink;;loggedInUser
+
+# saved carts (history) and saved carts (details) pages
+INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];label
+;;saved-carts;/my-account/saved-carts
+;;savedCartDetailsPage;/my-account/saved-cart
+
+# saved carts (cart page) button
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType
+;;AddToSavedCartsComponent;Add To Saved Carts Component;AddToSavedCartsComponent
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;cmsComponents(uid, $contentCV)
+;;TopContent-cartPage;Top content for Cart Slot;AddToSavedCartsComponent,CartComponent
+
+# saved carts (history) page
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType
+;;AccountSavedCartHistoryComponent;Account Saved Cart History Component;AccountSavedCartHistoryComponent
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;cmsComponents(uid, $contentCV)
+;;BodyContent-saved-carts;Body content for Saved Carts History Slot;AccountSavedCartHistoryComponent
+
+# saved carts (details) page
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType
+;;SavedCartDetailsOverviewComponent;Saved Cart Details Overview Component;SavedCartDetailsOverviewComponent
+;;SavedCartDetailsItemsComponent;Saved Cart Details Items Component;SavedCartDetailsItemsComponent
+;;SavedCartDetailsActionComponent;Saved Cart Details Action Component;SavedCartDetailsActionComponent
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;cmsComponents(uid, $contentCV)
+;;BodyContent-savedCartDetailsPage;Body content for Saved Carts Details Slot;SavedCartDetailsOverviewComponent,SavedCartDetailsItemsComponent,SavedCartDetailsActionComponent
+

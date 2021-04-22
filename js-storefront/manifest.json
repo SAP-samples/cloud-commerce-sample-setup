@@ -3,8 +3,14 @@
         {
             "name": "spartacusstore",
             "path": "spartacusstore",
-            "enableSSR": true
+            "ssr": {
+                "enabled": true,
+                "path": "dist/spartacusstore/server/main.js"
+            },
+            "csr": {
+                "webroot": "dist/spartacusstore/browser/"
+            }
         }
     ],
-        "nodeVersion": "12"
+    "nodeVersion": "12"
 }

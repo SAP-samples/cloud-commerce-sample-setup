@@ -6,6 +6,7 @@
 package de.hybris.platform.spartacussampledata.setup.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Required;
 
@@ -19,6 +20,7 @@ import de.hybris.platform.cronjob.enums.CronJobResult;
 import de.hybris.platform.cronjob.enums.CronJobStatus;
 import de.hybris.platform.servicelayer.cronjob.PerformResult;
 import de.hybris.platform.servicelayer.model.ModelService;
+import de.hybris.platform.util.Utilities;
 
 
 /**
@@ -31,6 +33,7 @@ public class SpaSampleDataImportService extends DefaultAddonSampleDataImportServ
 	private static final String STORES_URL = "/stores/";
 
 	private ModelService modelService;
+	private Map<String, String> additionalSampleDataImports;
 
 	@Override
 	protected void importContentCatalog(final SystemSetupContext context, final String importRoot, final String catalogName)
@@ -62,15 +65,44 @@ public class SpaSampleDataImportService extends DefaultAddonSampleDataImportServ
 
 		if (catalogName.equals("electronics") || catalogName.equals("powertools") || catalogName.equals("apparel-uk"))
 		{
-			// 5- synchronize spaContentCatalog:staged->online
+			// 5- import additional sample data
+			importAdditionalContentData(context, catalogName, importRoot);
+			
+			// 6- synchronize spaContentCatalog:staged->online
 			synchronizeContentCatalog(context, catalogName + "-spa", true);
 
-			// 6- give permission to cmsmanager to do the sync
+			// 7- give permission to cmsmanager to do the sync
 			importImpexFile(context, importRoot + "/contentCatalogs/" + catalogName + "ContentCatalog/sync.impex", false);
 
-			// 7- import email data
+			// 8- import email data
 			importImpexFile(context, importRoot + "/contentCatalogs/" + catalogName + "ContentCatalog/email-content.impex", false);
+			
 		}
+	}
+
+
+	/**
+	 * This methods imports the additional impex files that are required by various
+	 * different modules. If those extension are loaded in the commerce
+	 * installation, then the impex file is imported <br/>
+	 * To enable the import the following needs to be done: <br/>
+	 * 1. Define an entry in the map additionalSampleDataImports via spring config
+	 * where the key is the extension name, and value is the impex file name <br/>
+	 * 2. Include the impex file which contains the required data changes within the
+	 * ContentCatalog folder
+	 *
+	 * @param context
+	 * @param catalogName
+	 * @param importRoot
+	 */
+	protected void importAdditionalContentData(final SystemSetupContext context, final String catalogName,
+			final String importRoot) {
+		additionalSampleDataImports.entrySet().forEach(i -> {
+			if (Utilities.getExtensionNames().contains(i.getKey())) {
+				importImpexFile(context,
+						importRoot + "/contentCatalogs/" + catalogName + "ContentCatalog/" + i.getValue(), false);
+			}
+		});
 	}
 
 
@@ -116,5 +148,15 @@ public class SpaSampleDataImportService extends DefaultAddonSampleDataImportServ
 	public void setModelService(final ModelService modelService)
 	{
 		this.modelService = modelService;
+	}
+
+
+	public Map<String, String> getAdditionalSampleDataImports() {
+		return additionalSampleDataImports;
+	}
+
+
+	public void setAdditionalSampleDataImports(Map<String, String> additionalSampleDataImports) {
+		this.additionalSampleDataImports = additionalSampleDataImports;
 	}
 }

@@ -5,23 +5,17 @@ import { AppComponent } from './app.component';
 import { translations, translationChunksConfig } from '@spartacus/assets';
 import { B2cStorefrontModule } from '@spartacus/storefront';
 import { OccConfig } from '@spartacus/core';
-import { environment } from './../environments/environment';
+import { environment } from 'src/environments/environment';
 
 const occConfig: OccConfig = { backend: { occ: {} } };
-
 // only provide the `occ.baseUrl` key if it is explicitly configured, otherwise the value of
 // <meta name="occ-backend-base-url" > is ignored.
-// This in turn breaks the call to the API aspect in public cloud environments
+// This in turn breaks the deployment in CCv2
+// https://github.com/SAP/spartacus/issues/5886
+occConfig.backend.occ.prefix = '/occ/v2/';
 if (environment.occBaseUrl) {
   occConfig.backend.occ.baseUrl = environment.occBaseUrl;
 }
-if (environment.prefix) {
-  occConfig.backend.occ.prefix = environment.prefix;
-}
-else {
-  occConfig.backend.occ.prefix = '/occ/v2/';
-}
-
 @NgModule({
   declarations: [
     AppComponent
@@ -31,9 +25,9 @@ else {
     B2cStorefrontModule.withConfig({
       backend: occConfig.backend,
       context: {
-        urlParameters: ['baseSite', 'language', 'currency'],
-        baseSite: ['electronics-spa'],
-        currency: ['USD', 'GBP',]
+        currency: ['USD'],
+        language: ['en'],
+        baseSite: ['electronics-spa']
       },
       i18n: {
         resources: translations,
@@ -41,10 +35,10 @@ else {
         fallbackLang: 'en'
       },
       features: {
-        level: '2.0'
+        level: '3.1'
       }
     }),
-    BrowserTransferStateModule
+    BrowserTransferStateModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
