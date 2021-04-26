@@ -221,9 +221,13 @@ UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid, $
 UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid, $contentCV)
 ;;BottomHeaderSlot;breadcrumbComponent
 
-# clear BottomHeaderSlot for home page (replaced by an empty slot)
+# put PageTitleComponent into homepage's BottomHeaderSlot
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType;&componentRef
+;;PageTitleComponent;Page Header Component;PageTitleComponent;PageTitleComponent
+
+# replace BottomHeaderSlot by HomepageBottomHeaderSlot in homepage
 INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;cmsComponents(uid, $contentCV)
-;;HomepageBottomHeaderSlot;Homepage Bottom Header Slot;
+;;HomepageBottomHeaderSlot;Homepage Bottom Header Slot;PageTitleComponent
 
 INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV);contentSlot(uid,$contentCV)[unique=true]
 ;;BottomHeaderSlot-homepage;BottomHeaderSlot;homepage;HomepageBottomHeaderSlot
