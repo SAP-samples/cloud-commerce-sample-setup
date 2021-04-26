@@ -29,10 +29,16 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "src/manifest.webmanifest"
+              "src/manifest.webmanifest",
+              {
+                "glob": "**/*",
+                "input": "./node_modules/@spartacus/smartedit/assets",
+                "output": "assets/"
+              }
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "src/styles/spartacus/user.scss"
             ],
             "scripts": []
           },
@@ -96,10 +102,16 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "src/manifest.webmanifest"
+              "src/manifest.webmanifest",
+              {
+                "glob": "**/*",
+                "input": "./node_modules/@spartacus/smartedit/assets",
+                "output": "assets/"
+              }
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "src/styles/spartacus/user.scss"
             ],
             "scripts": []
           }
@@ -178,6 +190,7 @@
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "spartacusstore"
 }
