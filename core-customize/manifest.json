@@ -47,7 +47,7 @@
     "properties": [
         {
             "key": "lang.packs",
-            "value": "de,zh,en"
+            "value": "de,en"
         }
     ],
     "storefrontAddons": [
