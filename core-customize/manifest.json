@@ -20,7 +20,7 @@
                 "persona": "production"
             },
             {
-                "location": "/hybris/config/environments/common.properties"
+                "location": "/hybris/config/local.properties"
              },
              {
                 "aspect": "accstorefront",
