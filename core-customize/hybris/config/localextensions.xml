@@ -52,7 +52,7 @@
     <extension name='backoffice' />
     <extension name='backofficesolrsearch' />
     <extension name='platformbackoffice' />
-
+    <extension name='yacceleratorstorefront' />
     <extension name='basecommerce' />
     <extension name='basecommercebackoffice' />
     <extension name='customerreview' />
