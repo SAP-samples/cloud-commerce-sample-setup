@@ -29,7 +29,7 @@ if (environment.occBaseUrl) {
     context: {
       urlParameters: ['baseSite', 'language', 'currency'],
       baseSite: ['powertools-spa'],
-      currency: ['USD'],
+      currency: ['USD','GPY'],
       language: ['en'],
     },
     i18n: {
