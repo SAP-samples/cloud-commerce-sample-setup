@@ -28,7 +28,7 @@ if (environment.occBaseUrl) {
     },
     context: {
       urlParameters: ['baseSite', 'language', 'currency'],
-      baseSite: ['electronics-spa'],
+      baseSite: ['powertools-spa'],
       currency: ['USD'],
       language: ['en'],
     },
