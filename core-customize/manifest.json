@@ -221,17 +221,12 @@
             "storefront": "yacceleratorstorefront",
             "template": "yacceleratorstorefront"
         },
-		{
-            "addon": "personalizationsearchsamplesaddon",
-            "storefront": "yacceleratorstorefront",
-            "template": "yacceleratorstorefront"
-        },
-		{
+	{
             "addon": "selectivecartsplitlistaddon",
             "storefront": "yacceleratorstorefront",
             "template": "yacceleratorstorefront"
         },
-		{
+	{
             "addon": "promotionenginesamplesaddon",
             "storefront": "yacceleratorstorefront",
             "template": "yacceleratorstorefront"
