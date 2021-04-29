@@ -52,7 +52,7 @@
     <extension name='backoffice' />
     <extension name='backofficesolrsearch' />
     <extension name='platformbackoffice' />
-    <extension name='yacceleratorstorefront' />
+
     <extension name='basecommerce' />
     <extension name='basecommercebackoffice' />
     <extension name='customerreview' />
@@ -69,6 +69,7 @@
     <extension name='merchandisingservicesbackoffice' />
     <extension name='merchandisingsmartedit' />
     <extension name='merchandisingstorefrontsampledataaddon' />
+    
     <extension name='commercefacades' />
     <extension name='commerceservices' />
     <extension name='commerceservicesbackoffice' />
@@ -90,6 +91,7 @@
     <extension name='sapproductconfigruntimeinterface' />
     <extension name='sapproductconfigruntimemock' />
     <extension name='sapproductconfigservices' />
+    <extension name='ysapproductconfigaddon' />
     <extension name='consignmenttrackingaddon' />
     <extension name='consignmenttrackingbackoffice' />
     <extension name='consignmenttrackingfacades' />
@@ -192,6 +194,8 @@
     <extension name='patches' />
     <extension name='springintegrationlibs' />
     <extension name='tomcatembeddedserver' />
+    <extension name='yempty' />
+    <extension name='yvoid' />
     <extension name='promotionenginebackoffice' />
     <extension name='promotionenginesamplesaddon' />
     <extension name='promotionengineservices' />
@@ -250,6 +254,7 @@
     <extension name='permissionsfacades' />
     <extension name='permissionswebservices' />
     <extension name='webservicescommons' />
+    <extension name='ywebservices' />
     <extension name='orbeonweb' />
     <extension name='xyformsbackoffice' />
     <extension name='xyformsfacades' />
@@ -257,6 +262,7 @@
     <extension name='xyformsservices' />
     <extension name='xyformsstorefrontcommons' />
     <extension name='xyformsweb' />
+	  <extension name='yacceleratorstorefront' />
 
 <!-- Sample Extensions
     <extension name='spartacussampledata' /> -->
