@@ -30,7 +30,7 @@ if (environment.occBaseUrl) {
       urlParameters: ['baseSite', 'language', 'currency'],
       baseSite: ['powertools-spa'],
       currency: ['USD','GPY'],
-      language: ['en'],
+      language: ['en','zh'],
     },
     i18n: {
       resources: translations,
