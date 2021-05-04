@@ -349,7 +349,7 @@
 		{
 			"key": "corsfilter.commercewebservices.exposedHeaders",
 			"value": "x-anonymous-consents occ-personalization-id occ-personalization-time"
-		}
+		},
 		{
 			"key": "corsfilter.commercewebservices.allowCredentials",
 			"value": "true"
