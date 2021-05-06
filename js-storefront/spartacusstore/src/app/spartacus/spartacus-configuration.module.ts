@@ -24,13 +24,13 @@ if (environment.occBaseUrl) {
     smartEdit: {
       storefrontPreviewRoute: 'cx-preview',
       //TODO: adjust origins as necessary
-      allowOrigin: 'localhost:9002, *.*.model-t.cc.commerce.ondemand.com:443',
+      allowOrigin: 'localhost:9002, *.*.model-t.cc.commerce.ondemand.com:443, *.*.model-t.cc.commerce.ondemand.com',
     },
     context: {
       urlParameters: ['baseSite', 'language', 'currency'],
-      baseSite: ['electronics-spa'],
-      currency: ['USD'],
-      language: ['en'],
+      baseSite: ['powertools-spa'],
+      currency: ['USD','GPY'],
+      language: ['en','zh'],
     },
     i18n: {
       resources: translations,
