@@ -53,192 +53,192 @@
     "storefrontAddons": [
         {
             "addon": "promotionenginesamplesaddon",
-            "storefront": "yacceleratorstorefront",
+            "storefront": "yb2bacceleratorstorefront",
             "template": "yacceleratorstorefront"
         },
         {
             "addon": "smarteditaddon",
-            "storefront": "yacceleratorstorefront",
+            "storefront": "yb2bacceleratorstorefront",
             "template": "yacceleratorstorefront"
         },
         {
             "addon": "textfieldconfiguratortemplateaddon",
-            "storefront": "yacceleratorstorefront",
+            "storefront": "yb2bacceleratorstorefront",
             "template": "yacceleratorstorefront"
         },
         {
             "addon": "assistedservicestorefront",
-            "storefront": "yacceleratorstorefront",
+            "storefront": "yb2bacceleratorstorefront",
             "template": "yacceleratorstorefront"
         },
         {
             "addon": "assistedservicepromotionaddon",
-            "storefront": "yacceleratorstorefront",
+            "storefront": "yb2bacceleratorstorefront",
             "template": "yacceleratorstorefront"
         },
         {
             "addon": "customerticketingaddon",
-            "storefront": "yacceleratorstorefront",
+            "storefront": "yb2bacceleratorstorefront",
             "template": "yacceleratorstorefront"
         },
 		{
             "addon": "b2bacceleratoraddon",
-            "storefront": "yacceleratorstorefront",
+            "storefront": "yb2bacceleratorstorefront",
             "template": "yacceleratorstorefront"
         },
         {
             "addon": "orderselfserviceaddon",
-            "storefront": "yacceleratorstorefront",
+            "storefront": "yb2bacceleratorstorefront",
             "template": "yacceleratorstorefront"
         },
         {
             "addon": "adaptivesearchsamplesaddon",
-            "storefront": "yacceleratorstorefront",
+            "storefront": "yb2bacceleratorstorefront",
             "template": "yacceleratorstorefront"
         },
         {
             "addon": "multicountrysampledataaddon",
-            "storefront": "yacceleratorstorefront",
+            "storefront": "yb2bacceleratorstorefront",
             "template": "yacceleratorstorefront"
         },
         {
             "addon": "pcmbackofficesamplesaddon",
-            "storefront": "yacceleratorstorefront",
+            "storefront": "yb2bacceleratorstorefront",
             "template": "yacceleratorstorefront"
         },
 		{
             "addon": "assistedservicecustomerinterestsaddon",
-            "storefront": "yacceleratorstorefront",
+            "storefront": "yb2bacceleratorstorefront",
             "template": "yacceleratorstorefront"
         },
 		{
             "addon": "commerceorgaddon",
-            "storefront": "yacceleratorstorefront",
+            "storefront": "yb2bacceleratorstorefront",
             "template": "yacceleratorstorefront"
         },
 		{
             "addon": "commerceorgsamplesaddon",
-            "storefront": "yacceleratorstorefront",
+            "storefront": "yb2bacceleratorstorefront",
             "template": "yacceleratorstorefront"
         },
 		{
             "addon": "accountsummaryaddon",
-            "storefront": "yacceleratorstorefront",
+            "storefront": "yb2bacceleratorstorefront",
             "template": "yacceleratorstorefront"
         },
 		{
             "addon": "b2bpunchoutaddon",
-            "storefront": "yacceleratorstorefront",
+            "storefront": "yb2bacceleratorstorefront",
             "template": "yacceleratorstorefront"
         },
 		{
             "addon": "captchaaddon",
-            "storefront": "yacceleratorstorefront",
+            "storefront": "yb2bacceleratorstorefront",
             "template": "yacceleratorstorefront"
         },
 		{
             "addon": "secureportaladdon",
-            "storefront": "yacceleratorstorefront",
+            "storefront": "yb2bacceleratorstorefront",
             "template": "yacceleratorstorefront"
         },
 		{
             "addon": "multicountrysampledataaddon",
-            "storefront": "yacceleratorstorefront",
+            "storefront": "yb2bacceleratorstorefront",
             "template": "yacceleratorstorefront"
         },
 		{
             "addon": "pcmbackofficesamplesaddon",
-            "storefront": "yacceleratorstorefront",
+            "storefront": "yb2bacceleratorstorefront",
             "template": "yacceleratorstorefront"
         },
 		{
             "addon": "profiletagaddon",
-            "storefront": "yacceleratorstorefront",
+            "storefront": "yb2bacceleratorstorefront",
             "template": "yacceleratorstorefront"
         },
 		{
             "addon": "sapproductconfigb2baddon",
-            "storefront": "yacceleratorstorefront",
+            "storefront": "yb2bacceleratorstorefront",
             "template": "yacceleratorstorefront"
         },
 		{
             "addon": "ordermanagementaddon",
-            "storefront": "yacceleratorstorefront",
+            "storefront": "yb2bacceleratorstorefront",
             "template": "yacceleratorstorefront"
         },
 		{
             "addon": "orderselfserviceaddon",
-            "storefront": "yacceleratorstorefront",
+            "storefront": "yb2bacceleratorstorefront",
             "template": "yacceleratorstorefront"
         },
 		{
             "addon": "merchandisingaddon",
-            "storefront": "yacceleratorstorefront",
+            "storefront": "yb2bacceleratorstorefront",
             "template": "yacceleratorstorefront"
         },
 		{
             "addon": "merchandisingstorefrontsampledataaddon",
-            "storefront": "yacceleratorstorefront",
+            "storefront": "yb2bacceleratorstorefront",
             "template": "yacceleratorstorefront"
         },
 		{
             "addon": "configurablebundleaddon",
-            "storefront": "yacceleratorstorefront",
+            "storefront": "yb2bacceleratorstorefront",
             "template": "yacceleratorstorefront"
         },
 		{
             "addon": "consignmenttrackingaddon",
-            "storefront": "yacceleratorstorefront",
+            "storefront": "yb2bacceleratorstorefront",
             "template": "yacceleratorstorefront"
         },
 		{
             "addon": "customercouponaddon",
-            "storefront": "yacceleratorstorefront",
+            "storefront": "yb2bacceleratorstorefront",
             "template": "yacceleratorstorefront"
         },
 		{
             "addon": "customercouponsamplesaddon",
-            "storefront": "yacceleratorstorefront",
+            "storefront": "yb2bacceleratorstorefront",
             "template": "yacceleratorstorefront"
         },
 		{
             "addon": "customerinterestsaddon",
-            "storefront": "yacceleratorstorefront",
+            "storefront": "yb2bacceleratorstorefront",
             "template": "yacceleratorstorefront"
         },
 		{
             "addon": "customerticketingaddon",
-            "storefront": "yacceleratorstorefront",
+            "storefront": "yb2bacceleratorstorefront",
             "template": "yacceleratorstorefront"
         },
 		{
             "addon": "notificationaddon",
-            "storefront": "yacceleratorstorefront",
+            "storefront": "yb2bacceleratorstorefront",
             "template": "yacceleratorstorefront"
         },
 		{
             "addon": "personalizationsampledataaddon",
-            "storefront": "yacceleratorstorefront",
+            "storefront": "yb2bacceleratorstorefront",
             "template": "yacceleratorstorefront"
         },
 	{
             "addon": "selectivecartsplitlistaddon",
-            "storefront": "yacceleratorstorefront",
+            "storefront": "yb2bacceleratorstorefront",
             "template": "yacceleratorstorefront"
         },
 	{
             "addon": "promotionenginesamplesaddon",
-            "storefront": "yacceleratorstorefront",
+            "storefront": "yb2bacceleratorstorefront",
             "template": "yacceleratorstorefront"
         },
 		{
             "addon": "timedaccesspromotionengineaddon",
-            "storefront": "yacceleratorstorefront",
+            "storefront": "yb2bacceleratorstorefront",
             "template": "yacceleratorstorefront"
         },
         {
             "addon": "personalizationaddon",
-            "storefront": "yacceleratorstorefront",
+            "storefront": "yb2bacceleratorstorefront",
             "template": "yacceleratorstorefront"
         }
     ],
