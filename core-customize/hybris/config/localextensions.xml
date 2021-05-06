@@ -263,7 +263,7 @@
     <extension name='xyformsstorefrontcommons' />
     <extension name='xyformsweb' />
 	  <extension name='yacceleratorstorefront' />
-
+<extension name='yb2bacceleratorstorefront' />
 <!-- Sample Extensions
     <extension name='spartacussampledata' /> -->
 <!--<extension name='kiwi' />
