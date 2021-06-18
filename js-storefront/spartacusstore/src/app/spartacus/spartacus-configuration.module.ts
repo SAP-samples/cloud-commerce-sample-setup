@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { translationChunksConfig, translations } from "@spartacus/assets";
-import { OccConfig } from '@spartacus/core';
-import { provideConfig } from "@spartacus/core";
+import { FeaturesConfig, I18nConfig, OccConfig, provideConfig, SiteContextConfig } from '@spartacus/core';
 import { defaultCmsContentProviders, layoutConfig, mediaConfig } from "@spartacus/storefront";
 import { environment } from 'src/environments/environment';
 
@@ -39,6 +38,21 @@ if (environment.occBaseUrl) {
     },
     features: {
       level: '3.2'
+    }
+  }), provideConfig(<SiteContextConfig>{
+    context: {
+      currency: ['USD'],
+      language: ['en'],
+    },
+  }), provideConfig(<I18nConfig>{
+    i18n: {
+      resources: translations,
+      chunks: translationChunksConfig,
+      fallbackLang: 'en'
+    },
+  }), provideConfig(<FeaturesConfig>{
+    features: {
+      level: '3.4'
     }
   })]
 })

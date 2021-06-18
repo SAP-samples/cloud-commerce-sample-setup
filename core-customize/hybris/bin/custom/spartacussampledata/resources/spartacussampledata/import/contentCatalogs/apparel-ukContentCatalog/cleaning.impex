@@ -51,30 +51,6 @@ REMOVE ContentSlot;$contentCV[unique=true];uid[unique=true]
 REMOVE ContentPage;$contentCV[unique=true];uid[unique=true]
 ;;importCSVSavedCartPage
 
-# Saved Cart Details Page
-REMOVE ContentSlotForPage;$contentCV[unique=true];uid[unique=true]
-;;SideContent-savedCartDetailsPage
-;;BodyContent-savedCartDetailsPage
-
-REMOVE ContentSlot;$contentCV[unique=true];uid[unique=true]
-;;SideContent-savedCartDetailsPage
-;;BodyContent-savedCartDetailsPage
-
-REMOVE ContentPage;$contentCV[unique=true];uid[unique=true]
-;;savedCartDetailsPage
-
-# Account Saved Carts Page
-REMOVE ContentSlotForPage;$contentCV[unique=true];uid[unique=true]
-;;SideContent-saved-carts
-;;BodyContent-saved-carts
-
-REMOVE ContentSlot;$contentCV[unique=true];uid[unique=true]
-;;SideContent-saved-carts
-;;BodyContent-saved-carts
-
-REMOVE ContentPage;$contentCV[unique=true];uid[unique=true]
-;;saved-carts
-
 # Add-Edit address
 REMOVE ContentSlotForPage;$contentCV[unique=true];uid[unique=true]
 ;;SideContent-add-edit-address
@@ -102,15 +78,6 @@ REMOVE ContentSlotName;name[unique=true];template(uid,$contentCV)[unique=true];v
 
 
 ###### Remove unused navigation nodes ######
-# Account navigation nodes
-REMOVE CMSNavigationNode;uid[unique=true];$contentCV[unique=true]
-;SavedCartsNavNode;
-
-REMOVE CMSNavigationEntry;uid[unique=true];$contentCV[unique=true];
-;SavedCartsNavNodeEntry;
-
-REMOVE CMSLinkComponent;$contentCV[unique=true];uid[unique=true]
-;;SavedCartsLink
 
 # Order Navigation nodes
 # component contains the OrderNavNode
@@ -256,7 +223,6 @@ UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid, $
 ;;BodyContentSlot-updatePassword;UpdatePasswordComponent
 ;;BodyContentSlot-update-profile;UpdateProfileComponent
 ;;BodyContent-orderConfirmation;OrderConfirmationThankMessageComponent,OrderConfirmationOverviewComponent,OrderConfirmationItemsComponent,OrderConfirmationShippingComponent,OrderConfirmationTotalsComponent,OrderConfirmationContinueButtonComponent
-;;TopContentSlot-cartPage;CartComponent,SaveForLaterComponent
 ;;CenterLeftContentSlot-cartPage;PromotionsComponent,PotentialPromotionsComponent
 ;;CenterRightContentSlot-cartPage;CartTotalsComponent,CartApplyCouponComponent
 ;;BottomContentSlot-cartPage;CheckoutComponent,CartSuggestions

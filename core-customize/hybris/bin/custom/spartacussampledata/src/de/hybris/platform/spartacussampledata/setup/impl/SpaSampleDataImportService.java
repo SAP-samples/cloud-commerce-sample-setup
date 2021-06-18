@@ -58,6 +58,7 @@ public class SpaSampleDataImportService extends DefaultAddonSampleDataImportServ
 
 			// 4- solr ammendments
 			importImpexFile(context, importRoot + "/productCatalogs/" + catalogName + "ProductCatalog/solr.impex", false);
+
 		}
 
 		// 4- import content catalog from impex
@@ -76,7 +77,9 @@ public class SpaSampleDataImportService extends DefaultAddonSampleDataImportServ
 
 			// 8- import email data
 			importImpexFile(context, importRoot + "/contentCatalogs/" + catalogName + "ContentCatalog/email-content.impex", false);
-			
+
+			// 9 - import test data for each catalog
+			importImpexFile(context, importRoot + STORES_URL + catalogName + "/test-data.impex", false);
 		}
 	}
 

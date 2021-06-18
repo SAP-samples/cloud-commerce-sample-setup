@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
-import { provideConfig } from "@spartacus/core";
-import { SmartEditRootModule } from "@spartacus/smartedit/root";
+import { CmsConfig, provideConfig } from "@spartacus/core";
+import { SmartEditRootModule, SMART_EDIT_FEATURE } from "@spartacus/smartedit/root";
 
 @NgModule({
   declarations: [],
@@ -14,6 +14,15 @@ import { SmartEditRootModule } from "@spartacus/smartedit/root";
           import('@spartacus/smartedit').then((m) => m.SmartEditModule),
       },
     }
-  })]
+  }),
+  provideConfig(<CmsConfig>{
+    featureModules: {
+      [SMART_EDIT_FEATURE]: {
+        module: () =>
+          import('@spartacus/smartedit').then((m) => m.SmartEditModule),
+      },
+    }
+  })
+  ]
 })
 export class SmartEditFeatureModule { }

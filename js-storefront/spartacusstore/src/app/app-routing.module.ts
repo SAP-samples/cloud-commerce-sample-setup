@@ -5,10 +5,10 @@ import { RouterModule } from "@angular/router";
   declarations: [],
   imports: [
     RouterModule.forRoot([], {
-    anchorScrolling: 'enabled',
-    relativeLinkResolution: 'corrected',
-    initialNavigation: 'enabled',
-})
+      anchorScrolling: 'enabled',
+      relativeLinkResolution: 'corrected',
+      initialNavigation: 'enabled',
+    })
   ]
 })
 export class AppRoutingModule { }

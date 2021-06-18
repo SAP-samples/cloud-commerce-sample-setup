@@ -108,6 +108,7 @@ INSERT_UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];name;url
 ;;ContactUsLink;Contact Us Link;/contact;ContactUsLink;ContactUsLink
 ;;WishListLink;Wish List Link;/my-account/wishlist;WishListLink;WishListLink;;loggedInUser
 ;;OrdersLink;Orders Link;/my-account/orders;OrdersLink;OrdersLink;;loggedInUser
+;;SavedCartsLink;Saved Carts Link;/my-account/saved-carts;SavedCartsLink;SavedCartsLink;;loggedInUser
 
 INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(uid,$contentCV)
 ;;SiteLinksSlot;Slot contains some links;true;OrdersLink,WishListLink,StoreFinderLink,ContactUsLink,HelpLink
@@ -200,6 +201,7 @@ INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;pa
 ;NotificationPreferenceNavNode;;Notification Preference Nav Node;MyAccountNavNode;;NotificationPreferenceNavNode
 ;MyInterestsNavNode;;My Interests Nav Node;MyAccountNavNode;;MyInterestsNavNode
 ;MyCouponsNavNode;;Coupons Navigation Node;MyAccountNavNode;;MyCouponsNavNode
+;SavedCartsNavNode;;Saved Carts;MyAccountNavNode;;SavedCartsNavNode
 
 # Create additional cms navigation entries
 INSERT_UPDATE CMSNavigationEntry;uid[unique=true];$contentCV[unique=true];name;navigationNode(&nodeRef);item(&linkRef);
@@ -208,10 +210,11 @@ INSERT_UPDATE CMSNavigationEntry;uid[unique=true];$contentCV[unique=true];name;n
 ;NotificationPreferenceNavNodeEntry;;Notification Preference Nav Node Entry;NotificationPreferenceNavNode;NotificationPreferenceLink
 ;MyInterestsNavNodeEntry;;MyInterests Nav Node Entry;MyInterestsNavNode;MyInterestsLink
 ;MyCouponsNavNodeEntry;;My Coupons Navigation Node Entry;MyCouponsNavNode;MyCouponsLink;
+;SavedCartsNavNodeEntry;;SavedCartsNavNodeEntry;SavedCartsNavNode;SavedCartsLink;
 
 # Set the order or the items in the My Account Menu
 UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];children(uid,$contentCV)
-;MyAccountNavNode;;OrderHistoryNavNode,WishListNavNode,AddressBookNavNode,PaymentDetailsNavNode,PersonalDetailsNavNode,ChangePasswordNavNode,UpdateEmailNavNode,ConsentManagementNavNode,CloseAccountNavNode,MyInterestsNavNode,NotificationPreferenceNavNode,MyCouponsNavNode,SignOutNavNode
+;MyAccountNavNode;;OrderHistoryNavNode,WishListNavNode,SavedCartsNavNode,AddressBookNavNode,PaymentDetailsNavNode,PersonalDetailsNavNode,ChangePasswordNavNode,UpdateEmailNavNode,ConsentManagementNavNode,CloseAccountNavNode,MyInterestsNavNode,NotificationPreferenceNavNode,MyCouponsNavNode,SignOutNavNode
 
 
 ###### Create Forgot/Reset Password Pages and Components ######
@@ -790,3 +793,38 @@ INSERT_UPDATE ElementsForSlot;source($contentCV,uid)[unique=true];target(&compon
 ;VariantConfigOverviewContentSlot;ConfiguratorOverviewForm;
 ;VariantConfigOverviewBottombarSlot;ConfiguratorPriceSummary;10
 ;VariantConfigOverviewBottombarSlot;ConfiguratorAddToCartButton;20
+
+###### Import export ######
+
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType;&componentRef
+;;ExportOrderEntriesComponent;Export Order Entries Component;ExportOrderEntriesComponent;ExportOrderEntriesComponent
+
+###### Saved carts ######
+
+# saved carts (history) and saved carts (details) pages
+INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];label
+;;saved-carts;/my-account/saved-carts
+;;savedCartDetailsPage;/my-account/saved-cart
+
+# saved carts (cart page) button
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType
+;;AddToSavedCartsComponent;Add To Saved Carts Component;AddToSavedCartsComponent
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;cmsComponents(uid, $contentCV)
+;;TopContent-cartPage;Top content for Cart Slot;AddToSavedCartsComponent,CartComponent,SaveForLaterComponent,ExportOrderEntriesComponent
+
+# saved carts (history) page
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType
+;;AccountSavedCartHistoryComponent;Account Saved Cart History Component;AccountSavedCartHistoryComponent
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;cmsComponents(uid, $contentCV)
+;;BodyContent-saved-carts;Body content for Saved Carts History Slot;AccountSavedCartHistoryComponent
+
+# saved carts (details) page
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType
+;;SavedCartDetailsOverviewComponent;Saved Cart Details Overview Component;SavedCartDetailsOverviewComponent
+;;SavedCartDetailsItemsComponent;Saved Cart Details Items Component;SavedCartDetailsItemsComponent
+;;SavedCartDetailsActionComponent;Saved Cart Details Action Component;SavedCartDetailsActionComponent
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;cmsComponents(uid, $contentCV)
+;;BodyContent-savedCartDetailsPage;Body content for Saved Carts Details Slot;SavedCartDetailsOverviewComponent,SavedCartDetailsItemsComponent,ExportOrderEntriesComponent,SavedCartDetailsActionComponent

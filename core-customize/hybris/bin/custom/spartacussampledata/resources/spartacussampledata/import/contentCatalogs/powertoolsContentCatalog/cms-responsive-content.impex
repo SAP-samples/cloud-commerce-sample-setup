@@ -829,12 +829,12 @@ INSERT_UPDATE ContentSlotName;name[unique=true];template(uid,$contentCV)[unique=
 ;VariantConfigBottombar;;CMSFlexComponent;narrow
 ;VariantConfigLoading;;CMSFlexComponent;wide
 
-INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active
-;;VariantConfigHeaderSlot;Variant Configuration Header Slot;true
-;;VariantConfigContentSlot;Variant Configuration Content Slot;true
-;;VariantConfigMenuSlot;Variant Configuration Side Bar Slot;true
-;;VariantConfigBottombarSlot;Variant Configuration Bottom Bar Slot;true
-#;;VariantConfigLoadingContentSlot;Variant Configuration Loading Content Slot;true
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef)
+;;VariantConfigHeaderSlot;Variant Configuration Header Slot;true;ConfiguratorUpdateMessage,ConfiguratorProductTitle,ConfiguratorTabBar
+;;VariantConfigContentSlot;Variant Configuration Content Slot;true;ConfiguratorGroupTitle,ConfiguratorForm,ConfiguratorPrevNext
+;;VariantConfigMenuSlot;Variant Configuration Side Bar Slot;true;ConfiguratorMenu
+;;VariantConfigBottombarSlot;Variant Configuration Bottom Bar Slot;true;ConfiguratorPriceSummary,ConfiguratorAddToCartButton
+
 
 INSERT_UPDATE ContentSlotForTemplate;$contentCV;uid[unique=true];position[unique=true];pageTemplate(uid,$contentCV)[unique=true][default='VariantConfigurationTemplate'];contentSlot(uid,$contentCV)[unique=true];allowOverwrite
 ;;TopHeaderSlot-VariantConfigPage;TopHeaderSlot;;TopHeaderSlot;true
@@ -854,17 +854,6 @@ INSERT_UPDATE ContentSlotForTemplate;$contentCV;uid[unique=true];position[unique
 INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];label;name;masterTemplate(uid,$contentCV);defaultPage;approvalStatus(code)[default='approved']
 ;;variantConfig;/configure/vc;Variant Configuration;VariantConfigurationTemplate;true
 
-INSERT_UPDATE ElementsForSlot;source($contentCV,uid)[unique=true];target(&componentRef)[unique=true];
-;VariantConfigHeaderSlot;ConfiguratorUpdateMessage;
-;VariantConfigHeaderSlot;ConfiguratorProductTitle;
-;VariantConfigHeaderSlot;ConfiguratorTabBar
-;VariantConfigMenuSlot;ConfiguratorMenu
-;VariantConfigContentSlot;ConfiguratorGroupTitle
-;VariantConfigContentSlot;ConfiguratorForm
-;VariantConfigContentSlot;ConfiguratorPrevNext
-;VariantConfigBottombarSlot;ConfiguratorPriceSummary
-;VariantConfigBottombarSlot;ConfiguratorAddToCartButton
-
 INSERT_UPDATE PageTemplate;$contentCV[unique=true];uid[unique=true];name;frontendTemplateName;restrictedPageTypes(code);active[default=true]
 ;;VariantConfigurationOverviewTemplate;Variant Configuration Overview Template;configuration/variantConfigurationOverviewPage;ContentPage
 
@@ -883,13 +872,11 @@ INSERT_UPDATE ContentSlotName;name[unique=true];template(uid,$contentCV)[unique=
 ;VariantConfigOverviewLoading;;CMSFlexComponent;wide
 ;VariantConfigOverviewBanner;;CMSFlexComponent;wide
 
-INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active
-;;VariantConfigOverviewHeaderSlot;Variant Configuration Overview Header Slot;true
-;;VariantConfigOverviewContentSlot;Variant Configuration Overview Content Slot;true
-;;VariantConfigOverviewSidebarSlot;Variant Configuration Overview Side Bar Slot;true
-;;VariantConfigOverviewBottombarSlot;Variant Configuration Overview Bottom Bar Slot;true
-;;VariantConfigOverviewLoadingContentSlot;Variant Configuration Overview Loading Content Slot;true
-;;VariantConfigOverviewBannerContentSlot;Variant Configuration Overview Banner Content Slot;true
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef)
+;;VariantConfigOverviewHeaderSlot;Variant Configuration Overview Header Slot;true;ConfiguratorProductTitle,ConfiguratorTabBar
+;;VariantConfigOverviewContentSlot;Variant Configuration Overview Content Slot;true;ConfiguratorOverviewForm
+;;VariantConfigOverviewBottombarSlot;Variant Configuration Overview Bottom Bar Slot;true;ConfiguratorPriceSummary,ConfiguratorAddToCartButton
+;;VariantConfigOverviewBannerContentSlot;Variant Configuration Overview Banner Content Slot;true;ConfiguratorOverviewBanner
 
 INSERT_UPDATE ContentSlotForTemplate;$contentCV;uid[unique=true];position[unique=true];pageTemplate(uid,$contentCV)[unique=true][default='VariantConfigurationOverviewTemplate'];contentSlot(uid,$contentCV)[unique=true];allowOverwrite
 ;;TopHeaderSlot-VariantConfigOverviewPage;TopHeaderSlot;;TopHeaderSlot;true
@@ -899,23 +886,87 @@ INSERT_UPDATE ContentSlotForTemplate;$contentCV;uid[unique=true];position[unique
 ;;MiniCart-VariantConfigOverviewPage;MiniCart;;MiniCartSlot;true
 ;;NavigationBar-VariantConfigOverviewPage;NavigationBar;;NavigationBarSlot;true
 ;;Footer-VariantConfigOverviewPage;Footer;;FooterSlot;true
-;;ConfigOverviewLoading-VariantConfigOverviewPage;VariantConfigOverviewLoading;;VariantConfigOverviewLoadingContentSlot;true
 ;;ConfigOverviewBanner-VariantConfigOverviewPage;VariantConfigOverviewBanner;;VariantConfigOverviewBannerContentSlot;true
 ;;ConfigOverviewHeader-VariantConfigOverviewPage;VariantConfigOverviewHeader;;VariantConfigOverviewHeaderSlot;true
 ;;ConfigOverviewContent-VariantConfigOverviewPage;VariantConfigOverviewContent;;VariantConfigOverviewContentSlot;true
-;;ConfigOverviewSidebar-VariantConfigOverviewPage;VariantConfigOverviewSidebar;;VariantConfigOverviewSidebarSlot;true
 ;;ConfigOverviewBottombar-VariantConfigOverviewPage;VariantConfigOverviewBottombar;;VariantConfigOverviewBottombarSlot;true
 
 INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];label;name;masterTemplate(uid,$contentCV);defaultPage;approvalStatus(code)[default='approved']
 ;;variantConfigOverview;/configure-overview/vc;Variant Configuration Overview;VariantConfigurationOverviewTemplate;true
 
-INSERT_UPDATE ElementsForSlot;source($contentCV,uid)[unique=true];target(&componentRef)[unique=true];
-;VariantConfigOverviewBannerContentSlot;ConfiguratorOverviewBanner;
-;VariantConfigOverviewHeaderSlot;ConfiguratorProductTitle;
-;VariantConfigOverviewHeaderSlot;ConfiguratorTabBar
-;VariantConfigOverviewContentSlot;ConfiguratorOverviewForm
-;VariantConfigOverviewBottombarSlot;ConfiguratorPriceSummary
-;VariantConfigOverviewBottombarSlot;ConfiguratorAddToCartButton
+###### modules/cpq-product-configuration: CPQ Configurator ######
+
+INSERT_UPDATE PageTemplate;$contentCV[unique=true];uid[unique=true];name;frontendTemplateName;restrictedPageTypes(code);active[default=true]
+;;CpqConfigurationTemplate;CPQ Configuration Template;configuration/cpqConfigurationPage;ContentPage
+
+INSERT_UPDATE ContentSlotName;name[unique=true];template(uid,$contentCV)[unique=true][default='CpqConfigurationTemplate'];validComponentTypes(code);compTypeGroup(code)
+;TopHeaderSlot;;;wide
+;PlaceholderContentSlot;;;wide
+;SiteLogo;;;logo
+;HeaderLinks;;;headerlinks
+;SearchBox;;;searchbox
+;MiniCart;;;minicart
+;NavigationBar;;;navigation
+;Footer;;;footer
+;CpqConfigHeader;;;wide
+;CpqConfigBanner;;;wide
+;CpqConfigBottombar;;;narrow
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active
+;;CpqConfigHeaderSlot;Cpq Configuration Header Slot;true
+;;CpqConfigBottombarSlot;Cpq Configuration Bottom Bar Slot;true
+
+INSERT_UPDATE ContentSlotForTemplate;$contentCV;uid[unique=true];position[unique=true];pageTemplate(uid,$contentCV)[unique=true][default='CpqConfigurationTemplate'];contentSlot(uid,$contentCV)[unique=true];allowOverwrite
+;;TopHeaderSlot-CpqConfigTemplate;TopHeaderSlot;;TopHeaderSlot;true
+;;PlaceholderContentSlot-CpqConfigTemplate;PlaceholderContentSlot;;PlaceholderContentSlot;true
+;;SiteLogo-CpqConfigTemplate;SiteLogo;;SiteLogoSlot;true
+;;HeaderLinks-CpqConfigTemplate;HeaderLinks;;HeaderLinksSlot;true
+;;SearchBox-CpqConfigTemplate;SearchBox;;SearchBoxSlot;true
+;;MiniCart-CpqConfigTemplate;MiniCart;;MiniCartSlot;true
+;;NavigationBar-CpqConfigTemplate;NavigationBar;;NavigationBarSlot;true
+;;Footer-CpqConfigTemplate;Footer;;FooterSlot;true
+;;ConfigHeader-CpqConfigTemplate;CpqConfigHeader;;CpqConfigHeaderSlot;true
+;;ConfigBottombar-CpqConfigTemplate;CpqConfigBottombar;;CpqConfigBottombarSlot;true
+
+INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];label;name;masterTemplate(uid,$contentCV);defaultPage;approvalStatus(code)[default='approved']
+;;cpqConfig;/configure/cpq;CPQ Configurator;CpqConfigurationTemplate;true
+;;cpqConfigOverview;/configure-overview/cpq;CPQ Configuration Overview;CpqConfigurationTemplate;true
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active
+;;CpqConfigBannerContentSlot;CPQ Configuration Banner Content Slot;true
+;;CpqConfigContentSlot;Cpq Configuration Content Slot;true
+;;CpqConfigMenuSlot;Cpq Configuration Side Bar Slot;true
+;;CpqConfigOverviewContentSlot;CPQ Configuration Overview Content Slot;true
+;;CpqConfigOverviewBannerContentSlot;CPQ Configuration Overview Banner Content Slot;true
+
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true];contentSlot(uid,$contentCV)[unique=true]
+;;ConfigBanner-CpqConfigPage;CpqConfigBanner;cpqConfig;CpqConfigBannerContentSlot
+;;ConfigMenu-CpqConfigPage;CpqConfigMenu;cpqConfig;CpqConfigMenuSlot
+;;ConfigContent-CpqConfigPage;CpqConfigContent;cpqConfig;CpqConfigContentSlot
+;;ConfigOverviewBanner-CpqConfigOverviewPage;CpqConfigOverviewBanner;cpqConfigOverview;CpqConfigOverviewBannerContentSlot
+;;ConfigOverviewContent-CpqConfigOverviewPage;CpqConfigOverviewContent;cpqConfigOverview;CpqConfigOverviewContentSlot
+
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];flexType;name;&componentRef
+;;CpqConfiguratorConflictAndErrorMessagesComponent;CpqConfiguratorConflictAndErrorMessagesComponent;CPQ Configuration conflict and error messages;CpqConfiguratorConflictAndErrorMessagesComponent
+
+INSERT_UPDATE ElementsForSlot;source($contentCV,uid)[unique=true];target(&componentRef)[unique=true];sequencenumber[default=10]
+;CpqConfigHeaderSlot;ConfiguratorUpdateMessage;10
+;CpqConfigHeaderSlot;ConfiguratorProductTitle;20
+;CpqConfigHeaderSlot;ConfiguratorTabBar;30
+;CpqConfigBannerContentSlot;CpqConfiguratorConflictAndErrorMessagesComponent;
+;CpqConfigMenuSlot;ConfiguratorMenu;
+;CpqConfigContentSlot;ConfiguratorGroupTitle;10
+;CpqConfigContentSlot;ConfiguratorForm;20
+;CpqConfigContentSlot;ConfiguratorPrevNext;30
+;CpqConfigBottombarSlot;ConfiguratorPriceSummary;10
+;CpqConfigBottombarSlot;ConfiguratorAddToCartButton;20
+;CpqConfigOverviewBannerContentSlot;ConfiguratorOverviewBanner;
+;CpqConfigOverviewContentSlot;ConfiguratorOverviewForm;
+
+###### Import export ######
+
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType;&componentRef
+;;ExportOrderEntriesComponent;Export Order Entries Component;ExportOrderEntriesComponent;ExportOrderEntriesComponent
 
 ###### Saved carts ######
 # my-account dropdown for saved carts
@@ -932,7 +983,7 @@ INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;fle
 ;;AddToSavedCartsComponent;Add To Saved Carts Component;AddToSavedCartsComponent
 
 INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;cmsComponents(uid, $contentCV)
-;;TopContent-cartPage;Top content for Cart Slot;AddToSavedCartsComponent,CartComponent
+;;TopContent-cartPage;Top content for Cart Slot;AddToSavedCartsComponent,CartComponent,ExportOrderEntriesComponent
 
 # saved carts (history) page
 INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType
@@ -948,5 +999,4 @@ INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;fle
 ;;SavedCartDetailsActionComponent;Saved Cart Details Action Component;SavedCartDetailsActionComponent
 
 INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;cmsComponents(uid, $contentCV)
-;;BodyContent-savedCartDetailsPage;Body content for Saved Carts Details Slot;SavedCartDetailsOverviewComponent,SavedCartDetailsItemsComponent,SavedCartDetailsActionComponent
-
+;;BodyContent-savedCartDetailsPage;Body content for Saved Carts Details Slot;SavedCartDetailsOverviewComponent,SavedCartDetailsItemsComponent,ExportOrderEntriesComponent,SavedCartDetailsActionComponent

@@ -7,12 +7,12 @@ $contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCata
 
 ## B2B USER
 
-INSERT_UPDATE B2BCustomer;groups(uid);uid[unique=true];name;customerID;email;title(code);password[default='Password123.'];
-;Custom Retail,b2bcustomergroup,limitedPermissions,standardPermissions;powertools-test-user-with-orders@ydev.hybris.com;Powertools Test User;powertools-test-user-with-orders@ydev.hybris.com;powertools-test-user-with-orders@ydev.hybris.com;mr;
+INSERT_UPDATE B2BCustomer;groups(uid);uid[unique=true];name;customerID;email;title(code);
+;Custom Retail,b2bcustomergroup,limitedPermissions,standardPermissions;powertools-test-user-with-orders@sap.cx.com;Powertools Test User;powertools-test-user-with-orders@sap.cx.com;powertools-test-user-with-orders@sap.cx.com;mr;
 
 # Address created for Credit Card payment
 INSERT_UPDATE Address;owner(Customer.uid)[unique=true];streetname[unique=true];postalcode;town[default='Washington'];region(isocode)[default='US-WA'];country(isocode)[default='US'];shippingAddress[default=true];firstname;lastname;title(code)[default='mr']
-;powertools-test-user-with-orders@ydev.hybris.com;Address line10;123abc;;;;;Powertools;User;
+;powertools-test-user-with-orders@sap.cx.com;Address line10;123abc;;;;;Powertools;User;
 
 # Address created for Account payment
 INSERT_UPDATE Address;owner(B2BUnit.uid)[unique=true];streetname[unique=true];postalcode;town[default='Washington'];region(isocode)[default='US-WA'];country(isocode)[default='US'];shippingAddress[default=true];firstname;lastname;title(code)[default='mr']
