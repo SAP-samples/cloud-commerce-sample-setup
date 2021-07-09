@@ -10,7 +10,7 @@ When your files are ready, push them to your SAP Commerce Cloud repository.
 
 - You have a public-facing code repository.
 - You have an active SAP Commerce Cloud subscription.
-- You have a license for SAP Commerce version 1808 or higher.
+- You have a license for a [supported SAP Commerce release](https://help.sap.com/viewer/dc198ac31ba24dce96149c8480be955f/latest/en-US/1c6c687ad0ed4964bb43d409818d23a2.html)
 - You have not set up SAP Commerce Cloud yet.
 
 # Supported Versions
