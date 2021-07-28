@@ -1,0 +1,70 @@
+@media print {
+
+  // hide href from bootstrap default
+  a[href]:after {
+    content: "";
+  }
+
+  abbr[title]:after {
+    content: "";
+  }
+
+  .breadcrumb-section {
+    border-top: 2px solid @nav-border-color;
+    border-bottom: 2px solid @nav-border-color;
+  }
+
+  // reset cols
+  .make-grid(xs);
+  .make-grid(md);
+  .make-grid(sm);
+
+  .footer__left {
+    width: 100%;
+  }
+  .footer__right {
+    display: none;
+  }
+
+  //home
+  .owl-wrapper {
+    width: 100% !important;
+  }
+  .owl-carousel .owl-wrapper-outer .owl-wrapper .owl-item {
+    width: 25%!important;
+    display: none!important;
+  }
+  .owl-carousel .owl-wrapper-outer .owl-wrapper .owl-item:nth-child(-n+4) {
+    display: block!important;
+  }
+  .owl-controls {
+    display: none!important;
+  }
+
+
+  //cart page
+  .cart-voucher,
+  .cart-actions--print {
+    width: 100% !important;
+  }
+
+
+  //product detail page
+  .image-gallery__image,
+  .image-gallery__image .owl-wrapper,
+  .image-gallery__image .owl-wrapper .owl-item {
+    width: 190%!important;
+  }
+  .tabs .tabhead + .tabbody {
+    display: block!important;
+  }
+
+  .back-link .label {
+    border: 0;
+  }
+
+  .carousel-component {
+    overflow: hidden;
+    height: 320px;
+  }
+}

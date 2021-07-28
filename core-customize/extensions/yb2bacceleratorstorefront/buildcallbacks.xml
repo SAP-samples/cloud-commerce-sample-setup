@@ -1,0 +1,1115 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+--><!--
+ All hybris buildcallbacks.xml macrodefinitions:
+
+ Build/Documentation
+
+	 before/after ant macro "clean"
+		 <macrodef name="yb2bacceleratorstorefront_before_clean"/>
+		 <macrodef name="yb2bacceleratorstorefront_after_clean"/>
+
+	 before/after ant macro "build"
+		 <macrodef name="yb2bacceleratorstorefront_before_build"/>
+		 <macrodef name="yb2bacceleratorstorefront_after_build"/>
+
+	 before/after ant macro "compile_core" - the core module of the extension
+		 <macrodef name="yb2bacceleratorstorefront_before_compile_core">
+		 <macrodef name="yb2bacceleratorstorefront_after_compile_core">
+
+	 before/after ant macro "compile_web" - the web module of the extension
+		 <macrodef name="yb2bacceleratorstorefront_before_compile_web" />
+		 <macrodef name="yb2bacceleratorstorefront_after_compile_web" />
+
+ Preparing extension
+
+	 will be called in the beginning of the ant call and only once (also when using multiple 
+	 ant targets e.g. ant build yunittest)
+		 <macrodef name="yb2bacceleratorstorefront_only_once_prepare"/>
+
+ Creating ear module/production
+
+	 before/after ant macro "ear"
+		 <macrodef name="yb2bacceleratorstorefront_before_ear"/>
+		 <macrodef name="yb2bacceleratorstorefront_after_ear"/>
+
+	 before/after ant macro "production" - for hybris server only
+		 <macrodef name="yb2bacceleratorstorefront_before_production" />
+		 <macrodef name="yb2bacceleratorstorefront_after_production" />
+
+ JUnit Test
+
+	 before/after ant macro "yunitinit" 
+		 <macrodef name="yb2bacceleratorstorefront_before_yunitinit" />
+		 <macrodef name="yb2bacceleratorstorefront_after_yunitinit" />
+
+	 before/after ant macro "yunit"
+		 <macrodef name="yb2bacceleratorstorefront_before_yunit" />
+		 <macrodef name="yb2bacceleratorstorefront_after_yunit" /> 
+
+ Distribution package
+
+	 before/after ant macro "dist" - internal target; only for use when platform is available in source code
+		 <macrodef name="yb2bacceleratorstorefront_after_dist"/>
+		 <macrodef name="yb2bacceleratorstorefront_before_dist"/>
+
+	 before/after ant macro "dist_copy" - internal target; only for use when platform is available in source code
+		 <macrodef name="yb2bacceleratorstorefront_before_dist_copy"/>
+		 <macrodef name="yb2bacceleratorstorefront_after_dist_copy"/>
+
+--><project name="yb2bacceleratorstorefront_buildcallbacks">
+    	
+    <property location="${ext.yb2bacceleratorstorefront.path}/web/webroot/WEB-INF/lib/less-rhino-1.7.3.js" name="tool.less"/>
+    	
+    <property location="${ext.yb2bacceleratorstorefront.path}/web/webroot/WEB-INF/lib/lessc-rhino-1.7.3.js" name="tool.lessc"/>
+    	
+    <property location="${ext.yb2bacceleratorstorefront.path}/web/webroot/WEB-INF/lib/rhino-1.7.7.jar" name="tool.rhino"/>
+    	
+    <property location="${ext.yb2bacceleratorstorefront.path}" name="ext.yb2bacceleratorstorefront.mapperToPath"/>
+    	
+    <property name="yb2bacceleratorstorefront.wro.addons.template.path" value="${ext.yb2bacceleratorstorefront.path}/wro_addons_template.xml"/>
+    	
+    <property name="yb2bacceleratorstorefront.wro.addons.dest.path" value="${ext.yb2bacceleratorstorefront.path}/resources/wro_addons.xml"/>
+    	
+    <property name="yb2bacceleratorstorefront.wro.group.node" value="&lt;groups xmlns=&quot;http://www.isdc.ro/wro&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xsi:schemaLocation=&quot;http://www.isdc.ro/wro wro.xsd&quot;&gt;"/>
+    	
+    <if>
+        		
+        <os family="windows"/>
+        		
+        <then>
+            			
+            <propertyregex global="true" input="${ext.yb2bacceleratorstorefront.path}" override="yes" property="ext.yb2bacceleratorstorefront.mapperToPath" regexp="\\" replace="/"/>
+            		
+        </then>
+        	
+    </if>
+    	
+    <!-- The following macros and targets are used to create a new responsive theme based on an existing one (i.e. alpha or lambda) -->
+    	
+    <target description="Adds a new responsive theme based on an existing responsive source theme" name="yb2bacceleratorstorefront_responsive_theme_setup">
+        		
+        <yb2bacceleratorstorefront_responsive_theme_setup/>
+        	
+    </target>
+    	
+    <macrodef name="yb2bacceleratorstorefront_check_responsive_theme_setup_parameters">
+        		
+        <sequential>
+            			
+            <var name="themeSetupCommand" value="ant yb2bacceleratorstorefront_responsive_theme_setup -DsourceThemeCode=code1 -DtargetThemeCode=code2"/>
+            			
+            <!-- check if sourceThemeCode is set -->
+            			
+            <if>
+                				
+                <not>
+                    					
+                    <isset property="sourceThemeCode"/>
+                    				
+                </not>
+                				
+                <then>
+                    					
+                    <input addproperty="sourceThemeCode">Please enter the code of the responsive source theme</input>
+                    				
+                </then>
+                			
+            </if>
+            			
+            <!-- check if sourceThemeCode is not empty -->
+            			
+            <if>
+                				
+                <and>
+                    					
+                    <equals arg1="${sourceThemeCode}" arg2=""/>
+                    				
+                </and>
+                				
+                <then>
+                    					
+                    <fail message="Source theme's code cannot be empty. Enter correct code or set 'sourceThemeCode' in command line : ${themeSetupCommand}"/>
+                    				
+                </then>
+                			
+            </if>
+            			
+            <if>
+                				
+                <not>
+                    					
+                    <available file="${ext.yb2bacceleratorstorefront.path}/web/webroot/WEB-INF/_ui-src/responsive/themes/${sourceThemeCode}"/>
+                    				
+                </not>
+                				
+                <then>
+                    					
+                    <fail message="Source theme must be an existing responsive theme."/>
+                    				
+                </then>
+                			
+            </if>
+            			
+            <!-- check if targetThemeCode is set -->
+            			
+            <if>
+                				
+                <not>
+                    					
+                    <isset property="targetThemeCode"/>
+                    				
+                </not>
+                				
+                <then>
+                    					
+                    <input addproperty="targetThemeCode">Please enter the code of the new responsive theme.</input>
+                    				
+                </then>
+                			
+            </if>
+            			
+            <!-- check if targetThemeCode is not empty -->
+            			
+            <if>
+                				
+                <and>
+                    					
+                    <equals arg1="${targetThemeCode}" arg2=""/>
+                    				
+                </and>
+                				
+                <then>
+                    					
+                    <fail message="New theme's code cannot be empty. Enter correct code or set 'targetThemeCode' in command line : ${themeSetupCommand}"/>
+                    				
+                </then>
+                			
+            </if>
+            			
+            <if>
+                				
+                <available file="${ext.yb2bacceleratorstorefront.path}/web/webroot/WEB-INF/_ui-src/responsive/themes/${targetThemeCode}"/>
+                				
+                <then>
+                    					
+                    <fail message="New theme seems to already exist."/>
+                    				
+                </then>
+                			
+            </if>
+            		
+        </sequential>
+        	
+    </macrodef>
+    	
+    <macrodef name="yb2bacceleratorstorefront_responsive_theme_setup">
+        		
+        <sequential>
+            			
+            <yb2bacceleratorstorefront_check_responsive_theme_setup_parameters/>
+            			
+            <yb2bacceleratorstorefront_sync_responsive_theme isThemeSync="false" sourceCode="${sourceThemeCode}" targetCode="${targetThemeCode}"/>
+            			
+            <xmltask dest="${ext.yb2bacceleratorstorefront.path}/web/webroot/WEB-INF/wro.xml" omitHeader="true" source="${ext.yb2bacceleratorstorefront.path}/web/webroot/WEB-INF/wro.xml">
+                				
+                <remove path="/*[local-name()='groups']/*[local-name()='group'][@name='${targetThemeCode}_responsive']"/>
+                				
+                <insert path="/*[local-name()='groups']">
+                    					
+                    <![CDATA[
+						<group name="${targetThemeCode}_responsive" xmlns="http://www.isdc.ro/wro">
+							<css>/_ui/responsive/theme-${targetThemeCode}/css/style.css</css>
+						</group>
+					]]>
+                    				
+                </insert>
+                			
+            </xmltask>
+            		
+        </sequential>
+        	
+    </macrodef>
+    	
+    <macrodef name="yb2bacceleratorstorefront_sync_responsive_theme">
+        		
+        <attribute name="sourceCode"/>
+        		
+        <attribute name="targetCode"/>
+        		
+        <attribute default="true" name="isThemeSync"/>
+        		
+        <sequential>
+            			
+            <if>
+                				
+                <available file="${ext.yb2bacceleratorstorefront.path}/web/webroot/WEB-INF/_ui-src/responsive/themes/@{sourceCode}" type="dir"/>
+                				
+                <then>
+                    					
+                    <touchFutureTimestamp distDir="${ext.yb2bacceleratorstorefront.path}/web/webroot/WEB-INF/_ui-src/responsive/themes/@{targetCode}"/>
+                    					
+                    <sync todir="${ext.yb2bacceleratorstorefront.path}/web/webroot/WEB-INF/_ui-src/responsive/themes/@{targetCode}">
+                        						
+                        <fileset dir="${ext.yb2bacceleratorstorefront.path}/web/webroot/WEB-INF/_ui-src/responsive/themes/@{sourceCode}" erroronmissingdir="false"/>
+                        					
+                    </sync>
+                    				
+                </then>
+                			
+            </if>
+            			
+            <property name="theme.img.key.list" value="img.favIcon,img.iconArrowCategoryTile,img.missingProductImage.responsive.product,img.missingProductImage.responsive.thumbnail,img.missingProductImage.responsive.cartIcon,img.missingProductImage.responsive.styleSwatch,img.spinner"/>
+            			
+            <propertyregex input="${theme.img.key.list}" property="theme.img.regexp" regexp="," replace="=|"/>
+            			
+            <copy overwrite="true" todir="${ext.yb2bacceleratorstorefront.path}/web/webroot/WEB-INF/messages">
+                				
+                <fileset dir="${ext.yb2bacceleratorstorefront.path}/web/webroot/WEB-INF/messages" includes="theme-@{sourceCode}-desktop_*.properties"/>
+                				
+                <regexpmapper from="theme-(.*)-desktop_(.*).properties" to="theme-@{targetCode}-desktop_\2.properties"/>
+                				
+                <filterchain>
+                    					
+                    <filterreader classname="org.apache.tools.ant.filters.LineContainsRegExp">
+                        						
+                        <param type="regexp" value="${theme.img.regexp}="/>
+                        					
+                    </filterreader>
+                    					
+                    <filterreader classname="org.apache.tools.ant.filters.ReplaceTokens">
+                        						
+                        <param name="begintoken" type="tokenchar" value="/"/>
+                        						
+                        <param name="endtoken" type="tokenchar" value="/"/>
+                        						
+                        <param name="desktop" type="token" value="/responsive/"/>
+                        					
+                    </filterreader>
+                    					
+                    <filterreader classname="org.apache.tools.ant.filters.ReplaceTokens">
+                        						
+                        <param name="begintoken" type="tokenchar" value="/"/>
+                        						
+                        <param name="endtoken" type="tokenchar" value="/"/>
+                        						
+                        <param name="theme-@{sourceCode}" type="token" value="/theme-@{targetCode}/"/>
+                        					
+                    </filterreader>
+                    				
+                </filterchain>
+                			
+            </copy>
+            			
+            <for param="messageResource">
+                				
+                <path>
+                    					
+                    <fileset dir="${ext.yb2bacceleratorstorefront.path}/web/webroot/WEB-INF/messages" includes="theme-@{targetCode}-desktop_*.properties"/>
+                    				
+                </path>
+                				
+                <sequential>
+                    					
+                    <loadproperties srcFile="@{messageResource}"/>
+                    					
+                    <for list="${theme.img.key.list}" param="imageFileKey">
+                        						
+                        <sequential>
+                            							
+                            <propertycopy from="@{imageFileKey}" name="theme.@{imageFileKey}"/>
+                            							
+                            <if>
+                                								
+                                <istrue value="@{isThemeSync}"/>
+                                								
+                                <then>
+                                    									
+                                    <propertyregex input="${@{imageFileKey}}" override="true" property="@{imageFileKey}" regexp="/responsive/" replace="/desktop/"/>
+                                    								
+                                </then>
+                                							
+                            </if>
+                            							
+                            <propertyregex input="${@{imageFileKey}}" override="true" property="@{imageFileKey}" regexp="/theme-@{targetCode}/" replace="/theme-@{sourceCode}/"/>
+                            							
+                            <echo>copy from: ${@{imageFileKey}} to: ${theme.@{imageFileKey}}</echo>
+                            							
+                            <copy failonerror="false" file="${ext.yb2bacceleratorstorefront.path}/web/webroot${@{imageFileKey}}" quiet="true" tofile="${ext.yb2bacceleratorstorefront.path}/web/webroot${theme.@{imageFileKey}}"/>
+                            							
+                            <var name="theme.@{imageFileKey}" unset="true"/>
+                            							
+                            <var name="@{imageFileKey}" unset="true"/>
+                            						
+                        </sequential>
+                        					
+                    </for>
+                    				
+                </sequential>
+                			
+            </for>
+            		
+        </sequential>
+        	
+    </macrodef>
+    	
+    <!-- end of macros & targets for creating a new responsive theme -->
+    	
+    <macrodef name="yb2bacceleratorstorefront_lesscss">
+        		
+        <sequential>
+            			
+            <copy todir="${ext.yb2bacceleratorstorefront.path}/web/webroot/_ui/responsive/">
+                					
+                <fileset dir="${ext.yb2bacceleratorstorefront.path}/web/webroot/WEB-INF/_ui-src/responsive/" includes="themes/*"/>
+                					
+                <regexpmapper from="themes/(.*)" handledirsep="yes" to="theme-\1/css"/>
+                			
+            </copy>
+            			
+            <apply dir="${ext.yb2bacceleratorstorefront.path}/web/webroot/WEB-INF/_ui-src/responsive/themes/" executable="java" failonerror="true" force="true" parallel="false">
+                				
+                <!-- Give the input bundle of less files-->
+                				
+                <fileset dir="${ext.yb2bacceleratorstorefront.path}/web/webroot/WEB-INF/_ui-src/responsive/themes/">
+                    					
+                    <include name="**/style.less"/>
+                    				
+                </fileset>
+                				
+                <arg value="-jar"/>
+                				
+                <arg path="${tool.rhino}"/>
+                				
+                <arg value="-f"/>
+                				
+                <arg path="${tool.less}"/>
+                				
+                <arg path="${tool.lessc}"/>
+                				
+                <srcfile/>
+                				
+                <!-- Output the compiled css file with corresponding name -->
+                				
+                <regexpmapper from="(.*)/less/(.*)\.less$$" handledirsep="yes" to="${ext.yb2bacceleratorstorefront.mapperToPath}/web/webroot/_ui/responsive/theme-\1/css/\2.css"/>
+                				
+                <targetfile/>
+                			
+            </apply>
+            		
+        </sequential>
+        	
+    </macrodef>
+    	
+    <macrodef name="yb2bacceleratorstorefront_movelibs">
+        		
+        <sequential>
+            			
+            <copy todir="${ext.yb2bacceleratorstorefront.path}/web/webroot/_ui/responsive/common/bootstrap">
+                				
+                <fileset dir="${ext.yb2bacceleratorstorefront.path}/web/webroot/WEB-INF/_ui-src/responsive/lib/bootstrap-3.3.7" includes="**"/>
+                			
+            </copy>
+            			
+            <copy overwrite="true" todir="${ext.yb2bacceleratorstorefront.path}/web/webroot/_ui/responsive/common/js">
+                				
+                <fileset dir="${ext.yb2bacceleratorstorefront.path}/web/webroot/WEB-INF/_ui-src/responsive/lib/common" includes="**"/>
+                			
+            </copy>
+            			
+            <copy overwrite="true" todir="${ext.yb2bacceleratorstorefront.path}/web/webroot/_ui/responsive/common/js">
+                				
+                <fileset dir="${ext.yb2bacceleratorstorefront.path}/web/webroot/WEB-INF/_ui-src/responsive/lib/ybase-0.1.0/js" includes="**"/>
+                			
+            </copy>
+            			
+            <copy todir="${ext.yb2bacceleratorstorefront.path}/web/webroot/_ui/responsive/">
+                				
+                <fileset dir="${ext.yb2bacceleratorstorefront.path}/web/webroot/WEB-INF/_ui-src/responsive/" includes="themes/**/fonts/*"/>
+                				
+                <regexpmapper from="themes/(.*)/fonts/(.*)" handledirsep="yes" to="theme-\1/fonts/\2"/>
+                        
+			
+            </copy>
+            			
+            <copy overwrite="true" todir="${ext.yb2bacceleratorstorefront.path}/web/webroot/_ui/shared/js">
+                				
+                <fileset dir="${ext.yb2bacceleratorstorefront.path}/web/webroot/WEB-INF/_ui-src/shared/js" includes="**"/>
+                			
+            </copy>
+            		
+        </sequential>
+        	
+    </macrodef>
+    	
+    <macrodef name="yb2bacceleratorstorefront_generatevariables">
+        		
+        <sequential>
+            			
+            <uptodate property="updates" targetfile="${ext.yb2bacceleratorstorefront.path}/resources/generateVariables.properties" value="true">
+                				
+                <srcfiles file="${ext.yb2bacceleratorstorefront.path}/web/webroot/WEB-INF/tags/shared/variables/generatedVariables.tag"/>
+                				
+                <srcfiles file="${ext.yb2bacceleratorstorefront.path}/web/webroot/_ui/shared/js/generatedVariables.js"/>
+                				
+                <srcfiles file="${ext.yb2bacceleratorstorefront.path}/web/webroot/WEB-INF/_ui-src/shared/less/generatedVariables.less"/>
+                			
+            </uptodate>
+            			
+            <if>
+                				
+                <equals arg1="${updates}" arg2="true"/>
+                				
+                <then>
+                    					
+                    <concat destfile="${ext.yb2bacceleratorstorefront.path}/web/webroot/WEB-INF/tags/shared/variables/generatedVariables.tag" overwrite="no">
+                        						
+                        <string>&lt;%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %&gt;
+</string>
+                        						
+                        <filelist dir="${ext.yb2bacceleratorstorefront.path}/resources" files="generateVariables.properties"/>
+                        					
+                    </concat>
+                    					
+                    <replaceregexp byline="true" file="${ext.yb2bacceleratorstorefront.path}/web/webroot/WEB-INF/tags/shared/variables/generatedVariables.tag" match="^(?!&lt;%@)(.*)=(.*)" replace="&lt;c:set var=&quot;\1&quot; value=&quot;\2&quot; scope=&quot;session&quot;/&gt;"/>
+                    					
+                    <concat destfile="${ext.yb2bacceleratorstorefront.path}/web/webroot/_ui/shared/js/generatedVariables.js" overwrite="yes">
+                        						
+                        <filelist dir="${ext.yb2bacceleratorstorefront.path}/resources" files="generateVariables.properties"/>
+                        					
+                    </concat>
+                    					
+                    <replaceregexp byline="true" file="${ext.yb2bacceleratorstorefront.path}/web/webroot/_ui/shared/js/generatedVariables.js" match="(.*)=(.*)" replace="var \1=&quot;\2&quot;;"/>
+                    					
+                    <concat destfile="${ext.yb2bacceleratorstorefront.path}/web/webroot/WEB-INF/_ui-src/shared/less/generatedVariables.less" overwrite="no">
+                        						
+                        <filelist dir="${ext.yb2bacceleratorstorefront.path}/resources" files="generateVariables.properties"/>
+                        					
+                    </concat>
+                    					
+					
+                    <replaceregexp byline="true" file="${ext.yb2bacceleratorstorefront.path}/web/webroot/WEB-INF/_ui-src/shared/less/generatedVariables.less" match="(.*)=(.*)" replace="@\1:\2;"/>
+                    				
+                </then>
+                			
+            </if>
+            		
+        </sequential>
+        	
+    </macrodef>
+    	
+    <macrodef name="yb2bacceleratorstorefront_after_build">
+        		
+        <sequential>
+            			
+            <echo message="yb2bacceleratorstorefront_after_build"/>
+            			
+            <impexGenerate extname="yb2bacceleratorstorefront"/>
+            			
+            <containsExact separator=";" string="${extension.names}" substring="addonsupport">
+                				
+                <do>
+                    					
+                    <var name="addonTestsrcDirs" value=""/>
+                    					
+                    <sequential>
+                        						
+                        <foreachext>
+                            							
+                            <do>
+                                								
+                                <sequential>
+                                    									
+                                    <for delimiter=";" list="${addon.folder}" param="addOnFile">
+                                        										
+                                        <sequential>
+                                            											
+                                            <if>
+                                                												
+                                                <available file="${ext.@{extname}.path}/acceleratoraddon/@{addOnFile}"/>
+                                                												
+                                                <then>
+                                                    													
+                                                    <copyAddOnToExtension addonextension="@{extname}" addonresource="@{addOnFile}" target="yb2bacceleratorstorefront"/>
+                                                    												
+                                                </then>
+                                                											
+                                            </if>
+                                            										
+                                        </sequential>
+                                        									
+                                    </for>
+                                    									
+                                    <if>
+                                        										
+                                        <available file="${ext.yb2bacceleratorstorefront.path}/web/addontestsrc/@{extname}"/>
+                                        										
+                                        <then>
+                                            											
+                                            <if>
+                                                												
+                                                <equals arg1="${addonTestsrcDirs}" arg2=""/>
+                                                												
+                                                <then>
+                                                    													
+                                                    <var name="addonTestsrcDirs" value="addontestsrc/@{extname}"/>
+                                                    												
+                                                </then>
+                                                												
+                                                <else>
+                                                    													
+                                                    <var name="addonTestsrcDirs" value="${addonTestsrcDirs},addontestsrc/@{extname}"/>
+                                                    												
+                                                </else>
+                                                											
+                                            </if>
+                                            										
+                                        </then>
+                                        									
+                                    </if>
+                                    								
+                                </sequential>
+                                								
+                                <yb2bacceleratorstorefront_generate_wro_addons_xml extname="@{extname}"/>
+                                							
+                            </do>
+                            						
+                        </foreachext>
+                        						
+                        <!-- Create TestClasses Files -->
+                        						
+                        <if>
+                            							
+                            <not>
+                                								
+                                <equals arg1="${addonTestsrcDirs}" arg2=""/>
+                                							
+                            </not>
+                            							
+                            <then>
+                                								
+                                <outofdate>
+                                    									
+                                    <sourcefiles>
+                                        										
+                                        <fileset dir="${ext.yb2bacceleratorstorefront.path}">
+                                            											
+                                            <include name="web/addontestsrc/**"/>
+                                            										
+                                        </fileset>
+                                        									
+                                    </sourcefiles>
+                                    									
+                                    <targetfiles path="${HYBRIS_TEMP_DIR}/touch/yb2bacceleratorstorefront_addontestsrctouch"/>
+                                    									
+                                    <sequential>
+                                        										
+                                        <mkdir dir="${ext.yb2bacceleratorstorefront.path}/resources/yb2bacceleratorstorefront"/>
+                                        										
+                                        <testClassesScanner extension="yb2bacceleratorstorefront" fileExtensions="java,groovy,${ext.yb2bacceleratorstorefront.native.file.extension}" testSourceFolders="testsrc,${ext.yb2bacceleratorstorefront.additional.testsrc.dir},${addonTestsrcDirs}"/>
+                                        										
+                                        <mkdir dir="${HYBRIS_TEMP_DIR}/touch"/>
+                                        										
+                                        <touch file="${HYBRIS_TEMP_DIR}/touch/yb2bacceleratorstorefront_addontestsrctouch"/>
+                                        									
+                                    </sequential>
+                                    								
+                                </outofdate>
+                                							
+                            </then>
+                            						
+                        </if>
+                        					
+                    </sequential>
+                    				
+                </do>
+                			
+            </containsExact>
+            			
+            <yb2bacceleratorstorefront_compileuisrc_executor/>
+            			
+            <yb2bacceleratorstorefront_create_empty_wro_addons_xml/>
+            			
+            <yb2bacceleratorstorefront_fix_root_node_for_wro_addons_xml/>
+            		
+        </sequential>
+        	
+    </macrodef>
+    	
+    <macrodef name="yb2bacceleratorstorefront_before_build">
+        		
+        <sequential>
+            			
+            <echo message="yb2bacceleratorstorefront_before_build"/>
+            			
+            <yb2bacceleratorstorefront_generatevariables/>
+            			
+            <yb2bacceleratorstorefront_delete_wro_addons_xml/>
+            			
+            <foreachext>
+                				
+                <do>
+                    					
+                    <if>
+                        						
+                        <available file="${ext.@{extname}.path}/commonweb"/>
+                        						
+                        <then>
+                            							
+                            <echo message="Found commonweb extension:  @{extname}"/>
+                            							
+                            <copyCommonWebToExtension commonwebextension="@{extname}" commonwebresource="/src" target="yb2bacceleratorstorefront"/>
+                            						
+                        </then>
+                        					
+                    </if>
+                    				
+                </do>
+                			
+            </foreachext>
+            		
+        </sequential>
+        	
+    </macrodef>
+    	
+    <macrodef name="yb2bacceleratorstorefront_delete_wro_addons_xml">
+        		
+        <sequential>
+            			
+            <if>
+                				
+                <available file="${yb2bacceleratorstorefront.wro.addons.dest.path}"/>
+                				
+                <then>
+                    					
+                    <delete failonerror="false" file="${yb2bacceleratorstorefront.wro.addons.dest.path}"/>
+                    				
+                </then>
+                			
+            </if>
+            		
+        </sequential>
+        	
+    </macrodef>
+    	
+    <macrodef name="yb2bacceleratorstorefront_create_empty_wro_addons_xml">
+        		
+        <sequential>
+            			
+            <if>
+                				
+                <not>
+                    					
+                    <available file="${yb2bacceleratorstorefront.wro.addons.dest.path}"/>
+                    				
+                </not>
+                				
+                <then>
+                    					
+                    <echo> *** ${yb2bacceleratorstorefront.wro.addons.dest.path} not found, creating an empty one from the template... ***</echo>
+                    					
+                    <copy file="${yb2bacceleratorstorefront.wro.addons.template.path}" tofile="${yb2bacceleratorstorefront.wro.addons.dest.path}"/>
+                    				
+                </then>
+                			
+            </if>
+            		
+        </sequential>
+        	
+    </macrodef>
+    	
+    <macrodef name="yb2bacceleratorstorefront_generate_wro_addons_xml">
+        		
+        <attribute name="extname"/>
+        		
+        <sequential>
+            			
+            <if>
+                				
+                <available file="${ext.@{extname}.path}/project.properties"/>
+                				
+                <then>
+                    					
+                    <echo>yb2bacceleratorstorefront_generate_wro_addons_xml for @{extname}</echo>
+                    					
+                    <property file="${ext.@{extname}.path}/project.properties"/>
+                    					
+                    <if>
+                        						
+                        <equals arg1="${yb2bacceleratorstorefront.wro4jconfigscan.@{extname}}" arg2="true"/>
+                        						
+                        <then>
+                            							
+                            <echo>yb2bacceleratorstorefront.wro4jconfigscan.@{extname}: ${yb2bacceleratorstorefront.wro4jconfigscan.@{extname}}</echo>
+                            							
+                            <if>
+                                								
+                                <!-- if key doesn't exist in project.properties, the key itself is returned, so we need to escape 'arg2' -->
+                                								
+                                <equals arg1="${@{extname}.javascript.paths.desktop}" arg2="$${@{extname}.javascript.paths.desktop}"/>
+                                								
+                                <then>
+                                    									
+                                    <var name="jsPathsDesktop" value=""/>
+                                    								
+                                </then>
+                                								
+                                <else>
+                                    									
+                                    <var name="jsPathsDesktop" value="${@{extname}.javascript.paths.desktop}"/>
+                                    								
+                                </else>
+                                							
+                            </if>
+                            							
+                            <if>
+                                								
+                                <equals arg1="${@{extname}.javascript.paths.responsive}" arg2="$${@{extname}.javascript.paths.responsive}"/>
+                                								
+                                <then>
+                                    									
+                                    <var name="jsPathsResponsive" value=""/>
+                                    								
+                                </then>
+                                								
+                                <else>
+                                    									
+                                    <var name="jsPathsResponsive" value="${@{extname}.javascript.paths.responsive}"/>
+                                    								
+                                </else>
+                                							
+                            </if>
+                            							
+                            <if>
+                                								
+                                <equals arg1="${@{extname}.css.paths.desktop}" arg2="$${@{extname}.css.paths.desktop}"/>
+                                								
+                                <then>
+                                    									
+                                    <var name="cssPathsDesktop" value=""/>
+                                    								
+                                </then>
+                                								
+                                <else>
+                                    									
+                                    <var name="cssPathsDesktop" value="${@{extname}.css.paths.desktop}"/>
+                                    								
+                                </else>
+                                							
+                            </if>
+                            							
+                            <if>
+                                								
+                                <equals arg1="${@{extname}.css.paths.responsive}" arg2="$${@{extname}.css.paths.responsive}"/>
+                                								
+                                <then>
+                                    									
+                                    <var name="cssPathsResponsive" value=""/>
+                                    								
+                                </then>
+                                								
+                                <else>
+                                    									
+                                    <var name="cssPathsResponsive" value="${@{extname}.css.paths.responsive}"/>
+                                    								
+                                </else>
+                                							
+                            </if>
+                            							
+                            <yb2bacceleratorstorefront_create_wro_addons_xml cssPathsDesktop="${cssPathsDesktop}" cssPathsResponsive="${cssPathsResponsive}" extname="@{extname}" jsPathsDesktop="${jsPathsDesktop}" jsPathsResponsive="${jsPathsResponsive}"/>
+                            						
+                        </then>
+                        					
+                    </if>
+                    				
+                </then>
+                			
+            </if>
+            		
+        </sequential>
+        	
+    </macrodef>
+    	
+    <macrodef name="yb2bacceleratorstorefront_create_wro_addons_xml">
+        		
+        <attribute name="extname"/>
+        		
+        <attribute name="jsPathsDesktop"/>
+        		
+        <attribute name="jsPathsResponsive"/>
+        		
+        <attribute name="cssPathsDesktop"/>
+        		
+        <attribute name="cssPathsResponsive"/>
+        		
+		
+        <sequential>
+            			
+            <var name="addonPath" value="/_ui/addons/@{extname}"/>
+            			
+            <echo>yb2bacceleratorstorefront_create_wro_addons_xml for @{extname}</echo>
+            			
+            <if>
+                				
+                <available file="${yb2bacceleratorstorefront.wro.addons.template.path}"/>
+                				
+                <then>
+                    					
+                    <yb2bacceleratorstorefront_create_empty_wro_addons_xml/>
+                    					
+                    <xmltask destbuffer="buffer" omitHeader="true" source="${yb2bacceleratorstorefront.wro.addons.dest.path}"/>
+                    					
+                    <xmltask dest="${yb2bacceleratorstorefront.wro.addons.dest.path}" omitHeader="true" sourcebuffer="buffer">
+                        						
+                        <call path="/groups/group">
+                            							
+                            <param name="uiexperience" path="@name"/>
+                            							
+                            <actions>
+                                								
+                                <!-- ### responsive ### -->
+                                								
+                                <if>
+                                    									
+                                    <equals arg1="@{uiexperience}" arg2="addons_responsive"/>
+                                    									
+                                    <then>
+                                        										
+                                        <echo> &gt;&gt;&gt; Adding resources for @{uiexperience}</echo>
+                                        										
+                                        <for delimiter=";" list="@{jsPathsResponsive}" param="jsfile">
+                                            											
+                                            <sequential>
+                                                												
+                                                <xmltask destbuffer="buffer" sourcebuffer="buffer">
+                                                    													
+                                                    <insert path="/groups/group[@name='addons_responsive']">
+                                                        														
+                                                        <![CDATA[
+															<js>${addonPath}@{jsfile}</js>
+														]]>
+                                                        													
+                                                    </insert>
+                                                    												
+                                                </xmltask>
+                                                											
+                                            </sequential>
+                                            										
+                                        </for>
+                                        										
+                                        <for delimiter=";" list="@{cssPathsResponsive}" param="cssfile">
+                                            											
+                                            <sequential>
+                                                												
+                                                <xmltask destbuffer="buffer" sourcebuffer="buffer">
+                                                    													
+                                                    <insert path="/groups/group[@name='addons_responsive']">
+                                                        														
+                                                        <![CDATA[
+															<css>${addonPath}@{cssfile}</css>
+														]]>
+                                                        													
+                                                    </insert>
+                                                    												
+                                                </xmltask>
+                                                											
+                                            </sequential>
+                                            										
+                                        </for>
+                                        									
+                                    </then>
+                                    								
+                                </if>
+                                								
+                                <!-- ### desktop ### -->
+                                								
+                                <if>
+                                    									
+                                    <equals arg1="@{uiexperience}" arg2="addons_desktop"/>
+                                    									
+                                    <then>
+                                        										
+                                        <echo> &gt;&gt;&gt; Adding resources for @{uiexperience}</echo>
+                                        										
+                                        <for delimiter=";" list="@{jsPathsDesktop}" param="jsfile">
+                                            											
+                                            <sequential>
+                                                												
+                                                <xmltask destbuffer="buffer" sourcebuffer="buffer">
+                                                    													
+                                                    <insert path="/groups/group[@name='addons_desktop']">
+                                                        														
+                                                        <![CDATA[
+															<js>${addonPath}@{jsfile}</js>
+														]]>
+                                                        													
+                                                    </insert>
+                                                    												
+                                                </xmltask>
+                                                											
+                                            </sequential>
+                                            										
+                                        </for>
+                                        										
+                                        <for delimiter=";" list="@{cssPathsDesktop}" param="cssfile">
+                                            											
+                                            <sequential>
+                                                												
+                                                <xmltask destbuffer="buffer" sourcebuffer="buffer">
+                                                    													
+                                                    <insert path="/groups/group[@name='addons_desktop']">
+                                                        														
+                                                        <![CDATA[
+															<css>${addonPath}@{cssfile}</css>
+														]]>
+                                                        													
+                                                    </insert>
+                                                    												
+                                                </xmltask>
+                                                											
+                                            </sequential>
+                                            										
+                                        </for>
+                                        									
+                                    </then>
+                                    								
+                                </if>
+                                							
+                            </actions>
+                            						
+                        </call>
+                        					
+                    </xmltask>
+                    					
+                    <xmltask dest="${yb2bacceleratorstorefront.wro.addons.dest.path}" omitHeader="true" outputter="simple:3" sourcebuffer="buffer"/>
+                    				
+                </then>
+                				
+                <else>
+                    					
+                    <echo message="-----------WARNING----------- : Could not find template wro file = ${yb2bacceleratorstorefront.wro.addons.template.path}..."/>
+                    				
+                </else>
+                			
+            </if>
+            			
+		
+        </sequential>
+        	
+    </macrodef>
+    	
+    <macrodef name="yb2bacceleratorstorefront_fix_root_node_for_wro_addons_xml">
+        		
+        <sequential>
+            			
+            <replaceregexp file="${yb2bacceleratorstorefront.wro.addons.dest.path}" match="&lt;groups&gt;" replace="${yb2bacceleratorstorefront.wro.group.node}"/>
+            		
+        </sequential>
+        	
+    </macrodef>
+    	
+    <!--
+		Called whenever 'ant ear' is used. this callback can be used to modify the content of the ear file
+
+		${ear.path}: 			path to ear
+	 -->
+    	
+    <macrodef name="yb2bacceleratorstorefront_after_clean">
+        		
+        <sequential>
+            			
+            <!-- Addon folders in storefronts are always cleaned (even if there is no addonsupport on localextension list) -->
+            			
+            <addonclean/>
+            			
+            <commonwebclean/>
+            			
+            <yb2bacceleratorstorefront_delete_wro_addons_xml/>
+            		
+        </sequential>
+        	
+    </macrodef>
+    	
+    <macrodef name="yb2bacceleratorstorefront_compileuisrc_executor">
+        		
+        <sequential>
+            			
+            <yb2bacceleratorstorefront_lesscss/>
+            			
+            <yb2bacceleratorstorefront_movelibs/>
+            		
+        </sequential>
+        	
+    </macrodef>
+    	
+	
+    <macrodef name="touchFutureTimestamp">
+        		
+        <attribute name="distDir"/>
+        		
+        <sequential>
+            			
+            <property name="tstamp.pattern" value="MM/dd/yyyy HH:mm a"/>
+            			
+            <tstamp>
+                				
+                <format pattern="${tstamp.pattern}" property="tstamp.now"/>
+                			
+            </tstamp>
+            			
+            <touch>
+                				
+                <fileset dir="@{distDir}" erroronmissingdir="false">
+                    					
+                    <date datetime="${tstamp.now}" pattern="${tstamp.pattern}" when="after"/>
+                    					
+                    <type type="file"/>
+                    				
+                </fileset>
+                			
+            </touch>
+            		
+        </sequential>
+        	
+    </macrodef>
+    	
+    <patternset id="extension.yb2bacceleratorstorefront.binary.filter">
+        		
+        <patternset refid="extension.binary.filter"/>
+        		
+        <exclude name="resources/wro_addons.xml"/>
+        	
+    </patternset>
+    	
+    <patternset id="extension.yb2bacceleratorstorefront.source.filter">
+        		
+        <patternset refid="extension.source.filter"/>
+        		
+        <exclude name="resources/wro_addons.xml"/>
+        	
+    </patternset>
+    	
+    <patternset id="extension.yb2bacceleratorstorefront.production.filter">
+        		
+        <patternset refid="extension.production.filter"/>
+        		
+        <exclude name="resources/wro_addons.xml"/>
+        	
+    </patternset>
+    	
+    <patternset id="extension.yb2bacceleratorstorefront.devzip.filter">
+        		
+        <patternset refid="extension.source.filter"/>
+        		
+        <exclude name="resources/wro_addons.xml"/>
+        	
+    </patternset>
+    	
+    <target description="compile the _ui-src folder in _ui" name="yb2bacceleratorstorefront_compileuisrc">
+        		
+        <yb2bacceleratorstorefront_compileuisrc_executor/>
+        	
+    </target>
+    
+</project>

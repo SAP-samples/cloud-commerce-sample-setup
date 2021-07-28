@@ -1,0 +1,291 @@
+@store-finder-item-height:56px;
+@store-finder-item-arrow-size: @store-finder-item-height/2;
+
+#storeFinder {
+  margin-top: @grid-gutter-width;
+  .full-width-padding();
+
+  #storelocator-query {
+	height: floor((@padding-large-vertical * 2) + (@btn-font-size * @btn-line-height) + (@btn-border-width * 2));
+  }
+}
+
+.headline{
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.store__finder--search #storeFinderForm {
+  margin-bottom: 10px;
+}
+
+.store__finder {
+  display: none;
+  padding: 0;
+
+  .store__finder--pagination{
+	line-height: floor((@padding-large-vertical * 2) + (@btn-font-size * @btn-line-height) + (@btn-border-width * 2));;
+	.clearfix;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	display: inline-block;
+	width: 100%;
+  }
+
+  .store__finder--navigation,
+  .store__finder--details{
+	.make-xs-column(6);
+	padding: 0;
+  }
+
+  .store__finder--navigation {
+	overflow: hidden;
+	height: (@store-finder-item-height * 10 + 1 );
+
+	@media(min-width:@screen-sm) {
+	  padding-right: 10px;
+	}
+  }
+
+  .store__finder--map{
+	width: 100%;
+	height: 200px;
+
+  }
+
+
+  .stores-nearby{
+	margin-bottom: (@grid-gutter-width/2);
+  }
+
+  .store__finder--navigation-list{
+	.list-unstyled;
+
+	margin: 0;
+	border:1px solid #ddd;
+	position: relative;
+
+	li.loading{
+	  height: @pickup-store-item-height;
+	  background: @grayblue;
+	  border-bottom:1px solid #ddd;
+	  text-align: center;
+	  line-height: 56px;
+
+	  .glyphicon{
+		color: #ff4444;
+		-webkit-animation:spin 1s linear infinite;
+		-moz-animation:spin 1s linear infinite;
+		animation:spin 1s linear infinite;
+	  }
+
+	  @-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+	  @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+	  @keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+
+	}
+
+	.list__entry {
+	  height: @store-finder-item-height;
+
+	  &:last-child{
+		label{
+		  border:0;
+		}
+	  }
+
+	  input{
+		display: none;
+	  }
+
+	  label{
+		margin: 0;
+		height: 100%;
+		font-size: @font-size-small;
+		padding: 0  14px 0 (@grid-gutter-width/2);
+		display: table;
+		width: 100%;
+		cursor: pointer;
+		position: relative;
+		background: @grayblue;
+		border-bottom:1px solid #ddd;
+
+		&:hover{
+		  background: #f2f2f2;
+		}
+
+	  }
+
+	  input:checked + label{
+		background: @brand-primary;
+		color: #fff !important;
+
+
+		&:after{
+		  display: block;
+		  content:"";
+		  width: @store-finder-item-arrow-size;
+		  height: @store-finder-item-arrow-size;
+		  position: absolute;
+		  top: 50%;
+		  right: -1px;
+		  background: transparent;
+		  border:(@store-finder-item-arrow-size/2) solid transparent;
+		  border-right-color:#fff;
+		  .translate(0,-50%);
+		}
+
+	  }
+
+	  .entry__info{
+		display: table-cell;
+		vertical-align: middle;
+		width: 100%;
+	  }
+
+	  .entry__name{
+		display: block;
+	  }
+
+	  .entry__city{
+		display: block;
+		font-weight: normal;
+	  }
+
+	  .entry__distance{
+		display: table;
+		height: 100%;
+		width: 80px;
+		border-left:1px solid #ddd;
+
+		span{
+		  display: table-cell;
+		  vertical-align: middle;
+		  padding: 0 0 0 5px;
+		  text-align: center;
+		  white-space:nowrap;
+		}
+	  }
+	}
+  }
+
+  .store__finder--details{
+
+	.store__finder--details-back{
+	  margin-bottom: 20px;
+	  .visible-xs-inline-block;
+	}
+
+	.store__finder--details-image{
+	  width: (@store-finder-item-height * 2);
+	  float: left;
+	  margin-right: 10px;
+
+	  img{
+		width: 100%;
+		height: auto;
+	  }
+	}
+
+	.store__finder--details-info{
+	  margin-left: (@store-finder-item-height * 2 + 10);
+	}
+
+	.info__name{
+	  font-weight: bold;
+	}
+
+	hr{
+	  clear: both;
+	  margin: 0;
+	  padding-top: 10px;
+	  padding-bottom: 10px;
+	  height: 1px;
+	  position: relative;
+	  border:0;
+
+	  &:after{
+		content: '';
+		display: block;
+		position: absolute;
+		top: 10px;
+		height: 1px;
+		right: 0;
+		left: 0;
+		background: #ddd;
+	  }
+	}
+
+	.store__finder--details-map{
+	  background: #eee;
+	}
+
+	.store__finder--details-openings{
+
+	  dl{
+
+		dt{
+		  text-align: left !important;
+		  width: 60px;
+		}
+
+		dd{
+		  margin-left: 60px;
+		}
+	  }
+
+	  ul{
+		.list-unstyled;
+	  }
+	}
+  }
+
+
+
+  @media (max-width: @screen-xs-max) {
+
+	.back__to__storelist {
+	  margin-bottom: 10px;
+	}
+
+	.store__finder--panel {
+	  width: 200%;
+	  margin: 0;
+	  .transition-transform(~"0.3s ease-out");
+	  & > * {
+		padding: 0;
+	  }
+
+	  .store__finder--details{
+		display: none;
+	  }
+	}
+
+	.store__finder--pagination {
+	  line-height: @line-height-computed;
+	}
+
+	&.show-store {
+
+	  .store__finder--pagination{
+		color: rgba(0, 0, 0, 0);
+		height: 46px;
+		& *{
+		  display: none;
+		}
+	  }
+
+	  .store__finder--panel {
+		.translate(-50%,0);
+
+		.store__finder--navigation {
+		  padding-right: 20px;
+		}
+
+		.store__finder--details {
+		  display: block;
+		}
+	  }
+	}
+  }
+}

@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<web-app id="yb2bacceleratorstorefront" version="3.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" 
+         metadata-complete="true">
+  <absolute-ordering />
+  
+	<display-name>yb2bacceleratorstorefront</display-name>
+
+	<!--
+	 We have to explicitly clear the welcome file list.
+	 We don't need to serve a default or index page as we can handle all the requests via spring MVC.
+	-->
+	<welcome-file-list>
+		<welcome-file/>
+	</welcome-file-list>
+
+
+	<!-- filters -->	
+	<filter>
+		<filter-name>XSSFilter</filter-name>
+		<filter-class>de.hybris.platform.servicelayer.web.XSSFilter</filter-class>
+	</filter>
+
+	<filter>
+	<filter-name>characterEncodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+		<init-param>
+			<param-name>forceEncoding</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+
+	<!-- 	Web Resource Optimizer for Java Wro4j -->
+	<filter>
+	    <filter-name>WebResourceOptimizer</filter-name>
+	    <filter-class>ro.isdc.wro.http.WroFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+	    <filter-name>WebResourceOptimizer</filter-name>
+	    <url-pattern>/wro/*</url-pattern>
+	</filter-mapping>
+	<!-- resource filter -->
+	<filter>
+		<description>
+			ResourceFilter
+			Filter used to server file resources by bypassing the other filters.
+		</description>
+		<filter-name>resourceFilter</filter-name>
+		<filter-class>de.hybris.platform.yb2bacceleratorstorefront.filters.StaticResourceFilter</filter-class>
+	</filter>
+	
+	<filter>
+		<description>
+			AddOn developer 'hot swap' filter.
+		</description>
+		<filter-name>addOnDevelopmentFilter</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+
+	<!-- spring based filter chain -->
+	<filter>
+		<description>
+			Spring configured chain of spring filter beans in tenant scope
+		</description>
+		<filter-name>storefrontTenantFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+
+	<!-- filter mappings -->
+	<filter-mapping>
+		<filter-name>XSSFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>addOnDevelopmentFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+		<dispatcher>INCLUDE</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>characterEncodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>resourceFilter</filter-name>
+		<url-pattern>/_ui/*</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping><filter-name>storefrontTenantFilterChain</filter-name><servlet-name>DispatcherServlet</servlet-name></filter-mapping>
+
+	<!-- HTTP Session Listeners -->
+	
+	<listener>
+		<description>https://jira.spring.io/browse/SPR-9014
+		</description>
+		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
+	</listener>
+
+	<listener>
+		<description>
+			The HybrisContextLoaderListener extends the usual SpringContextLoaderListener (which loads
+			the context from specified location) by adding the global application context of
+			the platform as parent context. With having the global context set as parent you can access
+			or override beans of the global context and get the 'tenant' scope.
+		</description>
+		<listener-class>de.hybris.platform.yb2bacceleratorstorefront.filters.HybrisStorefrontContextLoaderListener</listener-class>
+	</listener>
+
+	<listener>
+		<description>
+			The RequestContextListener exposes the 'request' scope to the context.
+			Furthermore it is needed when overriding the 'jalosession' bean for your web application.
+		</description>
+		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+	</listener>
+
+ 	<listener>
+ 		<description>
+			HttpSessionListener that automatically exposes the session mutex when an HttpSession gets created.
+			The session mutex is guaranteed to be the same object during the entire lifetime of the session. 
+			It serves as a safe reference to synchronize on for locking on the current session.
+		</description>
+        <listener-class>org.springframework.web.util.HttpSessionMutexListener</listener-class>
+    </listener>
+    
+	<!-- config -->
+	<context-param>
+		<description>
+			The 'contextConfigLocation' param specifies where your configuration files are located.
+			The 'WEB-INF/config/web-application-config.xml' file includes several other XML config
+			files to build up the configuration for the application.
+		</description>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>WEB-INF/config/web-application-config.xml</param-value>
+	</context-param>
+	<context-param>
+		<param-name>tagpoolMaxSize</param-name>
+		<param-value>50</param-value>
+	</context-param>	
+
+	<!-- Servlets -->
+
+	<servlet>
+		<description>
+			DefaultServletAdapter. It forwards calls to the default servlet of well-known containers, making
+			this web.xml portable to different containers.
+		</description>
+		<servlet-name>DefaultServletAdapter</servlet-name>
+		<servlet-class>de.hybris.platform.yb2bacceleratorstorefront.web.servlet.DefaultServletAdapter</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<!-- all internal wro4j requests + static resources should NOT go through DispatcherServlet -->
+		<servlet-name>DefaultServletAdapter</servlet-name>
+		<url-pattern>/wro/*</url-pattern>
+		<url-pattern>/_ui/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<description>
+			DispatcherServlet
+			Spring MVC dispatcher servlet. This is the entry point for the Spring MVC application.
+		</description>
+		<servlet-name>DispatcherServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<description>
+				Specifies the location for Spring MVC to load an additional XML configuration file.
+				Because hybris is already configured with the XML spring configuration files to load
+				we must set this param value to EMPTY in order to prevent loading of the default
+				/WEB-INF/applicationContext.xml file.
+			</description>
+			<param-name>contextConfigLocation</param-name>
+			<param-value></param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>DispatcherServlet</servlet-name>
+		<!-- Map all requests to the DispatcherServlet -->
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+
+	 <!-- Comment out to see error stack for development -->
+	<error-page>
+		<location>/WEB-INF/common/pages/error/serverError.jsp</location>
+	</error-page>
+
+
+	<!-- Session -->
+
+	<session-config>
+		<!-- Session timeout of 30 minutes -->
+		<session-timeout>30</session-timeout>
+		<!--  Use secure flag on cookies -->
+		<cookie-config>
+			<secure>true</secure>
+		</cookie-config>
+		<tracking-mode>COOKIE</tracking-mode>
+	</session-config>
+
+
+	<!-- JSP Configuration -->
+
+	<jsp-config>
+		<jsp-property-group>
+			<url-pattern>*.jsp</url-pattern>
+			<!-- Disable JSP scriptlets and expressions -->
+			<scripting-invalid>true</scripting-invalid>
+			<!-- Remove additional whitespace due to JSP directives -->
+			<trim-directive-whitespaces>true</trim-directive-whitespaces>
+		</jsp-property-group>
+	</jsp-config>
+
+</web-app>

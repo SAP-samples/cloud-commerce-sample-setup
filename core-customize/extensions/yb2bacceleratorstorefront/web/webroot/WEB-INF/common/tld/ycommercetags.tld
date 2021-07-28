@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib version="2.1"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+		http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd">
+
+	<tlib-version>1.0</tlib-version>
+	<short-name>ycommerce</short-name>
+	<uri>http://hybris.com/tld/ycommercetags</uri>
+
+	<tag>
+		<name>testId</name>
+		<tag-class>de.hybris.platform.yb2bacceleratorstorefront.tags.TestIdTag</tag-class>
+		<body-content>scriptless</body-content>
+		<info>Render a text id wrapper</info>
+		<attribute>
+			<name>code</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<function>
+		<description>
+			Get the primary image for the ProductData specified in the format specified.
+		</description>
+		<name>productImage</name>
+		<function-class>de.hybris.platform.acceleratorstorefrontcommons.tags.Functions</function-class>
+		<function-signature>de.hybris.platform.commercefacades.product.data.ImageData getPrimaryImageForProductAndFormat(de.hybris.platform.commercefacades.product.data.ProductData,java.lang.String)</function-signature>
+	</function>
+	
+	<function>
+		<description>
+			Get the primary image for the ProductData specified in the format specified.
+		</description>
+		<name>productCodeImage</name>
+		<function-class>de.hybris.platform.acceleratorstorefrontcommons.tags.Functions</function-class>
+		<function-signature>de.hybris.platform.commercefacades.product.data.ImageData getImageForProductCode(de.hybris.platform.commercefacades.product.data.ProductData,java.lang.String,java.lang.String)</function-signature>
+	</function>
+
+	<function>
+		<description>
+			Get the store image for the PointOfServiceData specified in the format specified.
+		</description>
+		<name>storeImage</name>
+		<function-class>de.hybris.platform.acceleratorstorefrontcommons.tags.Functions</function-class>
+		<function-signature>de.hybris.platform.commercefacades.product.data.ImageData getImageForStoreAndFormat(de.hybris.platform.commercefacades.storelocator.data.PointOfServiceData,java.lang.String))</function-signature>
+	</function>
+
+	<function>
+		<description>
+			Test if an order entry number in a cart has an applied promotion.
+		</description>
+		<name>doesAppliedPromotionExistForOrderEntry</name>
+		<function-class>de.hybris.platform.acceleratorstorefrontcommons.tags.Functions</function-class>
+		<function-signature>boolean doesAppliedPromotionExistForOrderEntry(de.hybris.platform.commercefacades.order.data.CartData,int)</function-signature>
+	</function>
+
+
+	<function>
+		<description>
+			Test if an order entry or grouped order entry in a cart has an applied promotion.
+		</description>
+		<name>doesAppliedPromotionExistForOrderEntryOrOrderEntryGroup</name>
+		<function-class>de.hybris.platform.acceleratorstorefrontcommons.tags.Functions</function-class>
+		<function-signature>boolean doesAppliedPromotionExistForOrderEntryOrOrderEntryGroup(de.hybris.platform.commercefacades.order.data.CartData,de.hybris.platform.commercefacades.order.data.OrderEntryData)</function-signature>
+	</function>
+
+	<function>
+		<description>
+			Test if an order entry number in a cart has a potential promotion.
+		</description>
+		<name>doesPotentialPromotionExistForOrderEntry</name>
+		<function-class>de.hybris.platform.acceleratorstorefrontcommons.tags.Functions</function-class>
+		<function-signature>boolean doesPotentialPromotionExistForOrderEntry(de.hybris.platform.commercefacades.order.data.CartData,int)</function-signature>
+	</function>
+
+	<function>
+		<description>
+			Test if an order entry or grouped order entry in a cart has a potential promotion.
+		</description>
+		<name>doesPotentialPromotionExistForOrderEntryOrOrderEntryGroup</name>
+		<function-class>de.hybris.platform.acceleratorstorefrontcommons.tags.Functions</function-class>
+		<function-signature>boolean doesPotentialPromotionExistForOrderEntryOrOrderEntryGroup(de.hybris.platform.commercefacades.order.data.CartData,de.hybris.platform.commercefacades.order.data.OrderEntryData)</function-signature>
+	</function>
+
+	<function>
+		<description>
+			Test if entry or entry group belongs to consumed entry
+		</description>
+		<name>isConsumedByEntry</name>
+		<function-class>de.hybris.platform.acceleratorstorefrontcommons.tags.Functions</function-class>
+		<function-signature>boolean isConsumedByEntry(de.hybris.platform.commercefacades.order.data.PromotionOrderEntryConsumedData,de.hybris.platform.commercefacades.order.data.OrderEntryData)</function-signature>
+	</function>
+
+
+
+	<function>
+		<description>
+			Encodes given URL
+		</description>
+		<name>encodeUrl</name>
+		<function-class>de.hybris.platform.acceleratorstorefrontcommons.tags.Functions</function-class>
+		<function-signature>java.lang.String encodeUrl(java.lang.String)</function-signature>
+	</function>
+	
+	<function>
+		<description>
+			Check if array contains instance
+		</description>
+		<name>arrayContainsInstance</name>
+		<function-class>de.hybris.platform.acceleratorstorefrontcommons.tags.Functions</function-class>
+		<function-signature>boolean arrayContainsInstance(java.lang.String[], java.lang.String)</function-signature>
+	</function>
+
+	<function>
+		<description>
+			Math.pow
+		</description>
+		<name>pow</name>
+		<function-class>java.lang.Math</function-class>
+		<function-signature>double pow(double,double)</function-signature>
+	</function>
+	
+	<function>
+		<description>
+			Returns normalized code for selection data code
+		</description>
+		<name>normalizedCode</name>
+		<function-class>de.hybris.platform.acceleratorstorefrontcommons.tags.Functions</function-class>
+		<function-signature>java.lang.String normalizedCode(java.lang.String)</function-signature>
+	</function>
+	
+	<function>
+		<description>
+			Evaluate restrictions.
+		</description>
+		<name>evaluateRestrictions</name>
+		<function-class>de.hybris.platform.acceleratorstorefrontcommons.tags.Functions</function-class>
+		<function-signature>boolean evaluateRestrictions(de.hybris.platform.cms2.model.contents.components.AbstractCMSComponentModel)</function-signature>
+	</function>
+
+	<function>
+		<description>
+		   Checks if PickupStore is enabled for a base store.
+		</description>
+		<name>checkIfPickupEnabledForStore</name>
+		<function-class>de.hybris.platform.acceleratorstorefrontcommons.tags.Functions</function-class>
+		<function-signature>boolean checkIfPickupEnabledForStore()</function-signature>
+	</function>
+
+	<function>
+		<description>
+			Check if an extension is installed
+		</description>
+		<name>isExtensionInstalled</name>
+		<function-class>de.hybris.platform.acceleratorstorefrontcommons.tags.Functions</function-class>
+		<function-signature>boolean isExtensionInstalled(java.lang.String)</function-signature>
+	</function>
+
+	<function>
+		<description>
+			Check if quote user is a sales rep
+		</description>
+		<name>isQuoteUserSalesRep</name>
+		<function-class>de.hybris.platform.acceleratorstorefrontcommons.tags.Functions</function-class>
+		<function-signature>boolean isQuoteUserSalesRep()</function-signature>
+	</function>
+
+	<function>
+		<description>
+			Check if quote user is a seller approver
+		</description>
+		<name>isQuoteUserSellerApprover</name>
+		<function-class>de.hybris.platform.acceleratorstorefrontcommons.tags.Functions</function-class>
+		<function-signature>boolean isQuoteUserSellerApprover()</function-signature>
+	</function>
+
+	<function>
+		<description>
+			Encodes the input as HTML
+		</description>
+		<name>encodeHTML</name>
+		<function-class>de.hybris.platform.acceleratorstorefrontcommons.tags.Functions</function-class>
+		<function-signature>java.lang.String encodeHTML(java.lang.String)</function-signature>
+	</function>
+
+	<function>
+		<description>
+			Encodes the input as JavaScript
+		</description>
+		<name>encodeJavaScript</name>
+		<function-class>de.hybris.platform.acceleratorstorefrontcommons.tags.Functions</function-class>
+		<function-signature>java.lang.String encodeJavaScript(java.lang.String)</function-signature>
+	</function>
+
+	<function>
+		<description>
+			Sanitize potentially unsafe HTML string to make it safe
+		</description>
+		<name>sanitizeHTML</name>
+		<function-class>de.hybris.platform.acceleratorstorefrontcommons.tags.HTMLSanitizer</function-class>
+		<function-signature>java.lang.String sanitizeHTML(java.lang.String)</function-signature>
+	</function>
+
+	<function>
+		<description>
+			Sanitizes the provided html tag name. If invalid, returns div by default
+		</description>
+		<name>sanitizeHtmlTagName</name>
+		<function-class>de.hybris.platform.acceleratorstorefrontcommons.tags.Functions</function-class>
+		<function-signature>java.lang.String sanitizeHtmlTagName(java.lang.String)</function-signature>
+	</function>
+	
+	<function>
+		<description>
+			Validate unsafe URL schemes
+		</description>
+		<name>validateUrlScheme</name>
+		<function-class>de.hybris.platform.acceleratorstorefrontcommons.tags.HTMLSanitizer</function-class>
+		<function-signature>boolean validateUrlScheme(java.lang.String)</function-signature>
+	</function>
+
+	<function>
+		<description>
+			Helper class used for efficient encoding of JSON String values using Jackson JsonStringEncoder.
+		</description>
+		<name>encodeJSON</name>
+		<function-class>de.hybris.platform.acceleratorstorefrontcommons.tags.JSONUtils</function-class>
+		<function-signature>java.lang.String encode(java.lang.String)</function-signature>
+	</function>
+
+</taglib>
