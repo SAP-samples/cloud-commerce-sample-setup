@@ -1,0 +1,438 @@
+@pickup-store-item-height:56px;
+
+@pickup-store-panel-height: @pickup-store-item-height * 6 + @pickup-store-item-height / 2;
+@pickup-store-tab-height: @pickup-store-item-height * 4 + @pickup-store-item-height / 2;
+@pickup-store-item-arrow-size: @pickup-store-item-height/2;
+
+.addressbook-component{
+	border:1px solid #eee;
+	padding: 0;
+
+	margin: 140px 0;
+
+
+
+	.addressbook-header{
+		background: #eee;
+		position: relative;
+
+		border-bottom:1px solid @brand-primary;
+
+		padding:   (@grid-gutter-width/2);
+		height: @pickup-store-item-height;
+		display: table;
+		width: 100%;
+
+		.headline{
+			line-height: 16px;
+			font-weight: bold;
+			font-size: @font-size-small;
+			display: table-cell;
+			width: 100%;
+			vertical-align: middle;
+
+			.back-to-storelist{
+				display: none;
+			}
+			
+		}
+
+		.close-addressbook{
+			display: table-cell;
+		}
+
+
+		// .back-to-storelist{
+		// 		.hidden-md; 
+		// 		.hidden-lg;
+		// 		display: table-cell;
+		// }
+
+
+	}
+	
+
+
+
+
+
+
+
+
+
+
+	.find-address-display{
+		
+		
+
+		.clearfix;
+
+		.address-navigation{
+			float: left;
+			width: 50%;
+			border-right:1px solid @brand-primary;
+
+
+
+
+
+
+
+
+			.address-navigation-pager{
+				height: (@pickup-store-item-height /2);
+				line-height: (@pickup-store-item-height /2);
+				padding: 0  (@grid-gutter-width/2);
+				border-top: 1px solid #DDDDDD;
+				margin-top: -1px;
+
+				.clearfix;
+				background: #fff;
+				.prev{
+					float: left;
+				}
+
+				.next{
+					float: right;
+				}
+				
+				.position{
+					text-align: center;
+					margin: 0 80px;
+				}
+			}
+
+		}
+
+
+
+		.display-details{
+			
+			float: left;
+			width: 50%;
+
+
+
+			.address-details{
+				padding:  (@grid-gutter-width/2);
+				height: @pickup-store-tab-height;
+				overflow: hidden;
+			}
+
+
+			.address-actions{
+				height: @pickup-store-item-height;
+					
+				width: 100%;
+				// font-size: @font-size-small;
+				font-weight: bold;
+
+
+				border-top:1px solid #ddd;
+				padding: 10px 10px;
+
+
+				position: relative;
+				.set-default{
+					position: absolute;
+					top: -50px;
+					right: 10px;
+				}
+
+			}
+		}
+
+		
+
+
+
+	
+	}
+
+
+
+	
+	.address-list{
+		.list-unstyled;	
+		height: (@pickup-store-item-height * 5);
+		overflow: hidden;
+		margin: 0;
+		
+
+		position: relative;
+
+		.address-list-entry{ 
+
+			height: @pickup-store-item-height;
+			overflow: hidden;
+		
+
+			input{
+				display: none;
+			}
+
+			label{ 
+				margin: 0;
+				height: 100%;
+				font-size: @font-size-small;
+				padding: 0  0 0 (@grid-gutter-width/2);
+				display: table;
+				width: 100%;
+				cursor: pointer;
+				position: relative; 
+				background: #eee;
+				border-bottom:1px solid #ddd;
+				overflow: hidden;
+
+
+
+				&:hover{
+					background: #f2f2f2;
+				}
+
+			}
+
+
+			
+
+
+			.address-info{
+				display: table-cell;
+				vertical-align: middle;
+				width: 100%;
+
+				.inner{
+					max-height: 56px;
+					overflow: hidden;
+					display: block;
+				}
+
+			}
+
+
+			.address-list-entry-name{
+				display: block;
+			}
+
+			.address-list-entry-city{
+				display: block;
+				font-weight: normal;
+			}
+
+
+
+			.address-actions{
+				display: table;
+				height: 100%;
+				width: auto;
+				// border-left:1px solid #ddd;
+
+				span{
+					display: table-cell;
+					vertical-align: middle;
+					padding: 0 5px;
+					text-align: center;
+				}
+			}
+
+
+			
+
+			
+			
+			 
+
+		}
+	}
+
+
+
+}
+
+
+
+.inline-layer{
+	height: 0;
+	overflow: hidden;
+	.transition(~"0.9s ease-out");
+
+	&.open{
+		height: auto !important;
+	}
+}
+
+
+@media (min-width: @screen-md-min) { 
+	.addressbook-component{
+		.find-address-display{
+
+
+
+			
+
+			.address-list{
+				margin: 0 -1px 0 0 ;
+				.address-list-entry{
+					
+					label{
+						padding-right: (@pickup-store-item-arrow-size/2);
+						&:after{
+							content:"";
+							display: block;
+							width: 1px;
+							height: auto;
+							position: absolute;
+							top: -1px;
+							right: 0;
+							bottom:-1px;
+							background:  @brand-primary;
+							
+						}
+					}
+
+
+					input:checked + label{
+						background: @brand-primary;
+						
+						
+						.address-info{
+							color: #fff;
+						}
+						
+						.address-actions{
+							color: #fff;
+						}
+
+
+						
+
+						&:after{
+							display: block;
+							content:"";
+							width: @pickup-store-item-arrow-size;
+							height: @pickup-store-item-arrow-size;
+							position: absolute;
+							top: 50%;
+							right: -1px;
+							background: transparent;
+							border:(@pickup-store-item-arrow-size/2) solid transparent;
+							border-right-color:#fff;
+							.translate(0,-50%);
+						}
+
+					}
+
+
+				}
+			}
+		}
+
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media (max-width: @screen-sm-max) { 
+	.addressbook-component{
+		overflow: hidden;
+		.find-address-display{
+			width: 200%;
+			.transition-transform(~"0.3s ease-out");
+	
+
+			.address-navigation{
+				width: 50%;
+				border:0;
+			}
+
+
+			.address-list{
+				
+				.address-list-entry{
+					
+					
+
+
+					input:checked + label{
+						background: @brand-primary;
+
+						 
+						
+						.address-info{
+							color: #fff;
+						}
+						
+						.address-actions{
+							color: #fff;
+						}
+					}
+
+
+				}
+			}
+
+			
+
+		}
+
+		// mobile show store toggle
+		// &.show-address{
+		// 	.addressbook-header{
+		// 		.headline{
+		// 			.headline-text{
+		// 				display: none;
+		// 			}
+		// 			.back-to-addresslist{
+		// 				display: block;
+		// 			}
+		// 		}
+		// 	}
+
+
+		// 	.find-address-display{
+		// 		.translate(-50%,0);
+		// 	}
+
+
+
+		// }
+
+	}
+
+}
+
+
+
+
+
+
+@media (max-width: @screen-xs-max) { 
+	.pickup-component{
+		.find-store-display{
+
+			
+
+		}
+
+	}
+
+}
+
+
+
+
+
+

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+--><extensioninfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="extensioninfo.xsd">
+        	
+    
+    <extension abstractclassprefix="Generated" classprefix="Yb2bacceleratorstorefront" name="yb2bacceleratorstorefront" usemaven="false">
+                		
+        
+        
+        <requires-extension name="acceleratorstorefrontcommons"/>
+                		
+        
+        <requires-extension name="yacceleratorfacades"/>
+                		
+        
+        <webmodule jspcompile="false" webroot="/yb2bacceleratorstorefront"/>
+                		
+        
+        <meta key="modulegen-name" value="accelerator"/>
+                		
+        
+        	
+    
+    </extension>
+        
+
+</extensioninfo>

@@ -1,0 +1,21 @@
+{
+  "name": "yb2bacceleratorstorefront-web",
+  "version": "0.0.0",
+  "description": "grunt config for the accelerator",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "grunt"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "grunt": "^1.4.0",
+    "grunt-contrib-less": "^2.1.0",
+    "grunt-contrib-watch": "^1.1.0",
+    "plugin": "^0.0.15"
+  },
+  "dependencies": {
+    "grunt-sync": "0.8.2"
+  }
+}

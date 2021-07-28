@@ -3,6 +3,7 @@
 # SAP Commerce Cloud Sample Repository
 
 This sample repository contains the files and folders that are required to set up SAP Commerce Cloud. There are multiple branches covering different scenarios for Commerce Cloud (e.g. project Spartacus, data hub, solr customizations).  You can clone/download this repository, checkout the branch of interest and then follow the instructions in the readme to update the example files with your specific details. 
+The master branch covers a Commerce Cloud sample scenario that is based on the [CX recipe](https://help.sap.com/viewer/a74589c3a81a4a95bf51d87258c0ab15/latest/en-US/f09d46cf4a2546b586ed7021655e4715.html) 
 
 When your files are ready, push them to your SAP Commerce Cloud repository.  
 
@@ -31,6 +32,7 @@ Root level
 
 `core-customize` folder
 - `manifest.json`: The Commerce Cloud manifest.json file, which defines how your code will be built and deployed in the Public Cloud environments. The manifest is set up to leverage [configuration reuse](https://help.sap.com/viewer/1be46286b36a4aa48205be5a96240672/latest/en-US/2311d89eef9344fc81ef168ac9668307.html) to better allow for consistency between local and cloud builds.
+- `extensions\yb2bacceleratorstorefront` folder: contains the generated extension for use with the B2B storefront (e.g Powertools) in this Commerce Cloud sample scenario
 - `hybris `folder: contains a sample custom folder for storing any custom extensions as well as the config folder for storing local and cloud properties, `localextensions.xml` and any local solr/tomcat configurations
 - `other sample manifests`: A collection of tested and verified manifest files that you can use as starting points for your Commerce Cloud environments.
 
