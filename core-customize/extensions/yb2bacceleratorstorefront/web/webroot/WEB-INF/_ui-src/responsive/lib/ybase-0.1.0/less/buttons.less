@@ -1,0 +1,81 @@
+.btn-formblock {
+  display: block;
+  width: 100%;
+  padding-left: 0;
+  padding-right: 0;
+  margin-top: (@line-height-computed + 5) ;
+}
+
+.btn{
+	text-transform: uppercase;
+	font-weight: 600;
+	.button-size(@padding-large-vertical; @padding-large-horizontal; @btn-font-size; @btn-line-height; @btn-border-width);
+
+	&.glyphicon {
+		padding: 3px 0 4px 0;
+
+		&:before {
+			font-size: @btn-icon-font-size;
+		}
+	}
+	&,
+	&:active,
+	&.active {
+		box-shadow: none;
+		
+		&:focus {
+			outline: 0;
+		}
+	}
+}
+
+.btn-small {
+  .button-size(@padding-base-vertical; @padding-large-horizontal; @btn-font-size; @btn-line-height; @btn-border-width);
+}
+
+.btn-icon {
+	padding-left: @btn-icon-font-size + @padding-large-horizontal + (@grid-gutter-width * 2) + @btn-border-width;
+	position: relative;
+
+	&:before {
+		position: absolute;
+		font-size: @btn-icon-font-size;
+		top: 9px;
+		left: @grid-gutter-width;
+		display: inline-block;
+		font-family: 'Glyphicons Halflings', sans-serif;
+		font-style: normal;
+		font-weight: normal;
+		line-height: 1;
+	}
+
+	&:after {
+		content: "";
+		position: absolute;
+		left: @btn-icon-font-size + (@grid-gutter-width * 2);
+		top: -@btn-border-width;
+		border-right:  @btn-border-width solid currentColor;
+		height: floor((@padding-large-vertical * 2) + (@btn-font-size * @btn-line-height) + (@btn-border-width * 2));
+
+		:hover& {
+			border-right-width:  @btn-border-width;
+		}
+	}
+}
+
+.btn-edit-confirm
+{
+width:48%;
+}
+.btn-block + .btn-block {
+	margin-top: @grid-gutter-width/2;
+}
+
+.btn-default {
+	border: @btn-border-width solid;
+	.button-variant(@btn-default-color; @btn-default-bg; @btn-default-border; @btn-default-hover-color; @btn-default-hover-border; @btn-default-hover-background; @btn-default-disabled-bg);
+}
+.btn-primary {
+	border: 3px solid;
+	.button-variant(@btn-primary-color; @btn-primary-bg; @btn-primary-border; @btn-primary-hover-color; @btn-primary-hover-border; @btn-primary-hover-background; @btn-primary-disabled-bg);
+}

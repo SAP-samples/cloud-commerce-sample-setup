@@ -1,0 +1,173 @@
+
+// Button variants
+// -------------------------
+// Easily pump out default styles, as well as :hover, :focus, :active,
+// and disabled options for all buttons
+.button-box-shadow() when (@btn-box-shadow) {
+	.box-shadow(0 2px 2px 0 darken(@background,25%));
+}
+.button-variant(@color; @background; @border; @hoverColor; @hoverBorder; @hoverBackground; @disabledBackground) {
+	color: @color;
+	background-color: @background;
+	border-color: @border;
+	.button-box-shadow();
+
+	&:hover,
+	&:focus,
+	&:active,
+	&.active,
+	.open .dropdown-toggle& {
+		color: @hoverColor;
+		background-color: @hoverBackground;
+		border-color: @hoverBorder;
+		.box-shadow(none)
+	}
+	&:active,
+	&.active,
+	.open .dropdown-toggle& {
+		background-image: none;
+	}
+	&.disabled,
+	&[disabled],
+	fieldset[disabled] & {
+		&,
+		&:hover,
+		&:focus,
+		&:active,
+		&.active {
+			color: @color;
+			background-color: @disabledBackground;
+			border-color: @disabledBackground;
+			.button-box-shadow();
+		}
+	}
+
+	.badge {
+		color: @background;
+		background-color: @color;
+	}
+}
+
+.flex-display(@value) {
+	display: ~"-webkit-@{value}";
+	display: ~"-moz-@{value}";
+	display: ~"-ms-@{value}box";
+	display: ~"-ms-@{value}";
+	display: @value;
+}
+
+.flex-wrap(@value) {
+	-webkit-flex-wrap: @value;
+	-moz-flex-wrap: @value;
+	-ms-flex-wrap: @value;
+	flex-wrap: @value;
+}
+
+.flex-direction(@value) {
+	-webkit-flex-direction: @value;
+	-moz-flex-direction: @value;
+	-ms-flex-direction: @value;
+	flex-direction: @value;
+}
+
+.flex (@value) {
+	-webkit-flex: @value;
+	-moz-flex: @value;
+	-ms-flex: @value;
+	flex: @value;
+}
+
+.accordion-bg (@n, @i: 1) when (@i =< @n) {
+  @left-spacing: 15 + @grid-gutter-width * (@i + 2);
+  .panel-heading {
+    background-color: lighten(@accordion-bg, (95% -  (@i * 5)));
+    .accordion-lnk {
+      left: @left-spacing;
+      &.no-subs {
+        padding-left: @left-spacing;
+      }
+    }
+  }
+  .panel-collapse {
+    .accordion-bg(@n, (@i + 1));
+  }
+}
+
+
+// text variants
+.page-headline {
+  color: @headline-color;
+  font-size: @font-size-h3;
+  line-height: 35px;
+  font-weight: 700;
+  padding: @grid-gutter-width 0;
+  margin: 0;
+
+  &.border {
+    border-bottom: 1px solid @border-color-2;
+    margin-bottom: @grid-gutter-width + 5;
+  }
+}
+
+.page-sub-headline {
+  font-size: @font-size-base;
+  font-weight: 400;
+  line-height: 1.571;
+}
+
+.text-variant-bold {
+  font-weight: 600;
+}
+
+.text-variant-header-order-info() {
+  font-size: @font-size-large-2;
+  line-height: 38px;
+  font-weight: bold;
+}
+
+// padding variants
+
+.full-width-padding {
+  padding-left: 30px;
+  padding-right: 30px;
+
+  @media (max-width: @screen-md) {
+	padding-left: 20px;
+	padding-right: 20px;
+  }
+
+}
+
+.half-width-padding {
+  padding-left: 20px;
+  padding-right: 20px;
+
+  @media (max-width: @screen-md) {
+	padding-left: 10px;
+	padding-right: 10px;
+  }
+
+}
+
+.form-control-validation(@label-color; @border-color; @background-color; @hint-color) {
+  .control-label{
+    color: @label-color;
+  }
+
+  input.form-control {
+    background: @background-color;
+    border-color: @border-color;
+  }
+
+  .help-block {
+    font-weight: 600;
+    color:@hint-color;
+  }
+}
+
+.cart-voucher-placeholder(){
+  font-size: @font-size-small;
+  font-weight: 600;
+  color: @text-color;
+  text-transform: uppercase;
+}
