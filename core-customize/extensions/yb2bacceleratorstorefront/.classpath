@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="eclipsebin/notused"/>
+
+	<classpathentry exported="true" kind="src" path="/acceleratorstorefrontcommons" />
+	<classpathentry exported="true" kind="src" path="/yacceleratorfacades" />
+	<classpathentry exported="false" kind="lib" path="web/webroot/WEB-INF/lib/javax.servlet.jsp.jstl-1.2.5.jar" />
+	<classpathentry exported="false" kind="lib" path="web/webroot/WEB-INF/lib/json-taglib-0.4.1.jar" />
+	<classpathentry exported="false" kind="lib" path="web/webroot/WEB-INF/lib/jsoup-1.11.3.jar" />
+	<classpathentry exported="false" kind="lib" path="web/webroot/WEB-INF/lib/rhino-1.7.7.jar" />
+	<classpathentry exported="false" kind="lib" path="web/webroot/WEB-INF/lib/wro4j-core-1.8.0.jar" />
+	<classpathentry exported="true" kind="lib" path="resources" />
+	<classpathentry exported="false" output="eclipsebin/web/classes" kind="src" path="web/src" />
+	<classpathentry exported="false" output="eclipsebin/web/classes" kind="src" path="web/testsrc" />
+	<classpathentry exported="false" kind="src" path="/platform" />
+				
+</classpath>
+				

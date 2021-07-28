@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/security
+		http://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/util
+		http://www.springframework.org/schema/util/spring-util.xsd">
+		
+	<context:annotation-config/>
+
+	<security:http pattern="/_ui/**" security="none" />
+
+	<!--Security config for checkout - it has its own login page-->
+	<security:http pattern="/checkout/**">
+        <security:anonymous username="anonymous" granted-authority="ROLE_ANONYMOUS" />
+		<security:access-denied-handler error-page="/login"/>
+		<security:session-management session-authentication-strategy-ref="fixation" invalid-session-url="/login" />
+		<security:intercept-url pattern="/**" requires-channel="https" />
+		<security:csrf token-repository-ref="csrfTokenRepository" request-matcher-ref="csrfProtectionMatcher"/>
+		<security:custom-filter before="CSRF_FILTER" ref="logoutFilter" />
+
+		<security:form-login
+				login-page="/login/checkout"
+				authentication-failure-handler-ref="loginCheckoutAuthenticationFailureHandler"
+				authentication-success-handler-ref="loginCheckoutGuidAuthenticationSuccessHandler"
+				username-parameter="j_username" 
+				password-parameter="j_password"
+				login-processing-url="/checkout/j_spring_security_check"
+				 />
+
+		<security:port-mappings>
+			<security:port-mapping http="#{configurationService.configuration.getProperty('tomcat.http.port')}"
+			                       https="#{configurationService.configuration.getProperty('tomcat.ssl.port')}" />
+			<security:port-mapping http="80" https="443" />
+			<!--security:port-mapping http="#{configurationService.configuration.getProperty('proxy.http.port')}"
+				https="#{configurationService.configuration.getProperty('proxy.ssl.port')}" /-->
+		</security:port-mappings>
+
+		<security:request-cache ref="httpSessionRequestCache" />
+		
+		<security:headers>
+			<security:frame-options disabled="true"/>
+		</security:headers>
+
+	</security:http>
+
+	<!-- Ignores url(s) that match paths specified in the set -->
+	<bean id="excludeUrlRequestMatcher" class="de.hybris.platform.yb2bacceleratorstorefront.security.ExcludeUrlRequestMatcher">
+		<property name="excludeUrlSet" ref="excludeUrlSet"/>
+		<property name="pathMatcher" ref="defaultPathMatcher"/>
+	</bean>
+
+	<!-- The set of url(s) to exclude from the 'Default security config'-->
+	<bean id="excludeUrlSet" class="java.util.HashSet" />
+
+	<!-- Path matcher to use, AntPathMatcher is the default -->
+	<alias name="antPathMatcher" alias="defaultPathMatcher" />
+	<bean id="antPathMatcher" class="org.springframework.util.AntPathMatcher" />
+
+	<!-- Default security config -->
+	<security:http request-matcher-ref="excludeUrlRequestMatcher">
+		<security:anonymous username="anonymous" granted-authority="ROLE_ANONYMOUS" />
+		<security:access-denied-handler error-page="/login"/>
+		<security:session-management session-authentication-strategy-ref="fixation" session-authentication-error-url="/login" />
+		<security:csrf token-repository-ref="csrfTokenRepository" request-matcher-ref="csrfProtectionMatcher" />
+		<security:custom-filter before="CSRF_FILTER" ref="logoutFilter" />
+
+		<!-- RememberMe -->
+		<security:remember-me key="yb2bacceleratorstorefront" services-ref="rememberMeServices" />
+
+		<!-- SSL / AUTHENTICATED pages -->
+		<security:intercept-url pattern="/my-account/addressform" access="hasAnyRole('ROLE_ANONYMOUS','ROLE_CUSTOMERGROUP')" requires-channel="https" />
+		<security:intercept-url pattern="/checkout/multi/billingaddressform" access="hasAnyRole('ROLE_ANONYMOUS','ROLE_CUSTOMERGROUP')" requires-channel="https" />
+		<security:intercept-url pattern="/my-account*" access="hasRole('ROLE_CUSTOMERGROUP')" requires-channel="https" />
+		<security:intercept-url pattern="/my-account/order/*/getReadOnlyProductVariantMatrix" access="hasAnyRole('ROLE_ANONYMOUS','ROLE_CUSTOMERGROUP')" requires-channel="https" />
+		<security:intercept-url pattern="/my-account/**" access="hasRole('ROLE_CUSTOMERGROUP')" requires-channel="https" />
+		<security:intercept-url pattern="/quote/**" access="hasRole('ROLE_CUSTOMERGROUP')" requires-channel="https" />
+
+		<security:intercept-url pattern="/**" requires-channel="https" /> <!-- Everything should be secure -->
+
+		<security:form-login
+				login-page="/login"
+				authentication-failure-handler-ref="loginAuthenticationFailureHandler"
+				authentication-success-handler-ref="loginGuidAuthenticationSuccessHandler"
+				username-parameter="j_username" 
+				password-parameter="j_password" 
+				login-processing-url="/j_spring_security_check"
+				  />
+
+		<security:port-mappings>
+			<security:port-mapping http="#{configurationService.configuration.getProperty('tomcat.http.port')}"
+			                       https="#{configurationService.configuration.getProperty('tomcat.ssl.port')}" />
+			<security:port-mapping http="80" https="443" />
+			<!--security:port-mapping http="#{configurationService.configuration.getProperty('proxy.http.port')}"
+				https="#{configurationService.configuration.getProperty('proxy.ssl.port')}" /-->
+		</security:port-mappings>
+
+		<security:request-cache ref="httpSessionRequestCache" />
+		
+		<security:headers>
+			<security:frame-options disabled="true"/>
+		</security:headers>
+
+	</security:http>
+
+	<security:authentication-manager alias="authenticationManager">
+		<security:authentication-provider ref="acceleratorAuthenticationProvider" />
+	</security:authentication-manager>
+
+	<bean id="acceleratorAuthenticationProvider" parent="abstractAcceleratorAuthenticationProvider" 
+			class="de.hybris.platform.yb2bacceleratorstorefront.security.AcceleratorAuthenticationProvider">
+		<property name="adminGroup" value="ROLE_ADMINGROUP"/>
+	</bean>
+
+	<bean id="coreUserDetailsService" class="de.hybris.platform.spring.security.CoreUserDetailsService"  />
+
+	<bean id="guidCookieStrategy" class="de.hybris.platform.yb2bacceleratorstorefront.security.impl.DefaultGUIDCookieStrategy"
+	      >
+		<property name="cookieGenerator" ref="guidCookieGenerator" />
+	</bean>
+	
+	<alias name="defaultGuestCheckoutCartCleanStrategy" alias="guestCheckoutCartCleanStrategy"/>
+	<bean id="defaultGuestCheckoutCartCleanStrategy" class="de.hybris.platform.yb2bacceleratorstorefront.security.impl.DefaultGuestCheckoutCartCleanStrategy">
+		<property name="skipPatterns">
+			<list>
+				<value>#{configurationService.configuration.getProperty('yb2bacceleratorstorefront.checkout.url.pattern')}</value>
+				<value>#{configurationService.configuration.getProperty('yb2bacceleratorstorefront.favicon.pattern')}</value>
+			</list>
+		</property>
+		<property name="checkoutCustomerStrategy"  ref="checkoutCustomerStrategy" />
+		<property name="cartService" ref="cartService" />
+		<property name="sessionService" ref="sessionService"/>
+		<property name="userService" ref="userService"/>
+	</bean>
+
+	<alias name="defaultGuidCookieGenerator" alias="guidCookieGenerator"/>
+	<bean id="defaultGuidCookieGenerator" class="de.hybris.platform.yb2bacceleratorstorefront.security.cookie.EnhancedCookieGenerator" >
+		<property name="cookieSecure" value="true" />
+		<property name="cookieName" value="acceleratorSecureGUID" />
+		<property name="httpOnly" value="true"/>
+	</bean>
+
+    <alias name="defaultAutoLoginStrategy" alias="autoLoginStrategy"/>
+    <bean id="defaultAutoLoginStrategy" class="de.hybris.platform.yb2bacceleratorstorefront.security.impl.DefaultAutoLoginStrategy" >
+		<property name="authenticationManager" ref="authenticationManager" />
+		<property name="customerFacade" ref="customerFacade" />
+		<property name="guidCookieStrategy" ref="guidCookieStrategy"/>
+		<property name="rememberMeServices" ref="rememberMeServices"/>
+	</bean>
+
+	<bean id="httpSessionRequestCache" class="de.hybris.platform.yb2bacceleratorstorefront.security.impl.WebHttpSessionRequestCache">
+        <property name="requestMatcher" ref="excludeRedirectUrlRequestMatcher" />
+		<property name="sessionService" ref="sessionService"/>
+	</bean>
+
+	<!-- Ignores url(s) that match paths specified in the set -->
+	<bean id="excludeRedirectUrlRequestMatcher" class="de.hybris.platform.yb2bacceleratorstorefront.security.ExcludeUrlRequestMatcher">
+	<property name="excludeUrlSet">
+		<set>
+			<value>/guest/*</value>
+			<value>/orderConfirmation/*</value>
+			<value>/login/checkout</value>
+		</set>
+	</property>
+	<property name="pathMatcher" ref="defaultPathMatcher" />
+	</bean>
+
+	<bean id="redirectStrategy" class="org.springframework.security.web.DefaultRedirectStrategy"  />
+
+	<!-- Login Success Handlers -->
+
+	<bean id="loginGuidAuthenticationSuccessHandler" class="de.hybris.platform.yb2bacceleratorstorefront.security.GUIDAuthenticationSuccessHandler" >
+		<property name="authenticationSuccessHandler" ref="loginAuthenticationSuccessHandler" />
+		<property name="guidCookieStrategy" ref="guidCookieStrategy" />
+	</bean>
+
+	<alias name="defaultLoginAuthenticationSuccessHandler" alias="loginAuthenticationSuccessHandler"/>
+	<bean id="defaultLoginAuthenticationSuccessHandler" class="de.hybris.platform.acceleratorstorefrontcommons.security.StorefrontAuthenticationSuccessHandler" >
+		<property name="customerFacade" ref="customerFacade" />
+		<property name="defaultTargetUrl" value="#{'responsive' == '${commerceservices.default.desktop.ui.experience}' ? '/' : '/my-account'}"/>
+		<property name="useReferer" value="true"/>
+		<property name="requestCache" ref="httpSessionRequestCache" />
+		<property name="uiExperienceService" ref="uiExperienceService"/>
+		<property name="cartFacade" ref="cartFacade"/>
+		<property name="customerConsentDataStrategy" ref="customerConsentDataStrategy"/>
+		<property name="cartRestorationStrategy" ref="cartRestorationStrategy"/>
+		<property name="forceDefaultTargetForUiExperienceLevel">
+			<map key-type="de.hybris.platform.commerceservices.enums.UiExperienceLevel" value-type="java.lang.Boolean">
+				<entry key="DESKTOP" value="false"/>
+				<entry key="MOBILE" value="false"/>
+			</map>
+		</property>
+        <property name="bruteForceAttackCounter" ref="bruteForceAttackCounter" />
+		<property name="restrictedPages">
+			<list>
+				<value>/login</value>
+			</list>
+		</property>
+		<property name="listRedirectUrlsForceDefaultTarget">
+			<list></list>
+		</property>
+	</bean>
+
+	<bean id="loginCheckoutGuidAuthenticationSuccessHandler" class="de.hybris.platform.yb2bacceleratorstorefront.security.GUIDAuthenticationSuccessHandler" >
+		<property name="authenticationSuccessHandler" ref="loginCheckoutAuthenticationSuccessHandler" />
+		<property name="guidCookieStrategy" ref="guidCookieStrategy" />
+	</bean>
+
+	<alias name="defaultLoginCheckoutAuthenticationSuccessHandler" alias="loginCheckoutAuthenticationSuccessHandler"/>
+	<bean id="defaultLoginCheckoutAuthenticationSuccessHandler" class="de.hybris.platform.acceleratorstorefrontcommons.security.StorefrontAuthenticationSuccessHandler" >
+		<property name="customerFacade" ref="customerFacade" />
+		<property name="defaultTargetUrl" value="/checkout"/>
+		<property name="uiExperienceService" ref="uiExperienceService"/>
+		<property name="cartFacade" ref="cartFacade"/>
+		<property name="customerConsentDataStrategy" ref="customerConsentDataStrategy"/>
+		<property name="cartRestorationStrategy" ref="cartRestorationStrategy"/>
+		<property name="forceDefaultTargetForUiExperienceLevel">
+			<map key-type="de.hybris.platform.commerceservices.enums.UiExperienceLevel" value-type="java.lang.Boolean">
+				<entry key="DESKTOP" value="true"/>
+				<entry key="MOBILE" value="true"/>
+			</map>
+		</property>
+		<property name="bruteForceAttackCounter" ref="bruteForceAttackCounter" />
+		<property name="redirectStrategy" ref="commerceRedirectStrategy"/>
+		<property name="restrictedPages">
+			<list>
+				<value>/login/checkout</value>
+			</list>
+		</property>
+		<property name="listRedirectUrlsForceDefaultTarget">
+			<list></list>
+		</property>
+	</bean>
+
+	<alias name="defaultCommerceRedirectStrategy" alias="commerceRedirectStrategy"/>
+	<bean name="defaultCommerceRedirectStrategy" class="de.hybris.platform.yb2bacceleratorstorefront.security.impl.DefaultCommerceRedirectStrategy" parent="redirectStrategy">
+		<property name="checkoutFlowFacade" ref="checkoutFlowFacade"/>
+		<property name="expressTargetUrl" value="/checkout/multi/express"/>
+   </bean>
+
+	<bean id="loginAuthenticationFailureHandler" class="de.hybris.platform.yb2bacceleratorstorefront.security.LoginAuthenticationFailureHandler" >
+        <property name="bruteForceAttackCounter" ref="bruteForceAttackCounter" />
+		<property name="defaultFailureUrl" value="/login?error=true"/>
+	</bean>
+
+	<bean id="loginCheckoutAuthenticationFailureHandler" class="de.hybris.platform.yb2bacceleratorstorefront.security.LoginAuthenticationFailureHandler" >
+        <property name="bruteForceAttackCounter" ref="bruteForceAttackCounter" />
+		<property name="defaultFailureUrl" value="/login/checkout?error=true"/>
+	</bean>
+
+	<!-- Logout Success Handler -->
+
+	<util:list id="logoutRestrictedPages" value-type="java.lang.String">
+		<value>/my-account</value>
+		<value>/checkout</value>
+		<value>/quote</value>
+	</util:list>
+
+
+	<alias name="defaultLogoutSuccessHandler" alias="logoutSuccessHandler"/>
+	<bean id="defaultLogoutSuccessHandler" class="de.hybris.platform.acceleratorstorefrontcommons.security.StorefrontLogoutSuccessHandler" >
+		<property name="defaultTargetUrl" value="/?logout=true"/>
+		<property name="guidCookieStrategy" ref="guidCookieStrategy"/>
+		<property name="useReferer" value="true"/>
+		<property name="restrictedPages" ref="logoutRestrictedPages"/>
+		<property name="sessionService" ref="sessionService"/>
+	</bean>
+	
+     <bean id="logoutFilter" class="org.springframework.security.web.authentication.logout.LogoutFilter">
+ 		<constructor-arg name="logoutSuccessHandler" ref="logoutSuccessHandler" />
+ 		<constructor-arg name="handlers">
+ 			<list>
+				<bean class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler" />
+ 				<ref bean="rememberMeServices" />
+ 			</list>
+ 		</constructor-arg>
+ 	</bean>
+
+	<!-- Remember Me -->
+
+	<bean id="rememberMeProcessingFilter" class="org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter" >
+		<constructor-arg name="rememberMeServices" ref="rememberMeServices"/>
+		<constructor-arg name="authenticationManager" ref="authenticationManager"/>
+	</bean>
+
+	
+	<alias name="defaultRememberMeServices" alias="rememberMeServices"/>
+	<bean id="defaultRememberMeServices" class="de.hybris.platform.yb2bacceleratorstorefront.security.AcceleratorRememberMeServices" >
+		<constructor-arg name="key" value="yb2bacceleratorstorefront" />
+		<constructor-arg name="userDetailsService" ref="originalUidUserDetailsService" />
+		<property name="cookieName" value="yb2bacceleratorstorefrontRememberMe" />
+		<property name="alwaysRemember" value="true" />
+		<property name="userService" ref="userService"/>
+		<property name="useSecureCookie" value="true"/>
+		<property name="customerFacade" ref="customerFacade"/>
+		<property name="checkoutCustomerStrategy" ref="checkoutCustomerStrategy"/>
+		<property name="urlEncoderService" ref="urlEncoderService"/>
+		<property name="storeSessionFacade" ref="storeSessionFacade"/>
+		<property name="commonI18NService" ref="commonI18NService"/>
+		<property name="secureTokenService" ref="secureTokenService"/>
+	</bean>
+
+	<bean id="rememberMeAuthenticationProvider" class="org.springframework.security.authentication.RememberMeAuthenticationProvider" >
+		<constructor-arg name="key" value="yb2bacceleratorstorefront"/>
+	</bean>
+	
+	<!-- CSRF -->
+	<bean id="csrfTokenRepository" class="org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository">
+    	<property name="headerName" value="CSRFToken" />
+    	<property name="parameterName" value="CSRFToken" />
+	</bean>
+	
+	<util:list id="csrfAllowedUrlPatternsList" />
+	
+	<alias name="defaultCsrfProtectionMatcher" alias="csrfProtectionMatcher"/>
+	<bean id="defaultCsrfProtectionMatcher" class="de.hybris.platform.yb2bacceleratorstorefront.security.CsrfProtectionMatcher">
+		<property name="csrfAllowedUrlPatterns" ref="csrfAllowedUrlPatternsList"/>
+	</bean>
+
+</beans>

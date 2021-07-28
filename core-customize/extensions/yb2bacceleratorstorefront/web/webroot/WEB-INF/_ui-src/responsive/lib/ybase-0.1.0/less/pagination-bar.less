@@ -1,0 +1,118 @@
+.sort-refine-bar {
+
+	.form-group {
+		select {
+			width: auto;
+		}
+	}
+}
+
+.pagination-bar{
+	margin:  (@grid-gutter-width + 10) 0;
+
+	.pagination-toolbar {
+		padding-bottom: (@grid-gutter-width * 1.5);
+		padding-left: 20px;
+	  	padding-right: 30px;
+		border-bottom: 1px solid @border-color-3;
+
+	  @media (max-width: @screen-md) {
+		padding-left: 20px;
+		padding-right: 20px;
+	  }
+	}
+
+	.form-group {
+		margin: 0;
+	}
+
+	.pagination-bar-results {
+		margin-top: (@grid-gutter-width + 5);
+		padding: 0 20px;
+		color: @text-color-secondary;
+	}
+
+	&.bottom {
+		.pagination-toolbar {
+			padding-top: (@grid-gutter-width * 1.5);
+			border-top: 1px solid @border-color-3;
+			border-bottom-width: 1px;
+		}
+	}
+}
+
+@media (max-width: @screen-sm-max)  {
+	.pagination-bar {
+		button {
+			width: 100%;
+			padding-left: 0;
+			padding-right: 0;
+		}
+	}
+}
+
+@media (max-width: @screen-xs-max) {
+	.sort-refine-bar {
+		.form-group {
+			select {
+				width: 100%;
+			}
+		}
+
+	}
+	.pagination-bar {
+		.pagination,
+		button {
+			margin-top: @grid-gutter-width * 1.5;
+			width: 100%;
+		}
+	}
+	.pagination-bar-borders();
+}
+
+@media (min-width: @screen-sm-min) {
+	.pagination-bar {
+		.pagination-toolbar {
+			border-bottom-width: 1px;
+		}
+
+		.pagination,
+		button {
+			margin-top: @grid-gutter-width + 5;
+		}
+	}
+}
+
+@media (max-width: @screen-sm-max) and (min-width: @screen-sm-min) {
+	.sort-refine-bar {
+		.form-group {
+			select {
+				height: ceil((@padding-large-vertical * 2) + (@btn-font-size * @line-height-base) + (@btn-border-width * 2)) - 1;
+			}
+		}
+	}
+	.pagination-bar {
+		.pagination,
+		button {
+			margin-top: @grid-gutter-width + 4;
+		}
+	}
+}
+
+
+.pagination-bar-borders() when (@pagination-bar-framed) {
+	.pagination-bar {
+		//.pagination-toolbar,
+		//.pagination-wrap {
+		//	padding-left: 0;
+		//	padding-right: 0;
+		//}
+
+		.pagination {
+			padding-top: @grid-gutter-width - 5;
+			padding-bottom: @grid-gutter-width - 5;
+			border-top: 1px solid @border-color-3;
+			border-bottom: 1px solid @border-color-3;
+		}
+	}
+}

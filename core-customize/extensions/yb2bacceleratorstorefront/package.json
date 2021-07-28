@@ -1,0 +1,29 @@
+{
+  "name": "yb2bacceleratorstorefront",
+  "version": "0.0.0",
+  "description": "For maintain and scan deliverable JS Libraries of the accelerator",
+  "devDependencies": {
+    "less-rhino" : "^1.7.3",
+    "lessc-rhino" : "^1.7.3"
+  },
+  "dependencies": {
+    "enquire" : "2.1.2",
+    "Imager" : "",
+    "jquery" : "3.5.1",
+    "jquery-ui" : "1.12.1",
+    "jquery.blockUI" : "2.66",
+    "jquery.colorbox" : "1.5.14",
+    "jquery.currencies" : "",
+    "jquery.form" : "4.2.2",
+    "jquery.hoverIntent" : "1.8.1",
+    "jquery.pstrength" : "1.2",
+    "jquery.slideviewer" : "1.2",
+    "jquery.syncheight" : "1.5",
+    "jquery.tabs" : "",
+    "jquery.tmpl" : "1.0.0",
+    "jquery.waitforimages" : "1.4.2",
+    "jquery.zoom" : "1.7.13",
+    "owl.carousel" : "1.3.3",
+    "purify" : ""
+  }
+}
