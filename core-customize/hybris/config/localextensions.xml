@@ -295,13 +295,15 @@
     <extension name='kiwi' />
     <extension name='tiger'/>
 
-<!-- Download the Cloud Extension Pack (for 1811 and 1905 Commerce only) to get these extensions locally https://help.sap.com/viewer/dc198ac31ba24dce96149c8480be955f/1905/en-US/d6bf3abf8b974544a139c49dd3ca12a9.html?q=cloud%20extension%20pack#loioc2a6297b1b094f0cb735c12ef812d96c -->
+<!-- For more information where to find those extensions: -->
+<!-- https://launchpad.support.sap.com/#/notes/2817992 -->
     <extension name='azurecloudhotfolder' />
     <extension name='cloudcommons' />
     <extension name='cloudhotfolder' />
 
 
-<!-- Configuring Required Extensions and AddOns for SAP Commerce integration with SAP Cloud Platform Integration - https://help.sap.com/viewer/50c996852b32456c96d3161a95544cdb/1905/en-US/7f87b6adbab74635b744a1bc38ce8d3c.html-->
+<!-- Configuring Required Extensions and AddOns for SAP Commerce integration with SAP Cloud Platform Integration -->
+<!-- https://help.sap.com/viewer/product/SAP_COMMERCE_INTEGRATIONS/latest -->
     <!--<extension name='sapcpiadapter'/>
     <extension name='sapcpiorderexchange'/>
     <extension name='ysaporderfulfillment'/>
