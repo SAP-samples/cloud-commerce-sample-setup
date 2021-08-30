@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <!--  
- For more information, on how to customize this file, please see https://lucene.apache.org/solr/guide/7_5/documents-fields-and-schema-design.html
+ For more information, on how to customize this file, please see https://lucene.apache.org/solr/guide/8_8/documents-fields-and-schema-design.html
 -->
 
-<schema name="hybris" version="7.5">
+<schema name="hybris" version="8.9">
 	<types>	
 		<!-- Basic Types -->
 
