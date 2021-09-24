@@ -8,35 +8,35 @@
     "useConfig": {
         "properties": [
             {
-                "location": "/hybris/config/environments/local-dev.properties",
+                "location": "hybris/config/environments/local-dev.properties",
                 "persona": "development"
             },
             {
-                "location": "/hybris/config/environments/local-stage.properties",
+                "location": "hybris/config/environments/local-stage.properties",
                 "persona": "staging"
             },
             {
-                "location": "/hybris/config/environments/local-prod.properties",
+                "location": "hybris/config/environments/local-prod.properties",
                 "persona": "production"
             },
             {
-                "location": "/hybris/config/environments/common.properties"
+                "location": "hybris/config/environments/common.properties"
              },
              {
                 "aspect": "accstorefront",
-                "location": "/hybris/config/environments/accstorefront.properties"
+                "location": "hybris/config/environments/accstorefront.properties"
              },
              {
                 "aspect": "api",
-                "location": "/hybris/config/environments/api.properties"
+                "location": "hybris/config/environments/api.properties"
              },
              {
                 "aspect": "backoffice",
-                "location": "/hybris/config/environments/backoffice.properties"
+                "location": "hybris/config/environments/backoffice.properties"
              }
         ],
         "extensions": {
-            "location": "/hybris/config/localextensions.xml",
+            "location": "hybris/config/localextensions.xml",
             "exclude": [
                 "azurecloudhotfolder",
                 "cloudcommons",
@@ -51,11 +51,6 @@
         }
     ],
     "storefrontAddons": [
-        {
-            "addon": "promotionenginesamplesaddon",
-            "storefront": "yacceleratorstorefront",
-            "template": "yacceleratorstorefront"
-        },
         {
             "addon": "smarteditaddon",
             "storefront": "yacceleratorstorefront",
