@@ -11,35 +11,7 @@ import { UserProfileRootModule, USER_PROFILE_FEATURE } from "@spartacus/user/pro
     UserAccountRootModule,
     UserProfileRootModule
   ],
-  providers: [provideConfig({
-    featureModules: {
-      userAccount: {
-        module: () =>
-          import('@spartacus/user/account').then((m) => m.UserAccountModule),
-      },
-    }
-  }),
-  provideConfig({
-    i18n: {
-      resources: userAccountTranslations,
-      chunks: userAccountTranslationChunksConfig,
-    },
-  }),
-  provideConfig({
-    featureModules: {
-      userProfile: {
-        module: () =>
-          import('@spartacus/user/profile').then((m) => m.UserProfileModule),
-      },
-    }
-  }),
-  provideConfig({
-    i18n: {
-      resources: userProfileTranslations,
-      chunks: userProfileTranslationChunksConfig,
-    },
-  }),
-  provideConfig(<CmsConfig>{
+  providers: [provideConfig(<CmsConfig>{
     featureModules: {
       [USER_ACCOUNT_FEATURE]: {
         module: () =>

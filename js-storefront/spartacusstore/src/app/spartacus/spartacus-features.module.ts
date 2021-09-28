@@ -1,26 +1,23 @@
 import { NgModule } from '@angular/core';
-import { CheckoutComponentsModule, CheckoutLoginModule, OrderConfirmationModule, ReplenishmentOrderConfirmationModule } from "@spartacus/checkout/components";
-import { CheckoutCoreModule } from '@spartacus/checkout/core';
-import { CheckoutOccModule } from '@spartacus/checkout/occ';
-import { AnonymousConsentsModule, AuthModule, CartModule, CartOccModule, CostCenterOccModule, ExternalRoutesModule, ProductModule, ProductOccModule, UserOccTransitionalModule, UserTransitionalModule } from '@spartacus/core';
-import { AddressBookModule, AnonymousConsentManagementBannerModule, AnonymousConsentsDialogModule, BannerCarouselModule, BannerModule, BreadcrumbModule, CartComponentModule, CartPageEventModule, CategoryNavigationModule, CmsParagraphModule, ConsentManagementModule, FooterNavigationModule, HamburgerMenuModule, HomePageEventModule, LinkModule, LoginRouteModule, LogoutModule, MyCouponsModule, MyInterestsModule, NavigationEventModule, NavigationModule, NotificationPreferenceModule, OrderCancellationModule, OrderDetailsModule, OrderHistoryModule, OrderReturnModule, PaymentMethodsModule, ProductCarouselModule, ProductDetailsPageModule, ProductFacetNavigationModule, ProductImagesModule, ProductIntroModule, ProductListingPageModule, ProductListModule, ProductPageEventModule, ProductReferencesModule, ProductSummaryModule, ProductTabsModule, ReplenishmentOrderDetailsModule, ReplenishmentOrderHistoryModule, ReturnRequestDetailModule, ReturnRequestListModule, SearchBoxModule, SiteContextSelectorModule, StockNotificationModule, TabParagraphContainerModule, WishListModule } from '@spartacus/storefront';
-import { AsmFeatureModule } from './features/asm/asm-feature.module';
-import { CartSavedCartFeatureModule } from './features/cart/cart-saved-cart-feature.module';
-import { ProductBulkPricingFeatureModule } from './features/product/product-bulk-pricing-feature.module';
-import { ProductVariantsFeatureModule } from './features/product/product-variants-feature.module';
-import { SmartEditFeatureModule } from './features/smartedit/smart-edit-feature.module';
-import { StoreFinderFeatureModule } from './features/storefinder/store-finder-feature.module';
-import { PersonalizationFeatureModule } from './features/tracking/personalization-feature.module';
+import { AnonymousConsentsModule, AuthModule, CartModule, CartOccModule, CostCenterOccModule, ExternalRoutesModule, OrderOccModule, ProductModule, ProductOccModule, UserOccTransitionalModule, UserTransitionalModule } from "@spartacus/core";
+import { AddressBookModule, AnonymousConsentManagementBannerModule, AnonymousConsentsDialogModule, BannerCarouselModule, BannerModule, BreadcrumbModule, CartComponentModule, CartPageEventModule, CategoryNavigationModule, CmsParagraphModule, ConsentManagementModule, FooterNavigationModule, HamburgerMenuModule, HomePageEventModule, LinkModule, LoginRouteModule, LogoutModule, MyCouponsModule, MyInterestsModule, NavigationEventModule, NavigationModule, NotificationPreferenceModule, OrderCancellationModule, OrderDetailsModule, OrderHistoryModule, OrderReturnModule, PaymentMethodsModule, ProductCarouselModule, ProductDetailsPageModule, ProductFacetNavigationModule, ProductImagesModule, ProductIntroModule, ProductListingPageModule, ProductListModule, ProductPageEventModule, ProductReferencesModule, ProductSummaryModule, ProductTabsModule, ReplenishmentOrderDetailsModule, ReplenishmentOrderHistoryModule, ReturnRequestDetailModule, ReturnRequestListModule, SearchBoxModule, SiteContextSelectorModule, StockNotificationModule, TabParagraphContainerModule, WishListModule } from "@spartacus/storefront";
 import { UserFeatureModule } from './features/user/user-feature.module';
+import { PersonalizationFeatureModule } from './features/tracking/personalization-feature.module';
+import { StoreFinderFeatureModule } from './features/storefinder/store-finder-feature.module';
+import { SmartEditFeatureModule } from './features/smartedit/smart-edit-feature.module';
+import { ProductVariantsFeatureModule } from './features/product/product-variants-feature.module';
+import { CheckoutFeatureModule } from './features/checkout/checkout-feature.module';
+import { CartSavedCartFeatureModule } from './features/cart/cart-saved-cart-feature.module';
+import { CartQuickOrderFeatureModule } from './features/cart/cart-quick-order-feature.module';
+import { AsmFeatureModule } from './features/asm/asm-feature.module';
 
 @NgModule({
   declarations: [],
   imports: [
     // Auth Core
     AuthModule.forRoot(),
-    LogoutModule, // will become part of auth package
-    LoginRouteModule, // will become part of auth package
-
+    LogoutModule,
+    LoginRouteModule,
     // Basic Cms Components
     HamburgerMenuModule,
     SiteContextSelectorModule,
@@ -33,11 +30,10 @@ import { UserFeatureModule } from './features/user/user-feature.module';
     NavigationModule,
     FooterNavigationModule,
     BreadcrumbModule,
-
-    // User Core
+    // User Core,
     UserTransitionalModule,
     UserOccTransitionalModule,
-    // User UI
+    // User UI,
     AddressBookModule,
     PaymentMethodsModule,
     NotificationPreferenceModule,
@@ -45,18 +41,15 @@ import { UserFeatureModule } from './features/user/user-feature.module';
     StockNotificationModule,
     ConsentManagementModule,
     MyCouponsModule,
-
-    // Anonymous Consents Core
+    // Anonymous Consents Core,
     AnonymousConsentsModule.forRoot(),
-    // Anonymous Consents UI
+    // Anonymous Consents UI,
     AnonymousConsentsDialogModule,
     AnonymousConsentManagementBannerModule,
-
-    // Product Core
+    // Product Core,
     ProductModule.forRoot(),
     ProductOccModule,
-
-    // Product UI
+    // Product UI,
     ProductDetailsPageModule,
     ProductListingPageModule,
     ProductListModule,
@@ -68,24 +61,14 @@ import { UserFeatureModule } from './features/user/user-feature.module';
     ProductImagesModule,
     ProductSummaryModule,
     ProductIntroModule,
-
-    // Cart Core
+    // Cart Core,
     CartModule.forRoot(),
     CartOccModule,
-    // Cart UI
+    // Cart UI,
     CartComponentModule,
     WishListModule,
-
-    // Checkout Core
-    CheckoutCoreModule,
-    CheckoutOccModule,
     CostCenterOccModule,
-    // Checkout UI
-    CheckoutLoginModule,
-    CheckoutComponentsModule,
-    OrderConfirmationModule,
-
-    // Order
+    // Order,
     OrderHistoryModule,
     OrderDetailsModule,
     OrderCancellationModule,
@@ -94,22 +77,22 @@ import { UserFeatureModule } from './features/user/user-feature.module';
     ReturnRequestDetailModule,
     ReplenishmentOrderHistoryModule,
     ReplenishmentOrderDetailsModule,
-    ReplenishmentOrderConfirmationModule,
-
-    // Page Events
+    OrderOccModule,
+    // Page Events,
     NavigationEventModule,
     HomePageEventModule,
     CartPageEventModule,
     ProductPageEventModule,
-    UserFeatureModule,
-    SmartEditFeatureModule,
     // External routes,
     ExternalRoutesModule.forRoot(),
+    UserFeatureModule,
     PersonalizationFeatureModule,
     StoreFinderFeatureModule,
-    ProductBulkPricingFeatureModule,
+    SmartEditFeatureModule,
     ProductVariantsFeatureModule,
+    CheckoutFeatureModule,
     CartSavedCartFeatureModule,
+    CartQuickOrderFeatureModule,
     AsmFeatureModule,
   ]
 })

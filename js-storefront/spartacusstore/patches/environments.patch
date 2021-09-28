@@ -4,7 +4,7 @@
  export const environment = {
 -  production: true
 +  production: true,
-+  occBaseUrl: null
++  occBaseUrl: undefined
  };
 --- src/environments/environment.ts	2021-04-23 11:57:19.000000000 +0200
 +++ src/environments/environment.ts	2021-04-23 12:17:59.000000000 +0200
