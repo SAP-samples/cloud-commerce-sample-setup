@@ -195,12 +195,8 @@
                     "value": ""
                 },
                 {
-                    "key": "tomcat.maxthreads",
+                    "key": "ccv2.platform.tomcat.serverxml.maxThreads",
                     "value": "1200"
-                },
-                {
-                    "key": "xss.filter.header.X-Frame-Options",
-                    "value": ""
                 },
                 {
                     "key": "storefrontContextRoot",
