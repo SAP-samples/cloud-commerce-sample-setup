@@ -1,0 +1,246 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+## Consignment Tracking E2E test data
+INSERT_UPDATE Customer;groups(uid);uid[unique=true];name;customerId
+;customergroup;test-user-with-orders@sap.cx.com;Test User;test-user-with-orders@sap.cx.com;
+
+INSERT_UPDATE Address;owner(Customer.uid)[unique=true];streetname[unique=true];postalcode;town[default='Washington'];region(isocode)[default='US-WA'];country(isocode)[default='US'];shippingAddress[default=true];firstname;lastname;title(code)[default='mr']
+;test-user-with-orders@sap.cx.com;Address line0;100000;;;;;User;Test;
+
+INSERT_UPDATE Order;code[unique=true];user(uid);date[dateformat=dd.MM.yyyy HH:mm];currency(isocode)[default='USD'];net[default=false];deliveryMode(code)[default='standard-gross'];Discounts(code);calculated[default=false];store(uid);site(uid);deliveryCost;totalPrice
+;100000;test-user-with-orders@sap.cx.com;10.01.2019 10:40;;;;;;electronics;;5.26;754.66
+;100001;test-user-with-orders@sap.cx.com;10.01.2019 10:40;;;;;;electronics;;7.9;655.55
+
+INSERT_UPDATE OrderEntry;order(code)[unique=true];product(code,catalogVersion(catalog(id),version))[unique=true];quantity[default=1];calculated[default=true];unit(code)[default='pieces'];entryNumber;basePrice;totalPrice
+;100000;300938:electronicsProductCatalog:Online;;;;0;114.12;114.12
+;100000;1992693:electronicsProductCatalog:Online;;;;1;541.34;541.43
+;100000;1377492:electronicsProductCatalog:Online;;;;2;79.11;79.11
+;100001;300938:electronicsProductCatalog:Online;;;;0;114.12;114.12
+;100001;1992693:electronicsProductCatalog:Online;;;;1;541.34;541.43
+
+INSERT_UPDATE Consignment;code[unique=true];status(code)[default='SHIPPED'];order(code);shippingAddress(owner(Customer.uid));warehouse(code);trackingID;carrierDetails(code)[default='MockCarrier']
+;100000a;;100000;test-user-with-orders@sap.cx.com;warehouse_e;2019031500001;
+;100000b;;100000;test-user-with-orders@sap.cx.com;warehouse_s;;;
+;100000c;WAITING;100000;test-user-with-orders@sap.cx.com;warehouse_n;;;
+
+INSERT_UPDATE ConsignmentEntry;consignment(code)[unique=true];orderEntry(order(code),entryNumber);quantity[default=1];shippedQuantity[default=1]
+;100000a;100000:0
+;100000b;100000:1
+;100000c;100000:2
+
+######## OMS/STOCK test data ##########
+
+# Updates the OMS ATP default formula for stock calculation to avoid products with placed orders to go out of stock
+INSERT_UPDATE AtpFormula;code[unique=true];availability;allocation;cancellation;increase;reserved;shrinkage;wastage;returned
+;Default_Formula;true;false;false;true;false;true;true;true
+
+# OMS sets electronics store tax group to Japan taxes. This fixes it.
+INSERT_UPDATE BaseStore;uid[unique=true];taxGroup(code);
+;electronics;us-taxes;
+
+## Out of stock product for E2E tests
+UPDATE StockLevel;productCode[unique=true];warehouse(code)[default='warehouse_e',unique=true];inStockStatus(code)
+;872912;Misato;forceOutOfStock
+;872912;Yokosuka;forceOutOfStock
+;872912;Shinbashi;forceOutOfStock
+;872912;Nakano;forceOutOfStock
+;872912;Tokio Flexstay Nippori Inn;forceOutOfStock
+;872912;Tokio Hotel Metropolitan Tokyo;forceOutOfStock
+;872912;Tokio Dormy Inn Tokyo Hatchobori;forceOutOfStock
+;872912;Tokio Park Hotel Tokyo;forceOutOfStock
+;872912;Yokohama Sakuragicho Washington Hotel;forceOutOfStock
+;872912;Yokohama Comfort Hotel Yokohama Kannai;forceOutOfStock
+;872912;Yokohama Hotel New Grand;forceOutOfStock
+;872912;Matsudo;forceOutOfStock
+;872912;Yokohama Hotel JAL City Kannai Yokohama;forceOutOfStock
+;872912;Osaka Crowne Plaza Hotel Ana Osaka;forceOutOfStock
+;872912;Osaka Ramada Osaka;forceOutOfStock
+;872912;Osaka Cross Hotel Osaka;forceOutOfStock
+;872912;Nagoya Hilton Nagoya Hotel;forceOutOfStock
+;872912;Nagoya Marriott Nagoya;forceOutOfStock
+;872912;Nagoya Crowne Plaza Ana Grand Court Nagoya;forceOutOfStock
+;872912;Nagoya The Westin Nagoya Castle;forceOutOfStock
+;872912;Sapporo Ana Hotel Sapporo;forceOutOfStock
+;872912;Ichikawa;forceOutOfStock
+;872912;Sapporo Best Western Hotel Sapporo Nakajima Koen;forceOutOfStock
+;872912;Kobe Hotel Monterey Amalie;forceOutOfStock
+;872912;Kobe Hotel Monterey Kobe;forceOutOfStock
+;872912;Kobe Sannomiya Terminal Hotel;forceOutOfStock
+;872912;Kobe the b;forceOutOfStock
+;872912;Fukuoka Hotel Monterey La Soeur Fukuoka;forceOutOfStock
+;872912;Fukuoka Hilton Fukuoka Sea Hawk;forceOutOfStock
+;872912;Fukuoka Hotel Nikko Fukuoka;forceOutOfStock
+;872912;Kawasaki Mets Kawasaki Hotel;forceOutOfStock
+;872912;Kawasaki Mets Mizonokuchi Hotel;forceOutOfStock
+;872912;Kawasaki Hotel Sunroute Kawasaki;forceOutOfStock
+;872912;Kawasaki Pearl Hotel Kawasaki;forceOutOfStock
+;872912;warehouse_e;forceOutOfStock
+
+
+######## COUPONS E2E test data ##########
+
+$defaultPromoGrp=electronicsPromoGrp
+$defaultRuleGroup=couponPromotionRuleGroup
+$promotionsModule="promotions-module"
+$previewModule="promotions-preview-module"
+$ruleImportProcessor=processor=de.hybris.platform.ruleengineservices.impex.impl.ConditionalImportProcessor,condition=de.hybris.platform.ruleengineservices.impex.impl.RuleImportCondition
+$lang=en
+
+INSERT_UPDATE SingleCodeCoupon;couponId(id)[unique=true];maxRedemptionsPerCustomer;maxTotalRedemptions;active[default=true]
+;CouponForProduct;;;
+;CouponForCart;;;
+;FreeGiftCoupon;;;
+
+INSERT_UPDATE PromotionSourceRule[$ruleImportProcessor];code[unique=true];name[lang=en];description[lang=en];messageFired[lang=en];
+;CouponForProductProm;Coupon For Product Promotion;Coupon For Product Promotion description;Get 25% off in all camera lenses
+;CouponForCartProm;Coupon For Cart Promotion;Coupon For Cart Promotion description;Get $25 off your order
+;FreeGiftCouponProm;Free Gift Coupon Promotion;Free Gift Coupon Promotion description;Free Gift with any purchase above $200
+
+INSERT_UPDATE PromotionSourceRule[$ruleImportProcessor];code[unique=true];priority;maxAllowedRuns;ruleGroup(code);conditions;actions;website(Identifier)[default=$defaultPromoGrp];excludeFromStorefrontDisplay[default=false];status(code)[unique=true,default=UNPUBLISHED]
+"#% afterEach: de.hybris.platform.core.Registry.getApplicationContext().getBean(""ruleEngineSystemSetup"").registerSourceRuleForDeployment(impex.getLastImportedItem(), new String[]{$promotionsModule,$previewModule});"
+;CouponForCartProm;25;1;couponPromotionRuleGroup;"[{""definitionId"":""y_qualifying_coupons"",""parameters"":{""coupons"":{""uuid"":""9644b8a6-ad94-4990-afca-2a132e1bd171"",""type"":""List(ItemType(AbstractCoupon))"",""value"":[""CouponForCart""]}},""children"":[]}]";"[{""definitionId"":""y_order_fixed_discount"",""parameters"":{""value"":{""uuid"":""b4dfe431-e526-42e2-bb08-0dea08f310db"",""type"":""Map(ItemType(Currency),java.math.BigDecimal)"",""value"":{""USD"":10}}}}]";
+
+INSERT_UPDATE PromotionSourceRule[$ruleImportProcessor];code[unique=true];priority;maxAllowedRuns;ruleGroup(code);conditions;actions;website(Identifier)[default=$defaultPromoGrp];excludeFromStorefrontDisplay[default=false];status(code)[unique=true,default=UNPUBLISHED]
+"#% afterEach: de.hybris.platform.core.Registry.getApplicationContext().getBean(""ruleEngineSystemSetup"").registerSourceRuleForDeployment(impex.getLastImportedItem(), new String[]{$promotionsModule,$previewModule});"
+;FreeGiftCouponProm;160;1;couponPromotionRuleGroup;"[{""definitionId"":""y_qualifying_coupons"",""parameters"":{""coupons"":{""uuid"":""ff7280f8-3272-4ddb-9e92-d26a083ec234"",""type"":""List(ItemType(AbstractCoupon))"",""value"":[""FreeGiftCoupon""]}},""children"":[]},{""definitionId"":""y_cart_total"",""parameters"":{""value"":{""uuid"":""b4959112-d22e-4bc3-a87c-80c4116ba887"",""type"":""Map(ItemType(Currency),java.math.BigDecimal)"",""value"":{""USD"":200}},""operator"":{""uuid"":""677a62d0-c8cd-4c47-af0b-91d19b6daa9d"",""type"":""Enum(de.hybris.platform.ruledefinitions.AmountOperator)"",""value"":""GREATER_THAN_OR_EQUAL""}},""children"":[]}]";"[{""definitionId"":""y_free_gift"",""parameters"":{""product"":{""uuid"":""5c9f025c-b351-46ee-bc49-662d8746ce56"",""type"":""ItemType(Product)"",""value"":""443175""},""quantity"":{""uuid"":""395a45d1-6f14-4ddd-ae48-d6ef8dc9c468"",""type"":""java.lang.Integer"",""value"":1}}}]";
+
+INSERT_UPDATE PromotionSourceRule[$ruleImportProcessor];code[unique=true];priority;maxAllowedRuns;ruleGroup(code);conditions;actions;website(Identifier)[default=$defaultPromoGrp];excludeFromStorefrontDisplay[default=false];status(code)[unique=true,default=UNPUBLISHED]
+"#% afterEach: de.hybris.platform.core.Registry.getApplicationContext().getBean(""ruleEngineSystemSetup"").registerSourceRuleForDeployment(impex.getLastImportedItem(), new String[]{$promotionsModule,$previewModule});"
+;CouponForProductProm;155;1;couponPromotionRuleGroup;"[{""definitionId"":""y_qualifying_coupons"",""parameters"":{""coupons"":{""uuid"":""baa9d67e-66ec-4989-b3c4-7589346db224"",""type"":""List(ItemType(AbstractCoupon))"",""value"":[""CouponForProduct""]}},""children"":[]},{""definitionId"":""y_qualifying_categories"",""parameters"":{""quantity"":{""uuid"":""20fd1aab-396d-4f36-a397-7d11d4549012"",""type"":""java.lang.Integer"",""value"":1},""categories_operator"":{""uuid"":""504c05f5-9092-4827-9950-29b60dd30d3d"",""type"":""Enum(de.hybris.platform.ruledefinitions.CollectionOperator)"",""value"":""CONTAINS_ANY""},""excluded_categories"":{""uuid"":""671ae763-e0c7-4fb9-bb34-c6367f684622"",""type"":""List(ItemType(Category))""},""excluded_products"":{""uuid"":""7f1a0063-0625-437c-90c4-ec00b5e6a3d4"",""type"":""List(ItemType(Product))""},""categories"":{""uuid"":""fe873025-b08c-452c-a649-906cde3fab06"",""type"":""List(ItemType(Category))"",""value"":[""588""]},""operator"":{""uuid"":""6a1f11ef-8bc0-490d-aa69-6e9b70d37e4c"",""type"":""Enum(de.hybris.platform.ruledefinitions.AmountOperator)"",""value"":""GREATER_THAN_OR_EQUAL""}},""children"":[]}]";"[{""definitionId"":""y_order_entry_percentage_discount"",""parameters"":{""value"":{""uuid"":""7850ea3a-cd43-4a94-b12d-c2ef6b81937a"",""type"":""java.math.BigDecimal"",""value"":25}}}]";electronicsPromoGrp;
+
+# Customer coupons (for my coupons e2e test)
+INSERT_UPDATE CustomerCoupon;couponId(id)[unique=true];startDate[default=01-01-2021,dateformat=dd-MM-yyyy];endDate[default=01-05-2099,dateformat=dd-MM-yyyy];active[default=true];assignable[default=true]
+;customerCoupon1;01-05-2000;01-05-2099
+;customerCoupon2
+;customerCoupon3
+;customerCoupon4
+;customerCoupon5
+;customerCoupon6
+;customerCoupon7
+;customerCoupon8
+;customerCoupon9
+;customerCoupon10
+;customerCoupon11;01-05-2019;01-06-2099
+
+INSERT_UPDATE Customer;groups(uid);uid[unique=true];name;customerId
+;customergroup;test-user-with-coupons@sap.cx.com;Test User;test-user-with-coupons@sap.cx.com;
+
+INSERT_UPDATE Address;owner(Customer.uid)[unique=true];streetname[unique=true];postalcode;town[default='Washington'];region(isocode)[default='US-WA'];country(isocode)[default='US'];shippingAddress[default=true];firstname;lastname;title(code)[default='mr']
+;test-user-with-coupons@sap.cx.com;Address line0;100000;;;;;User;Test;
+
+INSERT_UPDATE CustomerCoupon2Customer;source(CustomerCoupon.couponId)[unique=true];target(Customer.uid)[unique=true]
+;customerCoupon1;test-user-with-coupons@sap.cx.com;
+;customerCoupon2;test-user-with-coupons@sap.cx.com;
+;customerCoupon3;test-user-with-coupons@sap.cx.com;
+;customerCoupon4;test-user-with-coupons@sap.cx.com;
+;customerCoupon5;test-user-with-coupons@sap.cx.com;
+;customerCoupon6;test-user-with-coupons@sap.cx.com;
+;customerCoupon7;test-user-with-coupons@sap.cx.com;
+;customerCoupon8;test-user-with-coupons@sap.cx.com;
+;customerCoupon9;test-user-with-coupons@sap.cx.com;
+;customerCoupon10;test-user-with-coupons@sap.cx.com;
+;customerCoupon11;test-user-with-coupons@sap.cx.com;
+
+INSERT_UPDATE CustomerCoupon;couponId(id)[unique=true];startDate[default=01-01-2021,dateformat=dd-MM-yyyy];active[default=true];assignable[default=true]
+;midautumn
+;dragonboat
+;springfestival
+
+INSERT_UPDATE PromotionSourceRule;code[unique=true];priority;maxAllowedRuns;stackable[default=false];ruleGroup(code)[default=$defaultRuleGroup];conditions;actions;website(Identifier)[default=$defaultPromoGrp];excludeFromStorefrontDisplay[default=false];startDate[default=01-05-2017,dateformat=dd-MM-yyyy]
+"#% afterEach: de.hybris.platform.core.Registry.getApplicationContext().getBean(""ruleEngineSystemSetup"").registerSourceRuleForDeployment(impex.getLastImportedItem(), new String[]{$promotionsModule,$previewModule});"
+;midautumncouponbasedpromotion;180;1;;;"[{""definitionId"":""y_qualifying_coupons"",""parameters"":{""coupons"":{""uuid"":""228f0f4f-d24f-4325-b1a7-ef9b47c69f21"",""type"":""List(ItemType(AbstractCoupon))"",""value"":[""midautumn""]}},""children"":[]},{""definitionId"":""y_qualifying_products"",""parameters"":{""catalog"":{""uuid"":""bc350ff4-a10e-45e5-91ee-0bbed6d4b63a"",""type"":""ItemType(Catalog)"",""value"":""electronicsProductCatalog""},""products_operator"":{""uuid"":""d8d6576e-a579-49bd-a36e-3e8abc0a93ce"",""type"":""Enum(de.hybris.platform.ruledefinitions.CollectionOperator)"",""value"":""CONTAINS_ANY""},""quantity"":{""uuid"":""8b8fae6d-183a-4118-9ea3-af21a27a84d2"",""type"":""java.lang.Integer"",""value"":1},""operator"":{""uuid"":""58143771-ab68-450a-8e92-5b46891a3f0a"",""type"":""Enum(de.hybris.platform.ruledefinitions.AmountOperator)"",""value"":""GREATER_THAN_OR_EQUAL""},""products"":{""uuid"":""2a1d0128-529d-4f42-8239-8a7f78369991"",""type"":""List(ItemType(Product))"",""value"":[""1934793""]}},""children"":[]}]";"[{""definitionId"":""y_order_entry_fixed_discount"",""parameters"":{""value"":{""uuid"":""1d8bf69f-f897-4d3b-bed9-70ab11c3b6b9"",""type"":""Map(ItemType(Currency),java.math.BigDecimal)"",""value"":{""USD"":20}}}}]"
+
+INSERT_UPDATE PromotionSourceRule;code[unique=true];priority;maxAllowedRuns;stackable[default=false];ruleGroup(code)[default=$defaultRuleGroup];conditions;actions;website(Identifier)[default=$defaultPromoGrp];excludeFromStorefrontDisplay[default=false];startDate[default=01-05-2017,dateformat=dd-MM-yyyy]
+"#% afterEach: de.hybris.platform.core.Registry.getApplicationContext().getBean(""ruleEngineSystemSetup"").registerSourceRuleForDeployment(impex.getLastImportedItem(), new String[]{$promotionsModule,$previewModule});"
+;dragonboatcouponbasedpromotion;180;1;;;"[{""definitionId"":""y_qualifying_coupons"",""parameters"":{""coupons"":{""uuid"":""228f0f4f-d24f-4325-b1a7-ef9b47c69f21"",""type"":""List(ItemType(AbstractCoupon))"",""value"":[""dragonboat""]}},""children"":[]},{""definitionId"":""y_cart_total"",""parameters"":{""value"":{""uuid"":""f44d5ee7-1f6b-43b1-8542-4bc084c70bfc"",""type"":""Map(ItemType(Currency),java.math.BigDecimal)"",""value"":{""USD"":1000}},""operator"":{""uuid"":""af9f4980-c5a8-40bd-8f1f-151e4e6d7506"",""type"":""Enum(de.hybris.platform.ruledefinitions.AmountOperator)"",""value"":""GREATER_THAN_OR_EQUAL""}},""children"":[]}]";"[{""definitionId"":""y_order_percentage_discount"",""parameters"":{""value"":{""uuid"":""3ae37229-4a94-4aba-821b-aaf640c19423"",""type"":""java.math.BigDecimal"",""value"":20}}}]"
+
+INSERT_UPDATE PromotionSourceRule;code[unique=true];priority;maxAllowedRuns;stackable[default=false];ruleGroup(code)[default=$defaultRuleGroup];conditions;actions;website(Identifier)[default=$defaultPromoGrp];excludeFromStorefrontDisplay[default=false];startDate[default=01-05-2017,dateformat=dd-MM-yyyy]
+"#% afterEach: de.hybris.platform.core.Registry.getApplicationContext().getBean(""ruleEngineSystemSetup"").registerSourceRuleForDeployment(impex.getLastImportedItem(), new String[]{$promotionsModule,$previewModule});"
+;springfestivalcouponbasedpromotion;180;1;;;"[{""definitionId"":""y_qualifying_coupons"",""parameters"":{""coupons"":{""uuid"":""b2538f8a-f1e4-445e-8ab8-9224092901e9"",""type"":""List(ItemType(AbstractCoupon))"",""value"":[""springfestival""]}},""children"":[]},{""definitionId"":""y_qualifying_categories"",""parameters"":{""quantity"":{""uuid"":""f65892a0-e6f9-4fba-9987-1f55436b5715"",""type"":""java.lang.Integer"",""value"":1},""categories_operator"":{""uuid"":""ed1266e8-960f-4a41-a44a-5623e825bf6d"",""type"":""Enum(de.hybris.platform.ruledefinitions.CollectionOperator)"",""value"":""CONTAINS_ANY""},""excluded_categories"":{""uuid"":""7a87900e-1a2d-497e-9bb9-f63fcfa05cc2"",""type"":""List(ItemType(Category))""},""categories"":{""uuid"":""0e3f1f97-88e8-4081-b121-18244da432e7"",""type"":""List(ItemType(Category))"",""value"":[""577""]},""excluded_products"":{""uuid"":""d04460f6-8580-40a3-a22a-7fbe62dae09a"",""type"":""List(ItemType(Product))""},""operator"":{""uuid"":""00ea6501-ca9a-4ded-b833-6bde17855eba"",""type"":""Enum(de.hybris.platform.ruledefinitions.AmountOperator)"",""value"":""GREATER_THAN_OR_EQUAL""}},""children"":[]}]";"[{""definitionId"":""y_order_fixed_discount"",""parameters"":{""value"":{""uuid"":""9fe191b0-996a-4f3b-91d8-248f64cff2d6"",""type"":""Map(ItemType(Currency),java.math.BigDecimal)"",""value"":{""USD"":5}}}}]"
+
+INSERT_UPDATE PromotionSourceRuleTemplate;code[unique=true];maxAllowedRuns;ruleGroup(code)[default=$defaultRuleGroup];conditions;actions
+;coupon_order_threshold_percentage_discount;1;;"[{""definitionId"":""y_qualifying_coupons"",""parameters"":{""coupons"":{""uuid"":""bc31e8c0-b7b5-47ec-b129-6ed062b73bd4"",""type"":""List(ItemType(AbstractCoupon))""}},""children"":[]},{""definitionId"":""y_cart_total"",""parameters"":{""value"":{""uuid"":""fd76d28e-66ad-4daa-aa6e-0e0f07a6d5e6"",""type"":""Map(ItemType(Currency),java.math.BigDecimal)""},""operator"":{""uuid"":""1451f6d0-d31a-4fd6-a15d-8fde3778e3f5"",""type"":""Enum(de.hybris.platform.ruledefinitions.AmountOperator)"",""value"":""GREATER_THAN_OR_EQUAL""}},""children"":[]}]";"[{""definitionId"":""y_order_percentage_discount"",""parameters"":{""value"":{""uuid"":""f2de1179-37b3-4646-8c2a-d4f77d5e64b5"",""type"":""java.math.BigDecimal""}}}]"
+
+INSERT_UPDATE PromotionSourceRule;code[unique=true];name[lang=$lang];description[lang=$lang];messageFired[lang=$lang];status(code)[unique=true,default=UNPUBLISHED]
+;midautumncouponbasedpromotion;Buy PowerShot A480 and get $20 off;;Buy product {2a1d0128-529d-4f42-8239-8a7f78369991} and get {1d8bf69f-f897-4d3b-bed9-70ab11c3b6b9} off
+;dragonboatcouponbasedpromotion;Buy over $1000 get 20% off on cart;A percentage discount is applied to the cart when the order threshold value is reached;Buy over {f44d5ee7-1f6b-43b1-8542-4bc084c70bfc} get {3ae37229-4a94-4aba-821b-aaf640c19423}% off on cart 
+;springfestivalcouponbasedpromotion;Buy any item in the webcam category get $5 on cart;A fixed discount is applied to the cart when an item in the webcam category is purchased;Buy any webcam get {9fe191b0-996a-4f3b-91d8-248f64cff2d6} discount on cart
+
+INSERT_UPDATE CustomerCoupon;couponId(id)[unique=true];name[lang=$lang];description[lang=$lang]
+;midautumn;Buy PowerShot A480 and get $20 off;Buy PowerShot A480 and get $20 off
+;dragonboat;Buy over $1000 get 20% off on cart;Buy over $1000 get 20% off on cart 
+;springfestival;Buy any item in the webcam category get $5 on cart
+
+INSERT_UPDATE PromotionSourceRuleTemplate;code[unique=true];name[lang=$lang];description[lang=$lang];messageFired[lang=$lang]
+;coupon_order_threshold_percentage_discount;Coupon order threshold percentage discount;A percentage discount is applied to the cart when the order threshold value is reached;Buy over {fd76d28e-66ad-4daa-aa6e-0e0f07a6d5e6} get {f2de1179-37b3-4646-8c2a-d4f77d5e64b5}% off on cart
+
+## Save for later E2E test data
+INSERT_UPDATE PromotionSourceRule[$ruleImportProcessor];code[unique=true];name[lang=en];description[lang=en];messageFired[lang=en];
+;GiftProductProm;Gift Product Promotion;Gift Product Promotion description;Gift Product Promotion message
+
+INSERT_UPDATE PromotionSourceRule;code[unique=true];priority;maxAllowedRuns;ruleGroup(code);conditions;actions;website(Identifier)[default=$defaultPromoGrp];excludeFromStorefrontDisplay[default=false];status(code)[unique=true,default=UNPUBLISHED]
+"#% afterEach: de.hybris.platform.core.Registry.getApplicationContext().getBean(""ruleEngineSystemSetup"").registerSourceRuleForDeployment(impex.getLastImportedItem(), new String[]{$promotionsModule,$previewModule});"
+;GiftProductProm;160;1;;"[{""definitionId"":""y_qualifying_products"",""parameters"":{""products_operator"":{""uuid"":""c23447d8-17a1-4b86-b58c-d0a68086165f"",""type"":""Enum(de.hybris.platform.ruledefinitions.CollectionOperator)"",""value"":""CONTAINS_ANY""},""quantity"":{""uuid"":""dd642a57-e1f9-43db-a8bd-5c6f7c8af9a3"",""type"":""java.lang.Integer"",""value"":1},""catalog"":{""uuid"":""3d31d041-c05e-4dc4-9c1d-daad97da911c"",""type"":""ItemType(Catalog)"",""value"":""electronicsProductCatalog""},""operator"":{""uuid"":""eb27416c-323f-44e5-8fdfb7cfaea996e2"",""type"":""Enum(de.hybris.platform.ruledefinitions.AmountOperator)"",""value"":""GREATER_THAN_OR_EQUAL""},""products"":{""uuid"":""c7301cd8-bc26-457c-ae7a-d8275c855764"",""type"":""List(ItemType(Product))"",""value"":[""1934796""]}},""children"":[]}]";"[{""definitionId"":""y_free_gift"",""parameters"":{""product"":{""uuid"":""f50646d8-fc86-4c60-9b74-e5dc8643cc52"",""type"":""ItemType(Product)"",""value"":""137220""},""quantity"":{""uuid"":""aabb2475-66e1-4e6e-aa47-72b02b10c0e6"",""type"":""java.lang.Integer"",""value"":1}}}]";;
+
+############# CDS (Merchandising carousel) E2E test data ###################
+$contentCatalog=electronics-spaContentCatalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Online])[default=$contentCatalog:Online]
+
+# Homepage carousel
+# Create the CMS Component
+INSERT_UPDATE MerchandisingCarouselComponent;$contentCV[unique=true];uid[unique=true];name;title;numberToDisplay;strategy;&componentRef
+;;HomepageE2EMerchandisingCarousel;Homepage E2E Merchandising Carousel;Homepage E2E Merchandising Carousel;10;00000000-0000-0000-0000-000000000000;HomepageE2EMerchandisingCarousel
+
+# Add the component to the slot
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid,$contentCV)
+;;Section2CSlot-Homepage;HomepageE2EMerchandisingCarousel
+
+# Category Page carousel
+# Create the CMS Component
+INSERT_UPDATE MerchandisingCarouselComponent;$contentCV[unique=true];uid[unique=true];name;title;numberToDisplay;strategy;&componentRef
+;;CategoryPageE2EMerchandisingCarousel;Category Page E2E Merchandising Carousel;Category Page E2E Merchandising Carousel;10;00000000-0000-0000-0000-000000000000;CategoryPageE2EMerchandisingCarousel
+
+# Add the component to the slot
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid,$contentCV)[mode=append]
+;;BottomHeaderSlot;CategoryPageE2EMerchandisingCarousel
+
+# SLR Page carousel
+# Create the CMS Component
+INSERT_UPDATE MerchandisingCarouselComponent;$contentCV[unique=true];uid[unique=true];name;title;numberToDisplay;strategy;&componentRef
+;;SLRCategoryPageE2EMerchandisingCarousel;SLR Category Page E2E Merchandising Carousel;SLR Category Page E2E Merchandising Carousel;10;00000000-0000-0000-0000-000000000000;SLRCategoryPageE2EMerchandisingCarousel
+
+# Add the component to the slot
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid,$contentCV)
+;;SLRCamerasBottomHeaderSlot;SLRCategoryPageE2EMerchandisingCarousel
+
+############# CDS (Profile tag) E2E test data ###################
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType;&componentRef;
+;;ProfileTagComponent;ProfileTag Spartacus Component;ProfileTagComponent;ProfileTagComponent;
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid, $contentCV)[mode=append]
+;;FooterSlot;ProfileTagComponent
+
+############# Qualtrics Integration E2E test data ###################
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType
+;;QualtricsComponent;A Qualtrics Component;QualtricsComponent
+;;QualtricsEmbeddedFeedbackComponent;Qualtrics Embedded Feedback Component;QualtricsEmbeddedFeedbackComponent
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid,$contentCV)
+;;ProductSummarySlot;ProductImagesComponent,ProductIntroComponent,QualtricsEmbeddedFeedbackComponent,ProductSummaryComponent,VariantSelector,AddToCart,ConfigureProductComponent,AddToWishListComponent,StockNotificationComponent
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid,$contentCV)[mode=append]
+;;UpSellingSlot;QualtricsComponent
+
+################Notification feature E2E test data###################################################################
+UPDATE CronJob;code[unique=true];active[default=false]
+;stockLevelStatusCronJob
+;expiredInterestsCleanUpJob
+
+############ Inventory display - Cameras category now have a stock threshold ################
+$productCatalog=electronicsProductCatalog
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Online'])[unique=true,default=$productCatalog:Online]
+
+UPDATE Category;$catalogVersion;code[unique=true];stockLevelThreshold
+;;577;343

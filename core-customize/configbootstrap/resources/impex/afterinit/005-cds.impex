@@ -1,0 +1,121 @@
+$client = releasetest2105
+$clientid = htv730345050.releasetest2105
+$clientsecret =U212_LB2G---..8T5B50Jnc4MAH3FB
+$region = us
+$projectid = htv730345050
+$profiletagconfigurl = https://tag.static.us.context.cloud.sap/config/3177f010-a10e-11eb-897a-3db0c3b3f208
+$basesite = electronics
+$profiletagurl   = https://tag.static.$region.context.cloud.sap/js/profile-tag.js
+$edgeservice     = https://$projectid.api.$region.context.cloud.sap/edge
+$oauthservice    = https://$projectid.api.$region.context.cloud.sap/uaa/oauth
+$consentservice  = https://$projectid.api.$region.context.cloud.sap/consent
+$identityservice = https://$projectid.api.$region.context.cloud.sap/identity
+$profileservice  = https://$projectid.api.$region.context.cloud.sap/profile
+
+# CDS Foundation
+
+INSERT_UPDATE DestinationTarget;id[unique=true];destinationChannel(code)[default=CDS]
+;$projectid;CDS
+INSERT_UPDATE ConsumedOAuthCredential;id[unique=true];clientId;clientSecret;oAuthUrl
+;$projectid.$client;$clientid;$clientsecret;$oauthservice
+INSERT_UPDATE Endpoint;id[unique=true];version[unique=true];specUrl;name
+;ProfileClient;v1;"empty";"Profile Client v1"
+;ConsentServiceClient;v1;"empty";"Consent Service Client v1"
+;ProfileTagUrl;v1;"empty";"Profile Tag Url v1"
+;ProfileTagConfigUrl;v1;"empty";"Profile Tag Config Url v1"
+;CxIdentityServiceClient;v1;"empty";"Identity Service v1"
+;CxProfileServiceClient;v1;"empty";"Profile Service v1"
+
+INSERT_UPDATE ConsumedDestination;id[unique=true];url;additionalProperties(key,value)[map-delimiter=|];endpoint(id);destinationTarget(id)[default=$projectid];credential(id)
+;ProfileClient$basesite;$edgeservice;baseSite->$basesite|clientClassName->ProfileClient;ProfileClient;$projectid;$projectid.$client
+;ConsentServiceClient$basesite;$consentservice;baseSite->$basesite|oauth.scope->cds.roles.customerec|clientClassName->ConsentServiceClient;ConsentServiceClient;$projectid;$projectid.$client
+;ProfileTagUrl$basesite;$profiletagurl;baseSite->$basesite|clientClassName->ProfileTagUrl;ProfileTagUrl;$projectid;$projectid.$client
+;ProfileTagConfigUrl$basesite;$profiletagconfigurl;baseSite->$basesite|clientClassName->ProfileTagConfigUrl;ProfileTagConfigUrl;$projectid;$projectid.$client
+;CxIdentityServiceClient$basesite;$identityservice;oauth.scope->cds.roles.customerec|baseSite->$basesite|clientClassName->CxIdentityServiceClient;CxIdentityServiceClient;$projectid;$projectid.$client
+;CxProfileServiceClient$basesite;$profileservice;oauth.scope->cds.roles.customerec|baseSite->$basesite|clientClassName->CxProfileServiceClient;CxProfileServiceClient;$projectid;$projectid.$client
+
+# CDS Merchandize
+
+$strategyservice = https://$projectid.api.$region.context.cloud.sap/strategy
+$catalogservice  = https://$projectid.api.$region.context.cloud.sap/catalog
+
+INSERT_UPDATE Endpoint;id[unique=true];version[unique=true];specUrl;name
+;MerchStrategyServiceClient;v1;"empty";"MerchStrategyServiceClient"
+;MerchCatalogServiceClient;v1;"empty";"MerchCatalogServiceClient"
+
+INSERT_UPDATE ConsumedDestination;id[unique=true];url;additionalProperties(key,value)[map-delimiter=|];endpoint(id);destinationTarget(id)[default=$projectid];credential(id)
+;StrategyClient$basesite;$strategyservice;baseSite->$basesite|clientClassName->MerchStrategyServiceClient|oauth.scope->cds.roles.customerec;MerchStrategyServiceClient;$projectid;$projectid.$client
+;CatalogClient$basesite;$catalogservice;baseSite->$basesite|clientClassName->MerchCatalogServiceClient|oauth.scope->cds.roles.customerec;MerchCatalogServiceClient;$projectid;$projectid.$client
+
+# Add Profile Tag to the Footer content slot
+
+$contentCatalog=electronicsContentCatalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Online])[default=$contentCatalog:Online]
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType;&componentRef;
+;;ProfileTagAccComponent;ProfileTag Accelerator Component;ProfileTagAccComponent;ProfileTagAccComponent;
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid, $contentCV)[mode=append]
+;;FooterSlot;ProfileTagAccComponent
+
+# Spartacus
+
+$basesite=electronics-spa
+$spartacusSecret=li0A2SEKP41s1CQRUaodiCTDJaXtm76m
+
+INSERT_UPDATE DestinationTarget;id[unique=true];destinationChannel(code)[default=CDS]
+;$projectid;CDS
+INSERT_UPDATE ConsumedOAuthCredential;id[unique=true];clientId;clientSecret;oAuthUrl
+;$projectid.$client;$clientid;$clientsecret;$oauthservice
+INSERT_UPDATE Endpoint;id[unique=true];version[unique=true];specUrl;name
+;ProfileClient;v1;"empty";"Profile Client v1"
+;ConsentServiceClient;v1;"empty";"Consent Service Client v1"
+;ProfileTagUrl;v1;"empty";"Profile Tag Url v1"
+;ProfileTagConfigUrl;v1;"empty";"Profile Tag Config Url v1"
+;CxIdentityServiceClient;v1;"empty";"Identity Service v1"
+;CxProfileServiceClient;v1;"empty";"Profile Service v1"
+
+INSERT_UPDATE ConsumedDestination;id[unique=true];url;additionalProperties(key,value)[map-delimiter=|];endpoint(id);destinationTarget(id)[default=$projectid];credential(id)
+;ProfileClient$basesite;$edgeservice;baseSite->$basesite|clientClassName->ProfileClient;ProfileClient;$projectid;$projectid.$client
+;ConsentServiceClient$basesite;$consentservice;baseSite->$basesite|oauth.scope->cds.roles.customerec|clientClassName->ConsentServiceClient;ConsentServiceClient;$projectid;$projectid.$client
+;ProfileTagUrl$basesite;$profiletagurl;baseSite->$basesite|clientClassName->ProfileTagUrl;ProfileTagUrl;$projectid;$projectid.$client
+;ProfileTagConfigUrl$basesite;$profiletagconfigurl;baseSite->$basesite|clientClassName->ProfileTagConfigUrl;ProfileTagConfigUrl;$projectid;$projectid.$client
+;CxIdentityServiceClient$basesite;$identityservice;oauth.scope->cds.roles.customerec|baseSite->$basesite|clientClassName->CxIdentityServiceClient;CxIdentityServiceClient;$projectid;$projectid.$client
+;CxProfileServiceClient$basesite;$profileservice;oauth.scope->cds.roles.customerec|baseSite->$basesite|clientClassName->CxProfileServiceClient;CxProfileServiceClient;$projectid;$projectid.$client
+
+
+# CDS Merchandize
+
+$strategyservice = https://$projectid.api.$region.context.cloud.sap/strategy
+$catalogservice  = https://$projectid.api.$region.context.cloud.sap/catalog
+
+INSERT_UPDATE Endpoint;id[unique=true];version[unique=true];specUrl;name
+;MerchStrategyServiceClient;v1;"empty";"MerchStrategyServiceClient"
+;MerchCatalogServiceClient;v1;"empty";"MerchCatalogServiceClient"
+
+INSERT_UPDATE ConsumedDestination;id[unique=true];url;additionalProperties(key,value)[map-delimiter=|];endpoint(id);destinationTarget(id)[default=$projectid];credential(id)
+;StrategyClient$basesite;$strategyservice;baseSite->$basesite|clientClassName->MerchStrategyServiceClient|oauth.scope->cds.roles.customerec;MerchStrategyServiceClient;$projectid;$projectid.$client
+;CatalogClient$basesite;$catalogservice;baseSite->$basesite|clientClassName->MerchCatalogServiceClient|oauth.scope->cds.roles.customerec;MerchCatalogServiceClient;$projectid;$projectid.$client
+
+
+INSERT_UPDATE OAuthClientDetails;clientId[unique=true]    ;resourceIds       ;scope        ;authorizedGrantTypes                                            ;authorities             ;clientSecret              ;registeredRedirectUri
+                                ;client-side              ;hybris            ;basic        ;implicit,client_credentials                                     ;ROLE_CLIENT             ;$spartacusSecret          ;http://localhost:9001/authorizationserver/oauth2_implicit_callback;
+                                ;mobile_android           ;hybris            ;basic        ;authorization_code,refresh_token,password,client_credentials    ;ROLE_CLIENT             ;$spartacusSecret          ;http://localhost:9001/authorizationserver/oauth2_callback;
+
+
+
+# Spartacus setup
+
+INSERT_UPDATE OAuthClientDetails;clientId[unique=true]    ;resourceIds       ;scope        ;authorizedGrantTypes                                            ;authorities             ;clientSecret    ;registeredRedirectUri
+                                ;client-side              ;hybris            ;basic        ;implicit,client_credentials                                     ;ROLE_CLIENT             ;secret          ;https://yprofiletest2.yrdci.fra.hybris.com:9002/authorizationserver/oauth2_implicit_callback;
+                                ;mobile_android           ;hybris            ;basic        ;authorization_code,refresh_token,password,client_credentials    ;ROLE_CLIENT             ;secret          ;https://yprofiletest2.yrdci.fra.hybris.com:9002/authorizationserver/oauth2_callback;
+
+# Add Profile Tag to the Footer content slot of Spartacus
+
+$contentCatalog=electronics-spaContentCatalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Online])[default=$contentCatalog:Online]
+
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType;&componentRef;
+;;ProfileTagComponent;ProfileTag Component;ProfileTagComponent;ProfileTagComponent;
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid, $contentCV)[mode=append]
+;;FooterSlot;ProfileTagComponent

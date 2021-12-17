@@ -20,7 +20,7 @@ You can find the supported SAP Commerce versions listed in the [Compatibility he
 # Download and Installation
 Not applicable.
 
-# Configuration
+# General Configuration
 
 These instructions walk you through the process of cloning the repository and then updating the sample files with your specific requirements. 
 
@@ -30,10 +30,62 @@ Root level
 - core-customize folder: The folder that contains all of the folders and files that support Commerce Cloud.
 - js-storefront: A project Spartacus JS Storefront configured with Server Side Rendering (SSR). For more on project Spartacus see [project Spartacus documentation](https://sap.github.io/spartacus-docs/)
 
-core-customize folder
-- manifest.json: The Commerce Cloud manifest.json file, which defines how your code will be built and deployed in the Public Cloud environments. The manifest is set up to leverage [confiuration reuse](https://help.sap.com/viewer/1be46286b36a4aa48205be5a96240672/latest/en-US/2311d89eef9344fc81ef168ac9668307.html) to better allow for consistency between local and cloud builds.
+## core-customize folder
+- manifest.json: The Commerce Cloud manifest.json file, which defines how your code will be built and deployed in the Public Cloud environments. The manifest is set up to leverage [configuration reuse](https://help.sap.com/viewer/1be46286b36a4aa48205be5a96240672/latest/en-US/2311d89eef9344fc81ef168ac9668307.html) to better allow for consistency between local and cloud builds.
 - hybris folder: contains a sample custom folder for storing any custom extensions as well as the config folder for storing local and cloud properties, localextensions.xml and any local solr/tomcat configurations
 
+#### manifest.json
+1. The key `commerceSuiteVersion` must include the major release number for the SAP Cloud Commerce you wish to use (e.g. 2105)
+2. The keys `website.electronics.http`, `website.electronics.https`, `website.apparel-uk.http`, `website.apparel-uk.https`, `website.apparel-de.http`, `website.apparel-de.https`, `website.powertools.http`, `website.powertools.https` must include your subscription's deployment server
+
+More information regarding the build components of the manifest.json can be found [here](https://help.sap.com/viewer/1be46286b36a4aa48205be5a96240672/v2105/en-US/2be55790d99e4a1dad4caa7a1fc1738f.html)
+
+## js-storefront folder
+- In the `src/app/spartacus/spartacus-configuration.module.ts` remove the `baseUrl` configuration.
+    - By default it will be:
+    ```javascript
+    backend: {
+       occ: {
+         baseUrl: 'https://localhost:9002',
+      }
+  }
+  ```
+    - And after it will look like:
+    ```javascript
+    backend: {
+       occ: {
+         baseUrl: 'https://localhost:9002',
+      }
+  }
+  ```
+- In the root of your application find the "index.html"
+    - In `head` section, replace
+    ```html
+    <meta name="occ-backend-base-url" content="https://localhost:9002" />
+    ```
+    - with
+    ```html
+    <meta name="occ-backend-base-url" content="OCC_BACKEND_BASE_URL_VALUE" />
+    ``` 
+
+- (Optional) Enabling SSR
+    - To set up your storefont for SSR please see the [Server Side Rendering Documentation](https://sap.github.io/spartacus-docs/server-side-rendering-in-spartacus/)   
+    - To update your manifest.json simply add the "SSR" configuration as shown below
+    ```javascript
+    "applications": [
+        {
+            "name": "<your storefrontapp name>",
+            "path": "<your storefrontapp path>",
+            "ssr": {
+                 "enabled": true,
+                 "path": "dist/<your storefrontapp name>/server/main.js"
+            },
+            "csr": {
+                 "webroot": "dist/<your storefrontapp name>/browser/"
+            }
+        }
+    ]
+    ```
 
 ### Clone Repository
 

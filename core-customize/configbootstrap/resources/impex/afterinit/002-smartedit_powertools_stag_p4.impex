@@ -1,0 +1,19 @@
+# # TODO: Change the following full path variables to match your storefront URLs
+# i.e: https://electronics.domain.com
+$fullPathPowertools=https://powertools.cg79x9wuu9-eccommerc1-p5-public.model-t.myhybris.cloud/yb2bacceleratorstorefront
+$fullPathPowertoolsSpa=https://b2bspastore.cg79x9wuu9-eccommerc1-p5-public.model-t.myhybris.cloud/powertools-spa/en/USD/
+$fullPathElectronicsSpa=https://spartacusstore.cg79x9wuu9-eccommerc1-p5-public.model-t.myhybris.cloud/electronics-spa/en/USD/
+$fullPathApparelUKSpa=https://spartacusstore.cg79x9wuu9-eccommerc1-p5-public.model-t.myhybris.cloud/apparel-uk-spa/en/GBP/
+
+# Setup site preview url for each storefront
+# This ensures that when user clicks on the HOMEPAGE link after logging in, user navigates to the correct storefront homepage
+UPDATE CMSSite;uid[unique=true];previewURL
+;powertools;$fullPathPowertools/?site=powertools
+;electronics-spa;$fullPathElectronicsSpa
+;apparel-uk-spa;$fullPathApparelUKSpa
+;powertools-spa;$fullPathPowertoolsSpa
+
+# Whitelist all storefronts to enable cross origin
+# Replace domain with your domain
+INSERT_UPDATE SmartEditConfiguration;key[unique=true];value
+;whiteListedStorefronts;"[""https://localhost:4200"",""https://powertools.cg79x9wuu9-eccommerc1-p5-public.model-t.myhybris.cloud/yb2bacceleratorstorefront:443"", ""https://b2bspastore.cg79x9wuu9-eccommerc1-p5-public.model-t.myhybris.cloud"", ""https://spartacusstore.cg79x9wuu9-eccommerc1-p5-public.model-t.myhybris.cloud"" ]"

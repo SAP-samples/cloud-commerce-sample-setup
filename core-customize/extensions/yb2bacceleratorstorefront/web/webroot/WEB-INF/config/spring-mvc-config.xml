@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/mvc
+		http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/util
+		http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<!--
+		Section for Traditional Spring MVC.
+		Annotation driven controllers, and a list of packages to scan. Can be extended by adding (or removing) packages.
+	-->
+    <context:annotation-config/>
+    <bean id="webLazyInitOverrideBeanFactoryPostProcessor" parent="lazyInitOverrideBeanFactoryPostProcessor" />
+
+	<alias name="jaxb2RootElementHttpMessageConverter" alias="jaxbMessageConverter" />
+	<bean id="jaxb2RootElementHttpMessageConverter" class="org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter" />
+
+	<!-- activates annotation driven binding -->
+	<mvc:annotation-driven ignore-default-model-on-redirect="true" validator="validator">
+		<mvc:message-converters>
+			<bean class="org.springframework.http.converter.ResourceHttpMessageConverter"/>
+			<ref bean="jaxbMessageConverter"/>
+			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+
+	<!-- Scan for annotation configured controller -->
+	<context:component-scan base-package="de.hybris.platform.yb2bacceleratorstorefront" scope-resolver="de.hybris.platform.spring.IgnoreTenantScopeMetadataResolver"  />
+
+    
+
+	<!-- Data Value Processor -->
+	<bean name="defaultRequestDataValueProcessor" class="de.hybris.platform.yb2bacceleratorstorefront.util.DefaultRequestDataProcessor" />
+
+	<!--This is a bean post-processor for RequestMappingHandlerAdapter-->
+	<bean class="de.hybris.platform.yb2bacceleratorstorefront.web.mvc.RequestMappingHandlerAdapterConfigurer" init-method="init" lazy-init="false">
+		<property name="urlPathHelper">
+			<bean class="de.hybris.platform.yb2bacceleratorstorefront.web.mvc.AcceleratorUrlPathHelper"/>
+		</property>
+	</bean>
+
+	<alias name="defaultRequireHardLoginEvaluator" alias="requireHardLoginEvaluator" />
+	<bean id="defaultRequireHardLoginEvaluator" class="de.hybris.platform.yb2bacceleratorstorefront.security.evaluator.impl.RequireHardLoginEvaluator" >
+		<property name="userService" ref="userService"/>
+		<property name="cookieGenerator" ref="guidCookieGenerator"/>
+		<property name="sessionService" ref="sessionService"/>
+		<property name="cartService" ref="cartService"/>
+	</bean>
+
+
+	<!--  MVC Interceptors -->
+	<alias name="defaultBeforeControllerHandlersList" alias="beforeControllerHandlersList" />
+	<util:list id="defaultBeforeControllerHandlersList" >
+		<!-- List of handlers to run -->
+		<bean class="de.hybris.platform.yb2bacceleratorstorefront.interceptors.beforecontroller.SecurityUserCheckBeforeControllerHandler" />
+		<bean class="de.hybris.platform.yb2bacceleratorstorefront.interceptors.beforecontroller.RequireHardLoginBeforeControllerHandler" >
+				<property name="redirectStrategy" ref="redirectStrategy"/>
+				<property name="loginUrl" value="/login"/>
+				<property name="loginAndCheckoutUrl" value="/login/checkout"/>
+				<property name="requireHardLoginEvaluator" ref="requireHardLoginEvaluator"/>
+		</bean>
+		<bean class="de.hybris.platform.yb2bacceleratorstorefront.interceptors.beforecontroller.DeviceDetectionBeforeControllerHandler" />
+		<bean class="de.hybris.platform.yb2bacceleratorstorefront.interceptors.beforecontroller.SetLanguageBeforeControllerHandler" />
+		<bean class="de.hybris.platform.yb2bacceleratorstorefront.interceptors.beforecontroller.SetUiExperienceBeforeControllerHandler" />
+		<bean class="de.hybris.platform.yb2bacceleratorstorefront.interceptors.beforecontroller.ThemeBeforeControllerHandler" />
+		<bean class="de.hybris.platform.yb2bacceleratorstorefront.interceptors.beforecontroller.SecurityEmailCheckBeforeControllerHandler" />
+	</util:list>
+
+	<!--UI Theme-->
+	<bean id="uiThemeUtils" class="de.hybris.platform.yb2bacceleratorstorefront.util.UiThemeUtils">
+		<property name="defaultThemeName" value="blue" />
+		<property name="uiExperienceService" ref="uiExperienceService"/>
+		<property name="cmsSiteService" ref="cmsSiteService"/>
+		<property name="siteConfigService" ref="siteConfigService"/>
+		<property name="requiredAddOnsNameProvider" ref="reqAddOnsNameProvider"/>
+		<property name="uiExperienceViewResolver" ref="viewResolver"/>
+	</bean>
+
+
+	<alias name="defaultBeforeViewHandlersList" alias="beforeViewHandlersList" />
+	<util:list id="defaultBeforeViewHandlersList"  >
+	<!-- The CmsPageBeforeViewHandler could change the target view, so it should be run first. -->
+		<bean class="de.hybris.platform.yb2bacceleratorstorefront.interceptors.beforeview.CmsPageBeforeViewHandler" />
+		<bean class="de.hybris.platform.yb2bacceleratorstorefront.interceptors.beforeview.UiThemeResourceBeforeViewHandler" />
+		<bean class="de.hybris.platform.yb2bacceleratorstorefront.interceptors.beforeview.SeoRobotsFollowBeforeViewHandler" >
+			<property name="robotIndexForJSONMapping">
+				<map>
+					<entry key="/search" value="noindex,follow" />
+				</map>
+			</property>
+		</bean>
+		<bean class="de.hybris.platform.yb2bacceleratorstorefront.interceptors.beforeview.UiExperienceMetadataViewHandler"  />
+		<bean class="de.hybris.platform.yb2bacceleratorstorefront.interceptors.beforeview.AnalyticsPropertiesBeforeViewHandler" >
+			<property name="hostConfigService" ref="hostConfigService" />
+		</bean>
+		<bean class="de.hybris.platform.yb2bacceleratorstorefront.interceptors.beforeview.ConfigWro4jBeforeViewHandler" >
+			<property name="siteConfigService" ref="siteConfigService"/>
+		</bean>
+		<bean class="de.hybris.platform.yb2bacceleratorstorefront.interceptors.beforeview.DebugInfoBeforeViewHandler" />
+		<bean class="de.hybris.platform.yb2bacceleratorstorefront.interceptors.beforeview.CartRestorationBeforeViewHandler">
+			<property name="sessionService" ref="sessionService" />
+			<property name="pagesToShowModifications">
+				<list>
+					<value>/cart</value>
+				</list>
+			</property>
+		</bean>
+		<bean class="de.hybris.platform.yb2bacceleratorstorefront.interceptors.beforeview.GoogleMapsBeforeViewHandler" />
+		<bean class="de.hybris.platform.yb2bacceleratorstorefront.interceptors.beforeview.ConsentManagementBeforeViewHandler" />
+		<bean class="de.hybris.platform.yb2bacceleratorstorefront.interceptors.beforeview.CookieNotificationBeforeViewHandler">
+			<property name="cookieNotificationCookieGenerator" ref="cookieNotificationCookieGenerator" />
+		</bean>
+
+	</util:list>
+	
+	<!-- Interceptor that runs once per request and before the controller handler method is called -->
+	<alias name="defaultBeforeControllerHandlerInterceptor" alias="beforeControllerHandlerInterceptor" />
+	<bean id="defaultBeforeControllerHandlerInterceptor" class="de.hybris.platform.yb2bacceleratorstorefront.interceptors.BeforeControllerHandlerInterceptor" >
+		<property name="beforeControllerHandlers">
+			<ref bean="beforeControllerHandlersList" />	
+		</property>
+	</bean>
+
+	<!-- Interceptor that runs BeforeViewHandlers before the view is rendered -->
+	<alias name="defaultBeforeViewHandlerInterceptor" alias="beforeViewHandlerInterceptor" />
+	<bean id="defaultBeforeViewHandlerInterceptor" class="de.hybris.platform.yb2bacceleratorstorefront.interceptors.BeforeViewHandlerInterceptor" >
+		<property name="beforeViewHandlers">
+			<ref bean="beforeViewHandlersList" />	
+		</property>
+	</bean>
+
+	<mvc:interceptors>
+		<ref bean="beforeControllerHandlerInterceptor" />
+		<ref bean="beforeViewHandlerInterceptor" />
+
+		<!--
+		<bean class="org.springframework.web.servlet.handler.ConversionServiceExposingInterceptor" >
+			<constructor-arg ref="conversionService"/>
+		</bean>
+		-->
+	</mvc:interceptors>
+
+	<!-- Tell Spring MVC how to find its jsp files -->
+	<bean id="viewResolver" class="de.hybris.platform.yb2bacceleratorstorefront.web.view.UiExperienceViewResolver" >
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+		<property name="prefix" value="/WEB-INF/views/"/>
+		<property name="addOnPrefix" value="addons/"/>
+		<property name="suffix" value=".jsp"/>
+		<property name="redirectHttp10Compatible" value="true"/>
+		<property name="cache" value="true"/>
+
+		<property name="uiExperienceService" ref="uiExperienceService"/>
+		<property name="uiExperienceViewPrefix">
+			<map>
+				<entry key="DESKTOP" value="${commerceservices.default.desktop.ui.experience:desktop}/"/>
+				<entry key="MOBILE" value="mobile/"/>
+			</map>
+		</property>
+		<property name="unknownUiExperiencePrefix" value="${commerceservices.default.desktop.ui.experience:desktop}/"/>
+	</bean>
+
+	<!-- Localization -->
+	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" >
+		<property name="validationMessageSource" ref="storefrontMessageSource"/>
+	</bean>
+
+	<bean id="baseMessageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource" >
+		<property name="basenames">
+			<list>
+				<value>/WEB-INF/messages/base</value>
+			</list>
+		</property>
+		<property name="defaultEncoding" value="UTF-8"/>
+		<!-- The number of seconds to cache loaded properties files. Set to -1 (never) for production. -->
+		<property name="cacheSeconds" value="#{configurationService.configuration.getProperty('storefront.resourceBundle.cacheSeconds')}"/>
+		<property name="fallbackToSystemLocale" value="false"/>
+	</bean>
+
+
+	<!-- theme message source - falls back to the messageSource -->
+	<alias name="storefrontMessageSource" alias="themeSource" />
+	<alias name="storefrontMessageSource" alias="messageSource" />
+	<bean id="storefrontMessageSource" class="de.hybris.platform.yb2bacceleratorstorefront.web.theme.StorefrontResourceBundleSource">
+		<property name="basenamePrefix" value="/WEB-INF/messages/" />
+		<property name="basePrefix" value="base" />
+		<property name="sitePrefix" value="site" />
+		<property name="themePrefix" value="theme" />
+		<property name="parentMessageSource" ref="baseMessageSource" />
+		<property name="requiredAddOnsNameProvider" ref="reqAddOnsNameProvider" />
+		<!-- The number of seconds to cache loaded properties files. Set to -1 (never) for production. -->
+		<property name="cacheSeconds" value="#{configurationService.configuration.getProperty('storefront.resourceBundle.cacheSeconds')}"/>
+		<property name="defaultEncoding" value="UTF-8"/>
+		<property name="fallbackToSystemLocale" value="false" />
+		<property name="resourceLoader">
+			<bean class="org.springframework.core.io.FileSystemResourceLoader"/>
+		</property>
+		<property name="siteThemeResolverUtils" ref="siteThemeResolverUtils"/>
+	</bean>
+
+	<!-- Theme Resolver Will resolve Theme from current page and then current cms site -->
+	<alias name="uiExperienceSiteThemeResolver" alias="themeResolver"/>
+	<bean id="uiExperienceSiteThemeResolver" class="de.hybris.platform.yb2bacceleratorstorefront.web.theme.UiExperienceSiteThemeResolver" >
+		<property name="siteThemeResolverUtils" ref="siteThemeResolverUtils"/>
+	</bean>
+	
+	<bean id="localeResolver" class="de.hybris.platform.yb2bacceleratorstorefront.web.i18n.StoreSessionLocaleResolver" >
+		<property name="i18NService" ref="i18NService"/>
+	</bean>
+
+	<!-- CMS Content Element Controllers -->
+
+	<bean id="browseHistory" class="de.hybris.platform.acceleratorstorefrontcommons.history.impl.DefaultBrowseHistory" >
+		<property name="cmsSiteService" ref="cmsSiteService" />
+		<property name="sessionService" ref="sessionService" />
+		<property name="capacity" value="10" />
+	</bean>
+
+	<!-- Page Breadcrumb Builders -->
+
+	<bean id="productBreadcrumbBuilder" class="de.hybris.platform.acceleratorstorefrontcommons.breadcrumb.impl.ProductBreadcrumbBuilder" >
+		<property name="browseHistory" ref="browseHistory" />
+		<property name="productModelUrlResolver" ref="productModelUrlResolver"/>
+		<property name="categoryModelUrlResolver" ref="categoryModelUrlResolver"/>
+		<property name="productService" ref="productService"/>
+		<property name="productAndCategoryHelper" ref="productAndCategoryHelper"/>
+	</bean>
+
+	<bean id="searchBreadcrumbBuilder" class="de.hybris.platform.acceleratorstorefrontcommons.breadcrumb.impl.SearchBreadcrumbBuilder" >
+		<property name="commerceCategoryService" ref="commerceCategoryService"/>
+		<property name="categoryModelUrlResolver" ref="categoryModelUrlResolver"/>
+	</bean>
+
+	<bean id="contentPageBreadcrumbBuilder" class="de.hybris.platform.acceleratorstorefrontcommons.breadcrumb.impl.ContentPageBreadcrumbBuilder" />
+
+	<bean id="storefinderBreadcrumbBuilder" class="de.hybris.platform.acceleratorstorefrontcommons.breadcrumb.impl.StorefinderBreadcrumbBuilder" >
+		<property name="messageSource" ref="storefrontMessageSource" />
+		<property name="i18nService" ref="i18nService" />
+	</bean>
+
+	<bean id="simpleBreadcrumbBuilder" class="de.hybris.platform.acceleratorstorefrontcommons.breadcrumb.impl.DefaultResourceBreadcrumbBuilder" >
+		<property name="i18nService" ref="i18nService" />
+	</bean>
+	
+	<bean id="storeBreadcrumbBuilder" class="de.hybris.platform.acceleratorstorefrontcommons.breadcrumb.impl.StoreBreadcrumbBuilder" >
+		<property name="messageSource" ref="storefrontMessageSource" />
+		<property name="i18nService" ref="i18nService" />
+	</bean>
+
+	<bean id="accountBreadcrumbBuilder" class="de.hybris.platform.acceleratorstorefrontcommons.breadcrumb.impl.DefaultResourceBreadcrumbBuilder" >
+		<property name="i18nService" ref="i18nService" />
+		<property name="parentBreadcrumbLinkPath" value="/my-account"/>
+		<property name="parentBreadcrumbResourceKey" value="#{'responsive' == '${commerceservices.default.desktop.ui.experience}' ? '' : 'header.link.account'}"/>
+	</bean>
+
+	<bean id="multiStepCheckoutBreadcrumbBuilder" class="de.hybris.platform.acceleratorstorefrontcommons.breadcrumb.impl.DefaultResourceBreadcrumbBuilder" >
+		<property name="i18nService" ref="i18nService" />
+		<property name="parentBreadcrumbResourceKey" value="checkout.multi.breadcrumb"/>
+	</bean>
+
+	<!-- -->
+	<alias name="defaultPreviewUrlResolverPageMappings" alias="previewUrlResolverPageMappings" />
+	<util:map id="defaultPreviewUrlResolverPageMappings">
+		<entry key="homepage" value="/"/>
+		<entry key="cartPage" value="/cart"/>
+		<entry key="search" value="/search"/>
+		<entry key="searchEmpty" value="/search"/>
+		<entry key="account" value="/my-account"/>
+		<entry key="profile" value="/my-account/profile"/>
+		<entry key="address-book" value="/my-account/address-book"/>
+		<entry key="add-edit-address" value="/my-account/add-edit-address"/>
+		<entry key="payment-details" value="/my-account/payment-details"/>
+		<entry key="order" value="/my-account/order"/>
+		<entry key="orders" value="/my-account/orders"/>
+		<entry key="multiStepCheckoutSummaryPage" value="/checkout/multi/add-delivery-address"/>
+		<entry key="importCSVSavedCartPage" value="/import/csv/saved-cart"/>
+		<entry key="saved-carts" value="/my-account/saved-carts"/>
+		<entry key="savedCartDetailsPage" value="/my-account/saved-carts"/>
+		<entry key="storefinderPage" value="/store-finder"/>
+		<entry key="login" value="/login"/>
+		<entry key="checkout-login" value="/login/checkout"/>
+		<entry key="forgottenPassword" value="/login/pw/request"/>
+		<entry key="updatePassword" value="/my-account/update-password"/>
+
+		<!--Configuration WCMS Mobile Page to URL -->
+		<entry key="mobile-homepage" value="/"/>
+		<entry key="mobile-cartPage" value="/cart"/>
+		<entry key="mobile-search" value="/search"/>
+		<entry key="mobile-searchEmpty" value="/search"/>
+		<entry key="mobile-account" value="/my-account"/>
+		<entry key="mobile-profile" value="/my-account/profile"/>
+		<entry key="mobile-address-book" value="/my-account/address-book"/>
+		<entry key="mobile-add-edit-address" value="/my-account/add-edit-address"/>
+		<entry key="mobile-payment-details" value="/my-account/payment-details"/>
+		<entry key="mobile-order" value="/my-account/order"/>
+		<entry key="mobile-orders" value="/my-account/orders"/>
+		<entry key="mobile-multiStepCheckoutSummaryPage" value="/checkout/multi/add-delivery-address"/>
+		<entry key="mobile-storefinderPage" value="/store-finder"/>
+		<entry key="mobile-login" value="/login"/>
+		<entry key="mobile-checkout-login" value="/login/checkout"/>
+		<entry key="mobile-forgottenPassword" value="/login/pw/request"/>
+		<entry key="mobile-updatePassword" value="/my-account/update-password"/>
+		<entry key="mobile-register" value="/register"/>
+		<entry key="mobile-orderConfirmationPage" value="/my-account/order"/>
+		<entry key="mobile-notFound" value="/error"/>
+	</util:map>
+
+	<alias name="defaultPreviewDataModelUrlResolver" alias="previewDataModelUrlResolver" />
+	<bean id="defaultPreviewDataModelUrlResolver" class="de.hybris.platform.yb2bacceleratorstorefront.url.DefaultPreviewDataModelUrlResolver" >
+		<property name="productModelUrlResolver" ref="productModelUrlResolver"/>
+		<property name="categoryModelUrlResolver" ref="categoryModelUrlResolver"/>
+		<property name="pageMapping">
+			<ref bean="previewUrlResolverPageMappings" />
+		</property>
+	</bean>
+
+	<bean id="pageTitleResolver" class="de.hybris.platform.acceleratorservices.storefront.util.PageTitleResolver" >
+		<property name="cmsSiteService" ref="cmsSiteService"/>
+		<property name="commerceCategoryService" ref="commerceCategoryService"/>
+		<property name="productService" ref="productService"/>
+		<property name="productAndCategoryHelper" ref="productAndCategoryHelper"/>
+	</bean>
+
+	<alias name="defaultVariantSortStrategy" alias="variantSortStrategy" />
+	<bean id="defaultVariantSortStrategy" class="de.hybris.platform.acceleratorstorefrontcommons.variants.impl.DefaultVariantSortStrategy" >
+		<property name="sortingFieldsOrder">
+			<list>
+				<value>size</value>
+			</list>
+		</property>
+		<property name="comparators">
+			<util:map>
+				<entry key="size" value-ref="sizeAttributeComparator"/>
+			</util:map>
+		</property>
+		<property name="defaultComparator" ref="variantsComparator"/>
+	</bean>
+
+	<alias name="defaultVariantsComparator" alias="variantsComparator"/>
+	<bean id="defaultVariantsComparator"
+		  class="de.hybris.platform.acceleratorstorefrontcommons.variants.impl.DefaultVariantComparator" />
+
+	<bean id="fixation" class="de.hybris.platform.servicelayer.security.spring.HybrisSessionFixationProtectionStrategy"/>
+
+	<!-- redefined here to make sure the bean is processed after all the addon's beans are loaded -->
+	<bean id="listMergeBeanPostProcessor"
+	      class="de.hybris.platform.commerceservices.spring.config.ListMergeDirectiveBeanPostProcessor"/>
+	<bean id="mapMergeBeanPostProcessor"
+	      class="de.hybris.platform.commerceservices.spring.config.MapMergeDirectiveBeanPostProcessor"/>
+
+	<bean id="siteThemeResolverUtils" class="de.hybris.platform.yb2bacceleratorstorefront.util.SiteThemeResolverUtils">
+		<property name="uiExperienceService" ref="uiExperienceService"/>
+		<property name="cmsSiteService" ref="cmsSiteService"/>
+		<property name="defaultTheme" value="blue"/>
+	</bean>
+
+</beans>

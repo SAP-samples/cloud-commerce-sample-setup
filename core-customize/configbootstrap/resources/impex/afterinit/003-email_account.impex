@@ -1,0 +1,3 @@
+# Update the email account to be used
+UPDATE EmailPage[batchmode=true];owner[unique=true];fromEmail
+;;sap.ccv2.test.user@gmail.com

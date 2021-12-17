@@ -1,9 +1,6 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
-  "cli": {
-    "packageManager": "yarn"
-  },
   "newProjectRoot": "projects",
   "projects": {
     "spartacusstore": {
@@ -32,7 +29,6 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "src/manifest.webmanifest",
               {
                 "glob": "**/*",
                 "input": "./node_modules/@spartacus/smartedit/assets",
@@ -44,12 +40,12 @@
               "src/styles/spartacus/user.scss",
               "src/styles/spartacus/storefinder.scss",
               "src/styles/spartacus/product.scss",
+              "src/styles/spartacus/cart.scss",
+              "src/styles/spartacus/order.scss",
               "src/styles/spartacus/checkout.scss",
-              "src/styles/spartacus/cart.scss"
+              "src/styles/spartacus/product-configurator.scss"
             ],
-            "scripts": [],
-            "serviceWorker": true,
-            "ngswConfigPath": "ngsw-config.json"
+            "scripts": []
           },
           "configurations": {
             "production": {
@@ -113,7 +109,6 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "src/manifest.webmanifest",
               {
                 "glob": "**/*",
                 "input": "./node_modules/@spartacus/smartedit/assets",
@@ -125,8 +120,10 @@
               "src/styles/spartacus/user.scss",
               "src/styles/spartacus/storefinder.scss",
               "src/styles/spartacus/product.scss",
+              "src/styles/spartacus/cart.scss",
+              "src/styles/spartacus/order.scss",
               "src/styles/spartacus/checkout.scss",
-              "src/styles/spartacus/cart.scss"
+              "src/styles/spartacus/product-configurator.scss"
             ],
             "scripts": []
           }

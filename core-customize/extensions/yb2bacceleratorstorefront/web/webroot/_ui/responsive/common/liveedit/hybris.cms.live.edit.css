@@ -1,0 +1,174 @@
+/*
+ * Stylesheet loaded when the site is being viewed in lived edit mode
+ */
+
+/*
+ * cmsLiveEditComponent class is added to divs that are injected by the cms tags while in live edit mode.
+ * Note that these divs do not normally exist in the html, but are injected during live edit only.
+ *
+ * Select all elements that are direct children of the divs with the liveEditElement class.
+ * and put a red border around the elements.
+ */
+
+
+/* Content Slot */
+
+.yCmsLiveEdit .yCmsContentSlot {
+    padding-top: 10px;
+    border-bottom: 10px solid #d2d2d2;
+    padding-bottom: 0px;
+    overflow:hidden;
+    height: auto;
+}
+
+.yCmsLiveEdit .yCmsContentSlot:before {
+    content: attr(data-cms-content-slot-position);
+    font-weight: bold;
+    display: block;
+    z-index: -1;
+    padding: 5px;
+    background: #ddd;
+}
+
+/* Component */
+.yCmsLiveEdit .yCmsComponent > * {
+    cursor: pointer;
+}
+
+.yCmsLiveEdit .yCmsComponent.yCmsComponentLocked > * {
+    border: 1px dashed #f07700 !important;
+}
+
+.yCmsComponent {
+    position: relative;
+    border: 1px dashed #33ba31 !important;
+    box-sizing: border-box !important;
+    -moz-box-sizing: border-box !important;
+    -webkit-sizing: border-box !important;
+    overflow: hidden;
+    min-height:10px;
+}
+
+.yCmsComponent:hover {
+    border: 1px dashed #33ba31 !important;
+    box-sizing: border-box !important;
+    overflow: hidden;
+    border: 1px solid #E13815 !important;
+    box-sizing: border-box !important;
+    -moz-box-sizing: border-box !important;
+    -webkit-sizing: border-box !important;
+    -ms-sizing: border-box !important;
+}
+
+.yCmsComponent .yCmsComponent {
+    position: relative;
+    border: 1px dashed #98fb98 !important;
+    box-sizing: border-box !important;
+    -moz-box-sizing: border-box !important;
+    -webkit-sizing: border-box !important;
+    overflow: hidden;
+}
+
+.yCmsComponent .yCmsComponent:hover {
+    border: 1px dashed #f08080 !important;
+}
+
+.yCmsComponent:empty {
+    border: 0px !important;
+}
+
+/* Custom */
+
+.yCmsLiveEdit #header .yCmsContentSlot {
+    padding-top: 0;
+}
+
+.yCmsLiveEdit .yCmsComponent .yCmsComponentEmpty {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border: 2px solid #BACAD5;
+    border-radius: 4px 4px 4px 4px;
+    padding: 5px;
+}
+
+.yCmsContentSlot > *:not(li, .span-6, .span-4, .span-2, .span-8) {
+    width: 100%;
+}
+
+/* CONTENT STYLING FIX */
+#header ul.nav {
+    position: static !important;
+    float: right !important;
+}
+
+#nav_main {
+    overflow: hidden;
+    height: auto;
+}
+
+#productDetailUpdateable .yCmsContentSlot {
+    float: left;
+}
+
+#header .headerContent .nav {
+    height: auto;
+}
+
+#header .headerContent .nav ul.sortable li {
+    float: left;
+    border-left: 1px solid #000;
+    padding: 0 6px;
+}
+
+#header .headerContent .nav li.yCmsContentSlot {
+    border-left: 0px;
+}
+
+#header .headerContent.secondRow > .yCmsContentSlot {
+    float: right;
+}
+
+#nav_main li.La > .yCmsComponent > a {
+    display: block;
+    line-height: 2.750em;
+}
+
+/* CHINAACC_START */
+.search-suggest {
+    position: static !important;
+    float: right;
+    clear: right;
+}
+
+#page #header .headerContent.secondRow {
+    height: auto;
+}
+
+/* CHINAACC_END */
+
+.yCmsComponent > .scroller {
+    padding: 15px 0px;
+}
+
+.yCmsComponent > .scroller .title {
+    margin: 0 0 15px 0;
+}
+
+/* NAVIGATION COLLECTION COMPONENT */
+.navigationbarcollectioncomponent ul.clear_fix > li {
+    float: left;
+    text-align: center;
+}
+
+.navigationbarcollectioncomponent ul.clear_fix > li {
+    padding: 0px;
+}
+
+/* HEADER ELEMENTS */
+.headerContent.secondRow > .yCmsContentSlot .sortable  > .yCmsComponent {
+    float: right;
+}
+
+.siteSearch input.siteSearchInput[type=text] {
+    margin-bottom: 0px;
+}
