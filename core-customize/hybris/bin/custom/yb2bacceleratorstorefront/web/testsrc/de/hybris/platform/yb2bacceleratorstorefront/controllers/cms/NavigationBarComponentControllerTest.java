@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
  */
 package de.hybris.platform.yb2bacceleratorstorefront.controllers.cms;
 
@@ -10,7 +10,6 @@ import de.hybris.bootstrap.annotations.UnitTest;
 import de.hybris.platform.acceleratorcms.enums.NavigationBarMenuLayout;
 import de.hybris.platform.acceleratorcms.model.components.NavigationBarComponentModel;
 import de.hybris.platform.acceleratorstorefrontcommons.controllers.pages.AbstractPageController;
-import de.hybris.platform.cms2.exceptions.CMSItemNotFoundException;
 import de.hybris.platform.cms2.servicelayer.services.impl.DefaultCMSComponentService;
 import de.hybris.platform.yb2bacceleratorstorefront.controllers.ControllerConstants;
 
@@ -22,9 +21,10 @@ import junit.framework.Assert;
 import org.apache.commons.lang.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.ui.Model;
 
 
@@ -32,6 +32,7 @@ import org.springframework.ui.Model;
  * Unit test for {@link NavigationBarComponentController}
  */
 @UnitTest
+@RunWith(MockitoJUnitRunner.class)
 public class NavigationBarComponentControllerTest
 {
 	private static final String COMPONENT = "component";
@@ -61,7 +62,6 @@ public class NavigationBarComponentControllerTest
 	@Before
 	public void setUp()
 	{
-		MockitoAnnotations.initMocks(this);
 
 		navigationBarComponentController = new NavigationBarComponentController();
 		navigationBarComponentController.setCmsComponentService(cmsComponentService);
@@ -120,7 +120,6 @@ public class NavigationBarComponentControllerTest
 	{
 		given(request.getAttribute(COMPONENT_UID)).willReturn(null);
 		given(request.getParameter(COMPONENT_UID)).willReturn(TEST_COMPONENT_UID);
-		given(cmsComponentService.getSimpleCMSComponent(TEST_COMPONENT_UID)).willReturn(null);
 		navigationBarComponentController.handleGet(request, response, model);
 	}
 
@@ -128,8 +127,6 @@ public class NavigationBarComponentControllerTest
 	public void testRenderComponentNotFound3() throws Exception
 	{
 		given(request.getAttribute(COMPONENT_UID)).willReturn(TEST_COMPONENT_UID);
-		given(cmsComponentService.getSimpleCMSComponent(TEST_COMPONENT_UID)).willReturn(null);
-		given(cmsComponentService.getSimpleCMSComponent(TEST_COMPONENT_UID)).willThrow(new CMSItemNotFoundException(""));
 		navigationBarComponentController.handleGet(request, response, model);
 	}
 

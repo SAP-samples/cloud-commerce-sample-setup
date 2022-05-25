@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
  */
 package de.hybris.platform.yb2bacceleratorstorefront.interceptors.beforeview;
 
@@ -24,11 +24,12 @@ import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -38,14 +39,15 @@ import static de.hybris.platform.commercefacades.constants.CommerceFacadesConsta
 import static de.hybris.platform.commercefacades.constants.CommerceFacadesConstants.USER_CONSENTS;
 import static de.hybris.platform.testframework.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 
 @UnitTest
+@RunWith(MockitoJUnitRunner.class)
 public class ConsentManagementBeforeViewHandlerTest
 {
 	public static final String TEMPLATE_CODE_GIVEN = "templateCodeGiven";
@@ -76,8 +78,6 @@ public class ConsentManagementBeforeViewHandlerTest
 	@Before
 	public void setUp() throws IOException
 	{
-		MockitoAnnotations.initMocks(this);
-
 		// consent template data setup
 		final ConsentData givenConsent = ConsentDataBuilder.aConsentData()//
 				.withCode("given")//
@@ -198,7 +198,6 @@ public class ConsentManagementBeforeViewHandlerTest
 
 		when(sessionService.getAttribute(USER_CONSENTS)).thenReturn(sessionConsents);
 		when(sessionService.getAttribute(CONSENT_TEMPLATES)).thenReturn(getConsentTemplateData());
-		when(consentFacade.getConsentTemplatesWithConsents()).thenReturn(consentTemplateData);
 
 		//when
 		consentManagementBeforeViewHandler.beforeView(request, response, modelAndView);

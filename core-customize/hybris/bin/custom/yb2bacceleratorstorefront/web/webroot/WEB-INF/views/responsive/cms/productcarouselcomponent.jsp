@@ -16,11 +16,6 @@
 			<c:choose>
 				<c:when test="${component.popup}">
 					<div class="carousel__component--carousel js-owl-carousel js-owl-lazy-reference js-owl-carousel-reference">
-						<div id="quickViewTitle" class="quickView-header display-none">
-							<div class="headline">
-								<span class="headline-text"><spring:theme code="popup.quick.view.select"/></span>
-							</div>
-						</div>
 						<c:forEach items="${productData}" var="product">
 
 							<c:url value="${product.url}/quickView" var="productQuickViewUrl"/>
@@ -34,6 +29,11 @@
 								</a>
 							</div>
 						</c:forEach>
+					</div>
+					<div id="quickViewTitle" class="quickView-header display-none">
+						<div class="headline">
+							<span class="headline-text"><spring:theme code="popup.quick.view.select"/></span>
+						</div>
 					</div>
 				</c:when>
 				<c:otherwise>

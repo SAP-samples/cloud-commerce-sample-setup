@@ -45,7 +45,7 @@ public class QuickOrderPageController extends AbstractPageController
 	private ProductFacade productFacade;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String getQuickOrderPage(final Model model) throws CMSItemNotFoundException // NOSONAR
+	public String getQuickOrderPage(final Model model) throws CMSItemNotFoundException 
 	{
 		storeCmsPageInModel(model, getContentPageForLabelOrId("quickOrderPage"));
 		model.addAttribute("quickOrderMinRows", Integer.valueOf(Config.getInt("yb2bacceleratorstorefront.quick.order.rows.min", 3)));

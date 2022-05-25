@@ -217,14 +217,12 @@
                 <remove path="/*[local-name()='groups']/*[local-name()='group'][@name='${targetThemeCode}_responsive']"/>
                 				
                 <insert path="/*[local-name()='groups']">
-                    					
-                    <![CDATA[
+					<![CDATA[
 						<group name="${targetThemeCode}_responsive" xmlns="http://www.isdc.ro/wro">
 							<css>/_ui/responsive/theme-${targetThemeCode}/css/style.css</css>
 						</group>
 					]]>
-                    				
-                </insert>
+				</insert>
                 			
             </xmltask>
             		
@@ -885,12 +883,10 @@
                                                 <xmltask destbuffer="buffer" sourcebuffer="buffer">
                                                     													
                                                     <insert path="/groups/group[@name='addons_responsive']">
-                                                        														
-                                                        <![CDATA[
+														<![CDATA[
 															<js>${addonPath}@{jsfile}</js>
 														]]>
-                                                        													
-                                                    </insert>
+													</insert>
                                                     												
                                                 </xmltask>
                                                 											
@@ -905,12 +901,10 @@
                                                 <xmltask destbuffer="buffer" sourcebuffer="buffer">
                                                     													
                                                     <insert path="/groups/group[@name='addons_responsive']">
-                                                        														
-                                                        <![CDATA[
+														<![CDATA[
 															<css>${addonPath}@{cssfile}</css>
 														]]>
-                                                        													
-                                                    </insert>
+													</insert>
                                                     												
                                                 </xmltask>
                                                 											
@@ -939,12 +933,10 @@
                                                 <xmltask destbuffer="buffer" sourcebuffer="buffer">
                                                     													
                                                     <insert path="/groups/group[@name='addons_desktop']">
-                                                        														
-                                                        <![CDATA[
+														<![CDATA[
 															<js>${addonPath}@{jsfile}</js>
 														]]>
-                                                        													
-                                                    </insert>
+													</insert>
                                                     												
                                                 </xmltask>
                                                 											
@@ -959,12 +951,10 @@
                                                 <xmltask destbuffer="buffer" sourcebuffer="buffer">
                                                     													
                                                     <insert path="/groups/group[@name='addons_desktop']">
-                                                        														
-                                                        <![CDATA[
+														<![CDATA[
 															<css>${addonPath}@{cssfile}</css>
 														]]>
-                                                        													
-                                                    </insert>
+													</insert>
                                                     												
                                                 </xmltask>
                                                 											

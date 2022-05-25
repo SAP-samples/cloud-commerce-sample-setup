@@ -111,7 +111,7 @@ ACC.address = {
 			},
 			error: function (xht, textStatus, ex)
 			{
-				console.log("Failed to update cart. Error details [" + xht + ", " + textStatus + ", " + ex + "]");  // NOSONAR
+				console.log(`Failed to update cart. Error details [${xht}, ${textStatus}, ${ex}]`);
 			}
 		};
 
@@ -132,7 +132,7 @@ ACC.address = {
 			},
 			error: function (xht, textStatus, ex)
 			{
-				console.log("Failed to update address book. Error details [" + xht + ", " + textStatus + ", " + ex + "]");  // NOSONAR
+				console.log(`Failed to update address book. Error details [${xht}, ${textStatus}, ${ex}]`);
 			}
 		};
 
@@ -149,7 +149,7 @@ ACC.address = {
 		}
 		else
 		{
-			console.log("Failed to set delivery address");  // NOSONAR
+			console.log("Failed to set delivery address");
 		}
 	},
 
@@ -180,7 +180,7 @@ ACC.address = {
 				},
 				error: function (xht, textStatus, ex)
 				{
-					console.log("Failed to update cart. Error details [" + xht + ", " + textStatus + ", " + ex + "]");  // NOSONAR
+					console.log(`Failed to update cart. Error details [${xht}, ${textStatus}, ${ex}]`);
 				},
 				complete: function ()
 				{

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2022 SAP SE or an SAP affiliate company. All rights reserved.
  */
 package de.hybris.platform.yb2bacceleratorstorefront.controllers.pages;
 
@@ -12,7 +12,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import de.hybris.bootstrap.annotations.UnitTest;
-import de.hybris.platform.acceleratorfacades.futurestock.FutureStockFacade;
 import de.hybris.platform.acceleratorservices.data.RequestContextData;
 import de.hybris.platform.acceleratorservices.storefront.util.PageTitleResolver;
 import de.hybris.platform.acceleratorstorefrontcommons.breadcrumb.impl.ProductBreadcrumbBuilder;
@@ -22,8 +21,10 @@ import de.hybris.platform.acceleratorstorefrontcommons.variants.VariantSortStrat
 import de.hybris.platform.cms2.exceptions.CMSItemNotFoundException;
 import de.hybris.platform.cms2.servicelayer.services.CMSPageService;
 import de.hybris.platform.cms2.servicelayer.services.CMSPreviewService;
+import de.hybris.platform.commercefacades.futurestock.FutureStockFacade;
 import de.hybris.platform.commercefacades.product.ProductFacade;
 import de.hybris.platform.commercefacades.product.data.ProductData;
+import de.hybris.platform.commercefacades.user.UserFacade;
 import de.hybris.platform.commerceservices.url.UrlResolver;
 import de.hybris.platform.core.Registry;
 import de.hybris.platform.product.ProductService;
@@ -32,6 +33,7 @@ import de.hybris.platform.testframework.HybrisJUnit4Test;
 
 import java.io.UnsupportedEncodingException;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -89,6 +91,9 @@ public class ProductPageControllerTest extends HybrisJUnit4Test
 	private Model model;
 
 	@Mock
+	private UserFacade userFacade;
+
+	@Mock
 	private WebApplicationContext webApplicationContext;
 
 	private final RequestContextData requestContextData = new RequestContextData();
@@ -105,6 +110,7 @@ public class ProductPageControllerTest extends HybrisJUnit4Test
 
 		request.getSession().getServletContext().setAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE, webApplicationContext);
 		when(webApplicationContext.getBean(any(), any(Class.class))).thenReturn(requestContextData);
+		when(userFacade.isAnonymousUser()).thenReturn(false);
 	}
 
 	@Test
@@ -186,5 +192,15 @@ public class ProductPageControllerTest extends HybrisJUnit4Test
 		controller.productFutureStock(PRODUCT_CODE, model, request, response);
 
 		verify(productFacade).getProductForCodeAndOptions(eq(PRODUCT_CODE), any());
+		verify(userFacade).isAnonymousUser();
+	}
+
+	@Test
+	public void testProductCodeIsCorrectlyDecodedAndUsedAnonymous_productFutureStock() throws CMSItemNotFoundException
+	{
+		Registry.getCurrentTenant().getConfig().setParameter("storefront.products.futurestock.enabled", "true");
+		when(userFacade.isAnonymousUser()).thenReturn(true);
+		final String res = controller.productFutureStock(PRODUCT_CODE, model, request, response);
+		Assert.assertEquals("pages/error/errorNotFoundPage", res);
 	}
 }

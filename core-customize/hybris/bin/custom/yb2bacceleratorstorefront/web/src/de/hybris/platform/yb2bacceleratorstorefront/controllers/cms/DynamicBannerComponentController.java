@@ -16,11 +16,9 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 
 /**
  * Controller for CMS DynamicBannerComponent
@@ -29,9 +27,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(value = ControllerConstants.Actions.Cms.DynamicBannerComponent)
 public class DynamicBannerComponentController extends AbstractAcceleratorCMSComponentController<DynamicBannerComponentModel>
 {
-	@SuppressWarnings("unused")
-	private static final Logger LOG = Logger.getLogger(DynamicBannerComponentController.class);
-
 	private static final String MEDIA_PATTERN_TOKEN = "\\{VARIABLE\\}";
 
 	@Resource(name = "mediaService")

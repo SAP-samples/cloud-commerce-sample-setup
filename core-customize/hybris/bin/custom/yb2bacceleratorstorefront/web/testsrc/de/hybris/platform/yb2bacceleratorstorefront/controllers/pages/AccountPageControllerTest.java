@@ -1,10 +1,15 @@
 /*
- * Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
  */
 package de.hybris.platform.yb2bacceleratorstorefront.controllers.pages;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.nullable;
+import static org.mockito.Mockito.verify;
 
 import de.hybris.bootstrap.annotations.UnitTest;
 import de.hybris.platform.acceleratorservices.config.SiteConfigService;
@@ -65,19 +70,20 @@ import org.apache.commons.collections.CollectionUtils;
 import org.hamcrest.CoreMatchers;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.context.MessageSource;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.support.BindingAwareModelMap;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-
 @UnitTest
+@RunWith(MockitoJUnitRunner.class)
 public class AccountPageControllerTest
 {
 	private final Model page = Mockito.spy(new BindingAwareModelMap());
@@ -192,17 +198,17 @@ public class AccountPageControllerTest
 	@Before
 	public void prepare() throws CMSItemNotFoundException
 	{
-		MockitoAnnotations.initMocks(this);
+
 		final Locale locale = new Locale("en");
 		final List breadcrumbsList = new ArrayList();
 		breadcrumbsList.add(breadcrumb);
 
 		BDDMockito.given(cmsPreviewService.getPagePreviewCriteria()).willReturn(pagePreviewCriteriaData);
-		BDDMockito.given(accountBreadcrumbBuilder.getBreadcrumbs(Mockito.anyString())).willReturn(breadcrumbsList);
-		BDDMockito.given(cmsPageService.getPageForLabelOrId(Mockito.anyString(), Mockito.anyObject()))
-				.willReturn(contentPageModel);
-		BDDMockito.given(pageTitleResolver.resolveContentPageTitle(Mockito.anyString())).willReturn(TITLE_FOR_PAGE);
-		BDDMockito.given(Boolean.valueOf(page.containsAttribute(CMS_PAGE_MODEL))).willReturn(Boolean.TRUE);
+		BDDMockito.given(accountBreadcrumbBuilder.getBreadcrumbs(nullable(String.class))).willReturn(breadcrumbsList);
+		BDDMockito.given(contentPageModel.getTitle()).willReturn(TITLE_FOR_PAGE);
+		BDDMockito.given(cmsPageService.getPageForLabelOrId(anyString(), any())).willReturn(contentPageModel);
+		BDDMockito.given(pageTitleResolver.resolveContentPageTitle(anyString())).willReturn(TITLE_FOR_PAGE);
+		BDDMockito.given(page.containsAttribute(CMS_PAGE_MODEL)).willReturn(Boolean.TRUE);
 		BDDMockito.given(page.asMap().get(CMS_PAGE_MODEL)).willReturn(abstractPageModel);
 		BDDMockito.given(abstractPageModel.getMasterTemplate()).willReturn(pageTemplateModel);
 		BDDMockito.given(cmsPageService.getFrontendTemplateName(pageTemplateModel)).willReturn(VIEW_FOR_PAGE);
@@ -216,10 +222,9 @@ public class AccountPageControllerTest
 		BDDMockito.given(customerData.getUid()).willReturn(FIRST_NAME);
 		BDDMockito.given(customerFacade.getCurrentCustomer()).willReturn(customerData);
 		BDDMockito.given(i18NService.getCurrentLocale()).willReturn(locale);
-		BDDMockito.given(i18NFacade.getRegionsForCountryIso(Mockito.anyString())).willReturn(Collections.singletonList(regionData));
-		BDDMockito.given(messageSource.getMessage(Mockito.anyString(), Mockito.any(Object[].class), Mockito.eq(locale)))
-				.willReturn("ANY STRING");
-		BDDMockito.given(i18NFacade.getCountryForIsocode(Mockito.anyString())).willReturn(countryData);
+		BDDMockito.given(i18NFacade.getRegionsForCountryIso(nullable(String.class))).willReturn(Collections.singletonList(regionData));
+		BDDMockito.given(messageSource.getMessage(anyString(), any(), eq(locale))).willReturn("ANY STRING");
+		BDDMockito.given(i18NFacade.getCountryForIsocode(nullable(String.class))).willReturn(countryData);
 	}
 
 	private void setupAddressCreateEdit()
@@ -261,9 +266,9 @@ public class AccountPageControllerTest
 
 		final String countryFragment = accountController.getCountryAddressForm("TEST_ADDRESS_CODE", TEST_COUNTRY_CODE, page);
 
-		Mockito.verify(page).addAttribute("supportedCountries", accountController.getCountries());
-		Mockito.verify(page).addAttribute("regions", i18NFacade.getRegionsForCountryIso(TEST_COUNTRY_CODE));
-		Mockito.verify(page).addAttribute("country", TEST_COUNTRY_CODE);
+		verify(page).addAttribute("supportedCountries", accountController.getCountries());
+		verify(page).addAttribute("regions", i18NFacade.getRegionsForCountryIso(TEST_COUNTRY_CODE));
+		verify(page).addAttribute("country", TEST_COUNTRY_CODE);
 
 		assertEquals(ControllerConstants.Views.Fragments.Account.CountryAddressForm, countryFragment);
 	}
@@ -274,9 +279,9 @@ public class AccountPageControllerTest
 		BDDMockito.given(userFacade.getAddressBook()).willReturn(Collections.singletonList(addressData));
 
 		final String addressBookPage = accountController.getAddressBook(page);
-		Mockito.verify(page).addAttribute("addressData", Collections.singletonList(addressData));
-		Mockito.verify(page).addAttribute("cmsPage", contentPageModel);
-		Mockito.verify(page).addAttribute("pageTitle", TITLE_FOR_PAGE);
+		verify(page).addAttribute("addressData", Collections.singletonList(addressData));
+		verify(page).addAttribute("cmsPage", contentPageModel);
+		verify(page).addAttribute("pageTitle", TITLE_FOR_PAGE);
 
 		assertEquals(FULL_VIEW_PATH, addressBookPage);
 	}
@@ -297,11 +302,11 @@ public class AccountPageControllerTest
 		setupAddressCreateEdit();
 		final String addAddressPage = accountController.addAddress(page);
 
-		Mockito.verify(page).addAttribute("countryData", Collections.singletonList(countryData));
-		Mockito.verify(page).addAttribute("titleData", Collections.singletonList(titleData));
-		Mockito.verify(page).addAttribute("addressForm", addressForm);
-		Mockito.verify(page).addAttribute("addressBookEmpty", Boolean.FALSE);
-		Mockito.verify(page).addAttribute("isDefaultAddress", Boolean.FALSE);
+		verify(page).addAttribute("countryData", Collections.singletonList(countryData));
+		verify(page).addAttribute("titleData", Collections.singletonList(titleData));
+		verify(page).addAttribute("addressForm", addressForm);
+		verify(page).addAttribute("addressBookEmpty", Boolean.FALSE);
+		verify(page).addAttribute("isDefaultAddress", Boolean.FALSE);
 
 		assertEquals(FULL_VIEW_PATH, addAddressPage);
 	}
@@ -313,7 +318,7 @@ public class AccountPageControllerTest
 
 		final String addAddressPage = accountController.addAddress(addressForm, bindingResult, page, redirectModel);
 
-		Mockito.verify(accountController).setUpAddressFormAfterError(addressForm, page);
+		verify(accountController).setUpAddressFormAfterError(addressForm, page);
 		assertEquals(FULL_VIEW_PATH, addAddressPage);
 	}
 
@@ -325,8 +330,8 @@ public class AccountPageControllerTest
 		createBasicAddressFields();
 		BDDMockito.given(addressVerificationFacade.verifyAddressData(Mockito.any(AddressData.class))).willReturn(avsResult);
 		BDDMockito.given(Boolean.valueOf(
-				addressVerificationResultHandler.handleResult(Mockito.eq(avsResult), Mockito.any(AddressData.class), Mockito.eq(page),
-						Mockito.eq(redirectModel), Mockito.eq(bindingResult), Mockito.anyBoolean(), Mockito.anyString())))
+				addressVerificationResultHandler.handleResult(eq(avsResult), Mockito.any(AddressData.class), eq(page),
+						eq(redirectModel), eq(bindingResult), Mockito.anyBoolean(), Mockito.anyString())))
 				.willReturn(Boolean.TRUE);
 
 		final String addAddressPage = accountController.addAddress(addressForm, bindingResult, page, redirectModel);
@@ -342,13 +347,13 @@ public class AccountPageControllerTest
 		createBasicAddressFields();
 		BDDMockito.given(addressVerificationFacade.verifyAddressData(Mockito.any(AddressData.class))).willReturn(avsResult);
 		BDDMockito.given(Boolean.valueOf(
-				addressVerificationResultHandler.handleResult(Mockito.eq(avsResult), Mockito.any(AddressData.class), Mockito.eq(page),
-						Mockito.eq(redirectModel), Mockito.eq(bindingResult), Mockito.anyBoolean(), Mockito.anyString())))
+				addressVerificationResultHandler.handleResult(eq(avsResult), Mockito.any(AddressData.class), eq(page),
+						eq(redirectModel), eq(bindingResult), Mockito.anyBoolean(), Mockito.anyString())))
 				.willReturn(Boolean.FALSE);
 
 		final String addAddressPage = accountController.addAddress(addressForm, bindingResult, page, redirectModel);
 
-		Mockito.verify(userFacade).addAddress(Mockito.any(AddressData.class));
+		verify(userFacade).addAddress(Mockito.any(AddressData.class));
 		assertThat(addAddressPage, CoreMatchers.containsString(REDIRECT_TO_EDIT_ADDRESS_PAGE));
 	}
 
@@ -357,13 +362,11 @@ public class AccountPageControllerTest
 	{
 		final String addressBookPage = accountController.editAddress(TEST_CODE, page);
 
-		Mockito.verify(page).addAttribute("countryData", checkoutFacade.getCountries(CountryType.SHIPPING));
-		Mockito.verify(page).addAttribute("titleData", userFacade.getTitles());
-		Mockito.verify(page).addAttribute("addressBookEmpty",
-				Boolean.valueOf(CollectionUtils.isEmpty(userFacade.getAddressBook())));
-		Mockito.verify(page).addAttribute(ThirdPartyConstants.SeoRobots.META_ROBOTS,
-				ThirdPartyConstants.SeoRobots.NOINDEX_NOFOLLOW);
-		Mockito.verify(page).addAttribute("edit", Boolean.TRUE);
+		verify(page).addAttribute("countryData", checkoutFacade.getCountries(CountryType.SHIPPING));
+		verify(page).addAttribute("titleData", userFacade.getTitles());
+		verify(page).addAttribute("addressBookEmpty", CollectionUtils.isEmpty(userFacade.getAddressBook()));
+		verify(page).addAttribute(ThirdPartyConstants.SeoRobots.META_ROBOTS, ThirdPartyConstants.SeoRobots.NOINDEX_NOFOLLOW);
+		verify(page).addAttribute("edit", Boolean.TRUE);
 		assertEquals(FULL_VIEW_PATH, addressBookPage);
 	}
 
@@ -374,7 +377,7 @@ public class AccountPageControllerTest
 
 		final String addressBookPage = accountController.editAddress(addressForm, bindingResult, page, redirectModel);
 
-		Mockito.verify(accountController).setUpAddressFormAfterError(addressForm, page);
+		verify(accountController).setUpAddressFormAfterError(addressForm, page);
 		assertEquals(FULL_VIEW_PATH, addressBookPage);
 	}
 
@@ -386,8 +389,8 @@ public class AccountPageControllerTest
 		createBasicAddressFields();
 		BDDMockito.given(addressVerificationFacade.verifyAddressData(Mockito.any(AddressData.class))).willReturn(avsResult);
 		BDDMockito.given(Boolean.valueOf(
-				addressVerificationResultHandler.handleResult(Mockito.eq(avsResult), Mockito.any(AddressData.class), Mockito.eq(page),
-						Mockito.eq(redirectModel), Mockito.eq(bindingResult), Mockito.anyBoolean(), Mockito.anyString())))
+				addressVerificationResultHandler.handleResult(eq(avsResult), Mockito.any(AddressData.class), eq(page),
+						eq(redirectModel), eq(bindingResult), Mockito.anyBoolean(), Mockito.anyString())))
 				.willReturn(Boolean.TRUE);
 
 		final String addAddressPage = accountController.editAddress(addressForm, bindingResult, page, redirectModel);
@@ -400,7 +403,7 @@ public class AccountPageControllerTest
 	{
 		final String editAddressPage = accountController.editAddress(addressForm, bindingResult, page, redirectModel);
 
-		Mockito.verify(userFacade).editAddress(Mockito.any(AddressData.class));
+		verify(userFacade).editAddress(Mockito.any(AddressData.class));
 		assertThat(editAddressPage, CoreMatchers.containsString(REDIRECT_TO_EDIT_ADDRESS_PAGE));
 	}
 
@@ -409,7 +412,7 @@ public class AccountPageControllerTest
 	{
 		final String addressBookPage = accountController.setDefaultAddress(TEST_CODE, redirectModel);
 
-		Mockito.verify(userFacade).setDefaultAddress(Mockito.any(AddressData.class));
+		verify(userFacade).setDefaultAddress(Mockito.any(AddressData.class));
 		assertEquals(REDIRECT_TO_ADDRESS_BOOK_PAGE, addressBookPage);
 	}
 
@@ -418,7 +421,7 @@ public class AccountPageControllerTest
 	{
 		final String addressBookPage = accountController.removeAddress(TEST_CODE, redirectModel);
 
-		Mockito.verify(userFacade).removeAddress(Mockito.any(AddressData.class));
+		verify(userFacade).removeAddress(Mockito.any(AddressData.class));
 		assertEquals(REDIRECT_TO_ADDRESS_BOOK_PAGE, addressBookPage);
 	}
 
@@ -431,7 +434,7 @@ public class AccountPageControllerTest
 		BDDMockito.given(orderFacade.getPagedOrderHistoryForStatuses(Mockito.any(PageableData.class))).willReturn(searchList);
 
 		final String orderHistoryPage = accountController.orders(1, showMode, "desc", page);
-		Mockito.verify(orderFacade).getPagedOrderHistoryForStatuses(Mockito.any(PageableData.class));
+		verify(orderFacade).getPagedOrderHistoryForStatuses(Mockito.any(PageableData.class));
 		assertEquals(FULL_VIEW_PATH, orderHistoryPage);
 	}
 
@@ -441,7 +444,7 @@ public class AccountPageControllerTest
 		BDDMockito.given(orderFacade.getOrderDetailsForCode(TEST_CODE)).willThrow(UnknownIdentifierException.class);
 		final String orderHistoryPage = accountController.order(TEST_CODE, page, redirectModel);
 
-		BDDMockito.verify(page, BDDMockito.times(0)).addAttribute(Mockito.anyString(), Mockito.anyString());
+		verify(page, BDDMockito.times(0)).addAttribute(Mockito.anyString(), Mockito.anyString());
 		assertEquals(REDIRECT_TO_ORDER_HISTORY_PAGE, orderHistoryPage);
 	}
 
@@ -453,7 +456,7 @@ public class AccountPageControllerTest
 
 		final String myAccountPage = accountController.order(TEST_CODE, page, redirectModel);
 
-		BDDMockito.verify(page, BDDMockito.times(6)).addAttribute(Mockito.anyString(), Mockito.anyString());
+		verify(page, BDDMockito.times(6)).addAttribute(anyString(), any());
 		assertEquals(FULL_VIEW_PATH, myAccountPage);
 	}
 
@@ -463,7 +466,7 @@ public class AccountPageControllerTest
 	{
 		final String updateProfilePage = accountController.profile(page);
 
-		BDDMockito.verify(page, BDDMockito.times(7)).addAttribute(Mockito.anyString(), Mockito.anyString());
+		verify(page, BDDMockito.times(7)).addAttribute(anyString(), any());
 		assertEquals(FULL_VIEW_PATH, updateProfilePage);
 	}
 
@@ -472,7 +475,7 @@ public class AccountPageControllerTest
 	{
 		final String profilePage = accountController.editProfile(page);
 
-		BDDMockito.verify(page, BDDMockito.times(7)).addAttribute(Mockito.anyString(), Mockito.anyString());
+		verify(page, BDDMockito.times(7)).addAttribute(anyString(), any());
 		assertEquals(FULL_VIEW_PATH, profilePage);
 	}
 
@@ -483,8 +486,8 @@ public class AccountPageControllerTest
 
 		final String profilePage = accountController.updateProfile(profileForm, bindingResult, page, redirectModel);
 
-		BDDMockito.verify(customerFacade, BDDMockito.times(0)).updateProfile(Mockito.any(CustomerData.class));
-		BDDMockito.verify(accountController).setErrorMessagesAndCMSPage(page, UPDATE_PROFILE_CMS_PAGE);
+		verify(customerFacade, BDDMockito.times(0)).updateProfile(Mockito.any(CustomerData.class));
+		verify(accountController).setErrorMessagesAndCMSPage(page, UPDATE_PROFILE_CMS_PAGE);
 		assertEquals(FULL_VIEW_PATH, profilePage);
 	}
 
@@ -495,8 +498,8 @@ public class AccountPageControllerTest
 
 		final String profilePage = accountController.updateProfile(profileForm, bindingResult, page, redirectModel);
 
-		BDDMockito.verify(customerFacade).updateProfile(Mockito.any(CustomerData.class));
-		BDDMockito.verify(accountController).setErrorMessagesAndCMSPage(page, UPDATE_PROFILE_CMS_PAGE);
+		verify(customerFacade).updateProfile(Mockito.any(CustomerData.class));
+		verify(accountController).setErrorMessagesAndCMSPage(page, UPDATE_PROFILE_CMS_PAGE);
 		assertEquals(FULL_VIEW_PATH, profilePage);
 	}
 
@@ -505,7 +508,7 @@ public class AccountPageControllerTest
 	{
 		final String profilePage = accountController.updateProfile(profileForm, bindingResult, page, redirectModel);
 
-		BDDMockito.verify(customerFacade).updateProfile(Mockito.any(CustomerData.class));
+		verify(customerFacade).updateProfile(Mockito.any(CustomerData.class));
 		assertEquals(REDIRECT_TO_UPDATE_PROFILE, profilePage);
 	}
 
@@ -515,7 +518,7 @@ public class AccountPageControllerTest
 	{
 		final String emailPage = accountController.editEmail(page);
 
-		BDDMockito.verify(page, BDDMockito.times(6)).addAttribute(Mockito.anyString(), Mockito.anyString());
+		verify(page, BDDMockito.times(6)).addAttribute(anyString(), any());
 		assertEquals(FULL_VIEW_PATH, emailPage);
 	}
 
@@ -526,7 +529,7 @@ public class AccountPageControllerTest
 
 		final String emailUpdatePage = accountController.updateEmail(emailForm, bindingResult, page, redirectModel);
 
-		BDDMockito.verify(accountController).setErrorMessagesAndCMSPage(page, UPDATE_EMAIL_CMS_PAGE);
+		verify(accountController).setErrorMessagesAndCMSPage(page, UPDATE_EMAIL_CMS_PAGE);
 		assertEquals(FULL_VIEW_PATH, emailUpdatePage);
 	}
 
@@ -537,8 +540,8 @@ public class AccountPageControllerTest
 		BDDMockito.doThrow(new DuplicateUidException()).when(customerFacade).changeUid(Mockito.anyString(), Mockito.anyString());
 		final String emailUpdatePage = accountController.updateEmail(emailForm, bindingResult, page, redirectModel);
 
-		BDDMockito.verify(bindingResult).rejectValue("email", "profile.email.unique");
-		BDDMockito.verify(accountController).setErrorMessagesAndCMSPage(page, UPDATE_EMAIL_CMS_PAGE);
+		verify(bindingResult).rejectValue("email", "profile.email.unique");
+		verify(accountController).setErrorMessagesAndCMSPage(page, UPDATE_EMAIL_CMS_PAGE);
 		assertEquals(FULL_VIEW_PATH, emailUpdatePage);
 	}
 
@@ -550,8 +553,8 @@ public class AccountPageControllerTest
 				Mockito.anyString());
 		final String emailUpdatePage = accountController.updateEmail(emailForm, bindingResult, page, redirectModel);
 
-		BDDMockito.verify(bindingResult).rejectValue("password", "profile.currentPassword.invalid");
-		BDDMockito.verify(accountController).setErrorMessagesAndCMSPage(page, UPDATE_EMAIL_CMS_PAGE);
+		verify(bindingResult).rejectValue("password", "profile.currentPassword.invalid");
+		verify(accountController).setErrorMessagesAndCMSPage(page, UPDATE_EMAIL_CMS_PAGE);
 		assertEquals(FULL_VIEW_PATH, emailUpdatePage);
 	}
 
@@ -561,7 +564,7 @@ public class AccountPageControllerTest
 	{
 		final String passwordPage = accountController.updatePassword(page);
 
-		BDDMockito.verify(page).addAttribute(BDDMockito.eq("updatePasswordForm"), Mockito.any(UpdatePasswordForm.class));
+		verify(page).addAttribute(eq("updatePasswordForm"), Mockito.any(UpdatePasswordForm.class));
 		assertEquals(FULL_VIEW_PATH, passwordPage);
 	}
 
@@ -573,19 +576,18 @@ public class AccountPageControllerTest
 				.willReturn(breadcrumbsList);
 		final String passwordPage = accountController.updatePassword(passwordForm, bindingResult, page, redirectModel);
 
-		BDDMockito.verify(page).addAttribute("breadcrumbs", breadcrumbsList);
+		verify(page).addAttribute("breadcrumbs", breadcrumbsList);
 		assertEquals(FULL_VIEW_PATH, passwordPage);
 	}
 
 	@Test
 	public void shouldNotUpdatePasswordNotEqual() throws CMSItemNotFoundException
 	{
-		BDDMockito.given(passwordForm.getCurrentPassword()).willReturn(TEST_CODE);
 		BDDMockito.given(passwordForm.getNewPassword()).willReturn("Different");
 
 		final String passwordPage = accountController.updatePassword(passwordForm, bindingResult, page, redirectModel);
 
-		BDDMockito.verify(bindingResult).rejectValue("checkNewPassword", "validation.checkPwd.equals", new Object[] {},
+		verify(bindingResult).rejectValue("checkNewPassword", "validation.checkPwd.equals", new Object[] {},
 				"validation.checkPwd.equals");
 		assertEquals(REDIRECT_TO_PASSWORD_UPDATE_PAGE, passwordPage);
 	}
@@ -595,12 +597,11 @@ public class AccountPageControllerTest
 	{
 		BDDMockito.given(passwordForm.getCheckNewPassword()).willReturn(TEST_CODE);
 		BDDMockito.given(passwordForm.getNewPassword()).willReturn(TEST_CODE);
-		Mockito.doThrow(new PasswordMismatchException("error")).when(customerFacade).changePassword(Mockito.anyString(),
-				Mockito.anyString());
+		Mockito.doThrow(new PasswordMismatchException("error")).when(customerFacade).changePassword(nullable(String.class), nullable(String.class));
 
 		final String passwordPage = accountController.updatePassword(passwordForm, bindingResult, page, redirectModel);
 
-		BDDMockito.verify(bindingResult).rejectValue("currentPassword", "profile.currentPassword.invalid", new Object[] {},
+		verify(bindingResult).rejectValue("currentPassword", "profile.currentPassword.invalid", new Object[] {},
 				"profile.currentPassword.invalid");
 		assertEquals(REDIRECT_TO_PASSWORD_UPDATE_PAGE, passwordPage);
 	}
@@ -614,7 +615,7 @@ public class AccountPageControllerTest
 
 		final String passwordPage = accountController.updatePassword(passwordForm, bindingResult, page, redirectModel);
 
-		BDDMockito.verify(customerFacade).changePassword(TEST_CODE, TEST_CODE);
+		verify(customerFacade).changePassword(TEST_CODE, TEST_CODE);
 		assertEquals(REDIRECT_TO_PASSWORD_UPDATE_PAGE, passwordPage);
 	}
 
@@ -624,7 +625,7 @@ public class AccountPageControllerTest
 	{
 		final String paymentDetailsPage = accountController.paymentDetails(page);
 
-		BDDMockito.verify(page, BDDMockito.times(7)).addAttribute(Mockito.anyString(), Mockito.anyString());
+		verify(page, BDDMockito.times(7)).addAttribute(anyString(), any());
 		assertEquals(FULL_VIEW_PATH, paymentDetailsPage);
 	}
 
@@ -632,9 +633,8 @@ public class AccountPageControllerTest
 	public void shouldSetDefaultPaymentDetailsNull() throws CMSItemNotFoundException
 	{
 		final String paymentDetailsPage = accountController.setDefaultPaymentDetails(null);
-
-		BDDMockito.verify(userFacade, BDDMockito.times(0)).getCCPaymentInfoForCode(Mockito.anyString());
-		BDDMockito.verify(userFacade).setDefaultPaymentInfo(Mockito.any(CCPaymentInfoData.class));
+		verify(userFacade, BDDMockito.times(0)).getCCPaymentInfoForCode(anyString());
+		verify(userFacade).setDefaultPaymentInfo(nullable(CCPaymentInfoData.class));
 		assertEquals(REDIRECT_TO_PAYMENT_INFO_PAGE, paymentDetailsPage);
 	}
 
@@ -642,9 +642,8 @@ public class AccountPageControllerTest
 	public void shouldSetDefaultPaymentDetails() throws CMSItemNotFoundException
 	{
 		final String paymentDetailsPage = accountController.setDefaultPaymentDetails(TEST_CODE);
-
-		BDDMockito.verify(userFacade, BDDMockito.times(1)).getCCPaymentInfoForCode(Mockito.anyString());
-		BDDMockito.verify(userFacade).setDefaultPaymentInfo(Mockito.any(CCPaymentInfoData.class));
+		verify(userFacade, BDDMockito.times(1)).getCCPaymentInfoForCode(anyString());
+		verify(userFacade).setDefaultPaymentInfo(nullable(CCPaymentInfoData.class));
 		assertEquals(REDIRECT_TO_PAYMENT_INFO_PAGE, paymentDetailsPage);
 	}
 
@@ -653,7 +652,7 @@ public class AccountPageControllerTest
 	{
 		final String paymentDetailsPage = accountController.removePaymentMethod(TEST_CODE, redirectModel);
 
-		BDDMockito.verify(userFacade, BDDMockito.times(1)).unlinkCCPaymentInfo(Mockito.anyString());
+		verify(userFacade, BDDMockito.times(1)).unlinkCCPaymentInfo(Mockito.anyString());
 		assertEquals(REDIRECT_TO_PAYMENT_INFO_PAGE, paymentDetailsPage);
 	}
 }

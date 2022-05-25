@@ -109,9 +109,13 @@
                                 <div class="row">
                                     <ycommerce:testId code="addressRemove_delete_button">
                                         <div class="col-xs-12 col-sm-6 col-sm-push-6">
-                                            <a class="btn btn-primary btn-block" data-address-id="${fn:escapeXml(address.id)}" href="remove-address/${fn:escapeXml(ycommerce:encodeUrl(address.id))}">
-                                                <spring:theme code="text.address.delete" />
-                                            </a>
+											<form:form action="remove-address/${fn:escapeXml(ycommerce:encodeUrl(address.id))}"
+													   class="url-holder"
+													   data-address-id="${fn:escapeXml(address.id)}">
+												<button type="submit" class="btn btn-primary btn-block">
+													<spring:theme code="text.address.delete" />
+												</button>
+											</form:form>
                                         </div>
                                     </ycommerce:testId>
                                     <div class="col-xs-12 col-sm-6 col-sm-pull-6">

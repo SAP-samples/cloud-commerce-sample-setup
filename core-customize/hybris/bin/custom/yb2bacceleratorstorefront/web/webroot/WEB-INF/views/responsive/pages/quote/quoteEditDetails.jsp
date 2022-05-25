@@ -56,7 +56,7 @@
                         <formElement:formInputBox idKey="expirationTime"
                                                   labelKey="text.quote.expiration.time.label" labelCSS="quote__expiration--label" path="expirationTime"
                                                   inputCSS="text quote__expiration--input" mandatory="true" placeholder="${dateFormatHintHtml}"/>
-                        <i class="glyphicon glyphicon-calendar js-open-datepicker-quote-expiration-time"></i>
+                        <em class="glyphicon glyphicon-calendar js-open-datepicker-quote-expiration-time"></em>
                     </div>
                 </div>
             </c:if>

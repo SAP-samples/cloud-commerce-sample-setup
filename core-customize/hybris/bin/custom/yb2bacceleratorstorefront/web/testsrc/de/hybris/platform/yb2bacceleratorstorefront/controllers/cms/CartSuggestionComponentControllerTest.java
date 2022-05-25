@@ -1,18 +1,16 @@
 /*
- * Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
  */
 package de.hybris.platform.yb2bacceleratorstorefront.controllers.cms;
 
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 import de.hybris.bootstrap.annotations.UnitTest;
 import de.hybris.platform.acceleratorcms.model.components.CartSuggestionComponentModel;
 import de.hybris.platform.acceleratorcms.model.components.SimpleSuggestionComponentModel;
 import de.hybris.platform.acceleratorstorefrontcommons.controllers.pages.AbstractPageController;
 import de.hybris.platform.catalog.enums.ProductReferenceTypeEnum;
-import de.hybris.platform.cms2.exceptions.CMSItemNotFoundException;
 import de.hybris.platform.cms2.servicelayer.services.impl.DefaultCMSComponentService;
 import de.hybris.platform.commercefacades.order.data.CartData;
 import de.hybris.platform.commercefacades.order.data.OrderEntryData;
@@ -34,9 +32,10 @@ import junit.framework.Assert;
 import org.apache.commons.lang.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.ui.Model;
 
@@ -45,6 +44,7 @@ import org.springframework.ui.Model;
  * Unit test for {@link CartSuggestionComponentController}
  */
 @UnitTest
+@RunWith(MockitoJUnitRunner.class)
 public class CartSuggestionComponentControllerTest
 {
 	private static final String COMPONENT_UID = "componentUid";
@@ -82,7 +82,6 @@ public class CartSuggestionComponentControllerTest
 	@Before
 	public void setUp()
 	{
-		MockitoAnnotations.initMocks(this);
 
 		cartSuggestionComponentController = new CartSuggestionComponentController();
 		cartSuggestionComponentController.setCmsComponentService(cmsComponentService);
@@ -91,13 +90,10 @@ public class CartSuggestionComponentControllerTest
 
 		given(cartFacade.hasSessionCart()).willReturn(Boolean.TRUE);
 		final CartData cartData = Mockito.mock(CartData.class);
-		when(cartFacade.getSessionCart()).thenReturn(cartData);
 
 		final List<OrderEntryData> listData = new ArrayList<OrderEntryData>();
 		final OrderEntryData entryData = Mockito.mock(OrderEntryData.class);
-		when(entryData.getProduct()).thenReturn(productData);
 		listData.add(entryData);
-		when(cartData.getEntries()).thenReturn(listData);
 	}
 
 	@Test
@@ -157,7 +153,6 @@ public class CartSuggestionComponentControllerTest
 	{
 		given(request.getAttribute(COMPONENT_UID)).willReturn(null);
 		given(request.getParameter(COMPONENT_UID)).willReturn(TEST_COMPONENT_UID);
-		given(cmsComponentService.getSimpleCMSComponent(TEST_COMPONENT_UID)).willReturn(null);
 		cartSuggestionComponentController.handleGet(request, response, model);
 	}
 
@@ -165,8 +160,6 @@ public class CartSuggestionComponentControllerTest
 	public void testRenderComponentNotFound3() throws Exception
 	{
 		given(request.getAttribute(COMPONENT_UID)).willReturn(TEST_COMPONENT_UID);
-		given(cmsComponentService.getSimpleCMSComponent(TEST_COMPONENT_UID)).willReturn(null);
-		given(cmsComponentService.getSimpleCMSComponent(TEST_COMPONENT_UID)).willThrow(new CMSItemNotFoundException(""));
 		cartSuggestionComponentController.handleGet(request, response, model);
 	}
 }

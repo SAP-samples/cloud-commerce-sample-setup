@@ -1,8 +1,9 @@
 /*
- * Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
  */
 package de.hybris.platform.yb2bacceleratorstorefront.interceptors.i18n;
 
+import de.hybris.bootstrap.annotations.UnitTest;
 import de.hybris.platform.commerceservices.i18n.LanguageResolver;
 import de.hybris.platform.core.model.c2l.LanguageModel;
 import de.hybris.platform.servicelayer.i18n.CommonI18NService;
@@ -10,18 +11,17 @@ import de.hybris.platform.yb2bacceleratorstorefront.interceptors.beforecontrolle
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
 
 
-/**
- *
- */
+@UnitTest
+@RunWith(MockitoJUnitRunner.class)
 public class SetLanguageBeforeControllerHandlerTest
 {
 	@InjectMocks
@@ -35,12 +35,6 @@ public class SetLanguageBeforeControllerHandlerTest
 
 	@Mock
 	private HttpServletRequest request;
-
-	@Before
-	public void prepare()
-	{
-		MockitoAnnotations.initMocks(this);
-	}
 
 	@Test
 	public void testCallForNonGetRequest() throws Exception
@@ -73,8 +67,8 @@ public class SetLanguageBeforeControllerHandlerTest
 
 		beforeControllerHandler.beforeController(request, null, null);
 
-		Mockito.verifyZeroInteractions(commonI18NService);
-		Mockito.verifyZeroInteractions(languageResolver);
+		Mockito.verifyNoInteractions(commonI18NService);
+		Mockito.verifyNoInteractions(languageResolver);
 
 		Mockito.reset(languageResolver, request, commonI18NService);
 	}

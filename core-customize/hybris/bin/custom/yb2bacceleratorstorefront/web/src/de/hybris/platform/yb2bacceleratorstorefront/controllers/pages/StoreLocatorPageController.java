@@ -99,7 +99,7 @@ public class StoreLocatorPageController extends AbstractSearchPageController
 	}
 
 	@RequestMapping(method = RequestMethod.GET, params = "q")
-	public String findStores(@RequestParam(value = "page", defaultValue = "0") final int page, // NOSONAR
+	public String findStores(@RequestParam(value = "page", defaultValue = "0") final int page, 
 			@RequestParam(value = "show", defaultValue = "Page") final AbstractSearchPageController.ShowMode showMode,
 			@RequestParam(value = "sort", required = false) final String sortCode,
 			@RequestParam(value = "q") final String locationQuery,
@@ -141,8 +141,7 @@ public class StoreLocatorPageController extends AbstractSearchPageController
 		return ControllerConstants.Views.Pages.StoreFinder.StoreFinderSearchPage;
 	}
 
-	@RequestMapping(value = "/position", method =
-	{ RequestMethod.GET, RequestMethod.POST }) //NOSONAR
+	@RequestMapping(value = "/position", method = RequestMethod.POST )
 	public String searchByCurrentPosition(@RequestParam(value = "page", defaultValue = "0") final int page,
 			@RequestParam(value = "show", defaultValue = "Page") final AbstractSearchPageController.ShowMode showMode,
 			@RequestParam(value = "sort", required = false) final String sortCode, final StorePositionForm storePositionForm,

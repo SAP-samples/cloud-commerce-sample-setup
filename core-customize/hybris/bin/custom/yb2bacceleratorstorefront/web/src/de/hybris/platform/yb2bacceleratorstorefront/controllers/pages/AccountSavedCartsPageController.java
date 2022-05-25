@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
  */
 package de.hybris.platform.yb2bacceleratorstorefront.controllers.pages;
 
@@ -38,15 +38,19 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -71,7 +75,7 @@ public class AccountSavedCartsPageController extends AbstractSearchPageControlle
 	private static final String REFRESH_UPLOADING_SAVED_CART = "refresh.uploading.saved.cart";
 	private static final String REFRESH_UPLOADING_SAVED_CART_INTERVAL = "refresh.uploading.saved.cart.interval";
 
-	private static final Logger LOG = Logger.getLogger(AccountSavedCartsPageController.class);
+	private static final Logger LOG = LoggerFactory.getLogger(AccountSavedCartsPageController.class);
 
 	@Resource(name = "accountBreadcrumbBuilder")
 	private ResourceBreadcrumbBuilder accountBreadcrumbBuilder;
@@ -94,7 +98,7 @@ public class AccountSavedCartsPageController extends AbstractSearchPageControlle
 	@Resource(name = "restoreSaveCartFormValidator")
 	private RestoreSaveCartFormValidator restoreSaveCartFormValidator;
 
-	@RequestMapping(method = RequestMethod.GET)
+	@GetMapping
 	@RequireHardLogIn
 	public String savedCarts(@RequestParam(value = "page", defaultValue = "0") final int page,
 			@RequestParam(value = "show", defaultValue = "Page") final ShowMode showMode,
@@ -117,7 +121,7 @@ public class AccountSavedCartsPageController extends AbstractSearchPageControlle
 		return getViewForPage(model);
 	}
 
-	@RequestMapping(value = "/" + SAVED_CART_CODE_PATH_VARIABLE_PATTERN, method = RequestMethod.GET)
+	@GetMapping(value = "/" + SAVED_CART_CODE_PATH_VARIABLE_PATTERN)
 	@RequireHardLogIn
 	public String savedCart(@PathVariable("cartCode") final String cartCode, final Model model,
 			final RedirectAttributes redirectModel) throws CMSItemNotFoundException
@@ -162,13 +166,13 @@ public class AccountSavedCartsPageController extends AbstractSearchPageControlle
 		return getViewForPage(model);
 	}
 
-	@RequestMapping(value = "/uploadingCarts", method = RequestMethod.GET, produces = "application/json")
+	@GetMapping(value = "/uploadingCarts", produces = "application/json")
 	@ResponseBody
 	@RequireHardLogIn
 	public List<CartData> getUploadingSavedCarts(@RequestParam("cartCodes") final List<String> cartCodes)
 			throws CommerceSaveCartException
 	{
-		final List<CartData> result = new ArrayList<CartData>();
+		final List<CartData> result = new ArrayList<>();
 		for (final String cartCode : cartCodes)
 		{
 			final CommerceSaveCartParameterData parameter = new CommerceSaveCartParameterData();
@@ -186,7 +190,7 @@ public class AccountSavedCartsPageController extends AbstractSearchPageControlle
 		return result;
 	}
 
-	@RequestMapping(value = "/" + SAVED_CART_CODE_PATH_VARIABLE_PATTERN + "/getReadOnlyProductVariantMatrix", method = RequestMethod.GET)
+	@GetMapping(value = "/" + SAVED_CART_CODE_PATH_VARIABLE_PATTERN + "/getReadOnlyProductVariantMatrix")
 	@RequireHardLogIn
 	public String getProductVariantMatrixForResponsive(@PathVariable("cartCode") final String cartCode,
 			@RequestParam("productCode") final String productCode, final Model model, final RedirectAttributes redirectModel)
@@ -213,7 +217,7 @@ public class AccountSavedCartsPageController extends AbstractSearchPageControlle
 		}
 	}
 
-	@RequestMapping(value = "/" + SAVED_CART_CODE_PATH_VARIABLE_PATTERN + "/edit", method = RequestMethod.POST)
+	@PostMapping(value = "/" + SAVED_CART_CODE_PATH_VARIABLE_PATTERN + "/edit")
 	@RequireHardLogIn
 	public String savedCartEdit(@PathVariable("cartCode") final String cartCode, final SaveCartForm form,
 			final BindingResult bindingResult, final RedirectAttributes redirectModel) throws CommerceSaveCartException
@@ -252,7 +256,7 @@ public class AccountSavedCartsPageController extends AbstractSearchPageControlle
 		return REDIRECT_TO_SAVED_CARTS_PAGE + "/" + cartCode;
 	}
 
-	@RequestMapping(value = "/{cartId}/restore", method = RequestMethod.GET)
+	@GetMapping(value = "/{cartId}/restore")
 	@RequireHardLogIn
 	public String restoreSaveCartForId(@PathVariable(value = "cartId") final String cartId, final Model model)
 			throws CommerceSaveCartException
@@ -271,7 +275,7 @@ public class AccountSavedCartsPageController extends AbstractSearchPageControlle
 	}
 
 	@RequireHardLogIn
-	@RequestMapping(value = "/{cartId}/restore", method = RequestMethod.POST)
+	@PostMapping(value = "/{cartId}/restore")
 	public @ResponseBody String postRestoreSaveCartForId(@PathVariable(value = "cartId") final String cartId,
 			final RestoreSaveCartForm restoreSaveCartForm, final BindingResult bindingResult) throws CommerceSaveCartException
 	{
@@ -280,8 +284,14 @@ public class AccountSavedCartsPageController extends AbstractSearchPageControlle
 			restoreSaveCartFormValidator.validate(restoreSaveCartForm, bindingResult);
 			if (bindingResult.hasErrors())
 			{
-				return getMessageSource().getMessage(bindingResult.getFieldError().getCode(), null,
-						getI18nService().getCurrentLocale());
+				final FieldError fieldError = bindingResult.getFieldError();
+				if(fieldError != null && fieldError.getCode() != null) {
+					return getMessageSource().getMessage(fieldError.getCode(), null, getI18nService().getCurrentLocale());
+				} else {
+					LOG.error("getFieldError() or fieldError.getCode() is null for bindingResult {}, returning text.restore.savedcart.error", bindingResult);
+					return getMessageSource().getMessage("text.restore.savedcart.error", null, getI18nService().getCurrentLocale());
+				}
+
 			}
 
 			if (restoreSaveCartForm.getCartName() != null && !restoreSaveCartForm.isPreventSaveActiveCart()
@@ -305,13 +315,13 @@ public class AccountSavedCartsPageController extends AbstractSearchPageControlle
 		}
 		catch (final CommerceSaveCartException ex)
 		{
-			LOG.error("Error while restoring the cart for cartId " + cartId + " because of " + ex);
+			LOG.error("Error while restoring the cart for cartId {} because of {}", cartId, ex);
 			return getMessageSource().getMessage("text.restore.savedcart.error", null, getI18nService().getCurrentLocale());
 		}
 		return String.valueOf(HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/{cartId}/delete", method = RequestMethod.DELETE)
+	@DeleteMapping(value = "/{cartId}/delete")
 	@ResponseStatus(value = HttpStatus.OK)
 	@RequireHardLogIn
 	public @ResponseBody String deleteSaveCartForId(@PathVariable(value = "cartId") final String cartId)
@@ -325,7 +335,7 @@ public class AccountSavedCartsPageController extends AbstractSearchPageControlle
 		}
 		catch (final CommerceSaveCartException ex)
 		{
-			LOG.error("Error while deleting the saved cart with cartId " + cartId + " because of " + ex);
+			LOG.error("Error while deleting the saved cart with cartId {} because of {}", cartId, ex);
 			return getMessageSource().getMessage("text.delete.savedcart.error", null, getI18nService().getCurrentLocale());
 		}
 		return String.valueOf(HttpStatus.OK);

@@ -59,7 +59,7 @@ ACC.cart = {
                     location.reload();
                 },
                 error: function () {
-                    console.log("Failed to remove quantity. Error details [" + xht + ", " + textStatus + ", " + ex + "]");    // NOSONAR
+                    console.log(`Failed to remove quantity. Error details [${xht}, ${textStatus}, ${ex}]`);
                 }
 
             });
@@ -111,7 +111,7 @@ ACC.cart = {
                     ACC.productorderform.coreTableScrollActions(grid.children('#cartOrderGridForm'));
                 },
                 error: function (xht, textStatus, ex) {
-                    console.log("Failed to get variant matrix. Error details [" + xht + ", " + textStatus + ", " + ex + "]");   // NOSONAR
+                    console.log(`Failed to get variant matrix. Error details [${xht}, ${textStatus}, ${ex}]`);
                 }
 
             });

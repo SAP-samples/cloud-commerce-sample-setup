@@ -1,9 +1,8 @@
 /*
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
  */
 package de.hybris.platform.yb2bacceleratorstorefront.interceptors.beforeview;
 
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -21,7 +20,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.web.servlet.ModelAndView;
 
 
@@ -53,8 +52,6 @@ public class AnalyticsPropertiesBeforeViewHandlerTest
 	{
 		viewHandler.getCfgChangeListener().configChanged(ThirdPartyConstants.Google.ANALYTICS_TRACKING_ID,"");
 		viewHandler = spy(viewHandler);
-
-		doNothing().when(viewHandler).registerConfigChangeListener();
 
 		when(httpServletRequest.getServerName()).thenReturn(TEST_SERVER_NAME_1);
 		when(hostConfigService.getProperty(ThirdPartyConstants.Google.ANALYTICS_TRACKING_ID, TEST_SERVER_NAME_1))
