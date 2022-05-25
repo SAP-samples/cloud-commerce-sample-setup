@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
  */
 package de.hybris.platform.yb2bacceleratorstorefront.controllers.cms;
 
@@ -25,13 +25,15 @@ import junit.framework.Assert;
 import org.apache.commons.lang.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.ui.ExtendedModelMap;
 
 
 @UnitTest
+@RunWith(MockitoJUnitRunner.class)
 public class MiniCartComponentControllerTest
 {
 	private static final String COMPONENT = "component";
@@ -57,7 +59,6 @@ public class MiniCartComponentControllerTest
 	@Before
 	public void setUp() throws CMSItemNotFoundException
 	{
-		MockitoAnnotations.initMocks(this);
 		miniCartComponentController = new MiniCartComponentController();
 		miniCartComponentController.setCmsComponentService(cmsComponentService);
 

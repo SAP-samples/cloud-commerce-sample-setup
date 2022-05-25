@@ -17,12 +17,6 @@
 
 			<div class="carousel js-owl-carousel js-owl-lazy-reference js-owl-carousel-reference">
 				
-				<div id="quickViewTitle" class="quickView-header display-none">
-					<div class="headline">		
-						<span class="headline-text"><spring:theme code="popup.quick.view.select"/></span>
-					</div>
-				</div>
-				
 				<c:forEach end="${component.maximumNumberProducts}" items="${productReferences}" var="productReference">
 					<c:url value="${productReference.target.url}/quickView" var="productUrl"/>
 					<div class="item">
@@ -44,6 +38,13 @@
 					</div>
 				</c:forEach>
 			</div>
+			
+			<div id="quickViewTitle" class="quickView-header display-none">
+				<div class="headline">		
+					<span class="headline-text"><spring:theme code="popup.quick.view.select"/></span>
+				</div>
+			</div>
+			
 		</div>
 	</c:when>
 

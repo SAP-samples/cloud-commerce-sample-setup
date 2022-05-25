@@ -1,10 +1,10 @@
 /*
- * Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
  */
 package de.hybris.platform.yb2bacceleratorstorefront.filters;
 
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Matchers.any;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
@@ -25,12 +25,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
 
 
 @UnitTest
+@RunWith(MockitoJUnitRunner.class)
 public class CustomerLocationRestorationFilterTest
 {
 
@@ -58,7 +60,6 @@ public class CustomerLocationRestorationFilterTest
 	@Before
 	public void setup()
 	{
-		MockitoAnnotations.initMocks(this);
 		final Cookie cookie = mock(Cookie.class);
 		given(cookie.getName()).willReturn(COOKIE_NAME);
 		final Cookie[] cookies = { cookie };

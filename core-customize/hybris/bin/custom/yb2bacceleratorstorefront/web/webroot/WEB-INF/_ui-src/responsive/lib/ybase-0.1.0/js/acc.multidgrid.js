@@ -72,7 +72,7 @@ ACC.multidgrid = {
 			},
 			error: function(xht, textStatus, ex)
 			{
-				console.log("Failed to get variant matrix. Error details [" + xht + ", " + textStatus + ", " + ex + "]");   // NOSONAR
+				console.log(`Failed to get variant matrix. Error details [${xht}, ${textStatus}, ${ex}]`);
 			}
 
 		});

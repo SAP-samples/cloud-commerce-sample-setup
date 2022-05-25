@@ -57,7 +57,7 @@ public class PickupLocationCheckoutStepController extends AbstractCheckoutStepCo
 	@RequestMapping(value = "/choose", method = RequestMethod.POST)
 	@RequireHardLogIn
 	public String doSelectDeliveryLocation(@RequestParam(value = "posName") final String posName, final Model model,
-			final RedirectAttributes redirectAttributes) throws CMSItemNotFoundException, CommerceCartModificationException // NOSONAR
+			final RedirectAttributes redirectAttributes) throws CMSItemNotFoundException, CommerceCartModificationException 
 	{
 		final ValidationResults validationResults = getCheckoutStep().validate(redirectAttributes);
 		if (getCheckoutStep().checkIfValidationErrors(validationResults))

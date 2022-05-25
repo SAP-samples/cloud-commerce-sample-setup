@@ -8,18 +8,29 @@
 <%@ taglib prefix="grid" tagdir="/WEB-INF/tags/responsive/grid" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<c:set var="categoriesSize" value="${fn:length(product.categories)}" />
-
-<c:if test="${isOrderForm}">
-	<c:set var="categoriesSize" value="${categoriesSize -1}" />
+<c:set var="dimensions" value="1" />
+<c:if test="${!empty(product.variantOptions) && !empty(product.variantOptions[0].variantOptionQualifiers)}">
+	<c:set var="dimensions" value="${fn:length(product.variantOptions[0].variantOptionQualifiers)}" />
+</c:if>
+<c:if test="${!empty(product.baseOptions) && !empty(product.baseOptions[0].options)
+		&& !empty(product.baseOptions[0].options[0].variantOptionQualifiers)}">
+	<c:set var="dimensions" value="${fn:length(product.baseOptions[0].options[0].variantOptionQualifiers)}" />
+</c:if>
+<c:if test="${!empty(product.variantMatrix) && !empty(product.variantMatrix[0].elements)
+        && !empty(product.variantMatrix[0].elements[0].elements) && !empty(product.variantMatrix[0].elements[0].elements[0].variantOption)
+        && !empty(product.variantMatrix[0].elements[0].elements[0].variantOption.variantOptionQualifiers)}">
+    <c:set var="dimensions" value="${fn:length(product.variantMatrix[0].elements[0].elements[0].variantOption.variantOptionQualifiers)}" />
+</c:if>
+<c:if test="${empty(product.variantOptions) && empty(product.baseOptions)}">
+	<c:set var="dimensions" value="${fn:length(product.categories) - 1}" />
 </c:if>
 
-<c:if test="${categoriesSize >= 3}">
+<c:if test="${dimensions >= 3}">
 	<grid:grid3dimensions product="${product}" showName="${showName}" filterSkus="${filterSkus}" readOnly="${readOnly}"/>
 </c:if>
-<c:if test="${categoriesSize == 2}">
+<c:if test="${dimensions == 2}">
 	<grid:grid2dimensions product="${product}" showName="${showName}" filterSkus="${filterSkus}" readOnly="${readOnly}"/>
 </c:if>
-<c:if test="${categoriesSize == 1}">
+<c:if test="${dimensions == 1}">
 	<grid:grid1dimension product="${product}" readOnly="${readOnly}"/>
 </c:if>

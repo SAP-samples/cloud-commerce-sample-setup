@@ -1,7 +1,7 @@
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ page session="false" %>
 <!DOCTYPE html>
-<html>
+<html lang="en" xml:lang="en">
     <head>
         <title>Server Error</title>
     </head>

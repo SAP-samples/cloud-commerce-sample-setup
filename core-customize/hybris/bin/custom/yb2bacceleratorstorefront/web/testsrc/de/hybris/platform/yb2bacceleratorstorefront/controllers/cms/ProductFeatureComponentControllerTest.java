@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
  */
 package de.hybris.platform.yb2bacceleratorstorefront.controllers.cms;
 
@@ -9,7 +9,6 @@ import static org.mockito.Mockito.verify;
 import de.hybris.bootstrap.annotations.UnitTest;
 import de.hybris.platform.acceleratorcms.model.components.ProductFeatureComponentModel;
 import de.hybris.platform.acceleratorstorefrontcommons.controllers.pages.AbstractPageController;
-import de.hybris.platform.cms2.exceptions.CMSItemNotFoundException;
 import de.hybris.platform.cms2.servicelayer.services.impl.DefaultCMSComponentService;
 import de.hybris.platform.commercefacades.product.ProductFacade;
 import de.hybris.platform.commercefacades.product.ProductOption;
@@ -25,12 +24,12 @@ import javax.servlet.http.HttpServletResponse;
 import junit.framework.Assert;
 
 import org.apache.commons.lang.StringUtils;
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.ui.Model;
 
 
@@ -38,6 +37,7 @@ import org.springframework.ui.Model;
  * Unit test for {@link ProductFeatureComponentController}
  */
 @UnitTest
+@RunWith(MockitoJUnitRunner.class)
 public class ProductFeatureComponentControllerTest
 {
 	private static final String COMPONENT_UID = "componentUid";
@@ -69,11 +69,6 @@ public class ProductFeatureComponentControllerTest
 	@InjectMocks
 	private final ProductFeatureComponentController productFeatureComponentController = new ProductFeatureComponentController();
 
-	@Before
-	public void setUp()
-	{
-		MockitoAnnotations.initMocks(this);
-	}
 
 	@Test
 	public void testRenderComponent()
@@ -83,7 +78,6 @@ public class ProductFeatureComponentControllerTest
 		given(
 				productFacade.getProductForOptions(productModel,
 						Arrays.asList(ProductOption.BASIC, ProductOption.PRICE, ProductOption.SUMMARY))).willReturn(productData);
-		given(productData.getUrl()).willReturn(TEST_PRODUCT_URL);
 		given(request.getAttribute(COMPONENT)).willReturn(productFeatureComponentModel);
 
 		final String viewName = productFeatureComponentController.handleGet(request, response, model);
@@ -115,7 +109,6 @@ public class ProductFeatureComponentControllerTest
 		given(
 				productFacade.getProductForOptions(productModel,
 						Arrays.asList(ProductOption.BASIC, ProductOption.PRICE, ProductOption.SUMMARY))).willReturn(productData);
-		given(productData.getUrl()).willReturn(TEST_PRODUCT_URL);
 
 		final String viewName = productFeatureComponentController.handleGet(request, response, model);
 		verify(model, Mockito.times(1)).addAttribute(COMPONENT, productFeatureComponentModel);
@@ -136,7 +129,6 @@ public class ProductFeatureComponentControllerTest
 	{
 		given(request.getAttribute(COMPONENT_UID)).willReturn(null);
 		given(request.getParameter(COMPONENT_UID)).willReturn(TEST_COMPONENT_UID);
-		given(cmsComponentService.getSimpleCMSComponent(TEST_COMPONENT_UID)).willReturn(null);
 		productFeatureComponentController.handleGet(request, response, model);
 	}
 
@@ -144,8 +136,6 @@ public class ProductFeatureComponentControllerTest
 	public void testRenderComponentNotFound3() throws Exception
 	{
 		given(request.getAttribute(COMPONENT_UID)).willReturn(TEST_COMPONENT_UID);
-		given(cmsComponentService.getSimpleCMSComponent(TEST_COMPONENT_UID)).willReturn(null);
-		given(cmsComponentService.getSimpleCMSComponent(TEST_COMPONENT_UID)).willThrow(new CMSItemNotFoundException(""));
 		productFeatureComponentController.handleGet(request, response, model);
 	}
 

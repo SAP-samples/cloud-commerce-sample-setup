@@ -18,7 +18,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
 import org.springframework.web.servlet.ModelAndView;
 
 
@@ -29,9 +28,6 @@ import org.springframework.web.servlet.ModelAndView;
  */
 public class UiThemeResourceBeforeViewHandler implements BeforeViewHandler
 {
-	@SuppressWarnings("unused")
-	private static final Logger LOG = Logger.getLogger(UiThemeResourceBeforeViewHandler.class);
-
 	protected static final String COMMON = "common";
 	protected static final String SHARED = "shared";
 

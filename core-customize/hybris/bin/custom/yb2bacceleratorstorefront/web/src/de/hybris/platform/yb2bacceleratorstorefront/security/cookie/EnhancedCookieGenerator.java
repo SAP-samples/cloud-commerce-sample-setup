@@ -58,7 +58,7 @@ public class EnhancedCookieGenerator extends CookieGenerator
 	@Override
 	public void addCookie(final HttpServletResponse response, final String cookieValue)
 	{
-		super.addCookie(new HttpServletResponseWrapper(response) // NOSONAR
+		super.addCookie(new HttpServletResponseWrapper(response) 
 		{
 			@Override
 			public void addCookie(final Cookie cookie)

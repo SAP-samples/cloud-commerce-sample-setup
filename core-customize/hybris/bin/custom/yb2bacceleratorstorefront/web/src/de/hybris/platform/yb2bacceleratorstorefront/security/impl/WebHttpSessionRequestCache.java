@@ -101,17 +101,7 @@ public class WebHttpSessionRequestCache extends HttpSessionRequestCache implemen
 
 			if (getRequestMatcher().matches(request))
 			{
-				final DefaultSavedRequest savedRequest = new DefaultSavedRequest(request, getPortResolver())
-				{
-					private final String referer = request.getHeader(REFERER);
-					private final String contextPath = request.getContextPath();
-
-					@Override
-					public String getRedirectUrl()
-					{
-						return calculateRelativeRedirectUrl(contextPath, referer);
-					}
-				};
+				final DefaultSavedRequest savedRequest = new RedirectAwareSavedRequest(request, getPortResolver());
 
 				if (isCreateSessionAllowed() || request.getSession(false) != null)
 				{
@@ -176,4 +166,22 @@ public class WebHttpSessionRequestCache extends HttpSessionRequestCache implemen
 		}
 	}
 
+	private class RedirectAwareSavedRequest extends DefaultSavedRequest
+	{
+		private final String referer;
+		private final String contextPath;
+
+		public RedirectAwareSavedRequest(final HttpServletRequest request, final PortResolver portResolverh)
+		{
+			super(request, portResolver);
+			this.referer = request.getHeader(REFERER);
+			this.contextPath = request.getContextPath();
+		}
+
+		@Override
+		public String getRedirectUrl()
+		{
+			return calculateRelativeRedirectUrl(contextPath, referer);
+		}
+	}
 }

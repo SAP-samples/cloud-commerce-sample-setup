@@ -1,5 +1,5 @@
 {
-    "commerceSuiteVersion": "2105",
+    "commerceSuiteVersion": "2205",
     "enableImageProcessingService": true,
     "extensions": [
         "cloudmediaconversion",
@@ -53,6 +53,7 @@
                 "assistedservicestorefront",
                 "assistedserviceyprofileaddon",
                 "captchaaddon",
+                "chineseaddressaddon",
                 "configurablebundleaddon",
                 "consignmenttrackingaddon",
                 "customercouponaddon",
@@ -92,10 +93,10 @@
                 "accountsummaryaddon",
                 "b2bacceleratoraddon",
                 "b2bpunchoutaddon",
+                "chinesecommerceorgaddressaddon",
                 "commerceorgaddon",
                 "commerceorgsamplesaddon",
-                "sapproductconfigb2baddon",
-                "secureportaladdon"
+                "sapproductconfigb2baddon"
             ],
             "storefront": "yb2bacceleratorstorefront",
             "template": "yacceleratorstorefront"
@@ -104,7 +105,7 @@
     "properties": [
         {
             "key": "lang.packs",
-            "value": "de,en,es,es_CO,fr,it,ja,ko,pl,pt,ru,zh,zh_TW,hi,id,cs,cy"
+            "value": "de,en,es,es_CO,fr,it,ja,ko,pl,pt,ru,zh,zh_TW,hi,id,cs,hu"
         },
         {
             "key": "endpoint.hac.platform.init.disabled",
@@ -158,7 +159,7 @@
         },
         {
             "key": "orbeonweb.orbeon.persistence.uri",
-            "value": "https://localhost:8088/xyformsweb/fr/service/hybris"
+            "value": "http://localhost:8081/xyformsweb/fr/service/hybris"
         },
         {
             "key": "xyformsservices.orbeon.url.address",
@@ -190,6 +191,22 @@
                     "value": "true"
                 },
                 {
+                    "key": "storefrontContextRoot",
+                    "value": ""
+                },
+                {
+                    "key": "xss.filter.header.X-Frame-Options",
+                    "value": ""
+                },
+                {
+                    "key": "smarteditaddon.dynamicattribute.enabled",
+                    "value": "true"
+                },
+                {
+                    "key": "smartedit.sso.enabled",
+                    "value": "true"
+                },
+                {
                     "key": "xyformsservices.webroot.override",
                     "value": "false"
                 }
@@ -206,6 +223,58 @@
                 {
                     "name": "backoffice",
                     "contextPath": "/backoffice"
+                },
+                {
+                    "name": "yacceleratorstorefront",
+                    "contextPath": "/yacceleratorstorefront"
+                },
+                {
+                    "name": "yb2bacceleratorstorefront",
+                    "contextPath": "/yb2bacceleratorstorefront"
+                },
+                {
+                    "name": "smartedit",
+                    "contextPath": "/smartedit"
+                },
+                {
+                    "name": "smarteditwebservices",
+                    "contextPath": "/smarteditwebservices"
+                },
+                {
+                    "name": "cmssmartedit",
+                    "contextPath": "/cmssmartedit"
+                },
+                {
+                    "name": "cmssmarteditwebservices",
+                    "contextPath": "/cmssmarteditwebservices"
+                },
+                {
+                    "name": "personalizationsmartedit",
+                    "contextPath": "/personalizationsmartedit"
+                },
+                {
+                    "name": "personalizationwebservices",
+                    "contextPath": "/personalizationwebservices"
+                },
+                {
+                    "name": "personalizationpromotionssmartedit",
+                    "contextPath": "/personalizationpromotionssmartedit"
+                },
+                {
+                    "name": "personalizationsearchsmartedit",
+                    "contextPath": "/personalizationsearchsmartedit"
+                },
+                {
+                    "name": "cmswebservices",
+                    "contextPath": "/cmswebservices"
+                },
+                {
+                    "name": "previewwebservices",
+                    "contextPath": "/previewwebservices"
+                },
+                {
+                    "name": "permissionswebservices",
+                    "contextPath": "/permissionswebservices"
                 },
                 {
                     "name": "odata2webservices"
@@ -245,12 +314,28 @@
                 {
                     "name": "oauth2",
                     "contextPath": "/authorizationserver"
+                },
+                {
+                    "name": "merchandisingsmartedit",
+                    "contextPath": "/merchandisingsmartedit"
+                },
+                {
+                    "name": "merchandisingcmswebservices",
+                    "contextPath": "/merchandisingcmswebservices"
                 }
             ]
         },
         {
             "name": "accstorefront",
             "properties": [
+                {
+                    "key": "cookies.SameSite.enabled",
+                    "value": "true"
+                },
+                {
+                    "key": "cookies.SameSite",
+                    "value": "None"
+                },
                 {
                     "key": "spring.session.enabled",
                     "value": "true"
@@ -272,6 +357,10 @@
                     "value": ""
                 },
                 {
+                    "key": "sapproductconfig.providerFactoryBeanName",
+                    "value": "sapProductConfigMockProviderFactory"
+                },
+                {
                     "key": "xyformsservices.webroot.override",
                     "value": "false"
                 },
@@ -287,7 +376,7 @@
                 },
                 {
                     "name": "yacceleratorstorefront",
-                    "contextPath": ""
+                    "contextPath": "/yacceleratorstorefront"
                 },
                 {
                     "name": "yb2bacceleratorstorefront",
@@ -304,10 +393,6 @@
                 {
                     "name": "b2bpunchout",
                     "contextPath": "/b2bpunchout"
-                },
-                {
-                    "name": "secureportaladdon",
-                    "contextPath": "/secureportaladdon"
                 },
                 {
                     "name": "hac",
@@ -328,11 +413,131 @@
             "properties": [
                 {
                     "key": "storefrontContextRoot",
-                    "value": "/yacceleratorstorefront"
+                    "value": ""
                 },
                 {
                     "key": "xss.filter.header.X-Frame-Options",
                     "value": ""
+                },
+                {
+                    "key": "tomcat.maxthreads",
+                    "value": "1200"
+                },
+                {
+                    "key": "sop.post.url",
+                    "value": "${ccv2.services.api.url.0}/acceleratorservices/sop-mock/process"
+                },
+                {
+                    "key": "corsfilter.default.allowedOrigins",
+                    "value": "*"
+                },
+                {
+                    "key": "corsfilter.default.allowedMethod",
+                    "value": "GET"
+                },
+                {
+                    "key": "corsfilter.acceleratorservices.allowedOrigins",
+                    "value": "*"
+                },
+                {
+                    "key": "corsfilter.acceleratorservices.allowedHeaders",
+                    "value": "origin content-type accept authorization"
+                },
+                {
+                    "key": "corsfilter.acceleratorservices.allowedMethods",
+                    "value": "GET HEAD OPTIONS PATCH PUT POST DELETE"
+                },
+                {
+                    "key": "corsfilter.acceleratorservices.exposedHeaders",
+                    "value": "x-anonymous-consents"
+                },
+                {
+                    "key": "corsfilter.modeltacceleratorservices.allowedOrigins",
+                    "value": "*"
+                },
+                {
+                    "key": "corsfilter.modeltacceleratorservices.allowedHeaders",
+                    "value": "origin content-type accept authorization"
+                },
+                {
+                    "key": "corsfilter.modeltacceleratorservices.allowedMethods",
+                    "value": "GET HEAD OPTIONS PATCH PUT POST DELETE"
+                },
+                {
+                    "key": "corsfilter.modeltacceleratorservices.exposedHeaders",
+                    "value": "x-anonymous-consents"
+                },
+                {
+                    "key": "corsfilter.assistedservicewebservices.allowedOrigins",
+                    "value": "*"
+                },
+                {
+                    "key": "corsfilter.assistedservicewebservices.allowedHeaders",
+                    "value": "origin content-type accept authorization cache-control x-anonymous-consents x-profile-tag-debug x-consent-reference"
+                },
+                {
+                    "key": "corsfilter.assistedservicewebservices.allowedMethods",
+                    "value": "GET HEAD OPTIONS PATCH PUT POST DELETE"
+                },
+                {
+                    "key": "corsfilter.assistedservicewebservices.exposedHeaders",
+                    "value": "x-anonymous-consents"
+                },
+                {
+                    "key": "corsfilter.commercewebservices.allowedOrigins",
+                    "value": "*"
+                },
+                {
+                    "key": "corsfilter.commercewebservices.allowedHeaders",
+                    "value": "origin content-type accept authorization cache-control x-anonymous-consents x-profile-tag-debug x-consent-reference if-none-match occ-personalization-id occ-personalization-time"
+                },
+                {
+                    "key": "corsfilter.commercewebservices.allowedMethods",
+                    "value": "GET HEAD OPTIONS PATCH PUT POST DELETE"
+                },
+                {
+                    "key": "corsfilter.commercewebservices.exposedHeaders",
+                    "value": "x-anonymous-consents occ-personalization-id occ-personalization-time"
+                },
+                {
+                    "key": "corsfilter.ycommercewebservices.allowedOrigins",
+                    "value": "*"
+                },
+                {
+                    "key": "corsfilter.ycommercewebservices.allowedHeaders",
+                    "value": "origin content-type accept authorization cache-control x-anonymous-consents x-profile-tag-debug x-consent-reference if-none-match occ-personalization-id occ-personalization-time"
+                },
+                {
+                    "key": "corsfilter.ycommercewebservices.allowedMethods",
+                    "value": "GET HEAD OPTIONS PATCH PUT POST DELETE"
+                },
+                {
+                    "key": "corsfilter.ycommercewebservices.exposedHeaders",
+                    "value": "x-anonymous-consents occ-personalization-id occ-personalization-time"
+                },
+                {
+                    "key": "corsfilter.permissionswebservices.allowedOrigins",
+                    "value": "*"
+                },
+                {
+                    "key": "corsfilter.permissionswebservices.allowedHeaders",
+                    "value": "origin content-type accept authorization"
+                },
+                {
+                    "key": "corsfilter.permissionswebservices.allowedMethods",
+                    "value": "GET"
+                },
+                {
+                    "key": "corsfilter.personalizationwebservices.allowedOrigins",
+                    "value": "*"
+                },
+                {
+                    "key": "mockup.payment.label.billTo.region",
+                    "value": "billTo_state"
+                },
+                {
+                    "key": "mockup.payment.label.billTo.phoneNumber",
+                    "value": "billTo_phoneNumber"
                 }
             ],
             "webapps": [
@@ -369,44 +574,12 @@
                     "contextPath": "/b2bpunchout"
                 },
                 {
-                    "name": "secureportaladdon",
-                    "contextPath": "/secureportaladdon"
-                },
-                {
                     "name": "commercewebservices",
                     "contextPath": "/occ"
                 },
                 {
-                    "name": "smartedit",
-                    "contextPath": "/smartedit"
-                },
-                {
-                    "name": "cmssmartedit",
-                    "contextPath": "/cmssmartedit"
-                },
-                {
-                    "name": "smarteditwebservices",
-                    "contextPath": "/smarteditwebservices"
-                },
-                {
-                    "name": "cmssmarteditwebservices",
-                    "contextPath": "/cmssmarteditwebservices"
-                },
-                {
-                    "name": "personalizationsmartedit",
-                    "contextPath": "/personalizationsmartedit"
-                },
-                {
-                    "name": "personalizationpromotionssmartedit",
-                    "contextPath": "/personalizationpromotionssmartedit"
-                },
-                {
                     "name": "oauth2",
                     "contextPath": "/authorizationserver"
-                },
-                {
-                    "name": "cmswebservices",
-                    "contextPath": "/cmswebservices"
                 },
                 {
                     "name": "permissionswebservices",
@@ -421,24 +594,8 @@
                     "contextPath": "/previewwebservices"
                 },
                 {
-                    "name": "personalizationwebservices",
-                    "contextPath": "/personalizationwebservices"
-                },
-                {
-                    "name": "personalizationsearchsmartedit",
-                    "contextPath": "/personalizationsearchsmartedit"
-                },
-                {
                     "name": "warehousingwebservices",
                     "contextPath": "/warehousingwebservices"
-                },
-                {
-                    "name": "merchandisingsmartedit",
-                    "contextPath": "/merchandisingsmartedit"
-                },
-                {
-                    "name": "merchandisingcmswebservices",
-                    "contextPath": "/merchandisingcmswebservices"
                 },
                 {
                     "name": "couponwebservices",

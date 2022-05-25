@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
  */
 package de.hybris.platform.yb2bacceleratorstorefront.controllers.cms;
 
@@ -10,7 +10,6 @@ import de.hybris.bootstrap.annotations.UnitTest;
 import de.hybris.platform.acceleratorcms.model.components.CategoryFeatureComponentModel;
 import de.hybris.platform.acceleratorstorefrontcommons.controllers.pages.AbstractPageController;
 import de.hybris.platform.category.model.CategoryModel;
-import de.hybris.platform.cms2.exceptions.CMSItemNotFoundException;
 import de.hybris.platform.cms2.servicelayer.services.impl.DefaultCMSComponentService;
 import de.hybris.platform.commercefacades.product.data.CategoryData;
 import de.hybris.platform.servicelayer.dto.converter.Converter;
@@ -24,9 +23,10 @@ import junit.framework.Assert;
 import org.apache.commons.lang.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.ui.Model;
 
@@ -35,6 +35,7 @@ import org.springframework.ui.Model;
  * Unit test for {@link CategoryFeatureComponentController}
  */
 @UnitTest
+@RunWith(MockitoJUnitRunner.class)
 public class CategoryFeatureComponentControllerTest
 {
 	private static final String COMPONENT_UID = "componentUid";
@@ -68,8 +69,6 @@ public class CategoryFeatureComponentControllerTest
 	@Before
 	public void setUp()
 	{
-		MockitoAnnotations.initMocks(this);
-
 		categoryFeatureComponentController = new CategoryFeatureComponentController();
 		categoryFeatureComponentController.setCmsComponentService(cmsComponentService);
 		ReflectionTestUtils.setField(categoryFeatureComponentController, "categoryUrlConverter", categoryUrlConverter);
@@ -132,7 +131,6 @@ public class CategoryFeatureComponentControllerTest
 	{
 		given(request.getAttribute(COMPONENT_UID)).willReturn(null);
 		given(request.getParameter(COMPONENT_UID)).willReturn(TEST_COMPONENT_UID);
-		given(cmsComponentService.getSimpleCMSComponent(TEST_COMPONENT_UID)).willReturn(null);
 		categoryFeatureComponentController.handleGet(request, response, model);
 	}
 
@@ -140,8 +138,6 @@ public class CategoryFeatureComponentControllerTest
 	public void testRenderComponentNotFound3() throws Exception
 	{
 		given(request.getAttribute(COMPONENT_UID)).willReturn(TEST_COMPONENT_UID);
-		given(cmsComponentService.getSimpleCMSComponent(TEST_COMPONENT_UID)).willReturn(null);
-		given(cmsComponentService.getSimpleCMSComponent(TEST_COMPONENT_UID)).willThrow(new CMSItemNotFoundException(""));
 		categoryFeatureComponentController.handleGet(request, response, model);
 	}
 

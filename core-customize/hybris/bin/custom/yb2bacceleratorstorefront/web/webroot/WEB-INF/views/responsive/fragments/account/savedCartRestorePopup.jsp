@@ -16,11 +16,11 @@
 
     <div class="modal-details row">
         <span class="col-xs-6"><spring:theme code="text.account.savedcart.cart.name"/>:</span>
-        <span class="col-xs-6"><b>${fn:escapeXml(commerceSaveCartResultData.savedCartData.name)}</b></span>
+        <span class="col-xs-6"><strong>${fn:escapeXml(commerceSaveCartResultData.savedCartData.name)}</strong></span>
         <span class="col-xs-6"><spring:theme code="text.account.savedcart.cart.id"/>:</span>
-        <span class="col-xs-6"><b>${fn:escapeXml(commerceSaveCartResultData.savedCartData.code)}</b></span>
+        <span class="col-xs-6"><strong>${fn:escapeXml(commerceSaveCartResultData.savedCartData.code)}</strong></span>
         <span class="col-xs-6"><spring:theme code="text.account.savedcart.numberofproducts"/>:</span>
-        <span class="col-xs-6"><b>${fn:escapeXml(commerceSaveCartResultData.savedCartData.totalUnitCount)}</b></span>
+        <span class="col-xs-6"><strong>${fn:escapeXml(commerceSaveCartResultData.savedCartData.totalUnitCount)}</strong></span>
     </div>
     <br/>
 

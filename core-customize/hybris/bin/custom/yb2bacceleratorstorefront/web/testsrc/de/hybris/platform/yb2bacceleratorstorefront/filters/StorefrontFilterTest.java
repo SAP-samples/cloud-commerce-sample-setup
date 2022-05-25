@@ -1,15 +1,17 @@
 /*
- * Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
  */
 package de.hybris.platform.yb2bacceleratorstorefront.filters;
 
 import de.hybris.bootstrap.annotations.UnitTest;
 import de.hybris.platform.acceleratorstorefrontcommons.history.BrowseHistory;
 import de.hybris.platform.commercefacades.storesession.StoreSessionFacade;
+import de.hybris.platform.commercefacades.storesession.data.LanguageData;
 import de.hybris.platform.commerceservices.i18n.CommerceCommonI18NService;
 import de.hybris.platform.core.model.c2l.LanguageModel;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Locale;
@@ -23,15 +25,17 @@ import javax.servlet.http.HttpSession;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.http.HttpMethod;
 import org.springframework.util.PathMatcher;
 import org.springframework.web.util.CookieGenerator;
 
 
 @UnitTest
+@RunWith(MockitoJUnitRunner.class)
 public class StorefrontFilterTest
 {
 	private static final String REQUESTEDURL = "http://requestedurl.hybris.de";
@@ -76,7 +80,6 @@ public class StorefrontFilterTest
 	@Before
 	public void initFilter()
 	{
-		MockitoAnnotations.initMocks(this);
 		filter = new StorefrontFilter();
 		filter.setBrowseHistory(browseHistory);
 		filter.setStoreSessionFacade(storeSessionFacade);
@@ -138,12 +141,38 @@ public class StorefrontFilterTest
 	}
 
 	@Test
-	public void shouldSetCurrentLanguageWhenI18NSet() throws IOException, ServletException
+	public void shouldSetCurrentLanguageWhenI18NSetAndLanguageIsInStoreLanguages() throws IOException, ServletException
 	{
 		Mockito.when(request.getMethod()).thenReturn(HttpMethod.GET.toString());
+
+		ArrayList<LanguageData> storeLanguages = new ArrayList<LanguageData>();
+		LanguageData languageData1 = new LanguageData();
+		languageData1.setIsocode("en");
+		LanguageData languageData2 = new LanguageData();
+		languageData2.setIsocode("de");
+		storeLanguages.add(languageData1);
+		storeLanguages.add(languageData2);
+		Mockito.when(storeSessionFacade.getAllLanguages()).thenReturn(storeLanguages);
+
 		filter.doFilterInternal(request, response, filterChain);
 		Mockito.verify(commerceCommonI18NService).getCurrentLanguage();
 		Mockito.verify(storeSessionFacade, Mockito.times(1)).setCurrentLanguage("de");
+	}
+
+	@Test
+	public void shouldNotSetCurrentLanguageWhenI18NSetAndLanguageIsNotInStoreLanguages() throws IOException, ServletException
+	{
+		Mockito.when(request.getMethod()).thenReturn(HttpMethod.GET.toString());
+
+		ArrayList<LanguageData> storeLanguages = new ArrayList<LanguageData>();
+		LanguageData languageData1 = new LanguageData();
+		languageData1.setIsocode("en");
+		storeLanguages.add(languageData1);
+		Mockito.when(storeSessionFacade.getAllLanguages()).thenReturn(storeLanguages);
+
+		filter.doFilterInternal(request, response, filterChain);
+		Mockito.verify(commerceCommonI18NService).getCurrentLanguage();
+		Mockito.verify(storeSessionFacade, Mockito.never()).setCurrentLanguage(Mockito.anyString());
 	}
 
 	@Test

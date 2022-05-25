@@ -60,7 +60,7 @@ public class StorefrontFilter extends OncePerRequestFilter
 			{
 				final String requestURL = request.getRequestURL().toString();
 				session.setAttribute(ORIGINAL_REFERER, StringUtils.isNotBlank(queryString) ? requestURL + "?" + queryString
-						: requestURL);	// NOSONAR
+						: requestURL);	
 			}
 
 			getBrowseHistory().addBrowseHistoryEntry(new BrowseHistoryEntry(request.getRequestURI(), null));
@@ -100,8 +100,12 @@ public class StorefrontFilter extends OncePerRequestFilter
 	protected void initDefaults(final HttpServletRequest request)
 	{
 		final String currentLanguage = commerceCommonI18NService.getCurrentLanguage().getIsocode();
+
+		boolean isInStoreLanguages = getStoreSessionFacade().getAllLanguages().stream().anyMatch(language -> language.getIsocode().equals(currentLanguage));
+
 		getStoreSessionFacade().initializeSession(Collections.list(request.getLocales()));
-		if (StringUtils.isNotBlank(currentLanguage)){
+
+		if (StringUtils.isNotBlank(currentLanguage) && isInStoreLanguages){
 			getStoreSessionFacade().setCurrentLanguage(currentLanguage);
 		}
 	}

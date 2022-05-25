@@ -1,10 +1,10 @@
 /*
- * Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
  */
 package de.hybris.platform.yb2bacceleratorstorefront.security;
 
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Matchers.anyString;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -20,15 +20,17 @@ import java.util.Calendar;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 
 
 @UnitTest
+@RunWith(MockitoJUnitRunner.class)
 public class AcceleratorAuthenticationProviderTest
 {
 	private AcceleratorAuthenticationProvider acceleratorAuthenticationProvider;
@@ -47,7 +49,6 @@ public class AcceleratorAuthenticationProviderTest
 	@Before
 	public void setUp()
 	{
-		MockitoAnnotations.initMocks(this);
 		acceleratorAuthenticationProvider = new AcceleratorAuthenticationProvider();
 		acceleratorAuthenticationProvider.setBruteForceAttackCounter(bruteForceAttackCounter);
 		acceleratorAuthenticationProvider.setUserService(userService);

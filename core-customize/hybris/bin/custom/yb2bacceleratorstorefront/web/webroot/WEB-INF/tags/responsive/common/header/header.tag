@@ -32,9 +32,11 @@
 							<c:if test="${uiExperienceOverride}">
 								<li class="backToMobileLink">
 									<c:url value="/_s/ui-experience?level=" var="backToMobileStoreUrl" />
-									<a href="${fn:escapeXml(backToMobileStoreUrl)}">
-										<spring:theme code="text.backToMobileStore" />
-									</a>
+									<form:form action="${backToMobileStoreUrl}" class="url-holder">
+										<button type="submit" class="navbar-default navbar-link btn-link">
+											<spring:theme code="text.backToMobileStore" />
+										</button>
+									</form:form>
 								</li>
 							</c:if>
 

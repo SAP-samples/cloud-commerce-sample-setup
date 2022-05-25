@@ -129,7 +129,7 @@ ACC.global = {
     								.attr("type", "text/javascript")
     								.attr("src", googleApiSrc));
         } else if (callback != undefined) {
-            eval(callback + "()"); //NOSONAR
+            eval(callback + "()");
         }
     },
 

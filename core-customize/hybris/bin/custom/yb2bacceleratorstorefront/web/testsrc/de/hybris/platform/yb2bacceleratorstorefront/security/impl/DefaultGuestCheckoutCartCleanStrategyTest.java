@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
  */
 package de.hybris.platform.yb2bacceleratorstorefront.security.impl;
 
@@ -31,9 +31,10 @@ import javax.servlet.http.HttpSession;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
 
 
 /**
@@ -41,6 +42,7 @@ import org.mockito.MockitoAnnotations;
  *
  */
 @UnitTest
+@RunWith(MockitoJUnitRunner.class)
 public class DefaultGuestCheckoutCartCleanStrategyTest
 {
 	private static final String CHECKOUT_URL_PATTERN = "(^https://.*/checkout/.*)";
@@ -76,7 +78,6 @@ public class DefaultGuestCheckoutCartCleanStrategyTest
 	@Before
 	public void prepare()
 	{
-		MockitoAnnotations.initMocks(this);
 		guestCheckoutCartCleanStrategy.setSkipPatterns(Arrays.asList(CHECKOUT_URL_PATTERN, FAVICON_PATTERN));
 	}
 
@@ -86,7 +87,6 @@ public class DefaultGuestCheckoutCartCleanStrategyTest
 
 		given(sessionService.getAttribute(WebConstants.ANONYMOUS_CHECKOUT)).willReturn(Boolean.TRUE);
 		given(Boolean.valueOf(checkoutCustomerStrategy.isAnonymousCheckout())).willReturn(Boolean.TRUE);
-		given(request.getSession()).willReturn(session);
 		given(request.getMethod()).willReturn(HTTP_REQUEST_GET_METHOD);
 		given(request.getRequestURL()).willReturn(new StringBuffer(
 				"https://electronics.local:9002/yb2bacceleratorstorefront/electronics/en/Open-Catalogue/Cameras/Digital-Cameras/Digital-Compacts/PowerShot-A480/p/1934793"));
@@ -118,10 +118,8 @@ public class DefaultGuestCheckoutCartCleanStrategyTest
 		given(request.getMethod()).willReturn(HTTP_REQUEST_GET_METHOD);
 		given(request.getRequestURL())
 				.willReturn(new StringBuffer("https://electronics.local:9002/yb2bacceleratorstorefront/electronics/en/checkout/multi"));
-		given(request.getSession()).willReturn(session);
 
 		final CartModel cartModel = mock(CartModel.class);
-		given(cartService.getSessionCart()).willReturn(cartModel);
 		guestCheckoutCartCleanStrategy.cleanGuestCart(request);
 
 		verifyNoMoreInteractions(cartModel);
@@ -133,10 +131,8 @@ public class DefaultGuestCheckoutCartCleanStrategyTest
 		given(sessionService.getAttribute(WebConstants.ANONYMOUS_CHECKOUT)).willReturn(Boolean.TRUE);
 		given(Boolean.valueOf(checkoutCustomerStrategy.isAnonymousCheckout())).willReturn(Boolean.TRUE);
 		given(request.getMethod()).willReturn(HTTP_REQUEST_POST_METHOD);
-		given(request.getSession()).willReturn(session);
 
 		final CartModel cartModel = mock(CartModel.class);
-		given(cartService.getSessionCart()).willReturn(cartModel);
 		guestCheckoutCartCleanStrategy.cleanGuestCart(request);
 
 		verifyNoMoreInteractions(cartModel);
@@ -147,14 +143,8 @@ public class DefaultGuestCheckoutCartCleanStrategyTest
 	{
 		given(sessionService.getAttribute(WebConstants.ANONYMOUS_CHECKOUT)).willReturn(Boolean.TRUE);
 		given(Boolean.valueOf(checkoutCustomerStrategy.isAnonymousCheckout())).willReturn(Boolean.TRUE);
-		given(request.getMethod()).willReturn(HTTP_REQUEST_GET_METHOD);
 		given(request.getHeader(AJAX_REQUEST_HEADER_NAME)).willReturn(AJAX_REQUEST_HEADER_NAME);
-		given(request.getRequestURL()).willReturn(
-				new StringBuffer("https://electronics.local:9002/yb2bacceleratorstorefront/electronics/en/my-account/addressform"));
-		given(request.getSession()).willReturn(session);
-
 		final CartModel cartModel = mock(CartModel.class);
-		given(cartService.getSessionCart()).willReturn(cartModel);
 		guestCheckoutCartCleanStrategy.cleanGuestCart(request);
 
 		verifyNoMoreInteractions(cartModel);

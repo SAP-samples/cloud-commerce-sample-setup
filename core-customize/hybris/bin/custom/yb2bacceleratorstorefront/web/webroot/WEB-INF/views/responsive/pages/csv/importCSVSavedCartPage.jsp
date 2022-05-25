@@ -26,7 +26,7 @@
             <div class="well well-quaternary well-md import-csv__well">
                 <div class="row">
                     <div class="col-xs-12 col-sm-6 import-csv__file-spec">
-                        <b><spring:theme code="import.csv.savedCart.fileContentNote"/></b>
+                        <strong><spring:theme code="import.csv.savedCart.fileContentNote"/></strong>
                         <ul>
                             <li class="import-csv__file-spec-item"><spring:theme code="import.csv.savedCart.fileContent"/></li>
                             <li class="import-csv__file-spec-item">
@@ -35,7 +35,7 @@
                         </ul>
                     </div>
                     <div class="col-xs-12 col-sm-6 import-csv__file-upload">
-                        <b><spring:theme code="import.csv.savedCart.selectFile"/></b>
+                        <strong><spring:theme code="import.csv.savedCart.selectFile"/></strong>
 
                         <div class="form-group file-upload js-file-upload">
                             <div class="file-upload__wrapper btn btn-default btn-small" id="chooseFileButton">

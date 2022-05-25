@@ -304,7 +304,7 @@ ACC.pickupinstore = {
 								ACC.pickupinstore.locationSearchSubmit('', $('#atCartPage').val(),  ele.data("entrynumber"), ele.data("actionurl"),position.coords.latitude, position.coords.longitude);
 							},
 							function (error){
-									console.log("An error occurred... The error code and message are: " + error.code + "/" + error.message);    // NOSONAR
+									console.log(`An error occurred... The error code and message are: ${error.code}/${error.message}`);
 							}
 						);
 					}
