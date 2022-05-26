@@ -43,7 +43,7 @@ public class SecurityEmailCheckBeforeControllerHandler implements BeforeControll
 				&& EmailPageController.class.isAssignableFrom(handler.getMethod().getDeclaringClass()))
 		{
 			// redirect to default page to avoid empty page
-			response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/")); //NOSONAR
+			response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/")); 
 			return false;
 		}
 

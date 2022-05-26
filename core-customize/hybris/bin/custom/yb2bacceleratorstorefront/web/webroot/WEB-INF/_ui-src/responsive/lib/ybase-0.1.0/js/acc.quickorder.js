@@ -63,7 +63,7 @@ if ($("#quickOrder").length > 0) {
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     // log the error to the console
-                    console.log("The following error occurred: " + textStatus, errorThrown);    // NOSONAR
+                    console.log("The following error occurred: " + textStatus, errorThrown);
                 }
             });
         },

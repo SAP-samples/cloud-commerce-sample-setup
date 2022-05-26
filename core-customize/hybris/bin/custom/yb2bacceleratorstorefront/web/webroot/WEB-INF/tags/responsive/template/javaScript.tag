@@ -28,7 +28,7 @@
 		<script src="${commonResourcePathHtml}/js/jquery.pstrength.custom-1.2.0.js"></script>
 		<script src="${commonResourcePathHtml}/js/jquery.syncheight.custom.js"></script>
 		<script src="${commonResourcePathHtml}/js/jquery.tabs.custom.js"></script>
-		<script src="${commonResourcePathHtml}/js/jquery-ui-1.12.1.min.js"></script>
+		<script src="${commonResourcePathHtml}/js/jquery-ui-1.13.0.min.js"></script>
 		<script src="${commonResourcePathHtml}/js/jquery.zoom.custom.js"></script>
 		<script src="${commonResourcePathHtml}/js/owl.carousel.custom.js"></script>
 		<script src="${commonResourcePathHtml}/js/jquery.tmpl-1.0.0pre.min.js"></script>

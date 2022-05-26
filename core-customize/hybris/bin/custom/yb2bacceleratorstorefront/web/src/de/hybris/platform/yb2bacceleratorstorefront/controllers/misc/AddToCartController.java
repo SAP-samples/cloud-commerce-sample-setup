@@ -1,10 +1,11 @@
 /*
- * Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
  */
 package de.hybris.platform.yb2bacceleratorstorefront.controllers.misc;
 
 import de.hybris.platform.acceleratorfacades.product.data.ProductWrapperData;
 import de.hybris.platform.acceleratorstorefrontcommons.controllers.AbstractController;
+import de.hybris.platform.acceleratorstorefrontcommons.controllers.util.GlobalMessages;
 import de.hybris.platform.acceleratorstorefrontcommons.forms.AddToCartForm;
 import de.hybris.platform.acceleratorstorefrontcommons.forms.AddToCartOrderForm;
 import de.hybris.platform.acceleratorstorefrontcommons.forms.AddToEntryGroupForm;
@@ -22,7 +23,6 @@ import de.hybris.platform.util.Config;
 import de.hybris.platform.yb2bacceleratorstorefront.controllers.ControllerConstants;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -39,10 +39,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 /**
@@ -56,6 +56,8 @@ public class AddToCartController extends AbstractController
 	private static final String ERROR_MSG_TYPE = "errorMsg";
 	private static final String QUANTITY_INVALID_BINDING_MESSAGE_KEY = "basket.error.quantity.invalid.binding";
 	private static final String SHOWN_PRODUCT_COUNT = "yb2bacceleratorstorefront.storefront.minicart.shownProductCount";
+	private static final int DEFAULT_SHOWN_PRODUCT_COUNT = 3;
+
 
 	private static final Logger LOG = Logger.getLogger(AddToCartController.class);
 
@@ -68,7 +70,7 @@ public class AddToCartController extends AbstractController
 	@Resource(name = "groupCartModificationListPopulator")
 	private GroupCartModificationListPopulator groupCartModificationListPopulator;
 
-	@RequestMapping(value = "/cart/add", method = RequestMethod.POST, produces = "application/json")
+	@PostMapping(value = "/cart/add", produces = "application/json")
 	public String addToCart(@RequestParam("productCodePost") final String code, final Model model,
 			@Valid final AddToCartForm form, final BindingResult bindingErrors)
 	{
@@ -82,14 +84,14 @@ public class AddToCartController extends AbstractController
 		if (qty <= 0)
 		{
 			model.addAttribute(ERROR_MSG_TYPE, "basket.error.quantity.invalid");
-			model.addAttribute(QUANTITY_ATTR, Long.valueOf(0L));
+			model.addAttribute(QUANTITY_ATTR, 0L);
 		}
 		else
 		{
 			try
 			{
 				final CartModificationData cartModification = cartFacade.addToCart(code, qty);
-				model.addAttribute(QUANTITY_ATTR, Long.valueOf(cartModification.getQuantityAdded()));
+				model.addAttribute(QUANTITY_ATTR, cartModification.getQuantityAdded());
 				model.addAttribute("entry", cartModification.getEntry());
 				model.addAttribute("cartCode", cartModification.getCartCode());
 				model.addAttribute("isQuote", cartFacade.getSessionCart().getQuoteData() != null ? Boolean.TRUE : Boolean.FALSE);
@@ -108,18 +110,18 @@ public class AddToCartController extends AbstractController
 			{
 				logDebugException(ex);
 				model.addAttribute(ERROR_MSG_TYPE, "basket.error.occurred");
-				model.addAttribute(QUANTITY_ATTR, Long.valueOf(0L));
+				model.addAttribute(QUANTITY_ATTR, 0L);
 			}
 			catch (final UnknownIdentifierException ex)
 			{
 				LOG.debug(String.format("Product could not be added to cart - %s", ex.getMessage()));
 				model.addAttribute(ERROR_MSG_TYPE, "basket.error.occurred");
-				model.addAttribute(QUANTITY_ATTR, Long.valueOf(0L));
+				model.addAttribute(QUANTITY_ATTR, 0L);
 				return ControllerConstants.Views.Fragments.Cart.AddToCartPopup;
 			}
 		}
 
-		model.addAttribute("product", productFacade.getProductForCodeAndOptions(code, Arrays.asList(ProductOption.BASIC)));
+		model.addAttribute("product", productFacade.getProductForCodeAndOptions(code, Collections.singletonList(ProductOption.BASIC)));
 
 		return ControllerConstants.Views.Fragments.Cart.AddToCartPopup;
 	}
@@ -142,14 +144,14 @@ public class AddToCartController extends AbstractController
 
 	protected boolean isTypeMismatchError(final ObjectError error)
 	{
-		return error.getCode().equals(TYPE_MISMATCH_ERROR_CODE);
+		return TYPE_MISMATCH_ERROR_CODE.equals(error.getCode());
 	}
 
-	@RequestMapping(value = "/cart/addGrid", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/cart/addGrid", produces = MediaType.APPLICATION_JSON_VALUE)
 	public final String addGridToCart(@RequestBody final AddToCartOrderForm form, final Model model)
 	{
-		final Set<String> multidErrorMsgs = new HashSet<String>();
-		final List<CartModificationData> modificationDataList = new ArrayList<CartModificationData>();
+		final Set<String> multidErrorMsgs = new HashSet<>();
+		final List<CartModificationData> modificationDataList = new ArrayList<>();
 
 		for (final OrderEntryData cartEntry : form.getCartEntries())
 		{
@@ -184,17 +186,17 @@ public class AddToCartController extends AbstractController
 			model.addAttribute("multidErrorMsgs", multidErrorMsgs);
 		}
 
-		model.addAttribute("numberShowing", Integer.valueOf(Config.getInt(SHOWN_PRODUCT_COUNT, 3)));
+		model.addAttribute("numberShowing", Config.getInt(SHOWN_PRODUCT_COUNT, DEFAULT_SHOWN_PRODUCT_COUNT));
 
 
 		return ControllerConstants.Views.Fragments.Cart.AddToCartPopup;
 	}
 
-	@RequestMapping(value = "/cart/addQuickOrder", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/cart/addQuickOrder", produces = MediaType.APPLICATION_JSON_VALUE)
 	public final String addQuickOrderToCart(@RequestBody final AddToCartOrderForm form, final Model model)
 	{
-		final List<CartModificationData> modificationDataList = new ArrayList();
-		final List<ProductWrapperData> productWrapperDataList = new ArrayList();
+		final List<CartModificationData> modificationDataList = new ArrayList<>();
+		final List<ProductWrapperData> productWrapperDataList = new ArrayList<>();
 		final int maxQuickOrderEntries = Config.getInt("yb2bacceleratorstorefront.quick.order.rows.max", 25);
 		final int sizeOfCartEntries = CollectionUtils.size(form.getCartEntries());
 		form.getCartEntries().stream().limit(Math.min(sizeOfCartEntries, maxQuickOrderEntries)).forEach(cartEntry -> {
@@ -233,9 +235,9 @@ public class AddToCartController extends AbstractController
 		return ControllerConstants.Views.Fragments.Cart.AddToCartPopup;
 	}
 
-	@RequestMapping(value = "/entrygroups/cart/addToEntryGroup", method =
-	{ RequestMethod.POST, RequestMethod.GET }) //NOSONAR
-	public String addEntryGroupToCart(final Model model, @Valid final AddToEntryGroupForm form, final BindingResult bindingErrors)
+	@PostMapping(value = "/entrygroups/cart/addToEntryGroup")
+	public String addEntryGroupToCart(final Model model, @Valid final AddToEntryGroupForm form, final BindingResult bindingErrors,
+			final RedirectAttributes redirectModel)
 	{
 		if (bindingErrors.hasErrors())
 		{
@@ -250,7 +252,7 @@ public class AddToCartController extends AbstractController
 			addToCartParams.setQuantity(qty);
 			addToCartParams.setStoreId(null);
 			final CartModificationData cartModification = cartFacade.addToCart(addToCartParams);
-			model.addAttribute(QUANTITY_ATTR, Long.valueOf(cartModification.getQuantityAdded()));
+			model.addAttribute(QUANTITY_ATTR, cartModification.getQuantityAdded());
 			model.addAttribute("entry", cartModification.getEntry());
 			model.addAttribute("cartCode", cartModification.getCartCode());
 
@@ -266,12 +268,13 @@ public class AddToCartController extends AbstractController
 		}
 		catch (final CommerceCartModificationException ex)
 		{
+			GlobalMessages.addFlashMessage(redirectModel, GlobalMessages.ERROR_MESSAGES_HOLDER, ex.getMessage(), null);
 			logDebugException(ex);
 			model.addAttribute(ERROR_MSG_TYPE, "basket.error.occurred");
-			model.addAttribute(QUANTITY_ATTR, Long.valueOf(0L));
+			model.addAttribute(QUANTITY_ATTR, 0L);
 		}
 		model.addAttribute("product",
-				productFacade.getProductForCodeAndOptions(form.getProductCode(), Arrays.asList(ProductOption.BASIC)));
+				productFacade.getProductForCodeAndOptions(form.getProductCode(), Collections.singletonList(ProductOption.BASIC)));
 
 		return REDIRECT_PREFIX + "/cart";
 	}
@@ -300,7 +303,7 @@ public class AddToCartController extends AbstractController
 		String errorMsg = StringUtils.EMPTY;
 		try
 		{
-			final long qty = cartEntry.getQuantity().longValue();
+			final long qty = cartEntry.getQuantity();
 			final CartModificationData cartModificationData = cartFacade.addToCart(cartEntry.getProduct().getCode(), qty);
 			if (cartModificationData.getQuantityAdded() == 0L)
 			{
@@ -329,6 +332,6 @@ public class AddToCartController extends AbstractController
 
 	protected boolean isValidQuantity(final OrderEntryData cartEntry)
 	{
-		return cartEntry.getQuantity() != null && cartEntry.getQuantity().longValue() >= 1L;
+		return cartEntry.getQuantity() != null && cartEntry.getQuantity() >= 1L;
 	}
 }

@@ -299,7 +299,7 @@ ACC.productorderform = {
                     ACC.productorderform.updateFuture($gridContainer, $skus, data, skusId, showFutureStockLink , hideFutureStockInfo);
                 },
                 error: function (xht, textStatus, ex) {
-                    console.log("Failed to get delivery modes. Error details [" + xht + ", " + textStatus + ", " + ex + "]");   // NOSONAR
+                    console.log(`Failed to get delivery modes. Error details [${xht}, ${textStatus}, ${ex}]`);
                 }
             });
         });
@@ -517,7 +517,7 @@ ACC.productorderform = {
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     // log the error to the console
-                    console.log("The following error occured: " + textStatus, errorThrown); // NOSONAR
+                    console.log("The following error occured: " + textStatus, errorThrown);
                 }
             });
         });

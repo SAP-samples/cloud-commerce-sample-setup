@@ -47,7 +47,7 @@ public class CheckoutRegisterController extends AbstractRegisterPageController
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String doCheckoutRegister(final Model model, final HttpServletRequest request) throws CMSItemNotFoundException //NOSONAR
+	public String doCheckoutRegister(final Model model, final HttpServletRequest request) throws CMSItemNotFoundException 
 	{
 		return getDefaultRegistrationPage(model);
 	}

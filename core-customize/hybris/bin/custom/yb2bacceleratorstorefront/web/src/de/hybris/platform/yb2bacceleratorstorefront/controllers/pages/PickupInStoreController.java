@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
  */
 package de.hybris.platform.yb2bacceleratorstorefront.controllers.pages;
 
@@ -32,13 +32,16 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -55,7 +58,7 @@ public class PickupInStoreController extends AbstractSearchPageController
 	private static final String QUANTITY_INVALID_BINDING_MESSAGE_KEY = "basket.error.quantity.invalid.binding";
 	private static final String POINTOFSERVICE_DISPLAY_SEARCH_RESULTS_COUNT = "pointofservice.display.search.results.count";
 
-	private static final Logger LOG = Logger.getLogger(PickupInStoreController.class);
+	private static final Logger LOG = LoggerFactory.getLogger(PickupInStoreController.class);
 
 	private static final String PRODUCT_CODE_PATH_VARIABLE_PATTERN = "/{productCode:.*}";
 	private static final String GOOGLE_API_KEY_ID = "googleApiKey";
@@ -91,12 +94,12 @@ public class PickupInStoreController extends AbstractSearchPageController
 		final String googleApiKey = getHostConfigService().getProperty(GOOGLE_API_KEY_ID, request.getServerName());
 		if (StringUtils.isEmpty(googleApiKey))
 		{
-			LOG.warn("No Google API key found for server: " + request.getServerName());
+			LOG.warn("No Google API key found for server: {}", request.getServerName());
 		}
 		return googleApiKey;
 	}
 
-	@RequestMapping(value = PRODUCT_CODE_PATH_VARIABLE_PATTERN + "/pointOfServices", method = RequestMethod.POST)
+	@PostMapping(value = PRODUCT_CODE_PATH_VARIABLE_PATTERN + "/pointOfServices")
 	public String getPointOfServiceForStorePickupSubmit(@PathVariable("productCode") final String productCode,
 			@RequestParam(value = "locationQuery", required = false) final String locationQuery,
 			@RequestParam(value = "latitude", required = false) final Double latitude,
@@ -122,7 +125,7 @@ public class PickupInStoreController extends AbstractSearchPageController
 				cartPage, entryNumber, model, RequestMethod.POST, response);
 	}
 
-	@RequestMapping(value = PRODUCT_CODE_PATH_VARIABLE_PATTERN + "/pointOfServices", method = RequestMethod.GET)
+	@GetMapping(value = PRODUCT_CODE_PATH_VARIABLE_PATTERN + "/pointOfServices")
 	public String getPointOfServiceForStorePickupClick(@PathVariable("productCode") final String productCode,
 			@RequestParam(value = "page", defaultValue = "0") final int page,
 			@RequestParam(value = "show", defaultValue = "Page") final AbstractSearchPageController.ShowMode showMode,
@@ -144,7 +147,7 @@ public class PickupInStoreController extends AbstractSearchPageController
 				cartPage, entryNumber, model, RequestMethod.GET, response);
 	}
 
-	protected String getPointOfServiceForStorePickup(final String productCode, final String locationQuery, // NOSONAR
+	protected String getPointOfServiceForStorePickup(final String productCode, final String locationQuery, 
 			final GeoPoint geoPoint, final int page, final AbstractSearchPageController.ShowMode showMode, final String sortCode,
 			final Boolean cartPage, final Long entryNumber, final Model model, final RequestMethod requestMethod,
 			final HttpServletResponse response)
@@ -231,7 +234,7 @@ public class PickupInStoreController extends AbstractSearchPageController
 		return builder.toString();
 	}
 
-	@RequestMapping(value = "/cart/add", method = RequestMethod.POST, produces = "application/json")
+	@PostMapping(value = "/cart/add", produces = "application/json")
 	public String addToCartPickup(@RequestParam("productCodePost") final String code,
 			@RequestParam("storeNamePost") final String storeId, final Model model, @Valid final PickupInStoreForm form,
 			final BindingResult bindingErrors)
@@ -301,17 +304,17 @@ public class PickupInStoreController extends AbstractSearchPageController
 
 	protected boolean isTypeMismatchError(final ObjectError error)
 	{
-		return error.getCode().equals(TYPE_MISMATCH_ERROR_CODE);
+		return TYPE_MISMATCH_ERROR_CODE.equals(error.getCode());
 	}
 
-	@RequestMapping(value = "/cart/update", method = RequestMethod.POST, produces = "application/json")
+	@PostMapping(value = "/cart/update", produces = "application/json")
 	public String updateCartQuantities(@RequestParam("storeNamePost") final String storeId,
 			@RequestParam("entryNumber") final long entryNumber, @RequestParam("hiddenPickupQty") final long quantity,
 			final RedirectAttributes redirectModel) throws CommerceCartModificationException
 	{
 		final CartModificationData cartModificationData = cartFacade.updateCartEntry(entryNumber, storeId);
 
-		if (entryNumber == cartModificationData.getEntry().getEntryNumber().intValue())
+		if (entryNumber == cartModificationData.getEntry().getEntryNumber())
 		{
 			final CartModificationData cartModification = cartFacade.updateCartEntry(entryNumber, quantity);
 			if (cartModification.getQuantity() == quantity)
@@ -346,8 +349,7 @@ public class PickupInStoreController extends AbstractSearchPageController
 		return REDIRECT_PREFIX + "/cart";
 	}
 
-	@RequestMapping(value = "/cart/update/delivery", method =
-	{ RequestMethod.GET, RequestMethod.POST }) //NOSONAR
+	@RequestMapping(value = "/cart/update/delivery", method = RequestMethod.POST )
 	public String updateToDelivery(@RequestParam("entryNumber") final long entryNumber, final RedirectAttributes redirectModel)
 			throws CommerceCartModificationException
 	{

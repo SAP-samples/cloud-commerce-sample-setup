@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
  */
 package de.hybris.platform.yb2bacceleratorstorefront.controllers.misc;
 
@@ -20,13 +20,14 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.WebUtils;
 
@@ -40,14 +41,19 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @RequestMapping("/anonymous-consent")
 public class AnonymousConsentController extends AbstractPageController
 {
-	private static final Logger LOGGER = Logger.getLogger(AnonymousConsentController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(AnonymousConsentController.class);
 	private static final ObjectMapper mapper = new ObjectMapper();
 
-	@RequestMapping(value = "/{consentTemplateId}", method = RequestMethod.POST)
+	@PostMapping(value = "/{consentTemplateId}")
 	public ResponseEntity giveConsent(@PathVariable final String consentTemplateId, @RequestParam final String consentState,
 			final HttpServletRequest request, final HttpServletResponse response)
 	{
 		final Cookie anonymousConsentCookie = WebUtils.getCookie(request, WebConstants.ANONYMOUS_CONSENT_COOKIE);
+
+		if(anonymousConsentCookie == null) {
+			LOGGER.error("The Anonymous Consent Cookie is null");
+			return new ResponseEntity(HttpStatus.BAD_REQUEST);
+		}
 
 		try
 		{

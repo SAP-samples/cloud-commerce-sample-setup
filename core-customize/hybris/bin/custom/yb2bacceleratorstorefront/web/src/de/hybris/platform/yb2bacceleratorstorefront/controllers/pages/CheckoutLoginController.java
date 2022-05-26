@@ -56,7 +56,7 @@ public class CheckoutLoginController extends AbstractLoginPageController
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String doCheckoutLogin(@RequestParam(value = "error", defaultValue = "false") final boolean loginError,
-			final HttpSession session, final Model model, final HttpServletRequest request) throws CMSItemNotFoundException //NOSONAR
+			final HttpSession session, final Model model, final HttpServletRequest request) throws CMSItemNotFoundException 
 	{
 		model.addAttribute("expressCheckoutAllowed", Boolean.valueOf(checkoutFlowFacade.isExpressCheckoutEnabledForStore()));
 		return getDefaultLoginPage(loginError, session, model);

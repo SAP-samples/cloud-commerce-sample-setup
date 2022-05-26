@@ -7,9 +7,6 @@ import de.hybris.platform.spring.HybrisContextLoaderListener;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
-
-
 /**
  * The HybrisContextLoaderListener load spring config files into the the web application context. The config files are
  * also loaded from properties which are prefixed with the display name of the web application. As the accelerator is a
@@ -18,8 +15,6 @@ import org.apache.log4j.Logger;
  */
 public class HybrisStorefrontContextLoaderListener extends HybrisContextLoaderListener
 {
-	@SuppressWarnings("unused")
-	private static final Logger LOG = Logger.getLogger(HybrisStorefrontContextLoaderListener.class);
 	protected static final String ACCELERATORSTOREFRONT = "acceleratorstorefront";
 
 	@Override

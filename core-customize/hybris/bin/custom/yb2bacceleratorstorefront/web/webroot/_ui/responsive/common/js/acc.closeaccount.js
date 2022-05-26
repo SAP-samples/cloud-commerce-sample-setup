@@ -34,7 +34,7 @@ ACC.close = {
                     window.location.replace(url);
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
-                    console.log("Failed to close account. Error: [" + errorThrown + "]");   // NOSONAR
+                    console.log(`Failed to close account. Error: [${errorThrown}]`);
                     window.location.reload();
                 }
             });

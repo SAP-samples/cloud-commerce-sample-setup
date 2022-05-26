@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
  */
 package de.hybris.platform.yb2bacceleratorstorefront.filters;
 
@@ -17,15 +17,18 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Answers;
 import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
+import org.mockito.junit.MockitoJUnitRunner;
+
 
 @UnitTest
+@RunWith(MockitoJUnitRunner.class)
 public class AcceleratorAddOnFilterTest
 {
 	private static final String ADDONTWO = "addontwo";
@@ -48,7 +51,6 @@ public class AcceleratorAddOnFilterTest
 	@Before
 	public void prepare() throws FileNotFoundException
 	{
-		MockitoAnnotations.initMocks(this);
 		Mockito.doReturn("/addons/").when(request).getAttribute("javax.servlet.include.servlet_path");
 	}
 
@@ -94,7 +96,6 @@ public class AcceleratorAddOnFilterTest
 		final String remotePath = "/some/dir/" + STOREFRONT_NAME + "/tags/addons/" + ADDONTWO + "/some/special/resource.tag";
 		Mockito.doReturn(remotePath).when(request).getRequestURI();
 
-		Mockito.doReturn(remotePath).when(filter).getFullPathNameFromRequest(request);
 		Mockito.doReturn("/some/dir/" + STOREFRONT_NAME + "/web/webroot/").when(filter)
 				.getAppContextFullPathNameFromRequest(request);
 

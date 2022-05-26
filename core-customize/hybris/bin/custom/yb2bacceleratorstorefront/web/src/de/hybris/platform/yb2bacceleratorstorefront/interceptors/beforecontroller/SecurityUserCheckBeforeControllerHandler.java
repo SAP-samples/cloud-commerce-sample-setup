@@ -90,7 +90,7 @@ public class SecurityUserCheckBeforeControllerHandler implements BeforeControlle
 	{
 		// Invalidate session and redirect
 		request.getSession().invalidate();
-		response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + redirectPath));	//NOSONAR
+		response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + redirectPath));	
 	}
 
 	protected boolean isUserDeactivated(final UserModel userModel)

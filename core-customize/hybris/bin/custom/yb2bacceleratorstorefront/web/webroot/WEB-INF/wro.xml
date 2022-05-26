@@ -30,7 +30,7 @@
 		<js>/_ui/responsive/common/js/jquery.pstrength.custom-1.2.0.js</js>
 		<js>/_ui/responsive/common/js/jquery.syncheight.custom.js</js>
 		<js>/_ui/responsive/common/js/jquery.tabs.custom.js</js>
-		<js minimize="false">/_ui/responsive/common/js/jquery-ui-1.12.1.min.js</js>
+		<js minimize="false">/_ui/responsive/common/js/jquery-ui-1.13.0.min.js</js>
 		<js>/_ui/responsive/common/js/jquery.zoom.custom.js</js>
 		<js>/_ui/responsive/common/js/owl.carousel.custom.js</js>
 		<js minimize="false">/_ui/responsive/common/js/jquery.tmpl-1.0.0pre.min.js</js>
