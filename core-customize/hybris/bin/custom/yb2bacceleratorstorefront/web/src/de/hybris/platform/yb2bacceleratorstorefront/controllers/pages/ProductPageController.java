@@ -1,9 +1,8 @@
 /*
- * Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2022 SAP SE or an SAP affiliate company. All rights reserved.
  */
 package de.hybris.platform.yb2bacceleratorstorefront.controllers.pages;
 
-import de.hybris.platform.acceleratorfacades.futurestock.FutureStockFacade;
 import de.hybris.platform.acceleratorservices.controllers.page.PageType;
 import de.hybris.platform.acceleratorstorefrontcommons.breadcrumb.impl.ProductBreadcrumbBuilder;
 import de.hybris.platform.acceleratorstorefrontcommons.constants.WebConstants;
@@ -18,6 +17,7 @@ import de.hybris.platform.acceleratorstorefrontcommons.variants.VariantSortStrat
 import de.hybris.platform.cms2.exceptions.CMSItemNotFoundException;
 import de.hybris.platform.cms2.model.pages.AbstractPageModel;
 import de.hybris.platform.cms2.servicelayer.services.CMSPageService;
+import de.hybris.platform.commercefacades.futurestock.FutureStockFacade;
 import de.hybris.platform.commercefacades.order.data.ConfigurationInfoData;
 import de.hybris.platform.commercefacades.product.ProductFacade;
 import de.hybris.platform.commercefacades.product.ProductOption;
@@ -27,6 +27,7 @@ import de.hybris.platform.commercefacades.product.data.ImageData;
 import de.hybris.platform.commercefacades.product.data.ImageDataType;
 import de.hybris.platform.commercefacades.product.data.ProductData;
 import de.hybris.platform.commercefacades.product.data.ReviewData;
+import de.hybris.platform.commercefacades.user.UserFacade;
 import de.hybris.platform.commerceservices.url.UrlResolver;
 import de.hybris.platform.core.model.product.ProductModel;
 import de.hybris.platform.product.ProductService;
@@ -72,7 +73,7 @@ import com.google.common.collect.Maps;
 @RequestMapping(value = "/**/p")
 public class ProductPageController extends AbstractPageController
 {
-	@SuppressWarnings("unused")
+
 	private static final Logger LOG = Logger.getLogger(ProductPageController.class);
 
 	/**
@@ -111,6 +112,9 @@ public class ProductPageController extends AbstractPageController
 	@Resource(name = "futureStockFacade")
 	private FutureStockFacade futureStockFacade;
 
+	@Resource(name = "userFacade")
+	private UserFacade userFacade;
+
 	@RequestMapping(value = PRODUCT_CODE_PATH_VARIABLE_PATTERN, method = RequestMethod.GET)
 	public String productDetail(@PathVariable("productCode") final String productCode, final Model model,
 			final HttpServletRequest request, final HttpServletResponse response)
@@ -134,7 +138,7 @@ public class ProductPageController extends AbstractPageController
 
 		model.addAttribute(new ReviewForm());
 		model.addAttribute("pageType", PageType.PRODUCT.name());
-		model.addAttribute("futureStockEnabled", Boolean.valueOf(Config.getBoolean(FUTURE_STOCK_ENABLED, false)));
+		model.addAttribute("futureStockEnabled", isFutureStockEnabledForCurrentUser());
 
 		final String metaKeywords = MetaSanitizerUtil.sanitizeKeywords(productData.getKeywords());
 		final String metaDescription = MetaSanitizerUtil.sanitizeDescription(productData.getDescription());
@@ -206,8 +210,7 @@ public class ProductPageController extends AbstractPageController
 		return ControllerConstants.Views.Fragments.Product.QuickViewPopup;
 	}
 
-	@RequestMapping(value = PRODUCT_CODE_PATH_VARIABLE_PATTERN + "/review", method =
-	{ RequestMethod.GET, RequestMethod.POST }) //NOSONAR
+	@RequestMapping(value = PRODUCT_CODE_PATH_VARIABLE_PATTERN + "/review", method = RequestMethod.POST )
 	public String postReview(@PathVariable("productCode") final String productCode, final ReviewForm form,
 			final BindingResult result, final Model model, final HttpServletRequest request, final RedirectAttributes redirectAttrs)
 			throws CMSItemNotFoundException
@@ -317,7 +320,7 @@ public class ProductPageController extends AbstractPageController
 	public String productFutureStock(@PathVariable("productCode") final String productCode, final Model model,
 			final HttpServletRequest request, final HttpServletResponse response) throws CMSItemNotFoundException
 	{
-		final boolean futureStockEnabled = Config.getBoolean(FUTURE_STOCK_ENABLED, false);
+		final boolean futureStockEnabled = isFutureStockEnabledForCurrentUser();
 		if (futureStockEnabled)
 		{
 			final List<FutureStockData> futureStockList = futureStockFacade.getFutureAvailability(productCode);
@@ -348,7 +351,7 @@ public class ProductPageController extends AbstractPageController
 	{
 		final String productCode = form.getProductCode();
 		final List<String> skus = form.getSkus();
-		final boolean futureStockEnabled = Config.getBoolean(FUTURE_STOCK_ENABLED, false);
+		final boolean futureStockEnabled = isFutureStockEnabledForCurrentUser();
 
 		Map<String, Object> result = new HashMap<>();
 		if (futureStockEnabled && CollectionUtils.isNotEmpty(skus) && StringUtils.isNotBlank(productCode))
@@ -508,5 +511,9 @@ public class ProductPageController extends AbstractPageController
 	{
 		final ProductModel productModel = productService.getProductForCode(productCode);
 		return cmsPageService.getPageForProduct(productModel, getCmsPreviewService().getPagePreviewCriteria());
+	}
+
+	protected boolean isFutureStockEnabledForCurrentUser() {
+		return Config.getBoolean(FUTURE_STOCK_ENABLED, false) && !userFacade.isAnonymousUser();
 	}
 }

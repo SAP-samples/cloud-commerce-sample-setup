@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
  */
 package de.hybris.platform.yb2bacceleratorstorefront.controllers.cms;
 
@@ -12,7 +12,6 @@ import de.hybris.platform.acceleratorcms.model.components.SimpleSuggestionCompon
 import de.hybris.platform.acceleratorstorefrontcommons.controllers.pages.AbstractPageController;
 import de.hybris.platform.catalog.enums.ProductReferenceTypeEnum;
 import de.hybris.platform.category.model.CategoryModel;
-import de.hybris.platform.cms2.exceptions.CMSItemNotFoundException;
 import de.hybris.platform.cms2.servicelayer.services.impl.DefaultCMSComponentService;
 import de.hybris.platform.commercefacades.product.data.ProductData;
 import de.hybris.platform.yacceleratorfacades.suggestion.SimpleSuggestionFacade;
@@ -30,9 +29,10 @@ import junit.framework.Assert;
 import org.apache.commons.lang.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.ui.Model;
 
@@ -41,6 +41,7 @@ import org.springframework.ui.Model;
  * Unit test for {@link PurchasedCategorySuggestionComponentController}
  */
 @UnitTest
+@RunWith(MockitoJUnitRunner.class)
 public class PurchasedCategorySuggestionComponentControllerTest
 {
 	private static final String COMPONENT_UID = "componentUid";
@@ -78,8 +79,6 @@ public class PurchasedCategorySuggestionComponentControllerTest
 	@Before
 	public void setUp()
 	{
-		MockitoAnnotations.initMocks(this);
-
 		purchasedCategorySuggestionComponentController = new PurchasedCategorySuggestionComponentController();
 		purchasedCategorySuggestionComponentController.setCmsComponentService(cmsComponentService);
 		ReflectionTestUtils.setField(purchasedCategorySuggestionComponentController, "simpleSuggestionFacade",
@@ -146,7 +145,6 @@ public class PurchasedCategorySuggestionComponentControllerTest
 	{
 		given(request.getAttribute(COMPONENT_UID)).willReturn(null);
 		given(request.getParameter(COMPONENT_UID)).willReturn(TEST_COMPONENT_UID);
-		given(cmsComponentService.getSimpleCMSComponent(TEST_COMPONENT_UID)).willReturn(null);
 		purchasedCategorySuggestionComponentController.handleGet(request, response, model);
 	}
 
@@ -154,8 +152,6 @@ public class PurchasedCategorySuggestionComponentControllerTest
 	public void testRenderComponentNotFound3() throws Exception
 	{
 		given(request.getAttribute(COMPONENT_UID)).willReturn(TEST_COMPONENT_UID);
-		given(cmsComponentService.getSimpleCMSComponent(TEST_COMPONENT_UID)).willReturn(null);
-		given(cmsComponentService.getSimpleCMSComponent(TEST_COMPONENT_UID)).willThrow(new CMSItemNotFoundException(""));
 		purchasedCategorySuggestionComponentController.handleGet(request, response, model);
 	}
 }

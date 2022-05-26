@@ -58,7 +58,7 @@ public class MultiStepCheckoutController extends AbstractCheckoutStepController
 	@RequestMapping(method = RequestMethod.GET)
 	@PreValidateQuoteCheckoutStep
 	@PreValidateCheckoutStep(checkoutStep = MULTI)
-	public String enterStep(final Model model, final RedirectAttributes redirectAttributes) throws CMSItemNotFoundException, // NOSONAR
+	public String enterStep(final Model model, final RedirectAttributes redirectAttributes) throws CMSItemNotFoundException, 
 			CommerceCartModificationException
 	{
 		if (validateCart(redirectAttributes))
@@ -84,7 +84,7 @@ public class MultiStepCheckoutController extends AbstractCheckoutStepController
 	@RequestMapping(value = "/express", method = RequestMethod.GET)
 	@RequireHardLogIn
 	public String performExpressCheckout(final Model model, final RedirectAttributes redirectModel)
-			throws CMSItemNotFoundException, CommerceCartModificationException // NOSONAR
+			throws CMSItemNotFoundException, CommerceCartModificationException 
 	{
 		if (getSessionService().getAttribute(WebConstants.CART_RESTORATION) != null && CollectionUtils.isNotEmpty(
 				((CartRestorationData) getSessionService().getAttribute(WebConstants.CART_RESTORATION)).getModifications()))

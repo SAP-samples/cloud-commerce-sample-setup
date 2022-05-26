@@ -1,8 +1,9 @@
 /*
- * Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
  */
 package de.hybris.platform.yb2bacceleratorstorefront.controllers.cms;
 
+import static org.mockito.ArgumentMatchers.nullable;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
@@ -11,7 +12,6 @@ import de.hybris.platform.acceleratorcms.model.components.ProductReferencesCompo
 import de.hybris.platform.acceleratorservices.data.RequestContextData;
 import de.hybris.platform.acceleratorstorefrontcommons.controllers.pages.AbstractPageController;
 import de.hybris.platform.catalog.enums.ProductReferenceTypeEnum;
-import de.hybris.platform.cms2.exceptions.CMSItemNotFoundException;
 import de.hybris.platform.cms2.servicelayer.services.impl.DefaultCMSComponentService;
 import de.hybris.platform.commercefacades.product.ProductFacade;
 import de.hybris.platform.commercefacades.product.data.ProductReferenceData;
@@ -28,12 +28,12 @@ import javax.servlet.http.HttpServletResponse;
 import junit.framework.Assert;
 
 import org.apache.commons.lang.StringUtils;
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.ui.Model;
 
 
@@ -41,6 +41,7 @@ import org.springframework.ui.Model;
  * Unit test for {@link ProductReferencesComponentController}
  */
 @UnitTest
+@RunWith(MockitoJUnitRunner.class)
 public class ProductReferencesComponentControllerTest
 {
 	private static final String COMPONENT_UID = "componentUid";
@@ -84,11 +85,6 @@ public class ProductReferencesComponentControllerTest
 		}
 	};
 
-	@Before
-	public void setUp()
-	{
-		MockitoAnnotations.initMocks(this);
-	}
 
 	@Test
 	public void testRenderComponent()
@@ -101,8 +97,8 @@ public class ProductReferencesComponentControllerTest
 
 		requestContextData.setProduct(new ProductModel());
 		given(
-				productFacade.getProductReferencesForCode(Mockito.anyString(), Mockito.anyList(), Mockito.any(List.class),
-						Mockito.<Integer> any())).willReturn(productReferenceDataList);
+				productFacade.getProductReferencesForCode(nullable(String.class), nullable(List.class), nullable(List.class),
+						nullable(Integer.class))).willReturn(productReferenceDataList);
 		given(request.getAttribute(COMPONENT)).willReturn(productReferencesComponentModel);
 
 		final String viewName = productReferencesComponentController.handleGet(request, response, model);
@@ -125,8 +121,8 @@ public class ProductReferencesComponentControllerTest
 
 		requestContextData.setProduct(new ProductModel());
 		given(
-				productFacade.getProductReferencesForCode(Mockito.anyString(), Mockito.anyList(), Mockito.any(List.class),
-						Mockito.<Integer> any())).willReturn(productReferenceDataList);
+				productFacade.getProductReferencesForCode(nullable(String.class), nullable(List.class), nullable(List.class),
+						nullable(Integer.class))).willReturn(productReferenceDataList);
 
 		final String viewName = productReferencesComponentController.handleGet(request, response, model);
 		verify(model, Mockito.times(1)).addAttribute(COMPONENT, productReferencesComponentModel);
@@ -149,7 +145,6 @@ public class ProductReferencesComponentControllerTest
 	{
 		given(request.getAttribute(COMPONENT_UID)).willReturn(null);
 		given(request.getParameter(COMPONENT_UID)).willReturn(TEST_COMPONENT_UID);
-		given(cmsComponentService.getSimpleCMSComponent(TEST_COMPONENT_UID)).willReturn(null);
 		productReferencesComponentController.handleGet(request, response, model);
 	}
 
@@ -157,8 +152,6 @@ public class ProductReferencesComponentControllerTest
 	public void testRenderComponentNotFound3() throws Exception
 	{
 		given(request.getAttribute(COMPONENT_UID)).willReturn(TEST_COMPONENT_UID);
-		given(cmsComponentService.getSimpleCMSComponent(TEST_COMPONENT_UID)).willReturn(null);
-		given(cmsComponentService.getSimpleCMSComponent(TEST_COMPONENT_UID)).willThrow(new CMSItemNotFoundException(""));
 		productReferencesComponentController.handleGet(request, response, model);
 	}
 

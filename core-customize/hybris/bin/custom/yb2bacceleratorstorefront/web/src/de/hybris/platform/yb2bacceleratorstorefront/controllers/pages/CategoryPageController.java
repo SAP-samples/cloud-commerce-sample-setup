@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class CategoryPageController extends AbstractCategoryPageController {
 
     @RequestMapping(value = CATEGORY_CODE_PATH_VARIABLE_PATTERN, method = RequestMethod.GET)
-    public String category(@PathVariable("categoryCode") final String categoryCode, // NOSONAR
+    public String category(@PathVariable("categoryCode") final String categoryCode, 
                            @RequestParam(value = "q", required = false) final String searchQuery,
                            @RequestParam(value = "page", defaultValue = "0") final int page,
                            @RequestParam(value = "show", defaultValue = "Page") final ShowMode showMode,

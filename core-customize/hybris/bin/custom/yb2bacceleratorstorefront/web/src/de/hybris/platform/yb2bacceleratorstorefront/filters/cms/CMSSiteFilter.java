@@ -57,7 +57,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
  */
 public class CMSSiteFilter extends OncePerRequestFilter implements CMSFilter
 {
-	@SuppressWarnings("unused")
+
 	private static final Logger LOG = Logger.getLogger(CMSSiteFilter.class);
 
 	protected static final int MISSING_CMS_SITE_ERROR_STATUS = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
@@ -102,12 +102,12 @@ public class CMSSiteFilter extends OncePerRequestFilter implements CMSFilter
 			{
 				final String contextPath = httpRequest.getContextPath();
 				final String encodedRedirectUrl = httpResponse.encodeRedirectURL(contextPath + redirectURL);
-				httpResponse.sendRedirect(encodedRedirectUrl);	//NOSONAR
+				httpResponse.sendRedirect(encodedRedirectUrl);	
 			}
 			else
 			{
 				final String encodedRedirectUrl = httpResponse.encodeRedirectURL(redirectURL);
-				httpResponse.sendRedirect(encodedRedirectUrl);	//NOSONAR
+				httpResponse.sendRedirect(encodedRedirectUrl);	
 			}
 
 			// next filter in chain won't be invoked!!!

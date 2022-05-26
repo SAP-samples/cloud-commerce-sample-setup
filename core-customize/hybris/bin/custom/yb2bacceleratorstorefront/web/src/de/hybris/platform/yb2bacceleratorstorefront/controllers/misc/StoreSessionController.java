@@ -29,8 +29,8 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
@@ -65,8 +65,7 @@ public class StoreSessionController extends AbstractController
 	@Resource(name = "sessionService")
 	private SessionService sessionService;
 
-	@RequestMapping(value = "/language", method =
-	{ RequestMethod.GET, RequestMethod.POST }) //NOSONAR
+	@PostMapping(value = "/language")
 	public String selectLanguage(@RequestParam("code") final String isoCode, final HttpServletRequest request)
 	{
 		final String previousLanguage = storeSessionFacade.getCurrentLanguage().getIsocode();
@@ -80,8 +79,7 @@ public class StoreSessionController extends AbstractController
 				storeSessionFacade.getCurrentLanguage().getIsocode()) : getReturnRedirectUrlWithoutReferer(request);
 	}
 
-	@RequestMapping(value = "/currency", method =
-	{ RequestMethod.GET, RequestMethod.POST }) //NOSONAR
+	@PostMapping(value = "/currency")
 	public String selectCurrency(@RequestParam("code") final String isoCode, final HttpServletRequest request)
 	{
 		final String previousCurrency = storeSessionFacade.getCurrentCurrency().getIsocode();
@@ -91,8 +89,7 @@ public class StoreSessionController extends AbstractController
 				storeSessionFacade.getCurrentCurrency().getIsocode()) : getReturnRedirectUrlWithoutReferer(request);
 	}
 
-	@RequestMapping(value = "/ui-experience", method =
-	{ RequestMethod.GET, RequestMethod.POST }) //NOSONAR
+	@PostMapping(value = "/ui-experience")
 	public String selectUiExperienceLevel(@RequestParam("level") final String uiExperienceLevelString,
 			final HttpServletRequest request)
 	{
@@ -158,8 +155,7 @@ public class StoreSessionController extends AbstractController
 		return codes;
 	}
 
-	@RequestMapping(value = "/ui-experience-level-prompt", method =
-	{ RequestMethod.GET, RequestMethod.POST }) //NOSONAR
+	@PostMapping(value = "/ui-experience-level-prompt")
 	public String selectUiExperienceLevelPrompt(@RequestParam("hide") final boolean hideFlag, final HttpServletRequest request)
 	{
 		setHideUiExperienceLevelOverridePrompt(request, hideFlag);

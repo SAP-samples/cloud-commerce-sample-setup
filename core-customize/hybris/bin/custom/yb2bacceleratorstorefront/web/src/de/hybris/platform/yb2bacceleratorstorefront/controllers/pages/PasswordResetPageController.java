@@ -41,7 +41,7 @@ public class PasswordResetPageController extends AbstractPageController
 {
 	private static final String FORGOTTEN_PWD_TITLE = "forgottenPwd.title";
 
-	@SuppressWarnings("unused")
+
 	private static final Logger LOG = Logger.getLogger(PasswordResetPageController.class);
 
 	private static final String REDIRECT_PWD_REQ_CONF = "redirect:/login/pw/request/external/conf";

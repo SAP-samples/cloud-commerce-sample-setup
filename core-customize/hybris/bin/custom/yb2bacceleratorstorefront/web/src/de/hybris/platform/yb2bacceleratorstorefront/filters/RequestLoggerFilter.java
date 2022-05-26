@@ -129,7 +129,7 @@ public class RequestLoggerFilter extends OncePerRequestFilter
 		@Override
 		public void sendError(final int status, final String msg) throws IOException
 		{
-			super.sendError(status, msg); // NOSONAR
+			super.sendError(status, msg); 
 			this.status = status;
 		}
 

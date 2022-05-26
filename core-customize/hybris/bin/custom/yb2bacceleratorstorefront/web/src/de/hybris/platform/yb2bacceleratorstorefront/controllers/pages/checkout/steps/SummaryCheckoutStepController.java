@@ -51,7 +51,7 @@ public class SummaryCheckoutStepController extends AbstractCheckoutStepControlle
 	@Override
 	@PreValidateQuoteCheckoutStep
 	@PreValidateCheckoutStep(checkoutStep = SUMMARY)
-	public String enterStep(final Model model, final RedirectAttributes redirectAttributes) throws CMSItemNotFoundException, // NOSONAR
+	public String enterStep(final Model model, final RedirectAttributes redirectAttributes) throws CMSItemNotFoundException, 
 			CommerceCartModificationException
 	{
 		final CartData cartData = getCheckoutFacade().getCheckoutCart();
@@ -91,11 +91,11 @@ public class SummaryCheckoutStepController extends AbstractCheckoutStepControlle
 	}
 
 
-	@RequestMapping(value = "/placeOrder") //NOSONAR
+	@RequestMapping(value = "/placeOrder", method = RequestMethod.POST)
 	@PreValidateQuoteCheckoutStep
 	@RequireHardLogIn
 	public String placeOrder(@ModelAttribute("placeOrderForm") final PlaceOrderForm placeOrderForm, final Model model,
-			final HttpServletRequest request, final RedirectAttributes redirectModel) throws CMSItemNotFoundException, // NOSONAR
+			final HttpServletRequest request, final RedirectAttributes redirectModel) throws CMSItemNotFoundException, 
 			InvalidCartException, CommerceCartModificationException
 	{
 		if (validateOrderForm(placeOrderForm, model))

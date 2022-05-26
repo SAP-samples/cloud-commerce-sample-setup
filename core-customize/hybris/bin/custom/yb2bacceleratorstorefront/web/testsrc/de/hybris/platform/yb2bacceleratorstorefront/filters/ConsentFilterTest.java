@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
  */
 package de.hybris.platform.yb2bacceleratorstorefront.filters;
 
@@ -21,12 +21,13 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.mock.web.MockHttpServletResponse;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -36,7 +37,7 @@ import static de.hybris.platform.commercefacades.constants.CommerceFacadesConsta
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.AdditionalAnswers.delegatesTo;
-import static org.mockito.Matchers.any;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -44,6 +45,7 @@ import static org.mockito.Mockito.when;
 
 
 @UnitTest
+@RunWith(MockitoJUnitRunner.class)
 public class ConsentFilterTest
 {
 	public static final String TEMPLATE_CODE_GIVEN = "templateCodeGiven";
@@ -74,8 +76,6 @@ public class ConsentFilterTest
 	@Before
 	public void setUp()
 	{
-		MockitoAnnotations.initMocks(this);
-
 		// anonymous consent data setup
 		final AnonymousConsentData given = createAnonymousConsent(TEMPLATE_CODE_GIVEN, 1, CONSENT_GIVEN);
 		final AnonymousConsentData withdrawn = createAnonymousConsent(TEMPLATE_CODE_WITHDRAWN, 1, CONSENT_WITHDRAWN);

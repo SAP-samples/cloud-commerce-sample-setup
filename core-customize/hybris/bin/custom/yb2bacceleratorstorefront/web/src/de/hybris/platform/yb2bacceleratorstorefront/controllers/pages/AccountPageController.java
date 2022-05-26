@@ -77,6 +77,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -852,8 +853,7 @@ public class AccountPageController extends AbstractSearchPageController
 		return REDIRECT_TO_ADDRESS_BOOK_PAGE;
 	}
 
-	@RequestMapping(value = "/remove-address/" + ADDRESS_CODE_PATH_VARIABLE_PATTERN, method =
-	{ RequestMethod.GET, RequestMethod.POST }) //NOSONAR
+	@PostMapping(value = "/remove-address/" + ADDRESS_CODE_PATH_VARIABLE_PATTERN)
 	@RequireHardLogIn
 	public String removeAddress(@PathVariable("addressCode") final String addressCode, final RedirectAttributes redirectModel)
 	{

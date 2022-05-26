@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2022 SAP SE or an SAP affiliate company. All rights reserved.
  */
 package de.hybris.platform.yb2bacceleratorstorefront.controllers.pages;
 
@@ -55,14 +55,16 @@ public class MyQuotesController extends AbstractSearchPageController
 {
 	private static final Logger LOG = Logger.getLogger(MyQuotesController.class);
 
+	private static final String MY_ACCOUNT_CMS_PAGE = "my-account";
 	private static final String MY_QUOTES_CMS_PAGE = "my-quotes";
 	private static final String QUOTE_DETAILS_CMS_PAGE = "quote-detail";
-	private static final String REDIRECT_QUOTE_LIST_URL = REDIRECT_PREFIX + "/my-account/my-quotes/";
+	private static final String REDIRECT_QUOTE_LIST_URL = REDIRECT_PREFIX + "/" + MY_ACCOUNT_CMS_PAGE + "/" + MY_QUOTES_CMS_PAGE + "/";
 	private static final String REDIRECT_QUOTE_EDIT_URL = REDIRECT_PREFIX + "/quote/%s/edit/";
 	private static final String PAGINATION_NUMBER_OF_COMMENTS = "quote.pagination.numberofcomments";
 	private static final String ALLOWED_ACTIONS = "allowedActions";
 	private static final String SYSTEM_ERROR_PAGE_NOT_FOUND = "system.error.page.not.found";
 	private static final String QUOTE_CART_INSUFFICIENT_ACCESS_RIGHTS = "quote.cart.insufficient.access.rights.error";
+	private static final String QUOTE_LISTING_ERROR = "quote.list.error";
 
 	private static final List<QuoteState> DRAFT_STATES = Arrays.asList(QuoteState.BUYER_DRAFT, QuoteState.SELLER_DRAFT);
 
@@ -85,23 +87,33 @@ public class MyQuotesController extends AbstractSearchPageController
 	@RequireHardLogIn
 	public String quotes(@RequestParam(value = "page", defaultValue = "0") final int page,
 			@RequestParam(value = "show", defaultValue = "Page") final ShowMode showMode,
-			@RequestParam(value = "sort", defaultValue = "byDate") final String sortCode, final Model model)
+			@RequestParam(value = "sort", defaultValue = "byDate") final String sortCode,
+			final Model model, final RedirectAttributes redirectModel)
 			throws CMSItemNotFoundException
 	{
-		// Handle paged search results
-		final PageableData pageableData = createPageableData(page, 5, sortCode, showMode);
-		final SearchPageData searchPageData = getQuoteFacade().getPagedQuotes(pageableData);
-		populateModel(model, searchPageData, showMode);
+		try
+		{
+			// Handle paged search results
+			final PageableData pageableData = createPageableData(page, 5, sortCode, showMode);
+			final SearchPageData searchPageData = getQuoteFacade().getPagedQuotes(pageableData);
+			populateModel(model, searchPageData, showMode);
 
-		final List<Breadcrumb> breadcrumbs = accountBreadcrumbBuilder.getBreadcrumbs(null);
-		breadcrumbs.add(new Breadcrumb("/my-account/my-quotes", getMessageSource().getMessage(
-				"text.account.manageQuotes.breadcrumb", null, getI18nService().getCurrentLocale()), null));
-		model.addAttribute(WebConstants.BREADCRUMBS_KEY, breadcrumbs);
-		final ContentPageModel myQuotesPage = getContentPageForLabelOrId(MY_QUOTES_CMS_PAGE);
-		storeCmsPageInModel(model, myQuotesPage);
-		setUpMetaDataForContentPage(model, myQuotesPage);
-		model.addAttribute(ThirdPartyConstants.SeoRobots.META_ROBOTS, ThirdPartyConstants.SeoRobots.NOINDEX_NOFOLLOW);
-		return getViewForPage(model);
+			final List<Breadcrumb> breadcrumbs = accountBreadcrumbBuilder.getBreadcrumbs(null);
+			breadcrumbs.add(new Breadcrumb("/my-account/my-quotes", getMessageSource().getMessage(
+					"text.account.manageQuotes.breadcrumb", null, getI18nService().getCurrentLocale()), null));
+			model.addAttribute(WebConstants.BREADCRUMBS_KEY, breadcrumbs);
+			final ContentPageModel myQuotesPage = getContentPageForLabelOrId(MY_QUOTES_CMS_PAGE);
+			storeCmsPageInModel(model, myQuotesPage);
+			setUpMetaDataForContentPage(model, myQuotesPage);
+			model.addAttribute(ThirdPartyConstants.SeoRobots.META_ROBOTS, ThirdPartyConstants.SeoRobots.NOINDEX_NOFOLLOW);
+			return getViewForPage(model);
+		}
+		catch (UnknownIdentifierException ex)
+		{
+			LOG.warn("Failed to load my-quotes", ex);
+			GlobalMessages.addFlashMessage(redirectModel, GlobalMessages.ERROR_MESSAGES_HOLDER, QUOTE_LISTING_ERROR);
+			return REDIRECT_PREFIX + ROOT + MY_ACCOUNT_CMS_PAGE;
+		}
 	}
 
 	@RequestMapping(value = "/{quoteCode}", method = RequestMethod.GET)

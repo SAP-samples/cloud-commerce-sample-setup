@@ -1,18 +1,23 @@
 /*
- * Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
  */
 package de.hybris.platform.yb2bacceleratorstorefront.web.theme;
 
 import de.hybris.platform.acceleratorservices.addonsupport.RequiredAddOnsNameProvider;
 import de.hybris.platform.util.Utilities;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import de.hybris.platform.yb2bacceleratorstorefront.util.SiteThemeResolverUtils;
-import org.apache.log4j.Logger;
+
+import javax.servlet.ServletContext;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.context.ApplicationContext;
@@ -36,7 +41,7 @@ import org.springframework.web.context.ConfigurableWebApplicationContext;
  */
 public class StorefrontResourceBundleSource implements ThemeSource, ResourceLoaderAware, MessageSource
 {
-	private static final Logger LOG = Logger.getLogger(StorefrontResourceBundleSource.class);
+	private static final Logger LOG = LoggerFactory.getLogger(StorefrontResourceBundleSource.class);
 
 	private MessageSource parentMessageSource;
 	private int cacheSeconds;
@@ -95,8 +100,14 @@ public class StorefrontResourceBundleSource implements ThemeSource, ResourceLoad
 		final String siteBasename = getBasenamePrefix() + getSitePrefix() + "-" + sitePart;
 		final String themeBasename = getBasenamePrefix() + getThemePrefix() + "-" + themePart;
 		final String uiExperienceCode = uiExperiencePart.toLowerCase();
-		final List<String> addOnNames = requiredAddOnsNameProvider
-				.getAddOns(((ConfigurableWebApplicationContext) appContext).getServletContext().getServletContextName());
+		final List<String> addOnNames = new ArrayList<>();
+		final ServletContext servletContext = ((ConfigurableWebApplicationContext) appContext).getServletContext();
+		if(servletContext != null) {
+			addOnNames.addAll(requiredAddOnsNameProvider.getAddOns(servletContext.getServletContextName()));
+		} else {
+			LOG.error("servletContext is null");
+		}
+
 		// Build the messages sources from most general to most specific
 		final MessageSource addOnBaseMessageSrouce = createAddOnMessageSource(addOnNames, getParentMessageSource(),
 				getBasePrefix());
@@ -117,8 +128,7 @@ public class StorefrontResourceBundleSource implements ThemeSource, ResourceLoad
 
 		if (LOG.isDebugEnabled())
 		{
-			LOG.debug("Theme created: name '" + themeName + "', siteBasename [" + siteBasename + "], themeBasename [" + themeBasename
-					+ "]");
+			LOG.debug("Theme created: name [{}], siteBasename [{}], themeBasename [{}]", themeName, siteBasename, themeBasename);
 		}
 
 		// Create the new theme
@@ -144,7 +154,7 @@ public class StorefrontResourceBundleSource implements ThemeSource, ResourceLoad
 					+ "/acceleratoraddon/web/webroot/WEB-INF/messages/" + lastBasenamePart;
 			if (LOG.isDebugEnabled())
 			{
-				LOG.debug("AddOn message reource basename: " + basename);
+				LOG.debug("AddOn message reource basename: {}", basename);
 			}
 
 			messageSource = createMessageSource(basename, tmpParentMessageSource);

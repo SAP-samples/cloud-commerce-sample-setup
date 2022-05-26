@@ -97,7 +97,7 @@ ACC.savedcarts = {
             			var url = ACC.config.encodedContextPath + "/cart"
             			window.location.replace(url);
             		} else {
-            			var errorMsg = status.responseText.slice(1, -1);
+            			var errorMsg = status.responseText;
             			$('.js-restore-current-cart-form').addClass('has-error');
             			$('.js-restore-error-container').html(ACC.sanitizer.sanitize(errorMsg));
             			$('.js-savedcart_restore_confirm_modal').colorbox.resize();
