@@ -35,7 +35,7 @@
     "@spartacus/assets": "~4.3.7",
     "@spartacus/cart": "~4.3.7",
     "@spartacus/checkout": "~4.3.7",
-    "@spartacus/core": "~4.3.7",
+    "@pwa-toolset/core": "~4.3.7",
     "@spartacus/product": "~4.3.7",
     "@spartacus/setup": "~4.3.7",
     "@spartacus/smartedit": "~4.3.7",
