@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
-import { CmsConfig, provideConfig } from "@spartacus/core";
-import { PersonalizationRootModule, PERSONALIZATION_FEATURE } from "@spartacus/tracking/personalization/root";
+import { CmsConfig, provideConfig } from "@pwa-toolset/core";
+import { PersonalizationRootModule, PERSONALIZATION_FEATURE } from "@pwa-toolset/tracking/personalization/root";
 
 @NgModule({
   declarations: [],
@@ -11,7 +11,7 @@ import { PersonalizationRootModule, PERSONALIZATION_FEATURE } from "@spartacus/t
     featureModules: {
       [PERSONALIZATION_FEATURE]: {
         module: () =>
-          import('@spartacus/tracking/personalization').then((m) => m.PersonalizationModule),
+          import('@pwa-toolset/tracking/personalization').then((m) => m.PersonalizationModule),
       },
     }
   })]

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
-import { savedCartTranslationChunksConfig, savedCartTranslations } from "@spartacus/cart/saved-cart/assets";
-import { CART_SAVED_CART_FEATURE, SavedCartRootModule } from "@spartacus/cart/saved-cart/root";
-import { CmsConfig, I18nConfig, provideConfig } from "@spartacus/core";
+import { savedCartTranslationChunksConfig, savedCartTranslations } from "@pwa-toolset/cart/saved-cart/assets";
+import { CART_SAVED_CART_FEATURE, SavedCartRootModule } from "@pwa-toolset/cart/saved-cart/root";
+import { CmsConfig, I18nConfig, provideConfig } from "@pwa-toolset/core";
 
 @NgModule({
   declarations: [],
@@ -12,7 +12,7 @@ import { CmsConfig, I18nConfig, provideConfig } from "@spartacus/core";
     featureModules: {
       [CART_SAVED_CART_FEATURE]: {
         module: () =>
-          import('@spartacus/cart/saved-cart').then((m) => m.SavedCartModule),
+          import('@pwa-toolset/cart/saved-cart').then((m) => m.SavedCartModule),
       },
     }
   }),

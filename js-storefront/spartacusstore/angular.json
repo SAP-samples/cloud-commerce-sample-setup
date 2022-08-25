@@ -35,7 +35,7 @@
               "src/manifest.webmanifest",
               {
                 "glob": "**/*",
-                "input": "./node_modules/@spartacus/smartedit/assets",
+                "input": "./node_modules/@pwa-toolset/smartedit/assets",
                 "output": "assets/"
               }
             ],
@@ -116,7 +116,7 @@
               "src/manifest.webmanifest",
               {
                 "glob": "**/*",
-                "input": "./node_modules/@spartacus/smartedit/assets",
+                "input": "./node_modules/@pwa-toolset/smartedit/assets",
                 "output": "assets/"
               }
             ],

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { BaseStorefrontModule } from "@spartacus/storefront";
+import { BaseStorefrontModule } from "@pwa-toolset/storefront";
 import { SpartacusConfigurationModule } from './spartacus-configuration.module';
 import { SpartacusFeaturesModule } from './spartacus-features.module';
 

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
-import { translationChunksConfig, translations } from "@spartacus/assets";
-import { FeaturesConfig, I18nConfig, OccConfig, provideConfig, SiteContextConfig } from "@spartacus/core";
-import { defaultCmsContentProviders, layoutConfig, mediaConfig } from "@spartacus/storefront";
+import { translationChunksConfig, translations } from "@pwa-toolset/assets";
+import { FeaturesConfig, I18nConfig, OccConfig, provideConfig, SiteContextConfig } from "@pwa-toolset/core";
+import { defaultCmsContentProviders, layoutConfig, mediaConfig } from "@pwa-toolset/storefront";
 import { environment } from 'src/environments/environment';
 
 @NgModule({

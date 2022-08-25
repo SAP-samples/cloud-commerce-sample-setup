@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
-import { CmsConfig, I18nConfig, provideConfig } from "@spartacus/core";
-import { productVariantsTranslationChunksConfig, productVariantsTranslations } from "@spartacus/product/variants/assets";
-import { ProductVariantsRootModule, PRODUCT_VARIANTS_FEATURE } from "@spartacus/product/variants/root";
+import { CmsConfig, I18nConfig, provideConfig } from "@pwa-toolset/core";
+import { productVariantsTranslationChunksConfig, productVariantsTranslations } from "@pwa-toolset/product/variants/assets";
+import { ProductVariantsRootModule, PRODUCT_VARIANTS_FEATURE } from "@pwa-toolset/product/variants/root";
 
 @NgModule({
   declarations: [],
@@ -12,7 +12,7 @@ import { ProductVariantsRootModule, PRODUCT_VARIANTS_FEATURE } from "@spartacus/
     featureModules: {
       [PRODUCT_VARIANTS_FEATURE]: {
         module: () =>
-          import('@spartacus/product/variants').then((m) => m.ProductVariantsModule),
+          import('@pwa-toolset/product/variants').then((m) => m.ProductVariantsModule),
       },
     }
   }),

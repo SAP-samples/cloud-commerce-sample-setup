@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
-import { CmsConfig, provideConfig } from "@spartacus/core";
-import { SmartEditConfig, SmartEditRootModule, SMART_EDIT_FEATURE } from "@spartacus/smartedit/root";
+import { CmsConfig, provideConfig } from "@pwa-toolset/core";
+import { SmartEditConfig, SmartEditRootModule, SMART_EDIT_FEATURE } from "@pwa-toolset/smartedit/root";
 
 @NgModule({
   declarations: [],
@@ -11,7 +11,7 @@ import { SmartEditConfig, SmartEditRootModule, SMART_EDIT_FEATURE } from "@spart
     featureModules: {
       [SMART_EDIT_FEATURE]: {
         module: () =>
-          import('@spartacus/smartedit').then((m) => m.SmartEditModule),
+          import('@pwa-toolset/smartedit').then((m) => m.SmartEditModule),
       },
     }
   }),

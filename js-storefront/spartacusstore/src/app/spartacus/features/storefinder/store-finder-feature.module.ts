@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
-import { CmsConfig, I18nConfig, provideConfig } from "@spartacus/core";
-import { storeFinderTranslationChunksConfig, storeFinderTranslations } from "@spartacus/storefinder/assets";
-import { StoreFinderRootModule, STORE_FINDER_FEATURE } from "@spartacus/storefinder/root";
+import { CmsConfig, I18nConfig, provideConfig } from "@pwa-toolset/core";
+import { storeFinderTranslationChunksConfig, storeFinderTranslations } from "@pwa-toolset/storefinder/assets";
+import { StoreFinderRootModule, STORE_FINDER_FEATURE } from "@pwa-toolset/storefinder/root";
 
 @NgModule({
   declarations: [],
@@ -12,7 +12,7 @@ import { StoreFinderRootModule, STORE_FINDER_FEATURE } from "@spartacus/storefin
     featureModules: {
       [STORE_FINDER_FEATURE]: {
         module: () =>
-          import('@spartacus/storefinder').then((m) => m.StoreFinderModule),
+          import('@pwa-toolset/storefinder').then((m) => m.StoreFinderModule),
       },
     }
   }),

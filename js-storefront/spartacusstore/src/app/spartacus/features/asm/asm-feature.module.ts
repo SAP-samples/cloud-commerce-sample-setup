@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
-import { asmTranslationChunksConfig, asmTranslations } from "@spartacus/asm/assets";
-import { AsmRootModule, ASM_FEATURE } from "@spartacus/asm/root";
-import { CmsConfig, I18nConfig, provideConfig } from "@spartacus/core";
+import { asmTranslationChunksConfig, asmTranslations } from "@pwa-toolset/asm/assets";
+import { AsmRootModule, ASM_FEATURE } from "@pwa-toolset/asm/root";
+import { CmsConfig, I18nConfig, provideConfig } from "@pwa-toolset/core";
 
 @NgModule({
   declarations: [],
@@ -12,7 +12,7 @@ import { CmsConfig, I18nConfig, provideConfig } from "@spartacus/core";
     featureModules: {
       [ASM_FEATURE]: {
         module: () =>
-          import('@spartacus/asm').then((m) => m.AsmModule),
+          import('@pwa-toolset/asm').then((m) => m.AsmModule),
       },
     }
   }),

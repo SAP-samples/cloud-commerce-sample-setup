@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { CmsConfig, I18nConfig, provideConfig } from "@spartacus/core";
-import { userAccountTranslationChunksConfig, userAccountTranslations } from "@spartacus/user/account/assets";
-import { UserAccountRootModule, USER_ACCOUNT_FEATURE } from "@spartacus/user/account/root";
-import { userProfileTranslationChunksConfig, userProfileTranslations } from "@spartacus/user/profile/assets";
-import { UserProfileRootModule, USER_PROFILE_FEATURE } from "@spartacus/user/profile/root";
+import { CmsConfig, I18nConfig, provideConfig } from "@pwa-toolset/core";
+import { userAccountTranslationChunksConfig, userAccountTranslations } from "@pwa-toolset/user/account/assets";
+import { UserAccountRootModule, USER_ACCOUNT_FEATURE } from "@pwa-toolset/user/account/root";
+import { userProfileTranslationChunksConfig, userProfileTranslations } from "@pwa-toolset/user/profile/assets";
+import { UserProfileRootModule, USER_PROFILE_FEATURE } from "@pwa-toolset/user/profile/root";
 
 @NgModule({
   declarations: [],
@@ -15,7 +15,7 @@ import { UserProfileRootModule, USER_PROFILE_FEATURE } from "@spartacus/user/pro
     featureModules: {
       [USER_ACCOUNT_FEATURE]: {
         module: () =>
-          import('@spartacus/user/account').then((m) => m.UserAccountModule),
+          import('@pwa-toolset/user/account').then((m) => m.UserAccountModule),
       },
     }
   }),
@@ -29,7 +29,7 @@ import { UserProfileRootModule, USER_PROFILE_FEATURE } from "@spartacus/user/pro
     featureModules: {
       [USER_PROFILE_FEATURE]: {
         module: () =>
-          import('@spartacus/user/profile').then((m) => m.UserProfileModule),
+          import('@pwa-toolset/user/profile').then((m) => m.UserProfileModule),
       },
     }
   }),
