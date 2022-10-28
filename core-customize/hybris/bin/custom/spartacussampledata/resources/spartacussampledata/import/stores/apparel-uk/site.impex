@@ -26,9 +26,9 @@ $urlPatterns=(?i)^https?://[^/]+(/[^?]*)?\?(.*\&)?(site=$spaSiteUid)(|\&.*)$,(?i
 $urlEncodingAttributes=storefront,language,currency
 
 ### Update SiteTheme ###
-INSERT_UPDATE SiteTheme;code[unique=true]
-;Santorini
-;sparta
+INSERT_UPDATE SiteTheme;code[unique=true];name[lang=en]
+;santorini;Santorini
+;sparta;Sparta
 
 ### Site for spartacus
 INSERT_UPDATE CMSSite;uid[unique=true];theme(code);channel(code);stores(uid);contentCatalogs(id);defaultCatalog(id);defaultLanguage(isoCode);siteMapConfig(configId);urlPatterns;active;previewURL;startingPage(uid,$spaContentCV);urlEncodingAttributes;defaultPromotionGroup(Identifier)[default=apparelUKPromoGrp]
@@ -45,5 +45,5 @@ INSERT_UPDATE SmartEditConfiguration;key[unique=true];value
 ;whiteListedStorefronts;"[""$fullPathApparel""]"
 
 ### Kyma OAuth client
-INSERT_UPDATE OpenIDClientDetails;clientId[unique=true] ;resourceIds   ;scope    ;autoApprove  ;authorizedGrantTypes         ;authorities  ;clientSecret   ;registeredRedirectUri      ;externalScopeClaimName ;issuer
-                                 ;client4kyma           ;hybris        ;openid   ;openid       ;password,client_credentials  ;ROLE_CLIENT  ;secret         ;http://MY_APPLICATION/     ;scope                  ;ec
+INSERT_UPDATE OpenIDClientDetails;clientId[unique=true] ;resourceIds   ;scope    ;autoApprove  ;authorizedGrantTypes                                      ;authorities  ;clientSecret   ;registeredRedirectUri                            ;externalScopeClaimName ;issuer
+                                 ;client4kyma           ;hybris        ;openid   ;openid       ;password,client_credentials,implicit,authorization_code   ;ROLE_CLIENT  ;secret         ;http://MY_APPLICATION/,http://localhost:4200     ;scope                  ;ec

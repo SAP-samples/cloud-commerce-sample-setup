@@ -107,7 +107,7 @@ INSERT_UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];name;url
 
 
 INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(uid,$contentCV)
-;;SiteLinksSlot;Slot contains some links;true;OrdersLink,StoreFinderLink,ContactUsLink,HelpLink
+;;SiteLinksSlot;Slot contains some links;true;QuickOrderLink,OrdersLink,StoreFinderLink,ContactUsLink,HelpLink
 
 INSERT_UPDATE ContentSlotName;name[unique=true];template(uid,$contentCV)[unique=true];validComponentTypes(code);compTypeGroup(code)
 ;SiteLinks;ProductDetailsPageTemplate;CMSLinkComponent;;
@@ -254,7 +254,7 @@ INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];positi
 ###### Create Register Page ######
 # TODO GH-8029: Remove page status
 INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid,$contentCV);label;defaultPage[default='true'];approvalStatus(code)[default='approved'];homepage[default='false'];pageStatus(code,itemtype(code))
-;;register;Register Page;AccountPageTemplate;/login/register;;deleted:CmsPageStatus
+;;register;Register Page;AccountPageTemplate;/login/register;;unapproved
 
 INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef)
 ;;BodyContentSlot-register;Body Content Slot for Register;true;RegisterCustomerComponent
@@ -290,6 +290,31 @@ UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];label
 INSERT_UPDATE SearchBoxComponent;uid;minCharactersBeforeRequest;maxProducts;maxSuggestions;waitTimeBeforeRequest;$contentCV[unique=true]
 ;SearchBox;0;5;5;0
 
+###### Import export ######
+
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType;&componentRef
+;;ImportExportOrderEntriesComponent;Import Export Order Entries Component;ImportExportOrderEntriesComponent;ImportExportOrderEntriesComponent
+;;ImportOrderEntriesComponent;Import Order Entries Component;ImportOrderEntriesComponent;ImportOrderEntriesComponent
+;;ExportOrderEntriesComponent;Export Order Entries Component;ExportOrderEntriesComponent;ExportOrderEntriesComponent
+
+###### Order details and confirmation ######
+
+UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid, $contentCV)
+;;BodyContent-orderdetail;AccountOrderDetailsOverviewComponent,AccountOrderDetailsShippingComponent,AccountOrderDetailsItemsComponent,ExportOrderEntriesComponent,AccountOrderDetailsTotalsComponent,AccountOrderDetailsApprovalDetailsComponent,AccountOrderDetailsReorderComponent
+;;BodyContent-orderConfirmation;OrderConfirmationThankMessageComponent,OrderConfirmationOverviewComponent,OrderConfirmationItemsComponent,ExportOrderEntriesComponent,OrderConfirmationShippingComponent,OrderConfirmationTotalsComponent,OrderConfirmationContinueButtonComponent
+
+###### Empty cart ######
+
+INSERT_UPDATE CMSParagraphComponent;$contentCV[unique=true];uid[unique=true];name;&componentRef
+;;EmptyCartParagraphComponent;Empty Cart Paragraph Component;EmptyCartParagraphComponent
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef)
+;;EmptyCartMiddleContent-cartPage;Empty Cart Middle Slot for Cart Page;true;EmptyCartParagraphComponent,ImportOrderEntriesComponent
+
+###### Clear cart ######
+
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType;&componentRef
+;;ClearCartComponent;Clear Cart Component;ClearCartComponent;ClearCartComponent
 
 ###### Pages related to checkout ######
 # add some ContentSlotName into MultiStepCheckoutSummaryPageTemplate
@@ -341,21 +366,21 @@ INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;fle
 ;;CheckoutProgressComponent;Checkout Progress Component;CheckoutProgress
 ;;CheckoutProgressMobileTopComponent;Checkout Progress Mobile Top Component;CheckoutProgressMobileTop
 ;;CheckoutProgressMobileBottomComponent;Checkout Progress Mobile Bottom Component;CheckoutProgressMobileBottom
-;;CheckoutShippingAddressComponent;Checkout Shipping Address Component;CheckoutShippingAddress
+;;CheckoutDeliveryAddressComponent;Checkout Delivery Address Component;CheckoutDeliveryAddress
 ;;CheckoutPaymentTypeComponent;Checkout Payment Type Component;CheckoutPaymentType
 ;;CheckoutCostCenterComponent;Checkout Cost Center Component;CheckoutCostCenterComponent
 
-## Shipping address page (/checkout/shipping-address)
+## Delivery address page (/checkout/delivery-address)
 INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid,$contentCV);label;defaultPage[default='true'];approvalStatus(code)[default='approved'];homepage[default='false']
-;;CheckoutShippingAddress;Checkout Shipping Address Page;MultiStepCheckoutSummaryPageTemplate;/checkout/shipping-address
+;;CheckoutDeliveryAddress;Checkout Delivery Address Page;MultiStepCheckoutSummaryPageTemplate;/checkout/delivery-address
 
 INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;cmsComponents(uid, $contentCV)
-;;BodyContentSlot-checkoutShippingAddress;Checkout Shipping Address Slot;CheckoutProgressComponent,CheckoutProgressMobileTopComponent,CheckoutCostCenterComponent,CheckoutShippingAddressComponent,CheckoutProgressMobileBottomComponent
-;;SideContentSlot-checkoutShippingAddress;Order Summary Slot;CheckoutOrderSummaryComponent
+;;BodyContentSlot-checkoutDeliveryAddress;Checkout Delivery Address Slot;CheckoutProgressComponent,CheckoutProgressMobileTopComponent,CheckoutCostCenterComponent,CheckoutDeliveryAddressComponent,CheckoutProgressMobileBottomComponent
+;;SideContentSlot-checkoutDeliveryAddress;Order Summary Slot;CheckoutOrderSummaryComponent
 
 INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true];contentSlot(uid,$contentCV)[unique=true]
-;;BodyContent-checkoutShippingAddress;BodyContent;CheckoutShippingAddress;BodyContentSlot-checkoutShippingAddress
-;;SideContent-checkoutShippingAddress;SideContent;CheckoutShippingAddress;SideContentSlot-checkoutShippingAddress
+;;BodyContent-checkoutDeliveryAddress;BodyContent;CheckoutDeliveryAddress;BodyContentSlot-checkoutDeliveryAddress
+;;SideContent-checkoutDeliveryAddress;SideContent;CheckoutDeliveryAddress;SideContentSlot-checkoutDeliveryAddress
 
 ## Delivery mode page (/checkout/delivery-mode)
 INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid,$contentCV);label;defaultPage[default='true'];approvalStatus(code)[default='approved'];homepage[default='false']
@@ -392,7 +417,7 @@ INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];name;masterTe
 ;;CheckoutReviewOrder;Checkout Review Order Page;MultiStepCheckoutSummaryPageTemplate;/checkout/review-order
 
 INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;cmsComponents(uid, $contentCV)
-;;BodyContentSlot-checkoutReviewOrder;Checkout Review Order Slot;CheckoutProgressComponent,CheckoutProgressMobileTopComponent,CheckoutReviewOrderComponent,CheckoutProgressMobileBottomComponent
+;;BodyContentSlot-checkoutReviewOrder;Checkout Review Order Slot;CheckoutProgressComponent,CheckoutProgressMobileTopComponent,CheckoutReviewOrderComponent,ExportOrderEntriesComponent,CheckoutProgressMobileBottomComponent
 ;;SideContentSlot-checkoutReviewOrder;Checkout Place Order Slot;CheckoutOrderSummaryComponent,CheckoutScheduleReplenishmentOrderComponent,CheckoutPlaceOrderComponent
 
 INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true];contentSlot(uid,$contentCV)[unique=true]
@@ -407,6 +432,22 @@ INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;fle
 
 
 ###### MY-ACCOUNT ######
+## Quick Order ## (my-account/quick-order)
+UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];masterTemplate(uid,$contentCV);label
+;;quickOrderPage;AccountPageTemplate;/my-account/quick-order
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef)
+;;BodyContentSlot-quickOrder;Body Content Slot for Quick Order;true;QuickOrderComponent,ImportExportOrderEntriesComponent
+
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true];contentSlot(uid,$contentCV)[unique=true]
+;;BodyContent-quickOrder;BodyContent;quickOrderPage;BodyContentSlot-quickOrder
+
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType;&componentRef
+;;QuickOrderComponent;Quick Order Component;QuickOrderComponent;QuickOrderComponent
+
+UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];url
+;;QuickOrderLink;/my-account/quick-order
+
 ## Cancel Order Page ##
 INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid,$contentCV);label;defaultPage[default='true'];approvalStatus(code)[default='approved'];homepage[default='false']
 ;;CancelOrderPage;Cancel Order Page;AccountPageTemplate;/my-account/order/cancel
@@ -544,8 +585,12 @@ INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;fle
 INSERT_UPDATE CMSParagraphComponent;$contentCV[unique=true];uid[unique=true];name;&componentRef;
 ;;NoticeTextParagraph;Notice Text Paragraph;NoticeTextParagraph;
 
+# Scroll back to top
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType;&componentRef
+;;ScrollToTopComponent;Scroll To Top Component;ScrollToTopComponent;ScrollToTopComponent
+
 UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid, $contentCV)
-;;FooterSlot;FooterNavigationComponent,AnonymousConsentOpenDialogComponent,NoticeTextParagraph,AnonymousConsentManagementBannerComponent
+;;FooterSlot;FooterNavigationComponent,AnonymousConsentOpenDialogComponent,NoticeTextParagraph,AnonymousConsentManagementBannerComponent,ScrollToTopComponent 
 
 
 ###### My Company CMS items ######
@@ -566,13 +611,14 @@ INSERT_UPDATE BannerComponent;$contentCV[unique=true];uid[unique=true];name;urlL
 ;;UsersHomeLink;Users Home Link;/organization/users;UsersHomeLink
 ;;UserGroupsHomeLink;UserGroups Home Link;/organization/user-groups;UserGroupsHomeLink
 ;;PurchaseLimitsHomeLink;PurchaseLimits Home Link;/organization/purchase-limits;PurchaseLimitsHomeLink
+;;AccountSummaryHomeLink;AccountSummary Home Link;/organization/account-summary;AccountSummaryHomeLink
 
 ## Organization Home Page (/organization)
 INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid,$contentCV);label;defaultPage[default='true'];approvalStatus(code)[default='approved'];homepage[default='false']
 ;;MyCompany;My Company Page;CompanyPageTemplate;/organization
 
 INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;cmsComponents(uid, $contentCV)
-;;BodyContentSlot-MyCompany;My Company Slot;UnitsHomeLink,UsersHomeLink,CostCentersHomeLink,BudgetsHomeLink,PurchaseLimitsHomeLink,UserGroupsHomeLink
+;;BodyContentSlot-MyCompany;My Company Slot;UnitsHomeLink,UsersHomeLink,CostCentersHomeLink,BudgetsHomeLink,PurchaseLimitsHomeLink,UserGroupsHomeLink,AccountSummaryHomeLink
 
 INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true];contentSlot(uid,$contentCV)[unique=true]
 ;;BodyContent-MyCompany;BodyContent;MyCompany;BodyContentSlot-MyCompany
@@ -655,6 +701,33 @@ INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;cmsCompo
 INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true];contentSlot(uid,$contentCV)[unique=true]
 ;;BodyContent-ManageUsers;BodyContent;ManageUsers;BodyContentSlot-ManageUsers
 
+## Manage AccountSummary Page
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType
+;;ManageAccountSummaryListComponent;Manage Account Summary List Component;ManageAccountSummaryListComponent
+
+INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid,$contentCV);label;defaultPage[default='true'];approvalStatus(code)[default='approved'];homepage[default='false']
+;;ManageAccountSummary;Manage Account Summary Page;CompanyPageTemplate;/organization/account-summary
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;cmsComponents(uid, $contentCV)
+;;BodyContentSlot-ManageAccountSummary;Manage Account Summary Slot;ManageAccountSummaryListComponent
+
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true];contentSlot(uid,$contentCV)[unique=true]
+;;BodyContent-ManageAccountSummary;BodyContent;ManageAccountSummary;BodyContentSlot-ManageAccountSummary
+
+## Account Summary Details Page
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType
+;;AccountSummaryHeaderComponent;AccountSummary Header;AccountSummaryHeaderComponent
+;;AccountSummaryDocumentComponent;AccountSummary Documents;AccountSummaryDocumentComponent
+
+INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid,$contentCV);label;defaultPage[default='true'];approvalStatus(code)[default='approved'];homepage[default='false']
+;;AccountSummaryDetails;Account Summmary Details Page;CompanyPageTemplate;/organization/account-summary/details
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;cmsComponents(uid, $contentCV)
+;;BodyContentSlot-AccountSummaryDetails;Account SummaryDetails Slot;AccountSummaryHeaderComponent,AccountSummaryDocumentComponent
+
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true];contentSlot(uid,$contentCV)[unique=true]
+;;BodyContent-AccountSummaryDetails;BodyContent;AccountSummaryDetails;BodyContentSlot-AccountSummaryDetails
+
 ###### Pages related to order-approvals ######
 # Order Approvals Page
 INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];label
@@ -720,7 +793,7 @@ INSERT_UPDATE CMSNavigationEntry;uid[unique=true];$contentCV[unique=true];name;n
 
 # Sort the order
 UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];children(uid,$contentCV)
-;MyAccountNavNode;;PersonalDetailsNavNode,UpdateEmailNavNode,PaymentDetailsNavNode,UpdatePasswordNavNode,OrderHistoryNavNode,AddressBookNavNode,MyReplenishmentOrdersNavNode,WishListNavNode,ApprovalDashboardNavNode,MyCompanyNavNode,SignOutNavNode
+;MyAccountNavNode;;PersonalDetailsNavNode,UpdateEmailNavNode,PaymentDetailsNavNode,UpdatePasswordNavNode,OrderHistoryNavNode,SavedCartsNavNode,AddressBookNavNode,MyReplenishmentOrdersNavNode,ApprovalDashboardNavNode,MyCompanyNavNode,SignOutNavNode
 
 # Add restriction
 INSERT_UPDATE CMSUserGroupRestriction;$contentCV[unique=true];uid[unique=true];name;userGroups(uid);includeSubgroups;components(&linkRef)
@@ -764,6 +837,7 @@ INSERT_UPDATE ContentSlotForTemplate;$contentCV;uid[unique=true];position[unique
 
 INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];label;name;masterTemplate(uid,$contentCV);defaultPage;approvalStatus(code)[default='approved']
 ;;textfieldConfig;/configure/textfield;Textfield Configurator;TextfieldConfigurationTemplate;true
+;;textfieldConfigOv;/configure-overview/textfield;Textfield Configurator Overview;TextfieldConfigurationTemplate;true
 
 INSERT_UPDATE ElementsForSlot;source($contentCV,uid)[unique=true];target(&componentRef)[unique=true];
 ;TextfieldConfigContentSlot;TextfieldConfigurationForm
@@ -812,13 +886,16 @@ INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];flexType
 INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];flexType;name;&componentRef
 ;;ConfiguratorOverviewBanner;ConfiguratorOverviewBanner;Configuration Banner;ConfiguratorOverviewBanner
 
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];flexType;name;&componentRef
+;;ConfiguratorExitButton;ConfiguratorExitButton;Configuration Exit Button;ConfiguratorExitButton
+
 INSERT_UPDATE PageTemplate;$contentCV[unique=true];uid[unique=true];name;frontendTemplateName;restrictedPageTypes(code);active[default=true]
 ;;VariantConfigurationTemplate;Variant Configuration Template;configuration/variantConfigurationPage;ContentPage
 
 INSERT_UPDATE ContentSlotName;name[unique=true];template(uid,$contentCV)[unique=true][default='VariantConfigurationTemplate'];validComponentTypes(code);compTypeGroup(code)
-;TopHeaderSlot;;;wide
-;SiteLogo;;;logo
-;HeaderLinks;;;headerlinks
+;SiteContext;;;
+;SiteLogo;;;
+;SiteLinks;;;
 ;SearchBox;;;searchbox
 ;MiniCart;;;minicart
 ;NavigationBar;;;navigation
@@ -828,18 +905,19 @@ INSERT_UPDATE ContentSlotName;name[unique=true];template(uid,$contentCV)[unique=
 ;VariantConfigMenu;;CMSFlexComponent;narrow
 ;VariantConfigBottombar;;CMSFlexComponent;narrow
 ;VariantConfigLoading;;CMSFlexComponent;wide
+;VariantConfigExitButton;;CMSFlexComponent;wide
 
 INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef)
 ;;VariantConfigHeaderSlot;Variant Configuration Header Slot;true;ConfiguratorUpdateMessage,ConfiguratorProductTitle,ConfiguratorTabBar
 ;;VariantConfigContentSlot;Variant Configuration Content Slot;true;ConfiguratorGroupTitle,ConfiguratorForm,ConfiguratorPrevNext
 ;;VariantConfigMenuSlot;Variant Configuration Side Bar Slot;true;ConfiguratorMenu
 ;;VariantConfigBottombarSlot;Variant Configuration Bottom Bar Slot;true;ConfiguratorPriceSummary,ConfiguratorAddToCartButton
-
+;;VariantConfigExitButtonSlot;Variant Configuration Exit Slot;true
 
 INSERT_UPDATE ContentSlotForTemplate;$contentCV;uid[unique=true];position[unique=true];pageTemplate(uid,$contentCV)[unique=true][default='VariantConfigurationTemplate'];contentSlot(uid,$contentCV)[unique=true];allowOverwrite
-;;TopHeaderSlot-VariantConfigPage;TopHeaderSlot;;TopHeaderSlot;true
+;;SiteContext-VariantConfigPage;SiteContext;;SiteContextSlot;true
 ;;SiteLogo-VariantConfigPage;SiteLogo;;SiteLogoSlot;true
-;;HeaderLinks-VariantConfigPage;HeaderLinks;;HeaderLinksSlot;true
+;;SiteLinks-VariantConfigPage;SiteLinks;;SiteLinksSlot;true
 ;;SearchBox-VariantConfigPage;SearchBox;;SearchBoxSlot;true
 ;;MiniCart-VariantConfigPage;MiniCart;;MiniCartSlot;true
 ;;NavigationBar-VariantConfigPage;NavigationBar;;NavigationBarSlot;true
@@ -849,7 +927,10 @@ INSERT_UPDATE ContentSlotForTemplate;$contentCV;uid[unique=true];position[unique
 ;;ConfigContent-VariantConfigPage;VariantConfigContent;;VariantConfigContentSlot;true
 ;;ConfigMenu-VariantConfigPage;VariantConfigMenu;;VariantConfigMenuSlot;true
 ;;ConfigBottombar-VariantConfigPage;VariantConfigBottombar;;VariantConfigBottombarSlot;true
+;;ConfigExitButton-VariantConfigPage;VariantConfigExitButton;;VariantConfigExitButtonSlot;true
 
+INSERT_UPDATE ElementsForSlot;source($contentCV,uid)[unique=true];target(&componentRef)[unique=true];sequencenumber[default=10]
+;VariantConfigExitButtonSlot;ConfiguratorExitButton;10
 
 INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];label;name;masterTemplate(uid,$contentCV);defaultPage;approvalStatus(code)[default='approved']
 ;;variantConfig;/configure/vc;Variant Configuration;VariantConfigurationTemplate;true
@@ -858,9 +939,9 @@ INSERT_UPDATE PageTemplate;$contentCV[unique=true];uid[unique=true];name;fronten
 ;;VariantConfigurationOverviewTemplate;Variant Configuration Overview Template;configuration/variantConfigurationOverviewPage;ContentPage
 
 INSERT_UPDATE ContentSlotName;name[unique=true];template(uid,$contentCV)[unique=true][default='VariantConfigurationOverviewTemplate'];validComponentTypes(code);compTypeGroup(code)
-;TopHeaderSlot;;;wide
-;SiteLogo;;;logo
-;HeaderLinks;;;headerlinks
+;SiteContext;;;
+;SiteLogo;;;
+;SiteLinks;;;
 ;SearchBox;;;searchbox
 ;MiniCart;;;minicart
 ;NavigationBar;;;navigation
@@ -871,17 +952,19 @@ INSERT_UPDATE ContentSlotName;name[unique=true];template(uid,$contentCV)[unique=
 ;VariantConfigOverviewBottombarSlot;;CMSFlexComponent;narrow
 ;VariantConfigOverviewLoading;;CMSFlexComponent;wide
 ;VariantConfigOverviewBanner;;CMSFlexComponent;wide
+;VariantConfigOverviewExitButton;;CMSFlexComponent;wide
 
 INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef)
 ;;VariantConfigOverviewHeaderSlot;Variant Configuration Overview Header Slot;true;ConfiguratorProductTitle,ConfiguratorTabBar
 ;;VariantConfigOverviewContentSlot;Variant Configuration Overview Content Slot;true;ConfiguratorOverviewForm
 ;;VariantConfigOverviewBottombarSlot;Variant Configuration Overview Bottom Bar Slot;true;ConfiguratorPriceSummary,ConfiguratorAddToCartButton
 ;;VariantConfigOverviewBannerContentSlot;Variant Configuration Overview Banner Content Slot;true;ConfiguratorOverviewBanner
+;;VariantConfigOverviewExitButtonSlot;Variant Configuration Overview Exit Button Slot;true
 
 INSERT_UPDATE ContentSlotForTemplate;$contentCV;uid[unique=true];position[unique=true];pageTemplate(uid,$contentCV)[unique=true][default='VariantConfigurationOverviewTemplate'];contentSlot(uid,$contentCV)[unique=true];allowOverwrite
-;;TopHeaderSlot-VariantConfigOverviewPage;TopHeaderSlot;;TopHeaderSlot;true
+;;SiteContext-VariantConfigOverviewPage;SiteContext;;SiteContextSlot;true
 ;;SiteLogo-VariantConfigOverviewPage;SiteLogo;;SiteLogoSlot;true
-;;HeaderLinks-VariantConfigOverviewPage;HeaderLinks;;HeaderLinksSlot;true
+;;SiteLinks-VariantConfigOverviewPage;SiteLinks;;SiteLinksSlot;true
 ;;SearchBox-VariantConfigOverviewPage;SearchBox;;SearchBoxSlot;true
 ;;MiniCart-VariantConfigOverviewPage;MiniCart;;MiniCartSlot;true
 ;;NavigationBar-VariantConfigOverviewPage;NavigationBar;;NavigationBarSlot;true
@@ -890,6 +973,10 @@ INSERT_UPDATE ContentSlotForTemplate;$contentCV;uid[unique=true];position[unique
 ;;ConfigOverviewHeader-VariantConfigOverviewPage;VariantConfigOverviewHeader;;VariantConfigOverviewHeaderSlot;true
 ;;ConfigOverviewContent-VariantConfigOverviewPage;VariantConfigOverviewContent;;VariantConfigOverviewContentSlot;true
 ;;ConfigOverviewBottombar-VariantConfigOverviewPage;VariantConfigOverviewBottombar;;VariantConfigOverviewBottombarSlot;true
+;;ConfigExitButton-VariantConfigOverviewPage;VariantConfigOverviewExitButton;;VariantConfigOverviewExitButtonSlot;true
+
+INSERT_UPDATE ElementsForSlot;source($contentCV,uid)[unique=true];target(&componentRef)[unique=true];sequencenumber[default=10]
+;VariantConfigOverviewExitButtonSlot;ConfiguratorExitButton;10
 
 INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];label;name;masterTemplate(uid,$contentCV);defaultPage;approvalStatus(code)[default='approved']
 ;;variantConfigOverview;/configure-overview/vc;Variant Configuration Overview;VariantConfigurationOverviewTemplate;true
@@ -900,10 +987,9 @@ INSERT_UPDATE PageTemplate;$contentCV[unique=true];uid[unique=true];name;fronten
 ;;CpqConfigurationTemplate;CPQ Configuration Template;configuration/cpqConfigurationPage;ContentPage
 
 INSERT_UPDATE ContentSlotName;name[unique=true];template(uid,$contentCV)[unique=true][default='CpqConfigurationTemplate'];validComponentTypes(code);compTypeGroup(code)
-;TopHeaderSlot;;;wide
-;PlaceholderContentSlot;;;wide
-;SiteLogo;;;logo
-;HeaderLinks;;;headerlinks
+;SiteContext;;;
+;SiteLogo;;;
+;SiteLinks;;;
 ;SearchBox;;;searchbox
 ;MiniCart;;;minicart
 ;NavigationBar;;;navigation
@@ -911,22 +997,27 @@ INSERT_UPDATE ContentSlotName;name[unique=true];template(uid,$contentCV)[unique=
 ;CpqConfigHeader;;;wide
 ;CpqConfigBanner;;;wide
 ;CpqConfigBottombar;;;narrow
+;CpqConfigExitButton;;;wide
 
 INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active
 ;;CpqConfigHeaderSlot;Cpq Configuration Header Slot;true
 ;;CpqConfigBottombarSlot;Cpq Configuration Bottom Bar Slot;true
+;;CpqConfigExitButtonSlot;Cpq Configuration Exit Button Slot;true
 
 INSERT_UPDATE ContentSlotForTemplate;$contentCV;uid[unique=true];position[unique=true];pageTemplate(uid,$contentCV)[unique=true][default='CpqConfigurationTemplate'];contentSlot(uid,$contentCV)[unique=true];allowOverwrite
-;;TopHeaderSlot-CpqConfigTemplate;TopHeaderSlot;;TopHeaderSlot;true
-;;PlaceholderContentSlot-CpqConfigTemplate;PlaceholderContentSlot;;PlaceholderContentSlot;true
+;;SiteContext-CpqConfigTemplate;SiteContext;;SiteContextSlot;true
 ;;SiteLogo-CpqConfigTemplate;SiteLogo;;SiteLogoSlot;true
-;;HeaderLinks-CpqConfigTemplate;HeaderLinks;;HeaderLinksSlot;true
+;;SiteLinks-CpqConfigTemplate;SiteLinks;;SiteLinksSlot;true
 ;;SearchBox-CpqConfigTemplate;SearchBox;;SearchBoxSlot;true
 ;;MiniCart-CpqConfigTemplate;MiniCart;;MiniCartSlot;true
 ;;NavigationBar-CpqConfigTemplate;NavigationBar;;NavigationBarSlot;true
 ;;Footer-CpqConfigTemplate;Footer;;FooterSlot;true
 ;;ConfigHeader-CpqConfigTemplate;CpqConfigHeader;;CpqConfigHeaderSlot;true
 ;;ConfigBottombar-CpqConfigTemplate;CpqConfigBottombar;;CpqConfigBottombarSlot;true
+;;CpqConfigExitButtonSlot-CpqConfigTemplate;CpqConfigExitButton;;CpqConfigExitButtonSlot;true
+
+INSERT_UPDATE ElementsForSlot;source($contentCV,uid)[unique=true];target(&componentRef)[unique=true];sequencenumber[default=10]
+;CpqConfigExitButtonSlot;ConfiguratorExitButton;10
 
 INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];label;name;masterTemplate(uid,$contentCV);defaultPage;approvalStatus(code)[default='approved']
 ;;cpqConfig;/configure/cpq;CPQ Configurator;CpqConfigurationTemplate;true
@@ -938,6 +1029,7 @@ INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active
 ;;CpqConfigMenuSlot;Cpq Configuration Side Bar Slot;true
 ;;CpqConfigOverviewContentSlot;CPQ Configuration Overview Content Slot;true
 ;;CpqConfigOverviewBannerContentSlot;CPQ Configuration Overview Banner Content Slot;true
+;;CpqConfigOverviewExitButtonSlot;Cpq Configuration Exit Button Slot;true
 
 INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true];contentSlot(uid,$contentCV)[unique=true]
 ;;ConfigBanner-CpqConfigPage;CpqConfigBanner;cpqConfig;CpqConfigBannerContentSlot
@@ -962,11 +1054,7 @@ INSERT_UPDATE ElementsForSlot;source($contentCV,uid)[unique=true];target(&compon
 ;CpqConfigBottombarSlot;ConfiguratorAddToCartButton;20
 ;CpqConfigOverviewBannerContentSlot;ConfiguratorOverviewBanner;
 ;CpqConfigOverviewContentSlot;ConfiguratorOverviewForm;
-
-###### Import export ######
-
-INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType;&componentRef
-;;ExportOrderEntriesComponent;Export Order Entries Component;ExportOrderEntriesComponent;ExportOrderEntriesComponent
+;CpqConfigOverviewExitButtonSlot;ConfiguratorExitButton;10
 
 ###### Saved carts ######
 # my-account dropdown for saved carts
@@ -983,14 +1071,14 @@ INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;fle
 ;;AddToSavedCartsComponent;Add To Saved Carts Component;AddToSavedCartsComponent
 
 INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;cmsComponents(uid, $contentCV)
-;;TopContent-cartPage;Top content for Cart Slot;AddToSavedCartsComponent,CartComponent,ExportOrderEntriesComponent
+;;TopContent-cartPage;Top content for Cart Slot;AddToSavedCartsComponent,CartComponent,ClearCartComponent,ImportExportOrderEntriesComponent
 
 # saved carts (history) page
 INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType
 ;;AccountSavedCartHistoryComponent;Account Saved Cart History Component;AccountSavedCartHistoryComponent
 
 INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;cmsComponents(uid, $contentCV)
-;;BodyContent-saved-carts;Body content for Saved Carts History Slot;AccountSavedCartHistoryComponent
+;;BodyContent-saved-carts;Body content for Saved Carts History Slot;AccountSavedCartHistoryComponent,ImportOrderEntriesComponent
 
 # saved carts (details) page
 INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType
@@ -999,4 +1087,4 @@ INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;fle
 ;;SavedCartDetailsActionComponent;Saved Cart Details Action Component;SavedCartDetailsActionComponent
 
 INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;cmsComponents(uid, $contentCV)
-;;BodyContent-savedCartDetailsPage;Body content for Saved Carts Details Slot;SavedCartDetailsOverviewComponent,SavedCartDetailsItemsComponent,ExportOrderEntriesComponent,SavedCartDetailsActionComponent
+;;BodyContent-savedCartDetailsPage;Body content for Saved Carts Details Slot;SavedCartDetailsOverviewComponent,SavedCartDetailsItemsComponent,ImportExportOrderEntriesComponent,SavedCartDetailsActionComponent

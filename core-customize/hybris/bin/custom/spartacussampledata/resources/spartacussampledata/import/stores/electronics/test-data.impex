@@ -184,56 +184,20 @@ INSERT_UPDATE PromotionSourceRule;code[unique=true];priority;maxAllowedRuns;rule
 "#% afterEach: de.hybris.platform.core.Registry.getApplicationContext().getBean(""ruleEngineSystemSetup"").registerSourceRuleForDeployment(impex.getLastImportedItem(), new String[]{$promotionsModule,$previewModule});"
 ;GiftProductProm;160;1;;"[{""definitionId"":""y_qualifying_products"",""parameters"":{""products_operator"":{""uuid"":""c23447d8-17a1-4b86-b58c-d0a68086165f"",""type"":""Enum(de.hybris.platform.ruledefinitions.CollectionOperator)"",""value"":""CONTAINS_ANY""},""quantity"":{""uuid"":""dd642a57-e1f9-43db-a8bd-5c6f7c8af9a3"",""type"":""java.lang.Integer"",""value"":1},""catalog"":{""uuid"":""3d31d041-c05e-4dc4-9c1d-daad97da911c"",""type"":""ItemType(Catalog)"",""value"":""electronicsProductCatalog""},""operator"":{""uuid"":""eb27416c-323f-44e5-8fdfb7cfaea996e2"",""type"":""Enum(de.hybris.platform.ruledefinitions.AmountOperator)"",""value"":""GREATER_THAN_OR_EQUAL""},""products"":{""uuid"":""c7301cd8-bc26-457c-ae7a-d8275c855764"",""type"":""List(ItemType(Product))"",""value"":[""1934796""]}},""children"":[]}]";"[{""definitionId"":""y_free_gift"",""parameters"":{""product"":{""uuid"":""f50646d8-fc86-4c60-9b74-e5dc8643cc52"",""type"":""ItemType(Product)"",""value"":""137220""},""quantity"":{""uuid"":""aabb2475-66e1-4e6e-aa47-72b02b10c0e6"",""type"":""java.lang.Integer"",""value"":1}}}]";;
 
-############# CDS (Merchandising carousel) E2E test data ###################
-$contentCatalog=electronics-spaContentCatalog
-$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Online])[default=$contentCatalog:Online]
-
-# Homepage carousel
-# Create the CMS Component
-INSERT_UPDATE MerchandisingCarouselComponent;$contentCV[unique=true];uid[unique=true];name;title;numberToDisplay;strategy;&componentRef
-;;HomepageE2EMerchandisingCarousel;Homepage E2E Merchandising Carousel;Homepage E2E Merchandising Carousel;10;00000000-0000-0000-0000-000000000000;HomepageE2EMerchandisingCarousel
-
-# Add the component to the slot
-INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid,$contentCV)
-;;Section2CSlot-Homepage;HomepageE2EMerchandisingCarousel
-
-# Category Page carousel
-# Create the CMS Component
-INSERT_UPDATE MerchandisingCarouselComponent;$contentCV[unique=true];uid[unique=true];name;title;numberToDisplay;strategy;&componentRef
-;;CategoryPageE2EMerchandisingCarousel;Category Page E2E Merchandising Carousel;Category Page E2E Merchandising Carousel;10;00000000-0000-0000-0000-000000000000;CategoryPageE2EMerchandisingCarousel
-
-# Add the component to the slot
-INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid,$contentCV)[mode=append]
-;;BottomHeaderSlot;CategoryPageE2EMerchandisingCarousel
-
-# SLR Page carousel
-# Create the CMS Component
-INSERT_UPDATE MerchandisingCarouselComponent;$contentCV[unique=true];uid[unique=true];name;title;numberToDisplay;strategy;&componentRef
-;;SLRCategoryPageE2EMerchandisingCarousel;SLR Category Page E2E Merchandising Carousel;SLR Category Page E2E Merchandising Carousel;10;00000000-0000-0000-0000-000000000000;SLRCategoryPageE2EMerchandisingCarousel
-
-# Add the component to the slot
-INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid,$contentCV)
-;;SLRCamerasBottomHeaderSlot;SLRCategoryPageE2EMerchandisingCarousel
-
-############# CDS (Profile tag) E2E test data ###################
-INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType;&componentRef;
-;;ProfileTagComponent;ProfileTag Spartacus Component;ProfileTagComponent;ProfileTagComponent;
-
-INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid, $contentCV)[mode=append]
-;;FooterSlot;ProfileTagComponent
-
-############# Qualtrics Integration E2E test data ###################
-INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType
-;;QualtricsComponent;A Qualtrics Component;QualtricsComponent
-;;QualtricsEmbeddedFeedbackComponent;Qualtrics Embedded Feedback Component;QualtricsEmbeddedFeedbackComponent
-
-INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid,$contentCV)
-;;ProductSummarySlot;ProductImagesComponent,ProductIntroComponent,QualtricsEmbeddedFeedbackComponent,ProductSummaryComponent,VariantSelector,AddToCart,ConfigureProductComponent,AddToWishListComponent,StockNotificationComponent
-
-INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid,$contentCV)[mode=append]
-;;UpSellingSlot;QualtricsComponent
 
 ################Notification feature E2E test data###################################################################
 UPDATE CronJob;code[unique=true];active[default=false]
 ;stockLevelStatusCronJob
 ;expiredInterestsCleanUpJob
+
+############ Inventory display - Cameras category now have a stock threshold ################
+$productCatalog=electronicsProductCatalog
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Online'])[unique=true,default=$productCatalog:Online]
+
+UPDATE Category;$catalogVersion;code[unique=true];stockLevelThreshold
+;;577;343
+
+# Remove not purchasable base products in electronics
+REMOVE Product[batchmode=true];code[unique=true];
+;1978440;
+;1978440_md;

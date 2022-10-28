@@ -20,9 +20,6 @@ REMOVE ContentSlotForPage;$contentCV[unique=true];uid[unique=true]
 REMOVE ContentSlot;$contentCV[unique=true];uid[unique=true]
 ;;TopContent-quickOrderPage
 
-REMOVE ContentPage;$contentCV[unique=true];uid[unique=true]
-;;quickOrderPage
-
 # Order expired
 REMOVE CMSParagraphComponent;$contentCV[unique=true];uid[unique=true]
 ;;orderExpiredMenuParagraph
@@ -100,17 +97,14 @@ REMOVE CMSNavigationNode;$contentCV[unique=true];uid[unique=true]
 # This is the parent of quickOrder and importSavedCart
 ;;OrderToolsNavNode
 ;;OrderFormsNavNode
-;;QuickOrderNavNode
 ;;ImportSavedCartNavNode
 
 REMOVE CMSNavigationEntry;$contentCV[unique=true];uid[unique=true]
 ;;OrderFormsNavNodeEntry
-;;QuickOrderNavNodeEntry
 ;;ImportSavedCartNavNodeEntry
 
 REMOVE CMSLinkComponent;$contentCV[unique=true];uid[unique=true]
 ;;OrderFormsLink
-;;QuickOrderLink
 ;;ImportSavedCartLink
 
 ###### Replace JspIncludeComponent to CMSFlexComponent ######
@@ -151,6 +145,8 @@ INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;fle
 ;;UpdatePasswordComponent;Update Password Component;UpdatePasswordComponent;UpdatePasswordComponent
 ;;UpdateProfileComponent;Update Profile Component;UpdateProfileComponent;UpdateProfileComponent
 ;;CartApplyCouponComponent;Cart Apply Coupon Component;CartApplyCouponComponent;CartApplyCouponComponent
+;;CartQuickOrderFormComponent;Cart Quick Order Form Component;CartQuickOrderFormComponent;CartQuickOrderFormComponent
+;;CartProceedToCheckoutComponent;Cart Proceed To Checkout Component;CartProceedToCheckoutComponent;CartProceedToCheckoutComponent
 
 # Update slots
 UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid, $contentCV)
@@ -164,7 +160,7 @@ UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid, $
 ;;BodyContent-orderConfirmation;OrderConfirmationThankMessageComponent,OrderConfirmationOverviewComponent,OrderConfirmationItemsComponent,OrderConfirmationShippingComponent,OrderConfirmationTotalsComponent,OrderConfirmationContinueButtonComponent
 ;;TopContent-cartPage;CartComponent
 ;;CenterLeftContentSlot-cartPage;PromotionsComponent,PotentialPromotionsComponent
-;;CenterRightContentSlot-cartPage;CartTotalsComponent,CartApplyCouponComponent
+;;CenterRightContentSlot-cartPage;CartTotalsComponent,CartApplyCouponComponent,CartQuickOrderFormComponent,CartProceedToCheckoutComponent
 ;;BottomContentSlot-cartPage;CheckoutComponent,CartSuggestions
 ;;LeftContentSlot-checkout-login;ReturningCustomerCheckoutLoginComponent
 ;;LeftContentSlot-login;ReturningCustomerLoginComponent

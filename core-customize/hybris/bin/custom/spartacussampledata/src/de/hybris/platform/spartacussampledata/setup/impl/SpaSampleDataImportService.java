@@ -31,6 +31,9 @@ public class SpaSampleDataImportService extends DefaultAddonSampleDataImportServ
 {
 	private static final String SYNC_CONTENT_CATALOG = "electronics->spa";
 	private static final String STORES_URL = "/stores/";
+	private static final String BEGIN_IMPORTING_STORE_MSG = "Begin importing store";
+	private static final String PRODUCT_CATALOGS_URL = "/productCatalogs/";
+	private static final String CUSTOMER_COUPON_SERVICES_EXTENSION_NAME = "customercouponservices";
 
 	private ModelService modelService;
 	private Map<String, String> additionalSampleDataImports;
@@ -78,8 +81,6 @@ public class SpaSampleDataImportService extends DefaultAddonSampleDataImportServ
 			// 8- import email data
 			importImpexFile(context, importRoot + "/contentCatalogs/" + catalogName + "ContentCatalog/email-content.impex", false);
 
-			// 9 - import test data for each catalog
-			importImpexFile(context, importRoot + STORES_URL + catalogName + "/test-data.impex", false);
 		}
 	}
 
@@ -115,6 +116,45 @@ public class SpaSampleDataImportService extends DefaultAddonSampleDataImportServ
 		super.importStoreLocations(context, importRoot, storeName);
 	}
 
+	@Override
+	protected void importStoreInitialData(final SystemSetupContext context, final String importRoot, final List<String> storeNames,
+			final String productCatalog, final List<String> contentCatalogs, final boolean solrReindex)
+	{
+		for (final String storeName : storeNames)
+		{
+
+			logInfo(context, BEGIN_IMPORTING_STORE_MSG + " [" + storeName + "]");
+
+			logInfo(context, "Begin importing warehouses for [" + storeName + "]");
+
+			importImpexFile(context, importRoot + STORES_URL + storeName + "/warehouses.impex", false);
+		}
+
+		// perform product sync job
+		final boolean productSyncSuccess = synchronizeProductCatalog(context, productCatalog, true);
+		if (!productSyncSuccess)
+		{
+			logInfo(context, "Product catalog synchronization for [" + productCatalog
+					+ "] did not complete successfully, that's ok, we will rerun it after the content catalog sync.");
+		}
+
+		// exclude solr impexes for stores when customercouponservices extensions are not available
+		if(isExtensionLoaded(CUSTOMER_COUPON_SERVICES_EXTENSION_NAME)) {
+			for (final String storeName : storeNames)
+			{
+				importImpexFile(context, importRoot + STORES_URL + storeName + "/solr.impex", false);
+			}
+		} else {
+			logInfo(context, "Impex for Coupons was skipped because the extension [" + CUSTOMER_COUPON_SERVICES_EXTENSION_NAME + "] requiring the changes is not included in the setup.");
+		}
+
+		synchronizeContent(context, productCatalog, contentCatalogs, productSyncSuccess);
+
+		// Load reviews after synchronization is done
+		importImpexFile(context, importRoot + PRODUCT_CATALOGS_URL + productCatalog + "ProductCatalog/reviews.impex", false);
+
+		processStoreNames(context, importRoot, storeNames, productCatalog, solrReindex);
+	}
 
 	private void synchronizeSpaContentCatalog(final SystemSetupContext context, final SyncItemJob syncJobItem)
 	{
