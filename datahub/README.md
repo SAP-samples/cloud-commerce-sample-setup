@@ -42,12 +42,12 @@ config folder
 ### Add an Optional Environment Variable File for Environments that Require Unique Properties
 
 1. Open the config folder.
-2. Open the datahub-environment-[environment_code].conf file.
+2. Open the datahub-environment-\[environment_code\].conf file.
 3. Add environment properties for each unique property that you want to apply to the environment.
-4. Name the file datahub-environment[environment_code].conf.
+4. Name the file datahub-environment\[environment_code\].conf.
  - To find the environment code for an environment, see the instructions in the [SAP Commerce Cloud help](https://help.sap.com/viewer/0fa6bcf4736c46f78c248512391eb467/SHIP/en-US/1f6dfab4981347db8ab221acaf37960f.html).
-5. Create a separate datahub-environment-[environment_code].conf file for each environment that requires unique properties.
-6. If you do not need unique environment variables, delete the datahub-environment[environment_code].conf file.
+5. Create a separate datahub-environment-\[environment_code\].conf file for each environment that requires unique properties.
+6. If you do not need unique environment variables, delete the datahub-environment\[environment_code\].conf file.
 
 ### Verify the logback.xml file
 
@@ -65,7 +65,7 @@ Pre-compiled extensions are extensions such as Marketplace extensions.  If neede
 4. If you are not using pre-compiled extensions, delete the lib folder.
 
 ### Create the encryption key
-### **Do NOT use the encryption key in this sample repository for productive use!**
+### **Do NOT use the encryption key in this sample repository for production use!**
 
 1. Make sure that you have openSSL installed on your local machine.
 2. Open a terminal window and run the following command to generate a 128-bit AES key.
@@ -81,7 +81,7 @@ $ openssl enc -aes-128-ecb -k secret -P -md sha1
 7. Move the file to the config folder.
 
 ### Add an SSL Certificate for Secure Communication between Data Hub and Third-Party Systems
-### **Do NOT use the sample google certificate for productive use!**
+### **Do NOT use the sample google certificate for production use!**
 
 1. Open the config folder.
 2. Create a folder named “trusted-certificates”.

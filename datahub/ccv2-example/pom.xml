@@ -23,22 +23,20 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<jre.source.version>1.8</jre.source.version>
-		<jre.target.version>1.8</jre.target.version>
+		<jre.source.version>17</jre.source.version>
+		<jre.target.version>17</jre.target.version>
 		<maven.compiler.plugin.version>3.1</maven.compiler.plugin.version>
-		<spring.version>4.3.11.RELEASE</spring.version>
+		<spring.version>5.3.23</spring.version>
 		<prometheus.version>0.0.21</prometheus.version>
 		<additionalparam>-Xdoclint:none</additionalparam>
 	</properties>
 
 	<dependencies>
 		<!-- 
-		This is how you access the Datahub SDK Jar in your maven repo 
+		This is how you access the DataHub SDK Jar in your maven repo
 		The datahub builder will set 2 maven properties: 
-			- ${datahub.sdk.jar} to the absolute path to the sdk jar from the
-			  datahub-suite.zip 
-			- ${datahub.sdk.version} to the version of datahub requested
-			  in the manifest. 
+			- ${datahub.sdk.jar} to the absolute path to the sdk jar from the datahub-suite.zip
+			- ${datahub.sdk.version} to the version of datahub requested in the manifest.
 		Copy the bit dependency declaration below to include datahub-sdk.jar in
 		your project.
 		-->
@@ -54,14 +52,14 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>1.7.5</version>
+			<version>2.0.3</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
 			<scope>compile</scope>
-			<version>1.2.3</version>
+			<version>1.4.4</version>
 		</dependency>
 		<dependency>
     		<groupId>javax.annotation</groupId>
@@ -71,7 +69,6 @@
 	</dependencies>
 
 	<build>
-
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -82,32 +79,6 @@
 					<target>${jre.target.version}</target>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.tomcat.maven</groupId>
-				<artifactId>tomcat7-maven-plugin</artifactId>
-				<version>2.2</version>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-shade-plugin</artifactId>
-				<version>3.1.0</version>
-				<configuration>
-					<artifactSet>
-						<includes>
-							<include>io.prometheus:*</include>
-						</includes>
-					</artifactSet>
-				</configuration>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>shade</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
 		</plugins>
 	</build>
-
 </project>

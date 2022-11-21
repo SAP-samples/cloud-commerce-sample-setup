@@ -1,0 +1,271 @@
+#% impex.setLocale( Locale.ENGLISH )
+
+# DataHub configurations
+
+INSERT_UPDATE DataHubInstanceModel;instanceName[unique = true];instanceLocation
+                                  ;localhost;http://localhost:8080/datahub-webapp/v1;
+                                  ;datahub;http://datahub:8080/datahub-webapp/v1;
+
+
+INSERT_UPDATE OAuthClientDetails;clientId[unique=true]; resourceIds; scope; authorizedGrantTypes                ; authorities; clientSecret; registeredRedirectUri
+                                ;eic                  ; hybris     ; basic; implicit,client_credentials,password; ROLE_CLIENT; secret      ; https://backoffice:8088/oauth2_implicit_callback;
+
+$password=@password[translator = de.hybris.platform.impex.jalo.translators.UserPasswordTranslator]
+INSERT_UPDATE Employee; uid[unique = true]; name    ; description                    ; $password         ; groups(uid)
+                      ; datahub           ; Data Hub; A user for imports from DataHub; *:<datahub_pwd>; hac_console_impeximport
+UPDATE Employee; uid[unique = true]; loginDisabled
+               ; datahub           ; false
+
+# Data needed for the IDoc smoke test
+
+INSERT_UPDATE Unit;code[unique=true];sapCode;unitType;conversion;name[lang=af];name[lang=ar];name[lang=bg];name[lang=ca];name[lang=cs];name[lang=da];name[lang=de];name[lang=el];name[lang=en];name[lang=es];name[lang=et];name[lang=fi];name[lang=fr];name[lang=he];name[lang=hr];name[lang=hu];name[lang=id];name[lang=is];name[lang=it];name[lang=ja];name[lang=ko];name[lang=lt];name[lang=lv];name[lang=ms];name[lang=nl];name[lang=no];name[lang=pl];name[lang=pt];name[lang=ro];name[lang=ru];name[lang=sh];name[lang=sk];name[lang=sl];name[lang=sr];name[lang=sv];name[lang=th];name[lang=tr];name[lang=uk];name[lang=z1];name[lang=zf];name[lang=zh]
+;EA;EA;SAP-AAAADL;1;;;;;"každý";"pr. styk";"each";;"each";"cada uno/a";;"kappale";"par pièce";;;"each";;;"each";"各";"개별";;;;"Stuk";"per stykk";"każdy";"Cada";;"Each";;"každý";;;"per styck";"ชิ้น";"each";;"Each";"每一";"each"
+;KGM;KG;SAP-MASS;1;;;;;"Kilogram";"Kilogram";"Kilogramm";;"Kilogram";"Kilogramo";;"Kilogramma";"Kilogramme";;;"Kilogramm";;;"Chilogrammo";"キログラム";"킬로그램";;;;"Kilogram";"Kilogram";"Kilogram";"Quilograma";;"Килограмм";;"Kilogram";;;"Kilogram";"กิโลกรัม";"Kilogram";;"Kilogram";"公斤";"公斤"
+
+INSERT_UPDATE ClassificationSystem;id[unique=true]
+;ERP_CLASSIFICATION_001
+;ERP_CLASSIFICATION_026
+;ERP_CLASSIFICATION_200
+;ERP_CLASSIFICATION_300
+
+INSERT_UPDATE ClassificationSystemVersion;catalog(id)[unique=true];version[unique=true]
+;ERP_CLASSIFICATION_001;ERP_IMPORT
+;ERP_CLASSIFICATION_026;ERP_IMPORT
+;ERP_CLASSIFICATION_200;ERP_IMPORT
+;ERP_CLASSIFICATION_300;ERP_IMPORT
+
+INSERT ClassificationAttributeUnit;systemVersion(catalog(id),version)[unique=true];code[unique=true];symbol
+#% beforeEach: if(FlexibleSearch.getInstance().search("SELECT {pk} FROM {ClassificationAttributeUnit AS u JOIN ClassificationSystemVersion AS v ON {u:systemVersion} = {v:pk} JOIN ClassificationSystem AS c ON {v:catalog} = {c:pk} } WHERE {u:code} = '"+line.get(2)+"' AND {v:version} = 'ERP_IMPORT' AND {c:id} = '"+line.get(1).split(":")[0]+"'", de.hybris.platform.catalog.jalo.classification.ClassificationAttributeUnit.class).getCount()>0) line.clear() ;
+;ERP_CLASSIFICATION_001:ERP_IMPORT;005;"mg/dl"
+;ERP_CLASSIFICATION_026:ERP_IMPORT;005;"mg/dl"
+;ERP_CLASSIFICATION_200:ERP_IMPORT;005;"mg/dl"
+;ERP_CLASSIFICATION_300:ERP_IMPORT;005;"mg/dl"
+;ERP_CLASSIFICATION_001:ERP_IMPORT;EA;"KAŽ"
+;ERP_CLASSIFICATION_026:ERP_IMPORT;EA;"KAŽ"
+;ERP_CLASSIFICATION_200:ERP_IMPORT;EA;"KAŽ"
+;ERP_CLASSIFICATION_300:ERP_IMPORT;EA;"KAŽ"
+;ERP_CLASSIFICATION_001:ERP_IMPORT;KVT;"kV"
+;ERP_CLASSIFICATION_026:ERP_IMPORT;KVT;"kV"
+;ERP_CLASSIFICATION_200:ERP_IMPORT;KVT;"kV"
+;ERP_CLASSIFICATION_300:ERP_IMPORT;KVT;"kV"
+
+UPDATE ClassificationAttributeUnit;systemVersion(catalog(id),version)[unique=true];code[unique=true];sapCode;unitType;conversionFactor;name[lang=af];name[lang=ar];name[lang=bg];name[lang=ca];name[lang=cs];name[lang=da];name[lang=de];name[lang=el];name[lang=en];name[lang=es];name[lang=et];name[lang=fi];name[lang=fr];name[lang=he];name[lang=hr];name[lang=hu];name[lang=id];name[lang=is];name[lang=it];name[lang=ja];name[lang=ko];name[lang=lt];name[lang=lv];name[lang=ms];name[lang=nl];name[lang=no];name[lang=pl];name[lang=pt];name[lang=ro];name[lang=ru];name[lang=sh];name[lang=sk];name[lang=sl];name[lang=sr];name[lang=sv];name[lang=th];name[lang=tr];name[lang=uk];name[lang=z1];name[lang=zf];name[lang=zh]
+;ERP_CLASSIFICATION_001:ERP_IMPORT;003;005;SAP-VPROPO;1;;;;;;;"Units/Liter";;"Units/Liter";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;ERP_CLASSIFICATION_026:ERP_IMPORT;003;005;SAP-VPROPO;1;;;;;;;"Units/Liter";;"Units/Liter";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;ERP_CLASSIFICATION_200:ERP_IMPORT;003;005;SAP-VPROPO;1;;;;;;;"Units/Liter";;"Units/Liter";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;ERP_CLASSIFICATION_300:ERP_IMPORT;003;005;SAP-VPROPO;1;;;;;;;"Units/Liter";;"Units/Liter";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;ERP_CLASSIFICATION_001:ERP_IMPORT;005;007;SAP-VPROPO;1;;;;;;;"Milligramm/Deziliter";;"milligrams/deciliter";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;ERP_CLASSIFICATION_026:ERP_IMPORT;005;007;SAP-VPROPO;1;;;;;;;"Milligramm/Deziliter";;"milligrams/deciliter";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;ERP_CLASSIFICATION_200:ERP_IMPORT;005;007;SAP-VPROPO;1;;;;;;;"Milligramm/Deziliter";;"milligrams/deciliter";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;ERP_CLASSIFICATION_300:ERP_IMPORT;005;007;SAP-VPROPO;1;;;;;;;"Milligramm/Deziliter";;"milligrams/deciliter";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;ERP_CLASSIFICATION_200:ERP_IMPORT;EA;EA;SAP-AAAADL;1;;;;;"každý";"pr. styk";"each";;"each";"cada uno/a";;"kappale";"par pièce";;;"each";;;"each";"各";"개별";;;;"Stuk";"per stykk";"każdy";"Cada";;"Each";;"každý";;;"per styck";"ชิ้น";"each";;"Each";"每一";"each"
+;ERP_CLASSIFICATION_300:ERP_IMPORT;EA;EA;SAP-AAAADL;1;;;;;"každý";"pr. styk";"each";;"each";"cada uno/a";;"kappale";"par pièce";;;"each";;;"each";"各";"개별";;;;"Stuk";"per stykk";"każdy";"Cada";;"Each";;"každý";;;"per styck";"ชิ้น";"each";;"Each";"每一";"each"
+;ERP_CLASSIFICATION_001:ERP_IMPORT;KVT;KV;SAP-VOLTAG;1000;;;;;"Kilovolt";"Kilovolt";"Kilovolt";;"Kilovolt";"Kilovoltio";;"Kilovoltti";"Kilovolt";;;"Kilovolt";;;"Chilovolt";"キロボルト";"킬로볼트";;;;"Kilovolt";"Kilovolt";"Kilowolt";"Quilovolt";;"Киловольт";;"Kilovolt";;;"Kilovolt";"กิโลโวลต์";"Kilovolt";;"Kilovolt";"千伏特";"千伏"
+;ERP_CLASSIFICATION_026:ERP_IMPORT;KVT;KV;SAP-VOLTAG;1000;;;;;"Kilovolt";"Kilovolt";"Kilovolt";;"Kilovolt";"Kilovoltio";;"Kilovoltti";"Kilovolt";;;"Kilovolt";;;"Chilovolt";"キロボルト";"킬로볼트";;;;"Kilovolt";"Kilovolt";"Kilowolt";"Quilovolt";;"Киловольт";;"Kilovolt";;;"Kilovolt";"กิโลโวลต์";"Kilovolt";;"Kilovolt";"千伏特";"千伏"
+;ERP_CLASSIFICATION_200:ERP_IMPORT;KVT;KV;SAP-VOLTAG;1000;;;;;"Kilovolt";"Kilovolt";"Kilovolt";;"Kilovolt";"Kilovoltio";;"Kilovoltti";"Kilovolt";;;"Kilovolt";;;"Chilovolt";"キロボルト";"킬로볼트";;;;"Kilovolt";"Kilovolt";"Kilowolt";"Quilovolt";;"Киловольт";;"Kilovolt";;;"Kilovolt";"กิโลโวลต์";"Kilovolt";;"Kilovolt";"千伏特";"千伏"
+;ERP_CLASSIFICATION_300:ERP_IMPORT;KVT;KV;SAP-VOLTAG;1000;;;;;"Kilovolt";"Kilovolt";"Kilovolt";;"Kilovolt";"Kilovoltio";;"Kilovoltti";"Kilovolt";;;"Kilovolt";;;"Chilovolt";"キロボルト";"킬로볼트";;;;"Kilovolt";"Kilovolt";"Kilowolt";"Quilovolt";;"Киловольт";;"Kilovolt";;;"Kilovolt";"กิโลโวลต์";"Kilovolt";;"Kilovolt";"千伏特";"千伏"
+
+INSERT Country;isocode[unique=true];active
+#% beforeEach: if( FlexibleSearch.getInstance().search("SELECT {pk} FROM {Country} WHERE {isocode} = ?isocode", Collections.singletonMap( "isocode", line.get(1)), de.hybris.platform.jalo.c2l.Country.class).getCount() > 0 ) line.clear() ;
+;GB;false
+;LS;false
+;US;false
+
+INSERT Region;country(isocode);isocode[unique=true];active
+#% beforeEach: if( FlexibleSearch.getInstance().search("SELECT {pk} FROM {Region} WHERE {isocode} = ?isocode", Collections.singletonMap( "isocode", line.get(2)), de.hybris.platform.jalo.c2l.Region.class).getCount() > 0 ) line.clear() ;
+;GB;GB-AM;false
+;GB;GB-AT;false
+;GB;GB-AV;false
+;GB;GB-BE;false
+;GB;GB-BK;false
+;GB;GB-BO;false
+;GB;GB-BU;false
+;GB;GB-CA;false
+;GB;GB-CE;false
+;GB;GB-CH;false
+;GB;GB-CL;false
+;GB;GB-CO;false
+;GB;GB-CU;false
+;GB;GB-CV;false
+;GB;GB-DB;false
+;GB;GB-DF;false
+;GB;GB-DN;false
+;GB;GB-DO;false
+;GB;GB-DU;false
+;GB;GB-DV;false
+;GB;GB-DY;false
+;GB;GB-ES;false
+;GB;GB-FI;false
+;GB;GB-FM;false
+;GB;GB-GL;false
+;GB;GB-GM;false
+;GB;GB-GR;false
+;GB;GB-GW;false
+;GB;GB-GY;false
+;GB;GB-HA;false
+;GB;GB-HI;false
+;GB;GB-HT;false
+;GB;GB-HU;false
+;GB;GB-HW;false
+;GB;GB-IM;false
+;GB;GB-IW;false
+;GB;GB-KE;false
+;GB;GB-LA;false
+;GB;GB-LD;false
+;GB;GB-LE;false
+;GB;GB-LI;false
+;GB;GB-LO;false
+;GB;GB-LT;false
+;GB;GB-MG;false
+;GB;GB-MY;false
+;GB;GB-NH;false
+;GB;GB-NK;false
+;GB;GB-NT;false
+;GB;GB-NU;false
+;GB;GB-OX;false
+;GB;GB-PO;false
+;GB;GB-SC;false
+;GB;GB-SG;false
+;GB;GB-SH;false
+;GB;GB-SK;false
+;GB;GB-SO;false
+;GB;GB-ST;false
+;GB;GB-SU;false
+;GB;GB-SX;false
+;GB;GB-SY;false
+;GB;GB-TA;false
+;GB;GB-TW;false
+;GB;GB-TY;false
+;GB;GB-WA;false
+;GB;GB-WG;false
+;GB;GB-WI;false
+;GB;GB-WM;false
+;GB;GB-WO;false
+;GB;GB-YK;false
+;GB;GB-YN;false
+;GB;GB-YS;false
+;GB;GB-YW;false
+;IE;IE-KV;false
+;US;US-AK;false
+;US;US-AL;false
+;US;US-AR;false
+;US;US-AS;false
+;US;US-AZ;false
+;US;US-CA;false
+;US;US-CO;false
+;US;US-CT;false
+;US;US-DC;false
+;US;US-DE;false
+;US;US-FL;false
+;US;US-GA;false
+;US;US-GU;false
+;US;US-HI;false
+;US;US-IA;false
+;US;US-ID;false
+;US;US-IL;false
+;US;US-IN;false
+;US;US-KS;false
+;US;US-KY;false
+;US;US-LA;false
+;US;US-MA;false
+;US;US-MD;false
+;US;US-ME;false
+;US;US-MI;false
+;US;US-MN;false
+;US;US-MO;false
+;US;US-MP;false
+;US;US-MS;false
+;US;US-MT;false
+;US;US-NC;false
+;US;US-ND;false
+;US;US-NE;false
+;US;US-NH;false
+;US;US-NJ;false
+;US;US-NM;false
+;US;US-NV;false
+;US;US-NY;false
+;US;US-OH;false
+;US;US-OK;false
+;US;US-OR;false
+;US;US-PA;false
+;US;US-PR;false
+;US;US-RI;false
+;US;US-SC;false
+;US;US-SD;false
+;US;US-TN;false
+;US;US-TX;false
+;US;US-UT;false
+;US;US-VA;false
+;US;US-VI;false
+;US;US-VT;false
+;US;US-WA;false
+;US;US-WI;false
+;US;US-WV;false
+;US;US-WY;false
+
+INSERT_UPDATE ProductTaxGroup;code[unique=true];name[lang=af];name[lang=ar];name[lang=bg];name[lang=ca];name[lang=cs];name[lang=da];name[lang=de];name[lang=el];name[lang=en];name[lang=es];name[lang=et];name[lang=fi];name[lang=fr];name[lang=he];name[lang=hr];name[lang=hu];name[lang=id];name[lang=is];name[lang=it];name[lang=ja];name[lang=ko];name[lang=lt];name[lang=lv];name[lang=ms];name[lang=nl];name[lang=no];name[lang=pl];name[lang=pt];name[lang=ro];name[lang=ru];name[lang=sh];name[lang=sk];name[lang=sl];name[lang=sr];name[lang=sv];name[lang=th];name[lang=tr];name[lang=uk];name[lang=z1];name[lang=zf];name[lang=zh]
+;GB-MWST-0;;;;;"GB Výstupní DPH Bez daně";"GB Salgsmoms Ingen moms";"GB Ausgangssteuer keine Steuer";;"GB Output Tax No tax";"GB IVA repercutido Sin impuestos";;"GB Myynnin ALV Ei veroja";"GB Taxe collectée Exempt de TVA";;;"GB Fizetendő ÁFA Nincs adó";;;"GB IVA vendite Nessuna imposta";"GB 仮受消費税 非課税";"GB 매출부가가치세 면세";;;;"GB Belastingen Geen belasting";"GB Utgående mva. Ingen avgift";"GB Podatek należny Bez podatku";"GB IVA liquidado Sem impostos";;"GB Исходящий НДС Без налога";;"GB Výstupná DPH Bez dane";;;"GB Utgående moms Utan skatt";"GB ภาษีขาย ไม่รวมภาษี";"GB Hesaplanan KDV Vergisiz";;"GB Output Tax No tax";"GB 銷項稅 無稅";"GB 销项税 没有税"
+;GB-MWST-1;;;;;"GB Výstupní DPH Plná daň";"GB Salgsmoms Fuld moms";"GB Ausgangssteuer volle Steuer";;"GB Output Tax Full tax";"GB IVA repercutido Impuesto completo";;"GB Myynnin ALV Kaikki verot";"GB Taxe collectée Soumis 100% à la TVA";;;"GB Fizetendő ÁFA Teljes adó";;;"GB IVA vendite Imposta completa";"GB 仮受消費税 全課税";"GB 매출부가가치세 세금전액";;;;"GB Belastingen Volle belasting";"GB Utgående mva. Full avgift";"GB Podatek należny Pełny podatek";"GB IVA liquidado Imposto 100%";;"GB Исходящий НДС Полный налог";;"GB Výstupná DPH Plná daň";;;"GB Utgående moms full skatt";"GB ภาษีขาย คิดภาษีเต็ม";"GB Hesaplanan KDV Tam vergi";;"GB Output Tax Full Tax";"GB 銷項稅 全額稅";"GB 销项税 全额税"
+;GB-MWST-2;;;;;"GB Výstupní DPH Poloviční daň";"GB Salgsmoms Halv moms";"GB Ausgangssteuer halbe Steuer";;"GB Output Tax Half tax";"GB IVA repercutido Mitad del impuesto";;"GB Myynnin ALV Osa verosta";"GB Taxe collectée Soumis à 50% de TVA";;;"GB Fizetendő ÁFA 50%-os adó";;;"GB IVA vendite Imposta parziale";"GB 仮受消費税 半額課税";"GB 매출부가가치세 세금반액";;;;"GB Belastingen Halve belasting";"GB Utgående mva. Halv avgift";"GB Podatek należny Połowa podatku";"GB IVA liquidado Imposto 50%";;"GB Исходящий НДС Половина налога";;"GB Výstupná DPH Polov.daň";;;"GB Utgående moms halv skatt";"GB ภาษีขาย ภาษีครึ่งหนึ่ง";"GB Hesaplanan KDV Yarı vergi";;"GB Output Tax Half tax";"GB 銷項稅 半額稅";"GB 销项税 半额税"
+;GB-MWST-3;;;;;"GB Výstupní DPH Minim.sazba daně";"GB Salgsmoms Lav momssats";"GB Ausgangssteuer Niedrigsteuersatz";;"GB Output Tax Low tax rate";"GB IVA repercutido Tasa de imp. mínima";;"GB Myynnin ALV Alh. veroprosentti";"GB Taxe collectée Taux de T.V.A. mini.";;;"GB Fizetendő ÁFA Alacsony adókulcs";;;"GB IVA vendite Aliquota IVA min.";"GB 仮受消費税 低税率";"GB 매출부가가치세 저세율";;;;"GB Belastingen Laagste waarde rec.";"GB Utgående mva. Lav avgiftssats";"GB Podatek należny Najniższa stopa pod.";"GB IVA liquidado Taxa imposto infer.";;"GB Исходящий НДС Миним. ставка налога";;"GB Výstupná DPH Minim.sadzba dane";;;"GB Utgående moms lägsta skattesats";"GB ภาษีขาย อัตราภาษีต่ำ";"GB Hesaplanan KDV Düşük vergi oranı";;"GB Output Tax Low tax rate";"GB 銷項稅 低稅率";"GB 销项税 低税率"
+
+INSERT_UPDATE Vendor;code[unique=true]
+;ERP
+
+INSERT_UPDATE Warehouse;code[unique=true];default;vendor(code);name[lang=af];name[lang=ar];name[lang=bg];name[lang=ca];name[lang=cs];name[lang=da];name[lang=de];name[lang=el];name[lang=en];name[lang=es];name[lang=et];name[lang=fi];name[lang=fr];name[lang=he];name[lang=hr];name[lang=hu];name[lang=id];name[lang=is];name[lang=it];name[lang=ja];name[lang=ko];name[lang=lt];name[lang=lv];name[lang=ms];name[lang=nl];name[lang=no];name[lang=pl];name[lang=pt];name[lang=ro];name[lang=ru];name[lang=sh];name[lang=sk];name[lang=sl];name[lang=sr];name[lang=sv];name[lang=th];name[lang=tr];name[lang=uk];name[lang=z1];name[lang=zf];name[lang=zh]
+;0001;true;ERP;;;;;;;;;"Werk 0001";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+INSERT_UPDATE ProductPriceGroup;code[unique=true];name[lang=af];name[lang=ar];name[lang=bg];name[lang=ca];name[lang=cs];name[lang=da];name[lang=de];name[lang=el];name[lang=en];name[lang=es];name[lang=et];name[lang=fi];name[lang=fr];name[lang=he];name[lang=hr];name[lang=hu];name[lang=id];name[lang=is];name[lang=it];name[lang=ja];name[lang=ko];name[lang=lt];name[lang=lv];name[lang=ms];name[lang=nl];name[lang=no];name[lang=pl];name[lang=pt];name[lang=ro];name[lang=ru];name[lang=sh];name[lang=sk];name[lang=sl];name[lang=sr];name[lang=sv];name[lang=th];name[lang=tr];name[lang=uk];name[lang=z1];name[lang=zf];name[lang=zh]
+;01;;;;;"Norm.díly";"Normaldele";"Normalteile";;"Normal";"Piezas normales";;"Tavalliset osat";"Pièces normales";;;"Normál részek";;;"Pezzi normali";"標準部品";"표준부품";;;;"Normale onderdelen";"Normaldeler";"Części zwykłe";"Peças normais";;"СтндртнДетали";;"Norm.diely";;;"Delar";"ปกติ";"Normal parçalar";;"Standard Parts";"一般";"通常"
+
+INSERT_UPDATE ProductDiscountGroup;code[unique=true];name[lang=af];name[lang=ar];name[lang=bg];name[lang=ca];name[lang=cs];name[lang=da];name[lang=de];name[lang=el];name[lang=en];name[lang=es];name[lang=et];name[lang=fi];name[lang=fr];name[lang=he];name[lang=hr];name[lang=hu];name[lang=id];name[lang=is];name[lang=it];name[lang=ja];name[lang=ko];name[lang=lt];name[lang=lv];name[lang=ms];name[lang=nl];name[lang=no];name[lang=pl];name[lang=pt];name[lang=ro];name[lang=ru];name[lang=sh];name[lang=sk];name[lang=sl];name[lang=sr];name[lang=sv];name[lang=th];name[lang=tr];name[lang=uk];name[lang=z1];name[lang=zf];name[lang=zh]
+;01;;;;;"Norm.díly";"Normaldele";"Normalteile";;"Normal";"Piezas normales";;"Tavalliset osat";"Pièces normales";;;"Normál részek";;;"Pezzi normali";"標準部品";"표준부품";;;;"Normale onderdelen";"Normaldeler";"Części zwykłe";"Peças normais";;"СтндртнДетали";;"Norm.diely";;;"Delar";"ปกติ";"Normal parçalar";;"Standard Parts";"一般";"通常"
+
+INSERT_UPDATE UserPriceGroup;code[unique=true];name[lang=af];name[lang=ar];name[lang=bg];name[lang=ca];name[lang=cs];name[lang=da];name[lang=de];name[lang=el];name[lang=en];name[lang=es];name[lang=et];name[lang=fi];name[lang=fr];name[lang=he];name[lang=hr];name[lang=hu];name[lang=id];name[lang=is];name[lang=it];name[lang=ja];name[lang=ko];name[lang=lt];name[lang=lv];name[lang=ms];name[lang=nl];name[lang=no];name[lang=pl];name[lang=pt];name[lang=ro];name[lang=ru];name[lang=sh];name[lang=sk];name[lang=sl];name[lang=sr];name[lang=sv];name[lang=th];name[lang=tr];name[lang=uk];name[lang=z1];name[lang=zf];name[lang=zh]
+;01;;;;;"Velkoodběrat.";"Storkunde";"Großabnehmer";;"Bulk buyer";"Comprador al p.mayor";;"Suurasiakas";"Gros acheteur";;;"Nagybani vevő";;;"Cliente abituale";"得意先 (発注頻度-多)";"벌크바이어";;;;"Grootafnemer";"Storkunde";"Hurtownik";"Cliente importante";;"Оптовик";;"Veľkoodberat.";;;"Storkund";"ผู้ซื้อในปริมาณมาก";"Toptan alıcı";;"Bulk buyer";"大宗買主";"大宗买主"
+
+INSERT_UPDATE UserDiscountGroup;code[unique=true];name[lang=af];name[lang=ar];name[lang=bg];name[lang=ca];name[lang=cs];name[lang=da];name[lang=de];name[lang=el];name[lang=en];name[lang=es];name[lang=et];name[lang=fi];name[lang=fr];name[lang=he];name[lang=hr];name[lang=hu];name[lang=id];name[lang=is];name[lang=it];name[lang=ja];name[lang=ko];name[lang=lt];name[lang=lv];name[lang=ms];name[lang=nl];name[lang=no];name[lang=pl];name[lang=pt];name[lang=ro];name[lang=ru];name[lang=sh];name[lang=sk];name[lang=sl];name[lang=sr];name[lang=sv];name[lang=th];name[lang=tr];name[lang=uk];name[lang=z1];name[lang=zf];name[lang=zh]
+;01;;;;;"Velkoodběrat.";"Storkunde";"Großabnehmer";;"Bulk buyer";"Comprador al p.mayor";;"Suurasiakas";"Gros acheteur";;;"Nagybani vevő";;;"Cliente abituale";"得意先 (発注頻度-多)";"벌크바이어";;;;"Grootafnemer";"Storkunde";"Hurtownik";"Cliente importante";;"Оптовик";;"Veľkoodberat.";;;"Storkund";"ผู้ซื้อในปริมาณมาก";"Toptan alıcı";;"Bulk buyer";"大宗買主";"大宗买主"
+
+INSERT_UPDATE Title;code[unique=true];name[lang=af];name[lang=ar];name[lang=bg];name[lang=ca];name[lang=cs];name[lang=da];name[lang=de];name[lang=el];name[lang=en];name[lang=es];name[lang=et];name[lang=fi];name[lang=fr];name[lang=he];name[lang=hr];name[lang=hu];name[lang=id];name[lang=is];name[lang=it];name[lang=ja];name[lang=ko];name[lang=lt];name[lang=lv];name[lang=ms];name[lang=nl];name[lang=no];name[lang=pl];name[lang=pt];name[lang=ro];name[lang=ru];name[lang=sh];name[lang=sk];name[lang=sl];name[lang=sr];name[lang=sv];name[lang=th];name[lang=tr];name[lang=uk];name[lang=z1];name[lang=zf];name[lang=zh]
+;0001;;;;;"Pan";"Hr.";"Frau";;"Ms.";"Sra.";;"Rouva";"Madame";;;"Nő";;;"Signore";"様";"Ms.";;;;"Heer";"Fru";"Pani";"Sra.";;"Госпожа";;"Pani";;;"Fru";"นางสาว";"Bayan";;"Ms.";"女士";"女士"
+
+INSERT_UPDATE ReferenceDistributionChannelMapping;salesOrganization[unique=true];distChannel[unique=true];distChannelName[lang=af];distChannelName[lang=ar];distChannelName[lang=bg];distChannelName[lang=ca];distChannelName[lang=cs];distChannelName[lang=da];distChannelName[lang=de];distChannelName[lang=el];distChannelName[lang=en];distChannelName[lang=es];distChannelName[lang=et];distChannelName[lang=fi];distChannelName[lang=fr];distChannelName[lang=he];distChannelName[lang=hr];distChannelName[lang=hu];distChannelName[lang=id];distChannelName[lang=is];distChannelName[lang=it];distChannelName[lang=ja];distChannelName[lang=ko];distChannelName[lang=lt];distChannelName[lang=lv];distChannelName[lang=ms];distChannelName[lang=nl];distChannelName[lang=no];distChannelName[lang=pl];distChannelName[lang=pt];distChannelName[lang=ro];distChannelName[lang=ru];distChannelName[lang=sh];distChannelName[lang=sk];distChannelName[lang=sl];distChannelName[lang=sr];distChannelName[lang=sv];distChannelName[lang=th];distChannelName[lang=tr];distChannelName[lang=uk];distChannelName[lang=z1];distChannelName[lang=zf];distChannelName[lang=zh];refDistChannelConditions;refDistChannelConditionsName[lang=af];refDistChannelConditionsName[lang=ar];refDistChannelConditionsName[lang=bg];refDistChannelConditionsName[lang=ca];refDistChannelConditionsName[lang=cs];refDistChannelConditionsName[lang=da];refDistChannelConditionsName[lang=de];refDistChannelConditionsName[lang=el];refDistChannelConditionsName[lang=en];refDistChannelConditionsName[lang=es];refDistChannelConditionsName[lang=et];refDistChannelConditionsName[lang=fi];refDistChannelConditionsName[lang=fr];refDistChannelConditionsName[lang=he];refDistChannelConditionsName[lang=hr];refDistChannelConditionsName[lang=hu];refDistChannelConditionsName[lang=id];refDistChannelConditionsName[lang=is];refDistChannelConditionsName[lang=it];refDistChannelConditionsName[lang=ja];refDistChannelConditionsName[lang=ko];refDistChannelConditionsName[lang=lt];refDistChannelConditionsName[lang=lv];refDistChannelConditionsName[lang=ms];refDistChannelConditionsName[lang=nl];refDistChannelConditionsName[lang=no];refDistChannelConditionsName[lang=pl];refDistChannelConditionsName[lang=pt];refDistChannelConditionsName[lang=ro];refDistChannelConditionsName[lang=ru];refDistChannelConditionsName[lang=sh];refDistChannelConditionsName[lang=sk];refDistChannelConditionsName[lang=sl];refDistChannelConditionsName[lang=sr];refDistChannelConditionsName[lang=sv];refDistChannelConditionsName[lang=th];refDistChannelConditionsName[lang=tr];refDistChannelConditionsName[lang=uk];refDistChannelConditionsName[lang=z1];refDistChannelConditionsName[lang=zf];refDistChannelConditionsName[lang=zh];refDistChannelCustMat;refDistChannelCustMatName[lang=af];refDistChannelCustMatName[lang=ar];refDistChannelCustMatName[lang=bg];refDistChannelCustMatName[lang=ca];refDistChannelCustMatName[lang=cs];refDistChannelCustMatName[lang=da];refDistChannelCustMatName[lang=de];refDistChannelCustMatName[lang=el];refDistChannelCustMatName[lang=en];refDistChannelCustMatName[lang=es];refDistChannelCustMatName[lang=et];refDistChannelCustMatName[lang=fi];refDistChannelCustMatName[lang=fr];refDistChannelCustMatName[lang=he];refDistChannelCustMatName[lang=hr];refDistChannelCustMatName[lang=hu];refDistChannelCustMatName[lang=id];refDistChannelCustMatName[lang=is];refDistChannelCustMatName[lang=it];refDistChannelCustMatName[lang=ja];refDistChannelCustMatName[lang=ko];refDistChannelCustMatName[lang=lt];refDistChannelCustMatName[lang=lv];refDistChannelCustMatName[lang=ms];refDistChannelCustMatName[lang=nl];refDistChannelCustMatName[lang=no];refDistChannelCustMatName[lang=pl];refDistChannelCustMatName[lang=pt];refDistChannelCustMatName[lang=ro];refDistChannelCustMatName[lang=ru];refDistChannelCustMatName[lang=sh];refDistChannelCustMatName[lang=sk];refDistChannelCustMatName[lang=sl];refDistChannelCustMatName[lang=sr];refDistChannelCustMatName[lang=sv];refDistChannelCustMatName[lang=th];refDistChannelCustMatName[lang=tr];refDistChannelCustMatName[lang=uk];refDistChannelCustMatName[lang=z1];refDistChannelCustMatName[lang=zf];refDistChannelCustMatName[lang=zh]
+;0001;01;;;;;"Cesta odbytu 01";"Salgskanal 01";"Vertriebsweg 01";;"Distribtn Channel 01";"Venta directa";;"Jakelutie 01";"Vente directe";;;"01 értékesítési csat";;;"Canale distr.01";"直販";"직접판매";;;;"Directe verkopen";"Distribusjonskan. 01";"Kanał dystrybucji 01";"Venda direta";;"Продажа напрямую";;"Cesta odbytu 01";;;"Distr.kanal 01";"ช่องทางจัดจำหน่าย 01";"Dağıtım kanalı 01";;"Direct Sales";"配銷通路 01";"分销渠道 01";01;;;;;"Cesta odbytu 01";"Salgskanal 01";"Vertriebsweg 01";;"Distribtn Channel 01";"Venta directa";;"Jakelutie 01";"Vente directe";;;"01 értékesítési csat";;;"Canale distr.01";"直販";"직접판매";;;;"Directe verkopen";"Distribusjonskan. 01";"Kanał dystrybucji 01";"Venda direta";;"Продажа напрямую";;"Cesta odbytu 01";;;"Distr.kanal 01";"ช่องทางจัดจำหน่าย 01";"Dağıtım kanalı 01";;"Direct Sales";"配銷通路 01";"分销渠道 01";01;;;;;"Cesta odbytu 01";"Salgskanal 01";"Vertriebsweg 01";;"Distribtn Channel 01";"Venta directa";;"Jakelutie 01";"Vente directe";;;"01 értékesítési csat";;;"Canale distr.01";"直販";"직접판매";;;;"Directe verkopen";"Distribusjonskan. 01";"Kanał dystrybucji 01";"Venda direta";;"Продажа напрямую";;"Cesta odbytu 01";;;"Distr.kanal 01";"ช่องทางจัดจำหน่าย 01";"Dağıtım kanalı 01";;"Direct Sales";"配銷通路 01";"分销渠道 01"
+;0001;C1;;;;;;;"CP-Food";;"Direct Sales";"Venta directa";;;"Vente directe";;;"01 értékesítési csat";;;;"直販";"유통경로 01";;;;;;"Kanał dystrybucji 01";"Venda direta";;"Продажа напрямую";;"Cesta odbytu 01";;;"Distr.kanal 01";;"Dağıtım kanalı 01";;"Direct Sales";"配銷通路 01";"分销渠道 01";01;;;;;"Cesta odbytu 01";"Salgskanal 01";"Vertriebsweg 01";;"Distribtn Channel 01";"Venta directa";;"Jakelutie 01";"Vente directe";;;"01 értékesítési csat";;;"Canale distr.01";"直販";"직접판매";;;;"Directe verkopen";"Distribusjonskan. 01";"Kanał dystrybucji 01";"Venda direta";;"Продажа напрямую";;"Cesta odbytu 01";;;"Distr.kanal 01";"ช่องทางจัดจำหน่าย 01";"Dağıtım kanalı 01";;"Direct Sales";"配銷通路 01";"分销渠道 01";01;;;;;"Cesta odbytu 01";"Salgskanal 01";"Vertriebsweg 01";;"Distribtn Channel 01";"Venta directa";;"Jakelutie 01";"Vente directe";;;"01 értékesítési csat";;;"Canale distr.01";"直販";"직접판매";;;;"Directe verkopen";"Distribusjonskan. 01";"Kanał dystrybucji 01";"Venda direta";;"Продажа напрямую";;"Cesta odbytu 01";;;"Distr.kanal 01";"ช่องทางจัดจำหน่าย 01";"Dağıtım kanalı 01";;"Direct Sales";"配銷通路 01";"分销渠道 01"
+;3020;10;;;;;;;"Endkundenverkauf";;"Final customer sales";"Venta cliente final";;;"Vente consommateur";;;;;;;"小売";;;;;;;;"Venda cliente final";;"Продажа конечн. пок.";;;;;;;;;"Final customer sales";;;10;;;;;;;"Endkundenverkauf";;"Final customer sales";"Venta cliente final";;;"Vente consommateur";;;;;;;"小売";;;;;;;;"Venda cliente final";;"Продажа конечн. пок.";;;;;;;;;"Final customer sales";;;10;;;;;;;"Endkundenverkauf";;"Final customer sales";"Venta cliente final";;;"Vente consommateur";;;;;;;"小売";;;;;;;;"Venda cliente final";;"Продажа конечн. пок.";;;;;;;;;"Final customer sales";;
+;3020;12;;;;;;;"Wiederverkäufer";;"Sold for resale";"Venta a revendedores";;;"Revendeurs";;;;;;;"卸売";"소매";;;;;;;"Revendedor";;"Перепродажа";;;;;;;;;"Sold for resale";;;12;;;;;;;"Wiederverkäufer";;"Sold for resale";"Venta a revendedores";;;"Revendeurs";;;;;;;"卸売";"소매";;;;;;;"Revendedor";;"Перепродажа";;;;;;;;;"Sold for resale";;;12;;;;;;;"Wiederverkäufer";;"Sold for resale";"Venta a revendedores";;;"Revendeurs";;;;;;;"卸売";"소매";;;;;;;"Revendedor";;"Перепродажа";;;;;;;;;"Sold for resale";;
+;3020;14;;;;;;;"Service";;"Service";"Servicio";;;"Services";;;;;;;"サービス";"서비스";;;;;;;"Serviço";;"Сервис";;;;;;;;;"Service";;;14;;;;;;;"Service";;"Service";"Servicio";;;"Services";;;;;;;"サービス";"서비스";;;;;;;"Serviço";;"Сервис";;;;;;;;;"Service";;;14;;;;;;;"Service";;"Service";"Servicio";;;"Services";;;;;;;"サービス";"서비스";;;;;;;"Serviço";;"Сервис";;;;;;;;;"Service";;
+;3020;20;;;;;;;"Handelsketten";;"Store chain";"Cadena comercial";;;"Chaîne de distribut.";;;;;;;"小売チェーン店";"체인";;;;;;;"Cadeia comercial";;"Сеть магазинов";;;;;;;;;"Store chain";;;20;;;;;;;"Handelsketten";;"Store chain";"Cadena comercial";;;"Chaîne de distribut.";;;;;;;"小売チェーン店";"체인";;;;;;;"Cadeia comercial";;"Сеть магазинов";;;;;;;;;"Store chain";;;20;;;;;;;"Handelsketten";;"Store chain";"Cadena comercial";;;"Chaîne de distribut.";;;;;;;"小売チェーン店";"체인";;;;;;;"Cadeia comercial";;"Сеть магазинов";;;;;;;;;"Store chain";;
+;3020;30;;;;;;;"Internetverkauf";;"Internet Sales";"Ventas internet";;;"Ventes Internet";;;;;;;"インターネット Sales";;;;;;;;"Vendas por Internet";;"Продажа по Интернет";;;;;;;;;"Internet Sales";;;30;;;;;;;"Internetverkauf";;"Internet Sales";"Ventas internet";;;"Ventes Internet";;;;;;;"インターネット Sales";;;;;;;;"Vendas por Internet";;"Продажа по Интернет";;;;;;;;;"Internet Sales";;;30;;;;;;;"Internetverkauf";;"Internet Sales";"Ventas internet";;;"Ventes Internet";;;;;;;"インターネット Sales";;;;;;;;"Vendas por Internet";;"Продажа по Интернет";;;;;;;;;"Internet Sales";;
+
+INSERT_UPDATE ReferenceDivisionMapping;salesOrganization[unique=true];division[unique=true];divisionName[lang=af];divisionName[lang=ar];divisionName[lang=bg];divisionName[lang=ca];divisionName[lang=cs];divisionName[lang=da];divisionName[lang=de];divisionName[lang=el];divisionName[lang=en];divisionName[lang=es];divisionName[lang=et];divisionName[lang=fi];divisionName[lang=fr];divisionName[lang=he];divisionName[lang=hr];divisionName[lang=hu];divisionName[lang=id];divisionName[lang=is];divisionName[lang=it];divisionName[lang=ja];divisionName[lang=ko];divisionName[lang=lt];divisionName[lang=lv];divisionName[lang=ms];divisionName[lang=nl];divisionName[lang=no];divisionName[lang=pl];divisionName[lang=pt];divisionName[lang=ro];divisionName[lang=ru];divisionName[lang=sh];divisionName[lang=sk];divisionName[lang=sl];divisionName[lang=sr];divisionName[lang=sv];divisionName[lang=th];divisionName[lang=tr];divisionName[lang=uk];divisionName[lang=z1];divisionName[lang=zf];divisionName[lang=zh];refDivisionConditions;refDivisionConditionsName[lang=af];refDivisionConditionsName[lang=ar];refDivisionConditionsName[lang=bg];refDivisionConditionsName[lang=ca];refDivisionConditionsName[lang=cs];refDivisionConditionsName[lang=da];refDivisionConditionsName[lang=de];refDivisionConditionsName[lang=el];refDivisionConditionsName[lang=en];refDivisionConditionsName[lang=es];refDivisionConditionsName[lang=et];refDivisionConditionsName[lang=fi];refDivisionConditionsName[lang=fr];refDivisionConditionsName[lang=he];refDivisionConditionsName[lang=hr];refDivisionConditionsName[lang=hu];refDivisionConditionsName[lang=id];refDivisionConditionsName[lang=is];refDivisionConditionsName[lang=it];refDivisionConditionsName[lang=ja];refDivisionConditionsName[lang=ko];refDivisionConditionsName[lang=lt];refDivisionConditionsName[lang=lv];refDivisionConditionsName[lang=ms];refDivisionConditionsName[lang=nl];refDivisionConditionsName[lang=no];refDivisionConditionsName[lang=pl];refDivisionConditionsName[lang=pt];refDivisionConditionsName[lang=ro];refDivisionConditionsName[lang=ru];refDivisionConditionsName[lang=sh];refDivisionConditionsName[lang=sk];refDivisionConditionsName[lang=sl];refDivisionConditionsName[lang=sr];refDivisionConditionsName[lang=sv];refDivisionConditionsName[lang=th];refDivisionConditionsName[lang=tr];refDivisionConditionsName[lang=uk];refDivisionConditionsName[lang=z1];refDivisionConditionsName[lang=zf];refDivisionConditionsName[lang=zh];refDivisionCustomer;refDivisionCustomerName[lang=af];refDivisionCustomerName[lang=ar];refDivisionCustomerName[lang=bg];refDivisionCustomerName[lang=ca];refDivisionCustomerName[lang=cs];refDivisionCustomerName[lang=da];refDivisionCustomerName[lang=de];refDivisionCustomerName[lang=el];refDivisionCustomerName[lang=en];refDivisionCustomerName[lang=es];refDivisionCustomerName[lang=et];refDivisionCustomerName[lang=fi];refDivisionCustomerName[lang=fr];refDivisionCustomerName[lang=he];refDivisionCustomerName[lang=hr];refDivisionCustomerName[lang=hu];refDivisionCustomerName[lang=id];refDivisionCustomerName[lang=is];refDivisionCustomerName[lang=it];refDivisionCustomerName[lang=ja];refDivisionCustomerName[lang=ko];refDivisionCustomerName[lang=lt];refDivisionCustomerName[lang=lv];refDivisionCustomerName[lang=ms];refDivisionCustomerName[lang=nl];refDivisionCustomerName[lang=no];refDivisionCustomerName[lang=pl];refDivisionCustomerName[lang=pt];refDivisionCustomerName[lang=ro];refDivisionCustomerName[lang=ru];refDivisionCustomerName[lang=sh];refDivisionCustomerName[lang=sk];refDivisionCustomerName[lang=sl];refDivisionCustomerName[lang=sr];refDivisionCustomerName[lang=sv];refDivisionCustomerName[lang=th];refDivisionCustomerName[lang=tr];refDivisionCustomerName[lang=uk];refDivisionCustomerName[lang=z1];refDivisionCustomerName[lang=zf];refDivisionCustomerName[lang=zh]
+;0001;01;;;;;"Obor výrobku 01";"Produktdivision 01";"Produktsparte 01";;"Product Division 01";"Bombas";;"Tuotesektori 01";"Pompes";;;"01 termékcsoport";;;"Sett. merceol.01";"ポンプ";"제품군 01";;;;"Productgroep 01";"Prod.divisjon 01";"Dziedzina produk. 01";"Bombas";;"Насосы";;"Kateg.výrobku 01";;;"Produktfamilj 01";"สายผลิตภัณฑ์ 01";"Ürün bölümü 01";;"Pumps";"產品部門 01";"产品组 01";01;;;;;"Obor výrobku 01";"Produktdivision 01";"Produktsparte 01";;"Product Division 01";"Bombas";;"Tuotesektori 01";"Pompes";;;"01 termékcsoport";;;"Sett. merceol.01";"ポンプ";"제품군 01";;;;"Productgroep 01";"Prod.divisjon 01";"Dziedzina produk. 01";"Bombas";;"Насосы";;"Kateg.výrobku 01";;;"Produktfamilj 01";"สายผลิตภัณฑ์ 01";"Ürün bölümü 01";;"Pumps";"產品部門 01";"产品组 01";01;;;;;"Obor výrobku 01";"Produktdivision 01";"Produktsparte 01";;"Product Division 01";"Bombas";;"Tuotesektori 01";"Pompes";;;"01 termékcsoport";;;"Sett. merceol.01";"ポンプ";"제품군 01";;;;"Productgroep 01";"Prod.divisjon 01";"Dziedzina produk. 01";"Bombas";;"Насосы";;"Kateg.výrobku 01";;;"Produktfamilj 01";"สายผลิตภัณฑ์ 01";"Ürün bölümü 01";;"Pumps";"產品部門 01";"产品组 01"
+;0001;A1;;;;;;;"Pumpen";;"Vehicles";"Bombas";;;"Pompes";;;"01 termékcsoport";;;;"ポンプ";"제품군 01";;;;;;"Dziedzina produk. 01";"Bombas";;"Насосы";;"Kateg.výrobku 01";;;"Produktfamilj 01";;"Ürün bölümü 01";;"Pumps";"產品部門 01";"产品组 01";01;;;;;"Obor výrobku 01";"Produktdivision 01";"Produktsparte 01";;"Product Division 01";"Bombas";;"Tuotesektori 01";"Pompes";;;"01 termékcsoport";;;"Sett. merceol.01";"ポンプ";"제품군 01";;;;"Productgroep 01";"Prod.divisjon 01";"Dziedzina produk. 01";"Bombas";;"Насосы";;"Kateg.výrobku 01";;;"Produktfamilj 01";"สายผลิตภัณฑ์ 01";"Ürün bölümü 01";;"Pumps";"產品部門 01";"产品组 01";01;;;;;"Obor výrobku 01";"Produktdivision 01";"Produktsparte 01";;"Product Division 01";"Bombas";;"Tuotesektori 01";"Pompes";;;"01 termékcsoport";;;"Sett. merceol.01";"ポンプ";"제품군 01";;;;"Productgroep 01";"Prod.divisjon 01";"Dziedzina produk. 01";"Bombas";;"Насосы";;"Kateg.výrobku 01";;;"Produktfamilj 01";"สายผลิตภัณฑ์ 01";"Ürün bölümü 01";;"Pumps";"產品部門 01";"产品组 01"
+;3020;00;;;;;;;"Spartenübergreifend";;"Cross-division";"Común a tds.sectores";;;"Inter-secteurs";;;;;;;"複数部門間";;;;;;;;"Setor ativid.global";;"Разные секторы";;;;;;;;;"Cross-division";;;00;;;;;;;"Spartenübergreifend";;"Cross-division";"Común a tds.sectores";;;"Inter-secteurs";;;;;;;"複数部門間";;;;;;;;"Setor ativid.global";;"Разные секторы";;;;;;;;;"Cross-division";;;00;;;;;;;"Spartenübergreifend";;"Cross-division";"Común a tds.sectores";;;"Inter-secteurs";;;;;;;"複数部門間";;;;;;;;"Setor ativid.global";;"Разные секторы";;;;;;;;;"Cross-division";;
+;3020;01;;;;;"Obor výrobku 01";"Produktdivision 01";"Produktsparte 01";;"Product Division 01";"Bombas";;"Tuotesektori 01";"Pompes";;;"01 termékcsoport";;;"Sett. merceol.01";"ポンプ";"제품군 01";;;;"Productgroep 01";"Prod.divisjon 01";"Dziedzina produk. 01";"Bombas";;"Насосы";;"Kateg.výrobku 01";;;"Produktfamilj 01";"สายผลิตภัณฑ์ 01";"Ürün bölümü 01";;"Pumps";"產品部門 01";"产品组 01";00;;;;;;;"Spartenübergreifend";;"Cross-division";"Común a tds.sectores";;;"Inter-secteurs";;;;;;;"複数部門間";;;;;;;;"Setor ativid.global";;"Разные секторы";;;;;;;;;"Cross-division";;;00;;;;;;;"Spartenübergreifend";;"Cross-division";"Común a tds.sectores";;;"Inter-secteurs";;;;;;;"複数部門間";;;;;;;;"Setor ativid.global";;"Разные секторы";;;;;;;;;"Cross-division";;
+;3020;03;;;;;;;"Farben";;"Paints";"Colores";;;"Peinture";;;;;;;"ペンキ";;;;;;;;"Cores";;"Краски";;;;;;;;;"Paints";;;00;;;;;;;"Spartenübergreifend";;"Cross-division";"Común a tds.sectores";;;"Inter-secteurs";;;;;;;"複数部門間";;;;;;;;"Setor ativid.global";;"Разные секторы";;;;;;;;;"Cross-division";;;00;;;;;;;"Spartenübergreifend";;"Cross-division";"Común a tds.sectores";;;"Inter-secteurs";;;;;;;"複数部門間";;;;;;;;"Setor ativid.global";;"Разные секторы";;;;;;;;;"Cross-division";;
+;3020;04;;;;;;;"Beleuchtung";;"Lighting";"Iluminación";;;"Eclairage";;;;;;;"照明";;;;;;;;"Iluminação";;"Освещение";;;;;;;;;"Lighting";;;00;;;;;;;"Spartenübergreifend";;"Cross-division";"Común a tds.sectores";;;"Inter-secteurs";;;;;;;"複数部門間";;;;;;;;"Setor ativid.global";;"Разные секторы";;;;;;;;;"Cross-division";;;00;;;;;;;"Spartenübergreifend";;"Cross-division";"Común a tds.sectores";;;"Inter-secteurs";;;;;;;"複数部門間";;;;;;;;"Setor ativid.global";;"Разные секторы";;;;;;;;;"Cross-division";;
+;3020;07;;;;;;;"High Tech";;"High Tech";"Alta tecnología";;;"Haute Technologie";;;;;;;"ハイテク製品";;;;;;;;"Alta tecnologia";;"Высокая технология";;;;;;;;;"High Tech";;;00;;;;;;;"Spartenübergreifend";;"Cross-division";"Común a tds.sectores";;;"Inter-secteurs";;;;;;;"複数部門間";;;;;;;;"Setor ativid.global";;"Разные секторы";;;;;;;;;"Cross-division";;;00;;;;;;;"Spartenübergreifend";;"Cross-division";"Común a tds.sectores";;;"Inter-secteurs";;;;;;;"複数部門間";;;;;;;;"Setor ativid.global";;"Разные секторы";;;;;;;;;"Cross-division";;
+;3020;08;;;;;;;"Dienstleistungen";;"Service";"Prestaciones servic.";;;"Prestat. de services";;;;;;;"サービス";;;;;;;;"Prestações serviço";;"Услуги";;;;;;;;;"Service";;;00;;;;;;;"Spartenübergreifend";;"Cross-division";"Común a tds.sectores";;;"Inter-secteurs";;;;;;;"複数部門間";;;;;;;;"Setor ativid.global";;"Разные секторы";;;;;;;;;"Cross-division";;;00;;;;;;;"Spartenübergreifend";;"Cross-division";"Común a tds.sectores";;;"Inter-secteurs";;;;;;;"複数部門間";;;;;;;;"Setor ativid.global";;"Разные секторы";;;;;;;;;"Cross-division";;
+;3020;12;;;;;;;"Lösungsmittel";;"Chemical";"Disolvente";;;"Solvant";;;;;;;"溶媒";;;;;;;;"Solvente";;"Растворитель";;;;;;;;;"Chemical";;;00;;;;;;;"Spartenübergreifend";;"Cross-division";"Común a tds.sectores";;;"Inter-secteurs";;;;;;;"複数部門間";;;;;;;;"Setor ativid.global";;"Разные секторы";;;;;;;;;"Cross-division";;;00;;;;;;;"Spartenübergreifend";;"Cross-division";"Común a tds.sectores";;;"Inter-secteurs";;;;;;;"複数部門間";;;;;;;;"Setor ativid.global";;"Разные секторы";;;;;;;;;"Cross-division";;
+;3020;13;;;;;;;"Pharmazeutika";;"Pharmaceuticals";"Produc.farmacéuticos";;;"Pharmaceutique";;;;;;;"医薬品";;;;;;;;"Farmacêutica";;"Фармацевтика";;;;;;;;;"Pharmaceuticals";;;00;;;;;;;"Spartenübergreifend";;"Cross-division";"Común a tds.sectores";;;"Inter-secteurs";;;;;;;"複数部門間";;;;;;;;"Setor ativid.global";;"Разные секторы";;;;;;;;;"Cross-division";;;00;;;;;;;"Spartenübergreifend";;"Cross-division";"Común a tds.sectores";;;"Inter-secteurs";;;;;;;"複数部門間";;;;;;;;"Setor ativid.global";;"Разные секторы";;;;;;;;;"Cross-division";;
+;3020;14;;;;;;;"Kosmetik";;"Cosmetics";"Cosmética";;;"Cosmétique";;;;;;;"化粧品";;;;;;;;"Cosmética";;"Изд. косметические";;;;;;;;;"Cosmetics";;;14;;;;;;;"Kosmetik";;"Cosmetics";"Cosmética";;;"Cosmétique";;;;;;;"化粧品";;;;;;;;"Cosmética";;"Изд. косметические";;;;;;;;;"Cosmetics";;;14;;;;;;;"Kosmetik";;"Cosmetics";"Cosmética";;;"Cosmétique";;;;;;;"化粧品";;;;;;;;"Cosmética";;"Изд. косметические";;;;;;;;;"Cosmetics";;
+;3020;16;;;;;;;"Foto";;"Photo";"Foto";;;"Photo";;;;;;;"写真";;;;;;;;"Foto";;"Фотография";;;;;;;;;"Photo";;;00;;;;;;;"Spartenübergreifend";;"Cross-division";"Común a tds.sectores";;;"Inter-secteurs";;;;;;;"複数部門間";;;;;;;;"Setor ativid.global";;"Разные секторы";;;;;;;;;"Cross-division";;;00;;;;;;;"Spartenübergreifend";;"Cross-division";"Común a tds.sectores";;;"Inter-secteurs";;;;;;;"複数部門間";;;;;;;;"Setor ativid.global";;"Разные секторы";;;;;;;;;"Cross-division";;
+;3020;17;;;;;;;"Möbel";;"Furniture";"Mobiliario";;;"Meubles";;;;;;;"家具";;;;;;;;"Mobiliário";;"Mіbel";;;;;;;;;"Furniture";;;00;;;;;;;"Spartenübergreifend";;"Cross-division";"Común a tds.sectores";;;"Inter-secteurs";;;;;;;"複数部門間";;;;;;;;"Setor ativid.global";;"Разные секторы";;;;;;;;;"Cross-division";;;00;;;;;;;"Spartenübergreifend";;"Cross-division";"Común a tds.sectores";;;"Inter-secteurs";;;;;;;"複数部門間";;;;;;;;"Setor ativid.global";;"Разные секторы";;;;;;;;;"Cross-division";;
+;3020;18;;;;;;;"Pumpen-18";;"Consulting Services";"Bombas";;;"Pompes";;;;;;;"ポンプ";;;;;;;;"Bombas";;"Насосы";;;;;"Produktfamilj 01";;;;"Consulting Services";;;00;;;;;;;"Spartenübergreifend";;"Cross-division";"Común a tds.sectores";;;"Inter-secteurs";;;;;;;"複数部門間";;;;;;;;"Setor ativid.global";;"Разные секторы";;;;;;;;;"Cross-division";;;00;;;;;;;"Spartenübergreifend";;"Cross-division";"Común a tds.sectores";;;"Inter-secteurs";;;;;;;"複数部門間";;;;;;;;"Setor ativid.global";;"Разные секторы";;;;;;;;;"Cross-division";;
+;3020;19;;;;;;;"Lösungsmittel-19";;"IT Services";"Disolvente";;;"Solvant";;;;;;;"溶媒";;;;;;;;"Solvente";;"Растворитель";;;;;;;;;"IT Services";;;00;;;;;;;"Spartenübergreifend";;"Cross-division";"Común a tds.sectores";;;"Inter-secteurs";;;;;;;"複数部門間";;;;;;;;"Setor ativid.global";;"Разные секторы";;;;;;;;;"Cross-division";;;00;;;;;;;"Spartenübergreifend";;"Cross-division";"Común a tds.sectores";;;"Inter-secteurs";;;;;;;"複数部門間";;;;;;;;"Setor ativid.global";;"Разные секторы";;;;;;;;;"Cross-division";;
+;3020;60;;;;;;;"Pumpen60";;"Pumps";"MX Bombas";;;"Pompes";;;"01 termékcsoport";;;;"ポンプ";"제품군 01";;;;;;"Dziedzina produk. 01";"Bombas";;"Насосы";;"Kateg.výrobku 01";;;"Produktfamilj 01";;"Ürün bölümü 01";;"Pumps";"產品部門 01";"产品组 01";00;;;;;;;"Spartenübergreifend";;"Cross-division";"Común a tds.sectores";;;"Inter-secteurs";;;;;;;"複数部門間";;;;;;;;"Setor ativid.global";;"Разные секторы";;;;;;;;;"Cross-division";;;00;;;;;;;"Spartenübergreifend";;"Cross-division";"Común a tds.sectores";;;"Inter-secteurs";;;;;;;"複数部門間";;;;;;;;"Setor ativid.global";;"Разные секторы";;;;;;;;;"Cross-division";;
+;3020;61;;;;;;;"Pumpen61";;"Pumps";"MX Motores";;;"Pompes";;;"01 termékcsoport";;;;"ポンプ";"제품군 01";;;;;;"Dziedzina produk. 01";"Bombas";;"Насосы";;"Kateg.výrobku 01";;;"Produktfamilj 01";;"Ürün bölümü 01";;"Pumps";"產品部門 01";"产品组 01";00;;;;;;;"Spartenübergreifend";;"Cross-division";"Común a tds.sectores";;;"Inter-secteurs";;;;;;;"複数部門間";;;;;;;;"Setor ativid.global";;"Разные секторы";;;;;;;;;"Cross-division";;;00;;;;;;;"Spartenübergreifend";;"Cross-division";"Común a tds.sectores";;;"Inter-secteurs";;;;;;;"複数部門間";;;;;;;;"Setor ativid.global";;"Разные секторы";;;;;;;;;"Cross-division";;
+;3020;62;;;;;;;"Pumpen62";;"Pumps";"MX Colores";;;"Pompes";;;"01 termékcsoport";;;;"ポンプ";"제품군 01";;;;;;"Dziedzina produk. 01";"Bombas";;"Насосы";;"Kateg.výrobku 01";;;"Produktfamilj 01";;"Ürün bölümü 01";;"Pumps";"產品部門 01";"产品组 01";00;;;;;;;"Spartenübergreifend";;"Cross-division";"Común a tds.sectores";;;"Inter-secteurs";;;;;;;"複数部門間";;;;;;;;"Setor ativid.global";;"Разные секторы";;;;;;;;;"Cross-division";;;00;;;;;;;"Spartenübergreifend";;"Cross-division";"Común a tds.sectores";;;"Inter-secteurs";;;;;;;"複数部門間";;;;;;;;"Setor ativid.global";;"Разные секторы";;;;;;;;;"Cross-division";;
+;3020;63;;;;;;;"Pumpen63";;"Pumps";"MX Iluminacion";;;"Pompes";;;"01 termékcsoport";;;;"ポンプ";"제품군 01";;;;;;"Dziedzina produk. 01";"Bombas";;"Насосы";;"Kateg.výrobku 01";;;"Produktfamilj 01";;"Ürün bölümü 01";;"Pumps";"產品部門 01";"产品组 01";00;;;;;;;"Spartenübergreifend";;"Cross-division";"Común a tds.sectores";;;"Inter-secteurs";;;;;;;"複数部門間";;;;;;;;"Setor ativid.global";;"Разные секторы";;;;;;;;;"Cross-division";;;00;;;;;;;"Spartenübergreifend";;"Cross-division";"Común a tds.sectores";;;"Inter-secteurs";;;;;;;"複数部門間";;;;;;;;"Setor ativid.global";;"Разные секторы";;;;;;;;;"Cross-division";;
+;3020;64;;;;;;;"Pumpen64";;"Pumps";"MX Accesorios";;;"Pompes";;;"01 termékcsoport";;;;"ポンプ";"제품군 01";;;;;;"Dziedzina produk. 01";"Bombas";;"Насосы";;"Kateg.výrobku 01";;;"Produktfamilj 01";;"Ürün bölümü 01";;"Pumps";"產品部門 01";"产品组 01";00;;;;;;;"Spartenübergreifend";;"Cross-division";"Común a tds.sectores";;;"Inter-secteurs";;;;;;;"複数部門間";;;;;;;;"Setor ativid.global";;"Разные секторы";;;;;;;;;"Cross-division";;;00;;;;;;;"Spartenübergreifend";;"Cross-division";"Común a tds.sectores";;;"Inter-secteurs";;;;;;;"複数部門間";;;;;;;;"Setor ativid.global";;"Разные секторы";;;;;;;;;"Cross-division";;
+;3020;65;;;;;;;"Pumpen65";;"Pumps";"MX Alimentos";;;"Pompes";;;"01 termékcsoport";;;;"ポンプ";"제품군 01";;;;;;"Dziedzina produk. 01";"Bombas";;"Насосы";;"Kateg.výrobku 01";;;"Produktfamilj 01";;"Ürün bölümü 01";;"Pumps";"產品部門 01";"产品组 01";00;;;;;;;"Spartenübergreifend";;"Cross-division";"Común a tds.sectores";;;"Inter-secteurs";;;;;;;"複数部門間";;;;;;;;"Setor ativid.global";;"Разные секторы";;;;;;;;;"Cross-division";;;00;;;;;;;"Spartenübergreifend";;"Cross-division";"Común a tds.sectores";;;"Inter-secteurs";;;;;;;"複数部門間";;;;;;;;"Setor ativid.global";;"Разные секторы";;;;;;;;;"Cross-division";;
+;3020;66;;;;;;;"Pumpen66";;"Pumps";"MX Alta Tecnologia";;;"Pompes";;;"01 termékcsoport";;;;"ポンプ";"제품군 01";;;;;;"Dziedzina produk. 01";"Bombas";;"Насосы";;"Kateg.výrobku 01";;;"Produktfamilj 01";;"Ürün bölümü 01";;"Pumps";"產品部門 01";"产品组 01";00;;;;;;;"Spartenübergreifend";;"Cross-division";"Común a tds.sectores";;;"Inter-secteurs";;;;;;;"複数部門間";;;;;;;;"Setor ativid.global";;"Разные секторы";;;;;;;;;"Cross-division";;;00;;;;;;;"Spartenübergreifend";;"Cross-division";"Común a tds.sectores";;;"Inter-secteurs";;;;;;;"複数部門間";;;;;;;;"Setor ativid.global";;"Разные секторы";;;;;;;;;"Cross-division";;
+;3020;67;;;;;;;"Pumpen67";;"Pumps";"MX Vehiculos";;;"Pompes";;;"01 termékcsoport";;;;"ポンプ";"제품군 01";;;;;;"Dziedzina produk. 01";"Bombas";;"Насосы";;"Kateg.výrobku 01";;;"Produktfamilj 01";;"Ürün bölümü 01";;"Pumps";"產品部門 01";"产品组 01";00;;;;;;;"Spartenübergreifend";;"Cross-division";"Común a tds.sectores";;;"Inter-secteurs";;;;;;;"複数部門間";;;;;;;;"Setor ativid.global";;"Разные секторы";;;;;;;;;"Cross-division";;;00;;;;;;;"Spartenübergreifend";;"Cross-division";"Común a tds.sectores";;;"Inter-secteurs";;;;;;;"複数部門間";;;;;;;;"Setor ativid.global";;"Разные секторы";;;;;;;;;"Cross-division";;
+;3020;68;;;;;;;"Pumpen68";;"Pumps";"MX Electronica";;;"Pompes";;;"01 termékcsoport";;;;"ポンプ";"제품군 01";;;;;;"Dziedzina produk. 01";"Bombas";;"Насосы";;"Kateg.výrobku 01";;;"Produktfamilj 01";;"Ürün bölümü 01";;"Pumps";"產品部門 01";"产品组 01";00;;;;;;;"Spartenübergreifend";;"Cross-division";"Común a tds.sectores";;;"Inter-secteurs";;;;;;;"複数部門間";;;;;;;;"Setor ativid.global";;"Разные секторы";;;;;;;;;"Cross-division";;;00;;;;;;;"Spartenübergreifend";;"Cross-division";"Común a tds.sectores";;;"Inter-secteurs";;;;;;;"複数部門間";;;;;;;;"Setor ativid.global";;"Разные секторы";;;;;;;;;"Cross-division";;
+;3020;69;;;;;;;"Pumpen69";;"Pumps";"MX  Servicio";;;"Pompes";;;"01 termékcsoport";;;;"ポンプ";"제품군 01";;;;;;"Dziedzina produk. 01";"Bombas";;"Насосы";;"Kateg.výrobku 01";;;"Produktfamilj 01";;"Ürün bölümü 01";;"Pumps";"產品部門 01";"产品组 01";00;;;;;;;"Spartenübergreifend";;"Cross-division";"Común a tds.sectores";;;"Inter-secteurs";;;;;;;"複数部門間";;;;;;;;"Setor ativid.global";;"Разные секторы";;;;;;;;;"Cross-division";;;00;;;;;;;"Spartenübergreifend";;"Cross-division";"Común a tds.sectores";;;"Inter-secteurs";;;;;;;"複数部門間";;;;;;;;"Setor ativid.global";;"Разные секторы";;;;;;;;;"Cross-division";;
+;3020;A1;;;;;;;"Pumpen";;"Vehicles";"Bombas";;;"Pompes";;;"01 termékcsoport";;;;"ポンプ";"제품군 01";;;;;;"Dziedzina produk. 01";"Bombas";;"Насосы";;"Kateg.výrobku 01";;;"Produktfamilj 01";;"Ürün bölümü 01";;"Pumps";"產品部門 01";"产品组 01";00;;;;;;;"Spartenübergreifend";;"Cross-division";"Común a tds.sectores";;;"Inter-secteurs";;;;;;;"複数部門間";;;;;;;;"Setor ativid.global";;"Разные секторы";;;;;;;;;"Cross-division";;;00;;;;;;;"Spartenübergreifend";;"Cross-division";"Común a tds.sectores";;;"Inter-secteurs";;;;;;;"複数部門間";;;;;;;;"Setor ativid.global";;"Разные секторы";;;;;;;;;"Cross-division";;
+;3020;I1;;;;;;;"Media";;"Media";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;"Media";;;00;;;;;;;"Spartenübergreifend";;"Cross-division";"Común a tds.sectores";;;"Inter-secteurs";;;;;;;"複数部門間";;;;;;;;"Setor ativid.global";;"Разные секторы";;;;;;;;;"Cross-division";;;00;;;;;;;"Spartenübergreifend";;"Cross-division";"Común a tds.sectores";;;"Inter-secteurs";;;;;;;"複数部門間";;;;;;;;"Setor ativid.global";;"Разные секторы";;;;;;;;;"Cross-division";;
+;3020;I2;;;;;;;"Telco";;"Telco";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;"Telco";;;00;;;;;;;"Spartenübergreifend";;"Cross-division";"Común a tds.sectores";;;"Inter-secteurs";;;;;;;"複数部門間";;;;;;;;"Setor ativid.global";;"Разные секторы";;;;;;;;;"Cross-division";;;00;;;;;;;"Spartenübergreifend";;"Cross-division";"Común a tds.sectores";;;"Inter-secteurs";;;;;;;"複数部門間";;;;;;;;"Setor ativid.global";;"Разные секторы";;;;;;;;;"Cross-division";;
+;3020;I3;;;;;;;"Utilities";;"Utilities";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;"Utilities";;;00;;;;;;;"Spartenübergreifend";;"Cross-division";"Común a tds.sectores";;;"Inter-secteurs";;;;;;;"複数部門間";;;;;;;;"Setor ativid.global";;"Разные секторы";;;;;;;;;"Cross-division";;;00;;;;;;;"Spartenübergreifend";;"Cross-division";"Común a tds.sectores";;;"Inter-secteurs";;;;;;;"複数部門間";;;;;;;;"Setor ativid.global";;"Разные секторы";;;;;;;;;"Cross-division";;

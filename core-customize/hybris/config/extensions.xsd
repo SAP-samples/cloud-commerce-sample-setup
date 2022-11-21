@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+
+	<xs:element name="hybrisconfig">
+		<xs:annotation>
+			<xs:documentation>Configures the installed extensions for the hybris platform.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:annotation>
+				<xs:documentation>Configures the installed extensions for the hybris platform.</xs:documentation>
+			</xs:annotation>
+			<xs:sequence>
+				<xs:element name="extensions" type="extensionsType" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>Configures the installed extensions for the hybris platform..</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:complexType name="extensionsType">
+		<xs:annotation>
+			<xs:documentation>Configures the installed extensions for the hybris platform..</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="path" type="scanType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Adds a directory to scan for extensions in.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="extension" type="extensionType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Adds an extension to the hybris platform.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="webapp" type="webappType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Adds external extensions to the hybris platform.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="autoload" type="xs:boolean" use="optional" default="true">
+			<xs:annotation>
+				<xs:documentation>Loads automatically all extensions of the platform. If set to 'false', you 
+				have to manually add the platform extensions in the (local)extensions.xml file. 
+				Default value is 'true'. </xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+
+	<xs:complexType name="extensionType">
+		<xs:annotation>
+			<xs:documentation>Adds an extension to the hybris platform.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="dir" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Path to the extension folder relative to the platform home.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="name" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>The name of the extension. Requires at least one &lt;scan&gt; entry to be able to look up the extension location.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+
+	<xs:complexType name="webappType">
+		<xs:annotation>
+			<xs:documentation>Adds external extension to the hybris platform.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="contextroot" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>External extension's webroot.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="context" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>External extension's context.xml file.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="path" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Path to external extension's war file (or exploded directory).</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+
+	<xs:complexType name="scanType">
+		<xs:annotation>
+			<xs:documentation>Scans for extensions in a given folder.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="dir" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>Path to the extension folder relative to the platform home.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="autoload" type="xs:boolean" use="optional" default="false">
+			<xs:annotation>
+				<xs:documentation>Defines which extensions shall be loaded. Can be 'true' for loading all that can be found inside that folder or 'false' to load only extensions that are required by others.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="depth" type="xs:int" use="optional">
+			<xs:annotation>
+				<xs:documentation>The maximum directory depth to traverse when scanning for extensions.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+
+</xs:schema>
