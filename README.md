@@ -3,7 +3,7 @@
 # SAP Commerce Cloud Sample Repository
 
 This sample repository contains the files and folders that are required to set up SAP Commerce Cloud. There are multiple branches covering different scenarios for Commerce Cloud (e.g. project Spartacus, data hub, solr customizations).  You can clone/download this repository, checkout the branch of interest and then follow the instructions in the readme to update the example files with your specific details. 
-The master branch covers a Commerce Cloud sample scenario that is based on the [CX recipe](https://help.sap.com/viewer/a74589c3a81a4a95bf51d87258c0ab15/latest/en-US/f09d46cf4a2546b586ed7021655e4715.html) 
+This branch covers a Commerce Cloud sample scenario that is based on the [CX recipe](https://help.sap.com/viewer/a74589c3a81a4a95bf51d87258c0ab15/latest/en-US/f09d46cf4a2546b586ed7021655e4715.html) with Spartacus 4.3.x
 
 When your files are ready, push them to your SAP Commerce Cloud repository.  
 
@@ -32,7 +32,6 @@ Root level
 
 `core-customize` folder
 - `manifest.json`: The Commerce Cloud manifest.json file, which defines how your code will be built and deployed in the Public Cloud environments. The manifest is set up to leverage [configuration reuse](https://help.sap.com/viewer/1be46286b36a4aa48205be5a96240672/latest/en-US/2311d89eef9344fc81ef168ac9668307.html) to better allow for consistency between local and cloud builds.
-- `extensions\yb2bacceleratorstorefront` folder: contains the generated extension for use with the B2B storefront (e.g Powertools) in this Commerce Cloud sample scenario
 - `hybris `folder: contains a sample custom folder for storing any custom extensions as well as the config folder for storing local and cloud properties, `localextensions.xml` and any local solr/tomcat configurations
 - `other sample manifests`: A collection of tested and verified manifest files that you can use as starting points for your Commerce Cloud environments.
 
@@ -63,7 +62,7 @@ Push all the contents from your local machine to the root level of your Commerce
 
 ### Access the Cloud Portal
 
-Log in to the Cloud Portal and verify that your code repository is connected.
+Log in to the Cloud  Portal and verify that your code repository is connected.
 
 1. From a supported browser, log in to https://portal.commerce.ondemand.com. For more information, see [Accessing the Cloud Portal](https://help.sap.com/viewer/0c2050f6d31f49ddb6eba18509060ae5/latest/en-US/bc745004669445478d0c0505d77e096c.html).
 2. Select *Repository* and verify that you are connected to the correct code repository.
@@ -73,7 +72,7 @@ Log in to the Cloud Portal and verify that your code repository is connected.
 
 You may also wish to see [this video](https://enable.cx.sap.com/playlist/dedicated/116161351/1_6tm85g61/1_df6ptanl) which provides a walkthrough of how to connect your repository, as well as [this video](https://enable.cx.sap.com/playlist/dedicated/116161351/1_6tm85g61/1_9ogbv7hz) which outlines how to build and deploy
 
-### Final Steps - Validating an example Electronics Storefront
+### Final Steps - Validating an example Spartacus Electronics Storefront
 
 Use the Cloud Portal to create a build and then deploy the build to an environment.
 
