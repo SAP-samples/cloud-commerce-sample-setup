@@ -3,7 +3,7 @@
 # SAP Commerce Cloud Sample Repository
 
 This sample repository contains the files and folders that are required to set up SAP Commerce Cloud. There are multiple branches covering different scenarios for Commerce Cloud (e.g. project Spartacus, data hub, solr customizations).  You can clone/download this repository, checkout the branch of interest and then follow the instructions in the readme to update the example files with your specific details. 
-This branch covers a Commerce Cloud sample scenario that is based on the [CX recipe](https://help.sap.com/viewer/a74589c3a81a4a95bf51d87258c0ab15/latest/en-US/f09d46cf4a2546b586ed7021655e4715.html) with Spartacus 4.3.x
+This branch covers a Commerce Cloud 2211 sample scenario that is based on the [CX recipe](https://help.sap.com/viewer/a74589c3a81a4a95bf51d87258c0ab15/latest/en-US/f09d46cf4a2546b586ed7021655e4715.html) with Spartacus 4.3. Deprecated extensions have been excluded with the exception of yacceleratorstorefront, which contains sample data required for this sample demo. It is not recommended to use the deprecated yacceleratorstorefront extension.
 
 When your files are ready, push them to your SAP Commerce Cloud repository.  
 
@@ -29,6 +29,7 @@ The following folders and files are included in the sample repository.
 
 Root level
 - `core-customize` folder: The folder that contains all of the folders and files that support Commerce Cloud.
+- `js-storefront` folder: A project Spartacus JS Storefront configured with Server Side Rendering (SSR). For more on project Spartacus see [project Spartacus documentation](https://sap.github.io/spartacus-docs/)
 
 `core-customize` folder
 - `manifest.json`: The Commerce Cloud manifest.json file, which defines how your code will be built and deployed in the Public Cloud environments. The manifest is set up to leverage [configuration reuse](https://help.sap.com/viewer/1be46286b36a4aa48205be5a96240672/latest/en-US/2311d89eef9344fc81ef168ac9668307.html) to better allow for consistency between local and cloud builds.
@@ -70,18 +71,19 @@ Log in to the Cloud  Portal and verify that your code repository is connected.
 3. Create a new build.
 4. Deploy the build to the environment using the *Initialze Database* option.
 
-You may also wish to see [this video](https://enable.cx.sap.com/playlist/dedicated/116161351/1_6tm85g61/1_df6ptanl) which provides a walkthrough of how to connect your repository, as well as [this video](https://enable.cx.sap.com/playlist/dedicated/116161351/1_6tm85g61/1_9ogbv7hz) which outlines how to build and deploy
+You may also wish to see [this video](https://enable.cx.sap.com/playlist/dedicated/116161351/1_6tm85g61/1_df6ptanl) which provides a walkthrough of how to connect your repository, as well as [this video](https://enable.cx.sap.com/playlist/dedicated/116161351/1_6tm85g61/1_9ogbv7hz) which outlines how to build and deploy.
 
 ### Final Steps - Validating an example Spartacus Electronics Storefront
 
 Use the Cloud Portal to create a build and then deploy the build to an environment.
 
-1. After the build is deployed, you can find the 'Storefront' endpoint in the *Environments* page of the Cloud Portal listed under *Public Endpoints*.
-2. Click on the *Storefront* hyperlink to access the details page for endpoint.
+See [Build and Deploy your First SAP Commerce Cloud Project](https://www.sap.com/cxworks/article/2589632836/build_and_deploy_your_first_sap_commerce_cloud_project) for all the steps to build and deploy.
+
+1. After the build is deployed, you can find the 'JS Storefront' endpoint in the *Environments* page of the Cloud Portal listed under *Public Endpoints*.
+2. Click on the *JS Storefront* hyperlink to access the details page for endpoint.
 3. Either add an IP Filter Set for your IP address OR change the Base Rule from 'Deny All' to 'Allow All' in order to receive traffic to this example storefront.
 4. Save the changes.
-5. Click on the URL listed next to the *Storefront* public endpoint. You will receive a server error.
-6. In your browser's address, append the endpoint address with */?site=electronics* and reload the page
+5. Click on the URL listed next to the *JS Storefront* public endpoint. 
 7. Verify that you see a basic electronics storefront.
 
 # Limitations
