@@ -1,0 +1,91 @@
+# -----------------------------------------------------------------------
+# [y] hybris Platform
+#
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# The files in this addon are licensed under the Apache Software License, v. 2 
+# except as noted otherwise in the LICENSE file.
+# -----------------------------------------------------------------------
+#
+# Import the CMS content for the Electronics site emails
+#
+$contentCatalog=electronics-spaContentCatalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+$lang=en
+$wideContent=CMSImageComponent,BannerComponent
+
+UPDATE GenericItem[processor=de.hybris.platform.commerceservices.impex.impl.ConfigPropertyImportProcessor];pk[unique=true]
+$emailResource=$config-emailResourceValue
+
+###### CMS components velocity templates ######
+INSERT_UPDATE RendererTemplate;code[unique=true];contextClass;rendererType(code)[default='velocity']
+;electronics-spa-CMSImageComponent-template;java.util.Map
+;electronics-spa-BannerComponent-template;java.util.Map
+;electronics-spa-SimpleBannerComponent-template;java.util.Map
+;electronics-spa-CMSLinkComponent-template;java.util.Map
+;electronics-spa-CMSParagraphComponent-template;java.util.Map
+
+
+###### CMS components and Email velocity templates ######
+UPDATE RendererTemplate;code[unique=true];description[lang=$lang];templateScript[lang=$lang,translator=de.hybris.platform.commerceservices.impex.impl.FileLoaderValueTranslator]
+;electronics-spa-BannerComponent-template;"CMSBannerComponent Template";$emailResource/email-bannerComponentTemplate.vm
+;electronics-spa-CMSImageComponent-template;"CMSImageComponent Template";$emailResource/email-cmsImageComponentTemplate.vm
+;electronics-spa-CMSLinkComponent-template;"CMSLinkComponent Template";$emailResource/email-cmsLinkComponentTemplate.vm
+;electronics-spa-CMSParagraphComponent-template;"CMSParagraphComponent Template";$emailResource/email-cmsParagraphComponentTemplate.vm
+;electronics-spa-SimpleBannerComponent-template;"CMSSimpleBannerComponent Template";$emailResource/email-bannerComponentTemplate.vm
+ 
+
+###### Email CMS data for stock notification ######
+$emailPackageName=de.hybris.platform.stocknotificationfacades.process.email.context
+
+# Email page Template
+INSERT_UPDATE EmailPageTemplate;$contentCV[unique=true];uid[unique=true];name;active;frontendTemplateName;subject(code);htmlTemplate(code);restrictedPageTypes(code)
+;;ProductBackInStockNotificationEmailTemplate;Product Back In Stock Email Template;true;productBackInStockNotificationEmailTemplate;electronics_Email_Product_Back_In_Stock_Subject;electronics_Email_Product_Back_In_Stock_Body;EmailPage
+
+INSERT_UPDATE ContentSlotName;name[unique=true];template(uid,$contentCV)[unique=true][default='ProductBackInStockNotificationEmailTemplate'];validComponentTypes(code)
+;SiteLogo;;;$wideContent;
+;TopContent;;$wideContent;
+;BottomContent;;$wideContent;
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(uid,$contentCV)
+;;ProductBackInStockNotificationEmailTopSlot;Default ProductBackInStockNotification Email Top Slot;true;EmailBannerSaleNowOnImage
+
+# Bind Content Slots to Email Page Templates
+INSERT_UPDATE ContentSlotForTemplate;$contentCV[unique=true];uid[unique=true];position[unique=true];pageTemplate(uid,$contentCV)[unique=true][default='ProductBackInStockNotificationEmailTemplate'];contentSlot(uid,$contentCV)[unique=true];allowOverwrite
+;;SiteLogo-ProductBackInStockNotificationEmail;SiteLogo;;EmailSiteLogoSlot;true
+;;TopContent-ProductBackInStockNotificationEmail;TopContent;;ProductBackInStockNotificationEmailTopSlot;true
+;;BottomContent-ProductBackInStockNotificationEmail;BottomContent;;EmailBottomSlot;true
+
+# Email Pages
+INSERT_UPDATE EmailPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid,$contentCV);defaultPage;approvalStatus(code)[default='approved'];previewImage(code, $contentCV)[default='EmailPageModel_preview']
+;;ProductBackInStockNotificationEmail;Product Back In Stock Notification Email;ProductBackInStockNotificationEmailTemplate;true
+
+# Email velocity templates
+INSERT_UPDATE RendererTemplate;code[unique=true];contextClass;rendererType(code)[default='velocity']
+;electronics_Email_Product_Back_In_Stock_Body;$emailPackageName.BackInStockNotificationEmailContext
+;electronics_Email_Product_Back_In_Stock_Subject;$emailPackageName.BackInStockNotificationEmailContext
+
+
+###### Email CMS data for customer coupon ######
+$emailPackageName-mycoupons=de.hybris.platform.customercouponfacades.process.email.context
+
+# Email page Template
+INSERT_UPDATE EmailPageTemplate;$contentCV[unique=true];uid[unique=true];name;active;frontendTemplateName;subject(code);htmlTemplate(code);restrictedPageTypes(code)
+;;CustomerCouponEmailTemplate;Customer Coupon Alert Template;true;customerCounponEmail;electronics_Email_Customer_Customer_Coupon_Subject;electronics_Email_Customer_Customer_Coupon_Body;EmailPage
+
+INSERT_UPDATE ContentSlotName;name[unique=true];template(uid,$contentCV)[unique=true][default='CustomerCouponEmailTemplate'];validComponentTypes(code)
+;SiteLogo;;logo
+;TopContent;;$wideContent
+;BottomContent;;$wideContent
+
+# Bind Content Slots to Email Page Templates
+INSERT_UPDATE ContentSlotForTemplate;$contentCV[unique=true];uid[unique=true];position[unique=true];pageTemplate(uid,$contentCV)[unique=true][default='CustomerCouponEmailTemplate'];contentSlot(uid,$contentCV)[unique=true];allowOverwrite
+;;SiteLogo-CustomerCouponEmailTemplate;SiteLogo;;EmailSiteLogoSlot;true
+
+# Email Pages
+INSERT_UPDATE EmailPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid,$contentCV);defaultPage;approvalStatus(code)[default='approved']
+;;CustomerCouponEmail;Customer Coupon Email;CustomerCouponEmailTemplate;true;
+
+# Email velocity templates
+INSERT_UPDATE RendererTemplate;code[unique=true];contextClass;rendererType(code)[default='velocity']
+;electronics_Email_Customer_Customer_Coupon_Subject;$emailPackageName-mycoupons.CouponNotificationEmailContext
+;electronics_Email_Customer_Customer_Coupon_Body;$emailPackageName-mycoupons.CouponNotificationEmailContext

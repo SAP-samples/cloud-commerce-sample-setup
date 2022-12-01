@@ -1,0 +1,25 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+#
+# ImpEx for Consents for Electronics Store
+#
+#set($escContentCV=$esc.java('$contentCV[unique=true]'))
+# Email CMS data for stock notification
+\$contentCatalog=electronics-spaContentCatalog
+\$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=\$contentCatalog]),CatalogVersion.version[default=Staged])[default=\$contentCatalog:Staged]
+\$emailResource=jar:de.hybris.platform.spartacussampledata.constants.SpartacussampledataConstants&/spartacussampledata/import/emails
+\$lang=$lang.toLowerCase()
+
+#set( $rows = $query.load('email-content', 'EmailPage') )
+UPDATE EmailPage;$escContentCV;uid[unique=true];fromEmail[lang=\$lang];fromName[lang=\$lang]
+#foreach( $row in $rows )
+;;$row.key;"$row.values.fromEmail";"$row.values.fromName"
+#end
+
+UPDATE RendererTemplate;code[unique=true];templateScript[lang=\$lang,translator=de.hybris.platform.commerceservices.impex.impl.FileLoaderValueTranslator]
+;electronics_Email_Product_Back_In_Stock_Body;\$emailResource/email-productBackInStockBody.vm
+;electronics_Email_Product_Back_In_Stock_Subject;\$emailResource/email-productBackInStockSubject.vm
+;electronics_Email_Customer_Customer_Coupon_Subject;\$emailResource/email-customerCouponSubject.vm
+;electronics_Email_Customer_Customer_Coupon_Body;\$emailResource/email-customerCouponBody.vm
+

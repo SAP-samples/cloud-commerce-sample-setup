@@ -1,0 +1,242 @@
+# -----------------------------------------------------------------------
+# [y] hybris Platform
+#
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# The files in this addon are licensed under the Apache Software License, v. 2 
+# except as noted otherwise in the LICENSE file.
+# -----------------------------------------------------------------------
+#
+###### Remove unused pages ######
+$contentCatalog=apparel-uk-spaContentCatalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+
+# Quick order
+REMOVE CMSParagraphComponent;$contentCV[unique=true];uid[unique=true]
+;;QuickOrderInfoParagraphComponent
+
+REMOVE ContentSlotForPage;$contentCV[unique=true];uid[unique=true]
+;;TopContent-quickOrderPage
+
+REMOVE ContentSlot;$contentCV[unique=true];uid[unique=true]
+;;TopContent-quickOrderPage
+
+# Order expired
+REMOVE CMSParagraphComponent;$contentCV[unique=true];uid[unique=true]
+;;orderExpiredMenuParagraph
+;;orderExpiredTextParagraph
+
+REMOVE ContentSlotForPage;$contentCV[unique=true];uid[unique=true]
+;;Section2A-OrderExpired
+;;Section2B-OrderExpired
+
+REMOVE ContentSlot;$contentCV[unique=true];uid[unique=true]
+;;Section2ASlot-OrderExpired
+;;Section2BSlot-OrderExpired
+
+REMOVE ContentPage;$contentCV[unique=true];uid[unique=true]
+;;orderExpired
+
+# Import CSV as Saved Cart Page
+REMOVE ContentSlotForPage;$contentCV[unique=true];uid[unique=true]
+;;SideContent-importCSVSavedCartPage
+;;BodyContent-importCSVSavedCartPage
+
+REMOVE ContentSlot;$contentCV[unique=true];uid[unique=true]
+;;SideContent-importCSVSavedCartPage
+;;BodyContent-importCSVSavedCartPage
+
+REMOVE ContentPage;$contentCV[unique=true];uid[unique=true]
+;;importCSVSavedCartPage
+
+# Add-Edit address
+REMOVE ContentSlotForPage;$contentCV[unique=true];uid[unique=true]
+;;SideContent-add-edit-address
+;;BodyContent-add-edit-address
+
+REMOVE ContentSlot;$contentCV[unique=true];uid[unique=true]
+;;SideContent-add-edit-address
+;;BodyContent-add-edit-address
+
+REMOVE ContentPage;$contentCV[unique=true];uid[unique=true]
+;;add-edit-address
+
+# Add to cart
+REMOVE ContentSlotForTemplate;$contentCV[unique=true];uid[unique=true]
+;;AddToCart-ProductDetails
+# ;;VariantSelector-ProductDetails
+
+REMOVE ContentSlot;$contentCV[unique=true];uid[unique=true]
+;;AddToCartSlot
+# ;;VariantSelectorSlot
+
+REMOVE ContentSlotName;name[unique=true];template(uid,$contentCV)[unique=true];validComponentTypes(code);compTypeGroup(code)
+;AddToCart;ProductDetailsPageTemplate;;;
+# ;VariantSelector;ProductDetailsPageTemplate;;;
+
+
+###### Remove unused navigation nodes ######
+
+# Order Navigation nodes
+# component contains the OrderNavNode
+REMOVE NavigationComponent;$contentCV[unique=true];uid[unique=true]
+;;OrderComponent
+
+REMOVE CMSNavigationNode;$contentCV[unique=true];uid[unique=true]
+# This is the parent of quickOrder and importSavedCart
+;;OrderNavNode
+;;ImportSavedCartNavNode
+
+REMOVE CMSNavigationEntry;$contentCV[unique=true];uid[unique=true]
+;;ImportSavedCartNavNodeEntry
+
+REMOVE CMSLinkComponent;$contentCV[unique=true];uid[unique=true]
+;;ImportSavedCartLink
+
+# Add all brands category url 
+UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];url
+;;AllBrandsLink;/Brands/all/c/brands
+
+# Update brands sublinks
+INSERT_UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];url
+;;667Link;/Brands/667/c/667
+;;686Link;/Brands/686/c/686
+;;69SlamLink;/Brands/69 Slam/c/69 Slam
+;;adidasOriginalsLink;/Brands/adidas Originals/c/adidas Originals
+;;AlMerrickLink;/Brands/Al Merrick/c/Al Merrick
+;;AlienWorkshopLink;/Brands/Al MerricAlien Workshopk/c/Alien Workshop
+;;AnalogLink;/Brands/Analog/c/Analog
+;;AnonLink;/Brands/Anon/c/Anon
+;;ArmadaLink;/Brands/Armada/c/Armada
+;;BenchLink;/Brands/Bench/c/Bench
+;;BillabongLink;/Brands/Billabong/c/Billabong
+;;BlueTomatoLink;/Brands/Blue Tomato/c/Blue Tomato
+;;BurtonLink;/Brands/Burton/c/Burton
+;;CarharttLink;/Brands/Carhartt/c/Carhartt
+;;DCLink;/Brands/DC/c/DC
+;;DaineseLink;/Brands/Dainese/c/Dainese
+;;DakineLink;/Brands/Dakine/c/Dakine
+;;DalbelloLink;/Brands/Dalbello/c/Dalbello
+;;droidLink;/Brands/droid/c/droid
+;;ElementLink;/Brands/Element/c/Element
+;;ElmLink;/Brands/Elm/c/Elm
+;;F2-FTWOLink;/Brands/F2-FTWO/c/F2-FTWO
+;;FemipleasureLink;/Brands/Femipleasure/c/Femipleasure
+;;FoursquareLink;/Brands/Foursquare/c/Foursquare
+;;FoxLink;/Brands/Fox/c/Fox
+;;HorsefeathersLink;/Brands/Horsefeathers/c/Horsefeathers
+;;HurleyLink;/Brands/Hurley/c/Hurley
+;;NikeLink;/Brands/Nike/c/Nike
+;;Nike6.0Link;/Brands/Nike 6.0/c/Nike 6.0
+;;NixonLink;/Brands/Nixon/c/Nixon
+;;OakleyLink;/Brands/Oakley/c/Oakley
+;;OrageLink;/Brands/Orage/c/Orage
+;;PYUALink;/Brands/PYUA/c/PYUA
+;;PlayboardLink;/Brands/Playboard/c/Playboard
+;;ProTecLink;/Brands/Pro Tec/c/Pro Tec
+;;QuiksilverLink;/Brands/Quiksilver/c/Quiksilver
+;;RedLink;/Brands/Red/c/Red
+;;ReefLink;/Brands/Reef/c/Reef
+;;RipCurlLink;/Brands/Rip Curl/c/Rip Curl
+;;RoxyLink;/Brands/Roxy/c/Roxy
+;;SessionsLink;/Brands/Sessions/c/Sessions
+;;SpecialBlendLink;/Brands/Special Blend/c/Special Blend
+;;TokoLink;/Brands/Toko/c/Toko
+;;VIVOLink;/Brands/VIVO/c/VIVO
+;;VansLink;/Brands/Vans/c/Vans
+;;VolcomLink;/Brands/Volcom/c/Volcom
+;;VonZipperLink;/Brands/Von Zipper/c/Von Zipper
+;;WLDLink;/Brands/WLD/c/WLD
+;;ZimtsternLink;/Brands/Zimtstern/c/Zimtstern
+
+# fix for link with params to be supported by spartacus
+# (see https://github.com/SAP/cloud-commerce-spartacus-storefront/issues/5237)
+INSERT_UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];url
+;;StreetwearMensBeltsLink;/Collections/Streetwear/c/251100?sortCode=topRated
+;;StreetwearYouthBoardshortsBillabongLink;/Categories/Streetwear-youth/Boardshorts-youth/c/270600?query=:relevance:category:270600:brand:Billabong
+;;StreetwearYouthBoardshorts69SlamLink;/Categories/Streetwear-youth/Boardshorts-youth/c/270600?query=:relevance:category:270600:brand:69%2BSlam
+;;StreetwearYouthBoardshortsQuiksilverLink;/Categories/Streetwear-youth/Boardshorts-youth/c/270600?query=:relevance:category:270600:brand:Quiksilver
+;;StreetwearYouthBoardshortsVolcomLink;/Categories/Streetwear-youth/Boardshorts-youth/c/270600?query=:relevance:category:270600:brand:Volcom
+;;StreetwearYouthTShirtsBillabongLink;/Categories/Streetwear-youth/T-Shirts-youth/c/270100?query=:relevance:category:270100:brand:Billabong
+;;StreetwearYouthTShirtsBlueTomatoLink;/Categories/Streetwear-youth/T-Shirts-youth/c/270100?query=:relevance:category:270100:brand:Blue%2BTomato
+;;StreetwearYouthTShirtsBurtonLink;/Categories/Streetwear-youth/T-Shirts-youth/c/270100?query=:relevance:category:270100:brand:Burton
+;;StreetwearYouthTShirtsDCLink;/Categories/Streetwear-youth/T-Shirts-youth/c/270100?query=:relevance:category:270100:brand:DC
+;;StreetwearYouthTShirtsQuiksilverLink;/Categories/Streetwear-youth/T-Shirts-youth/c/270100?query=:relevance:category:270100:brand:Quiksilver
+
+###### Replace JspIncludeComponent to CMSFlexComponent ######
+# Remove JspIncludeComponent
+REMOVE JspIncludeComponent[batchmode=true];$contentCV[unique=true];itemtype(code)[unique=true]
+;;JspIncludeComponent
+
+# Create CMSFlexComponents
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType;&componentRef
+;;AccountAddEditAddressComponent;Account Add Edit Address Component;AccountAddEditAddressComponent;AccountAddEditAddressComponent
+;;AccountAddressBookComponent;Account Address Book Component;AccountAddressBookComponent;AccountAddressBookComponent
+;;AccountOrderDetailsActionsComponent;Account Order Details Actions Component;AccountOrderDetailsActionsComponent;AccountOrderDetailsActionsComponent
+;;AccountOrderDetailsItemsComponent;Account Order Details Items Info Component;AccountOrderDetailsItemsComponent;AccountOrderDetailsItemsComponent
+;;AccountOrderDetailsOverviewComponent;Account Order Details Overview Info Component;AccountOrderDetailsOverviewComponent;AccountOrderDetailsOverviewComponent
+;;AccountOrderDetailsShippingComponent;Account Order Details Shipping Info Component;AccountOrderDetailsShippingComponent;AccountOrderDetailsShippingComponent
+;;AccountOrderDetailsTotalsComponent;Account Order Details Order Totals Component;AccountOrderDetailsTotalsComponent;AccountOrderDetailsTotalsComponent
+;;AccountOrderHistoryComponent;Account History Component;AccountOrderHistoryComponent;AccountOrderHistoryComponent
+;;AccountPaymentDetailsComponent;Account Payment Details Component;AccountPaymentDetailsComponent;AccountPaymentDetailsComponent
+;;CartComponent;Cart Display Component;CartComponent;CartComponent
+;;CartTotalsComponent;Cart Totals Display Component;CartTotalsComponent;CartTotalsComponent
+;;CheckoutComponent;Checkout Display Component;CheckoutComponent;CheckoutComponent
+;;CloseAccountComponent;Close Account Component;CloseAccountComponent;CloseAccountComponent
+;;ConsentManagementComponent;Consent Management Component;ConsentManagementComponent;ConsentManagementComponent
+;;GuestCheckoutLoginComponent;Guest Checkout Login Component;GuestCheckoutLoginComponent;GuestCheckoutLoginComponent
+;;OrderConfirmationContinueButtonComponent;Order Confirmation Continue Button Component;OrderConfirmationContinueButtonComponent;OrderConfirmationContinueButtonComponent
+;;OrderConfirmationItemsComponent;Order Confirmation Items Info Component;OrderConfirmationItemsComponent;OrderConfirmationItemsComponent
+;;OrderConfirmationOverviewComponent;Order Confirmation Overview Info Component;OrderConfirmationOverviewComponent;OrderConfirmationOverviewComponent
+;;OrderConfirmationShippingComponent;Order Confirmation Shipping Info Component;OrderConfirmationShippingComponent;OrderConfirmationShippingComponent
+;;OrderConfirmationThankMessageComponent;Order Confirmation Thank You Message Component;OrderConfirmationThankMessageComponent;OrderConfirmationThankMessageComponent
+;;OrderConfirmationTotalsComponent;Order Confirmation Totals Component;OrderConfirmationTotalsComponent;OrderConfirmationTotalsComponent
+;;PotentialPromotionsComponent;Potential Promotions Component;PotentialPromotionsComponent;PotentialPromotionsComponent
+;;ProductDetailsTabComponent;Product Details Tab;ProductDetailsTabComponent;ProductDetailsTabComponent
+;;ProductReviewsTabComponent;Product Reviews Tab;ProductReviewsTabComponent;ProductReviewsTabComponent
+;;ProductSpecsTabComponent;Product Specification Tab;ProductSpecsTabComponent;ProductSpecsTabComponent
+;;PromotionsComponent;Promotions Component;PromotionsComponent;PromotionsComponent
+;;ReturningCustomerCheckoutLoginComponent;Returning Customer Checkout Login Component;ReturningCustomerCheckoutLoginComponent;ReturningCustomerCheckoutLoginComponent
+;;ReturningCustomerLoginComponent;Returning Customer Login Component;ReturningCustomerLoginComponent;ReturningCustomerLoginComponent
+;;ReturningCustomerRegisterComponent;Returning Customer Register Component;ReturningCustomerRegisterComponent;ReturningCustomerRegisterComponent
+;;StoreFinderComponent;Store Finder Component;StoreFinderComponent;StoreFinderComponent
+;;UpdateEmailComponent;Update Email Component;UpdateEmailComponent;UpdateEmailComponent
+;;UpdatePasswordComponent;Update Password Component;UpdatePasswordComponent;UpdatePasswordComponent
+;;UpdateProfileComponent;Update Profile Component;UpdateProfileComponent;UpdateProfileComponent
+;;CartApplyCouponComponent;Cart Apply Coupon Component;CartApplyCouponComponent;CartApplyCouponComponent
+;;SaveForLaterComponent;SaveForLater Component;SaveForLaterComponent;SaveForLaterComponent
+;;CartQuickOrderFormComponent;Cart Quick Order Form Component;CartQuickOrderFormComponent;CartQuickOrderFormComponent
+
+# Update slots
+UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid, $contentCV)
+;;BodyContentSlot-address-book;AccountAddressBookComponent
+;;BodyContentSlot-orderdetail;AccountOrderDetailsOverviewComponent,AccountOrderDetailsShippingComponent,AccountOrderDetailsItemsComponent,AccountOrderDetailsTotalsComponent,AccountOrderDetailsActionsComponent
+;;BodyContentSlot-orders;AccountOrderHistoryComponent
+;;BodyContentSlot-payment-details;AccountPaymentDetailsComponent
+;;BodyContentSlot-close-account;CloseAccountComponent
+;;BodyContentSlot-consents;ConsentManagementComponent
+;;BodyContentSlot-update-email;UpdateEmailComponent
+;;BodyContentSlot-updatePassword;UpdatePasswordComponent
+;;BodyContentSlot-update-profile;UpdateProfileComponent
+;;BodyContent-orderConfirmation;OrderConfirmationThankMessageComponent,OrderConfirmationOverviewComponent,OrderConfirmationItemsComponent,OrderConfirmationShippingComponent,OrderConfirmationTotalsComponent,OrderConfirmationContinueButtonComponent
+;;CenterLeftContentSlot-cartPage;PromotionsComponent,PotentialPromotionsComponent
+;;CenterRightContentSlot-cartPage;CartTotalsComponent,CartApplyCouponComponent,CartQuickOrderFormComponent
+;;BottomContentSlot-cartPage;CheckoutComponent,CartSuggestions
+;;RightContentSlot-checkout-login;GuestCheckoutLoginComponent
+;;LeftContentSlot-checkout-login;ReturningCustomerCheckoutLoginComponent
+;;RightContentSlot-login;
+;;LeftContentSlot-login;ReturningCustomerLoginComponent,ReturningCustomerRegisterComponent
+;;MiddleContentSlot-StoreFinder;StoreFinderComponent
+
+UPDATE CMSTabParagraphContainer;$contentCV[unique=true];uid[unique=true];simpleCMSComponents(uid, $contentCV);&componentRef
+;;TabPanelContainer;ProductDetailsTabComponent,ProductSpecsTabComponent,ProductReviewsTabComponent,deliveryTab;TabPanelContainer
+
+# CMS Assisted Service Components and Sub-Components
+
+REMOVE AssistedServiceComponent;$contentCV[unique=true];uid[unique=true]
+;;AssistedServiceComponent
+
+REMOVE ASMDevicesUsedComponent;$contentCV[unique=true];uid[unique=true]
+;;ASMDevicesUsedComponent
+
+REMOVE ASMFavoriteColorsComponent;$contentCV[unique=true];uid[unique=true]
+;;ASMFavoriteColorsComponent

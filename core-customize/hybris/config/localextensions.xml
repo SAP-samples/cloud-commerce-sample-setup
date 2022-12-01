@@ -4,7 +4,6 @@
     <!--<path dir='${HYBRIS_BIN_DIR}/modules-cep'  autoload='false' />-->
     
     <path dir='${HYBRIS_BIN_DIR}' autoload='false' />
-	  <extension name= 'spartacussampledata' />
 	  <extension name= 'adaptivesearch' />
 	  <extension name= 'adaptivesearchbackoffice' />
 	  <extension name= 'adaptivesearchfacades' />
@@ -250,6 +249,7 @@
 
 <!-- Sample Custom Extensions -->
     <extension name='kiwi' />
+	<extension name= 'spartacussampledata' />
     <extension name='tiger'/>
 
 <!-- For more information where to find those extensions: -->
