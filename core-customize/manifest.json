@@ -49,6 +49,10 @@
     {
       "key": "datahubadapter.datahuboutbound.url",
       "value": "http://datahub:8080/datahub-webapp/v1"
+    },
+    {
+      "key": "sapcoreconfiguration.datahuboutbound.enabled",
+      "value": "true"
     }
   ],
   "aspects": [
