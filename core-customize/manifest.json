@@ -147,14 +147,6 @@
                 {
                     "key": "storefrontContextRoot",
                     "value": ""
-                },
-                {
-                    "key": "acceleratorservices.payment.sopmock.enabled",
-                    "value": "true"
-                },
-                {
-                    "key": "acceleratorservices.payment.hopmock.enabled",
-                    "value": "true"
                 }
             ],
             "webapps": [
