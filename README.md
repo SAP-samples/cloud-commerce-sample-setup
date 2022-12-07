@@ -1,6 +1,7 @@
 # SAP Commerce Cloud with Data Hub Sample Repository
 
-This sample repository contains the files and folders that are required to set up SAP Commerce Cloud with Data Hub.  You can clone this repository and then follow the instructions in the readme to update the example files with your specific details. 
+This sample repository contains the files and folders that are required to set up SAP Commerce Cloud with Data Hub.  This sample is meant to be an addition to a standard storefront setup and shows only how Data Hub deployment can be configured.  This sample can be used "as is" only, if you're interested in trying or testing the Data Hub. Most likely, for production deployments, it has to be combined with another sample demonstrating the commerce suite configuration and customization capabilities, e.g. 2205-spartacus.
+You can clone this repository and then follow the instructions in the readme to update the example files with your specific details. 
 
 When your files are ready, push them to your SAP Commerce Cloud repository.  
 
@@ -16,9 +17,6 @@ When your files are ready, push them to your SAP Commerce Cloud repository.
 
 You can find the supported SAP Commerce versions listed in the [Compatibility help topic](https://help.sap.com/docs/SAP_COMMERCE_CLOUD_PUBLIC_CLOUD/20125f0eca6340dba918bda360e3cdfa/31ac209eb08f41bc92e9bbe5772fb949.html?version=v2205).
 
-# Download and Installation
-Not applicable.
-
 # Configuration
 
 These instructions walk you through the process of cloning the repository and then updating the sample files with your specific requirements. 
@@ -26,11 +24,11 @@ These instructions walk you through the process of cloning the repository and th
 The following folders and files are included in the sample repository.
 
 Root level 
-- core-customize folder: The folder that contains all of the folders and files that support Commerce Cloud.
-- datahub folder: The folder that contains all of the folders and files that support Data Hub.
+- core-customize folder: The folder that contains all the folders and files that support Commerce Cloud.
+- datahub folder: The folder that contains all the folders and files that support Data Hub.
 
 core-customize folder
-- manifest.json: The Commerce Cloud manifest.json file, which defines how your code will be built and deployed in the Public Cloud environments. The manifest is set up to leverage [confiuration reuse](https://help.sap.com/viewer/1be46286b36a4aa48205be5a96240672/SHIP/en-US/2311d89eef9344fc81ef168ac9668307.html) to better allow for consistency between local and cloud builds.
+- manifest.json: The Commerce Cloud manifest.json file, which defines how your code will be built and deployed in the Public Cloud environments. The manifest is set up to leverage [configuration reuse](https://help.sap.com/viewer/1be46286b36a4aa48205be5a96240672/SHIP/en-US/2311d89eef9344fc81ef168ac9668307.html) to better allow for consistency between local and cloud builds.
 - hybris folder: contains a sample custom folder for storing any custom extensions as well as the config folder for storing local and cloud properties, localextensions.xml and any local solr/tomcat configurations
 - other sample manifests: A collection of tested and verified manifest files that you can use as starting points for your Commerce Cloud environments.
 
@@ -41,7 +39,6 @@ datahub folder
 - README.md: Specific readme for Data Hub specific configuration.
 
 ### Clone Repository
-
 Clone the sample repository ([instructions can be found here](https://help.github.com/articles/cloning-a-repository/)). The files are copied to your local machine.
 
 ### Update the Custom Extensions
