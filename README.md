@@ -2,10 +2,20 @@
 
 # SAP Commerce Cloud Sample Repository
 
-This sample repository contains the files and folders that are required to set up SAP Commerce Cloud. There are multiple branches covering different scenarios for Commerce Cloud (e.g. project Spartacus, data hub, solr customizations).  You can clone/download this repository, checkout the branch of interest and then follow the instructions in the readme to update the example files with your specific details. 
-This branch covers a Commerce Cloud 2211 sample scenario that is based on the [CX recipe](https://help.sap.com/viewer/a74589c3a81a4a95bf51d87258c0ab15/latest/en-US/f09d46cf4a2546b586ed7021655e4715.html) with Spartacus 4.3. Deprecated extensions have been excluded with the exception of yacceleratorstorefront, which contains sample data required for this sample demo. It is not recommended to use the deprecated yacceleratorstorefront extension.
+This sample repository contains the files and folders that are required to set up SAP Commerce Cloud. 
 
-When your files are ready, push them to your SAP Commerce Cloud repository.  
+> **Note**
+> There are [different branches](https://github.com/SAP-samples/cloud-commerce-sample-setup/branches)
+> covering the various versions and configurations of an SAP Commerce Cloud solution, so make sure to choose the right one.
+> You can clone/download this repository, checkout the branch of interest and then follow the instructions in the readme to update the example files with your specific details.
+
+This branch covers a Commerce Cloud 2211 sample scenario that is based on the [CX recipe](https://help.sap.com/viewer/a74589c3a81a4a95bf51d87258c0ab15/latest/en-US/f09d46cf4a2546b586ed7021655e4715.html) with Spartacus 4.3.
+
+> **Warning**
+> The deprecated `yacceleratorstorefront` and a few addons are included in this repo *just for showcase purposes*.
+> We **do not** recommended to use the deprecated `yacceleratorstorefront `extension and the related addons
+> for any new development.
+> [Deprecation of Accelerator UIs and Older OCC template Extensions](https://help.sap.com/docs/SAP_COMMERCE_CLOUD_PUBLIC_CLOUD/7e47d40a176d48ba914b50957d003804/1f1c6885781a4267a99c5d619d1f1edd.html?locale=en-US)
 
 # Requirements
 
@@ -19,6 +29,7 @@ When your files are ready, push them to your SAP Commerce Cloud repository.
 You can find the supported SAP Commerce versions listed in the [Compatibility help topic](https://help.sap.com/viewer/1be46286b36a4aa48205be5a96240672/v1905/en-US/31ac209eb08f41bc92e9bbe5772fb949.html).
 
 # Download and Installation
+
 Not applicable.
 
 # Configuration
@@ -28,6 +39,7 @@ These instructions walk you through the process of cloning the repository and th
 The following folders and files are included in the sample repository.
 
 Root level
+
 - `core-customize` folder: The folder that contains all of the folders and files that support Commerce Cloud.
 - `js-storefront` folder: A project Spartacus JS Storefront configured with Server Side Rendering (SSR). For more on project Spartacus see [project Spartacus documentation](https://sap.github.io/spartacus-docs/)
 
@@ -56,6 +68,9 @@ Clone the sample repository ([instructions can be found here](https://help.githu
  
 In the sample repository, verify that you have the following files in the `core-customize` folder.
  - `manifest.json`:  This is the manifest.json for Commerce Cloud.
+
+In the sample repository, verify that you have the following files in the `js-storefront` folder.
+ - `manifest.json`: This is the file that tells Cloud Automation the name and path of the JavaScript storefronts you want to build and deploy
  
 ### Push the Commerce Cloud Configuration to Code Repository
 

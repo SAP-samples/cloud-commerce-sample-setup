@@ -5,6 +5,17 @@
         "cloudmediaconversion",
         "mediaconversionbackoffice"
     ],
+    "storefrontAddons": [
+        {
+            "addons": [
+                "ordermanagementaddon"
+            ],
+            "storefronts": [
+                "yacceleratorstorefront"
+            ],
+            "template": "yacceleratorstorefront"
+        }
+    ],
     "useConfig": {
         "properties": [
             {
@@ -56,24 +67,6 @@
         {
             "key": "endpoint.hac.platform.update.disabled",
             "value": "true"
-        },
-        {
-            "key": "test.property.1",
-            "value": "test-property-1-value-prod",
-            "persona": "production"
-        },
-        {
-            "key": "test.property.1",
-            "value": "test-property-1-value-dev",
-            "persona": "development"
-        },
-        {
-            "key": "test.property.1",
-            "value": "test-property-1-value"
-        },
-        {
-            "key": "test.property.2",
-            "value": "test-property-2-value"
         },
         {
             "key": "googleApiKey",
@@ -292,14 +285,6 @@
                 {
                     "name": "embeddedserver",
                     "contextPath": "/embeddedserver"
-                },
-                {
-                    "name": "groovynature",
-                    "contextPath": "/groovynature"
-                },
-                {
-                    "name": "mediaconversion",
-                    "contextPath": "/mediaconversion"
                 },
                 {
                     "name": "oauth2",
