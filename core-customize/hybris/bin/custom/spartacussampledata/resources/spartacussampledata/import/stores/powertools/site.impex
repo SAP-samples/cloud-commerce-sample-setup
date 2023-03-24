@@ -1,0 +1,48 @@
+# -----------------------------------------------------------------------
+# [y] hybris Platform
+#
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# The files in this addon are licensed under the Apache Software License, v. 2 
+# except as noted otherwise in the LICENSE file.
+# -----------------------------------------------------------------------
+#
+$spaSiteUid=powertools-spa
+$spaContentCatalog=powertools-spaContentCatalog
+$spaContentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$spaContentCatalog]),CatalogVersion.version[default=Staged])[default=$spaContentCatalog:Staged]
+
+$productCatalog=powertoolsProductCatalog
+$productCV=catalogVersion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+
+$storeUid=powertools
+$siteMapLangCur=jaJpy,jaUsd,enJpy,enUsd,deJpy,deUsd,zhJpy,zhUsd
+$siteMapPage=Homepage,Product,CategoryLanding,Category,Store,Content,Custom
+$customSiteMapUrls=/Open-Catalogue/c/1?q=%3AtopRated%3AallPromotions%3ABOGOFpowertools%3AallPromotions%3A10DiscountCanonEOS450D%3AallPromotions%3AMultiBuypowertools%3AallPromotions%3APerfectPartnerpowertools%3AallPromotions%3AProductBundlepowertools,/Brands/c/brands?q=%3Arelevance%3Abrand%3Abrand_5%3Acategory%3A575,/Open-Catalogue/Cameras/Hand-held-Camcorders/c/584?q=%3Arelevance%3Abrand%3Abrand_2,/Open-Catalogue/Components/Power-Supplies/c/816?q=%3Arelevance%3Abrand%3Abrand_5,/Open-Catalogue/Data-storage/Flash-Memory/c/902?q=%3Arelevance%3Abrand%3Abrand_18
+
+$fullPathpowertools=https://localhost:4200
+$language=en
+
+$urlPatterns=(?i)^https?://[^/]+(/[^?]*)?\?(.*\&)?(site=$spaSiteUid)(|\&.*)$,(?i)^https?://$spaSiteUid\.[^/]+(|/.*|\?.*)$,(?i)^https?://api\.hybrisdev\.com(:[\d]+)?/rest/.*$,(?i)^https?://localhost(:[\d]+)?/rest/.*$,(?i)^https?://[^/]+/$spaSiteUid(|/.*|\?.*|#.*)$
+$urlEncodingAttributes=storefront,language,currency
+
+### Update SiteTheme ###
+INSERT_UPDATE SiteTheme;code[unique=true];name[lang=en]
+;santorini;Santorini
+;sparta;Sparta
+
+### Site for spartacus
+INSERT_UPDATE CMSSite;uid[unique=true];theme(code);channel(code);stores(uid);contentCatalogs(id);defaultCatalog(id);defaultLanguage(isoCode);siteMapConfig(configId);urlPatterns;active;previewURL;startingPage(uid,$spaContentCV);urlEncodingAttributes;defaultPromotionGroup(Identifier)[default=powertoolsPromoGrp]
+;$spaSiteUid;sparta;B2B;$storeUid;$spaContentCatalog;$productCatalog;$language;powertoolsSiteMapConfig;$urlPatterns;true;$fullPathpowertools/$spaSiteUid;homepage;$urlEncodingAttributes
+
+UPDATE CMSSite;uid[unique=true];name[lang=$language]
+;$spaSiteUid;"Spartacus powertools Site"
+
+UPDATE CMSSite;uid[unique=true];defaultPreviewCategory(code, $productCV);defaultPreviewProduct(code, $productCV);defaultPreviewCatalog(id)
+;$spaSiteUid;1355;2116282;$productCatalog
+
+### Put spartacus into smart edit whitelist
+INSERT_UPDATE SmartEditConfiguration;key[unique=true];value
+;whiteListedStorefronts;"[""$fullPathpowertools""]"
+
+### Kyma OAuth client
+INSERT_UPDATE OpenIDClientDetails;clientId[unique=true] ;resourceIds   ;scope    ;autoApprove  ;authorizedGrantTypes         ;authorities  ;clientSecret   ;registeredRedirectUri      ;externalScopeClaimName ;issuer
+                                 ;client4kyma           ;hybris        ;openid   ;openid       ;password,client_credentials  ;ROLE_CLIENT  ;secret         ;http://MY_APPLICATION/     ;scope                  ;ec

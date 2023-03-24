@@ -1,0 +1,148 @@
+# -----------------------------------------------------------------------
+# [y] hybris Platform
+#
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# The files in this addon are licensed under the Apache Software License, v. 2
+# except as noted otherwise in the LICENSE file.
+# -----------------------------------------------------------------------
+#
+$contentCatalog=electronics-spaContentCatalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+$siteResource=jar:de.hybris.platform.spartacussampledata.constants.SpartacussampledataConstants&/spartacussampledata/import/contentCatalogs/electronicsContentCatalog
+
+
+###### Customer Data Cloud Integration CMS Content ######
+
+# Create PageTemplates
+INSERT_UPDATE PageTemplate;$contentCV[unique=true];uid[unique=true];name;frontendTemplateName;restrictedPageTypes(code);active[default=true]
+# Templates without a frontendTemplateName
+;;GigyaLoginPageTemplate;Gigya Login Page Template;;ContentPage;false;
+
+
+# Gigya Login Page Template
+INSERT_UPDATE ContentSlotName;name[unique=true];template(uid,$contentCV)[unique=true][default='GigyaLoginPageTemplate'];validComponentTypes(code);compTypeGroup(code)
+;SiteLogo;;;logo
+;HeaderLinks;;;headerlinks
+;SearchBox;;;searchbox
+;MiniCart;;;minicart
+;NavigationBar;;;navigation
+;Footer;;;footer
+;TopHeaderSlot;;;wide
+;BottomHeaderSlot;;;wide
+;BodyContent;;;wide
+;BottomContent;;;wide
+;PlaceholderContentSlot;;;
+
+
+INSERT_UPDATE ContentSlotForTemplate;$contentCV[unique=true];uid[unique=true];position[unique=true];pageTemplate(uid,$contentCV)[unique=true][default='GigyaLoginPageTemplate'];contentSlot(uid,$contentCV)[unique=true];allowOverwrite
+;;SiteLogo-GigyaLoginPage;SiteLogo;;SiteLogoSlot;true
+;;HeaderLinks-GigyaLoginPage;HeaderLinks;;HeaderLinksSlot;true
+;;SearchBox-GigyaLoginPage;SearchBox;;SearchBoxSlot;true
+;;MiniCart-GigyaLoginPage;MiniCart;;MiniCartSlot;true
+;;NavigationBar-GigyaLoginPage;NavigationBar;;NavigationBarSlot;true
+;;Footer-GigyaLoginPage;Footer;;FooterSlot;true
+;;TopHeaderSlot-GigyaLoginPage;TopHeaderSlot;;TopHeaderSlot;true
+;;BottomHeaderSlot-GigyaLoginPage;BottomHeaderSlot;;BottomHeaderSlot;true
+;;PlaceholderContentSlot-GigyaLoginPage;PlaceholderContentSlot;;PlaceholderContentSlot;true
+;;HomepageLink-GigyaLoginPage;HomepageNavLink;;HomepageNavLinkSlot;true
+
+
+# Functional Content Pages
+INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid,$contentCV);label;defaultPage[default='true'];approvalStatus(code)[default='approved'];homepage[default='false'];
+;;cdc-login;Gigya Login Page;GigyaLoginPageTemplate;/cdc/login
+;;gigya-profile;Gigya profile page;AccountPageTemplate;/my-account/gigya-profile
+;;cdc-checkout-login;Gigya Checkout Login Page;GigyaLoginPageTemplate;/cdc/checkout-login
+
+
+
+#### Gigya Login Page
+# ContentSlot
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef);;;
+;;BodyContent-gigya-login;Body Content Slot for Gigya Login Page;true;GigyaRaasComponentForLogin;;;
+;;BottomContent-gigya-login;Bottom Content Slot for Gigya Login Page;true;;;;
+
+
+# ContentSlotForPage
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='cdc-login'];contentSlot(uid,$contentCV)[unique=true];;;
+;;BodyContent-gigya-login;BodyContent;;BodyContent-gigya-login;;;
+;;BottomContent-gigya-login;BottomContent;;BottomContent-gigya-login;;;
+
+
+#### Gigya Checkout Login Page
+# ContentSlot
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef);;;
+;;BodyContent-gigya-checkout-login;Body Content Slot for Gigya Checkout Login Page;true;GigyaRaasComponentForLogin;;;
+;;BottomContent-gigya-checkout-login;Bottom Content Slot for Gigya Checkout Login Page;true;;;;
+
+# ContentSlotForPage
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='cdc-checkout-login'];contentSlot(uid,$contentCV)[unique=true];;;
+;;BodyContent-gigya-checkout-login;BodyContent;;BodyContent-gigya-checkout-login;;;
+;;BottomContent-gigya-checkout-login;BottomContent;;BottomContent-gigya-checkout-login;;;
+
+
+###### Gigya Profile Page
+# ContentSlot
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef);;;
+;;SideContent-gigya-profile;Side Content Slot for Gigya Profile;true;;;;
+;;BodyContent-gigya-profile;Body Content Slot for Gigya Profile;true;GigyaRaasComponentForProfileUpdate;;;
+
+
+# ContentSlotForPage
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='gigya-profile'];contentSlot(uid,$contentCV)[unique=true];;;
+;;SideContent-gigya-profile;SideContent;;SideContent-gigya-profile;;;
+;;BodyContent-gigya-profile;BodyContent;;BodyContent-gigya-profile;;;
+
+
+INSERT_UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];name;url;&linkRef;target(code)[default='sameWindow']
+;;GigyaProfileLink;GigyaProfileLink;/my-account/gigya-profile;GigyaProfileLink;
+
+
+# create navigation root node for my account & child nodes for the root node
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;parent(uid, $contentCV);links(&linkRef);&nodeRef
+#Root node is already added...
+;GigyaProfileNavNode;;Gigya Profile;MyAccountNavNode;;GigyaProfileNavNode
+
+
+# create cms navigation entry for navigation child nodes
+INSERT_UPDATE CMSNavigationEntry;uid[unique=true];$contentCV[unique=true];name;navigationNode(&nodeRef);item(&linkRef);
+;GigyaProfileNavNodeEntry;;GigyaProfileNavNodeEntry;GigyaProfileNavNode;GigyaProfileLink;
+
+
+### Gigya RAAS Component Creation
+INSERT_UPDATE GigyaRaasComponent;$contentCV[unique=true];uid[unique=true];name;visible;embed;containerID;screenSet;startScreen;showAnonymous;showLoggedIn;profileEdit[default=false];&componentRef
+;;GigyaRaasComponentForLogin;Gigya Raas Component for Login;true;true;login-container;Default-RegistrationLogin;gigya-login-screen;true;false;;GigyaRaasComponentForLogin
+;;GigyaRaasComponentForProfileUpdate;Gigya Raas Component for profile update;true;true;update-container;Default-ProfileUpdate;gigya-update-profile-screen;false;true;true;GigyaRaasComponentForProfileUpdate
+
+
+# CMS Link Components
+UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];linkName[lang=en]
+;;GigyaProfileLink;"Profile Details"
+
+
+# CMS Navigation Nodes
+UPDATE CMSNavigationNode;$contentCV[unique=true];uid[unique=true];title[lang=en]
+;;GigyaProfileNavNode;"Profile Details"
+
+
+
+### Add Site Links to the ContentSlot
+INSERT_UPDATE ContentSlotName;name[unique=true];template(uid,$contentCV)[unique=true];validComponentTypes(code);compTypeGroup(code)
+;SiteLinks;GigyaLoginPageTemplate;CMSLinkComponent;;
+
+
+### Add Site Links to the ContentSlotForTemplate
+INSERT_UPDATE ContentSlotForTemplate;$contentCV[unique=true];uid[unique=true];position[unique=true];pageTemplate(uid,$contentCV)[unique=true];contentSlot(uid,$contentCV)[unique=true];allowOverwrite
+;;SiteLinksSlot-GigyaLoginPage;SiteLinks;GigyaLoginPageTemplate;SiteLinksSlot;true
+
+
+### Add Site Context to the ContentSlot
+INSERT_UPDATE ContentSlotName;name[unique=true];template(uid,$contentCV)[unique=true];validComponentTypes(code);compTypeGroup(code)
+;SiteContext;GigyaLoginPageTemplate;CMSSiteContextComponent;;
+
+
+### Add Site Context to the ContentSlotForTemplate
+INSERT_UPDATE ContentSlotForTemplate;$contentCV[unique=true];uid[unique=true];position[unique=true];pageTemplate(uid,$contentCV)[unique=true];contentSlot(uid,$contentCV)[unique=true];allowOverwrite
+;;SiteContextSlot-GigyaLoginPage;SiteContext;GigyaLoginPageTemplate;SiteContextSlot;true
+
+

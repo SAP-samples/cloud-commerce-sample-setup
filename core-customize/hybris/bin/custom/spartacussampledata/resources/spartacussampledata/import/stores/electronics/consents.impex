@@ -1,0 +1,16 @@
+# -----------------------------------------------------------------------
+# [y] hybris Platform
+#
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# The files in this addon are licensed under the Apache Software License, v. 2 
+# except as noted otherwise in the LICENSE file.
+# -----------------------------------------------------------------------
+# ImpEx for Consents for Electronics Store
+#% impex.setLocale( Locale.GERMAN );
+
+$siteUid=electronics-spa
+
+INSERT_UPDATE ConsentTemplate;id[unique=true];name;description;version[unique=true];baseSite(uid)[unique=true,default=$siteUid];exposed
+;PROFILE;"Allow SAP Commerce Cloud, Context-Driven Services tracking";"We would like to store your browsing behaviour so that our website can dynamically present you with a personalised browsing experience and our customer support agents can provide you with contextual customer support.";0;;true
+;MARKETING_NEWSLETTER;"I approve to this sample MARKETING consent";"This is a sample marketing consent description that will need to be updated or replaced, based on the valid registration consent required.";0;;true
+;STORE_USER_INFORMATION;"I approve to this sample STORE USER INFORMATION consent";"This is a sample store user information consent description that will need to be updated or replaced.";0;;true

@@ -1,0 +1,189 @@
+# -----------------------------------------------------------------------
+# [y] hybris Platform
+#
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# The files in this addon are licensed under the Apache Software License, v. 2 
+# except as noted otherwise in the LICENSE file.
+# -----------------------------------------------------------------------
+#
+###### Remove unused pages ######
+$contentCatalog=electronics-spaContentCatalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+
+# Quick order
+REMOVE CMSParagraphComponent;$contentCV[unique=true];uid[unique=true]
+;;QuickOrderInfoParagraphComponent
+
+REMOVE ContentSlotForPage;$contentCV[unique=true];uid[unique=true]
+;;TopContent-quickOrderPage
+
+REMOVE ContentSlot;$contentCV[unique=true];uid[unique=true]
+;;TopContent-quickOrderPage
+
+
+# Order expired
+REMOVE CMSParagraphComponent;$contentCV[unique=true];uid[unique=true]
+;;orderExpiredMenuParagraph
+;;orderExpiredTextParagraph
+
+REMOVE ContentSlotForPage;$contentCV[unique=true];uid[unique=true]
+;;Section2A-OrderExpired
+;;Section2B-OrderExpired
+
+REMOVE ContentSlot;$contentCV[unique=true];uid[unique=true]
+;;Section2ASlot-OrderExpired
+;;Section2BSlot-OrderExpired
+
+REMOVE ContentPage;$contentCV[unique=true];uid[unique=true]
+;;orderExpired
+
+# Import CSV as Saved Cart Page
+REMOVE ContentSlotForPage;$contentCV[unique=true];uid[unique=true]
+;;SideContent-importCSVSavedCartPage
+;;BodyContent-importCSVSavedCartPage
+
+REMOVE ContentSlot;$contentCV[unique=true];uid[unique=true]
+;;SideContent-importCSVSavedCartPage
+;;BodyContent-importCSVSavedCartPage
+
+REMOVE ContentPage;$contentCV[unique=true];uid[unique=true]
+;;importCSVSavedCartPage
+
+# Add-Edit address
+REMOVE ContentSlotForPage;$contentCV[unique=true];uid[unique=true]
+;;SideContent-add-edit-address
+;;BodyContent-add-edit-address
+
+REMOVE ContentSlot;$contentCV[unique=true];uid[unique=true]
+;;SideContent-add-edit-address
+;;BodyContent-add-edit-address
+
+REMOVE ContentPage;$contentCV[unique=true];uid[unique=true]
+;;add-edit-address
+
+# Add to cart
+REMOVE ContentSlotForTemplate;$contentCV[unique=true];uid[unique=true]
+;;AddToCart-ProductDetails
+;;VariantSelector-ProductDetails
+
+REMOVE ContentSlot;$contentCV[unique=true];uid[unique=true]
+;;AddToCartSlot
+;;VariantSelectorSlot
+
+REMOVE ContentSlotName;name[unique=true];template(uid,$contentCV)[unique=true];validComponentTypes(code);compTypeGroup(code)
+;AddToCart;ProductDetailsPageTemplate;;;
+;VariantSelector;ProductDetailsPageTemplate;;;
+
+
+###### Remove unused navigation nodes ######
+
+# Order Navigation nodes
+# component contains the OrderNavNode
+REMOVE NavigationComponent;$contentCV[unique=true];uid[unique=true]
+;;OrderComponent
+
+REMOVE CMSNavigationNode;$contentCV[unique=true];uid[unique=true]
+# This is the parent of quickOrder and importSavedCart
+;;OrderNavNode
+;;ImportSavedCartNavNode
+
+REMOVE CMSNavigationEntry;$contentCV[unique=true];uid[unique=true]
+;;ImportSavedCartNavNodeEntry
+
+REMOVE CMSLinkComponent;$contentCV[unique=true];uid[unique=true]
+;;ImportSavedCartLink
+
+# Add all brands category url 
+UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];url
+;;AllBrandsCategoryLink;/Brands/all/c/brands
+
+# change category navigation structure 
+UPDATE CMSNavigationNode;uid[unique=true];parent(uid,$contentCV);$contentCV[unique=true,virtual=true];
+;FlashMemoryNavNode;AccessoriesNavNode
+;PowerSuppliesNavNode;AccessoriesNavNode
+
+# rename existing content
+UPDATE CMSNavigationNode;uid[unique=true];title;$contentCV[unique=true,virtual=true];
+;CameraAccessoriesNavNode;Accessories
+;HandheldCamcordersNavNode;Camcorders
+;AccessoriesNavNode;Gear
+
+###### Replace JspIncludeComponent to CMSFlexComponent ######
+# Remove JspIncludeComponent
+REMOVE JspIncludeComponent[batchmode=true];$contentCV[unique=true];itemtype(code)[unique=true]
+;;JspIncludeComponent
+
+# Create CMSFlexComponents
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType;&componentRef
+;;AccountAddEditAddressComponent;Account Add Edit Address Component;AccountAddEditAddressComponent;AccountAddEditAddressComponent
+;;AccountAddressBookComponent;Account Address Book Component;AccountAddressBookComponent;AccountAddressBookComponent
+;;AccountOrderDetailsActionsComponent;Account Order Details Actions Component;AccountOrderDetailsActionsComponent;AccountOrderDetailsActionsComponent
+;;AccountOrderDetailsItemsComponent;Account Order Details Items Info Component;AccountOrderDetailsItemsComponent;AccountOrderDetailsItemsComponent
+;;AccountOrderDetailsOverviewComponent;Account Order Details Overview Info Component;AccountOrderDetailsOverviewComponent;AccountOrderDetailsOverviewComponent
+;;AccountOrderDetailsShippingComponent;Account Order Details Shipping Info Component;AccountOrderDetailsShippingComponent;AccountOrderDetailsShippingComponent
+;;AccountOrderDetailsTotalsComponent;Account Order Details Order Totals Component;AccountOrderDetailsTotalsComponent;AccountOrderDetailsTotalsComponent
+;;AccountOrderHistoryComponent;Account History Component;AccountOrderHistoryComponent;AccountOrderHistoryComponent
+;;AccountPaymentDetailsComponent;Account Payment Details Component;AccountPaymentDetailsComponent;AccountPaymentDetailsComponent
+;;CartComponent;Cart Display Component;CartComponent;CartComponent
+;;CartTotalsComponent;Cart Totals Display Component;CartTotalsComponent;CartTotalsComponent
+;;CheckoutComponent;Checkout Display Component;CheckoutComponent;CheckoutComponent
+;;CloseAccountComponent;Close Account Component;CloseAccountComponent;CloseAccountComponent
+;;ConsentManagementComponent;Consent Management Component;ConsentManagementComponent;ConsentManagementComponent
+;;GuestCheckoutLoginComponent;Guest Checkout Login Component;GuestCheckoutLoginComponent;GuestCheckoutLoginComponent
+;;OrderConfirmationContinueButtonComponent;Order Confirmation Continue Button Component;OrderConfirmationContinueButtonComponent;OrderConfirmationContinueButtonComponent
+;;OrderConfirmationItemsComponent;Order Confirmation Items Info Component;OrderConfirmationItemsComponent;OrderConfirmationItemsComponent
+;;OrderConfirmationOverviewComponent;Order Confirmation Overview Info Component;OrderConfirmationOverviewComponent;OrderConfirmationOverviewComponent
+;;OrderConfirmationShippingComponent;Order Confirmation Shipping Info Component;OrderConfirmationShippingComponent;OrderConfirmationShippingComponent
+;;OrderConfirmationThankMessageComponent;Order Confirmation Thank You Message Component;OrderConfirmationThankMessageComponent;OrderConfirmationThankMessageComponent
+;;OrderConfirmationTotalsComponent;Order Confirmation Totals Component;OrderConfirmationTotalsComponent;OrderConfirmationTotalsComponent
+;;PotentialPromotionsComponent;Potential Promotions Component;PotentialPromotionsComponent;PotentialPromotionsComponent
+;;ProductDetailsTabComponent;Product Details Tab;ProductDetailsTabComponent;ProductDetailsTabComponent
+;;ProductReviewsTabComponent;Product Reviews Tab;ProductReviewsTabComponent;ProductReviewsTabComponent
+;;ProductSpecsTabComponent;Product Specification Tab;ProductSpecsTabComponent;ProductSpecsTabComponent
+;;PromotionsComponent;Promotions Component;PromotionsComponent;PromotionsComponent
+;;ReturningCustomerCheckoutLoginComponent;Returning Customer Checkout Login Component;ReturningCustomerCheckoutLoginComponent;ReturningCustomerCheckoutLoginComponent
+;;ReturningCustomerLoginComponent;Returning Customer Login Component;ReturningCustomerLoginComponent;ReturningCustomerLoginComponent
+;;ReturningCustomerRegisterComponent;Returning Customer Register Component;ReturningCustomerRegisterComponent;ReturningCustomerRegisterComponent
+;;StoreFinderComponent;Store Finder Component;StoreFinderComponent;StoreFinderComponent
+;;UpdateEmailComponent;Update Email Component;UpdateEmailComponent;UpdateEmailComponent
+;;UpdatePasswordComponent;Update Password Component;UpdatePasswordComponent;UpdatePasswordComponent
+;;UpdateProfileComponent;Update Profile Component;UpdateProfileComponent;UpdateProfileComponent
+;;CartApplyCouponComponent;Cart Apply Coupon Component;CartApplyCouponComponent;CartApplyCouponComponent
+;;SaveForLaterComponent;SaveForLater Component;SaveForLaterComponent;SaveForLaterComponent
+;;CartQuickOrderFormComponent;Cart Quick Order Form Component;CartQuickOrderFormComponent;CartQuickOrderFormComponent
+
+# Update slots
+UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid, $contentCV)
+;;BodyContent-address-book;AccountAddressBookComponent
+;;BodyContent-orderdetail;AccountOrderDetailsOverviewComponent,AccountOrderDetailsShippingComponent,AccountOrderDetailsItemsComponent,AccountOrderDetailsTotalsComponent,AccountOrderDetailsShippingComponent,AccountOrderDetailsActionsComponent
+;;BodyContent-orders;AccountOrderHistoryComponent
+;;BodyContent-payment-details;AccountPaymentDetailsComponent
+;;BodyContentSlot-close-account;CloseAccountComponent
+;;BodyContentSlot-consents;ConsentManagementComponent
+;;BodyContent-update-email;UpdateEmailComponent
+;;BodyContent-updatePassword;UpdatePasswordComponent
+;;BodyContent-update-profile;UpdateProfileComponent
+;;BodyContent-orderConfirmation;OrderConfirmationThankMessageComponent,OrderConfirmationOverviewComponent,OrderConfirmationItemsComponent,OrderConfirmationShippingComponent,OrderConfirmationTotalsComponent,OrderConfirmationContinueButtonComponent
+;;CenterLeftContentSlot-cartPage;PromotionsComponent,PotentialPromotionsComponent
+;;CenterRightContentSlot-cartPage;CartTotalsComponent,CartApplyCouponComponent,CartQuickOrderFormComponent
+;;BottomContentSlot-cartPage;CheckoutComponent,CartSuggestions
+;;RightContentSlot-checkout-login;GuestCheckoutLoginComponent
+;;LeftContentSlot-checkout-login;ReturningCustomerCheckoutLoginComponent
+;;RightContentSlot-login;
+;;LeftContentSlot-login;ReturningCustomerLoginComponent,ReturningCustomerRegisterComponent
+;;MiddleContent-StoreFinderPage;StoreFinderComponent
+;;Section4Slot-search;
+
+UPDATE CMSTabParagraphContainer;$contentCV[unique=true];uid[unique=true];simpleCMSComponents(uid, $contentCV);&componentRef
+;;TabPanelContainer;ProductDetailsTabComponent,ProductSpecsTabComponent,ProductReviewsTabComponent,deliveryTab;TabPanelContainer
+
+# CMS Assisted Service Components and Sub-Components
+
+REMOVE AssistedServiceComponent;$contentCV[unique=true];uid[unique=true]
+;;AssistedServiceComponent
+
+REMOVE ASMDevicesUsedComponent;$contentCV[unique=true];uid[unique=true]
+;;ASMDevicesUsedComponent
+
+REMOVE ASMFavoriteColorsComponent;$contentCV[unique=true];uid[unique=true]
+;;ASMFavoriteColorsComponent

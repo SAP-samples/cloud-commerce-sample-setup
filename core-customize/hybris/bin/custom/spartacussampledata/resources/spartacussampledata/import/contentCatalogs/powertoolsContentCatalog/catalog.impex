@@ -1,0 +1,36 @@
+# -----------------------------------------------------------------------
+# [y] hybris Platform
+#
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# The files in this addon are licensed under the Apache Software License, v. 2 
+# except as noted otherwise in the LICENSE file.
+# -----------------------------------------------------------------------
+#
+$contentCatalog=powertoolsContentCatalog
+$spaContentCatalog=powertools-spaContentCatalog
+$language=en
+$languages=ja,en,de,zh
+
+
+###### Content catalog for spartacus ######
+INSERT_UPDATE ContentCatalog;id[unique=true];name[lang=$language]
+;$spaContentCatalog;"SPA Powertools Content Catalog"
+
+###### CatalogVersion for spartacus ######
+INSERT_UPDATE CatalogVersion;catalog(id)[unique=true];version[unique=true];active;languages(isoCode);writePrincipals(usergroup.uid)[mode=append];readPrincipals(usergroup.uid)[mode=append]
+;$spaContentCatalog;Staged;false;$languages;cmsmanagergroup;
+;$spaContentCatalog;Online;true;$languages;;cmsmanagergroup;
+
+###### Sync electronicContentCatalog:staged to spaContentCatalog:staged ######
+$syncJob=sync $contentCatalog:Staged->$spaContentCatalog:Staged
+$sourceContentCV=sourceVersion(catalog(id[default=$contentCatalog]),version[default='Staged'])[unique=true,default='$contentCatalog:Staged']
+$targetContentCV=targetVersion(catalog(id[default=$spaContentCatalog]),version[default='Staged'])[unique=true,default='$spaContentCatalog:Staged']
+
+INSERT_UPDATE CatalogVersionSyncJob;code[unique=true];$sourceContentCV;$targetContentCV;syncPrincipals(uid)[mode=append];syncPrincipalsOnly[default=false];removeMissingItems;createNewItems;rootTypes(code)[mode=append]
+;$syncJob;;;cmsmanagergroup;;true;true;CMSItem,CMSRelation,Media,MediaContainer
+
+
+###### Site Context ######
+INSERT_UPDATE CmsSiteContext;code[unique=true];name[lang=$language]
+;LANGUAGE;"language"
+;CURRENCY;"currency"

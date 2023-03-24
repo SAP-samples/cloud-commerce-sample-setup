@@ -1,0 +1,144 @@
+# -----------------------------------------------------------------------
+# [y] hybris Platform
+# 
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# The files in this addon are licensed under the Apache Software License, v. 2 
+# except as noted otherwise in the LICENSE file.
+# -----------------------------------------------------------------------
+# 
+
+# SPA Storefinder locations
+$storeUid=electronics
+$productCatalog=electronicsProductCatalog
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$storeImage=storeImage(qualifier, $catalogVersion)
+
+# Remove old PointOfServices (temporarily keep old stores because of e2e failing #4705)
+# REMOVE PointOfService[batchmode=true];basestore(uid)[unique=true]
+# ;$storeUid
+
+$standardHours=sap-office-standard-hours
+$weekendHours=sap-office-weekend-hours
+
+INSERT_UPDATE OpeningSchedule;code[unique=true];
+;$standardHours;
+;$weekendHours;
+
+INSERT_UPDATE WeekdayOpeningDay;openingSchedule(code)[unique=true];dayOfWeek(code)[unique=true];openingTime[dateformat=hh:mm];closingTime[dateformat=hh:mm];
+;$standardHours;MONDAY   ; 09:00; 20:00
+;$standardHours;TUESDAY  ; 09:00; 20:00
+;$standardHours;WEDNESDAY; 09:00; 20:00
+;$standardHours;THURSDAY ; 09:00; 20:00
+;$standardHours;FRIDAY   ; 09:00; 20:00
+;$standardHours;SATURDAY ; 10:00; 20:00
+
+;$weekendHours;MONDAY   ; 09:00; 20:00
+;$weekendHours;TUESDAY  ; 09:00; 20:00
+;$weekendHours;WEDNESDAY; 09:00; 20:00
+;$weekendHours;THURSDAY ; 09:00; 20:00
+;$weekendHours;FRIDAY   ; 09:00; 20:00
+;$weekendHours;SATURDAY ; 10:00; 20:00
+;$weekendHours;SUNDAY   ; 10:00; 16:00
+
+INSERT_UPDATE SpecialOpeningDay;openingSchedule(code)[unique=true];date[unique=true,dateformat=dd.MM.yyyy];closed;openingTime[dateformat=hh:mm];closingTime[dateformat=hh:mm]
+;$standardHours; 01.01.2014 ;true  
+;$standardHours; 29.03.2014 ;true  
+;$standardHours; 01.04.2014 ;true  
+;$standardHours; 01.05.2014 ;true  
+;$standardHours; 09.05.2014 ;true  
+;$standardHours; 20.05.2014 ;true  
+;$standardHours; 03.10.2014 ;true  
+;$standardHours; 25.12.2014 ;true  
+;$standardHours; 26.12.2014 ;true  
+
+;$weekendHours; 01.01.2014 ;true
+;$weekendHours; 29.03.2014 ;true
+;$weekendHours; 01.04.2014 ;true
+;$weekendHours; 01.05.2014 ;true
+;$weekendHours; 09.05.2014 ;true
+;$weekendHours; 20.05.2014 ;true
+;$weekendHours; 03.10.2014 ;true
+;$weekendHours; 25.12.2014 ;true
+;$weekendHours; 26.12.2014 ;true
+
+INSERT_UPDATE PointOfService;name[unique=true];displayName;type(code);address(&addrID);latitude;longitude;geocodeTimestamp[dateformat=dd.MM.yyyy];$storeImage;features(code);basestore(uid)[default=$storeUid];openingSchedule(code)
+;sap-uk-feltham-office;SAP (UK) Ltd;STORE;addr1001;51.449216;-0.445058;29.05.2025;;creche,sundayWorkshops;;$standardHours
+;sap-uk-maidenhead-office;SAP Maidenhead Office;STORE;addr1002;51.511560;-0.747654;29.05.2025;;creche,sundayWorkshops;;$standardHours
+;sap-uk-knutsford-office;SAP Knutsford Office;STORE;addr1003;53.303179;-2.371401;29.05.2025;;creche,sundayWorkshops;;$standardHours
+;sap-de-walldorf-office;SAP SE - Walldorf;STORE;addr1004;49.293401;8.641979;29.05.2025;;creche,sundayWorkshops;;$standardHours
+;sap-de-berlin-office;SAP Berlin Office;STORE;addr1005;52.526066;13.403466;29.05.2025;;creche,sundayWorkshops;;$standardHours
+;sap-de-dusseldorf-office;SAP Düsseldorf Office;STORE;addr1006;51.291054;6.867271;29.05.2025;;creche,sundayWorkshops;;$standardHours
+;sap-de-dresden-office;SAP Dresden Office;STORE;addr1007;51.033425;13.710494;29.05.2025;;creche,sundayWorkshops;;$standardHours
+;sap-de-dresden-se-office;SAP SE - Dresden;STORE;addr1008;51.046318;13.756872;29.05.2025;;creche,sundayWorkshops;;$standardHours
+;sap-de-frankfurt-office;SAP Frankfurt Office;STORE;addr1009;50.132645;8.564958;29.05.2025;;creche,sundayWorkshops;;$standardHours
+;sap-osterreich-gmbh-office;SAP Österreich GmbH;STORE;addr1010;48.223325;16.397626;29.05.2025;;creche,sundayWorkshops;;$standardHours
+;sap-osterreich-gmbh-2-office;SAP Österreich GmbH 2;STORE;addr1011;48.298983;14.291374;29.05.2025;;creche,sundayWorkshops;;$standardHours
+;sap-belgium-nv-sa-office;SAP Belgium NV/SA;STORE;addr1012;50.870507;4.406359;29.05.2025;;creche,sundayWorkshops;;$standardHours
+;sap-brussels-education-center-office;SAP Brussels Education Center;STORE;addr1013;50.870507;4.406359;29.05.2025;;creche,sundayWorkshops;;$standardHours
+;sap-bulgaria-ltd-office;SAP Bulgaria Ltd.;STORE;addr1014;42.669243;23.266235;29.05.2025;;creche,sundayWorkshops;;$standardHours
+;sap-labs-czech-republic-office;SAP Labs Czech Republic;STORE;addr1016;49.180484;16.605760;29.05.2025;;creche,sundayWorkshops;;$standardHours
+;sap-cr-spol-s-r-o-office;SAP ČR, spol. s.r.o.;STORE;addr1017;50.047841;14.456082;29.05.2025;;creche,sundayWorkshops;;$standardHours
+;sap-services-s-r-o-office;SAP Services s.r.o.;STORE;addr1018;50.051302;14.350062;29.05.2025;;creche,sundayWorkshops;;$standardHours
+;sap-danmark-a-s-office;SAP Danmark A/S;STORE;addr1019;55.710814;12.589327;29.05.2025;;creche,sundayWorkshops;;$standardHours
+;sap-estonia-ou-office;SAP Estonia OÜ ;STORE;addr1020;59.406605;24.732628;29.05.2025;;creche,sundayWorkshops;;$standardHours
+;sap-finland-oy-office;SAP Finland Oy ;STORE;addr1021;60.173525;24.829702;29.05.2025;;creche,sundayWorkshops;;$standardHours
+;sap-latvia-s-i-a-office;SAP Latvia S.I.A.;STORE;addr1022;56.957075;24.113771;29.05.2025;;creche,sundayWorkshops;;$standardHours
+;sap-uab-office;SAP UAB ;STORE;addr1023;54.694115;25.264868;29.05.2025;;creche,sundayWorkshops;;$standardHours
+;sap-nederland-b-v-office;SAP Nederland B.V. ;STORE;addr1024;51.712889;5.339575;29.05.2025;;creche,sundayWorkshops;;$standardHours
+;sap-norge-as-office;SAP Norge AS;STORE;addr1025;59.912568;10.637349;29.05.2025;;creche,sundayWorkshops;;$standardHours
+;sap-portugal-lda-office;SAP Portugal, Lda.;STORE;addr1026;38.712429;-9.311245;29.05.2025;;creche,sundayWorkshops;;$standardHours
+;centro-servicos-sap-office;Centro Serviços SAP;STORE;addr1027;38.712312;-9.311175;29.05.2025;;creche,sundayWorkshops;;$standardHours
+;sap-romania-srl-office;SAP România SRL ;STORE;addr1028;44.484282;26.072080;29.05.2025;;creche,sundayWorkshops;;$standardHours
+;llc-sap-c-i-s-office;LLC SAP C.I.S.;STORE;addr1030;55.732800;37.644331;29.05.2025;;creche,sundayWorkshops;;$standardHours
+;llc-sap-c-i-s-service-center-office;LLC SAP C.I.S. Service Center;STORE;addr1031;55.732800;37.644331;29.05.2025;;creche,sundayWorkshops;;$standardHours
+;sap-se-representative-office-russia-office;SAP SE, Representative Office - Russia;STORE;addr1032;59.934645;30.309009;29.05.2025;;creche,sundayWorkshops;;$standardHours
+;sap-west-balkans-d-o-o-office;SAP West Balkans D.O.O.;STORE;addr1033;44.812501;20.396858;29.05.2025;;creche,sundayWorkshops;;$standardHours
+;sap-slovensko-s-r-o-office;SAP Slovensko s.r.o. ;STORE;addr1034;48.146128;17.127078;29.05.2025;;creche,sundayWorkshops;;$standardHours
+;sap-d-o-o-office;SAP d.o.o.;STORE;addr1035;46.082837;14.512761;29.05.2025;;creche,sundayWorkshops;;$standardHours
+;sap-espana-s-a-1-office;SAP España, S.A. 1;STORE;addr1036;41.407822;2.218073;29.05.2025;;creche,sundayWorkshops;;$standardHours
+;sap-espana-s-a-2-office;SAP España, S.A. 2;STORE;addr1037;40.447234;-3.656515;29.05.2025;;creche,sundayWorkshops;;$standardHours
+;sap-svenska-ab-office;SAP Svenska AB;STORE;addr1038;59.337266;18.062394;29.05.2025;;creche,sundayWorkshops;;$standardHours
+;sap-turkey-office;SAP Turkey;STORE;addr1039;41.004224;29.072027;29.05.2025;;creche,sundayWorkshops;;$standardHours
+;sap-poland-warsaw-office;SAP Polska Sp. z o.o.;STORE;addr1040;52.180762;21.000317;29.05.2025;;creche,sundayWorkshops;;$standardHours
+;sap-poland-labs-polska-gliwice-office;SAP Labs Polska;STORE;addr1041;50.296528;18.670372;29.05.2025;;creche,sundayWorkshops;;$standardHours
+
+INSERT_UPDATE Address;&addrID;streetname;streetnumber;postalcode;town;country(isocode);phone1;owner(PointOfService.name)[unique=true];
+;addr1001;Clockhouse Place Bedfont Road;;TW14 8HD;Feltham;GB;+44 870 608 4000;sap-uk-feltham-office;
+;addr1002;Vanwall Business Park Vanwall Road;;SL6 4UB;Maidenhead;GB;+44 1628 764600;sap-uk-maidenhead-office;
+;addr1003;25 King Street;;WA16 6DW;Knutsford;GB;+44 156 568 7000;sap-uk-knutsford-office;
+;addr1004;Dietmar-Hopp-Allee 16;;69190;Walldorf;DE;+49 (0)6227 / 7-47474;sap-de-walldorf-office;
+;addr1005;Rosenthaler Str. 30;;10178;Berlin;DE;+49 (0)6227 / 7-47474;sap-de-berlin-office;
+;addr1006;SAP-Platz 1;;40882;Ratingen;DE;+49 (0)2102 / 864-5005;sap-de-dusseldorf-office;
+;addr1007;Chemnitzer Str. 48;;01187;Dresden;DE;+49 (0)6227 / 7-47474;sap-de-dresden-office;
+;addr1008;Straßburger Platz 1;;01307;Dresden;DE;+49 (0)6227 / 7-47474;sap-de-dresden-se-office;
+;addr1009;Frankfurter Straße 1;;65760;Eschborn;DE;+49 (0)6196 / 8872-870;sap-de-frankfurt-office;
+;addr1010;Lassallestraße 7b;;1021;Wien;AT;+43/1/288 22-0;sap-osterreich-gmbh-office;
+;addr1011;Langgasse 7;;4020;Linz;AT;+43/1/28822-0;sap-osterreich-gmbh-2-office;
+;addr1012;Avenue des Olympiades 2 Olympiadenlaan;;B-1140;Brussels;BE;+32(0)26746511;sap-belgium-nv-sa-office;
+;addr1013;Avenue des Olympiades 2 Olympiadenlaan;;B-1140;Brussels;BE;+32(0)26746511;sap-brussels-education-center-office;
+;addr1014;136A, Tzar Boris III Blvd.;;1618;Sofia;BG;+359 2 9157 100;sap-bulgaria-ltd-office;
+;addr1016;Holandská 2/4;;639 00;Brno;CZ;+420 54354-2400;sap-labs-czech-republic-office;
+;addr1017;Vyskočilova 1481/4;;140 00;Praha;CZ;+420 257-114-111;sap-cr-spol-s-r-o-office;
+;addr1018;Bucharova 2817/11;;158 00;Praha;CZ;+420 257 118 111;sap-services-s-r-o-office;
+;addr1019;Lautrupsgade 11;;DK-2100;København Ø;DK;+45 3913 3000;sap-danmark-a-s-office;
+;addr1020;Pärnu mnt 15 ;;10141;Talinn;EE;+372 50 87 172 ;sap-estonia-ou-office;
+;addr1021;Keilasatama 5 ;;02150;Espoo;FI;+358 10 430 4400;sap-finland-oy-office;
+;addr1022;21 Kr.Valdemara ;;LV-1010;Riga;LV;+371 6 7035 227;sap-latvia-s-i-a-office;
+;addr1023;Gyneju 16 ;;01109;Vilnius ;LT;+370 5 204 72 30 ;sap-uab-office;
+;addr1024;Amerikastraat 10 ;;5232 BE 's;Hertogenbosch ;NL;+31 (0)73 645 75 00 ;sap-nederland-b-v-office;
+;addr1025;Lysaker Torg 5 ;;1324;Lysaker ;NO;+47/67/52-9400;sap-norge-as-office;
+;addr1026;Lagoas Park, Edifício 14, Piso 0;;2740-262;Porto Salvo ;PT;+351 214465500 ;sap-portugal-lda-office;
+;addr1027; Lagoas Park, Edifício 14, Piso 3 ;;2740-262;Porto Salvo ;PT;+351 214465500 ;centro-servicos-sap-office;
+;addr1028;Calea Tipografilor 11-15 Clădirea A1 / LA, Etajul 2;;013714;Bucuresti;RO;+40/312252800;sap-romania-srl-office;
+;addr1030;Kosmodamianskaya nab. 52/4 ;;115054 ;Moscow;RU; +7 (495) /755-9800 ;llc-sap-c-i-s-office;
+;addr1031;Kosmodamianskaya nab. 52/4 ;;115054 ;Moscow;RU;+7 (495) /797-2720;llc-sap-c-i-s-service-center-office;
+;addr1032;23, Malaya Morskaya ;;190000;St. Petersburg;RU;+7 (812) /718-3771 ;sap-se-representative-office-russia-office;
+;addr1033;88, Omladinskih Brigada Airport City Belgrade, zgrada 1500;;11070;Novi Beograd;RS;+381 (11) 35 36 900;sap-west-balkans-d-o-o-office;
+;addr1034;Twin city C Mlynské nivy 16;;82109;Bratislava ;SK; +421/2/582-56111 ;sap-slovensko-s-r-o-office;
+;addr1035;(Poslovna stavba Rotonda) Dunajska cesta 165/4;;SI-1000;Lubljana;SI;+386/1/307 2000;sap-d-o-o-office;
+;addr1036;Edificio Torre Diagonal Mar - Planta 13 c/. Josep Pla, 2 ;;E-08019;Barcelona;ES;+34/93/4833500;sap-espana-s-a-1-office;
+;addr1037;Torrelaguna, 77 Bloque SAP ;;28043;Madrid;ES;+34/91/456-7200 ;sap-espana-s-a-2-office;
+;addr1038;Sveavägen 44;;S - 111 34;Stockholm;SE; +46/8/587 700 00;sap-svenska-ab-office;
+;addr1039;Emaar Square Ofis Ünalan mah. Libadiye cad. no:82 F K 17-18 Üsküdar;;34700;Istanbul;TR;+90 216 633 03 00;sap-turkey-office;
+;addr1040;ul. Wołoska 5;;02-675;Warsaw;PL;+48 22 541 66 06;sap-poland-warsaw-office;
+;addr1041;ul. Zwycięstwa 23;;44-100;Gliwice;PL;+48 32 440 08 00;sap-poland-labs-polska-gliwice-office;

@@ -1,9 +1,20 @@
 {
-    "commerceSuiteVersion": "2205",
+    "commerceSuiteVersion": "2211",
     "enableImageProcessingService": true,
     "extensions": [
         "cloudmediaconversion",
         "mediaconversionbackoffice"
+    ],
+    "storefrontAddons": [
+        {
+            "addons": [
+                "ordermanagementaddon"
+            ],
+            "storefronts": [
+                "yacceleratorstorefront"
+            ],
+            "template": "yacceleratorstorefront"
+        }
     ],
     "useConfig": {
         "properties": [
@@ -44,64 +55,6 @@
             ]
         }
     },
-    "storefrontAddons": [
-        {
-            "addons": [
-                "adaptivesearchsamplesaddon",
-                "assistedservicecustomerinterestsaddon",
-                "assistedservicepromotionaddon",
-                "assistedservicestorefront",
-                "assistedserviceyprofileaddon",
-                "captchaaddon",
-                "chineseaddressaddon",
-                "configurablebundleaddon",
-                "consignmenttrackingaddon",
-                "customercouponaddon",
-                "customercouponsamplesaddon",
-                "customerinterestsaddon",
-                "customerticketingaddon",
-                "eventtrackingwsaddon",
-                "merchandisingaddon",
-                "merchandisingstorefrontsampledataaddon",
-                "multicountrysampledataaddon",
-                "notificationaddon",
-                "ordermanagementaddon",
-                "orderselfserviceaddon",
-                "pcmbackofficesamplesaddon",
-                "personalizationaddon",
-                "personalizationsampledataaddon",
-                "personalizationyprofilesampledataaddon",
-                "profiletagaddon",
-                "selectivecartsplitlistaddon",
-                "smarteditaddon",
-                "stocknotificationaddon",
-                "textfieldconfiguratortemplateaddon",
-                "timedaccesspromotionengineaddon",
-                "timedaccesspromotionenginesamplesaddon",
-                "xyformssamples",
-                "xyformsstorefrontcommons",
-                "ysapproductconfigaddon"
-            ],
-            "storefronts": [
-                "yacceleratorstorefront",
-                "yb2bacceleratorstorefront"
-            ],
-            "template": "yacceleratorstorefront"
-        },
-        {
-            "addons": [
-                "accountsummaryaddon",
-                "b2bacceleratoraddon",
-                "b2bpunchoutaddon",
-                "chinesecommerceorgaddressaddon",
-                "commerceorgaddon",
-                "commerceorgsamplesaddon",
-                "sapproductconfigb2baddon"
-            ],
-            "storefront": "yb2bacceleratorstorefront",
-            "template": "yacceleratorstorefront"
-        }
-    ],
     "properties": [
         {
             "key": "lang.packs",
@@ -116,34 +69,8 @@
             "value": "true"
         },
         {
-            "key": "test.property.1",
-            "value": "test-property-1-value-prod",
-            "persona": "production"
-        },
-        {
-            "key": "test.property.1",
-            "value": "test-property-1-value-dev",
-            "persona": "development"
-        },
-        {
-            "key": "test.property.1",
-            "value": "test-property-1-value"
-        },
-        {
-            "key": "test.property.2",
-            "value": "test-property-2-value"
-        },
-        {
             "key": "googleApiKey",
             "value": ""
-        },
-        {
-            "key": "yb2bacceleratorstorefront.illegalrequirementstest.excluded",
-            "value": "true"
-        },
-        {
-            "key": "multicountrysampledataaddon.import.active",
-            "value": "false"
         },
         {
             "key": "occ.rewrite.overlapping.paths.enabled",
@@ -166,20 +93,84 @@
             "value": "http://localhost:8081/web-orbeon"
         },
         {
-            "key": "xyformsstorefrontcommons.orbeon.keystoreFile",
-            "value": "/opt/hybris/bin/platform/tomcat/lib/keystore"
-        },
-        {
             "key": "xyformsservices.webroot.override",
             "value": "false"
         },
         {
-            "key": "backoffice.cockpit.ytestid.enabled",
+            "key": "mail.smtp.server",
+            "value": ""
+        },
+        {
+            "key": "mail.smtp.port",
+            "value": ""
+        },
+        {
+            "key": "mail.smtp.user",
+            "value": ""
+        },
+        {
+            "key": "mail.smtp.password",
+            "value": ""
+        },
+        {
+            "key": "mail.use.tls",
+            "value": "false"
+        },
+        {
+            "key": "emailservice.send.enabled",
             "value": "true"
         },
         {
             "key": "outboundservices.monitoring.enabled",
             "value": "true"
+        },
+        {
+            "key": "session.serialization.check.response.error",
+            "value": "true"
+        },
+        {
+            "key": "website.electronics-spa.http",
+            "value": "${ccv2.services.jsapps.url.0}"
+        },
+        {
+            "key": "website.electronics-spa.https",
+            "value": "${ccv2.services.jsapps.url.0}"
+        },
+        {
+            "key": "website.apparel-uk-spa.http",
+            "value": "${ccv2.services.jsapps.url.0}"
+        },
+        {
+            "key": "website.apparel-uk-spa.https",
+            "value": "${ccv2.services.jsapps.url.0}"
+        },
+        {
+            "key": "website.apparel-de-spa.http",
+            "value": "${ccv2.services.jsapps.url.0}"
+        },
+        {
+            "key": "website.apparel-de-spa.https",
+            "value": "${ccv2.services.jsapps.url.0}"
+        },
+        {
+            "key": "website.powertools-spa.http",
+            "value": "${ccv2.services.jsapps.url.0}"
+        },
+        {
+            "key": "website.powertools-spa.https",
+            "value": "${ccv2.services.jsapps.url.0}"
+        },
+        {
+            "key": "b2bpunchout.order.verification.enabled",
+            "value": "true"
+        },
+        {
+            "key": "b2bcommerce.unitlevelorders.enabled",
+            "value": "true"
+        },
+        {
+            "key": "acceleratorservices.payment.url.strict.enabled",
+            "value": "false"
         }
     ],
     "aspects": [
@@ -197,10 +188,6 @@
                 {
                     "key": "xss.filter.header.X-Frame-Options",
                     "value": ""
-                },
-                {
-                    "key": "smarteditaddon.dynamicattribute.enabled",
-                    "value": "true"
                 },
                 {
                     "key": "smartedit.sso.enabled",
@@ -221,16 +208,12 @@
                     "contextPath": "/medias"
                 },
                 {
+                    "name": "adaptivesearchwebservices",
+                    "contextPath": "/adaptivesearchwebservices"
+                },
+                {
                     "name": "backoffice",
                     "contextPath": "/backoffice"
-                },
-                {
-                    "name": "yacceleratorstorefront",
-                    "contextPath": "/yacceleratorstorefront"
-                },
-                {
-                    "name": "yb2bacceleratorstorefront",
-                    "contextPath": "/yb2bacceleratorstorefront"
                 },
                 {
                     "name": "smartedit",
@@ -304,14 +287,6 @@
                     "contextPath": "/embeddedserver"
                 },
                 {
-                    "name": "groovynature",
-                    "contextPath": "/groovynature"
-                },
-                {
-                    "name": "mediaconversion",
-                    "contextPath": "/mediaconversion"
-                },
-                {
                     "name": "oauth2",
                     "contextPath": "/authorizationserver"
                 },
@@ -341,18 +316,6 @@
                     "value": "true"
                 },
                 {
-                    "key": "spring.session.yacceleratorstorefront.save",
-                    "value": "async"
-                },
-                {
-                    "key": "spring.session.yacceleratorstorefront.cookie.name",
-                    "value": "JSESSIONID"
-                },
-                {
-                    "key": "spring.session.yacceleratorstorefront.cookie.path",
-                    "value": "/"
-                },
-                {
                     "key": "storefrontContextRoot",
                     "value": ""
                 },
@@ -375,20 +338,8 @@
                     "contextPath": "/medias"
                 },
                 {
-                    "name": "yacceleratorstorefront",
-                    "contextPath": "/yacceleratorstorefront"
-                },
-                {
-                    "name": "yb2bacceleratorstorefront",
-                    "contextPath": "/yb2bacceleratorstorefront"
-                },
-                {
                     "name": "acceleratorservices",
                     "contextPath": "/acceleratorservices"
-                },
-                {
-                    "name": "accountsummaryaddon",
-                    "contextPath": "/accountsummaryaddon"
                 },
                 {
                     "name": "b2bpunchout",
@@ -500,22 +451,6 @@
                     "value": "x-anonymous-consents occ-personalization-id occ-personalization-time"
                 },
                 {
-                    "key": "corsfilter.ycommercewebservices.allowedOrigins",
-                    "value": "*"
-                },
-                {
-                    "key": "corsfilter.ycommercewebservices.allowedHeaders",
-                    "value": "origin content-type accept authorization cache-control x-anonymous-consents x-profile-tag-debug x-consent-reference if-none-match occ-personalization-id occ-personalization-time"
-                },
-                {
-                    "key": "corsfilter.ycommercewebservices.allowedMethods",
-                    "value": "GET HEAD OPTIONS PATCH PUT POST DELETE"
-                },
-                {
-                    "key": "corsfilter.ycommercewebservices.exposedHeaders",
-                    "value": "x-anonymous-consents occ-personalization-id occ-personalization-time"
-                },
-                {
                     "key": "corsfilter.permissionswebservices.allowedOrigins",
                     "value": "*"
                 },
@@ -554,20 +489,8 @@
                     "contextPath": "/adaptivesearchwebservices"
                 },
                 {
-                    "name": "yacceleratorstorefront",
-                    "contextPath": "/yacceleratorstorefront"
-                },
-                {
-                    "name": "yb2bacceleratorstorefront",
-                    "contextPath": "/yb2bacceleratorstorefront"
-                },
-                {
                     "name": "acceleratorservices",
                     "contextPath": "/acceleratorservices"
-                },
-                {
-                    "name": "accountsummaryaddon",
-                    "contextPath": "/accountsummaryaddon"
                 },
                 {
                     "name": "b2bpunchout",

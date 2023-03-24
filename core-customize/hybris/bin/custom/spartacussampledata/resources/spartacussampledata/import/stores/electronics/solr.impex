@@ -1,0 +1,14 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+$solrIndexedType=electronicsProductType
+
+
+# Non-facet properties
+INSERT_UPDATE SolrIndexedProperty;solrIndexedType(identifier)[unique=true];name[unique=true];type(code);multiValue[default=true];facet[default=true];facetType(code);facetSort(code);priority;visible;categoryField[default=true];fieldValueProvider;facetDisplayNameProvider;topValuesProvider
+;$solrIndexedType;customerCouponCode;string;;;Refine;Alpha;5000;false;;customerCouponCodeValueResolver;customerCouponFacetDisplayNameProvider;defaultTopValuesProvider
+
+# Category search query facets
+INSERT_UPDATE SolrSearchQueryProperty;indexedProperty(name, solrIndexedType(identifier))[unique=true];searchQueryTemplate(name, indexedType(identifier))[unique=true][default=DEFAULT:$solrIndexedType];facet[default=true];facetType(code);includeInResponse[default=true];facetDisplayNameProvider;facetSortProvider;facetTopValuesProvider
+;customerCouponCode:$solrIndexedType;;;Refine;;customerCouponFacetDisplayNameProvider;

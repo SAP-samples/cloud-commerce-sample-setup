@@ -1,11 +1,25 @@
-[![REUSE status](https://api.reuse.software/badge/github.com/SAP-samples/cloud-commerce-sample-setup)](https://api.reuse.software/info/github.com/SAP-samples/cloud-commerce-sample-setup)
-
 # SAP Commerce Cloud Sample Repository
 
-This sample repository contains the files and folders that are required to set up SAP Commerce Cloud. There are multiple branches covering different scenarios for Commerce Cloud (e.g. project Spartacus, data hub, solr customizations).  You can clone/download this repository, checkout the branch of interest and then follow the instructions in the readme to update the example files with your specific details. 
-The master branch covers a Commerce Cloud sample scenario that is based on the [CX recipe](https://help.sap.com/viewer/a74589c3a81a4a95bf51d87258c0ab15/latest/en-US/f09d46cf4a2546b586ed7021655e4715.html) 
+[![REUSE status](https://api.reuse.software/badge/github.com/SAP-samples/cloud-commerce-sample-setup)](https://api.reuse.software/info/github.com/SAP-samples/cloud-commerce-sample-setup)
 
-When your files are ready, push them to your SAP Commerce Cloud repository.  
+This sample repository contains the files and folders that are required to set up SAP Commerce Cloud.
+
+> **Note**
+>
+> There are [different branches](https://github.com/SAP-samples/cloud-commerce-sample-setup/branches)
+> covering the various versions and configurations of an SAP Commerce Cloud solution, so make sure
+> to choose the right one. You can clone/download this repository, checkout the branch of interest
+> and then follow the instructions in the README to update the example files with your specific details.
+
+This branch covers a **Commerce Cloud 2211** sample scenario that is based on the [CX recipe](https://help.sap.com/viewer/a74589c3a81a4a95bf51d87258c0ab15/latest/en-US/f09d46cf4a2546b586ed7021655e4715.html) with **Spartacus 4.3.x**.
+
+> **Warning**
+>
+> **Do not**  use the deprecated `yacceleratorstorefront` extension and the related
+> addons for any new development.
+> The deprecated `yacceleratorstorefront` and a few addons are included in this repo *purely for showcase purposes*.
+>
+> Details: [Deprecation of Accelerator UIs and Older OCC template Extensions](https://help.sap.com/docs/SAP_COMMERCE_CLOUD_PUBLIC_CLOUD/7e47d40a176d48ba914b50957d003804/1f1c6885781a4267a99c5d619d1f1edd.html?locale=en-US)
 
 # Requirements
 
@@ -19,6 +33,7 @@ When your files are ready, push them to your SAP Commerce Cloud repository.
 You can find the supported SAP Commerce versions listed in the [Compatibility help topic](https://help.sap.com/viewer/1be46286b36a4aa48205be5a96240672/v1905/en-US/31ac209eb08f41bc92e9bbe5772fb949.html).
 
 # Download and Installation
+
 Not applicable.
 
 # Configuration
@@ -28,11 +43,12 @@ These instructions walk you through the process of cloning the repository and th
 The following folders and files are included in the sample repository.
 
 Root level
+
 - `core-customize` folder: The folder that contains all of the folders and files that support Commerce Cloud.
+- `js-storefront` folder: A project Spartacus JS Storefront configured with Server Side Rendering (SSR). For more on project Spartacus see [project Spartacus documentation](https://sap.github.io/spartacus-docs/)
 
 `core-customize` folder
 - `manifest.json`: The Commerce Cloud manifest.json file, which defines how your code will be built and deployed in the Public Cloud environments. The manifest is set up to leverage [configuration reuse](https://help.sap.com/viewer/1be46286b36a4aa48205be5a96240672/latest/en-US/2311d89eef9344fc81ef168ac9668307.html) to better allow for consistency between local and cloud builds.
-- `extensions\yb2bacceleratorstorefront` folder: contains the generated extension for use with the B2B storefront (e.g Powertools) in this Commerce Cloud sample scenario
 - `hybris `folder: contains a sample custom folder for storing any custom extensions as well as the config folder for storing local and cloud properties, `localextensions.xml` and any local solr/tomcat configurations
 - `other sample manifests`: A collection of tested and verified manifest files that you can use as starting points for your Commerce Cloud environments.
 
@@ -56,6 +72,9 @@ Clone the sample repository ([instructions can be found here](https://help.githu
  
 In the sample repository, verify that you have the following files in the `core-customize` folder.
  - `manifest.json`:  This is the manifest.json for Commerce Cloud.
+
+In the sample repository, verify that you have the following files in the `js-storefront` folder.
+ - `manifest.json`: This is the file that tells Cloud Automation the name and path of the JavaScript storefronts you want to build and deploy
  
 ### Push the Commerce Cloud Configuration to Code Repository
 
@@ -63,7 +82,7 @@ Push all the contents from your local machine to the root level of your Commerce
 
 ### Access the Cloud Portal
 
-Log in to the Cloud Portal and verify that your code repository is connected.
+Log in to the Cloud  Portal and verify that your code repository is connected.
 
 1. From a supported browser, log in to https://portal.commerce.ondemand.com. For more information, see [Accessing the Cloud Portal](https://help.sap.com/viewer/0c2050f6d31f49ddb6eba18509060ae5/latest/en-US/bc745004669445478d0c0505d77e096c.html).
 2. Select *Repository* and verify that you are connected to the correct code repository.
@@ -71,23 +90,26 @@ Log in to the Cloud Portal and verify that your code repository is connected.
 3. Create a new build.
 4. Deploy the build to the environment using the *Initialze Database* option.
 
-You may also wish to see [this video](https://enable.cx.sap.com/playlist/dedicated/116161351/1_6tm85g61/1_df6ptanl) which provides a walkthrough of how to connect your repository, as well as [this video](https://enable.cx.sap.com/playlist/dedicated/116161351/1_6tm85g61/1_9ogbv7hz) which outlines how to build and deploy
+You may also wish to see [this video](https://enable.cx.sap.com/playlist/dedicated/116161351/1_6tm85g61/1_df6ptanl) which provides a walkthrough of how to connect your repository, as well as [this video](https://enable.cx.sap.com/playlist/dedicated/116161351/1_6tm85g61/1_9ogbv7hz) which outlines how to build and deploy.
 
-### Final Steps - Validating an example Electronics Storefront
+### Final Steps - Validating an example Spartacus Electronics Storefront
 
 Use the Cloud Portal to create a build and then deploy the build to an environment.
 
-1. After the build is deployed, you can find the 'Storefront' endpoint in the *Environments* page of the Cloud Portal listed under *Public Endpoints*.
-2. Click on the *Storefront* hyperlink to access the details page for endpoint.
-3. Either add an IP Filter Set for your IP address OR change the Base Rule from 'Deny All' to 'Allow All' in order to receive traffic to this example storefront.
-4. Save the changes.
-5. Click on the URL listed next to the *Storefront* public endpoint. You will receive a server error.
-6. In your browser's address, append the endpoint address with */?site=electronics* and reload the page
-7. Verify that you see a basic electronics storefront.
+See [Build and Deploy your First SAP Commerce Cloud Project](https://www.sap.com/cxworks/article/2589632836/build_and_deploy_your_first_sap_commerce_cloud_project) for all the steps to build and deploy.
+
+After the build is deployed, you can find the 'JS Storefront' endpoint in the *Environments* page of the Cloud Portal listed under *Public Endpoints*.
+
+1. Click on the *JS Storefront* hyperlink to access the details page for endpoint.
+1. Either add an IP Filter Set for your IP address OR change the Base Rule from 'Deny All' to
+  'Allow All' in order to receive traffic to this example storefront.
+1. Save the changes.
+1. Click on the URL listed next to the *JS Storefront* public endpoint.
+1. Verify that you see a basic electronics storefront.
 
 # Limitations
 
-The repository must be a public-facing repository.  You cannot use a private repository to host SAP Commerce Cloud configurations. 
+The repository must be a public-facing repository.  You cannot use a private repository to host SAP Commerce Cloud configurations.
 
 # Known Issues
 
@@ -100,5 +122,7 @@ This repository is provided "as-is"; no support is available.
 Find more information about SAP Commerce Cloud Setup on our [help site](https://help.sap.com/viewer/1be46286b36a4aa48205be5a96240672/latest/en-US/76450bc02bdf492689ca5e6d35c670e6.html).
 
 # License
-Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. This project is licensed under the Apache Software License, version 2.0 except as noted otherwise in the [LICENSE file](https://github.com/SAP-samples/cloud-commerce-sample-setup/blob/master-license-update/LICENSES/Apache-2.0.txt).
 
+Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. This project is licensed
+under the Apache Software License, version 2.0 except as noted otherwise in the
+[LICENSE file](https://github.com/SAP-samples/cloud-commerce-sample-setup/blob/main/LICENSES/Apache-2.0.txt).

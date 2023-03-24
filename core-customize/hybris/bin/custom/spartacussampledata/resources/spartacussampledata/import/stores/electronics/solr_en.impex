@@ -1,0 +1,13 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# Index Type
+$solrIndexedType=electronicsProductType
+
+# Language
+$lang=en
+
+# Solr Indexed Property
+UPDATE SolrIndexedProperty;solrIndexedType(identifier)[unique=true];name[unique=true];displayName[lang=$lang]
+;$solrIndexedType;customerCouponCode;"Customer coupon code"

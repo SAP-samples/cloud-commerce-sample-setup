@@ -1,0 +1,30 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+$contentCatalog=powertools-spaContentCatalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Online])[default=$contentCatalog:Online]
+
+## B2B USER
+
+INSERT_UPDATE B2BCustomer;groups(uid);uid[unique=true];name;customerID;email;title(code);
+;Custom Retail,b2bcustomergroup,limitedPermissions,standardPermissions;powertools-test-user-with-orders@sap.cx.com;Powertools Test User;powertools-test-user-with-orders@sap.cx.com;powertools-test-user-with-orders@sap.cx.com;mr;
+
+# Address created for Credit Card payment
+INSERT_UPDATE Address;owner(Customer.uid)[unique=true];streetname[unique=true];postalcode;town[default='Washington'];region(isocode)[default='US-WA'];country(isocode)[default='US'];shippingAddress[default=true];firstname;lastname;title(code)[default='mr']
+;powertools-test-user-with-orders@sap.cx.com;Address line10;123abc;;;;;Powertools;User;
+
+# Address created for Account payment
+INSERT_UPDATE Address;owner(B2BUnit.uid)[unique=true];streetname[unique=true];postalcode;town[default='Washington'];region(isocode)[default='US-WA'];country(isocode)[default='US'];shippingAddress[default=true];firstname;lastname;title(code)[default='mr']
+;Custom Retail;Address line11;abc123;;;;;Powertools;User;
+
+## Out of stock product for E2E tests
+UPDATE StockLevel;productCode[unique=true];warehouse(code);inStockStatus(code)
+;1979039;pw_warehouse_w;forceOutOfStock
+
+############ Inventory display - Measuring & Layout Tools category now have a stock threshold ################
+$productCatalog=powertoolsProductCatalog
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Online'])[unique=true,default=$productCatalog:Online]
+
+UPDATE Category;$catalogVersion;code[unique=true];stockLevelThreshold
+;;1358;215

@@ -1,0 +1,11 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+#
+# Import Two Sample B2B Organizations
+#
+
+###### DON'T DELETE THIS FILE. ######
+###### This file is required to import other user-groups_xx.impex files which are missing from powertools store. ######
+INSERT_UPDATE UserGroup;uid[unique=true];groups(uid);locname[lang=en];
+

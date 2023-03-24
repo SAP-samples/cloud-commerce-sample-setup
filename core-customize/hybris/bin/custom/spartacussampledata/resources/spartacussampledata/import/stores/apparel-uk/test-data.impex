@@ -1,0 +1,42 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+## variables for consignment tracking e2e and coupon e2e test data
+$defaultPromoGrp=apparelUKPromoGrp
+$storeUid=apparel-uk
+$lang=en
+$promotionsModule="promotions-module"
+$previewModule="promotions-preview-module"
+$defaultRuleGroup=couponPromotionRuleGroup
+$productCatalog=apparelProductCatalog
+$spaSiteUid=apparel-uk-spa
+
+## ConsignmentTracking E2E test data
+INSERT_UPDATE Customer;groups(uid);uid[unique=true];name;customerId
+;customergroup;appareluk-test-user-with-orders@sap.cx.com;Test User;appareluk-test-user-with-orders@sap.cx.com;
+
+INSERT_UPDATE Address;owner(Customer.uid)[unique=true];streetname[unique=true];postalcode;town[default='Douglas'];country(isocode)[default='IM'];shippingAddress[default=true];firstname;lastname;title(code)[default='mr']
+;appareluk-test-user-with-orders@sap.cx.com;Address line0;100000;;;;User;Test;
+
+INSERT_UPDATE Order;code[unique=true];user(uid);date[dateformat=dd.MM.yyyy HH:mm];currency(isocode)[default='GBP'];net[default=false];deliveryMode(code)[default='standard-gross'];Discounts(code);calculated[default=false];store(uid);site(uid);deliveryCost;totalPrice
+;200000;appareluk-test-user-with-orders@sap.cx.com;10.01.2019 10:40;;;;;;$storeUid;;5.26;754.66
+;200001;appareluk-test-user-with-orders@sap.cx.com;10.01.2019 10:40;;;;;;$storeUid;;7.9;655.55
+
+INSERT_UPDATE OrderEntry;order(code)[unique=true];product(code,catalogVersion(catalog(id),version))[unique=true];quantity[default=1];calculated[default=true];unit(code)[default='pieces'];entryNumber;basePrice;totalPrice
+;200000;29533:$productCatalog:Online;;;;0;50.96;50.96
+;200000;300062456:$productCatalog:Online;;;;1;67.96;67.96
+;200000;45572:$productCatalog:Online;;;;2;12.86;12.86
+;200001;29533:$productCatalog:Online;;;;0;50.96;50.96
+;200001;300062456:$productCatalog:Online;;;;1;67.96;67.96
+
+INSERT_UPDATE Consignment;code[unique=true];status(code)[default='SHIPPED'];order(code);shippingAddress(owner(Customer.uid));warehouse(code);trackingID;carrierDetails(code)[default='MockCarrier']
+;100000a;;100000;appareluk-test-user-with-orders@sap.cx.com;warehouse_e;2019031500001;
+;100000b;;100000;appareluk-test-user-with-orders@sap.cx.com;warehouse_s;;;
+;100000c;WAITING;100000;appareluk-test-user-with-orders@sap.cx.com;warehouse_n;;;
+
+
+INSERT_UPDATE ConsignmentEntry;consignment(code)[unique=true];orderEntry(order(code),entryNumber);quantity[default=1];shippedQuantity[default=1]
+;100000a;100000:0
+;100000b;100000:1
+;100000c;100000:2
