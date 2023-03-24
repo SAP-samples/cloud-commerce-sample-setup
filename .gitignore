@@ -1,5 +1,6 @@
 # folders/files to always ignore
 .metadata
+.DS_Store
 **/gensrc
 
 #IDE files

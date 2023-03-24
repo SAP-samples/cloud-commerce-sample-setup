@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+ The files in this addon are licensed under the Apache Software License, v. 2 
+ except as noted otherwise in the LICENSE file.
+--><!--
+ All hybris buildcallbacks.xml macrodefinitions:
+ 
+ Build/Documentation
+ 
+	 before/after ant macro "clean"
+		 <macrodef name="spartacussampledata_before_clean"/>
+		 <macrodef name="spartacussampledata_after_clean"/>
+	 
+	 before/after ant macro "build"
+		 <macrodef name="spartacussampledata_before_build"/>
+		 <macrodef name="spartacussampledata_after_build"/>
+		 
+	 before/after ant macro "compile_core" - the core module of the extension
+		 <macrodef name="spartacussampledata_before_compile_core">
+		 <macrodef name="spartacussampledata_after_compile_core">
+	 
+	 before/after ant macro "compile_web" - the web module of the extension
+		 <macrodef name="spartacussampledata_before_compile_web" />
+		 <macrodef name="spartacussampledata_after_compile_web" />
+	 
+ Preparing extension
+ 
+	 will be called in the beginning of the ant call and only once (also when using multiple 
+	 ant targets e.g. ant build yunittest)	
+		 <macrodef name="spartacussampledata_only_once_prepare"/>
+ 
+ Creating ear module/production
+ 
+	 before/after ant macro "ear"
+		 <macrodef name="spartacussampledata_before_ear"/>
+		 <macrodef name="spartacussampledata_after_ear"/>
+
+	 before/after ant macro "production" - for hybris server only
+		 <macrodef name="spartacussampledata_before_production" />
+		 <macrodef name="spartacussampledata_after_production" />
+ 
+ JUnit Test
+ 
+	 before/after ant macro "yunitinit" 
+		 <macrodef name="spartacussampledata_before_yunitinit" />
+		 <macrodef name="spartacussampledata_after_yunitinit" />
+	 
+	 before/after ant macro "yunit"
+		 <macrodef name="spartacussampledata_before_yunit" />
+		 <macrodef name="spartacussampledata_after_yunit" /> 
+		 
+ Distribution package
+ 
+ 	 before/after ant macro "dist" - internal target; only for use when platform is available in source code
+		 <macrodef name="spartacussampledata_after_dist"/>
+		 <macrodef name="spartacussampledata_before_dist"/>
+	 
+	 before/after ant macro "dist_copy" - internal target; only for use when platform is available in source code
+		 <macrodef name="spartacussampledata_before_dist_copy"/>
+		 <macrodef name="spartacussampledata_after_dist_copy"/>
+ 
+--><project name="spartacussampledata_buildcallbacks">
+	
+	<macrodef name="spartacussampledata_after_build">
+		<sequential>
+			<impexGenerate extname="spartacussampledata"/>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="spartacussampledata_after_clean">
+		<sequential>
+			<delete file="${ext.spartacussampledata.path}/resources-lang/touch_impexgen" failonerror="false"/>
+		</sequential>
+	</macrodef>
+
+	<patternset id="spartacussampledata.localization.pattern">
+		<patternset refid="localization.defaultpattern" />
+		<exclude name="**/*.impex"/>
+	</patternset>
+	
+	<macrodef name="spartacussampledata_before_ear">
+		<sequential>
+
+			<!-- you can do anything before the EAR file is being packed -->
+			
+		</sequential>
+	</macrodef>
+		
+</project>
+

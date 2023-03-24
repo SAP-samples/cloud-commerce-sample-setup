@@ -1,0 +1,11 @@
+# -----------------------------------------------------------------------
+# [y] hybris Platform
+#
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# The files in this addon are licensed under the Apache Software License, v. 2 
+# except as noted otherwise in the LICENSE file.
+# -----------------------------------------------------------------------
+
+## add the right display provider for allCategory index property
+UPDATE SolrIndexedProperty;name[unique=true];solrIndexedType(identifier)[unique=true];facetDisplayNameProvider(code)
+;allCategories;apparel-ukProductType;categoryFacetDisplayNameProvider

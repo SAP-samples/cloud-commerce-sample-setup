@@ -1,0 +1,31 @@
+# -----------------------------------------------------------------------
+# [y] hybris Platform
+#
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# The files in this addon are licensed under the Apache Software License, v. 2 
+# except as noted otherwise in the LICENSE file.
+# -----------------------------------------------------------------------
+
+# DEMO keyword redirect for category pages
+
+$productCatalog=electronicsProductCatalog
+$productCatalogVersion=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$productCatalog]),CatalogVersion.version[default='Online'])[default=$productCatalog:Online]
+$facetSearchConfigName=electronicsIndex
+
+# Language
+$lang=en
+
+
+## add the right display provider for allCategory index property
+UPDATE SolrIndexedProperty;name[unique=true];solrIndexedType(identifier)[unique=true];facetDisplayNameProvider(code)
+;allCategories;electronicsProductType;categoryFacetDisplayNameProvider
+
+# Category Redirect examples (Must use INSERT_UPDATE here)
+INSERT_UPDATE SolrCategoryRedirect;redirectItem(code,$productCatalogVersion)[unique=true];&redirectRefID
+;brand_5;$productCatalog-redirectRefID-sony
+;578;$productCatalog-redirectRefID-slr
+
+INSERT_UPDATE SolrFacetSearchKeywordRedirect;facetSearchConfig(name)[unique=true,default=$facetSearchConfigName];language(isocode)[unique=true,default=$lang];keyword[unique=true];matchType(code)[unique=true];redirect(&redirectRefID);ignoreCase[default=true]
+ ;;;"sony";EXACT;$productCatalog-redirectRefID-sony;
+ ;;;"slr";EXACT;$productCatalog-redirectRefID-slr;
+
