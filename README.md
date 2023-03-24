@@ -6,6 +6,7 @@ This sample repository contains the files and folders that are required to set u
 
 > **Note**
 >
+>
 > There are [different branches](https://github.com/SAP-samples/cloud-commerce-sample-setup/branches)
 > covering the various versions and configurations of an SAP Commerce Cloud solution, so make sure
 > to choose the right one. You can clone/download this repository, checkout the branch of interest
@@ -15,8 +16,7 @@ This branch covers a **Commerce Cloud 2211** sample scenario that is based on th
 
 > **Warning**
 >
-> **Do not**  use the deprecated `yacceleratorstorefront` extension and the related
-> addons for any new development.
+> **Do not**  use the deprecated `yacceleratorstorefront` template extension and the related addons for any new development.
 > The deprecated `yacceleratorstorefront` and a few addons are included in this repo *purely for showcase purposes*.
 >
 > Details: [Deprecation of Accelerator UIs and Older OCC template Extensions](https://help.sap.com/docs/SAP_COMMERCE_CLOUD_PUBLIC_CLOUD/7e47d40a176d48ba914b50957d003804/1f1c6885781a4267a99c5d619d1f1edd.html?locale=en-US)
