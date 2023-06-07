@@ -197,7 +197,22 @@ $catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[defa
 UPDATE Category;$catalogVersion;code[unique=true];stockLevelThreshold
 ;;577;343
 
-# Remove not purchasable base products in electronics
-REMOVE Product[batchmode=true];code[unique=true];
-;1978440;
-;1978440_md;
+
+############ Customer Isolation ###############
+
+$spaSiteUid=electronics-standalone
+$spaContentCatalog=electronics-spaContentCatalog
+$spaContentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$spaContentCatalog]),CatalogVersion.version[default=Staged])[default=$spaContentCatalog:Staged]
+$productCatalog=electronicsProductCatalog
+
+### Updating product catalogs
+
+INSERT_UPDATE CMSSite;uid[unique=true];contentCatalogs(id);defaultCatalog(id)
+;$spaSiteUid;$spaContentCatalog;$productCatalog
+
+### Creating consents
+
+INSERT_UPDATE ConsentTemplate;id[unique=true];name;description;version[unique=true];baseSite(uid)[unique=true,default=$spaSiteUid];exposed
+;PROFILE;"Allow SAP Commerce Cloud, Context-Driven Services tracking";"We would like to store your browsing behaviour so that our website can dynamically present you with a personalised browsing experience and our customer support agents can provide you with contextual customer support.";0;;true
+;MARKETING_NEWSLETTER;"I approve to this sample MARKETING consent";"This is a sample marketing consent description that will need to be updated or replaced, based on the valid registration consent required.";0;;true
+;STORE_USER_INFORMATION;"I approve to this sample STORE USER INFORMATION consent";"This is a sample store user information consent description that will need to be updated or replaced.";0;;true

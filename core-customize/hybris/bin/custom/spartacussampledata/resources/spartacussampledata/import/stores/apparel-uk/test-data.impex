@@ -40,3 +40,23 @@ INSERT_UPDATE ConsignmentEntry;consignment(code)[unique=true];orderEntry(order(c
 ;100000a;100000:0
 ;100000b;100000:1
 ;100000c;100000:2
+
+
+############ Customer Isolation ###############
+
+$spaSiteUid=apparel-uk-standalone
+$spaContentCatalog=apparel-uk-spaContentCatalog
+$spaContentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$spaContentCatalog]),CatalogVersion.version[default=Staged])[default=$spaContentCatalog:Staged]
+$productCatalog=apparelProductCatalog
+
+### Updating product catalogs
+
+INSERT_UPDATE CMSSite;uid[unique=true];contentCatalogs(id);defaultCatalog(id)
+;$spaSiteUid;$spaContentCatalog;$productCatalog
+
+### Creating consents
+
+INSERT_UPDATE ConsentTemplate;id[unique=true];name;description;version[unique=true];baseSite(uid)[unique=true,default=$spaSiteUid];exposed
+;PROFILE;"Allow SAP Commerce Cloud, Context-Driven Services tracking";"We would like to store your browsing behaviour so that our website can dynamically present you with a personalised browsing experience and our customer support agents can provide you with contextual customer support.";0;;true
+;MARKETING_NEWSLETTER;"I approve to this sample MARKETING consent";"This is a sample marketing consent description that will need to be updated or replaced, based on the valid registration consent required.";0;;true
+;STORE_USER_INFORMATION;"I approve to this sample STORE USER INFORMATION consent";"This is a sample store user information consent description that will need to be updated or replaced.";0;;true
