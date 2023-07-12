@@ -187,6 +187,7 @@
 
 	<searchComponent name="suggest" class="solr.SpellCheckComponent">
 		<str name="queryAnalyzerFieldType">text_spell</str>
+		<str name="suggestAnalyzerFieldType">string</str>
 		<lst name="spellchecker">
 			<str name="name">default</str>
 			<str name="classname">org.apache.solr.spelling.suggest.Suggester</str>
