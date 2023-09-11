@@ -189,6 +189,10 @@
                     "key": "xss.filter.header.X-Frame-Options",
                     "value": ""
                 },
+				{ 
+                    "key": "smarteditaddon.dynamicattribute.enabled",
+                    "value": "true"
+                },                
                 {
                     "key": "smartedit.sso.enabled",
                     "value": "true"
@@ -440,7 +444,7 @@
                 },
                 {
                     "key": "corsfilter.commercewebservices.allowedHeaders",
-                    "value": "origin content-type accept authorization cache-control x-anonymous-consents x-profile-tag-debug x-consent-reference if-none-match occ-personalization-id occ-personalization-time"
+                    "value": "origin content-type accept authorization cache-control x-anonymous-consents x-profile-tag-debug x-consent-reference if-none-match occ-personalization-id occ-personalization-time sap-commerce-cloud-user-id sap-commerce-cloud-captcha-token"
                 },
                 {
                     "key": "corsfilter.commercewebservices.allowedMethods",

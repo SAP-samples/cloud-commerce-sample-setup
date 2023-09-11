@@ -18,6 +18,7 @@
 	  <extension name= 'assistedservicewebservices' />
 	  <extension name= 'assistedserviceyprofilefacades' />
 	  <extension name= 'yaasyprofileconnect' />
+	  <extension name= 'b2bacceleratorbackoffice' />
 	  <extension name= 'b2bacceleratorfacades' />
 	  <extension name= 'b2bacceleratorservices' />
 	  <extension name= 'b2bocc' />
@@ -68,6 +69,7 @@
       <extension name= 'chineseaddressfacades' />
       <extension name= 'chineseaddressocc' />
       <extension name= 'chineseaddressservices' />
+      <extension name= 'chinesecommerceorgaddressfacades' />
 	  <extension name= 'commercefacades' />
 	  <extension name= 'commerceservices' />
 	  <extension name= 'commerceservicesbackoffice' />
@@ -172,6 +174,7 @@
 	  <extension name= 'personalizationsearchsmartedit' />
 	  <extension name= 'personalizationsearchweb' />
 	  <extension name= 'adminapi' />
+	  <extension name= 'alluicommons' />
 	  <extension name= 'auditreportservices' />
 	  <extension name= 'azuredtu' />							 
 	  <extension name= 'deltadetection' />
@@ -238,6 +241,7 @@
 	  <extension name= 'previewwebservices' />
 	  <extension name= 'permissionsfacades' />
 	  <extension name= 'permissionswebservices' />
+	  <extension name= 'swaggerintegration' />
 	  <extension name= 'webservicescommons' />
 	  <extension name= 'ywebservices' />
 	  <extension name= 'orbeonweb' />
