@@ -9,7 +9,8 @@
       },
       "csr": {
         "webroot": "dist/spartacusstore/browser/"
-      }
+      },
+      "enabledRepositories": ["spartacus-6"]
     },
     {
       "name": "b2bspastore",
@@ -20,8 +21,9 @@
       },
       "csr": {
         "webroot": "dist/b2bspastore/browser/"
-      }
+      },
+      "enabledRepositories": ["spartacus-6"]
     }
   ],
-  "nodeVersion": "16"
+  "nodeVersion": "18"
 }

@@ -28,3 +28,42 @@ $catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[defa
 
 UPDATE Category;$catalogVersion;code[unique=true];stockLevelThreshold
 ;;1358;215
+
+############ Future Stock ############ 
+INSERT_UPDATE FutureStock;productCode[unique=true];quantity;date[unique=true,dateformat=yyyy-MM-dd]
+“#% beforeEach:
+import java.time.LocalDate;
+import java.time.Month;
+line.put(Integer.valueOf(1), LocalDate.of(LocalDate.now().getYear() + 8, Month.MARCH, 10).toString());
+”
+;3318057;50;
+
+INSERT_UPDATE FutureStock;productCode[unique=true];quantity;date[unique=true,dateformat=yyyy-MM-dd]
+“#% beforeEach:
+import java.time.LocalDate;
+import java.time.Month;
+line.put(Integer.valueOf(1), LocalDate.of(LocalDate.now().getYear() + 8, Month.JUNE, 10).toString());
+”
+;3318057;85;
+
+INSERT_UPDATE FutureStock;productCode[unique=true];quantity;date[unique=true,dateformat=yyyy-MM-dd]
+“#% beforeEach:
+import java.time.LocalDate;
+import java.time.Month;
+line.put(Integer.valueOf(1), LocalDate.of(LocalDate.now().getYear() + 8, Month.JULY, 10).toString());
+”
+;3318057;95;
+
+
+
+############ Customer Isolation ###############
+
+$spaSiteUid=powertools-standalone
+$spaContentCatalog=powertools-spaContentCatalog
+$spaContentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$spaContentCatalog]),CatalogVersion.version[default=Staged])[default=$spaContentCatalog:Staged]
+$productCatalog=powertoolsProductCatalog
+
+### Updating product catalogs
+
+INSERT_UPDATE CMSSite;uid[unique=true];contentCatalogs(id);defaultCatalog(id)
+;$spaSiteUid;$spaContentCatalog;$productCatalog
