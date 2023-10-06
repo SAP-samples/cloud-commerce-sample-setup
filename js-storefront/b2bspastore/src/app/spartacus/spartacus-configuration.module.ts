@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { translationChunksConfig, translations } from "@spartacus/assets";
 import { FeaturesConfig, I18nConfig, OccConfig, provideConfig, SiteContextConfig } from "@spartacus/core";
-import { defaultB2bCheckoutConfig, defaultB2bOccConfig } from "@spartacus/setup";
+import { defaultB2bOccConfig } from "@spartacus/setup";
 import { defaultCmsContentProviders, layoutConfig, mediaConfig } from "@spartacus/storefront";
 
 @NgModule({
@@ -11,15 +11,13 @@ import { defaultCmsContentProviders, layoutConfig, mediaConfig } from "@spartacu
   providers: [provideConfig(layoutConfig), provideConfig(mediaConfig), ...defaultCmsContentProviders, provideConfig(<OccConfig>{
     backend: {
       occ: {
-        // baseUrl: 'https://localhost:9002',
+      //  baseUrl: 'https://localhost:9002',
       }
     },
   }), provideConfig(<SiteContextConfig>{
     context: {
-      currency: ['USD'],
-      language: ['en'],
       baseSite: ['powertools-spa'],
-      urlParameters: ['baseSite', 'language', 'currency']
+      urlParameters: ['baseSite', 'language', 'currency'],
     },
   }), provideConfig(<I18nConfig>{
     i18n: {
@@ -29,8 +27,8 @@ import { defaultCmsContentProviders, layoutConfig, mediaConfig } from "@spartacu
     },
   }), provideConfig(<FeaturesConfig>{
     features: {
-      level: '4.3'
+      level: '6.4'
     }
-  }), provideConfig(defaultB2bOccConfig), provideConfig(defaultB2bCheckoutConfig)]
+  }), provideConfig(defaultB2bOccConfig)]
 })
 export class SpartacusConfigurationModule { }
