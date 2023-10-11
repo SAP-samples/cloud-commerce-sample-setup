@@ -6,10 +6,9 @@ import { SpartacusFeaturesModule } from './spartacus-features.module';
 @NgModule({
   declarations: [],
   imports: [
-
+    BaseStorefrontModule,
     SpartacusFeaturesModule,
-    SpartacusConfigurationModule,
-    BaseStorefrontModule
+    SpartacusConfigurationModule
   ],
   exports: [BaseStorefrontModule]
 })

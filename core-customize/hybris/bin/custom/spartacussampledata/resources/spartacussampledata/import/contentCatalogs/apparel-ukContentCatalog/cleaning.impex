@@ -205,6 +205,7 @@ INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;fle
 ;;CartApplyCouponComponent;Cart Apply Coupon Component;CartApplyCouponComponent;CartApplyCouponComponent
 ;;SaveForLaterComponent;SaveForLater Component;SaveForLaterComponent;SaveForLaterComponent
 ;;CartQuickOrderFormComponent;Cart Quick Order Form Component;CartQuickOrderFormComponent;CartQuickOrderFormComponent
+;;CartProceedToCheckoutComponent;Cart Proceed To Checkout Component;CartProceedToCheckoutComponent;CartProceedToCheckoutComponent
 
 # Update slots
 UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid, $contentCV)
@@ -219,7 +220,7 @@ UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid, $
 ;;BodyContentSlot-update-profile;UpdateProfileComponent
 ;;BodyContent-orderConfirmation;OrderConfirmationThankMessageComponent,OrderConfirmationOverviewComponent,OrderConfirmationItemsComponent,OrderConfirmationShippingComponent,OrderConfirmationTotalsComponent,OrderConfirmationContinueButtonComponent
 ;;CenterLeftContentSlot-cartPage;PromotionsComponent,PotentialPromotionsComponent
-;;CenterRightContentSlot-cartPage;CartTotalsComponent,CartApplyCouponComponent,CartQuickOrderFormComponent
+;;CenterRightContentSlot-cartPage;CartTotalsComponent,CartApplyCouponComponent,CartQuickOrderFormComponent,CartProceedToCheckoutComponent
 ;;BottomContentSlot-cartPage;CheckoutComponent,CartSuggestions
 ;;RightContentSlot-checkout-login;GuestCheckoutLoginComponent
 ;;LeftContentSlot-checkout-login;ReturningCustomerCheckoutLoginComponent
