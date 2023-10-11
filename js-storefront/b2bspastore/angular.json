@@ -8,9 +8,6 @@
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
-        },
-        "@schematics/angular:application": {
-          "strict": true
         }
       },
       "root": "",
@@ -23,7 +20,9 @@
             "outputPath": "dist/b2bspastore/browser",
             "index": "src/index.html",
             "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
+            "polyfills": [
+              "zone.js"
+            ],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -38,16 +37,19 @@
             "styles": [
               "src/styles.scss",
               "src/styles/spartacus/user.scss",
-              "src/styles/spartacus/storefinder.scss",
-              "src/styles/spartacus/product.scss",
               "src/styles/spartacus/cart.scss",
               "src/styles/spartacus/order.scss",
               "src/styles/spartacus/checkout.scss",
-              "src/styles/spartacus/asm.scss",
-              "src/styles/spartacus/organization.scss",
-              "src/styles/spartacus/product-configurator.scss"
+              "src/styles/spartacus/storefinder.scss",
+              "src/styles/spartacus/product.scss",
+              "src/styles/spartacus/asm.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "node_modules/"
+              ]
+            }
           },
           "configurations": {
             "production": {
@@ -61,12 +63,6 @@
                   "type": "anyComponentStyle",
                   "maximumWarning": "2kb",
                   "maximumError": "4kb"
-                }
-              ],
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
                 }
               ],
               "outputHashing": "all"
@@ -103,10 +99,11 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "src/test.ts",
-            "polyfills": "src/polyfills.ts",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
             "tsConfig": "tsconfig.spec.json",
-            "karmaConfig": "karma.conf.js",
             "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
@@ -120,16 +117,19 @@
             "styles": [
               "src/styles.scss",
               "src/styles/spartacus/user.scss",
-              "src/styles/spartacus/storefinder.scss",
-              "src/styles/spartacus/product.scss",
               "src/styles/spartacus/cart.scss",
               "src/styles/spartacus/order.scss",
               "src/styles/spartacus/checkout.scss",
-              "src/styles/spartacus/asm.scss",
-              "src/styles/spartacus/organization.scss",
-              "src/styles/spartacus/product-configurator.scss"
+              "src/styles/spartacus/storefinder.scss",
+              "src/styles/spartacus/product.scss",
+              "src/styles/spartacus/asm.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "node_modules/"
+              ]
+            }
           }
         },
         "server": {
@@ -138,22 +138,22 @@
             "outputPath": "dist/b2bspastore/server",
             "main": "server.ts",
             "tsConfig": "tsconfig.server.json",
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "node_modules/"
+              ]
+            },
             "inlineStyleLanguage": "scss"
           },
           "configurations": {
             "production": {
-              "outputHashing": "media",
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
-                }
-              ]
+              "outputHashing": "media"
             },
             "development": {
               "optimization": false,
               "sourceMap": true,
-              "extractLicenses": false
+              "extractLicenses": false,
+              "vendorChunk": true
             }
           },
           "defaultConfiguration": "production"
@@ -193,6 +193,5 @@
         }
       }
     }
-  },
-  "defaultProject": "b2bspastore"
+  }
 }
