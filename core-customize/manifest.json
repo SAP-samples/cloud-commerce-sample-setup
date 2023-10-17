@@ -279,10 +279,6 @@
                     "contextPath": "/tomcatembeddedserver"
                 },
                 {
-                    "name": "yempty",
-                    "contextPath": "/yempty"
-                },
-                {
                     "name": "embeddedserver",
                     "contextPath": "/embeddedserver"
                 },
@@ -489,10 +485,6 @@
                     "contextPath": "/acceleratorservices"
                 },
                 {
-                    "name": "b2bpunchout",
-                    "contextPath": "/b2bpunchout"
-                },
-                {
                     "name": "commercewebservices",
                     "contextPath": "/occ"
                 },
@@ -503,10 +495,6 @@
                 {
                     "name": "permissionswebservices",
                     "contextPath": "/permissionswebservices"
-                },
-                {
-                    "name": "ywebservices",
-                    "contextPath": "/ywebservices"
                 },
                 {
                     "name": "previewwebservices",
