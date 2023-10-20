@@ -367,10 +367,6 @@
                     "value": ""
                 },
                 {
-                    "key": "tomcat.maxthreads",
-                    "value": "1200"
-                },
-                {
                     "key": "sop.post.url",
                     "value": "${ccv2.services.api.url.0}/acceleratorservices/sop-mock/process"
                 },
