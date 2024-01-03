@@ -312,7 +312,7 @@ INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;fle
 ###### Order details and confirmation (export) ######
 
 UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid, $contentCV)
-;;BodyContent-orderdetail;AccountOrderDetailsSimpleOverviewComponent,AccountOrderDetailsGroupedItemsComponent,ExportOrderEntriesComponent,AccountOrderDetailsBillingComponent,AccountOrderDetailsTotalsComponent,AccountOrderDetailsActionsComponent
+;;BodyContent-orderdetail;AccountOrderDetailsSimpleOverviewComponent,AccountOrderDetailsGroupedItemsComponent,ExportOrderEntriesComponent,AccountOrderDetailsBillingComponent,AccountOrderDetailsTotalsComponent,AccountOrderDetailsActionsComponent,AccountOrderDetailsPDFInvoicesComponent
 ;;BodyContent-orderConfirmation;OrderConfirmationThankMessageComponent,OrderConfirmationShippingComponent,OrderConfirmationPickUpComponent,ExportOrderEntriesComponent,OrderConfirmationBillingComponent,OrderConfirmationTotalsComponent,OrderConfirmationContinueButtonComponent
 
 INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType;&componentRef

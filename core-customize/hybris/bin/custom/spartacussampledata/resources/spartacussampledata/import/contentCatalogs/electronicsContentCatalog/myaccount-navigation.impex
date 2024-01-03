@@ -1,0 +1,71 @@
+#NavigationNodes
+$contentCatalog=electronics-spaContentCatalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+$siteResource=jar:de.hybris.platform.spartacussampledata.constants.SpartacussampledataConstants&/spartacussampledata/import/contentCatalogs/electronicsContentCatalog
+
+# create navigation root node for my account & child nodes for the root node
+INSERT_UPDATE CMSNavigationNode ; uid[unique=true]     ; $contentCV[unique=true] ; name              ; parent(uid, $contentCV) ; links(&linkRef) ; &nodeRef            
+#Root node is already added...  
+                                ; MyAccountViewNavNode ;                         ; "My Account View" ; ElectronicsNavNode      ;                 ; MyAccountViewNavNode
+
+# create cms link components for my account page side navigation
+INSERT_UPDATE CMSLinkComponent ; $contentCV[unique=true] ; uid[unique=true]        ; name                    ; url                         ; &linkRef                ; target(code)[default='sameWindow'] ;styleClasses
+
+                               ;                         ; OrdersAndReturnsLink    ; OrdersAndReturnsLink    ; /my-account/orders          ; OrdersAndReturnsLink    ;                                    ;fas fa-shopping-cart                   
+                               ;                         ; SavedCartsLink          ; SavedCartsLink          ; /my-account/saved-carts     ; SavedCartsLink          ;                                    ;fas fa-cart-plus             
+                               ;                         ; WishlistsLink           ; WishlistsLink           ; /my-account/wishlist        ; WishlistsLink           ;                                    ;fas fa-star                   
+
+                               ;                         ; RequestsLink            ; RequestsLink            ; /my-account/support-tickets ; RequestsLink            ;                                    ;fas fa-headset                    
+
+                               ;                         ; PersonalDetailsLink     ; PersonalDetailsLink     ; /my-account/update-profile  ; PersonalDetailsLink     ;                                    ;fas fa-user                        
+                               ;                         ; PasswordAndSecurityLink ; PasswordAndSecurityLink ; /my-account/update-password ; PasswordAndSecurityLink ;                                    ;fas fa-lock                            
+                               ;                         ; AddressBookLink         ; AddressBookLink         ; /my-account/address-book    ; AddressBookLink         ;                                    ;fas fa-home                             
+                               ;                         ; PaymentDetailsLink      ; PaymentDetailsLink      ; /my-account/payment-details ; PaymentDetailsLink      ;                                    ;fas fa-credit-card                                
+                               ;                         ; CommunicationsLink      ; CommunicationsLink      ; /my-account/update-email    ; CommunicationsLink      ;                                    ;fas fa-envelope                     
+                               ;                         ; PrivacyAndSettingsLink  ; PrivacyAndSettingsLink  ; /my-account/consents        ; PrivacyAndSettingsLink  ;                                    ;fas fa-cog
+
+# create navigation root node & child nodes for side navigation 
+INSERT_UPDATE CMSNavigationNode ; uid[unique=true]           ; $contentCV[unique=true] ; name                  ; parent(uid, $contentCV)   ; links(&linkRef) ; &nodeRef                   ; title[lang=en]       
+                                ; OrderInformationNavNode    ;                         ; Order Information     ; MyAccountViewNavNode      ;                 ; OrderInformationNavNode    ; Order Information    
+                                ; CustomerServiceNavNode     ;                         ; Customer Service      ; MyAccountViewNavNode      ;                 ; CustomerServiceNavNode     ; Customer Service     
+                                ; AccountInformationNavNode  ;                         ; Account Information   ; MyAccountViewNavNode      ;                 ; AccountInformationNavNode  ; Account Information  
+
+# children for Order Information
+                                ; OrdersAndReturnsNavNode    ;                         ; Orders And Returns    ; OrderInformationNavNode   ;                 ; OrdersAndReturnsNavNode    ; Orders And Returns   
+                                ; SavedCartsNavNode          ;                         ; Saved Carts           ; OrderInformationNavNode   ;                 ; SavedCartsNavNode          ; Saved Carts          
+                                ; WishlistsNavNode           ;                         ; Wishlists             ; OrderInformationNavNode   ;                 ; WishlistsNavNode           ; Wishlists            
+
+# children for Customer Service 
+                                ; RequestsNavNode            ;                         ; Requests              ; CustomerServiceNavNode    ;                 ; RequestsNavNode            ; Requests             
+
+# children for Account Service  
+                                ; PersonalDetailsNavNode     ;                         ; Personal Details      ; AccountInformationNavNode ;                 ; PersonalDetailsNavNode     ; Personal Details     
+                                ; PasswordAndSecurityNavNode ;                         ; Password And Security ; AccountInformationNavNode ;                 ; PasswordAndSecurityNavNode ; Password And Security
+                                ; AddressBookNavNode         ;                         ; Address Book          ; AccountInformationNavNode ;                 ; AddressBookNavNode         ; Address Book         
+                                ; PaymentDetailsNavNode      ;                         ; Payment Details       ; AccountInformationNavNode ;                 ; PaymentDetailsNavNode      ; Payment Details      
+                                ; CommunicationsNavNode      ;                         ; Communications        ; AccountInformationNavNode ;                 ; CommunicationsNavNode      ; Communications       
+                                ; PrivacyAndSettingsNavNode  ;                         ; Privacy And Settings  ; AccountInformationNavNode ;                 ; PrivacyAndSettingsNavNode  ; Privacy And Settings 
+
+# create cms navigation entry for side navigation child nodes
+INSERT_UPDATE CMSNavigationEntry ; uid[unique=true]                ; $contentCV[unique=true] ; name                            ; navigationNode(&nodeRef)   ; item(&linkRef)          ;  
+                                 ; OrdersAndReturnsNavNodeEntry    ;                         ; OrdersAndReturnsNavNodeEntry    ; OrdersAndReturnsNavNode    ; OrdersAndReturnsLink    ;  
+                                 ; SavedCartsNavNodeEntry          ;                         ; SavedCartsNavNodeEntry          ; SavedCartsNavNode          ; SavedCartsLink          ;  
+                                 ; WishlistsNavNodeEntry           ;                         ; WishlistsNavNodeEntry           ; WishlistsNavNode           ; WishlistsLink           ;  
+
+                                 ; RequestsNavNodeEntry            ;                         ; RequestsNavNodeEntry            ; RequestsNavNode            ; RequestsLink            ;  
+
+                                 ; PersonalDetailsNavNodeEntry     ;                         ; PersonalDetailsNavNodeEntry     ; PersonalDetailsNavNode     ; PersonalDetailsLink     ;  
+                                 ; PasswordAndSecurityNavNodeEntry ;                         ; PasswordAndSecurityNavNodeEntry ; PasswordAndSecurityNavNode ; PasswordAndSecurityLink ;  
+                                 ; AddressBookNavNodeEntry         ;                         ; AddressBookNavNodeEntry         ; AddressBookNavNode         ; AddressBookLink         ;  
+                                 ; PaymentDetailsNavNodeEntry      ;                         ; PaymentDetailsNavNodeEntry      ; PaymentDetailsNavNode      ; PaymentDetailsLink      ;  
+                                 ; CommunicationsNavNodeEntry      ;                         ; PCommunicationsNavNodeEntry     ; CommunicationsNavNode      ; CommunicationsLink      ;  
+                                 ; PrivacyAndSettingsNavNodeEntry  ;                         ; PrivacyAndSettingsNavNodeEntry  ; PrivacyAndSettingsNavNode  ; PrivacyAndSettingsLink  ;  
+
+# create navigation component for my account
+INSERT_UPDATE NavigationComponent ; $contentCV[unique=true] ; uid[unique=true]            ; name                ; styleClass ; &componentRef               ; navigationNode(&nodeRef) 
+                                  ;                         ; OrderInformationComponent   ; Order Information   ;            ; OrderInformationComponent   ; OrderInformationNavNode  
+                                  ;                         ; CustomerServiceComponent    ; Customer Service    ;            ; CustomerServiceComponent    ; CustomerServiceNavNode   
+                                  ;                         ; AccountInformationComponent ; Account Information ;            ; AccountInformationComponent ; AccountInformationNavNode
+
+INSERT_UPDATE MyAccountSideNavigationComponent ; $contentCV[unique=true] ; uid[unique=true]                     ; name                                 ; styleClass ; &componentRef                        ; navigationNode(&nodeRef)
+                                               ;                         ; MyAccountViewSideNavigationComponent ; MyAccountViewSideNavigationComponent ;            ; MyAccountViewSideNavigationComponent ; MyAccountViewNavNode    
