@@ -121,6 +121,7 @@ INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;fle
 ;;AccountOrderDetailsShippingComponent;Account Order Details Shipping Info Component;AccountOrderDetailsShippingComponent;AccountOrderDetailsShippingComponent
 ;;AccountOrderDetailsTotalsComponent;Account Order Details Order Totals Component;AccountOrderDetailsTotalsComponent;AccountOrderDetailsTotalsComponent
 ;;AccountOrderDetailsReorderComponent;Account Order Details Reorder Component;AccountOrderDetailsReorderComponent;AccountOrderDetailsReorderComponent
+;;AccountOrderDetailsPDFInvoicesComponent;Account Order Details PDF Invoices Component;AccountOrderDetailsPDFInvoicesComponent;AccountOrderDetailsPDFInvoicesComponent
 ;;AccountOrderDetailsApprovalDetailsComponent;Account Order Details Approval Details Component;AccountOrderDetailsApprovalDetailsComponent;AccountOrderDetailsApprovalDetailsComponent	
 ;;AccountOrderHistoryComponent;Account History Component;AccountOrderHistoryComponent;AccountOrderHistoryComponent
 ;;AccountPaymentDetailsComponent;Account Payment Details Component;AccountPaymentDetailsComponent;AccountPaymentDetailsComponent
@@ -151,7 +152,7 @@ INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;fle
 # Update slots
 UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid, $contentCV)
 ;;BodyContent-address-book;AccountAddressBookComponent
-;;BodyContent-orderdetail;AccountOrderDetailsOverviewComponent,AccountOrderDetailsShippingComponent,AccountOrderDetailsItemsComponent,AccountOrderDetailsTotalsComponent,AccountOrderDetailsApprovalDetailsComponent,AccountOrderDetailsReorderComponent                
+;;BodyContent-orderdetail;AccountOrderDetailsOverviewComponent,AccountOrderDetailsShippingComponent,AccountOrderDetailsItemsComponent,AccountOrderDetailsTotalsComponent,AccountOrderDetailsApprovalDetailsComponent,AccountOrderDetailsReorderComponent,AccountOrderDetailsPDFInvoicesComponent                
 ;;BodyContent-orders;AccountOrderHistoryComponent
 ;;BodyContent-payment-details;AccountPaymentDetailsComponent
 ;;BodyContent-update-email;UpdateEmailComponent

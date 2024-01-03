@@ -15,7 +15,7 @@ $catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[defa
 INSERT_UPDATE Customer;groups(uid);uid[unique=true];name;customerId
 "#% beforeEach:
 import java.util.UUID;
-line.put(Integer.valueOf(5), UUID.randomUUID().toString());
+line.put(Integer.valueOf(4), UUID.randomUUID().toString());
 "
 ;"customergroup";"reviewer1@hybris.com";"Kenneth Reviewer";;
 ;"customergroup";"reviewer2@hybris.com";"Ken Reviewer";;
