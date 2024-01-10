@@ -10,7 +10,7 @@ import { defaultCmsContentProviders, layoutConfig, mediaConfig } from "@spartacu
   providers: [provideConfig(layoutConfig), provideConfig(mediaConfig), ...defaultCmsContentProviders, provideConfig(<OccConfig>{
     backend: {
       occ: {
-       // baseUrl: 'https://localhost:9002',
+        // baseUrl: 'https://localhost:9002',
       }
     },
   }), provideConfig(<SiteContextConfig>{
@@ -28,7 +28,7 @@ import { defaultCmsContentProviders, layoutConfig, mediaConfig } from "@spartacu
     },
   }), provideConfig(<FeaturesConfig>{
     features: {
-      level: '6.4'
+      level: '6.7'
     }
   })]
 })

@@ -9,5 +9,5 @@
 $contentCatalog=apparel-uk-spaContentCatalog
 $syncJob=sync $contentCatalog:Staged->Online
 
-UPDATE CatalogVersionSyncJob; code[unique=true]; syncPrincipals(uid)[mode=append]; syncPrincipalsOnly[default=false];
-;$syncJob;cmsmanagergroup;true
+UPDATE CatalogVersionSyncJob; code[unique=true]; syncPrincipals(uid)[mode=append]; syncPrincipalsOnly[default=false];sessionUser(uid);
+;$syncJob;cmsmanagergroup;true;cmssyncuser;
