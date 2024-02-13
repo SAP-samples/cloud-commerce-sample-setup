@@ -1,19 +1,17 @@
 #% impex.setLocale( Locale.ENGLISH )
 
 # DataHub configurations
-
-# DataHub configurations
-INSERT_UPDATE DataHubUserModel;id[unique = true];userName;password
+INSERT_UPDATE DataHubUserModel    ;id[unique = true] ; userName                                          ; password
 "#% beforeEach:
 import de.hybris.platform.util.Config;
 line.put(2, Config.getString(line.get(2), ""admin""));
 line.put(3, Config.getString(line.get(3), ""nimda""));
 "
-;admin;datahub.backoffice.rest.client.username.admin;datahub.backoffice.rest.client.password.admin
-;developer;datahub.backoffice.rest.client.username.developer;datahub.backoffice.rest.client.password.developer
+                                  ;admin             ; datahub.backoffice.rest.client.username.admin     ; datahub.backoffice.rest.client.password.admin
+                                  ;developer         ; datahub.backoffice.rest.client.username.developer ; datahub.backoffice.rest.client.password.developer
 
-INSERT_UPDATE DataHubInstanceModel;instanceName[unique = true];instanceLocation;admin(id);developer(id)
-;datahub;http://datahub:8080/datahub-webapp/v1;admin;developer
+INSERT_UPDATE DataHubInstanceModel;instanceName[unique = true] ; instanceLocation                      ; admin(id)  ; developer(id)
+                                  ;datahub                     ; http://datahub:8080/datahub-webapp/v1 ; admin      ; developer
 
 
 INSERT_UPDATE OAuthClientDetails;clientId[unique=true]; resourceIds; scope; authorizedGrantTypes                ; authorities; clientSecret; registeredRedirectUri
