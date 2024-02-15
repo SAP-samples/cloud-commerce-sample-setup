@@ -28,7 +28,7 @@ import { defaultCmsContentProviders, layoutConfig, mediaConfig } from "@spartacu
     },
   }), provideConfig(<FeaturesConfig>{
     features: {
-      level: '6.7'
+      level: '2211.19'
     }
   })]
 })
