@@ -9,7 +9,7 @@
     "test": "ng test",
     "dev:ssr": "ng run b2bspastore:serve-ssr",
     "serve:ssr": "node dist/b2bspastore/server/main.js",
-    "build:ssr": "ng build && ng run b2bspastore:server",
+    "build:ssr": "ng build",
     "prerender": "ng run b2bspastore:prerender"
   },
   "private": true,

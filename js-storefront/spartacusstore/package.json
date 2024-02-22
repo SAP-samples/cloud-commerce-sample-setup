@@ -9,7 +9,7 @@
     "test": "ng test",
     "dev:ssr": "ng run spartacusstore:serve-ssr",
     "serve:ssr": "node dist/spartacusstore/server/main.js",
-    "build:ssr": "ng build && ng run spartacusstore:server",
+    "build:ssr": "ng build",
     "prerender": "ng run spartacusstore:prerender"
   },
   "private": true,
