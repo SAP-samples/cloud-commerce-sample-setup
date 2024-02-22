@@ -7,7 +7,10 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:spartacusstore": "node dist/spartacusstore/server/server.mjs"
+    "dev:ssr": "ng run spartacusstore:serve-ssr",
+    "serve:ssr": "node dist/spartacusstore/server/main.js",
+    "build:ssr": "ng build && ng run spartacusstore:server",
+    "prerender": "ng run spartacusstore:prerender"
   },
   "private": true,
   "dependencies": {

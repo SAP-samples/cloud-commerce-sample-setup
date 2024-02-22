@@ -7,7 +7,10 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:b2bspastore": "node dist/b2bspastore/server/server.mjs"
+    "dev:ssr": "ng run b2bspastore:serve-ssr",
+    "serve:ssr": "node dist/b2bspastore/server/main.js",
+    "build:ssr": "ng build && ng run b2bspastore:server",
+    "prerender": "ng run b2bspastore:prerender"
   },
   "private": true,
   "dependencies": {
