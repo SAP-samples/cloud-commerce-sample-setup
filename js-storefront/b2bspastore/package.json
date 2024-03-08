@@ -8,7 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:b2bspastore": "node dist/b2bspastore/server/server.mjs",
-    "build:ssr": "ng build",
+    "build:ssr": "ng build"
   },
   "private": true,
   "dependencies": {
