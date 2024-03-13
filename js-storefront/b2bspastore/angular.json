@@ -7,7 +7,14 @@
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
-          "style": "scss"
+          "style": "scss",
+          "standalone": false
+        },
+        "@schematics/angular:directive": {
+          "standalone": false
+        },
+        "@schematics/angular:pipe": {
+          "standalone": false
         }
       },
       "root": "",
@@ -15,11 +22,11 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/b2bspastore/browser",
+            "outputPath": "dist/b2bspastore",
             "index": "src/index.html",
-            "main": "src/main.ts",
+            "browser": "src/main.ts",
             "polyfills": [
               "zone.js"
             ],
@@ -45,6 +52,11 @@
               "src/styles/spartacus/product.scss"
             ],
             "scripts": [],
+            "server": "src/main.server.ts",
+            "prerender": false,
+            "ssr": {
+              "entry": "server.ts"
+            },
             "stylePreprocessorOptions": {
               "includePaths": [
                 "node_modules/"
@@ -68,12 +80,13 @@
               "outputHashing": "all"
             },
             "development": {
-              "buildOptimizer": false,
               "optimization": false,
-              "vendorChunk": true,
               "extractLicenses": false,
-              "sourceMap": true,
-              "namedChunks": true
+              "sourceMap": true
+            },
+            "noSsr": {
+              "ssr": false,
+              "prerender": false
             }
           },
           "defaultConfiguration": "production"
@@ -82,10 +95,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "b2bspastore:build:production"
+              "buildTarget": "b2bspastore:build:production,noSsr"
             },
             "development": {
-              "browserTarget": "b2bspastore:build:development"
+              "buildTarget": "b2bspastore:build:development,noSsr"
             }
           },
           "defaultConfiguration": "development"
@@ -93,7 +106,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "b2bspastore:build"
+            "buildTarget": "b2bspastore:build"
           }
         },
         "test": {
@@ -131,65 +144,6 @@
               ]
             }
           }
-        },
-        "server": {
-          "builder": "@angular-devkit/build-angular:server",
-          "options": {
-            "outputPath": "dist/b2bspastore/server",
-            "main": "server.ts",
-            "tsConfig": "tsconfig.server.json",
-            "stylePreprocessorOptions": {
-              "includePaths": [
-                "node_modules/"
-              ]
-            },
-            "inlineStyleLanguage": "scss"
-          },
-          "configurations": {
-            "production": {
-              "outputHashing": "media"
-            },
-            "development": {
-              "optimization": false,
-              "sourceMap": true,
-              "extractLicenses": false,
-              "vendorChunk": true
-            }
-          },
-          "defaultConfiguration": "production"
-        },
-        "serve-ssr": {
-          "builder": "@nguniversal/builders:ssr-dev-server",
-          "configurations": {
-            "development": {
-              "browserTarget": "b2bspastore:build:development",
-              "serverTarget": "b2bspastore:server:development"
-            },
-            "production": {
-              "browserTarget": "b2bspastore:build:production",
-              "serverTarget": "b2bspastore:server:production"
-            }
-          },
-          "defaultConfiguration": "development"
-        },
-        "prerender": {
-          "builder": "@nguniversal/builders:prerender",
-          "options": {
-            "routes": [
-              "/"
-            ]
-          },
-          "configurations": {
-            "production": {
-              "browserTarget": "b2bspastore:build:production",
-              "serverTarget": "b2bspastore:server:production"
-            },
-            "development": {
-              "browserTarget": "b2bspastore:build:development",
-              "serverTarget": "b2bspastore:server:development"
-            }
-          },
-          "defaultConfiguration": "production"
         }
       }
     }

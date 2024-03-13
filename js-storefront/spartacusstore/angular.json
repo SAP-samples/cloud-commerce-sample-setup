@@ -7,7 +7,14 @@
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
-          "style": "scss"
+          "style": "scss",
+          "standalone": false
+        },
+        "@schematics/angular:directive": {
+          "standalone": false
+        },
+        "@schematics/angular:pipe": {
+          "standalone": false
         }
       },
       "root": "",
@@ -15,11 +22,11 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/spartacusstore/browser",
+            "outputPath": "dist/spartacusstore",
             "index": "src/index.html",
-            "main": "src/main.ts",
+            "browser": "src/main.ts",
             "polyfills": [
               "zone.js"
             ],
@@ -45,6 +52,11 @@
               "src/styles/spartacus/product.scss"
             ],
             "scripts": [],
+            "server": "src/main.server.ts",
+            "prerender": false,
+            "ssr": {
+              "entry": "server.ts"
+            },
             "stylePreprocessorOptions": {
               "includePaths": [
                 "node_modules/"
@@ -68,12 +80,13 @@
               "outputHashing": "all"
             },
             "development": {
-              "buildOptimizer": false,
               "optimization": false,
-              "vendorChunk": true,
               "extractLicenses": false,
-              "sourceMap": true,
-              "namedChunks": true
+              "sourceMap": true
+            },
+            "noSsr": {
+              "ssr": false,
+              "prerender": false
             }
           },
           "defaultConfiguration": "production"
@@ -82,10 +95,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "spartacusstore:build:production"
+              "buildTarget": "spartacusstore:build:production,noSsr"
             },
             "development": {
-              "browserTarget": "spartacusstore:build:development"
+              "buildTarget": "spartacusstore:build:development,noSsr"
             }
           },
           "defaultConfiguration": "development"
@@ -93,7 +106,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "spartacusstore:build"
+            "buildTarget": "spartacusstore:build"
           }
         },
         "test": {
@@ -131,65 +144,6 @@
               ]
             }
           }
-        },
-        "server": {
-          "builder": "@angular-devkit/build-angular:server",
-          "options": {
-            "outputPath": "dist/spartacusstore/server",
-            "main": "server.ts",
-            "tsConfig": "tsconfig.server.json",
-            "stylePreprocessorOptions": {
-              "includePaths": [
-                "node_modules/"
-              ]
-            },
-            "inlineStyleLanguage": "scss"
-          },
-          "configurations": {
-            "production": {
-              "outputHashing": "media"
-            },
-            "development": {
-              "optimization": false,
-              "sourceMap": true,
-              "extractLicenses": false,
-              "vendorChunk": true
-            }
-          },
-          "defaultConfiguration": "production"
-        },
-        "serve-ssr": {
-          "builder": "@nguniversal/builders:ssr-dev-server",
-          "configurations": {
-            "development": {
-              "browserTarget": "spartacusstore:build:development",
-              "serverTarget": "spartacusstore:server:development"
-            },
-            "production": {
-              "browserTarget": "spartacusstore:build:production",
-              "serverTarget": "spartacusstore:server:production"
-            }
-          },
-          "defaultConfiguration": "development"
-        },
-        "prerender": {
-          "builder": "@nguniversal/builders:prerender",
-          "options": {
-            "routes": [
-              "/"
-            ]
-          },
-          "configurations": {
-            "production": {
-              "browserTarget": "spartacusstore:build:production",
-              "serverTarget": "spartacusstore:server:production"
-            },
-            "development": {
-              "browserTarget": "spartacusstore:build:development",
-              "serverTarget": "spartacusstore:server:development"
-            }
-          },
-          "defaultConfiguration": "production"
         }
       }
     }

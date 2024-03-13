@@ -5,7 +5,7 @@
       "path": "spartacusstore",
       "ssr": {
         "enabled": true,
-        "path": "dist/spartacusstore/server/main.js"
+        "path": "dist/spartacusstore/server/server.mjs"
       },
       "csr": {
         "webroot": "dist/spartacusstore/browser/"
@@ -17,7 +17,7 @@
       "path": "b2bspastore",
       "ssr": {
         "enabled": true,
-        "path": "dist/b2bspastore/server/main.js"
+        "path": "dist/b2bspastore/server/server.mjs"
       },
       "csr": {
         "webroot": "dist/b2bspastore/browser/"
@@ -25,5 +25,5 @@
       "enabledRepositories": ["spartacus-6"]
     }
   ],
-  "nodeVersion": "18"
+  "nodeVersion": "20"
 }

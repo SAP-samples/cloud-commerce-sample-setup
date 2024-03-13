@@ -1,6 +1,6 @@
-import { HttpClientModule } from "@angular/common/http";
+import { provideHttpClient, withFetch, withInterceptorsFromDi } from "@angular/common/http";
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule,  } from '@angular/platform-browser';
 import { EffectsModule } from "@ngrx/effects";
 import { StoreModule } from "@ngrx/store";
 import { AppRoutingModule } from "@spartacus/storefront";
@@ -12,14 +12,15 @@ import { SpartacusModule } from './spartacus/spartacus.module';
     AppComponent
   ],
   imports: [
-    BrowserModule.withServerTransition({ appId: 'serverApp' }),
-    HttpClientModule,
-    AppRoutingModule,
+    BrowserModule,
     StoreModule.forRoot({}),
+    AppRoutingModule,
     EffectsModule.forRoot([]),
     SpartacusModule
   ],
-  providers: [],
+  providers: [
+    provideHttpClient(withFetch(), withInterceptorsFromDi())
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
