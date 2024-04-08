@@ -10,6 +10,8 @@
     "extensions": [
       "cloudmediaconversion",
       "mediaconversionbackoffice",
+	  "sapcpiadapter",
+      "sapdigitalpaymentaddon",
       "financialacceleratorstorefront",
       "financialb2bbackoffice",
       "financialb2bfacades",
