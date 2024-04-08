@@ -4,7 +4,7 @@
 	"extensionPacks":[
        {
           "name": "hybris-fsa-suite",
-          "version": "2302.FP5"
+          "version": "2302.4"
        }
     ],
     "extensions": [
