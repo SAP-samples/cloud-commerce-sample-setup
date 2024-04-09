@@ -264,14 +264,14 @@
 
 <!-- Configuring Required Extensions and AddOns for SAP Commerce integration with SAP Cloud Platform Integration -->
 <!-- https://help.sap.com/viewer/product/SAP_COMMERCE_INTEGRATIONS/latest -->
-    <!--<extension name='sapcpiadapter'/>
+    <extension name='sapcpiadapter'/>
     <extension name='sapcpiorderexchange'/>
     <extension name='ysaporderfulfillment'/>
     <extension name='integrationbackoffice'/>
     <extension name='sapcoreconfigurationbackoffice'/>
     <extension name='sapmodelbackoffice'/>
     <extension name='saporderexchangebackoffice'/>
-    <extension name='sapcoreaddon'/>-->
+    <extension name='sapcoreaddon'/>
 
 
   </extensions>
