@@ -253,6 +253,7 @@
 	 <extension name= 'financialbackoffice' />
 	 <extension name= 'financialb2bbackoffice' />
 	 <extension name= 'financialprocess' />
+	 <extension name= 'financialservices' /> <!-- aggiunta -->
 	 <extension name= 'swaggerintegration' />
 	 <extension name= 'b2bacceleratoraddon' />
 	 <extension name= 'xyformssamples' />
