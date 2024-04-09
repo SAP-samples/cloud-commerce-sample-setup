@@ -271,7 +271,7 @@
 
 <!-- Sample Custom Extensions -->
     <extension name='kiwi' />
-	<extension name= 'spartacussampledata' />
+	<extension name='spartacussampledata' />
     <extension name='tiger'/>
 
 <!-- For more information where to find those extensions: -->
@@ -283,8 +283,10 @@
 
 <!-- Configuring Required Extensions and AddOns for SAP Commerce integration with SAP Cloud Platform Integration -->
 <!-- https://help.sap.com/viewer/product/SAP_COMMERCE_INTEGRATIONS/latest -->
-<!--    <extension name='sapcpiadapter'/> 
-    <extension name='sapcpiorderexchange'/>
+    <extension name='sapcpiadapter'/>
+    <extension name='sapdigitalpaymentaddon'/>
+	
+<!--   <extension name='sapcpiorderexchange'/>
     <extension name='ysaporderfulfillment'/>
     <extension name='integrationbackoffice'/>
     <extension name='sapcoreconfigurationbackoffice'/>
