@@ -247,23 +247,20 @@
 	  <extension name= 'xyformsweb' />
 	  
 <!-- Financial Services Accelerator -->
-     <extension name= 'financialacceleratorstorefront' />
-	 <extension name= 'financialb2bbackoffice' />
-	 <extension name= 'financialb2bfacades' />
-	 <extension name= 'financialb2bocc' />
-	 <extension name= 'financialb2bservices' />
-	 <extension name= 'financialbackoffice' />
-	 <extension name= 'financialfacades' />
-	 <extension name= 'financialintegrationservices' />
+     <extension name= 'financialspastore' />
 	 <extension name= 'financialocc' />
-	 <extension name= 'financialocctests' />
-	 <extension name= 'financialpaymentaddon' />
+	 <extension name= 'financialb2bocc' />
+	 <extension name= 'financialbackoffice' />
+	 <extension name= 'financialb2bbackoffice' />
 	 <extension name= 'financialprocess' />
-	 <extension name= 'financialservices' />
-	 <extension name= 'financialspastore' />
-	 <extension name= 'financialstore' />
-	 <extension name= 'financialwebservices' />
-	 <extension name= 'financialwebservicescommons' />
+	 <extension name= 'swaggerintegration' />
+	 <extension name= 'b2bacceleratoraddon' />
+	 <extension name= 'xyformssamples' />
+	 <extension name= 'assistedservicestorefront' />
+	 <extension name= 'yacceleratorfulfilmentprocess' />
+	 <extension name= 'modeltacceleratorservices' />
+	 
+	 
 
 <!-- accelerator + addons are legacy, do not use anymore; just configured to enable end-to-end showcase -->
 	  <extension name= 'ordermanagementaddon' />
@@ -283,10 +280,9 @@
 
 <!-- Configuring Required Extensions and AddOns for SAP Commerce integration with SAP Cloud Platform Integration -->
 <!-- https://help.sap.com/viewer/product/SAP_COMMERCE_INTEGRATIONS/latest -->
-    <extension name='sapcpiadapter'/>
+<!--       <extension name='sapcpiadapter'/>
     <extension name='sapdigitalpaymentaddon'/>
-	
-<!--   <extension name='sapcpiorderexchange'/>
+	<extension name='sapcpiorderexchange'/>
     <extension name='ysaporderfulfillment'/>
     <extension name='integrationbackoffice'/>
     <extension name='sapcoreconfigurationbackoffice'/>
