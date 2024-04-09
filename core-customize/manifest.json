@@ -9,25 +9,7 @@
     ],
     "extensions": [
       "cloudmediaconversion",
-      "mediaconversionbackoffice",
-      "sapdigitalpaymentaddon",
-      "financialacceleratorstorefront",
-      "financialb2bbackoffice",
-      "financialb2bfacades",
-      "financialb2bocc",
-      "financialb2bservices",
-      "financialbackoffice",
-      "financialfacades",
-      "financialintegrationservices",
-      "financialocc",
-      "financialocctests",
-      "financialpaymentaddon",
-      "financialprocess",
-      "financialservices",
-      "financialspastore",
-      "financialstore",
-      "financialwebservices",
-      "financialwebservicescommons"
+      "mediaconversionbackoffice"
     ],
     "storefrontAddons": [
         {
