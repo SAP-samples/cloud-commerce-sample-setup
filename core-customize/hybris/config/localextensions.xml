@@ -167,7 +167,6 @@
 	  <extension name= 'integrationservices' />
 	  <extension name= 'odata2services' />
 	  <extension name= 'odata2webservices' />
-	  <extension name= 'odata2webservicesfeaturetests' />
 	  <extension name= 'outboundservices' />
 	  <extension name= 'outboundsync' />
 	  <extension name= 'outboundsyncbackoffice' />
