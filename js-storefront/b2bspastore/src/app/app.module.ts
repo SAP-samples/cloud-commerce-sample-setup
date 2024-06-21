@@ -18,9 +18,7 @@ import { SpartacusModule } from './spartacus/spartacus.module';
     EffectsModule.forRoot([]),
     SpartacusModule
   ],
-  providers: [
-    provideHttpClient(withFetch(), withInterceptorsFromDi())
-  ],
+  providers: [provideHttpClient(withFetch(), withInterceptorsFromDi()),],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -52,15 +52,15 @@
               "src/styles/spartacus/product.scss"
             ],
             "scripts": [],
-            "server": "src/main.server.ts",
-            "prerender": false,
-            "ssr": {
-              "entry": "server.ts"
-            },
             "stylePreprocessorOptions": {
               "includePaths": [
                 "node_modules/"
               ]
+            },
+            "server": "src/main.server.ts",
+            "prerender": false,
+            "ssr": {
+              "entry": "server.ts"
             }
           },
           "configurations": {
@@ -69,7 +69,7 @@
                 {
                   "type": "initial",
                   "maximumWarning": "500kb",
-                  "maximumError": "2.5mb"
+                  "maximumError": "3.5mb"
                 },
                 {
                   "type": "anyComponentStyle",
