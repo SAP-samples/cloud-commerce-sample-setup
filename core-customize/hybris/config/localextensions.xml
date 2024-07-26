@@ -18,6 +18,7 @@
 	  <extension name= 'assistedservicewebservices' />
 	  <extension name= 'assistedserviceyprofilefacades' />
 	  <extension name= 'yaasyprofileconnect' />
+	  <extension name= 'b2bacceleratoraddon' />
 	  <extension name= 'b2bacceleratorfacades' />
 	  <extension name= 'b2bacceleratorservices' />
 	  <extension name= 'b2bocc' />
