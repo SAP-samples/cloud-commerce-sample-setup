@@ -175,7 +175,6 @@
 	  <extension name= 'npmancillary' />
 	  <extension name= 'b2bordermanagementfacades' />
 	  <extension name= 'b2bordermanagementwebservices' />
-	  <extension name= 'ordermanagementaddon' />
 	  <extension name= 'ordermanagementfacades' />
 	  <extension name= 'ordermanagementwebservices' />
 	  <extension name= 'orderselfserviceaddon' />
