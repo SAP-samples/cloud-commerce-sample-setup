@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CmsConfig, provideConfig } from "@spartacus/core";
-import { PersonalizationRootModule, PERSONALIZATION_FEATURE } from "@spartacus/tracking/personalization/root";
+import { PERSONALIZATION_FEATURE, PersonalizationRootModule } from "@spartacus/tracking/personalization/root";
 
 @NgModule({
   declarations: [],
