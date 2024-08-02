@@ -49,7 +49,11 @@
               "src/styles/spartacus/checkout.scss",
               "src/styles/spartacus/storefinder.scss",
               "src/styles/spartacus/asm.scss",
-              "src/styles/spartacus/product.scss"
+              "src/styles/spartacus/product.scss",
+              "src/styles/spartacus/qualtrics-embedded-feedback.scss",
+              "src/styles/spartacus/customer-ticketing.scss",
+              "src/styles/spartacus/pickup-in-store.scss",
+              "src/styles/spartacus/product-configurator.scss"
             ],
             "scripts": [],
             "stylePreprocessorOptions": {
@@ -135,7 +139,11 @@
               "src/styles/spartacus/checkout.scss",
               "src/styles/spartacus/storefinder.scss",
               "src/styles/spartacus/asm.scss",
-              "src/styles/spartacus/product.scss"
+              "src/styles/spartacus/product.scss",
+              "src/styles/spartacus/qualtrics-embedded-feedback.scss",
+              "src/styles/spartacus/customer-ticketing.scss",
+              "src/styles/spartacus/pickup-in-store.scss",
+              "src/styles/spartacus/product-configurator.scss"
             ],
             "scripts": [],
             "stylePreprocessorOptions": {
