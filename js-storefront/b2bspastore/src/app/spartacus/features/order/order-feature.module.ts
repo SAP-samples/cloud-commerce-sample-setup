@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CmsConfig, I18nConfig, provideConfig } from "@spartacus/core";
 import { orderTranslationChunksConfig, orderTranslations } from "@spartacus/order/assets";
-import { OrderRootModule, ORDER_FEATURE } from "@spartacus/order/root";
+import { ORDER_FEATURE, OrderRootModule } from "@spartacus/order/root";
 
 @NgModule({
   declarations: [],
