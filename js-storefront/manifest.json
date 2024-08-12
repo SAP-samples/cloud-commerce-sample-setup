@@ -10,7 +10,7 @@
       "csr": {
         "webroot": "dist/spartacusstore/browser/"
       },
-      "enabledRepositories": ["spartacus-6"]
+      "enabledRepositories": ["composable-storefront-dev"]
     },
     {
       "name": "b2bspastore",
@@ -22,7 +22,7 @@
       "csr": {
         "webroot": "dist/b2bspastore/browser/"
       },
-      "enabledRepositories": ["spartacus-6"]
+      "enabledRepositories": ["composable-storefront-dev"]
     }
   ],
   "nodeVersion": "20"
