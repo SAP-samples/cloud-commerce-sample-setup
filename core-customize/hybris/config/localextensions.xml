@@ -243,9 +243,7 @@
 		<extension name= 'orbeonweb' />
 		<extension name= 'xyformsbackoffice' />
 		<extension name= 'xyformsfacades' />
-		<extension name= 'xyformssamples' />
 		<extension name= 'xyformsservices' />
-		<extension name= 'xyformsstorefrontcommons' />
 		<extension name= 'xyformsweb' />
 
 		<!-- accelerator + addons are legacy, do not use anymore; just configured to enable end-to-end showcase -->
@@ -293,6 +291,8 @@
 		<extension name= 'textfieldconfiguratortemplateaddon' />
 		<extension name= 'timedaccesspromotionengineaddon' />
 		<extension name= 'timedaccesspromotionenginesamplesaddon' />
+		<extension name= 'xyformssamples' />
+		<extension name= 'xyformsstorefrontcommons' />
 
 		<!-- Sample Custom Extensions -->
 		<extension name='kiwi' />
