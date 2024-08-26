@@ -1,0 +1,35 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# Impex for defining Product Offering relations to Product Specification
+
+# Macros / Replacement Parameter definitions
+$productCatalog = telcospaProductCatalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = '$productCatalog:Staged']
+
+# Product Price Classes
+INSERT_UPDATE TmaProductPriceClass; id[unique = true];
+                                  ; class1
+                                  ; class4
+                                  ; class6
+
+INSERT_UPDATE TmaSimpleProductOffering; code[unique = true]   ; productPriceClass(id); $catalogVersion
+                                      ; Y_STARTER_100_1Y      ; class1               ;
+                                      ; Y_STARTER_100_2Y      ; class4               ;
+                                      ; Y_STARTER_200_1Y      ; class1               ;
+                                      ; Y_STARTER_200_2Y      ; class4               ;
+                                      ; Y_STARTER_300_1Y      ; class1               ;
+                                      ; Y_STARTER_300_2Y      ; class4               ;
+                                      ; Y_SMART_600_12M       ; class1               ;
+                                      ; Y_SMART_600_18M       ; class6               ;
+                                      ; Y_SMART_600_24M       ; class4               ;
+                                      ; Y_SMART_900_12M       ; class1               ;
+                                      ; Y_SMART_900_18M       ; class6               ;
+                                      ; Y_SMART_900_24M       ; class4               ;
+                                      ; Y_SMART_1200_12M      ; class1               ;
+                                      ; Y_SMART_1200_18M      ; class6               ;
+                                      ; Y_SMART_1200_24M      ; class4               ;
+                                      ; Y_SMART_UNLIMITED_12M ; class1               ;
+                                      ; Y_SMART_UNLIMITED_18M ; class6               ;
+                                      ; Y_SMART_UNLIMITED_24M ; class4               ;

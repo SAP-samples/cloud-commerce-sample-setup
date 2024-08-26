@@ -1,0 +1,19 @@
+<span class ="discountedPriceColor" *ngFor="let alteration of alterations">
+  <span *ngIf="alteration.price.percentage">-{{alteration.price.percentage}}%&nbsp;{{'productDetails.price.common.off' | cxTranslate}}</span>
+  <span *ngIf="alteration.price.taxIncludedAmount">-{{alteration.price.taxIncludedAmount.value}}&nbsp;{{ 'common.currencies.currency' | cxTranslate : {context: alteration.price.taxIncludedAmount.currencyIso} }}&nbsp;{{'productDetails.price.common.off' | cxTranslate}}</span>
+  {{
+  'productDetails.price.priceTypes.billingEvents.billingEvent'
+    | cxTranslate: { context: alteration.recurringChargePeriod }
+  }}
+  <span *ngIf="alteration.cycle">
+    <ng-container *ngIf="alteration.cycle.cycleStart!==1 || alteration.cycle.cycleEnd">
+    <ng-container *ngIf="alteration.cycle.cycleStart && alteration.cycle.cycleEnd">
+      {{'productDetails.price.common.for' | cxTranslate}}
+      {{alteration.cycle.cycleStart}}&nbsp;{{'productDetails.price.common.to' | cxTranslate}}&nbsp;{{alteration.cycle.cycleEnd}}
+    </ng-container>
+    <ng-container *ngIf="alteration.cycle.cycleStart && !alteration.cycle.cycleEnd">
+      {{'productDetails.price.common.onwards' | cxTranslate}}
+    </ng-container>
+  </ng-container>
+  </span>
+</span>

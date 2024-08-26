@@ -1,0 +1,361 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+$lang = en
+$status = status(code)
+
+#% setAccessibility(true)
+#% Date date = new Date();
+#% date.setMonth(date.getMonth()+1);
+#% impex.definitions.put("$oneMonthAfterCurrent", new java.text.SimpleDateFormat("dd.MM.yyyy").format(date))
+
+# Currencies
+INSERT_UPDATE Currency; isocode[unique = true]; name[lang = $lang]; active; conversion; digits; symbol
+                      ; USD                   ; "US Dollar"       ; true  ; 1.5       ; 4     ; "$" ;
+
+INSERT_UPDATE CatalogUnawareMedia; code[unique = true]                             ; realfilename                                        ; @media[translator = de.hybris.platform.impex.jalo.media.MediaDataTranslator]; mime[default = 'text/plain']
+                                 ; bill_Tim_James_Fiber_Internet_2023_02           ; bill_Tim_James_Fiber_Internet_2023_02.jpg           ;
+                                 ; bill_Tim_James_iPhone_13_Pro_Max_2023_02        ; bill_Tim_James_iPhone_13_Pro_Max_2023_02.jpg        ;
+                                 ; bill_Emma_Smith_GSM_Small_2023_04               ; bill_Emma_Smith_GSM_Small_2023_04.jpg               ;
+                                 ; bill_Emma_Smith_Fiber_Internet_2023_04          ; bill_Emma_Smith_Fiber_Internet_2023_04.jpg          ;
+                                 ; bill_Emma_Smith_GSM_Large_2023_04               ; bill_Emma_Smith_GSM_Large_2023_04.jpg               ;
+                                 ; bill_Rachel_Green_5G_Internet_2023_01           ; bill_Rachel_Green_5G_Internet_2023_01.jpg           ;
+                                 ; bill_Mark_Johnson_5G_Internet_2023_02           ; bill_Mark_Johnson_5G_Internet_2023_02.jpg           ;
+                                 ; bill_Mark_Johnson_Home_Comfort_2023_02          ; bill_Mark_Johnson_Home_Comfort_2023_02.jpg          ;
+                                 ; bill_Mark_Johnson_Fiber_Internet_2023_02        ; bill_Mark_Johnson_Fiber_Internet_2023_02.jpg        ;
+                                 ; bill_Mark_Johnson_Router_X_2023_02              ; bill_Mark_Johnson_Router_X_2023_02.jpg              ;
+                                 ; bill_Mark_Johnson_TV_200_2023_02                ; bill_Mark_Johnson_TV_200_2023_02.jpg                ;
+                                 ; bill_Mark_Johnson_GSM_Medium_2023_02            ; bill_Mark_Johnson_GSM_Medium_2023_02.jpg            ;
+                                 ; bill_Etta_Berg_GSM_Large_2023_02                ; bill_Etta_Berg_GSM_Large_2023_02.jpg                ;
+                                 ; bill_Etta_Berg_Fiber_Internet_2023_02           ; bill_Etta_Berg_Fiber_Internet_2023_02.jpg           ;
+                                 ; bill_Etta_Berg_Winter_Deal_2023_02              ; bill_Etta_Berg_Winter_Deal_2023_02.jpg              ;
+                                 ; bill_Etta_Berg_GSM_Medium_2023_02               ; bill_Etta_Berg_GSM_Medium_2023_02.jpg               ;
+                                 ; bill_Etta_Berg_5GPOW_2023_02                    ; bill_Etta_Berg_5GPOW_2023_02.jpg                    ;
+                                 ; bill_David_Brown_5G_Internet_2023_01            ; bill_David_Brown_5G_Internet_2023_01.jpg            ;
+                                 ; bill_David_Brown_GSM_Small_2023_01			         ; bill_David_Brown_GSM_Small_2023_01.jpg				       ;
+                                 ; bill_Ronnie_Ray_GSM_Small_2023_03               ; bill_Ronnie_Ray_GSM_Small_2023_03.jpg               ;
+                                 ; bill_Joseph_Williams_5G_Internet_2023_01        ; bill_Joseph_Williams_5G_Internet_2023_01.jpg        ;
+                                 ; bill_Joseph_Williams_GSM_Small_2023_01          ; bill_Joseph_Williams_GSM_Small_2023_01.jpg          ;
+                                 ; onCycleBill_Etta_Berg_GSM_Large_2023_02         ; onCycleBill_Etta_Berg_GSM_Large_2023_02.jpg         ;
+                                 ; onCycleBill_Etta_Berg_Fiber_Internet_2023_02    ; onCycleBill_Etta_Berg_Fiber_Internet_2023_02.jpg    ;
+                                 ; onCycleBill_Emma_Smith_GSM_Small_2023_04        ; onCycleBill_Emma_Smith_GSM_Small_2023_04.jpg        ;
+                                 ; onCycleBill_Emma_Smith_Fiber_Internet_2023_04   ; onCycleBill_Emma_Smith_Fiber_Internet_2023_04.jpg   ;
+                                 ; onCycleBill_Emma_Smith_GSM_Large_2023_04        ; onCycleBill_Emma_Smith_GSM_Large_2023_04.jpg        ;
+                                 ; onCycleBill_Mark_Johnson_5G_Internet_2023_02    ; onCycleBill_Mark_Johnson_5G_Internet_2023_02.jpg    ;
+                                 ; onCycleBill_Mark_Johnson_Home_Comfort_2023_02   ; onCycleBill_Mark_Johnson_Home_Comfort_2023_02.jpg   ;
+                                 ; onCycleBill_Mark_Johnson_Fiber_Internet_2023_02 ; onCycleBill_Mark_Johnson_Fiber_Internet_2023_02.jpg ;
+                                 ; onCycleBill_Mark_Johnson_Router_X_2023_02       ; onCycleBill_Mark_Johnson_Router_X_2023_02.jpg       ;
+                                 ; onCycleBill_Mark_Johnson_TV_200_2023_02         ; onCycleBill_Mark_Johnson_TV_200_2023_02.jpg         ;
+                                 ; onCycleBill_Mark_Johnson_GSM_Medium_2023_02     ; onCycleBill_Mark_Johnson_GSM_Medium_2023_02.jpg     ;
+                                 ; onCycleBill_David_Brown_5G_Internet_2023_01     ; onCycleBill_David_Brown_5G_Internet_2023_01.jpg     ;
+                                 ; onCycleBill_Ronnie_Ray_GSM_Small_2023_03        ; onCycleBill_Ronnie_Ray_GSM_Small_2023_03.jpg        ;
+                                 ; onCycleBill_Tim_James_Fiber_Internet_2023_02    ; onCycleBill_Tim_James_Fiber_Internet_2023_02.jpg    ;
+                                 ; onCycleBill_Tim_James_iPhone_13_Pro_Max_2023_02 ; onCycleBill_Tim_James_iPhone_13_Pro_Max_2023_02.jpg ;
+                                 ; onCycleBill_Joseph_Williams_5G_Internet_2023_01 ; onCycleBill_Joseph_Williams_5G_Internet_2023_01.jpg ;
+                                 ; onCycleBill_Joseph_Williams_GSM_Small_2023_01   ; onCycleBill_Joseph_Williams_GSM_Small_2023_01.jpg   ;
+                                 ; onCycleBill_Rachel_Green_5G_Internet_2023_01    ; onCycleBill_Rachel_Green_5G_Internet_2023_01.jpg    ;
+                                 ; onCycleBill_Etta_Berg_Winter_Deal_2023_02       ; onCycleBill_Etta_Berg_Winter_Deal_2023_02.jpg       ;
+                                 ; onCycleBill_Etta_Berg_GSM_Medium_2023_02        ; onCycleBill_Etta_Berg_GSM_Medium_2023_02.jpg        ;
+                                 ; onCycleBill_Etta_Berg_5GPOW_2023_02             ; onCycleBill_Etta_Berg_5GPOW_2023_02.jpg             ;
+                                 ; onCycleBill_David_Brown_GSM_Small_2023_01       ; onCycleBill_David_Brown_GSM_Small_2023_01.jpg       ;
+                                 
+INSERT_UPDATE TuaParty; id[unique = true]          ; name[lang = en] ; partyRoles(id)  ; principals(uid)
+                      ; mark.johnson@hybris.com    ; Mark Johnson    ; mark.johnson    ; mark.johnson@hybris.com
+                      ; emma.smith@hybris.com      ; Emma Smith      ; emma.smith      ; emma.smith@hybris.com
+                      ; ronnie.ray@hybris.com      ; Ronnie Ray      ; ronnie.ray      ; ronnie.ray@hybris.com
+                      ; joseph.williams@hybris.com ; Joseph Williams ; joseph.williams ; joseph.williams@hybris.com
+                      ; tim.james@hybris.com       ; Tim James       ; tim.james       ; tim.james@hybris.com
+                      ; etta.berg@hybris.com       ; Etta Berg       ; etta.berg       ; etta.berg@hybris.com
+                      ; david.brown@hybris.com     ; David Brown     ; david.brown     ; david.brown@hybris.com
+                      ; rachel.green@hybris.com    ; Rachel Green    ; rachel.green    ; rachel.green@hybris.com
+
+INSERT_UPDATE TuaPartyRole; id[unique = true]; role     ; party(id)
+                          ; mark.johnson     ; customer ; mark.johnson@hybris.com
+                          ; emma.smith       ; customer ; emma.smith@hybris.com
+                          ; ronnie.ray       ; customer ; ronnie.ray@hybris.com
+                          ; joseph.williams  ; customer ; joseph.williams@hybris.com
+                          ; tim.james        ; customer ; tim.james@hybris.com
+                          ; etta.berg        ; customer ; etta.berg@hybris.com
+                          ; david.brown      ; customer ; david.brown@hybris.com
+                          ; rachel.green     ; customer ; rachel.green@hybris.com
+
+INSERT_UPDATE TuaAccountBalance; id[unique = true]          ; amount  ; currency(isocode); balanceType(code); startDateTime[dateformat = dd.MM.yyyy]; endDateTime[dateformat = dd.MM.yyyy]
+                               ; Mark_Johnson_AccBalance    ; 58.97   ; USD              ; DEPOSIT_BALANCE  ; 01.01.2022                            ; 01.01.2025
+                               ; Emma_Smith_AccBalance      ; 4972.09 ; USD              ; DEPOSIT_BALANCE  ; 01.01.2022                            ; 01.01.2025
+                               ; Joseph_Williams_AccBalance ; 6596.09 ; USD              ; DEPOSIT_BALANCE  ; 01.01.2022                            ; 01.01.2025
+                               ; Tim_James_AccBalance       ; 96.09   ; USD              ; DEPOSIT_BALANCE  ; 01.01.2022                            ; 01.01.2025
+                               ; Etta_Berg_AccBalance       ; 961.09  ; USD              ; DEPOSIT_BALANCE  ; 01.01.2022                            ; 01.01.2025
+                               ; David_Brown_AccBalance     ; 962.09  ; USD              ; DEPOSIT_BALANCE  ; 01.01.2022                            ; 01.01.2025
+                               ; Ronnie_Ray_AccBalance      ; 96.09   ; USD              ; DEPOSIT_BALANCE  ; 01.01.2022                            ; 01.01.2025
+                               ; Rachel_Green_AccBalance    ; 960.09  ; USD              ; DEPOSIT_BALANCE  ; 01.01.2022                            ; 01.01.2025
+
+INSERT_UPDATE TuaFinancialAccount; id[unique = true]            ; name                                          ; partyRoles(id)  ; accountBalances(id)
+                                 ; Mark_Johnson_FinancialAcc    ; Financial Account of customer Mark Johnson    ; mark.johnson    ; Mark_Johnson_AccBalance
+                                 ; Emma_Smith_FinancialAcc      ; Financial Account of customer Emma Smith      ; emma.smith      ; Emma_Smith_AccBalance
+                                 ; Joseph_Williams_FinancialAcc ; Financial Account of customer Joseph Williams ; joseph.williams ; Joseph_Williams_AccBalance
+                                 ; Tim_James_FinancialAcc       ; Financial Account of customer Tim James       ; tim.james       ; Tim_James_AccBalance
+                                 ; Etta_Berg_FinancialAcc       ; Financial Account of customer Etta Berg       ; etta.berg       ; Etta_Berg_AccBalance
+                                 ; David_Brown_FinancialAcc     ; Financial Account of customer David Brown     ; david.brown     ; David_Brown_AccBalance
+                                 ; Ronnie_Ray_FinancialAcc      ; Financial Account of customer Ronnie Ray      ; ronnie.ray      ; Ronnie_Ray_AccBalance
+                                 ; Rachel_Green_FinancialAcc    ; Financial Account of customer Rachel Green    ; rachel.green    ; Rachel_Green_AccBalance
+
+INSERT_UPDATE TuaPartyAccount; id[unique = true]        ; name [lang = en]                ; partyRoles(id)
+                             ; Mark_Johnson_PartyAcc    ; Party Account - Mark Johnson    ; mark.johnson
+                             ; Emma_Smith_PartyAcc      ; Party Account - Emma Smith      ; emma.smith
+                             ; Joseph_Williams_PartyAcc ; Party Account - Joseph Williams ; joseph.williams
+                             ; Tim_James_PartyAcc       ; Party Account - Tim James       ; tim.james
+                             ; Etta_Berg_PartyAcc       ; Party Account - Etta Berg       ; etta.berg
+                             ; David_Brown_PartyAcc     ; Party Account - David Brown     ; david.brown
+                             ; Ronnie_Ray_PartyAcc      ; Party Account - Ronnie Ray      ; ronnie.ray
+                             ; Rachel_Green_PartyAcc    ; Party Account - Rachel Green    ; rachel.green
+
+INSERT_UPDATE TuaMediumCharacteristic; id[unique = true]        ; city          ; contactType(code)   ; country; emailAddress               ; faxNumber    ; phoneNumber  ; postcode; socialNetworkId               ; stateOrProvince; street1                   ; street2
+                                     ; Etta_Berg_PhoneNo        ; Juneau        ; MOBILE_PHONE_NUMBER ; USA    ;                            ; 020 6332 734 ; 090 0987 653 ; 60628   ; Etta_Berg_SocialNetwork       ; AK             ; 115th Street & King Drive ;
+                                     ; Etta_Berg_EmailAdd       ; Juneau        ; MOBILE_PHONE_NUMBER ; USA    ; etta.berg@hybris.com       ; 020 6332 734 ;              ; 60628   ; Etta_Berg_SocialNetwork       ; AK             ; 115th Street & King Drive ;
+                                     ; Emma_Smith_PhoneNo       ; New York      ; MOBILE_PHONE_NUMBER ; USA    ;                            ; 020 1132 432 ; 090 4267 534 ; 32691   ; Emma_Smith_SocialNetwork      ; NY             ; 1255th Street             ;
+                                     ; Emma_Smith_EmailAdd      ; New York      ; MOBILE_PHONE_NUMBER ; USA    ; emma.smith@hybris.com      ; 020 1132 432 ;              ; 32691   ; Emma_Smith_SocialNetwork      ; NY             ; 1255th Street             ;
+                                     ; Mark_Johnson_PhoneNo     ; Chicago       ; MOBILE_PHONE_NUMBER ; USA    ;                            ; 020 1132 433 ; 090 4267 123 ; 32692   ; Mark_Johnson_SocialNetwork    ; IL             ; 1256th Street             ;
+                                     ; Mark_Johnson_EmailAdd    ; Chicago       ; MOBILE_PHONE_NUMBER ; USA    ; mark.johnson@hybris.com    ; 020 1132 433 ;              ; 32692   ; Mark_Johnson_SocialNetwork    ; IL             ; 1256th Street             ;
+                                     ; Ronnie_Ray_PhoneNo       ; San Francisco ; MOBILE_PHONE_NUMBER ; USA    ;                            ; 020 1132 434 ; 090 4267 124 ; 32693   ; Ronnie_Ray_SocialNetwork      ; CA             ; 1257th Street             ;
+                                     ; Ronnie_Ray_EmailAdd      ; San Francisco ; MOBILE_PHONE_NUMBER ; USA    ; ronnie.ray@hybris.com      ; 020 1132 434 ;              ; 32693   ; Ronnie_Ray_SocialNetwork      ; CA             ; 1257th Street             ;
+                                     ; Joseph_Williams_PhoneNo  ; San Diego     ; MOBILE_PHONE_NUMBER ; USA    ;                            ; 020 1132 435 ; 090 4267 125 ; 32694   ; Joseph_Williams_SocialNetwork ; CA             ; 1258th Street             ;
+                                     ; Joseph_Williams_EmailAdd ; San Diego     ; MOBILE_PHONE_NUMBER ; USA    ; joseph.williams@hybris.com ; 020 1132 435 ;              ; 32694   ; Joseph_Williams_SocialNetwork ; CA             ; 1258th Street             ;
+                                     ; Tim_James_PhoneNo        ; Boston        ; MOBILE_PHONE_NUMBER ; USA    ;                            ; 020 1132 436 ; 090 4267 126 ; 32695   ; Tim_James_SocialNetwork       ; MA             ; 1259th Street             ;
+                                     ; Tim_James_EmailAdd       ; Boston        ; MOBILE_PHONE_NUMBER ; USA    ; tim.james@hybris.com       ; 020 1132 436 ;              ; 32695   ; Tim_James_SocialNetwork       ; MA             ; 1259th Street             ;
+                                     ; David_Brown_PhoneNo      ; Seattle       ; MOBILE_PHONE_NUMBER ; USA    ;                            ; 020 1132 437 ; 090 4267 127 ; 32696   ; David_Brown_SocialNetwork     ; WA             ; 1260th Street             ;
+                                     ; David_Brown_EmailAdd     ; Seattle       ; MOBILE_PHONE_NUMBER ; USA    ; david.brown@hybris.com     ; 020 1132 437 ;              ; 32696   ; David_Brown_SocialNetwork     ; WA             ; 1260th Street             ;
+                                     ; Rachel_Green_PhoneNo     ; Seattle       ; MOBILE_PHONE_NUMBER ; USA    ;                            ; 020 1132 438 ; 090 4267 128 ; 32697   ; Rachel_Green_SocialNetwork    ; WA             ; 1261th Street             ;
+                                     ; Rachel_Green_EmailAdd    ; Seattle       ; MOBILE_PHONE_NUMBER ; USA    ; rachel.green@hybris.com    ; 020 1132 438 ;              ; 32697   ; Rachel_Green_SocialNetwork    ; WA             ; 1261th Street             ;
+
+INSERT_UPDATE TuaContactMedium; id[unique = true]                     ; mediumType(code); preferred; startDateTime[dateformat = dd.MM.yyyy]; endDateTime[dateformat = dd.MM.yyyy]; characteristic(id)
+                              ; Etta_Berg_ContactMedium_PhoneNo       ; PHONE_NUMBER    ; true     ; 01.01.2022                            ; 01.01.2025                          ; Etta_Berg_PhoneNo
+                              ; Etta_Berg_ContactMedium_Email         ; EMAIL_ADDRESS   ; false    ; 01.01.2022                            ; 01.01.2025                          ; Etta_Berg_EmailAdd
+                              ; Emma_Smith_ContactMedium_Email        ; EMAIL_ADDRESS   ; true     ; 01.01.2022                            ; 01.01.2025                          ; Emma_Smith_EmailAdd
+                              ; Emma_Smith_ContactMedium_PhoneNo      ; PHONE_NUMBER    ; true     ; 01.01.2022                            ; 01.01.2025                          ; Emma_Smith_PhoneNo
+                              ; Mark_Johnson_ContactMedium_Email      ; EMAIL_ADDRESS   ; true     ; 01.01.2022                            ; 01.01.2025                          ; Mark_Johnson_EmailAdd
+                              ; Mark_Johnson_ContactMedium_PhoneNo    ; PHONE_NUMBER    ; true     ; 01.01.2022                            ; 01.01.2025                          ; Mark_Johnson_PhoneNo
+                              ; Ronnie_Ray_ContactMedium_Email        ; EMAIL_ADDRESS   ; true     ; 01.01.2022                            ; 01.01.2025                          ; Ronnie_Ray_EmailAdd
+                              ; Ronnie_Ray_ContactMedium_PhoneNo      ; PHONE_NUMBER    ; true     ; 01.01.2022                            ; 01.01.2025                          ; Ronnie_Ray_PhoneNo
+                              ; Joseph_Williams_ContactMedium_Email   ; EMAIL_ADDRESS   ; true     ; 01.01.2022                            ; 01.01.2025                          ; Joseph_Williams_EmailAdd
+                              ; Joseph_Williams_ContactMedium_PhoneNo ; PHONE_NUMBER    ; true     ; 01.01.2022                            ; 01.01.2025                          ; Joseph_Williams_PhoneNo
+                              ; Tim_James_ContactMedium_Email         ; EMAIL_ADDRESS   ; true     ; 01.01.2022                            ; 01.01.2025                          ; Tim_James_EmailAdd
+                              ; Tim_James_ContactMedium_PhoneNo       ; PHONE_NUMBER    ; true     ; 01.01.2022                            ; 01.01.2025                          ; Tim_James_PhoneNo
+                              ; David_Brown_ContactMedium_Email       ; EMAIL_ADDRESS   ; true     ; 01.01.2022                            ; 01.01.2025                          ; David_Brown_EmailAdd
+                              ; David_Brown_ContactMedium_PhoneNo     ; PHONE_NUMBER    ; true     ; 01.01.2022                            ; 01.01.2025                          ; David_Brown_PhoneNo
+                              ; Rachel_Green_ContactMedium_Email      ; EMAIL_ADDRESS   ; true     ; 01.01.2022                            ; 01.01.2025                          ; Rachel_Green_EmailAdd
+                              ; Rachel_Green_ContactMedium_PhoneNo    ; PHONE_NUMBER    ; true     ; 01.01.2022                            ; 01.01.2025                          ; Rachel_Green_PhoneNo
+
+INSERT_UPDATE TuaContact; id[unique = true]               ; contactName     ; contactType(code); partyRoleType; relatedParty(id); startDateTime[dateformat = dd.MM.yyyy]; endDateTime[dateformat = dd.MM.yyyy]; contactMediums(id)
+                        ; Etta_Berg_Contact_Primary       ; Etta Berg       ; PRIMARY          ; Customer     ; etta.berg       ; 01.01.2022                            ; 01.01.2025                          ; Etta_Berg_ContactMedium_PhoneNo
+                        ; Etta_Berg_Contact_Secondary     ; Etta Berg       ; SECONDARY        ; Customer     ; etta.berg       ; 01.01.2022                            ; 01.01.2025                          ; Etta_Berg_ContactMedium_Email
+                        ; Emma_Smith_Contact_Primary      ; Emma Smith      ; PRIMARY          ; Customer     ; emma.smith      ; 01.01.2022                            ; 01.01.2025                          ; Emma_Smith_ContactMedium_PhoneNo, Emma_Smith_ContactMedium_Email
+                        ; Mark_Johnson_Contact_Primary    ; Mark Johnson    ; PRIMARY          ; Customer     ; mark.johnson    ; 01.01.2022                            ; 01.01.2025                          ; Mark_Johnson_ContactMedium_PhoneNo
+                        ; Mark_Johnson_Contact_Secondary  ; Mark Johnson    ; SECONDARY        ; Customer     ; mark.johnson    ; 01.01.2022                            ; 01.01.2025                          ; Mark_Johnson_ContactMedium_Email
+                        ; Ronnie_Ray_Contact_Primary      ; Ronnie Ray      ; PRIMARY          ; Customer     ; ronnie.ray      ; 01.01.2022                            ; 01.01.2025                          ; Ronnie_Ray_ContactMedium_PhoneNo
+                        ; Ronnie_Ray_Contact_Secondary    ; Ronnie Ray      ; SECONDARY        ; Customer     ; ronnie.ray      ; 01.01.2022                            ; 01.01.2025                          ; Ronnie_Ray_ContactMedium_Email
+                        ; Joseph_Williams_Contact_Primary ; Joseph Williams ; PRIMARY          ; Customer     ; joseph.williams ; 01.01.2022                            ; 01.01.2025                          ; Joseph_Williams_ContactMedium_PhoneNo, Joseph_Williams_ContactMedium_Email
+                        ; Tim_James_Contact_Primary       ; Tim James       ; PRIMARY          ; Customer     ; tim.james       ; 01.01.2022                            ; 01.01.2025                          ; Tim_James_ContactMedium_PhoneNo, Tim_James_ContactMedium_Email
+                        ; David_Brown_Contact_Primary     ; David Brown     ; PRIMARY          ; Customer     ; david.brown     ; 01.01.2022                            ; 01.01.2025                          ; David_Brown_ContactMedium_PhoneNo
+                        ; David_Brown_Contact_Secondary   ; David Brown     ; SECONDARY        ; Customer     ; david.brown     ; 01.01.2022                            ; 01.01.2025                          ; David_Brown_ContactMedium_Email
+                        ; Rachel_Green_Contact_Primary    ; Rachel Green    ; PRIMARY          ; Customer     ; rachel.green    ; 01.01.2022                            ; 01.01.2025                          ; Rachel_Green_ContactMedium_PhoneNo
+                        ; Rachel_Green_Contact_Secondary  ; Rachel Green    ; SECONDARY        ; Customer     ; rachel.green    ; 01.01.2022                            ; 01.01.2025                          ; Rachel_Green_ContactMedium_Email
+
+INSERT_UPDATE TuaDuration; id[unique = true]  ; units  ; amount
+                         ; months_12_duration ; months ; 12
+                         ; months_24_duration ; months ; 24
+                         ; months_36_duration ; months ; 36
+                         ; years_5_duration   ; years  ; 5
+                         ; years_2_duration   ; years  ; 2
+
+INSERT_UPDATE TuaPaymentPlan; id[unique = true]                       ; type     ; status ; priority; startDateTime[dateformat = dd.MM.yyyy]; endDateTime[dateformat = dd.MM.yyyy]; paymentPeriod(id)  ; totalAmount; currency(isocode); billingAccount(id)
+                            ; Tim_James_PaymentPlan_Fiber_Internet    ; postpaid ; active ; 10      ; 20.08.2020                            ; 19.09.2025                          ; years_5_duration   ; 40         ; USD              ; Tim_James_Fiber_Internet_BAcc
+                            ; Tim_James_PaymentPlan_Iphone_13_Pro_Max ; postpaid ; active ; 10      ; 28.01.2023                            ; 28.01.2027                          ; years_5_duration   ; 40.0       ; USD              ; Tim_James_Iphone_13_Pro_Max_BAcc
+                            ; Emma_Smith_PaymentPlan_GSM_Small        ; postpaid ; active ; 10      ; 28.03.2023                            ; 28.03.2024                          ; months_12_duration ; 20.0       ; USD              ; Emma_Smith_GSM_Small_BAcc
+                            ; Emma_Smith_PaymentPlan_Fiber_Internet   ; postpaid ; active ; 10      ; 28.03.2023                            ; 28.03.2024                          ; months_12_duration ; 15.0       ; USD              ; Emma_Smith_Fiber_Internet_BAcc
+                            ; Emma_Smith_PaymentPlan_GSM_Large        ; postpaid ; active ; 10      ; 28.03.2023                            ; 28.03.2024                          ; months_12_duration ; 25.0       ; USD              ; Emma_Smith_GSM_Large_BAcc
+                            ; Rachel_Green_PaymentPlan_5G_Internet    ; postpaid ; active ; 10      ; 28.03.2023                            ; 28.03.2024                          ; months_12_duration ; 25.0       ; USD              ; Emma_Smith_GSM_Large_BAcc
+                            ; Mark_Johnson_PaymentPlan_Home_Comfort   ; postpaid ; active ; 10      ; 13.10.2022                            ; 13.10.2024                          ; months_36_duration ; 4.0        ; USD              ; Mark_Johnson_Home_Comfort_BAcc
+                            ; Mark_Johnson_PaymentPlan_Fiber_Internet ; postpaid ; active ; 10      ; 13.10.2022                            ; 13.10.2024                          ; months_36_duration ; 4.0        ; USD              ; Mark_Johnson_Fiber_Internet_BAcc
+                            ; Mark_Johnson_PaymentPlan_Router_X       ; postpaid ; active ; 10      ; 13.10.2022                            ; 13.10.2024                          ; months_36_duration ; 4.0        ; USD              ; Mark_Johnson_Router_X_BAcc
+                            ; Mark_Johnson_PaymentPlan_TV_200         ; postpaid ; active ; 10      ; 13.10.2022                            ; 13.10.2024                          ; months_36_duration ; 4.0        ; USD              ; Mark_Johnson_TV_200_BAcc
+                            ; Mark_Johnson_PaymentPlan_GSM_Medium     ; postpaid ; active ; 10      ; 13.10.2022                            ; 13.10.2024                          ; months_36_duration ; 4.0        ; USD              ; Mark_Johnson_GSM_Medium_BAcc
+                            ; Mark_Johnson_PaymentPlan_GSM_Large      ; postpaid ; active ; 10      ; 13.10.2022                            ; 13.10.2024                          ; months_36_duration ; 4.0        ; USD              ; Mark_Johnson_GSM_Large_BAcc
+                            ; Joseph_Williams_PaymentPlan_GSM_Small   ; postpaid ; active ; 10      ; 12.09.2022                            ; 12.09.2023                          ; months_12_duration ; 55.0       ; USD              ; Joseph_Williams_GSM_Small_BAcc
+                            ; Joseph_Williams_PaymentPlan_5G_Internet ; postpaid ; active ; 10      ; 14.06.2022                            ; 13.06.2024                          ; months_36_duration ; 64         ; USD              ; Joseph_Williams_5G_Internet_BAcc
+                            ; Etta_Berg_PaymentPlan_GSM_Large         ; postpaid ; active ; 10      ; 14.06.2022                            ; 13.06.2023                          ; months_12_duration ; 10.0       ; USD              ; Etta_Berg_GSM_Large_BAcc
+                            ; Etta_Berg_PaymentPlan_Fiber_Internet    ; postpaid ; active ; 10      ; 12.09.2022                            ; 12.09.2023                          ; months_12_duration ; 12.0       ; USD              ; Etta_Berg_Fiber_Internet_BAcc
+                            ; Etta_Berg_PaymentPlan_Winter_Deal       ; postpaid ; active ; 10      ; 14.06.2022                            ; 13.06.2024                          ; months_12_duration ; 30.0       ; USD              ; Etta_Berg_Winter_Deal_BAcc
+                            ; Etta_Berg_PaymentPlan_GSM_Medium        ; postpaid ; active ; 10      ; 14.06.2022                            ; 13.06.2024                          ; months_36_duration ; 86.27      ; USD              ; Etta_Berg_GSM_Medium_BAcc
+                            ; Etta_Berg_PaymentPlan_5GPOW             ; postpaid ; active ; 10      ; 14.06.2022                            ; 13.06.2024                          ; months_36_duration ; 120        ; USD              ; Etta_Berg_5GPOW_BAcc
+                            ; David_Brown_PaymentPlan_GSM_Small       ; postpaid ; active ; 10      ; 01.02.2022                            ; 07.09.2023                          ; months_12_duration ; 40         ; USD              ; David_Brown_GSM_Small_BAcc
+                            ; Ronnie_Ray_PaymentPlan_GSM_Small        ; postpaid ; active ; 10      ; 12.09.2022                            ; 12.09.2023                          ; months_12_duration ; 55.0       ; USD              ; Ronnie_Ray_GSM_Small_BAcc
+
+
+INSERT_UPDATE TuaBillFormat; id[unique = true]      ; name                   ; description
+                           ; individual_bill_format ; Individual bill format ; Format of bills destinated to individual parties
+
+
+INSERT_UPDATE TuaBillingCycleSpecification; id[unique = true]                          ; name                                        ; description                                 ; startDateTime[dateformat = dd.MM.yyyy]; endDateTime[dateformat = dd.MM.yyyy]; frequency; billingDateShift; billingPeriod; dateShift; chargeDateOffset; creditDateOffset; mailingDateOffset; paymentDueDateOffset
+                                          ; Tim_James_Fiber_Internet_BillCycle_Spec    ; Billing Cycle - Tim James Fiber Internet    ; Billing Cycle - Tim James Fiber Internet    ; 20.02.2023                            ; 19.09.2024                          ; monthly  ; 8               ; month        ; 8        ; 8               ; 8               ; 8                ; 28
+                                          ; Tim_James_Iphone_13_Pro_Max_BillCycle_Spec ; Billing Cycle - Tim James iPhone 13 Pro Max ; Billing Cycle - Tim James iPhone 13 Pro Max ; 20.02.2023                            ; 19.09.2024                          ; monthly  ; 8               ; month        ; 8        ; 8               ; 8               ; 8                ; 28
+                                          ; Emma_Smith_GSM_Small_BillCycle_Spec        ; Billing Cycle - Emma Smith GSM Small        ; Billing Cycle - Emma Smith GSM Small        ; 12.04.2023                            ; 12.09.2024                          ; monthly  ; 8               ; month        ; 8        ; 8               ; 8               ; 8                ; 28
+                                          ; Emma_Smith_Fiber_Internet_BillCycle_Spec   ; Billing Cycle - Emma Smith Fiber Internet   ; Billing Cycle - Emma Smith Fiber Internet   ; 12.04.2023                            ; 12.09.2024                          ; monthly  ; 8               ; month        ; 8        ; 8               ; 8               ; 8                ; 28
+                                          ; Emma_Smith_GSM_Large_BillCycle_Spec        ; Billing Cycle - Emma Smith GSM Large        ; Billing Cycle - Emma Smith GSM Large        ; 01.04.2023                            ; 31.01.2024                          ; monthly  ; 8               ; month        ; 8        ; 8               ; 8               ; 8                ; 28
+                                          ; Rachel_Green_5G_Internet_BillCycle_Spec    ; Billing Cycle - Rachel Green 5G Internet    ; Billing Cycle - Rachel Green 5G Internet    ; 01.04.2023                            ; 31.01.2024                          ; monthly  ; 8               ; month        ; 8        ; 8               ; 8               ; 8                ; 28
+                                          ; Mark_Johnson_5G_Internet_BillCycle_Spec    ; Billing Cycle - Mark Johnson 5G Internet    ; Billing Cycle - Mark Johnson 5G Internet    ; 13.02.2023                            ; 13.10.2025                          ; monthly  ; 8               ; month        ; 8        ; 8               ; 8               ; 8                ; 28
+                                          ; Mark_Johnson_Home_Comfort_BillCycle_Spec   ; Billing Cycle - Mark Johnson Home Comfort   ; Billing Cycle - Mark Johnson Home Comfort   ; 13.02.2023                            ; 13.10.2025                          ; monthly  ; 8               ; month        ; 8        ; 8               ; 8               ; 8                ; 28
+                                          ; Mark_Johnson_Fiber_Internet_BillCycle_Spec ; Billing Cycle - Mark Johnson Fiber Internet ; Billing Cycle - Mark Johnson Fiber Internet ; 13.02.2023                            ; 13.10.2025                          ; monthly  ; 8               ; month        ; 8        ; 8               ; 8               ; 8                ; 28
+                                          ; Mark_Johnson_Router_X_BillCycle_Spec       ; Billing Cycle - Mark Johnson Router X       ; Billing Cycle - Mark Johnson Router X       ; 13.02.2023                            ; 13.10.2025                          ; monthly  ; 8               ; month        ; 8        ; 8               ; 8               ; 8                ; 28
+                                          ; Mark_Johnson_TV_200_BillCycle_Spec         ; Billing Cycle - Mark Johnson TV 200         ; Billing Cycle - Mark Johnson TV 200         ; 13.02.2023                            ; 13.10.2025                          ; monthly  ; 8               ; month        ; 8        ; 8               ; 8               ; 8                ; 28
+                                          ; Mark_Johnson_GSM_Medium_BillCycle_Spec     ; Billing Cycle - Mark Johnson GSM Medium     ; Billing Cycle - Mark Johnson GSM Medium     ; 13.02.2023                            ; 13.10.2025                          ; monthly  ; 8               ; month        ; 8        ; 8               ; 8               ; 8                ; 28
+                                          ; Mark_Johnson_GSM_Large_BillCycle_Spec      ; Billing Cycle - Mark Johnson GSM Large      ; Billing Cycle - Mark Johnson GSM Large      ; 13.02.2023                            ; 13.10.2025                          ; monthly  ; 8               ; month        ; 8        ; 8               ; 8               ; 8                ; 28
+                                          ; Etta_Berg_Fiber_Internet_BillCycle_Spec    ; Billing Cycle - Etta Berg Fiber Internet    ; Billing Cycle - Etta Berg Fiber Internet    ; 12.02.2023                            ; 12.08.2024                          ; monthly  ; 8               ; month        ; 8        ; 8               ; 8               ; 8                ; 28
+                                          ; Etta_Berg_GSM_Large_BillCycle_Spec         ; Billing Cycle - Etta Berg GSM Large         ; Billing Cycle - Etta Berg GSM Large         ; 14.02.2023                            ; 13.06.2024                          ; monthly  ; 8               ; month        ; 8        ; 8               ; 8               ; 8                ; 28
+                                          ; Etta_Berg_Winter_Deal_BillCycle_Spec       ; Billing Cycle - Etta Berg Winter Deal       ; Billing Cycle - Etta Berg Winter Deal       ; 12.02.2023                            ; 12.08.2024                          ; monthly  ; 8               ; month        ; 8        ; 8               ; 8               ; 8                ; 28
+                                          ; Etta_Berg_GSM_Medium_BillCycle_Spec        ; Billing Cycle - Etta Berg GSM Medium        ; Billing Cycle - Etta Berg GSM Medium        ; 14.02.2023                            ; 13.06.2024                          ; monthly  ; 8               ; month        ; 8        ; 8               ; 8               ; 8                ; 28
+                                          ; Etta_Berg_5GPOW_BillCycle_Spec             ; Billing Cycle - Etta Berg 5GPOW             ; Billing Cycle - Etta Berg 5GPOW             ; 14.02.2023                            ; 13.06.2024                          ; monthly  ; 8               ; month        ; 8        ; 8               ; 8               ; 8                ; 28
+                                          ; Joseph_Williams_5G_Internet_BillCycle_Spec ; Billing Cycle - Joseph Williams 5G Internet ; Billing Cycle - Joseph Williams 5G Internet ; 12.01.2023                            ; 12.09.2024                          ; monthly  ; 8               ; month        ; 8        ; 8               ; 8               ; 8                ; 28
+                                          ; Joseph_Williams_GSM_Small_BillCycle_Spec   ; Billing Cycle - Joseph Williams GSM Small   ; Billing Cycle - Joseph Williams GSM Small   ; 14.01.2023                            ; 13.06.2024                          ; monthly  ; 8               ; month        ; 8        ; 8               ; 8               ; 8                ; 28
+                                          ; David_Brown_GSM_Small_BillCycle_Spec       ; Billing Cycle - David Brown GSM Small       ; Billing Cycle - David Brown GSM Small       ; 21.01.2023                            ; 13.06.2024                          ; monthly  ; 8               ; month        ; 8        ; 8               ; 8               ; 8                ; 28
+                                          ; Ronnie_Ray_GSM_Small_BillCycle_Spec        ; Billing Cycle - Ronnie Ray GSM Small        ; Billing Cycle - Ronnie Ray GSM Small        ; 12.03.2023                            ; 12.09.2024                          ; monthly  ; 8               ; month        ; 8        ; 8               ; 8               ; 8                ; 28
+
+INSERT_UPDATE TuaBillPresentationMedia ; id[unique = true]           ; name                            ; description                            
+                                       ; billPresentationMedia_post  ; Bill presentation media - post  ; This is bill presentation media - post 
+                                       ; billPresentationMedia_email ; Bill presentation media - email ; This is bill presentation media - email
+
+INSERT_UPDATE TuaBillFormat; id[unique = true]       ; name                     ; description
+                           ; operational_bill_format ; BillFormat - Operational ; Format for bills having the operational work
+
+INSERT_UPDATE TuaBillStructure; id[unique = true]                         ; cycleSpecification(id)                     ; format(id)
+                              ; Tim_James_Fiber_Internet_BillStructure    ; Tim_James_Fiber_Internet_BillCycle_Spec    ; operational_bill_format
+                              ; Tim_James_Iphone_13_Pro_Max_BillStructure ; Tim_James_Iphone_13_Pro_Max_BillCycle_Spec ; operational_bill_format
+                              ; Emma_Smith_GSM_Small_BillStructure        ; Emma_Smith_GSM_Small_BillCycle_Spec        ; operational_bill_format
+                              ; Emma_Smith_Fiber_Internet_BillStructure   ; Emma_Smith_Fiber_Internet_BillCycle_Spec   ; operational_bill_format
+                              ; Emma_Smith_GSM_Large_BillStructure        ; Emma_Smith_GSM_Large_BillCycle_Spec        ; operational_bill_format
+                              ; Rachel_Green_5G_Internet_BillStructure    ; Rachel_Green_5G_Internet_BillCycle_Spec    ; operational_bill_format
+                              ; Mark_Johnson_5G_Internet_BillStructure    ; Mark_Johnson_5G_Internet_BillCycle_Spec    ; operational_bill_format
+                              ; Mark_Johnson_Home_Comfort_BillStructure   ; Mark_Johnson_Home_Comfort_BillCycle_Spec   ; operational_bill_format
+                              ; Mark_Johnson_Fiber_Internet_BillStructure ; Mark_Johnson_Fiber_Internet_BillCycle_Spec ; operational_bill_format
+                              ; Mark_Johnson_Router_X_BillStructure       ; Mark_Johnson_Router_X_BillCycle_Spec       ; operational_bill_format
+                              ; Mark_Johnson_TV_200_BillStructure         ; Mark_Johnson_TV_200_BillCycle_Spec         ; operational_bill_format
+                              ; Mark_Johnson_GSM_Medium_BillStructure     ; Mark_Johnson_GSM_Medium_BillCycle_Spec     ; operational_bill_format
+                              ; Mark_Johnson_GSM_Large_BillStructure      ; Mark_Johnson_GSM_Large_BillCycle_Spec      ; operational_bill_format
+                              ; Joseph_Williams_5G_Internet_BillStructure ; Joseph_Williams_5G_Internet_BillCycle_Spec ; operational_bill_format
+                              ; Joseph_Williams_GSM_Small_BillStructure   ; Joseph_Williams_GSM_Small_BillCycle_Spec   ; operational_bill_format
+                              ; Etta_Berg_Fiber_Internet_BillStructure    ; Etta_Berg_Fiber_Internet_BillCycle_Spec    ; operational_bill_format
+                              ; Etta_Berg_GSM_Large_BillStructure         ; Etta_Berg_GSM_Large_BillCycle_Spec         ; operational_bill_format
+                              ; Etta_Berg_Winter_Deal_BillStructure       ; Etta_Berg_Winter_Deal_BillCycle_Spec       ; operational_bill_format
+                              ; Etta_Berg_GSM_Medium_BillStructure        ; Etta_Berg_GSM_Medium_BillCycle_Spec        ; operational_bill_format
+                              ; Etta_Berg_5GPOW_BillStructure             ; Etta_Berg_5GPOW_BillCycle_Spec             ; operational_bill_format
+                              ; David_Brown_GSM_Small_BillStructure       ; David_Brown_GSM_Small_BillCycle_Spec       ; operational_bill_format
+                              ; Ronnie_Ray_GSM_Small_BillStructure        ; Ronnie_Ray_GSM_Small_BillCycle_Spec        ; operational_bill_format
+
+
+INSERT_UPDATE TuaAccountRelationship; id[unique = true]                           ; relationshipType; sourceAccount(id)                ; targetAccount(id)
+                                    ; Tim_James_Fiber_Internet_AccRelationship    ; contains        ; Tim_James_Fiber_Internet_BAcc    ; Tim_James_PartyAcc
+                                    ; Tim_James_Iphone_13_Pro_Max_AccRelationship ; contains        ; Tim_James_Iphone_13_Pro_Max_BAcc ; Tim_James_PartyAcc
+                                    ; Emma_Smith_GSM_Small_AccRelationship        ; contains        ; Emma_Smith_GSM_Small_BAcc        ; Emma_Smith_PartyAcc
+                                    ; Emma_Smith_Fiber_Internet_AccRelationship   ; contains        ; Emma_Smith_Fiber_Internet_BAcc   ; Emma_Smith_PartyAcc
+                                    ; Emma_Smith_GSM_Large_AccRelationship        ; contains        ; Emma_Smith_GSM_Large_BAcc        ; Emma_Smith_PartyAcc
+                                    ; Rachel_Green_5G_Internet_AccRelationship    ; contains        ; Rachel_Green_5G_Internet_BAcc    ; Rachel_Green_PartyAcc
+                                    ; Mark_Johnson_5G_Internet_AccRelationship    ; contains        ; Mark_Johnson_5G_Internet_BAcc    ; Mark_Johnson_PartyAcc
+                                    ; Mark_Johnson_Home_Comfort_AccRelationship   ; contains        ; Mark_Johnson_Home_Comfort_BAcc   ; Mark_Johnson_PartyAcc
+                                    ; Mark_Johnson_Fiber_Internet_AccRelationship ; contains        ; Mark_Johnson_Fiber_Internet_BAcc ; Mark_Johnson_PartyAcc
+                                    ; Mark_Johnson_Router_X_AccRelationship       ; contains        ; Mark_Johnson_Router_X_BAcc       ; Mark_Johnson_PartyAcc
+                                    ; Mark_Johnson_TV_200_AccRelationship         ; contains        ; Mark_Johnson_TV_200_BAcc         ; Mark_Johnson_PartyAcc
+                                    ; Mark_Johnson_GSM_Medium_AccRelationship     ; contains        ; Mark_Johnson_GSM_Medium_BAcc     ; Mark_Johnson_PartyAcc
+                                    ; Etta_Berg_GSM_Large_AccRelationship         ; contains        ; Etta_Berg_GSM_Large_BAcc         ; Etta_Berg_PartyAcc
+                                    ; Etta_Berg_Fiber_Internet_AccRelationship    ; contains        ; Etta_Berg_Fiber_Internet_BAcc    ; Etta_Berg_PartyAcc
+                                    ; Etta_Berg_Winter_Deal_AccRelationship       ; contains        ; Etta_Berg_Winter_Deal_BAcc       ; Etta_Berg_PartyAcc
+                                    ; Etta_Berg_GSM_Medium_AccRelationship        ; contains        ; Etta_Berg_GSM_Medium_BAcc        ; Etta_Berg_PartyAcc
+                                    ; Etta_Berg_5GPOW_AccRelationship             ; contains        ; Etta_Berg_5GPOW_BAcc             ; Etta_Berg_PartyAcc
+                                    ; Joseph_Williams_5G_Internet_AccRelationship ; contains        ; Joseph_Williams_5G_Internet_BAcc ; Joseph_Williams_PartyAcc
+                                    ; Joseph_Williams_GSM_Small_AccRelationship   ; contains        ; Joseph_Williams_GSM_Small_BAcc   ; Joseph_Williams_PartyAcc
+                                    ; David_Brown_GSM_Small_AccRelationship       ; contains        ; David_Brown_GSM_Small_BAcc       ; David_Brown_PartyAcc
+                                    ; Ronnie_Ray_GSM_Small_AccRelationship        ; contains        ; Ronnie_Ray_GSM_Small_BAcc        ; Ronnie_Ray_PartyAcc
+                            		; Rachel_Green_AccRelationship        		  ; contains        ; Rachel_Green_5G_Internet_BAcc    ; Rachel_Green_PartyAcc
+
+INSERT_UPDATE TuaBillingAccount ; id[unique = true]                ; name[lang = en]                                   ; description [lang = en]                                    ; accountType(code) ; creditLimit(id) ; creditCurrency(isocode) ; paymentStatus(code) ; ratingType(code) ; billStructure(id)                         ; financialAccount(id)         ; accountBalances(id)        ; contacts(id)                                                 ; accountRelationshipReferences(id)           ; partyRoles(id)  ;  
+                                ; Tim_James_Fiber_Internet_BAcc    ; Tim James' Billing Account for Fiber Internet     ; Personal Billing Account for Tim James' Fiber Internet     ; HOME              ; 1000            ; USD                     ; PAID                ; POSTPAID         ; Tim_James_Fiber_Internet_BillStructure    ; Tim_James_FinancialAcc       ; Tim_James_AccBalance       ; Tim_James_Contact_Primary                                    ; Tim_James_Fiber_Internet_AccRelationship    ; tim.james       ;  
+                                ; Tim_James_Iphone_13_Pro_Max_BAcc ; Tim James' Billing Account for iPhone 13 Pro Max  ; Personal Billing Account for Tim James' iPhone 13 Pro Max  ; HOME              ; 1000            ; USD                     ; PAID                ; POSTPAID         ; Tim_James_Iphone_13_Pro_Max_BillStructure ; Tim_James_FinancialAcc       ; Tim_James_AccBalance       ; Tim_James_Contact_Primary                                    ; Tim_James_Iphone_13_Pro_Max_AccRelationship ; tim.james       ;  
+                                ; Emma_Smith_GSM_Small_BAcc        ; Emma Smith's Billing Account for GSM Small        ; Personal Billing Account for Emma Smith's GSM Small        ; HOME              ; 1000            ; USD                     ; DUE                 ; POSTPAID         ; Emma_Smith_GSM_Small_BillStructure        ; Emma_Smith_FinancialAcc      ; Emma_Smith_AccBalance      ; Emma_Smith_Contact_Primary                                   ; Emma_Smith_GSM_Small_AccRelationship        ; emma.smith      ;  
+                                ; Emma_Smith_Fiber_Internet_BAcc   ; Emma Smith's Billing Account for Fiber Internet   ; Personal Billing Account for Emma Smith's Fiber Internet   ; HOME              ; 1000            ; USD                     ; DUE                 ; POSTPAID         ; Emma_Smith_Fiber_Internet_BillStructure   ; Emma_Smith_FinancialAcc      ; Emma_Smith_AccBalance      ; Emma_Smith_Contact_Primary                                   ; Emma_Smith_Fiber_Internet_AccRelationship   ; emma.smith      ;  
+                                ; Emma_Smith_GSM_Large_BAcc        ; Emma Smith's Billing Account for GSM Large        ; Personal Billing Account for Emma Smith's GSM Large        ; HOME              ; 1000            ; USD                     ; DUE                 ; POSTPAID         ; Emma_Smith_GSM_Large_BillStructure        ; Emma_Smith_FinancialAcc      ; Emma_Smith_AccBalance      ; Emma_Smith_Contact_Primary                                   ; Emma_Smith_GSM_Large_AccRelationship        ; emma.smith      ;  
+                                ; Rachel_Green_5G_Internet_BAcc    ; Rachel Green's Billing Account for 5G Internet    ; Personal Billing Account for Rachel Green 5G Internet      ; HOME              ; 1000            ; USD                     ; PAID                ; POSTPAID         ; Rachel_Green_5G_Internet_BillStructure    ; Rachel_Green_FinancialAcc    ; Rachel_Green_AccBalance    ; Rachel_Green_Contact_Primary, Rachel_Green_Contact_Secondary ; Rachel_Green_AccRelationship                ; rachel.green    ;  
+                                ; Mark_Johnson_5G_Internet_BAcc    ; Mark Johnson's Billing Account for 5G Internet    ; Personal Billing Account for Mark Johnson's 5G Internet    ; HOME              ; 1000            ; USD                     ; PAID                ; POSTPAID         ; Mark_Johnson_5G_Internet_BillStructure    ; Mark_Johnson_FinancialAcc    ; Mark_Johnson_AccBalance    ; Mark_Johnson_Contact_Primary, Mark_Johnson_Contact_Secondary ; Mark_Johnson_5G_Internet_AccRelationship    ; mark.johnson    ;  
+                                ; Mark_Johnson_Home_Comfort_BAcc   ; Mark Johnson's Billing Account for Home Comfort   ; Personal Billing Account for Mark Johnson's Home Comfort   ; HOME              ; 1000            ; USD                     ; PAID                ; POSTPAID         ; Mark_Johnson_Home_Comfort_BillStructure   ; Mark_Johnson_FinancialAcc    ; Mark_Johnson_AccBalance    ; Mark_Johnson_Contact_Primary, Mark_Johnson_Contact_Secondary ; Mark_Johnson_Home_Comfort_AccRelationship   ; mark.johnson    ;  
+                                ; Mark_Johnson_Fiber_Internet_BAcc ; Mark Johnson's Billing Account for Fiber Internet ; Personal Billing Account for Mark Johnson's Fiber Internet ; HOME              ; 1000            ; USD                     ; PAID                ; POSTPAID         ; Mark_Johnson_Fiber_Internet_BillStructure ; Mark_Johnson_FinancialAcc    ; Mark_Johnson_AccBalance    ; Mark_Johnson_Contact_Primary, Mark_Johnson_Contact_Secondary ; Mark_Johnson_Fiber_Internet_AccRelationship ; mark.johnson    ;  
+                                ; Mark_Johnson_Router_X_BAcc       ; Mark Johnson's Billing Account for Router X       ; Personal Billing Account for Mark Johnson's Router X       ; HOME              ; 1000            ; USD                     ; PAID                ; POSTPAID         ; Mark_Johnson_Router_X_BillStructure       ; Mark_Johnson_FinancialAcc    ; Mark_Johnson_AccBalance    ; Mark_Johnson_Contact_Primary, Mark_Johnson_Contact_Secondary ; Mark_Johnson_Router_X_AccRelationship       ; mark.johnson    ;  
+                                ; Mark_Johnson_TV_200_BAcc         ; Mark Johnson's Billing Account for TV 200         ; Personal Billing Account for Mark Johnson's TV 200         ; HOME              ; 1000            ; USD                     ; PAID                ; POSTPAID         ; Mark_Johnson_TV_200_BillStructure         ; Mark_Johnson_FinancialAcc    ; Mark_Johnson_AccBalance    ; Mark_Johnson_Contact_Primary, Mark_Johnson_Contact_Secondary ; Mark_Johnson_TV_200_AccRelationship         ; mark.johnson    ;  
+                                ; Mark_Johnson_GSM_Medium_BAcc     ; Mark Johnson's Billing Account for GSM Medium     ; Personal Billing Account for Mark Johnson's GSM Medium     ; HOME              ; 1000            ; USD                     ; PAID                ; POSTPAID         ; Mark_Johnson_GSM_Medium_BillStructure     ; Mark_Johnson_FinancialAcc    ; Mark_Johnson_AccBalance    ; Mark_Johnson_Contact_Primary, Mark_Johnson_Contact_Secondary ; Mark_Johnson_GSM_Medium_AccRelationship     ; mark.johnson    ;  
+                                ; Mark_Johnson_GSM_Large_BAcc      ; Mark Johnson's Billing Account for GSM Large      ; Personal Billing Account for Mark Johnson's GSM Large      ; HOME              ; 1000            ; USD                     ; PAID                ; POSTPAID         ; Mark_Johnson_GSM_Large_BillStructure      ; Mark_Johnson_FinancialAcc    ; Mark_Johnson_AccBalance    ; Mark_Johnson_Contact_Primary, Mark_Johnson_Contact_Secondary ; Mark_Johnson_GSM_Medium_AccRelationship     ; mark.johnson    ; 
+                                ; Etta_Berg_GSM_Large_BAcc         ; Etta Berg's Billing Account for GSM Large         ; Personal Billing Account for Etta Berg's GSM Large         ; HOME              ; 1000            ; USD                     ; PAID                ; POSTPAID         ; Etta_Berg_GSM_Large_BillStructure         ; Etta_Berg_FinancialAcc       ; Etta_Berg_AccBalance       ; Etta_Berg_Contact_Primary, Etta_Berg_Contact_Secondary       ; Etta_Berg_GSM_Large_AccRelationship         ; etta.berg       ;  
+                                ; Etta_Berg_Fiber_Internet_BAcc    ; Etta Berg's Billing Account for Fiber Internet    ; Personal Billing Account for Etta Berg's Fiber Internet    ; HOME              ; 1000            ; USD                     ; PAID                ; POSTPAID         ; Etta_Berg_Fiber_Internet_BillStructure    ; Etta_Berg_FinancialAcc       ; Etta_Berg_AccBalance       ; Etta_Berg_Contact_Primary, Etta_Berg_Contact_Secondary       ; Etta_Berg_Fiber_Internet_AccRelationship    ; etta.berg       ;  
+                                ; Etta_Berg_Winter_Deal_BAcc       ; Etta Berg's Billing Account for Winter Deal       ; Personal Billing Account for Etta Berg's Winter Deal       ; HOME              ; 1000            ; USD                     ; PAID                ; POSTPAID         ; Etta_Berg_Winter_Deal_BillStructure       ; Etta_Berg_FinancialAcc       ; Etta_Berg_AccBalance       ; Etta_Berg_Contact_Primary, Etta_Berg_Contact_Secondary       ; Etta_Berg_Winter_Deal_AccRelationship       ; etta.berg       ;  
+                                ; Etta_Berg_GSM_Medium_BAcc        ; Etta Berg's Billing Account for GSM Medium        ; Personal Billing Account for Etta Berg's GSM Medium        ; HOME              ; 1000            ; USD                     ; PAID                ; POSTPAID         ; Etta_Berg_GSM_Medium_BillStructure        ; Etta_Berg_FinancialAcc       ; Etta_Berg_AccBalance       ; Etta_Berg_Contact_Primary, Etta_Berg_Contact_Secondary       ; Etta_Berg_GSM_Medium_AccRelationship        ; etta.berg       ;  
+                                ; Etta_Berg_5GPOW_BAcc             ; Etta Berg's Billing Account for 5GPOW             ; Personal Billing Account for Etta Berg's 5GPOW             ; HOME              ; 1000            ; USD                     ; PAID                ; POSTPAID         ; Etta_Berg_5GPOW_BillStructure             ; Etta_Berg_FinancialAcc       ; Etta_Berg_AccBalance       ; Etta_Berg_Contact_Primary, Etta_Berg_Contact_Secondary       ; Etta_Berg_5GPOW_AccRelationship             ; etta.berg       ;  
+                                ; Joseph_Williams_5G_Internet_BAcc ; Joseph Williams' Billing Account for 5G Internet  ; Personal Billing Account for Joseph Williams' 5G Internet  ; HOME              ; 1000            ; USD                     ; DUE                 ; POSTPAID         ; Joseph_Williams_5G_Internet_BillStructure ; Joseph_Williams_FinancialAcc ; Joseph_Williams_AccBalance ; Joseph_Williams_Contact_Primary                              ; Joseph_Williams_5G_Internet_AccRelationship ; joseph.williams ;  
+                                ; Joseph_Williams_GSM_Small_BAcc   ; Joseph Williams' Billing Account for GSM Small    ; Personal Billing Account for Joseph Williams' GSM Small    ; HOME              ; 1000            ; USD                     ; DUE                 ; POSTPAID         ; Joseph_Williams_GSM_Small_BillStructure   ; Joseph_Williams_FinancialAcc ; Joseph_Williams_AccBalance ; Joseph_Williams_Contact_Primary                              ; Joseph_Williams_GSM_Small_AccRelationship   ; joseph.williams ;  
+                                ; David_Brown_GSM_Small_BAcc       ; David Brown's Billing Account for GSM Small       ; Personal Billing Account for David Brown's GSM Small       ; HOME              ; 1000            ; USD                     ; PAID                ; POSTPAID         ; David_Brown_GSM_Small_BillStructure       ; David_Brown_FinancialAcc     ; David_Brown_AccBalance     ; David_Brown_Contact_Primary, David_Brown_Contact_Secondary   ; David_Brown_GSM_Small_AccRelationship       ; david.brown     ;  
+                                ; Ronnie_Ray_GSM_Small_BAcc        ; Ronnie Ray's Billing Account for GSM Small        ; Personal Billing Account for Ronnie Ray's GSM Small        ; HOME              ; 1000            ; USD                     ; PAID                ; POSTPAID         ; Ronnie_Ray_GSM_Small_BillStructure        ; Ronnie_Ray_FinancialAcc      ; Ronnie_Ray_AccBalance      ; Ronnie_Ray_Contact_Primary, Ronnie_Ray_Contact_Secondary     ; Ronnie_Ray_GSM_Small_AccRelationship        ; ronnie.ray      ;  
+
+INSERT_UPDATE TuaPartyPayment; id[unique = true]          ; paymentDate[dateformat = dd.MM.yyyy HH:mm:ss]; paymentItems(id)
+                             ; tuapayment_Etta_Berg       ; 10.04.2022 00:00:00                          ; tuapaymentItem_Etta_Berg
+                             ; tuapayment_Emma_Smith      ; 10.04.2023 00:00:00                          ; tuapaymentItem_Emma_Smith
+                             ; tuapayment_Mark_Johnson    ; 10.04.2023 00:00:00                          ; tuapaymentItem_Mark_Johnson
+                             ; tuapayment_David_Brown     ; 10.07.2022 00:00:00                          ; tuapaymentItem_David_Brown
+                             ; tuapayment_Ronnie_Ray      ; 10.05.2023 00:00:00                          ; tuapaymentItem_Ronnie_Ray
+                             ; tuapayment_Tim_James       ; 10.02.2022 00:00:00                          ; tuapaymentItem_Tim_James
+                             ; tuapayment_Joseph_Williams ; 10.01.2023 00:00:00                          ; tuapaymentItem_Joseph_Williams
+                             ; tuapayment_Rachel_Green    ; 10.01.2023 00:00:00                          ; tuapaymentItem_Rachel_Green
+
+INSERT_UPDATE TuaPartyPaymentItem; id[unique = true]              ; appliedAmount; Currency(isocode); payment(id)
+                                 ; tuapaymentItem_Etta_Berg       ; 25           ; USD              ; tuapayment_Etta_Berg
+                                 ; tuapaymentItem_Emma_Smith      ; 23           ; USD              ; tuapayment_Emma_Smith
+                                 ; tuapaymentItem_Mark_Johnson    ; 33           ; USD              ; tuapayment_Mark_Johnson
+                                 ; tuapaymentItem_David_Brown     ; 33           ; USD              ; tuapayment_David_Brown
+                                 ; tuapaymentItem_Ronnie_Ray      ; 44           ; USD              ; tuapayment_Ronnie_Ray
+                                 ; tuapaymentItem_Tim_James       ; 55           ; USD              ; tuapayment_Tim_James
+                                 ; tuapaymentItem_Joseph_Williams ; 66           ; USD              ; tuapayment_Joseph_Williams
+                                 ; tuapaymentItem_Rachel_Green    ; 22           ; USD              ; tuapayment_Rachel_Green
+
+
+INSERT_UPDATE TuaPartyBillingCycle; id[unique = true]         ; billingDate[dateformat = dd.MM.yyyy HH:mm:ss]; chargeDate[dateformat = dd.MM.yyyy HH:mm:ss]; creditDate[dateformat = dd.MM.yyyy HH:mm:ss]; mailingDate[dateformat = dd.MM.yyyy HH:mm:ss]; paymentDueDate[dateformat = dd.MM.yyyy HH:mm:ss]; nextBillDate[dateformat = dd.MM.yyyy HH:mm:ss]; productionReason
+                                  ; billCycle_Etta_Berg       ; 28.02.2023 00:00:00                          ; 28.03.2023 00:00:00                         ; 10.04.2024 00:00:00                         ; 10.04.2024 00:00:00                          ; 08.05.2023 00:00:00                             ; 28.05.2023 00:00:00                           ; OnDemand
+                                  ; billCycle_Emma_Smith      ; 28.04.2023 00:00:00                          ; 28.05.2023 00:00:00                         ; 10.04.2024 00:00:00                         ; 10.04.2024 00:00:00                          ; 08.05.2023 00:00:00                             ; 28.05.2023 00:00:00                           ; OnDemand
+                                  ; billCycle_Mark_Johnson    ; 28.02.2023 00:00:00                          ; 28.03.2023 00:00:00                         ; 10.04.2024 00:00:00                         ; 10.04.2024 00:00:00                          ; 08.03.2023 00:00:00                             ; 28.03.2023 00:00:00                           ; OnDemand
+                                  ; billCycle_David_Brown     ; 28.05.2023 00:00:00                          ; 28.06.2022 00:00:00                         ; 10.04.2024 00:00:00                         ; 10.04.2024 00:00:00                          ; 08.06.2023 00:00:00                             ; 28.06.2022 00:00:00                           ; OnDemand
+                                  ; billCycle_Ronnie_Ray      ; 28.03.2023 00:00:00                          ; 28.04.2022 00:00:00                         ; 10.04.2024 00:00:00                         ; 10.04.2024 00:00:00                          ; 08.04.2023 00:00:00                             ; 28.04.2023 00:00:00                           ; OnDemand
+                                  ; billCycle_Tim_James       ; 28.02.2023 00:00:00                          ; 28.03.2023 00:00:00                         ; 10.04.2024 00:00:00                         ; 10.04.2024 00:00:00                          ; 08.03.2024 00:00:00                             ; 28.03.2023 00:00:00                           ; OnDemand
+                                  ; billCycle_Joseph_Williams ; 28.01.2023 00:00:00                          ; 28.02.2023 00:00:00                         ; 10.04.2024 00:00:00                         ; 10.04.2024 00:00:00                          ; 08.02.2023 00:00:00                             ; 28.02.2023 00:00:00                           ; OnDemand
+                                  ; billCycle_Rachel_Green    ; 28.01.2023 00:00:00                          ; 28.02.2023 00:00:00                         ; 10.04.2024 00:00:00                         ; 10.04.2024 00:00:00                          ; 08.02.2023 00:00:00                             ; 28.02.2023 00:00:00                           ; OnDemand
+
+
+INSERT_UPDATE TuaAppliedPartyBillingTaxRate; id[unique = true]       ; taxCategory; quantity; currency(isocode); taxRate
+                                           ; tuaRate_Etta_Berg       ; cat 2      ; 10      ; USD              ; 2
+                                           ; tuaRate_Emma_Smith      ; cat 3      ; 20      ; USD              ; 3
+                                           ; tuaRate_Mark_Johnson    ; cat 4      ; 25      ; USD              ; 4
+                                           ; tuaRate_David_Brown     ; cat 4      ; 25      ; USD              ; 4
+                                           ; tuaRate_Ronnie_Ray      ; cat 5      ; 2       ; USD              ; 5
+                                           ; tuaRate_Tim_James       ; cat 5      ; 2       ; USD              ; 5
+                                           ; tuaRate_Joseph_Williams ; cat 5      ; 2       ; USD              ; 5
+                                           ; tuaRate_Rachel_Green    ; cat 5      ; 2       ; USD              ; 5
+
+INSERT_UPDATE TuaOnCyclePartyBill; billNo [unique = true]        ; amount; currency(isocode); paymentItems(id)               ; taxItems(id)            ; billCycle(id)             ; parties(id)                ; status(code)   ;
+                                 ; tua_cycleBill_Etta_Berg       ; 10    ; USD              ; tuapaymentItem_Etta_Berg       ; tuaRate_Etta_Berg       ; billCycle_Etta_Berg       ; etta.berg@hybris.com       ; PARTIALLY_PAID ;
+                                 ; tua_cycleBill_Emma_Smith      ; 15    ; USD              ; tuapaymentItem_Emma_Smith      ; tuaRate_Emma_Smith      ; billCycle_Emma_Smith      ; emma.smith@hybris.com      ; ON_HOLD        ;
+                                 ; tua_cycleBill_Mark_Johnson    ; 20    ; USD              ; tuapaymentItem_Mark_Johnson    ; tuaRate_Mark_Johnson    ; billCycle_Mark_Johnson    ; mark.johnson@hybris.com    ; SENT           ;
+                                 ; tua_cycleBill_David_Brown     ; 25    ; USD              ; tuapaymentItem_David_Brown     ; tuaRate_David_Brown     ; billCycle_David_Brown     ; david.brown@hybris.com     ; NEW            ;
+                                 ; tua_cycleBill_Ronnie_Ray      ; 30    ; USD              ; tuapaymentItem_Ronnie_Ray      ; tuaRate_Ronnie_Ray      ; billCycle_Ronnie_Ray      ; ronnie.ray@hybris.com      ; SENT           ;
+                                 ; tua_cycleBill_Tim_James       ; 35    ; USD              ; tuapaymentItem_Tim_James       ; tuaRate_Tim_James       ; billCycle_Tim_James       ; tim.james@hybris.com       ; SENT           ;
+                                 ; tua_cycleBill_Joseph_Williams ; 40    ; USD              ; tuapaymentItem_Joseph_Williams ; tuaRate_Joseph_Williams ; billCycle_Joseph_Williams ; joseph.williams@hybris.com ; SENT           ;
+
+INSERT_UPDATE TuaPartyBill; billNo [unique = true]   ; amount; currency(isocode); paymentItems(id)               ; taxItems(id)            ; parties(id)                ; status(code)   ;
+                          ; tua_bill_Etta_Berg       ; 10    ; USD              ; tuapaymentItem_Etta_Berg       ; tuaRate_Etta_Berg       ; etta.berg@hybris.com       ; PARTIALLY_PAID ;
+                          ; tua_bill_Emma_Smith      ; 15    ; USD              ; tuapaymentItem_Emma_Smith      ; tuaRate_Emma_Smith      ; emma.smith@hybris.com      ; ON_HOLD        ;
+                          ; tua_bill_Mark_Johnson    ; 20    ; USD              ; tuapaymentItem_Mark_Johnson    ; tuaRate_Mark_Johnson    ; mark.johnson@hybris.com    ; SENT           ;
+                          ; tua_bill_David_Brown     ; 25    ; USD              ; tuapaymentItem_David_Brown     ; tuaRate_David_Brown     ; david.brown@hybris.com     ; NEW            ;
+                          ; tua_bill_Ronnie_Ray      ; 30    ; USD              ; tuapaymentItem_Ronnie_Ray      ; tuaRate_Ronnie_Ray      ; ronnie.ray@hybris.com      ; SENT           ;
+                          ; tua_bill_Tim_James       ; 35    ; USD              ; tuapaymentItem_Tim_James       ; tuaRate_Tim_James       ; tim.james@hybris.com       ; SENT           ;
+                          ; tua_bill_Joseph_Williams ; 40    ; USD              ; tuapaymentItem_Joseph_Williams ; tuaRate_Joseph_Williams ; joseph.williams@hybris.com ; SENT           ;

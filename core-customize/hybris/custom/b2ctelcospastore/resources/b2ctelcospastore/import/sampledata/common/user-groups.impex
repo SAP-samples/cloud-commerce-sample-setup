@@ -1,0 +1,24 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+$defaultPassword = nimda
+$lang = en
+
+INSERT_UPDATE Employee; UID[unique = true]; groups(uid)[mode = append]; sessionLanguage(isocode); password[default = $defaultPassword]; name
+                      ; sbgadmin          ; sbgadmingroup             ; $lang                   ;                                     ; SBG Admin
+
+INSERT_UPDATE UserGroup; UID[unique = true]; groups(uid)[mode = append]      ; locname[lang = en]
+                       ; basesbgadmingroup ; employeegroup                   ; Base SBG Admin Group
+                       ; sbgadmingroup     ; employeegroup,basesbgadmingroup ; SBG Admin Group
+
+INSERT_UPDATE User; UID[unique = true]; name      ; groups(uid)   ;
+                  ; sbgadmin          ; SBG Admin ; sbgadmingroup ;
+
+INSERT_UPDATE OAuthClientDetails; clientId[unique = true]; resourceIds; scope    ; authorizedGrantTypes                                         ; authorities         ; clientSecret; registeredRedirectUri
+                                ; sbg_admin              ; hybris     ; basic    ; authorization_code,refresh_token,password,client_credentials ; ROLE_SBGADMINGROUP  ; secret      ; https://localhost:9002/authorizationserver/oauth2_callback         ;
+                                ; spa_client             ; hybris     ; basic    ; password,client_credentials                                  ; ROLE_CLIENT         ; secret      ;                                                                    ;
+                                ; trusted_client         ; hybris     ; extended ; authorization_code,refresh_token,password,client_credentials ; ROLE_TRUSTED_CLIENT ; secret      ;                                                                    ;
+                                ; client-side            ; hybris     ; basic    ; implicit,client_credentials                                  ; ROLE_CLIENT         ; secret      ; http://localhost:9001/authorizationserver/oauth2_implicit_callback ;
+                                ; mobile_android         ; hybris     ; basic    ; authorization_code,refresh_token,password,client_credentials ; ROLE_CLIENT         ; secret      ; http://localhost:9001/authorizationserver/oauth2_callback          ;
+

@@ -1,0 +1,14 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+#
+# Import the CMS Site configuration for the utilities store
+#
+
+# Language
+$lang = en
+
+# Create CMS Site
+UPDATE CMSSite; uid[unique = true]; name[lang = $lang]   ; locale[lang = $lang]
+              ; utilitiesspa      ; "Utilities SPA Site" ; en_GB

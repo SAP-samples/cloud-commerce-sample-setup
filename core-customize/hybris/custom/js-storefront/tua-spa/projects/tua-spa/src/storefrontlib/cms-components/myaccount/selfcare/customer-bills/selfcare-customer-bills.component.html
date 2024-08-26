@@ -1,0 +1,19 @@
+<cx-split-view [hideMode]="false">
+    <ng-container *ngIf="structure$ as structure">
+      <cx-view *ngIf="listData$ | async as customerBills">
+        <section class="cx-customer-bills-list">
+          <cx-table
+            *ngIf="customerBills.length > 0"
+            [structure]="structure"
+            [data]="customerBills"
+            [i18nRoot]="domainType"
+            [currentItem]="{ property: key, value: getCurrentKey() | async }"
+            (launch)="launchItem($event)"
+          ></cx-table>
+        </section>
+      </cx-view>
+      <!-- nested split views are rendered inside child routes -->
+      <router-outlet></router-outlet>
+    </ng-container>
+  </cx-split-view>
+  

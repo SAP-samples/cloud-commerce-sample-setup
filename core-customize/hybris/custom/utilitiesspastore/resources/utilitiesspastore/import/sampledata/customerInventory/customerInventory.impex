@@ -1,0 +1,127 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Importing sample services
+
+# Users
+$productCatalog = utilitiesSpaProductCatalog
+$defaultApprovalStatus = approvalstatus(code)[default = 'approved']
+$catalog-version = Staged
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = $catalog-version])[unique = true, default = $productCatalog:$catalog-version]
+$defaultPassword = 1234
+
+# Catalog version
+INSERT_UPDATE Catalog; id[unique = true]
+                     ; $productCatalog
+
+INSERT_UPDATE CatalogVersion; catalog(id)[unique = true]; version[unique = true]
+                            ; $productCatalog           ; $catalog-version
+
+# Create Customer Group
+INSERT_UPDATE Usergroup; uid[unique = true]; groups(uid)[mode = append]
+                       ; customergroup     ;
+
+# Create test customer
+INSERT_UPDATE Customer; originalUid[unique = true]; uid[unique = true]       ; customerID               ; name          ; groups(uid)   ; password[default = $defaultPassword]
+                      ; alan.martin@hybris.com    ; alan.martin@hybris.com   ; alan.martin@hybris.com   ; Alan Martin   ; customergroup ;
+                      ; maria.stevens@hybris.com  ; maria.stevens@hybris.com ; maria.stevens@hybris.com ; Maria Stevens ; customergroup ;
+                      ; john.russel@hybris.com    ; john.russel@hybris.com   ; john.russel@hybris.com   ; John Russel   ; customergroup ;
+                      ; mark.farrel@hybris.com    ; mark.farrel@hybris.com   ; mark.farrel@hybris.com   ; Mark Farrel   ; customergroup ;
+                      ; olivia.ann@hybris.com     ; olivia.ann@hybris.com    ; olivia.ann@hybris.com    ; Olivia Ann    ; customergroup ;
+                      ; adrian.kent@hybris.com    ; adrian.kent@hybris.com   ; adrian.kent@hybris.com   ; Adrian Kent   ; customergroup ;
+                      ; rachel.green@hybris.com   ; rachel.green@hybris.com  ; rachel.green@hybris.com  ; Rachel Green  ; customergroup ;
+                      ; monica.geller@hybris.com  ; monica.geller@hybris.com ; monica.geller@hybris.com ; Monica Geller ; customergroup ;    
+
+# Create test address
+INSERT_UPDATE Address; owner(Customer.uid)[unique=true]; streetname[unique=true]   ; streetnumber[unique=true]; postalcode[unique=true] ; duplicate[unique=true] ; town  ; country(isocode) ; region(isocode) ; billingAddress  ; contactAddress    ; shippingAddress ; unloadingAddress ; firstname ; lastname ; email                   ; gender(code) ;middlename;    phone1      ;title(code);url;company;fax;department
+                     ; rachel.green@hybris.com         ; 115th Street & King Drive ;                          ; 60628                   ; FALSE                  ; Juneau; US               ; US-AK           ; TRUE            ; FALSE             ; TRUE            ; TRUE             ; Rachel    ; Green    ; rachel.green@hybris.com ; FEMALE       ;          ;    090 0987 653;           ;   ;       ;   ;
+                     ; monica.geller@hybris.com        ; 117th Street & King Drive ;                          ; 60628                   ; FALSE                  ; Juneau; US               ;US-AK            ;TRUE             ;FALSE              ;TRUE             ; TRUE             ;Monica     ; Geller   ; monica.geller@hybris.com; FEMALE       ;          ;    090 0987 375;           ;   ;       ;   ;                                        
+
+# Import sample subscribed products
+INSERT_UPDATE TmaSubscribedProduct; id[unique = true]; name                        ; serviceType(code); startDate[dateformat = dd.MM.yyyy]; endDate[dateformat = dd.MM.yyyy]; billingFrequency; productCode                 ; subscriptionStatus ; contractDuration; billingsystemId[unique = true]; billingSubscriptionId              ; contractFrequency; productSpecification(id, $catalogVersion);
+                                  ; 2110000001       ; electric_plan_plus          ; TARIFF_PLAN      ; 13.07.2017                        ; 12.07.2018                      ; monthly         ; electric_plan_plus          ; ACTIVE             ; 12              ; IN                            ; utilitiesbillingSubscriptionId_111 ; months           ; electricity
+                                  ; 2110000002       ; electric_plan_best          ; TARIFF_PLAN      ; 20.08.2017                        ; 19.09.2017                      ; monthly         ; electric_plan_best          ; EXPIRED            ; 1               ; IN                            ; utilitiesbillingSubscriptionId_112 ; years            ; electricity
+                                  ; 2110000003       ; electric_plan_best          ; TARIFF_PLAN      ; 20.09.2017                        ; 19.10.2017                      ; monthly         ; electric_plan_best          ; CANCELLED          ; 1               ; IN                            ; utilitiesbillingSubscriptionId_113 ; years            ; electricity
+                                  ; 2110000004       ; electric_plan_total_comfort ; TARIFF_PLAN      ; 20.09.2017                        ; 19.10.2017                      ; monthly         ; electric_plan_total_comfort ; PENDING_ACTIVATION ; 24              ; IN                            ; utilitiesbillingSubscriptionId_114 ; months           ; electricity
+                                  ; 2110000005       ; electric_plan_plus          ; TARIFF_PLAN      ; 01.02.2017                        ; 31.01.2018                      ; monthly         ; electric_plan_plus          ; EXPIRED            ; 12              ; IN                            ; utilitiesbillingSubscriptionId_115 ; months           ; electricity
+                                  ; 2110000006       ; electric_plan_basic         ; TARIFF_PLAN      ; 24.06.2017                        ; 23.12.2018                      ; monthly         ; electric_plan_basic         ; ACTIVE             ; 18              ; IN                            ; utilitiesbillingSubscriptionId_116 ; half year        ; electricity
+                                  ; 2110000007       ; electric_plan_best          ; TARIFF_PLAN      ; 31.03.2020                        ; 30.03.2021                      ; monthly         ; electric_plan_best          ; ACTIVE             ; 12              ; IN                            ; utilitiesbillingSubscriptionId_117 ; months           ; electricity 
+                                  ; 2110000008       ; electric_plan_best          ; TARIFF_PLAN      ; 31.03.2020                        ; 30.03.2021                      ; monthly         ; electric_plan_best          ; ACTIVE             ; 12              ; IN                            ; utilitiesbillingSubscriptionId_118 ; months           ; electricity 
+                                  ; 2110000009       ; electric_plan_best          ; TARIFF_PLAN      ; 31.03.2020                        ; 30.03.2021                      ; monthly         ; electric_plan_best          ; PENDING_TERMINATE  ; 12              ; IN                            ; utilitiesbillingSubscriptionId_119 ; months           ; electricity 
+
+
+UPDATE TmaSubscribedProduct; id[unique = true]; bundledProductCode; paymentMethodId; orderNumber ; orderEntryNumber
+                           ; 2110000001       ; electricityDeal   ; 9874687087554
+                           ; 2110000002       ; electricityDeal   ; 9874687087554
+                           ; 2110000003       ; electricityDeal   ; 9874687087554
+                           ; 2110000004       ; electricityDeal   ; 9874687087554
+                           ; 2110000005       ; electricityDeal   ; 9874687087554
+                           ; 2110000006       ; electricityDeal   ; 9874687087554
+                           ; 2110000007       ;                   ; 9874687087554  ; 90000200    ; 0
+                           ; 2110000008       ;                   ; 9874687087554  ; 90000201    ; 0
+                           ; 2110000009       ;                   ; 9874687087554  ; 90000202    ; 0
+
+# Import sample subscription bases with associated subscribed products and subscription accesses
+INSERT_UPDATE TmaSubscriptionBase; subscriberIdentity[unique = true]; billingSystemId[unique = true]; subscribedProducts(id)
+                                 ; 10012344321                      ; IN                            ; 2110000001
+                                 ; 10015554321                      ; IN                            ; 2110000002
+                                 ; 10085349064                      ; IN                            ; 2110000003
+                                 ; 10019845376                      ; IN                            ; 2110000006
+                                 ; 10018090887                      ; IN                            ; 2110000005,2110000004
+                                 ; 10019845380                      ; IN                            ; 2110000007
+                                 ; 10019845384                      ; IN                            ; 2110000008
+                                 ; 10019845388                      ; IN                            ; 2110000009
+
+# Import sample subscription accesses for B2C customers
+INSERT_UPDATE TmaSubscriptionAccess; principal(uid)[unique = true]; subscriptionBase(billingSystemId, subscriberIdentity)[unique = true]; accessType(code)
+                                   ; maria.stevens@hybris.com     ; IN:10012344321                                                      ; OWNER
+                                   ; alan.martin@hybris.com       ; IN:10085349064                                                      ; OWNER
+                                   ; alan.martin@hybris.com       ; IN:10012344321                                                      ; ADMINISTRATOR
+                                   ; john.russel@hybris.com       ; IN:10018090887                                                      ; ADMINISTRATOR
+                                   ; maria.stevens@hybris.com     ; IN:10018090887                                                      ; BENEFICIARY
+                                   ; mark.farrel@hybris.com       ; IN:10085349064                                                      ; BENEFICIARY
+                                   ; alan.martin@hybris.com       ; IN:10019845376                                                      ; BENEFICIARY
+                                   ; olivia.ann@hybris.com        ; IN:10015554321                                                      ; BENEFICIARY
+                                   ; adrian.kent@hybris.com       ; IN:10085349064                                                      ; OWNER
+                                   ; rachel.green@hybris.com      ; IN:10019845380                                                      ; OWNER
+                                   ; rachel.green@hybris.com      ; IN:10019845384                                                      ; BENEFICIARY
+                                   ; monica.geller@hybris.com     ; IN:10019845384                                                      ; OWNER
+                                   ; rachel.green@hybris.com      ; IN:10019845388                                                      ; OWNER                                                                                                         
+
+# Import sample billing accounts
+INSERT_UPDATE TmaBillingAccount; billingAccountId[unique = true]; billingSystemId[unique = true]; subscriptionBases(subscriberIdentity); parent(billingAccountId, billingSystemId)
+                               ; BA-124564                      ; IN                            ; 10012344321,10085349064              ;
+                               ; BA-189761                      ; IN                            ; 10015554321                          ;
+                               ; BA-145499                      ; IN                            ; 10019845376                          ;
+                               ; BA-127443                      ; IN                            ; 10018090887                          ;
+                               ; BA-127444                      ; IN                            ; 10019845380                          ;
+                               ; BA-127445                      ; IN                            ; 10019845384                          ;
+                               ; BA-127446                      ; IN                            ; 10019845388                          ;
+
+# Import sample billing agreement and billing agreement item
+INSERT_UPDATE TmaBillingAgreementItem; id[unique = true] ; subscribedProducts(id)
+                                     ; 2110000001_baItem ; 2110000001
+                                     ; 2110000002_baItem ; 2110000002
+                                     ; 2110000003_baItem ; 2110000003
+                                     ; 2110000004_baItem ; 2110000004
+                                     ; 2110000005_baItem ; 2110000005
+                                     ; 2110000006_baItem ; 2110000006
+                                     ; 2110000007_baItem ; 2110000007
+                                     ; 2110000008_baItem ; 2110000008
+                                     ; 2110000009_baItem ; 2110000009
+
+INSERT_UPDATE TmaBillingAgreementTerm; id[unique = true]        ; billingSystemId; start[dateformat = dd.MM.yyyy]; end[dateformat = dd.MM.yyyy]; length; frequency(code); offerTermRef
+                                     ; electricity_monthly_term ; IN             ; 13.10.2017                    ; 12.10.2019                  ; 12    ; monthly        ; monthly_12
+                                     ; electricity_monthly_term_1 ; IN           ; 31.03.2020                    ; 30.03.2021                  ; 12    ; monthly        ; monthly_12
+                                     ; electricity_monthly_term_2 ; IN           ; 31.03.2020                    ; 30.03.2021                  ; 12    ; monthly        ; monthly_12
+                                     ; electricity_monthly_term_3 ; IN           ; 31.03.2020                    ; 30.03.2021                  ; 12    ; monthly        ; monthly_12
+
+INSERT_UPDATE TmaBillingAgreement; id[unique = true]                        ; billingSystemId; term(id)                 ; agreementItems(id)
+                                 ; utilitiescontract-2018-02-14             ; IN             ; electricity_monthly_term ; 2110000001_baItem,2110000003_baItem
+                                 ; utilitiescontract-2018-01-21             ; IN             ; electricity_monthly_term ; 2110000002_baItem
+                                 ; utilitiescontract-2017-09-28             ; IN             ; electricity_monthly_term ; 2110000006_baItem
+                                 ; utilitiescontract-2018-03-03             ; IN             ; electricity_monthly_term ; 2110000004_baItem,2110000005_baItem
+                                 ; utilitiescontract-2021-03-11-10019845380 ; IN             ; electricity_monthly_term_1; 2110000007_baItem
+                                 ; utilitiescontract-2021-03-11-10019845384 ; IN             ; electricity_monthly_term_2; 2110000008_baItem
+                                 ; utilitiescontract-2021-03-11-10019845388 ; IN             ; electricity_monthly_term_3; 2110000009_baItem

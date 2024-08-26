@@ -1,0 +1,19 @@
+.is-missing {
+  @extend %cx-media-missing !optional;
+  height: 100%;
+}
+
+.order-item-thumbnail {
+  margin-right: 10px;
+  height: 96px;
+  width: 96px;
+}
+
+.align-left {
+  text-align: start !important;
+  padding-left: 20px;
+}
+
+.deleted-price {
+  color: var(--cx-color-light);
+}

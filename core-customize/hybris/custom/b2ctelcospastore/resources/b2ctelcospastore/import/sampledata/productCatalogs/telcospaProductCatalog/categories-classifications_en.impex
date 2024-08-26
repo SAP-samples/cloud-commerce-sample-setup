@@ -1,0 +1,97 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# Macros / Replacement Parameter definitions
+$classificationCatalog = telcospaClassification
+$classCatalogVersion = catalogversion(catalog(id[default=$classificationCatalog]), version[default='1.0'])[unique=true, default='$classificationCatalog:1.0']
+$classSystemVersion = systemVersion(catalog(id[default='telcospaClassification']), version[default='1.0'])[unique=true]
+$lang = en
+
+
+INSERT_UPDATE ClassificationSystem; id[unique = true]      ; name[lang = $lang]              ;
+                                  ; $classificationCatalog ; Telco SPA Classification System ;
+
+# ImpEx for Importing Category Classifications into telco Store
+
+# Insert Classifications
+UPDATE ClassificationClass; $classCatalogVersion; code[unique = true]         ; name[lang = $lang]
+                          ;                     ; mobilephoneclassification   ; Telco Products
+                          ;                     ; modemsclassification        ; Modem Features
+                          ;                     ; accessoryclassification     ; Telco Accessories
+                          ;                     ; serviceplanclassification   ; Service Plans
+                          ;                     ; compatibilityclassification ; Compatibility Features
+
+
+# Insert Classification Attributes
+UPDATE ClassificationAttribute; code[unique = true] ; name[lang = $lang]; $classSystemVersion
+                              ; mobileplatform      ; Operating System
+                              ; storage             ; Storage
+                              ; camera              ; Has Camera
+                              ; gps                 ; Has GPS
+                              ; maxspeed            ; Max Speed
+                              ; networksupport      ; Network Support
+                              ; keyboard            ; Has Keyboard
+                              ; formfactor          ; Form Factor
+                              ; displayresolution   ; Display Resolution
+                              ; displaysize         ; Display size
+                              ; touchscreen         ; Has touchScreen
+                              ; color               ; Color
+                              ; colorcompatibility  ; Other Available Colors
+                              ; height              ; Height
+                              ; weight              ; Weight
+                              ; width               ; Width
+                              ; depth               ; Depth
+                              ; bands               ; Bands
+                              ; vendorcompatibility ; Vendor Compatibility
+
+                              ; cameraresolution    ; Camera Resolution
+                              ; ram_memory          ; RAM Memory
+                              ; wifitype            ; Wi-Fi Type
+                              ; simcard             ; SIM Card
+
+INSERT_UPDATE ClassificationAttributeValue; code[unique = true]      ; name[lang = $lang]; $classSystemVersion
+                                          ; feature_bt10             ; Bluetooth Version 1.0
+                                          ; feature_bt20             ; Bluetooth Version 2.0
+                                          ; feature_bt21             ; Bluetooth Version 2.1
+                                          ; feature_usb1             ; USB 1.1
+                                          ; feature_usb2             ; USB 2.0
+                                          ; feature_microsd          ; MicroSD
+                                          ; feature_sdhc             ; Secure Digital High-Capacity
+                                          ; feature_memorystickmicro ; Memory Stick Micro (M2)
+                                          ; feature_multimediacard   ; MultiMediaCard (MMC)
+                                          ; feature_microsdhc        ; Micro Secure Digital High-Capacity
+                                          ; feature_8pinmicrosd      ; 8-pin microSD
+                                          ; platform_ios             ; IOS
+                                          ; platform_android         ; Android
+                                          ; platform_rim             ; Blackbery
+                                          ; platform_symbian         ; Symbian OS
+                                          ; platform_ms              ; Windows Mobile
+                                          ; band_dualband            ; Dual-Band
+                                          ; band_triband             ; Tri-Band
+                                          ; band_quadband            ; Quad-Band
+                                          ; band_umts                ; UMTS
+                                          ; band_lte                 ; LTE
+                                          ; formfactor_slider        ; Slider
+                                          ; formfactor_bar           ; Bar
+                                          ; formfactor_clamshell     ; Clamshell
+                                          ; gps_true                 ; GPS
+                                          ; gps_false                ; No GPS
+                                          ; camera_true              ; Camera
+                                          ; camera_false             ; No Camera
+                                          ; touchscreen_true         ; Touchscreen
+                                          ; touchscreen_false        ; No Touchscreen
+                                          ; keyboard_true            ; Keyboard
+                                          ; keyboard_false           ; No Keyboard
+                                          ; wifi6                    ; Wi-Fi 6
+                                          ; wifi802_11ax             ; Wi-Fi 802.11 ax
+                                          ; 4g                       ; 4G
+                                          ; 5g                       ; 5G
+                                          ; simcard_true             ; Yes
+                                          ; simcard_false            ; No
+                                          ; hd                       ; HD
+                                          ; 4k_uhd                   ; 4K UHD
+                                          ; android8_1               ; Android 8.1
+                                          ; mibox_4glk1              ; Mibox 4GLK1
+                                          ; mibox_5glk1              ; Mibox 5GLK1
+                                          ; quad_core                ; Quad-core

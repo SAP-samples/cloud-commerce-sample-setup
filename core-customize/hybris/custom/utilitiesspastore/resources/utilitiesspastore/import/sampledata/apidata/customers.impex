@@ -1,0 +1,12 @@
+#
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+#
+
+# ---------------------------------------------------------------------------
+## ---------------------------------------------------------------------------
+
+# ImpEx for Importing Customers Test Data
+#Consent Sample test data
+"#% Registry.setCurrentTenantByID(""api"");"
+INSERT_UPDATE Consent; code[unique = true]; consentTemplate(id, basesite(uid))    ; customer(uid)
+                     ; 0000006            ; BUSSINESS_PARTNER_UTILITIES:utilities ; testtmfapi1@hybris.com

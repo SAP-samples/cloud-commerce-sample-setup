@@ -1,0 +1,87 @@
+<cx-selfcare-card *ngIf="model$ | async as model" i18nRoot="{{ domainType }}" [showHint]="true" subtitle="{{ 'selfcare.subscriptions.details.serialNumber' | cxTranslate }}: {{
+    model.productSerialNumber
+  }}">
+  <section main class="details">
+    <div class="property">
+      <label>{{ 'selfcare.subscriptions.name' | cxTranslate }}</label>
+      <span class="value">
+        {{ model.name }}
+      </span>
+    </div>
+    <div class="property">
+      <label>{{ 'selfcare.subscriptions.id' | cxTranslate }}</label>
+      <span class="value">
+        {{ model.id }}
+      </span>
+    </div>
+    <div class="property">
+      <label>{{ 'selfcare.subscriptions.status' | cxTranslate }}</label>
+      <span class="value">
+        {{
+        model.status | uppercase
+        }}
+      </span>
+    </div>
+    <div class="property">
+      <label>{{ 'selfcare.subscriptions.details.contract' | cxTranslate }}</label>
+      <span class="value">
+        {{ 'selfcare.subscriptions.details.startDate' | cxTranslate }}
+        {{ model.startDate | cxDate }}
+        {{ 'selfcare.subscriptions.details.expiresOn' | cxTranslate }}
+        {{ model.terminationDate | cxDate }}
+      </span>
+    </div>
+    <div class="property" *ngFor="let term of model.productTerm">
+      <label>{{ 'selfcare.subscriptions.details.duration' | cxTranslate}}</label>
+      <span class="value">
+        {{
+        term.name.replace('_', ' ') | titlecase
+        }}
+      </span>
+    </div>
+    <ng-container *ngIf="model.productPrice">
+      <div class="property">
+        <label>{{ 'selfcare.subscriptions.details.price' | cxTranslate}}</label>
+        <ng-container *ngIf="model.productPrice">
+          <span class="value">
+            {{
+            spiPriceService.getCostPerMonth(model)
+            }} / month
+          </span>
+        </ng-container>
+      </div>
+    </ng-container>
+  </section>
+
+  <section main class="link-list">
+    <ng-container *ngIf="model.id">
+      <ng-container *ngIf="model.product">
+        <a class="link" [routerLink]="
+            { cxRoute: 'SubscriptionsChildProducts', params: model } | cxUrl
+          " routerLinkActive="is-current">
+          {{ 'selfcare.subscriptions.details.childProducts.title' | cxTranslate }}
+        </a>
+      </ng-container>
+      <a class="link" [routerLink]="
+          { cxRoute: 'SubscriptionsAccount', params: model } | cxUrl
+        " routerLinkActive="is-current">
+        {{ 'selfcare.subscriptions.details.account.title' | cxTranslate }}
+      </a>
+      <a class="link" [routerLink]="
+          { cxRoute: 'SubscriptionsAgreement', params: model } | cxUrl
+        " routerLinkActive="is-current">
+        {{ 'selfcare.subscriptions.details.agreement.title' | cxTranslate }}
+      </a>
+      <a class="link" [routerLink]="{ cxRoute: 'SubscriptionsOrder', params: model } | cxUrl"
+        routerLinkActive="is-current">
+        {{ 'selfcare.subscriptions.details.order.title' | cxTranslate }}
+      </a>
+      <ng-container *ngIf="model.isBundle">
+        <a class="link" [routerLink]="{ cxRoute: 'SubscriptionsAddress', params: model } | cxUrl"
+        routerLinkActive="is-current">
+          {{ 'selfcare.subscriptions.details.address.title' | cxTranslate }}
+        </a>
+      </ng-container>
+    </ng-container>
+  </section>
+</cx-selfcare-card>

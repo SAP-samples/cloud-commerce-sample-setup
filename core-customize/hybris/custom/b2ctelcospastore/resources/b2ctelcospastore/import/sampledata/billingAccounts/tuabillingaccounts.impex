@@ -1,0 +1,58 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+$currency = currency(isocode)[default = USD]
+$lang = en
+$status = status(code)
+
+# Currencies
+INSERT_UPDATE Currency; isocode[unique = true]; name[lang = $lang]; active; conversion; digits; symbol
+                      ; USD                   ; "US Dollar"       ; true  ; 1.5       ; 4     ; "$" ;
+
+INSERT_UPDATE Customer; originalUid[unique = true]; uid[unique = true]     ; customerID             ; name        ; groups(uid)   ; Europe1PriceFactory_UPG(code)
+                      ; doug.barley@hybris.com    ; doug.barley@hybris.com ; doug.barley@hybris.com ; doug.barley ; customergroup ;
+                      ; gordon.slim@hybris.com    ; gordon.slim@hybris.com ; gordon.slim@hybris.com ; gordon.slim ; customergroup ;
+                      ; john.lucas@hybris.com     ; john.lucas@hybris.com  ; john.lucas@hybris.com  ; john.lucas  ; customergroup ;
+                      ; kyle.troop@hybris.com     ; kyle.troop@hybris.com  ; kyle.troop@hybris.com  ; kyle.troop  ; customergroup ;
+
+INSERT_UPDATE TuaPartyRole; id[unique = true]; role
+                          ; doug.barley      ; customer
+                          ; gordon.slim      ; employee
+                          ; john.lucas       ; employee
+                          ; kyle.troop       ; customer
+
+INSERT_UPDATE TuaParty; id[unique = true]      ; name        ; status; principals(uid)        ; partyRoles(id)
+                      ; Individual_Doug_Barley ; Doug Barley ;       ; doug.barley@hybris.com ; doug.barley
+                      ; Individual_Gordon_Slim ; Gordon Slim ;       ; gordon.slim@hybris.com ; gordon.slim
+                      ; Individual_John_Lucas  ; John Lucas  ;       ; john.lucas@hybris.com  ; john.lucas
+                      ; Individual_Kyle_Troop  ; Kyle Troop  ;       ; kyle.troop@hybris.com  ; kyle.troop
+
+INSERT_UPDATE TuaBillingAccount; id[unique = true]      ; name                            ; description                              ; partyRoles(id); financialAccount(id); accountBalances(id); partyBills(billNo)
+                               ; Doug_Barley_BillingAcc ; Billing Account for Doug Barley ; Personal Billing Account for Doug Barley ; doug.barley
+                               ; Gordon_Slim_BillingAcc ; Billing Account for Gordon Slim ; Personal Billing Account for Gordon Slim ; gordon.slim
+                               ; John_Lucas_BillingAcc  ; Billing Account for John Lucas  ; Personal Billing Account for John Lucas  ; john.lucas
+                               ; Kyle_Troop_BillingAcc  ; Billing Account for Kyle Troop  ; Personal Billing Account for Kyle Troop  ; kyle.troop
+
+INSERT_UPDATE TuaPartyBillingCycle; id[unique = true]; billingDate[dateformat = dd.MM.yyyy HH:mm:ss]; chargeDate[dateformat = dd.MM.yyyy HH:mm:ss]; creditDate[dateformat = dd.MM.yyyy HH:mm:ss]; mailingDate[dateformat = dd.MM.yyyy HH:mm:ss]; paymentDueDate[dateformat = dd.MM.yyyy HH:mm:ss]; nextBillDate[dateformat = dd.MM.yyyy HH:mm:ss]; productionReason
+                                  ; sampleBillCycle1 ; 28.05.2021 00:00:00                          ; 28.06.2021 00:00:00                         ; 10.04.2022 00:00:00                         ; 10.04.2022 00:00:00                          ; 08.06.2022 00:00:00                             ; 28.06.2021 00:00:00                           ; ProdReason-OnDemand
+                                  ; sampleBillCycle2 ; 28.05.2021 00:00:00                          ; 28.06.2021 00:00:00                         ; 10.04.2022 00:00:00                         ; 10.04.2022 00:00:00                          ; 08.06.2022 00:00:00                             ; 28.06.2021 00:00:00                           ;
+                                  ; sampleBillCycle3 ; 28.05.2021 00:00:00                          ; 10.04.2022 00:00:00                         ; 10.04.2022 00:00:00                         ; 10.04.2022 00:00:00                          ; 08.06.2022 00:00:00                             ; 28.06.2021 00:00:00                           ;
+                                  ; sampleBillCycle4 ; 28.05.2021 00:00:00                          ; 10.04.2022 00:00:00                         ; 10.04.2022 00:00:00                         ; 10.04.2022 00:00:00                          ; 08.06.2022 00:00:00                             ; 28.06.2021 00:00:00                           ; ProdReason-OnDemand1
+
+INSERT_UPDATE TuaPartyPayment; id[unique = true]; paymentDate[dateformat = dd.MM.yyyy HH:mm:ss]; paymentItems(id)
+                             ; tuapayment1      ; 10.04.2022 00:00:00                          ; tuapaymentItem1
+                             ; tuapayment2      ; 10.04.2022 00:00:00                          ; tuapaymentItem2
+                             ; tuapayment3      ; 10.04.2022 00:00:00                          ; tuapaymentItem3
+                             ; tuapayment4      ; 10.04.2022 00:00:00                          ; tuapaymentItem4
+
+INSERT_UPDATE TuaPartyPaymentItem; id[unique = true]; appliedAmount; Currency(isocode); payment(id)
+                                 ; tuapaymentItem1  ; 25           ; USD              ; tuapayment1
+                                 ; tuapaymentItem2  ; 23           ; USD              ; tuapayment2
+                                 ; tuapaymentItem3  ; 33           ; USD              ; tuapayment3
+                                 ; tuapaymentItem4  ; 44           ; USD              ; tuapayment4
+
+INSERT_UPDATE TuaAppliedPartyBillingTaxRate; id[unique = true]; taxCategory; quantity; currency(isocode); taxRate
+                                           ; tuarate1         ; cat 2      ; 10      ; USD              ; 2
+                                           ; tuarate2         ; cat 3      ; 20      ; USD              ; 3
+                                           ; tuarate3         ; cat 4      ; 25      ; USD              ; 4
+                                           ; tuarate4         ; cat 5      ; 2       ; USD              ; 5

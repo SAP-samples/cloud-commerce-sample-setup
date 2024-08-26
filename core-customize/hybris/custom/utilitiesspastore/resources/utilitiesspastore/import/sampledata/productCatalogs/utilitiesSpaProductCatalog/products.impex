@@ -1,0 +1,120 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Importing Products into Utilities Store
+
+# Macros / Replacement Parameter definitions
+$productCatalog = utilitiesSpaProductCatalog
+$productCatalogName = Utilities Spa Product Catalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+$onlineCatalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Online'])[unique = true, default = $productCatalog:Online]
+$supercategories = supercategories(code, $catalogVersion)
+$approved = approvalstatus(code)[default = 'approved']
+$channels = distributionChannels(code)
+
+# Macros / Replacement Parameter definitions
+$solrIndexedTypeIdentifier = utilitiesspaProductType
+$solrIndexedType = indexedType(identifier[default = $solrIndexedTypeIdentifier])
+
+# Macros / Replacement Parameter definitions
+$soldIndividuallyFlag = soldIndividually[default = true]
+
+$lang = en
+
+# Insert Devices
+INSERT_UPDATE TmaSimpleProductOffering; code[unique = true]                    ; $supercategories; manufacturerName; manufacturerAID; onlineDate[dateformat = dd.MM.yyyy]; unit(code)[default = pieces]; ean; $channels; variantType(code); $approved; $catalogVersion; $soldIndividuallyFlag
+# lightbulbs
+                                      ; lightbulb_energy_efficient             ; lightbulbs      ;                 ;                ; 01.06.2018                         ;                             ;
+                                      ; lightbulb_led                          ; lightbulbs      ;                 ;                ; 01.06.2018                         ;                             ;
+                                      ; lightbulb_led_multipack                ; lightbulbs      ;                 ;                ; 01.06.2018                         ;                             ;
+# elelctricalcords
+                                      ; electrical_cord_general                ; electricalcords ;                 ;                ; 01.06.2018                         ;                             ;
+                                      ; electrical_cord_double_ended_extension ; electricalcords ;                 ;                ; 01.06.2018                         ;                             ;
+                                      ; electrical_cord_slim                   ; electricalcords ;                 ;                ; 01.06.2018                         ;                             ;
+# solarpanels
+                                      ; solar_panel                            ; solarpanels     ;                 ;                ; 01.06.2018                         ;                             ;
+                                      ; solar_panel_plus                       ; solarpanels     ;                 ;                ; 01.06.2018                         ;                             ;
+                                      ; solar_panel_premium                    ; solarpanels     ;                 ;                ; 01.06.2018                         ;                             ;
+# thermostats
+                                      ; thermostat_basic                       ; thermostats     ;                 ;                ; 01.06.2018                         ;                             ;
+                                      ; thermostat_plus                        ; thermostats     ;                 ;                ; 01.06.2018                         ;                             ;
+                                      ; thermostat_premium                     ; thermostats     ;                 ;                ; 01.06.2018                         ;                             ;
+# installation
+                                      ; installation_electricity               ; installation    ;                 ;                ; 01.06.2018                         ;                             ;
+                                      ; installation_gas                       ; installation    ;                 ;                ; 01.06.2018                         ;                             ;
+                                      ; installation_solar_panel               ; installation    ;                 ;                ; 01.06.2018                         ;                             ;
+# cameras
+                                      ; cameras_ring_spotlight                 ; cameras         ;                 ;                ; 01.06.2018                         ;                             ;
+                                      ; cameras_smart_securty                  ; cameras         ;                 ;                ; 01.06.2018                         ;                             ;
+# sensors
+                                      ; sensors_light                          ; sensors         ;                 ;                ; 01.06.2018                         ;                             ;
+                                      ; sensors_motion                         ; sensors         ;                 ;                ; 01.06.2018                         ;                             ;
+
+
+#Insert Service Plans (Plans)
+INSERT_UPDATE TmaSimpleProductOffering; code[unique = true]         ; productSpecification(id, $catalogVersion); $supercategories; manufacturerAID; soldIndividually[default = false]; unit(code)[default = pieces]; $approved; $catalogVersion
+# electricityplans
+                                      ; electric_plan_basic         ; electricity                              ; electricity     ;                ; true
+                                      ; electric_plan_plus          ; electricity                              ; electricity     ;                ; true
+                                      ; electric_plan_best          ; electricity                              ; electricity     ;                ; true
+                                      ; electric_plan_total_comfort ; electricity                              ; electricity     ;                ; true
+# gasplans
+                                      ; gas_plan_basic              ; gas                                      ; gas             ;                ; true
+                                      ; gas_plan_plus               ; gas                                      ; gas             ;                ; true
+                                      ; gas_plan_best               ; gas                                      ; gas             ;                ; true
+                                      ; gas_plan_total_comfort      ; gas                                      ; gas             ;                ; true
+# homewarrantyplans
+                                      ; home_warranty               ; homewarranty                             ; warranty        ;                ; true
+                                      ; home_warranty_plus          ; homewarranty                             ; warranty        ;                ; true
+                                      ; home_warranty_total_comfort ; homewarranty                             ; warranty        ;                ; true
+# internet
+                                      ; noncommodity_int_100        ; internet                                 ; internet        ;                ; true
+                                      ; noncommodity_int_500        ; internet                                 ; internet        ;                ; true
+                                      ; noncommodity_int_1000       ; internet                                 ; internet        ;                ; true
+# landline
+                                      ; noncommodity_ll_voip        ; landline_voip                            ; landline        ;                ; true
+                                      ; noncommodity_ll_pots        ; landline_pots                            ; landline        ;                ; true
+
+
+INSERT_UPDATE TmaProductSpecCharValueUse; name[lang = $lang]             ; description[lang = $lang]                          ; productSpecCharacteristicValues(id, $catalogVersion)[unique = true]; minCardinality; maxCardinality; productOfferings(code, $catalogVersion)[unique = true]                                                                                                  ; valueType(code); $catalogVersion; group[lang = $lang]
+# Static PSCVs
+                                        ; Power                          ; Power value                                        ; 50_kwh                                                             ; 1             ; 1             ; electric_plan_basic                                                                                                                                     ; NUMERIC        ;                ; Energy
+                                        ; Power                          ; Power value                                        ; 100_kwh                                                            ; 1             ; 1             ; electric_plan_plus                                                                                                                                      ; NUMERIC        ;                ; Energy
+                                        ; Power                          ; Power value                                        ; 200_kwh                                                            ; 1             ; 1             ; electric_plan_best                                                                                                                                      ; NUMERIC        ;                ; Energy
+                                        ; Power                          ; Power value                                        ; 300_kwh                                                            ; 1             ; 1             ; electric_plan_total_comfort                                                                                                                             ; NUMERIC        ;                ; Energy
+
+                                        ; Gas volume                     ; Included Gas volume                                ; 50_cubic_meters                                                    ; 1             ; 1             ; gas_plan_basic                                                                                                                                          ; NUMERIC        ;                ; Gas Quantity
+                                        ; Gas volume                     ; Included Gas volume                                ; 100_cubic_meters                                                   ; 1             ; 1             ; gas_plan_plus                                                                                                                                           ; NUMERIC        ;                ; Gas Quantity
+                                        ; Gas volume                     ; Included Gas volume                                ; 200_cubic_meters                                                   ; 1             ; 1             ; gas_plan_best                                                                                                                                           ; NUMERIC        ;                ; Gas Quantity
+                                        ; Gas volume                     ; Included Gas volume                                ; 300_cubic_meters                                                   ; 1             ; 1             ; gas_plan_total_comfort                                                                                                                                  ; NUMERIC        ;                ; Gas Quantity
+
+                                        ; Home Warranty Period           ; Period for which home warranty is available        ; 10_years                                                           ; 1             ; 1             ; home_warranty                                                                                                                                           ; NUMERIC        ;                ; Amount and Period
+                                        ; Home Warranty Period           ; Period for which home warranty is available        ; 30_years                                                           ; 1             ; 1             ; home_warranty_plus                                                                                                                                      ; NUMERIC        ;                ; Amount and Period
+                                        ; Home Warranty Period           ; Period for which home warranty is available        ; 120_years                                                          ; 1             ; 1             ; home_warranty_total_comfort                                                                                                                             ; NUMERIC        ;                ; Amount and Period
+
+                                        ; Home Warranty Amount           ; Amount of money guaranteed by by the home warranty ; 100000_USD                                                         ; 1             ; 1             ; home_warranty                                                                                                                                           ; NUMERIC        ;                ; Amount and Period
+                                        ; Home Warranty Amount           ; Amount of money guaranteed by by the home warranty ; 500000_USD                                                         ; 1             ; 1             ; home_warranty_plus                                                                                                                                      ; NUMERIC        ;                ; Amount and Period
+                                        ; Home Warranty Amount           ; Amount of money guaranteed by by the home warranty ; 3000000_USD                                                        ; 1             ; 1             ; home_warranty_total_comfort                                                                                                                             ; NUMERIC        ;                ; Amount and Period
+
+
+# internet PSCVs
+                                        ; Upload Speed                   ; Upload Speed                                       ; up_100                                                             ; 1             ; 1             ; noncommodity_int_100                                                                                                                                    ; NUMERIC        ;                ; Network
+                                        ; Upload Speed                   ; Upload Speed                                       ; up_200                                                             ; 1             ; 1             ; noncommodity_int_500                                                                                                                                    ; NUMERIC        ;                ; Network
+                                        ; Upload Speed                   ; Upload Speed                                       ; up_1000                                                            ; 1             ; 1             ; noncommodity_int_1000                                                                                                                                   ; NUMERIC        ;                ; Network
+                                        ; Download Speed                 ; Download Speed                                     ; down_100                                                           ; 1             ; 1             ; noncommodity_int_100                                                                                                                                    ; NUMERIC        ;                ; Network
+                                        ; Download Speed                 ; Download Speed                                     ; down_200                                                           ; 1             ; 1             ; noncommodity_int_500                                                                                                                                    ; NUMERIC        ;                ; Network
+                                        ; Download Speed                 ; Download Speed                                     ; down_1000                                                          ; 1             ; 1             ; noncommodity_int_1000                                                                                                                                   ; NUMERIC        ;                ; Network
+
+# energy type PSCVs
+                                        ; Energy Type                    ; Energy Type                                        ; green                                                              ; 1             ; 1             ; electric_plan_plus,gas_plan_plus                                                                                                                        ; STRING         ;                ; Energy
+                                        ; Energy Type                    ; Energy Type                                        ; mixed                                                              ; 1             ; 1             ; electric_plan_basic,electric_plan_best,electric_plan_total_comfort,gas_plan_basic,gas_plan_best,gas_plan_total_comfort                                  ; STRING         ;                ; Energy
+
+# values for meter type
+                                        ; Meter Type                     ; Meter Type                                         ; normal_meter_type                                                  ; 1             ; 1             ; electric_plan_basic,electric_plan_plus,gas_plan_basic,gas_plan_plus                                                                                     ; STRING         ;                ; Resources
+                                        ; Meter Type                     ; Meter Type                                         ; smart_meter_type                                                   ; 1             ; 1             ; electric_plan_best,electric_plan_total_comfort,gas_plan_best,gas_plan_total_comfort                                                                     ; STRING         ;                ; Resources
+
+# Configurable PSCVs
+                                        ; Technical Id                   ; Technical Id                                       ; technical_id                                                       ; 0             ; 1             ; electric_plan_basic,electric_plan_plus,electric_plan_best,electric_plan_total_comfort,gas_plan_basic,gas_plan_plus,gas_plan_best,gas_plan_total_comfort ; STRING         ;                ; Resources
+                                        ; Average Consumption Estimation ; Average Consumption Estimation                     ; average_consumption_estimation                                     ; 0             ; 1             ; electric_plan_basic,electric_plan_plus,electric_plan_best,electric_plan_total_comfort,gas_plan_basic,gas_plan_plus,gas_plan_best,gas_plan_total_comfort ; STRING         ;                ; Resources
+

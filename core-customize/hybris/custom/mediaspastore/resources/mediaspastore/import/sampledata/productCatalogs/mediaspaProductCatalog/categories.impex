@@ -1,0 +1,61 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Importing Categories into Media SPA Store
+
+# Macros / Replacement Parameter definitions
+$productCatalog = mediaspaProductCatalog
+$productCatalogName = Media SPA Product Catalog
+$catalogVersion = catalogversion(catalog(id[default=$productCatalog]), version[default='Staged'])[unique=true, default=$productCatalog:Staged]
+$supercategories = source(code, $catalogVersion)[unique=true]
+$categories = target(code, $catalogVersion)[unique=true]
+
+INSERT_UPDATE Category; code[unique = true]; allowedPrincipals(uid)[default = 'customergroup']; $catalogVersion
+                      ; 1
+
+INSERT_UPDATE Category; code[unique = true]; allowedPrincipals(uid)[default = 'customergroup']; $catalogVersion
+                      ; addons
+                      ; video
+                      ; merchandise
+                      ; brands
+                      ; hardware
+                      ; movies
+                      ; tvchannels
+                      ; news_channels
+                      ; entertainment_channels
+                      ; movie_channels
+                      ; lifestyle_channels
+                      ; tvshows
+                      ; tvseason
+                      ; tvepisodes
+                      ; underworldbrand
+                      ; plans
+                      ; internetplans
+                      ; landlineplans
+                      ; tvplans
+                      ; tvaddons
+                      ; trending
+
+INSERT_UPDATE CategoryCategoryRelation; $categories            ; $supercategories
+                                      ; trending               ; 1
+                                      ; addons                 ; 1
+                                      ; video                  ; 1
+                                      ; merchandise            ; 1
+                                      ; hardware               ; 1
+                                      ; movies                 ; video
+                                      ; tvchannels             ; video
+                                      ; tvshows                ; video
+                                      ; underworldbrand        ; merchandise
+                                      ; plans                  ; 1
+                                      ; internetplans          ; plans
+                                      ; landlineplans          ; plans
+                                      ; tvplans                ; plans
+                                      ; tvaddons               ; addons
+                                      ; tvshows                ; 1
+                                      ; tvseason               ; 1
+                                      ; tvepisodes             ; 1
+                                      ; news_channels          ; tvchannels
+                                      ; entertainment_channels ; tvchannels
+                                      ; movie_channels         ; tvchannels
+                                      ; lifestyle_channels     ; tvchannels

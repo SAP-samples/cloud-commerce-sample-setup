@@ -1,0 +1,113 @@
+<div class="row">
+  <div class="col-12 col-md-4">
+    <a
+      [routerLink]="{ cxRoute: 'product', params: product } | cxUrl"
+      class="cx-product-image-container"
+    >
+      <cx-media
+        class="cx-product-image"
+        [container]="product.images?.PRIMARY"
+        format="product"
+        [alt]="product.summary"
+      ></cx-media>
+    </a>
+  </div>
+  <div class="col-12 col-md-8">
+    <a
+      [routerLink]="{ cxRoute: 'product', params: product } | cxUrl"
+      class="cx-product-name"
+    >
+      <h2 [innerHtml]="product.nameHtml"></h2>
+    </a>
+    <cx-star-rating
+      *ngIf="product.averageRating"
+      [rating]="product?.averageRating"
+      [disabled]="true"
+    ></cx-star-rating>
+    <div *ngIf="!product.averageRating" class="cx-product-no-review">
+      {{ 'productDetails.noReviews' | cxTranslate }}
+    </div>
+    <ng-container *ngIf="!(productSpecificationForAverageCost || productSpecificationForViewDetails)">
+      <div class="cx-product-price" aria-label="Product price">
+        <cx-price-display [price]="product.productOfferingPrice[0]"
+                          [discounts]="priceService.getDiscountPricesForSPO(product)"></cx-price-display>
+      </div>
+    </ng-container>
+
+    <div class="row">
+      <div class="col-12 col-md-6 my-1">
+        <p class="cx-product-summary" [innerHtml]="product.summary">
+          {{ product.summary }}
+        </p>
+        <ng-container *ngIf="detailedProduct$ | async as detailedProduct">
+          <ng-container *ngIf="priceService.getUsageUnits(detailedProduct).length > 1">
+            <p class="text-warning cx-size-small">
+              {{ 'productDetails.costEstimationWarningMessage' | cxTranslate }}
+            </p>
+          </ng-container>
+        </ng-container>
+      </div>
+      <div class="col-12 col-md-6">
+        <ng-container *ngIf="productSpecificationForViewDetails && consumptionComponent">
+          <ng-container *ngIf="detailedProduct$ | async as detailedProduct else loading">
+            <button [routerLink]="{ cxRoute: 'setUpAService' } | cxUrl" class="btn btn-primary btn-block"
+                    type="button">
+              {{'serviceability.checkAvailability' | cxTranslate}}
+            </button>
+          </ng-container>
+        </ng-container>
+        <ng-container *ngIf="product.isBundle">
+          <button [routerLink]="{ cxRoute: 'product', params: product } | cxUrl" class="btn btn-primary btn-block"
+                  type="button">
+            {{'productList.viewDetails' | cxTranslate}}
+          </button>
+        </ng-container>
+        <ng-container *ngIf="!productSpecificationForViewDetails && !product.isBundle">
+          <ng-container
+            *ngIf="getChecklistActions(product.code) | async as checklistActions"
+          >
+            <ng-container
+              *ngIf="checklistActions.length > 0; else noChecklist"
+            >
+              <button
+                [routerLink]="{ cxRoute: 'product', params: product } | cxUrl"
+                class="btn btn-primary btn-block"
+                type="button"
+              >
+                {{ 'productList.seeDetails' | cxTranslate }}
+              </button>
+            </ng-container>
+          </ng-container>
+          <ng-template #noChecklist>
+            <ng-template [cxOutlet]="ProductListOutlets.ITEM_ACTIONS">
+              <ng-container cxInnerComponentsHost></ng-container>
+            </ng-template>
+          </ng-template>
+        </ng-container>
+      </div>
+    </div>
+
+    <div *ngIf="productSpecificationForViewDetails && !consumptionComponent">
+      <div class="row">
+        <div class="col-12 col-md-6">
+          <p [innerHtml]="product.summary" class="cx-product-summary">
+            {{ product.summary }}
+          </p>
+        </div>
+        <div class="col-12 col-md-6">
+          <button [routerLink]="{ cxRoute: 'setUpAService' } | cxUrl" class="btn btn-primary btn-block"
+                  type="button">
+            {{ 'serviceability.checkAvailability' | cxTranslate }}
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #loading>
+  <div class="cx-spinner">
+    <cx-spinner></cx-spinner>
+  </div>
+</ng-template>

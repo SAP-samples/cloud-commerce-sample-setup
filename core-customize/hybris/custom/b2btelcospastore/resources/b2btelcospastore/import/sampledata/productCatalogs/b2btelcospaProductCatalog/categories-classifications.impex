@@ -1,0 +1,119 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Importing Category Classifications into Telco Store
+
+# Macros / Replacement Parameter definitions
+$productCatalog = b2btelcospaProductCatalog
+$classificationCatalog = b2btelcospaClassification
+$productCatalogName = B2B Telco SPA Product Catalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+$classCatalogVersion = catalogversion(catalog(id[default = $classificationCatalog]), version[default = '1.0'])[unique = true,default = '$classificationCatalog:1.0']
+$classSystemVersion = systemVersion(catalog(id[default = $classificationCatalog]), version[default = '1.0'])[unique = true]
+$class = classificationClass(ClassificationClass.code, $classCatalogVersion)[unique = true]
+$supercategories = source(code, $classCatalogVersion)[unique = true]
+$categories = target(code, $catalogVersion)[unique = true]
+$attribute = classificationAttribute(code, $classSystemVersion)[unique = true]
+$unit = unit(code, $classSystemVersion)
+
+# Insert Classifications
+INSERT_UPDATE ClassificationClass; $classCatalogVersion; code[unique = true]       ; allowedPrincipals(uid)[default = 'customergroup']
+                                 ;                     ; mobilephoneclassification
+                                 ;                     ; accessoriesclassification
+
+# Phones Classification Attributes
+# Insert Classification Attributes
+INSERT_UPDATE ClassificationAttribute; $classSystemVersion; code[unique = true]
+                                     ;                    ; mobileplatform
+                                     ;                    ; storage
+                                     ;                    ; processor
+                                     ;                    ; cameratype
+                                     ;                    ; cameraresolution
+                                     ;                    ; zoom
+                                     ;                    ; displaysize
+                                     ;                    ; touchscreen
+                                     ;                    ; height
+                                     ;                    ; weight
+                                     ;                    ; width
+                                     ;                    ; depth
+                                     ;                    ; batterycharge
+                                     
+
+INSERT_UPDATE ClassAttributeAssignment; $class                      ; $attribute           ; position; $unit    ; attributeType(code[default = string]); multiValued[default = false]; range[default = false]; localized[default = false]; attributeValues(code, $classSystemVersion)
+                                      ; mobilephoneclassification   ; mobileplatform       ; 1       ;          ; enum                                 ;                             ;                       ;                           ; platform_ios,platform_android
+                                      ; mobilephoneclassification   ; storage              ; 2       ; gb       ; number
+                                      ; mobilephoneclassification   ; processor            ; 3       ;          ; enum                                 ;                             ;                       ;                           ; octa_core, a14_bionic
+                                      ; mobilephoneclassification   ; cameratype           ; 4       ;          ; enum                                 ;                             ;                       ;                           ; dual_camera, pro_camera, quad_camera
+                                      ; mobilephoneclassification   ; cameraresolution     ; 5       ; mp       ; number
+                                      ; mobilephoneclassification   ; zoom                 ; 6       ;          ; enum                                 ;                             ;                       ;                           ; zoom_hybrid, zoom_30, zoom_digital_12, zoom_digital_10, zoom_optical_3, zoom_optical_10, zoom_100
+                                      ; mobilephoneclassification   ; displaysize          ; 7       ; inch     ; number
+                                      ; mobilephoneclassification   ; touchscreen          ; 8       ;          ; enum                                 ;                             ;                       ;                           ; touchscreen_true,touchscreen_false
+                                      ; mobilephoneclassification   ; height               ; 9       ; inch     ; number
+                                      ; mobilephoneclassification   ; width                ; 10      ; inch     ; number
+                                      ; mobilephoneclassification   ; depth                ; 11      ; inch     ; number
+                                      ; mobilephoneclassification   ; weight               ; 12      ; pound    ; number
+                                      ; mobilephoneclassification   ; batterycharge        ; 13      ; mah      ; number
+                                      
+INSERT_UPDATE ClassificationAttributeValue; code[unique = true]; $classSystemVersion
+; platform_ios
+; platform_android
+; octa_core
+; a14_bionic
+; dual_camera
+; pro_camera
+; quad_camera
+; zoom_hybrid
+; zoom_30
+; zoom_digital_12
+; zoom_optical_3
+; zoom_optical_10
+; zoom_100
+; zoom_digital_10
+; touchscreen_true
+; touchscreen_false
+
+# Accessories Classification Attributes
+# Insert Classification Attributes
+INSERT_UPDATE ClassificationAttribute; $classSystemVersion; code[unique = true]
+                                     ;                    ; brand
+                                     ;                    ; color
+                                     ;                    ; batteries
+                                     ;                    ; connectivity_technology
+                                     ;                    ; form_factor
+                                     ;                    ; power
+                                     ;                    ; screensize
+                                     ;                    ; port_type
+                                     ;                    ; cable
+                                     ;                    ; output_current
+
+INSERT_UPDATE ClassAttributeAssignment; $class                      ; $attribute              ; position; $unit    ; attributeType(code[default = string]); multiValued[default = false]; range[default = false]; localized[default = false]; attributeValues(code, $classSystemVersion)
+                                      ; accessoriesclassification   ; brand                   ; 1       ;          ; enum                                 ;                             ;                       ;                           ; brand_apple, brand_samsung
+                                      ; accessoriesclassification   ; color                   ; 2       ;          ; enum                                 ;                             ;                       ;                           ; color_white, color_transparent, color_black, color_red, color_blue
+                                      ; accessoriesclassification   ; batteries               ; 3       ;          ; enum                                 ;                             ;                       ;                           ; batteries_required, no_batteries
+                                      ; accessoriesclassification   ; connectivity_technology ; 4       ;          ; enum                                 ;                             ;                       ;                           ; connect_bluetooth, connect_nfc
+                                      ; accessoriesclassification   ; form_factor             ; 5       ;          ; enum                                 ;                             ;                       ;                           ; form_in_ear, form_basic_case
+                                      ; accessoriesclassification   ; power                   ; 6       ; w        ; number
+                                      ; accessoriesclassification   ; screensize              ; 7       ; inch     ; number
+                                      ; accessoriesclassification   ; port_type               ; 8       ;          ; enum                                 ;                             ;                       ;                           ; port_usb_c, port_usb_a
+                                      ; accessoriesclassification   ; cable                   ; 8       ;          ; enum                                 ;                             ;                       ;                           ; has_cable, no_cable
+                                      ; accessoriesclassification   ; output_current          ; 9       ; a        ; number
+
+INSERT_UPDATE ClassificationAttributeValue; code[unique = true] ; $classSystemVersion
+                                          ; brand_apple
+                                          ; brand_samsung
+                                          ; color_white
+                                          ; color_transparent
+                                          ; color_black
+                                          ; color_red
+                                          ; color_blue
+                                          ; batteries_required
+                                          ; no_batteries
+                                          ; connect_bluetooth
+                                          ; connect_nfc
+                                          ; form_basic_case
+                                          ; form_in_ear
+                                          ; port_usb_a
+                                          ; port_usb_c
+                                          ; has_cable
+                                          ; no_cable

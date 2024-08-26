@@ -1,0 +1,26 @@
+.GuidedSellingPageTemplate {
+  max-width: 1700px;
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+
+  cx-page-slot {
+    &.GuidedSellingContentSlot {
+      max-width: 1280px;
+      margin: auto;
+      flex-direction: row;
+      padding-bottom: 5%;
+
+      cx-guided-selling {
+        display: flex;
+        flex-direction: row;
+
+        > div {
+          flex-direction: column;
+          width: 95%;
+          margin: auto;
+        }
+      }
+    }
+  }
+}

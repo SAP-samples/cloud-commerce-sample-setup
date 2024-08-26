@@ -1,0 +1,117 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Product Specifications
+
+$productCatalog = b2btelcospaProductCatalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+
+$lang = en
+INSERT_UPDATE TmaCustomerFacingServiceSpec; id[unique = true]            ; name[lang = $lang]                    ; $catalogVersion
+                                          ; satellite_service_spec       ; Satellite Service Specification       ;
+                                          ; backup_service_spec          ; Backup Service Specification          ;
+                                          ; satellite_voice_service_spec ; Satellite Voice Service Specification ;
+                                          ; internet_service_spec        ; Internet Service Specification        ;
+                                          ; internet_svc                 ; Internet Service                      ;
+
+INSERT_UPDATE TmaServiceSpecCharacteristic; id[unique = true]       ; name[lang = $lang]                        ; $catalogVersion
+                                          ; mir_download_speed      ; Maximum Information Rate Download Speed   ;
+                                          ; mir_upload_speed        ; Maximum Information Rate Upload Speed     ;
+                                          ; cir_download_speed      ; Committed Information Rate Download Speed ;
+                                          ; cir_upload_speed        ; Committed Information Rate Upload Speed   ;
+                                          ; eirp                    ; Effective Isotropic Radiated Power        ;
+
+                                          ; imsi                    ; International Mobile Subscriber Identity  ;
+                                          ; terminal_support        ; Terminal Support                          ;
+
+                                          ; number_type             ; Number Type                               ;
+                                          ; national_number         ; National Number                           ;
+                                          ; country_number          ; Country Number                            ;
+                                          ; phone_number            ; Phone Number                              ;
+
+                                          ; sms                     ; Text                                      ;
+                                          ; voice                   ; Voice                                     ;
+                                          ; data_volume             ; Data                                      ;
+                                          ; data_volume_premium     ; Premium Data                              ;
+                                          ; video_streaming_type    ; Video Streaming Type                      ;
+
+                                          ; internet_download_speed ; Download Speed                            ;
+                                          ; internet_upload_speed   ; Upload Speed                              ;
+
+INSERT_UPDATE TmaAtomicProductSpecification; id[unique = true]         ; name[lang = $lang]                           ; $catalogVersion
+                                           ; satellite_speed_ps        ; Satellite Speed Product Specification        ;
+                                           ; terminal_ps               ; Terminal Product Specification               ;
+                                           ; backup_ps                 ; Backup Service Product Specification         ;
+                                           ; satellite_voice_ps        ; Satellite Voice Product Specification        ;
+                                           ; satellite_connectivity_ps ; Satellite Connectivity Product Specification ;
+                                           ; internet_ps               ; Internet Product Specification               ;
+                                           ; gsm_ps                    ; GSM Product Specification                    ;
+                                           
+INSERT_UPDATE TmaProductSpecCharacteristic; id[unique = true]            ; name[lang = $lang]                        ; $catalogVersion
+# Configurable PSCs
+                                          ; imsi                         ; International Mobile Subscriber Identity  ;
+
+                                          ; number_type                  ; Number Type                               ;
+                                          ; national_number              ; National Number                           ;
+                                          ; country_number               ; Country Number                            ;
+                                          ; phone_number                 ; Phone Number                              ;
+
+                                          ; start_date                   ; Activation Start Date                     ;
+                                          ; market_sector                ; Market Sector                             ;
+                                          ; private_name                 ; Remote Site Name                          ;
+                                          ; ip_address                   ; IP Address                                ;
+                                          ; nat_inside_ip                ; NAT Inside IP                             ;
+                                          ; terminal_tpk                 ; Terminal Provisioning Key                 ;
+
+                                          ; dhcp                         ; DHCP                                      ;
+                                          ; connected_via                ; Connected Via                             ;
+                                          ; coverage                     ; Coverage                                  ;
+                                          ; country_variant              ; Country                                   ;
+
+# Static PSCs
+                                          ; mir_download_speed           ; Maximum Information Rate Download Speed   ;
+                                          ; mir_upload_speed             ; Maximum Information Rate Upload Speed     ;
+                                          ; cir_download_speed           ; Committed Information Rate Download Speed ;
+                                          ; cir_upload_speed             ; Committed Information Rate Upload Speed   ;
+                                          ; terminal_group               ; Terminal Efficiency Group                 ;
+                                          ; sla                          ; SLA                                       ;
+                                          ; bandwidth_expected           ; Bandwidth Expected                        ;
+
+                                          ; installation_type            ; Installation Type                         ;
+                                          ; connection_band              ; Connection Band                           ;
+                                          ; terminal_type                ; Terminal Type                             ;
+
+                                          ; terminal_support             ; Terminal Support                          ;
+
+                                          ; sector                       ; Sector                                    ;
+                                          ; subtype                      ; Sub-Sector                                ;
+                                          ; application_supported        ; Applications Supported                    ;
+                                          ; frequency                    ; Frequency                                 ;
+                                          ; satellite                    ; Satellite                                 ;
+                                          ; security_compliance          ; Security Compliance                       ;
+                                          ; max_sla_available            ; Max SLA Available                         ;
+                                          ; hub_platform_technology      ; HUB Platform Technology                   ;
+                                          ; ground_station_location      ; Ground Station Location                   ;
+                                          ; lead_time                    ; Lead Time                                 ;
+                                          ; op_security                  ; Operational Security                      ;
+                                          ; orbit                        ; Orbit                                     ;
+                                          ; frequency_char               ; Frequency Characteristic                  ;
+                                          ; frequency_band               ; Frequency Band                            ;
+                                          ; satellite_constellation      ; Satellite Constellation Name              ;
+                                          ; public_ip_supported          ; Public IP Supported                       ;
+                                          ; traffic_prioritisation       ; Traffic Prioritisation                    ;
+                                          ; overage_vol                  ; Overage Volume                            ;
+                                          
+                                          ; internet_download_speed      ; Download Speed                            ;
+                                          ; internet_upload_speed        ; Upload Speed                              ;
+# GSM PSCs
+                                          ; sms                          ; Text                                      ;
+                                          ; voice                        ; Voice                                     ;
+                                          ; data_volume                  ; Data                                      ;
+                                          ; data_volume_premium          ; Premium Data                              ;
+                                          ; video_streaming_type         ; Video Streaming Type                      ;
+                                          ; no_of_lines                  ; Number of lines                           ;
+# Addons PSC                                          
+                                          ; mms                          ; MMS                                       ;
+

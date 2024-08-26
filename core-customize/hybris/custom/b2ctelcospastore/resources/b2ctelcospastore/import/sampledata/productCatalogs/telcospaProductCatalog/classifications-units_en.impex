@@ -1,0 +1,18 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Importing Units
+# English Localisation
+
+# Macros / Replacement Parameter definitions
+
+$systemName = telcospaClassification;
+$systemVersion = 1.0;
+$sysVer = systemVersion(catalog(id[default=$systemName]), version[default=$systemVersion]);
+$lang = en
+
+UPDATE ClassificationAttributeUnit; code[unique = true]; name[lang = $lang]; $sysVer[virtual = true, unique = true]
+                                  ; pound              ; pounds
+                                  ; inch               ; inch
+                                  ; gb                 ; gigabyte

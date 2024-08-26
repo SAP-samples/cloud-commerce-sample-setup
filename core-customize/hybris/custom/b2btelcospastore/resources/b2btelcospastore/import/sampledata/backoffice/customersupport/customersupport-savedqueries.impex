@@ -1,0 +1,42 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+INSERT_UPDATE BackofficeSavedQuery; typeCode[unique = true]; name[lang = en, unique = true]; globalOperatorCode; queryOwner(uid)[unique = true] ; sortAsc; &savedQueryRef;
+                                  ; CsTicket               ; "My Assigned Tickets"         ; "and"             ; "CustomerSupportAdministrator" ; true   ; csAdmin       ;
+                                  ; CsTicket               ; "My Assigned Tickets"         ; "and"             ; "CustomerSupportManager"       ; true   ; csMgr         ;
+                                  ; CsTicket               ; "My Assigned Tickets"         ; "and"             ; "CustomerSupportAgent"         ; true   ; csAgent       ;
+                                  ; CsTicket               ; "My Assigned Tickets"         ; "and"             ; "customer.support.1@sap.com"   ; true   ; csAgent1      ;
+                                  ; CsTicket               ; "My Assigned Tickets"         ; "and"             ; "customer.support.2@sap.com"   ; true   ; csAgent2      ;
+                                  ; CsTicket               ; "My Assigned Tickets"         ; "and"             ; "customer.support.3@sap.com"   ; true   ; csAgent3      ;
+                                  ; CsTicket               ; "My Assigned Tickets"         ; "and"             ; "customer.support.4@sap.com"   ; true   ; csAgent4      ;
+                                  ; CsTicket               ; "My Assigned Tickets"         ; "and"             ; "customer.support.5@sap.com"   ; true   ; csAgent5      ;
+                                  ; CsTicket               ; "My Assigned Tickets"         ; "and"             ; "customer.support.6@sap.com"   ; true   ; csAgent6      ;
+                                  ; CsTicket               ; "My Assigned Tickets"         ; "and"             ; "customer.support.7@sap.com"   ; true   ; csAgent7      ;
+                                  ; CsTicket               ; "My Assigned Tickets"         ; "and"             ; "customer.support.8@sap.com"   ; true   ; csAgent8      ;
+
+
+INSERT_UPDATE BackofficeSearchCondition; value[unique = true]; attribute     ; selected; operatorCode; valueReference(Employee.uid)[mode = replace, unique = true]; savedQuery(&savedQueryRef)[unique = true];
+                                       ;                     ; assignedAgent ; true    ; equals      ; CustomerSupportAdministrator                               ; csAdmin                                  ;
+                                       ;                     ; assignedAgent ; true    ; equals      ; CustomerSupportManager                                     ; csMgr                                    ;
+                                       ;                     ; assignedAgent ; true    ; equals      ; CustomerSupportAgent                                       ; csAgent                                  ;
+                                       ;                     ; assignedAgent ; true    ; equals      ; customer.support.1@sap.com                                 ; csAgent1                                 ;
+                                       ;                     ; assignedAgent ; true    ; equals      ; customer.support.2@sap.com                                 ; csAgent2                                 ;
+                                       ;                     ; assignedAgent ; true    ; equals      ; customer.support.3@sap.com                                 ; csAgent3                                 ;
+                                       ;                     ; assignedAgent ; true    ; equals      ; customer.support.4@sap.com                                 ; csAgent4                                 ;
+                                       ;                     ; assignedAgent ; true    ; equals      ; customer.support.5@sap.com                                 ; csAgent5                                 ;
+                                       ;                     ; assignedAgent ; true    ; equals      ; customer.support.6@sap.com                                 ; csAgent6                                 ;
+                                       ;                     ; assignedAgent ; true    ; equals      ; customer.support.7@sap.com                                 ; csAgent7                                 ;
+                                       ;                     ; assignedAgent ; true    ; equals      ; customer.support.8@sap.com                                 ; csAgent8                                 ;
+
+                                       ; CsTicketState#OPEN  ; state         ; true    ; equals      ;                                                            ; csAdmin                                  ;
+                                       ; CsTicketState#OPEN  ; state         ; true    ; equals      ;                                                            ; csMgr                                    ;
+                                       ; CsTicketState#OPEN  ; state         ; true    ; equals      ;                                                            ; csAgent                                  ;
+                                       ; CsTicketState#OPEN  ; state         ; true    ; equals      ;                                                            ; csAgent1                                 ;
+                                       ; CsTicketState#OPEN  ; state         ; true    ; equals      ;                                                            ; csAgent2                                 ;
+                                       ; CsTicketState#OPEN  ; state         ; true    ; equals      ;                                                            ; csAgent3                                 ;
+                                       ; CsTicketState#OPEN  ; state         ; true    ; equals      ;                                                            ; csAgent4                                 ;
+                                       ; CsTicketState#OPEN  ; state         ; true    ; equals      ;                                                            ; csAgent5                                 ;
+                                       ; CsTicketState#OPEN  ; state         ; true    ; equals      ;                                                            ; csAgent6                                 ;
+                                       ; CsTicketState#OPEN  ; state         ; true    ; equals      ;                                                            ; csAgent7                                 ;
+                                       ; CsTicketState#OPEN  ; state         ; true    ; equals      ;                                                            ; csAgent8                                 ;

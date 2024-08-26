@@ -1,0 +1,20 @@
+{
+  "git": {
+    "requireCleanWorkingDir": true,
+    "requireUpstream": false,
+    "tagName": "tua-spa-${version}",
+    "commitMessage": "Bumping tua-spa version to ${version}",
+    "tagAnnotation": "Bumping tua-spa version to ${version}"
+  },
+  "npm": {
+    "publishPath": "./../../dist/tua-spa"
+  },
+  "hooks": {
+    "after:version:bump": "cd ../.. && ng build tua-spa --prod"
+  },
+  "github": {
+    "release": true,
+    "assets": ["../../docs.tar.gz", "../../docs.zip"],
+    "releaseName": "@tua/tua-spa@${version}",
+  }
+}

@@ -1,0 +1,63 @@
+.cx-add-payment {
+  color: var(--cx-color-primary);
+
+  &:hover {
+    color: var(--cx-color-primary-accent);
+    cursor: pointer;
+    text-decoration: none;
+    text-align: start;
+
+    &.disabled {
+      color: var(--cx-color-medium);
+      cursor: not-allowed;
+      pointer-events: none;
+
+      &::after {
+        color: var(--cx-color-medium);
+      }
+    }
+
+    &.active {
+      color: var(--cx-color-primary);
+
+      &::after {
+        color: var(--cx-color-primary);
+      }
+    }
+  }
+}
+
+.cx-card-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.cx-separator {
+  padding: 5px 0;
+  border-bottom: 1px solid var(--cx-color-medium);
+  margin-bottom: 10px;
+}
+
+.cx-radio-container {
+  display: inline-flex;
+  align-items: center;
+
+  input[name="paymentMethod"] {
+    margin-right: 10px;
+  }
+}
+
+.cx-card-box {
+  display: flex;
+  align-items: center;
+}
+
+.cx-card-span {
+  margin-left: 10px;
+}
+
+.cx-payment-option-box {
+  border: 1px solid var(--cx-color-medium);
+  border-radius: 12px;
+  padding: 20px;
+}

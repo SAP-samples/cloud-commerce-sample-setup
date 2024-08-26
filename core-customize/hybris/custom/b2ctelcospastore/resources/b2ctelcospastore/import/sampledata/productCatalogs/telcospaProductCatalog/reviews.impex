@@ -1,0 +1,41 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Importing Product Reviews
+
+$defaultPassword = password
+
+# Reviews from Customers
+
+INSERT_UPDATE Customer; groups(uid)     ; uid[unique = true]          ; name                 ; customerId
+                      ; "customergroup" ; "keenreviewer1@hybris.com"  ; "Kenneth Reviewer"   ; "keenreviewer1@hybris.com"  ;
+                      ; "customergroup" ; "keenreviewer2@hybris.com"  ; "Ken Reviewer"       ; "keenreviewer2@hybris.com"  ;
+                      ; "customergroup" ; "keenreviewer3@hybris.com"  ; "John Reviewer"      ; "keenreviewer3@hybris.com"  ;
+                      ; "customergroup" ; "keenreviewer4@hybris.com"  ; "Steve Reviewer"     ; "keenreviewer4@hybris.com"  ;
+                      ; "customergroup" ; "keenreviewer5@hybris.com"  ; "Adam Reviewer"      ; "keenreviewer5@hybris.com"  ;
+                      ; "customergroup" ; "keenreviewer6@hybris.com"  ; "Honda Reviewer"     ; "keenreviewer6@hybris.com"  ;
+                      ; "customergroup" ; "keenreviewer7@hybris.com"  ; "Roger Reviewer"     ; "keenreviewer7@hybris.com"  ;
+                      ; "customergroup" ; "keenreviewer8@hybris.com"  ; "Ronald Reviewer"    ; "keenreviewer8@hybris.com"  ;
+                      ; "customergroup" ; "keenreviewer9@hybris.com"  ; "Klaus Reviewer"     ; "keenreviewer9@hybris.com"  ;
+                      ; "customergroup" ; "keenreviewer10@hybris.com" ; "Stefan Reviewer"    ; "keenreviewer10@hybris.com" ;
+                      ; "customergroup" ; "keenreviewer11@hybris.com" ; "Rick Reviewer"      ; "keenreviewer11@hybris.com" ;
+                      ; "customergroup" ; "keenreviewer12@hybris.com" ; "Richard Reviewer"   ; "keenreviewer12@hybris.com" ;
+                      ; "customergroup" ; "keenreviewer13@hybris.com" ; "Aseem Reviewer"     ; "keenreviewer13@hybris.com" ;
+                      ; "customergroup" ; "keenreviewer14@hybris.com" ; "Toby Reviewer"      ; "keenreviewer14@hybris.com" ;
+                      ; "customergroup" ; "keenreviewer15@hybris.com" ; "Brendan Reviewer"   ; "keenreviewer15@hybris.com" ;
+                      ; "customergroup" ; "keenreviewer16@hybris.com" ; "Katie Reviewer"     ; "keenreviewer16@hybris.com" ;
+                      ; "customergroup" ; "keenreviewer17@hybris.com" ; "Flavia Reviewer"    ; "keenreviewer17@hybris.com" ;
+                      ; "customergroup" ; "keenreviewer18@hybris.com" ; "Thomas Reviewer"    ; "keenreviewer18@hybris.com" ;
+                      ; "customergroup" ; "keenreviewer19@hybris.com" ; "Axel Reviewer"      ; "keenreviewer19@hybris.com" ;
+                      ; "customergroup" ; "keenreviewer20@hybris.com" ; "Moritz Reviewer"    ; "keenreviewer20@hybris.com" ;
+                      ; "customergroup" ; "keenreviewer21@hybris.com" ; "Alistair Reviewer"  ; "keenreviewer21@hybris.com" ;
+                      ; "customergroup" ; "keenreviewer22@hybris.com" ; "Nicko Reviewer"     ; "keenreviewer22@hybris.com" ;
+                      ; "customergroup" ; "keenreviewer23@hybris.com" ; "Claudius Reviewer"  ; "keenreviewer23@hybris.com" ;
+                      ; "customergroup" ; "keenreviewer24@hybris.com" ; "Doris Reviewer"     ; "keenreviewer24@hybris.com" ;
+                      ; "customergroup" ; "keenreviewer25@hybris.com" ; "George Reviewer"    ; "keenreviewer25@hybris.com" ;
+                      ; "customergroup" ; "keenreviewer26@hybris.com" ; "Henry Reviewer"     ; "keenreviewer26@hybris.com" ;
+                      ; "customergroup" ; "keenreviewer27@hybris.com" ; "Frederick Reviewer" ; "keenreviewer27@hybris.com" ;
+                      ; "customergroup" ; "keenreviewer28@hybris.com" ; "Deepak Reviewer"    ; "keenreviewer28@hybris.com" ;
+                      ; "customergroup" ; "keenreviewer29@hybris.com" ; "Elizabeth Reviewer" ; "keenreviewer29@hybris.com" ;
+                      ; "customergroup" ; "keenreviewer30@hybris.com" ; "Dorothy Reviewer"   ; "keenreviewer30@hybris.com" ;

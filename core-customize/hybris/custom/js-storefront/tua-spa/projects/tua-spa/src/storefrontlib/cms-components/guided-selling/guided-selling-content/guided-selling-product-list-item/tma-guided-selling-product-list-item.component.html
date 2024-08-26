@@ -1,0 +1,73 @@
+<div class="row">
+  <div class="col-12 col-md-4">
+    <a
+      [routerLink]="{ cxRoute: 'product', params: product } | cxUrl"
+      (click)="setShouldRemoveCurrentSelections(false)"
+      class="cx-product-image-container"
+    >
+
+
+      <!-- Image -->
+      <cx-media
+        class="cx-product-image"
+        [container]="product.images?.PRIMARY"
+        format="product"
+        [alt]="product.summary"
+      ></cx-media>
+    </a>
+  </div>
+
+  <!-- Name -->
+  <div class="col-12 col-md-8">
+    <a
+      [routerLink]="{ cxRoute: 'product', params: product } | cxUrl"
+      (click)="setShouldRemoveCurrentSelections(false)"
+      class="cx-product-name"
+    ><h2 [innerHtml]="product.nameHtml"></h2></a>
+
+    <!-- Rating -->
+    <cx-star-rating
+      *ngIf="product.averageRating"
+      [rating]="product?.averageRating"
+      [disabled]="true"
+    ></cx-star-rating>
+    <div *ngIf="!product.averageRating" class="cx-product-no-review">
+      {{ 'productDetails.noReviews' | cxTranslate }}
+    </div>
+
+    <!-- Price -->
+    <div class="cx-product-price" aria-label="Product price">
+      <div *ngIf="product.price?.formattedValue; else compositePrice">
+        {{ 'guidedSelling.currentSelection.startingFrom' | cxTranslate }}
+      </div>
+      {{ product.price?.formattedValue }}
+    </div>
+
+    <ng-template #compositePrice>
+      <cx-price-display [price]="product.productOfferingPrice[0]"></cx-price-display>
+    </ng-template>
+
+    <!-- Summary -->
+    <div class="row">
+      <div class="col-12 col-md-8">
+        <p class="cx-product-summary" [innerHtml]="product.summary">
+          {{ product.summary }}
+        </p>
+      </div>
+
+      <!-- Select/Unselect Button -->
+      <div class="col-12 col-md-4">
+        <cx-guided-selling-add-selection
+          [product]="product"
+          [isSelected]="isSelected"
+          [tmfProducts]="tmfProducts"
+          (updateSelected)="updateSelected($event)">
+        </cx-guided-selling-add-selection>
+      </div>
+      <cx-tma-configurable-pscvu
+        [product]="product"
+      >
+      </cx-tma-configurable-pscvu>
+    </div>
+  </div>
+</div>

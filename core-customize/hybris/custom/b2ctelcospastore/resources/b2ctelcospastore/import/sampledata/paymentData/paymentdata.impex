@@ -1,0 +1,28 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2023 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Importing Sample Payment Method Data
+
+$lang = en
+
+INSERT_UPDATE SingleCodeCoupon; couponId[unique = true]; name[lang = $lang]; startDate[dateformat = dd.MM.yyyy]; endDate[dateformat = dd.MM.yyyy]; maxRedemptionsPerCustomer[default = 1]; maxTotalRedemptions[default = 100]; active[default = true]
+                              ; coupon_0000            ; Coupon 0000       ; 27.02.2023                        ; 26.02.2099                      ;
+                              ; coupon_0001            ; Coupon 0001       ; 27.02.2023                        ; 26.02.2099                      ;
+                              ; coupon_0002            ; Coupon 0002       ; 27.02.2023                        ; 26.02.2099                      ;
+                              ; coupon_0003            ; Coupon 0003       ; 27.02.2023                        ; 26.02.2099                      ;
+                              ; coupon_0004            ; Coupon 0004       ; 27.02.2023                        ; 26.02.2099                      ;
+                              ; coupon_0005            ; Coupon 0005       ; 27.02.2023                        ; 26.02.2099                      ;
+                              ; coupon_0006            ; Coupon 0006       ; 27.02.2023                        ; 26.02.2099                      ;
+                              ; coupon_0007            ; Coupon 0007       ; 27.02.2023                        ; 26.02.2099                      ;
+                              ; coupon_0008            ; Coupon 0008       ; 27.02.2023                        ; 26.02.2099                      ;
+                              ; coupon_0009            ; Coupon 0009       ; 27.02.2023                        ; 26.02.2099                      ;
+
+#Importing PromotionSourceRule which can be modified with any of above coupon code in the conditions.
+#On applying such coupon, fixed discount is applied on cart.
+
+INSERT_UPDATE RuleGroup; code[unique = true]
+                       ; couponPromotionRuleGroup
+
+INSERT_UPDATE PromotionSourceRule; code[unique = true]        ; priority; maxAllowedRuns; ruleGroup(code)          ; conditions                                                                                                                                                                                                                                                                                                                                                               ; actions                                                                                                                                                                                                           ; website(Identifier); name                         ; description
+                                 ; coupon_code_fixed_discount ; 25      ; 1             ; couponPromotionRuleGroup ; "[{""definitionId"":""y_qualifying_coupons"",""parameters"":{""coupons"":{""uuid"":""9644b8a6-ad94-4990-afca-2a132e1bd070"",""type"":""List(ItemType(AbstractCoupon))"",""value"":[""coupon_0000"",""coupon_0001"",""coupon_0002"",""coupon_0003"",""coupon_0004"",""coupon_0005"",""coupon_0006"",""coupon_0007"",""coupon_0008"",""coupon_0009""]}},""children"":[]}]" ; "[{""definitionId"":""y_order_fixed_discount"",""parameters"":{""value"":{""uuid"":""b4dfe431-e526-42e2-bb08-0dea08f013db"",""type"":""Map(ItemType(Currency),java.math.BigDecimal)"",""value"":{""USD"":10}}}}]" ; telcospaPromoGrp   ; "Coupon code fixed discount" ; "When these coupons are applied on the cart, offer fixed price discount."

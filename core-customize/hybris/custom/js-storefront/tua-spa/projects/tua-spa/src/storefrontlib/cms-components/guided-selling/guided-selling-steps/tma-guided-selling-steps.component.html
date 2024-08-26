@@ -1,0 +1,68 @@
+<ng-container *ngIf="!compact; else compactView">
+  <section class="cx-page-section">
+    <div class="step-menu">
+      <div class="d-flex justify-content-center">
+        <p>
+          <strong>{{ 'guidedSelling.steps.configureOffer' | cxTranslate }}</strong>
+        </p>
+      </div>
+      <div *ngFor="let step of guidedSellingSteps">
+        <button id="{{step.id}}" class="stepwizard step group"
+             (click)="changeActiveStep(step.id, step.inProductGroup)"
+             [ngClass]="step.active ? 'step-active' : 'step-inactive'"
+             [attr.aria-label]="step.name">
+          <p>
+            <strong>
+              {{ step.name }}
+              {{ !step.inProductGroup ? ('guidedSelling.steps.offers' | cxTranslate) : '' }}
+            </strong>
+            <span class="material-icons collapseCursor icon-align">keyboard_arrow_right</span>
+          </p>
+        </button>
+      </div>
+    </div>
+  </section>
+</ng-container>
+<ng-template #compactView>
+  <div
+    role="region"
+    tabindex="-1"
+    [attr.aria-label]="'guidedSelling.steps.configureOffer' | cxTranslate"
+    class="container"
+  >
+    <ng-container>
+      <ng-container>
+        <button [attr.aria-expanded]="activeTabNum" [class.active]="activeTabNum" (click)="select(0, $event)">
+          {{ 'guidedSelling.steps.configureOffer' | cxTranslate }}
+          <span class="accordion-icon" aria-hidden="true"></span>
+        </button>
+
+        <div
+          [class.active]="activeTabNum"
+          class="cx-tab-paragraph-content"
+          tabindex="0"
+          role="presentation"
+        >
+          <section class="cx-page-section">
+            <div class="step-menu">
+              <div *ngFor="let step of guidedSellingSteps">
+                <div id="{{step.id}}" class="stepwizard step group"
+                     (click)="changeActiveStep(step.id, step.inProductGroup)"
+                     [ngClass]="step.active ? 'step-active' : 'step-inactive'">
+                  <p>
+                    <strong>
+                      {{ step.name }}
+                      {{ !step.inProductGroup ? ('guidedSelling.steps.offers' | cxTranslate) : '' }}
+                    </strong>
+                    <span class="material-icons collapseCursor icon-align" aria-hidden="true">keyboard_arrow_right</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </ng-container>
+    </ng-container>
+  </div>
+</ng-template>
+

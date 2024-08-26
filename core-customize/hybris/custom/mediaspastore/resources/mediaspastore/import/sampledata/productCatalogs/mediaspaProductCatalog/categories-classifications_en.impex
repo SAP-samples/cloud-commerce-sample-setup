@@ -1,0 +1,36 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+#******************************This file is generated - please do not edit it. It will be regenerated after every build.********************************#
+# ImpEx for Importing Classification Categories into Media SPA Store
+# Macros / Replacement Parameter definitions
+
+$classCatalogVersion = catalogversion(catalog(id[default='mediaspaClassification']), version[default='1.0'])[unique=true, default='mediaspaClassification:1.0']
+$classSystemVersion = systemVersion(catalog(id[default='mediaspaClassification']), version[default='1.0'])[unique=true]
+$systemName = mediaspaClassification;
+
+$lang = en
+
+INSERT_UPDATE ClassificationSystem; id[unique = true]; name[lang = $lang]              ;
+                                  ; $systemName      ; Media Spa Classification System ;
+
+INSERT_UPDATE ClassificationClass; code[unique = true]        ; name[lang = $lang]; $classCatalogVersion
+                                 ; mediacontentclassification ; Media
+                                 ; creditsclassification      ; Credits
+
+INSERT_UPDATE ClassificationAttribute; code[unique = true]; name[lang = $lang]; $classSystemVersion
+                                     ; genre              ; Genre
+                                     ; actors             ; Actors
+                                     ; producers          ; Producers
+                                     ; directors          ; Directors
+
+INSERT_UPDATE ClassificationAttributeValue; code[unique = true]; name[lang = $lang]; $classSystemVersion
+                                          ; drama              ; Drama
+                                          ; adventure          ; Adventure
+                                          ; brady_germogen     ; Brady Germogen
+                                          ; dirk_alimjan       ; Dirk Alimjan
+                                          ; moana_chifundo     ; Moana Chifundo
+                                          ; van_hohenheim      ; Van Hohenheim
+                                          ; nina_kilik         ; Nina Kilik
+                                          ; jon_jacobsen       ; Jon Jacobsen
+                                          ; kayin_qillaq       ; Kayin Qillaq

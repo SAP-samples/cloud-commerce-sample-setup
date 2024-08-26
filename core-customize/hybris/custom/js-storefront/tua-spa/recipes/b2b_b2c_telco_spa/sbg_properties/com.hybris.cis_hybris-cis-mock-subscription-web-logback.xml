@@ -1,0 +1,42 @@
+<!--
+ Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<configuration>
+  <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+    <file>/home/hybris/tomcat/logs/com.hybris.cis_hybris-cis-mock-subscription-web.log</file>
+    <encoder>
+      <Pattern>%d [%-5level][%t][%c][%X{tenant}][%X{requestId}] %m%n</Pattern>
+    </encoder>
+  </appender>
+
+  <appender name="RESOURCE-PROFILER" class="ch.qos.logback.core.FileAppender">
+    <file>/home/hybris/tomcat/logs/com.hybris.cis_hybris-cis-mock-subscription-web_resource_profiler.log</file>
+    <append>true</append>
+    <encoder>
+      <pattern>%d [%-5level][%t][%c][%X{tenant}][%X{requestId}] %m%n</pattern>
+    </encoder>
+  </appender>
+  <logger name="RestResourceProfilingFilter" level="DEBUG" additivity="false">
+    <appender-ref ref="RESOURCE-PROFILER"/>
+  </logger>
+
+  <logger name="org.apache" level="info"/>
+  <logger name="javax.validation" level="info"/>
+
+  <logger name="org.springframework.beans.factory" level="warn"/>
+  <logger name="org.springframework.transaction" level="info"/>
+  <logger name="org.springframework.validation" level="info"/>
+  <logger name="org.apache.commons.httpclient" level="debug"/>
+  <logger name="httpclient.wire" level="debug"/>
+  <logger name="org.jgroups.protocols.UDP" level="error"/>
+  <logger name="org.apache.activemq.transport.AbstractInactivityMonitor" level="warn"/>
+  <logger name="org.apache.camel.component.file.FileConsumer" level="warn"/>
+
+  <logger name="com.hybris.commons" level="debug"/>
+  <logger name="com.hybris.dataonboarding" level="debug"/>
+  <logger name="com.hybris.usermanagement" level="debug"/>
+
+  <root level="info">
+    <appender-ref ref="FILE"/>
+  </root>
+</configuration>

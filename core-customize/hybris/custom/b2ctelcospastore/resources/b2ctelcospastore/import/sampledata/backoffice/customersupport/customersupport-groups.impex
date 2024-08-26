@@ -1,0 +1,11 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+#
+# Update Customer Support Agent and Manager to include csagentgroup
+#
+
+INSERT_UPDATE CsAgentGroup; UID[unique = true]          ; locname[lang = en]             ; groups(uid)                                                                          ; description
+                          ; customersupportmanagergroup ; Customer Support Manager Group ; customersupportmanagerrole,customersupportagentrole,csagentgroup,csagentmanagergroup ; The Customer Support Manager Group has access to the Customer Support Backoffice's Customer Support Manager Group and Customer Support Agent Group views AND/OR the Assisted Service Module.
+                          ; customersupportagentgroup   ; Customer Support Agent Group   ; customersupportagentrole,csagentgroup                                                ; The Customer Support Agent Group has access to the Customer Support Backoffice's Customer Support Agent Group views and AND/OR the Assisted Service Module.

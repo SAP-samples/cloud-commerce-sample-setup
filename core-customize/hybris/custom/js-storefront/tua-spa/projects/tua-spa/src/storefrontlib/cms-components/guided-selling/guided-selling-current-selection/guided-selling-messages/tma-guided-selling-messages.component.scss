@@ -1,0 +1,36 @@
+.guided-selling-error {
+  border: 1px solid var(--cx-color-danger);
+  background: var(--cx-color-danger-accent);
+  padding: 20px;
+  cx-icon {
+    color: var(--cx-color-danger);
+    &::before {
+      font-size: 2rem;
+      padding-right: 15px;
+    }
+  }
+  ul {
+    li {
+      padding-bottom: 5px;
+      &:last-child {
+        padding-bottom: 0;
+      }
+    }
+  }
+}
+
+.guided-selling-success {
+  border: 1px solid var(--cx-color-success);
+  background: var(--cx-color-success-accent);
+  padding: 20px;
+  cx-icon {
+    color: var(--cx-color-success);
+    &::before {
+      font-size: 2rem;
+      padding-right: 15px;
+    }
+  }
+  p {
+    padding-left: 45px;
+  }
+}

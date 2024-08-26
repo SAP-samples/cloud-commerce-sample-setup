@@ -1,0 +1,15 @@
+<ng-container *ngIf="navigationBanners$ | async as navigationBanners">
+    <ng-container *ngFor="let banner of navigationBanners">
+      <div class="col-6 col-sm-3 banner-container">
+        <cx-generic-link
+          *ngIf="banner.urlLink"
+          [url]="banner.urlLink"
+          [target]="getTarget(banner)"
+        >
+          <p class="headline" *ngIf="banner.headline" [innerHTML]="banner.headline"></p>
+          <cx-media [container]="getImage(banner)"></cx-media>
+          <p class="content" *ngIf="banner.content" [innerHTML]="banner.content"></p>
+        </cx-generic-link>
+      </div>
+    </ng-container>
+</ng-container>

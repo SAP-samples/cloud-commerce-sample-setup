@@ -1,0 +1,92 @@
+<ng-container *ngIf="tmfProduct">
+  <ng-container *ngIf="currency$ | async as currency">
+    <div class="card w-100 border-0">
+      <div class="card-header py-3 background-{{tmfProduct.status}}">
+        <div class="row mx-auto">
+          <div class="col-6">
+            <span class="labelHeading">{{tmfProduct.name}} ({{tmfProduct.id}})</span>
+          </div>
+          <div class="col-3">
+            {{
+              'subscriptions.status.status'
+                | cxTranslate: { context: tmfProduct.status }
+            }}
+          </div>
+        </div>
+      </div>
+      <div class="card-body border">
+        <div class="row mx-auto py-2">
+          <div class="col-6">
+            <span class="label">{{'subscriptions.contractStartDate' | cxTranslate}}</span>
+          </div>
+          <div class="col-6">
+            <span class="labelText">{{ tmfProduct.startDate | cxDate}}</span>
+          </div>
+        </div>
+        <div class="row mx-auto py-2">
+          <div class="col-6">
+            <span class="label">{{'subscriptions.expiresOn' | cxTranslate}}</span>
+          </div>
+          <div class="col-6">
+            <span class="labelText">{{tmfProduct.terminationDate | cxDate}}</span>
+          </div>
+        </div>
+        <ng-container *ngIf="tmfProduct.productOrderItem">
+          <ng-container *ngFor="let productOrder of tmfProduct.productOrderItem ">
+              <div class="row mx-auto py-2" *ngIf="!order">
+              <div class="col-6">
+                <span class="label">{{'subscriptions.orderNumber' | cxTranslate}}</span>
+              </div>
+              <div class="col-6">
+                <span class="labelText">{{productOrder.productOrderId}}</span>
+              </div>
+            </div>
+              <ng-container *ngIf="order">
+                <div class="row mx-auto py-2">
+                  <div class="col-6">
+                    <span class="label">{{'subscriptions.orderNumber' | cxTranslate}}</span>
+                  </div>
+                  <div class="col-6">
+                    <a [routerLink]="
+                  {
+                    cxRoute: 'orderDetails',
+                    params: order
+                  } | cxUrl
+                ">
+                      {{ order?.code }}</a>
+                  </div>
+                </div>
+                <ng-container *ngIf="getProductOrderEntry(order, productOrder.orderItemId ) as orderEntry">
+                  <div class="row mx-auto">
+                    <div class="col mx-auto">
+                      <span class="label">{{'subscriptions.contractDuration' | cxTranslate}}</span>
+                    </div>
+                    <div class="col mx-auto">
+                      <span class="labelText">{{ orderEntry.subscriptionTerm.name}}</span>
+                    </div>
+                  </div>
+                  <div class="row mx-auto">
+                    <ng-container *ngIf="getPrices(orderEntry) as cartItemPrice">
+                      <div ngbAccordion>
+                        <div ngbAccordionItem id="toggle-1">
+                          <ng-template ngbAccordionHeader let-opened="opened">
+                            <div class="d-flex align-items-center justify-content-between">
+                              <button ngbPanelToggle
+                                      class="label btn btn-link py-0 px-3">{{'subscriptions.priceInfo' | cxTranslate}}</button>
+                            </div>
+                          </ng-template>
+                          <ng-template ngbPanelContent>
+                            <cx-cart-item-price-display [price]="orderEntry.cartPrice"></cx-cart-item-price-display>
+                          </ng-template>
+                        </div>
+                      </div>
+                    </ng-container>
+                  </div>
+                </ng-container>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>

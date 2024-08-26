@@ -1,0 +1,101 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+$productCatalog = b2btelcospaProductCatalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = '$productCatalog:Staged']
+$currency = currency(isocode)[default = USD]
+$priceEvent = priceEvent(code)[default='paynow']
+$priceEventRcUc = priceEvent(code)[default='monthly']
+
+################################################
+###            One time charges              ###
+################################################
+
+INSERT_UPDATE TmaOneTimeProdOfferPriceCharge; id[unique = true]   ; $catalogVersion; value   ; $priceEvent; $currency
+                                            ; OTC_1246_15_USD_PN  ;                ; 1246.15 ;
+                                            ; OTC_2362_22_USD_OFB ;                ; 2362.22 ; onfirstbill
+                                            ; OTC_2387_22_USD_OFB ;                ; 2387.22 ; onfirstbill
+                                            ; OTC_2397_23_USD_OFB ;                ; 2397.23 ; onfirstbill
+                                            ; OTC_2409_33_USD_OFB ;                ; 2409.33 ; onfirstbill
+                                            ; OTC_2499_71_USD_OFB ;                ; 2499.71 ; onfirstbill
+                                            ; OTC_2549_56_USD_OFB ;                ; 2549.56 ; onfirstbill
+                                            ; OTC_2689_49_USD_OFB ;                ; 2689.49 ; onfirstbill
+                                            ; OTC_799_99_USD_PN   ;                ; 799.99  ;
+                                            ; OTC_849_99_USD_PN   ;                ; 849.99  ;
+                                            ; OTC_949_99_USD_PN   ;                ; 949.99  ;
+                                            ; OTC_999_99_USD_PN   ;                ; 999.99  ;
+                                            ; OTC_1099_99_USD_PN  ;                ; 1099.99 ;
+                                            ; OTC_1299_99_USD_PN  ;                ; 1299.99 ;
+                                            ; OTC_1199_99_USD_PN  ;                ; 1199.99 ;
+                                            ; OTC_1399_99_USD_PN  ;                ; 1399.99 ;
+                                            ; OTC_1249_99_USD_PN  ;                ; 1249.99 ;
+                                            ; OTC_1049_99_USD_PN  ;                ; 1049.99 ;
+                                            ; OTC_19_99_USD_PN    ;                ; 19.99   ;
+                                            ; OTC_199_99_USD_PN   ;                ; 199.99  ;
+                                            ; OTC_15_99_USD_PN    ;                ; 15.99   ;
+                                            ; OTC_34_99_USD_PN    ;                ; 34.99   ;
+                                            ; OTC_39_99_USD_PN    ;                ; 39.99   ;
+                                            ; OTC_27_99_USD_PN    ;                ; 27.99   ;
+                                            ; OTC_50_00_USD_PN    ;                ; 50.00   ;
+                                            ; OTC_149_99_USD_PN   ;                ; 149.99  ;
+                                            ; OTC_10_00_USD_PN    ;                ; 10.00   ;
+
+
+################################################
+###              Recurring charges           ###
+################################################
+
+INSERT_UPDATE TmaRecurringProdOfferPriceCharge; id[unique = true]              ; name                                 ; $catalogVersion; productSpecCharacteristicValues(id, $catalogVersion) ; value    ; $currency; $priceEventRcUc; cycleStart; cycleEnd
+                                              ; RC_1500_00_USD_start_1         ; "RC 1500.00 USD Start 1"             ;                ;                                                      ; 1500.00  ;          ;                ; 1         ;
+                                              ; RC_3045_54_USD_start_1         ; "RC 3045.54 USD Start 1"             ;                ;                                                      ; 3045.54  ;          ;                ; 1         ;
+                                              ; RC_10512_62_USD_start_1        ; "RC 10512.62 USD Start 1"            ;                ;                                                      ; 10512.62 ;          ;                ; 1         ;
+                                              ; RC_27125_24_USD_start_1        ; "RC 27125.24 USD Start 1"            ;                ;                                                      ; 27125.24 ;          ;                ; 1         ;
+                                              ; RC_38125_42_USD_start_1        ; "RC 38125.42 USD Start 1"            ;                ;                                                      ; 38125.42 ;          ;                ; 1         ;
+                                              ; RC_44128_54_USD_start_1        ; "RC 44128.54 USD Start 1"            ;                ;                                                      ; 44128.54 ;          ;                ; 1         ;
+                                              ; RC_50125_12_USD_start_1        ; "RC 50125.12 USD Start 1"            ;                ;                                                      ; 50125.12 ;          ;                ; 1         ;
+                                              ; RC_85_00_USD_start_1_1line     ; "RC 85.00 USD Start 1 - 1 line"      ;                ;                                                      ; 85.00    ;          ;                ; 1         ;
+                                              ; RC_70_00_USD_start_1_1line     ; "RC 70.00 USD Start 1 - 1 line"      ;                ;                                                      ; 70.00    ;          ;                ; 1         ;
+                                              ; RC_70_00_USD_start_1_2lines    ; "RC 70.00 USD Start 1 - 2 lines"     ;                ;                                                      ; 70.00    ;          ;                ; 1         ;
+                                              ; RC_60_00_USD_start_1_1line     ; "RC 60.00 USD Start 1 - 1 line"      ;                ;                                                      ; 60.00    ;          ;                ; 1         ;
+                                              ; RC_60_00_USD_start_1_2lines    ; "RC 60.00 USD Start 1 - 2 lines"     ;                ;                                                      ; 60.00    ;          ;                ; 1         ;
+                                              ; RC_57_00_USD_start_1_3lines    ; "RC 57.00 USD Start 1 - 3 lines"     ;                ;                                                      ; 57.00    ;          ;                ; 1         ;
+                                              ; RC_50_00_USD_start_1_4lines    ; "RC 50.00 USD Start 1 - 4 lines"     ;                ;                                                      ; 57.00    ;          ;                ; 1         ;
+                                              ; RC_47_00_USD_start_1_3lines    ; "RC 47.00 USD Start 1 - 3 lines"     ;                ;                                                      ; 47.00    ;          ;                ; 1         ;
+                                              ; RC_46_00_USD_start_1_5lines    ; "RC 46.00 USD Start 1 - 5 lines"     ;                ;                                                      ; 46.00    ;          ;                ; 1         ;
+                                              ; RC_45_00_USD_start_1_1line     ; "RC 45.00 USD Start 1 - 1 line"      ;                ;                                                      ; 45.00    ;          ;                ; 1         ;
+                                              ; RC_45_00_USD_start_1_2lines    ; "RC 45.00 USD Start 1 - 2 lines"     ;                ;                                                      ; 45.00    ;          ;                ; 1         ;
+                                              ; RC_40_00_USD_start_1_4lines    ; "RC 40.00 USD Start 1 - 4 lines"     ;                ;                                                      ; 40.00    ;          ;                ; 1         ;
+                                              ; RC_40_00_USD_start_1_6plus     ; "RC 40.00 USD Start 1 - 6plus lines" ;                ;                                                      ; 40.00    ;          ;                ; 1         ;
+                                              ; RC_37_00_USD_start_1_3lines    ; "RC 37.00 USD Start 1 - 3 lines"     ;                ;                                                      ; 37.00    ;          ;                ; 1         ;
+                                              ; RC_37_00_USD_start_1_5lines    ; "RC 37.00 USD Start 1 - 5 lines"     ;                ;                                                      ; 37.00    ;          ;                ; 1         ;
+                                              ; RC_30_00_USD_start_1_4lines    ; "RC 30.00 USD Start 1 - 4 lines"     ;                ;                                                      ; 30.00    ;          ;                ; 1         ;
+                                              ; RC_30_00_USD_start_1_6plus     ; "RC 30.00 USD Start 1 - 6plus lines" ;                ;                                                      ; 30.00    ;          ;                ; 1         ;
+                                              ; RC_26_00_USD_start_1_5lines    ; "RC 26.00 USD Start 1 - 5 lines"     ;                ;                                                      ; 26.00    ;          ;                ; 1         ;
+                                              ; RC_25_00_USD_start_1_6plus     ; "RC 25.00 USD Start 1 - 6plus lines" ;                ;                                                      ; 25.00    ;          ;                ; 1         ;
+                                              ; RC_5_00_USD_start_1_addon      ; "RC 5.00 USD Start 1 - addon"        ;                ;                                                      ; 5.00     ;          ;                ; 1         ;
+                                              ; RC_10_00_USD_start_1_addon     ; "RC 10.00 USD Start 1 - addon"       ;                ;                                                      ; 10.00    ;          ;                ; 1         ;                                              
+                                              ; RC_15_00_USD_start_1_addon     ; "RC 15.00 USD Start 1 - addon"       ;                ;                                                      ; 15.00    ;          ;                ; 1         ;
+                                              ; RC_40_00_USD_start_1_internet  ; "RC 40.00 USD Start 1 - Internet"    ;                ;                                                      ; 40.00    ;          ;                ; 1         ;
+                                              ; RC_45_00_USD_start_1_internet  ; "RC 45.00 USD Start 1 - Internet"    ;                ;                                                      ; 45.00    ;          ;                ; 1         ;
+                                              ; RC_60_00_USD_start_1_internet  ; "RC 60.00 USD Start 1 - Internet"    ;                ;                                                      ; 60.00    ;          ;                ; 1         ;
+                                              ; RC_80_00_USD_start_1_internet  ; "RC 80.00 USD Start 1 - Internet"    ;                ;                                                      ; 80.00    ;          ;                ; 1         ;
+                                              ; RC_175_00_USD_start_1_internet ; "RC 175.00 USD Start 1 - Internet"   ;                ;                                                      ; 175.00   ;          ;                ; 1         ;
+
+
+################################################
+###              Discount alterations        ###
+################################################
+
+INSERT_UPDATE TmaDiscountProdOfferPriceAlteration; id[unique = true]                     ; value; cycleStart; cycleEnd; $currency; $priceEvent; $catalogVersion; isPercentage[default = false];
+                                                 ; 100_percent_start_1_end_6_monthly_dsc ; 100  ; 1         ; 6       ;          ; monthly    ;                ; true                         ;
+
+################################################
+###              Composite prices            ###
+################################################
+
+INSERT_UPDATE TmaCompositeProdOfferPrice; id[unique = true]                     ; $catalogVersion; children(id, $catalogVersion)
+                                        ; connectivity_service_plan_USD_pop     ;                ; OTC_1246_15_USD_PN, RC_1500_00_USD_start_1, 100_percent_start_1_end_6_monthly_dsc
+                                        ; business_unlimited_starter_USD_pop    ;                ; OTC_50_00_USD_PN, RC_60_00_USD_start_1_1line, RC_45_00_USD_start_1_2lines, RC_37_00_USD_start_1_3lines, RC_30_00_USD_start_1_4lines, RC_26_00_USD_start_1_5lines, RC_25_00_USD_start_1_6plus
+                                        ; business_unlimited_advanced_USD_pop   ;                ; OTC_10_00_USD_PN, RC_70_00_USD_start_1_1line, RC_60_00_USD_start_1_2lines, RC_47_00_USD_start_1_3lines, RC_40_00_USD_start_1_4lines, RC_37_00_USD_start_1_5lines, RC_30_00_USD_start_1_6plus
+                                        ; business_unlimited_enterprise_USD_pop ;                ; RC_85_00_USD_start_1_1line, RC_70_00_USD_start_1_2lines, RC_57_00_USD_start_1_3lines, RC_50_00_USD_start_1_4lines, RC_46_00_USD_start_1_5lines, RC_40_00_USD_start_1_6plus

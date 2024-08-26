@@ -1,0 +1,53 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+#
+# ENGLISH LOCALIZATION
+#
+
+$version = Staged
+$lang = en
+$facetSearchConfigName = utilitiesspaIndex
+$productCatalog = utilitiesSpaProductCatalog
+$solrIndexedType = utilitiesspaPriceType
+$catalogVersion = catalogVersion(CatalogVersion.catalog(Catalog.id[default = $productCatalog]), CatalogVersion.version[default = $version])[default = $productCatalog:$version]
+$contentCatalog = utilitiesSpaContentCatalog
+$contentCatalogVersion = catalogVersion(CatalogVersion.catalog(Catalog.id[default = $contentCatalog]), CatalogVersion.version[default = $version])[default = $contentCatalog:$version]
+
+UPDATE SolrIndexedProperty; solrIndexedType(identifier)[unique = true]; name[unique = true]; displayName[lang = $lang]
+                          ; $solrIndexedType                          ; color              ; "Color"
+                          ; $solrIndexedType                          ; lifespan           ; "Lifespan"
+                          ; $solrIndexedType                          ; material           ; "Material"
+                          ; $solrIndexedType                          ; power              ; "Power"
+                          ; $solrIndexedType                          ; voltage            ; "Voltage"
+                          ; $solrIndexedType                          ; electricitypower   ; "Electricity power"
+                          ; $solrIndexedType                          ; gasvolume          ; "Gas volume"
+                          ; $solrIndexedType                          ; homewarrantyperiod ; "Warranty period"
+                          ; $solrIndexedType                          ; homewarrantyamount ; "Warranty amount"
+                          ; $solrIndexedType                          ; energytype         ; "Energy type"
+                          ; $solrIndexedType                          ; metertype          ; "Meter type"
+
+#
+# Add additional sample solr index configuration
+#
+
+# Synonyms
+INSERT_UPDATE SolrSynonymConfig; facetSearchConfig(name)[unique = true]; language(isocode)[unique = true, default = $lang]; synonymFrom[unique = true]; synonymTo
+                               ; $facetSearchConfigName                ;                                                  ; "Plan,Contract"           ;
+                               ; $facetSearchConfigName                ;                                                  ; "Gas"                     ;
+                               ; $facetSearchConfigName                ;                                                  ; "Solar"                   ;
+                               ; $facetSearchConfigName                ;                                                  ; "Electrical"              ; "Electric"
+
+# Keyword Redirects
+INSERT_UPDATE SolrFacetSearchKeywordRedirect; facetSearchConfig(name)[unique = true]; language(isocode)[unique = true, default = $lang]; keyword[unique = true]; matchType(code)[unique = true]; ignoreCase[default = true]; redirect(&redirectRefID)
+                                            ; $facetSearchConfigName                ;                                                  ; "cart"                ; CONTAINS                      ;                           ; redirectRefID-cart
+                                            ; $facetSearchConfigName                ;                                                  ; "basket"              ; CONTAINS                      ;                           ; redirectRefID-cart
+                                            ; $facetSearchConfigName                ;                                                  ; "store"               ; EXACT                         ;                           ; redirectRefID-store
+                                            ; $facetSearchConfigName                ;                                                  ; "hybris"              ; EXACT                         ;                           ; redirectRefID-hybris
+
+INSERT_UPDATE SolrURIRedirect; url[unique = true]      ; &redirectRefID
+                             ; "/cart"                 ; redirectRefID-cart
+                             ; "/store"                ; redirectRefID-store
+                             ; "http://www.hybris.com" ; redirectRefID-hybris
+

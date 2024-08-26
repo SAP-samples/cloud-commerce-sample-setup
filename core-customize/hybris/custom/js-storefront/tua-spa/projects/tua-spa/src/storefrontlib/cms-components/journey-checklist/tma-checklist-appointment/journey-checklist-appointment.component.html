@@ -1,0 +1,179 @@
+<div class="d-flex mt-4 col-12 row">
+    <div class="col-8 pl-0">
+        <div class="cx-bold pt-3">
+            <h4 class="font-weight-bolder m-0 pl-0">
+                {{ 'checkList.appointment.appointment' | cxTranslate }}
+            </h4>
+        </div>
+        <ng-container *ngIf="showEditView">
+            <ng-container>
+                <div class="cx-bold">
+                    <label
+                    >{{
+                        'checkList.appointment.appointmentDate'
+                            | cxTranslate
+                        }}
+                    </label>
+                </div>
+                <ng-container>
+                    <div class="font-small">
+                        <label
+                        >{{
+                            'checkList.appointment.selectAppointmentDate'
+                                | cxTranslate
+                            }}
+                        </label>
+                    </div>
+                    <ng-container>
+                        <input [formControl]="startDate" id="startDate" class="form-control" type="date"
+                               min="{{minDate | date:'yyyy-MM-dd'}}"
+                               max="{{maxDate | date:'yyyy-MM-dd'}}"/>
+                        <cx-form-errors
+                          class="form-message--danger"
+                          [control]="startDate"
+                        ></cx-form-errors>
+                    </ng-container>
+                    <ng-container *ngIf="searchTimeSlotError$ | async as error">
+                        <div class="alert alert-primary w-100" role="alert">
+                            {{ 'checkList.appointment.fetchTimeSlotsError' | cxTranslate }}
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="searchTimeSlot$ | async as timeSlot">
+                        <div class="cx-bold">
+                            <label
+                            >{{
+                                'checkList.appointment.appointmentTime'
+                                    | cxTranslate
+                                }}
+                            </label>
+                        </div>
+                        <div class="font-small">
+                            <label
+                            >{{
+                                'checkList.appointment.selectAppointmentTime'
+                                    | cxTranslate
+                                }}
+                            </label>
+                        </div>
+                        <div class="cx-bold">
+                            <label
+                            >{{
+                                'checkList.appointment.timeSlot.timeSlot'
+                                    | cxTranslate
+                                }}
+                            </label>
+                        </div>
+
+                        <div>
+                            <ng-container>
+                                <ng-container *ngIf="startDate.touched; else unselectedDesiredDate">
+                                    <ng-select [formControl]="timeSlotForm" #select (change)="select.blur()" class="customer-list-selector"
+                                               [items]="timeSlot.availableTimeSlot"
+                                               placeholder="{{ 'checkList.appointment.timeSlot.selectTimeSlot' | cxTranslate }}"
+                                    >
+                                        <ng-template ng-label-tmp let-item="item">
+                                            <span>{{ item.validFor.startDateTime | date: 'h:mm a' }}
+                                              - {{ item.validFor.endDateTime | date: 'h:mm a' }}</span>
+                                          {{ selectTimeSlot(item) }}
+                                        </ng-template>
+                                      <ng-template ng-option-tmp let-item="item">
+                                        <span>{{ item.validFor.startDateTime | date: 'h:mm a' }}
+                                          - {{ item.validFor.endDateTime | date: 'h:mm a' }}</span>
+                                      </ng-template>
+                                    </ng-select>
+                                    <cx-form-errors
+                                      class="form-message--danger"
+                                      [control]="timeSlotForm"
+                                    ></cx-form-errors>
+                                </ng-container>
+                                <div class="d-flex mb-2 pt-3">
+                                    <button
+                                            (click)="updateAppointment()"
+                                            class="btn btn-secondary"
+                                    >
+                                        {{('common.update' | cxTranslate)}}
+                                    </button>
+                                    <button
+                                            (click)="cancelAppointment()"
+                                            class="btn btn-tertiary ml-3"
+                                    >
+                                        {{('common.cancel' | cxTranslate)}}
+                                    </button>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="createAppointmentError$ | async as createAppointmentError">
+                                <div class="alert alert-primary w-100" role="alert">
+                                    {{ 'checkList.appointment.patchError' | cxTranslate }}
+                                </div>
+                            </ng-container>
+
+                            <ng-container *ngIf="updateAppointmentError$ | async as updateAppointmentError">
+                                <div class="alert alert-primary w-100" role="alert">
+                                    {{ "error update appointment" }}
+                                </div>
+                            </ng-container>
+                            <ng-template #unselectedDesiredDate>
+                                <label>
+                                    {{
+                                    'checkList.appointment.unselectedDesiredDate'
+                                        | cxTranslate
+                                    }}
+                                </label>
+                            </ng-template>
+                        </div>
+                    </ng-container>
+
+                </ng-container>
+                <ng-template #unselectedAddress>
+                    <label>
+                        {{
+                        'checkList.installationAddress.selectInstallationAddress'
+                            | cxTranslate
+                        }}
+                    </label>
+                </ng-template>
+            </ng-container>
+        </ng-container>
+    </div>
+    <button *ngIf="showSelect" type="button" [attr.aria-label]="'checkList.appointment.selectAppointmentDate' | cxTranslate"
+            (click)="switchEditButton()"
+            class="btn btn-tertiary font-label pr-0 col-4"
+    >
+        {{ 'common.select' | cxTranslate }}
+    </button>
+    <button *ngIf="showEdit && !showSelect" type="button" [attr.aria-label]="'checkList.appointment.selectAppointmentDate' | cxTranslate"
+            (click)="switchEditButton()"
+            class="btn btn-tertiary font-label pr-0 col-4"
+    >
+        {{ 'common.edit' | cxTranslate }}
+    </button>
+</div>
+<ng-container *ngIf="(appointment$ | async) as appointment">
+  <div *ngIf="appointment.validFor && !showEditView" class="row">
+    <div class="col-8">
+      <label class="cx-bold"
+      >{{
+        'checkList.appointment.appointmentDate'
+          | cxTranslate
+        }}
+      </label>
+      {{
+      appointment.validFor.startDateTime | date: 'EEEE, MMMM d, y'
+      }}
+    </div>
+    <div class="col-8">
+      <label class="cx-bold"
+      >{{
+        'checkList.appointment.appointmentTime'
+          | cxTranslate
+        }}
+      </label>
+      {{
+      appointment.validFor.startDateTime | date: 'h:mm a'
+      }} - {{
+      appointment.validFor.endDateTime | date: 'h:mm a'
+      }}
+    </div>
+  </div>
+</ng-container>
+

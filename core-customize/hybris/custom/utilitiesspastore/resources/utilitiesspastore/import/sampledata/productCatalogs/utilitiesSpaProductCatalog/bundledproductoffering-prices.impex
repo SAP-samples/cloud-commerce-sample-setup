@@ -1,0 +1,41 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+ 
+# ImpEx for Importing Prices for Utilities products
+ 
+$productCatalog = utilitiesSpaProductCatalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+$priceEvent = priceEvent(code)[default = 'paynow']
+$currency = currency(isocode)[default = USD]
+$unit = unit(code)[default = pieces]
+$product = product(code, $catalogVersion)[unique = true]
+$processTypes = processTypes(code)[unique = true]
+$distributionChannels = distributionChannels(code)
+$subscriptionTerms = subscriptionTerms(id)[unique = true]
+$oneTimeChargeEntries = oneTimeChargeEntries(id, $catalogVersion)
+$recurringChargeEntries = recurringChargeEntries(id, $catalogVersion)
+$prices = @Europe1prices[translator = de.hybris.platform.b2ctelcoservices.dataimport.batch.price.TmaPriceRowTranslator]
+$europe1pricefactory_ptg = Europe1PriceFactory_PTG(code)[default = us-sales-tax-full]
+$regions = regions(isocode)
+$price = price[default=0.0]
+$priority= priority[default = 50]
+ 
+################################################
+### BUNDLED PRODUCT OFFERING PRICE OVERRIDES ###
+################################################
+ 
+#################################################################################
+### subsidising Light Bulb (one-time-charges) when bought with a CLASS of plans ###
+#################################################################################
+INSERT_UPDATE PriceRow ; code[unique = true]                                             ; $product        ; affectedProductOffering(code, $catalogVersion)[unique = true] ; requiredProductClasses(id)[unique = true] ; $processTypes ; $subscriptionTerms     ; $distributionChannels ; $currency ; $unit ; $catalogVersion ; $regions    ; $price ; productOfferingPrice(id, $catalogVersion) ; $priority 
+                       ; pp_electricityDeal_override_lightbulb_energy_efficient_mid_acq  ; electricityDeal ; lightbulb_energy_efficient                                    ; medium                                    ; ACQUISITION   ; monthly_12, monthly_24 ;                       ;           ;       ;                 ; JP-13,JP-16 ;        ; pp_electricityDeal_mid_acq_pop            ; 100       
+                       ; pp_electricityDeal_override_lightbulb_energy_efficient_high_acq ; electricityDeal ; lightbulb_energy_efficient                                    ; high                                      ; ACQUISITION   ; monthly_12, monthly_24 ;                       ;           ;       ;                 ;             ;        ; pp_electricityDeal_high_acq_pop           ; 200         
+                       
+INSERT_UPDATE PriceRow ; code[unique = true]                                                            ; $product        ; affectedProductOffering(code, $catalogVersion) ; requiredProductOfferings(code, $catalogVersion)[unique = true] ; $processTypes[unique = true] ; $subscriptionTerms     ; $distributionChannels ; $currency ; $unit ; $catalogVersion ; $regions          ; $price ; productOfferingPrice(id, $catalogVersion) ; $priority 
+                       ; pp_electricityDeal_override_lightbulb_energy_efficient_electric_plan_basic_acq ; electricityDeal ; lightbulb_energy_efficient                     ; electric_plan_basic                                            ; ACQUISITION                  ; monthly_12, monthly_24 ;                       ;           ;       ;                 ; JP-13,JP-33,JP-27 ;        ; pp_electricityDeal_basic_acq_pop          ; 300         
+                       ; pp_electricityDeal_override_lightbulb_energy_efficient_electric_plan_basic_ret ; electricityDeal ; lightbulb_energy_efficient                     ; electric_plan_basic                                            ; RETENTION                    ; monthly_12, monthly_24 ;                       ;           ;       ;                 ; JP-40,JP-25       ;        ; pp_electricityDeal_basic_ret_pop          ; 400         
+                       ; pp_electricityDeal_override_lightbulb_energy_efficient_electric_plan_basic_mnp ; electricityDeal ; lightbulb_energy_efficient                     ; electric_plan_basic                                            ; MNP                          ; monthly_12, monthly_24 ;                       ;           ;       ;                 ;                   ;        ; pp_electricityDeal_basic_mnp_pop          ; 500         
+                       
+                       
+                       

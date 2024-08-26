@@ -1,0 +1,43 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Importing Categories into B2B Telco SPA Store
+
+# Macros / Replacement Parameter definitions
+$productCatalog = b2btelcospaProductCatalog
+$catalogVersion = catalogversion(catalog(id[default=$productCatalog]), version[default='Staged'])[unique=true, default=$productCatalog:Staged]
+$supercategories = source(code, $catalogVersion)[unique=true]
+$categories = target(code, $catalogVersion)[unique=true]
+$allowedPrincipals = allowedPrincipals(uid)[default = 'customergroup']
+
+# Insert Categories
+INSERT_UPDATE Category; code[unique = true]; $allowedPrincipals; $catalogVersion;
+                      ; 1                  ;                   ;
+                      ; businessTools      ;                   ;
+                      ; internet           ;                   ;
+                      ; satelliteServices  ;                   ;
+                      ; wireless           ;                   ;
+                      ; plans              ;                   ;
+                      ; terminals          ;                   ;
+                      ; gsmPlans           ;                   ;
+                      ; addons             ;                   ;
+                      ; phones             ;                   ;
+                      ; insurancePlans     ;                   ;
+                      ; accessories        ;                   ;
+                      ; billingOptions     ;                   ;
+                      ; brands             ;                   ;
+
+INSERT_UPDATE CategoryCategoryRelation; $categories       ; $supercategories
+                                      ; businessTools     ; 1
+                                      ; internet          ; 1
+                                      ; satelliteServices ; 1
+                                      ; wireless          ; 1
+                                      ; plans             ; satelliteServices
+                                      ; terminals         ; satelliteServices
+                                      ; gsmPlans          ; wireless
+                                      ; addons            ; wireless
+                                      ; phones            ; wireless
+                                      ; insurancePlans    ; wireless
+                                      ; accessories       ; wireless
+                                      ; billingOptions    ; wireless

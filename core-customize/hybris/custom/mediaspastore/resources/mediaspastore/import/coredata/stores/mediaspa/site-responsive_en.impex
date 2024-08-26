@@ -1,0 +1,11 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+#
+# Import the CMS Site configuration for the media spa store
+#
+$lang = en
+
+INSERT_UPDATE CMSSite; uid[unique = true]; name[lang = $lang]; locale[lang = $lang]
+                     ; mediaspa          ; "Media SPA Site"  ; en_GB

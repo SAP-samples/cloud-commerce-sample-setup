@@ -1,0 +1,28 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Importing Usage Units
+
+INSERT_UPDATE UsageUnit; id[unique = true]       ; accumulative[default = false]
+                       ; radio_stations          ; true
+                       ; theme_packages          ; true
+                       ; movies_on_demand        ;
+                       ; documentaries_on_demand ;
+                       ; blockbusters_on_demand  ;
+                       ; videos_on_demand        ;
+                       ; sessions                ; true
+                       ; channels                ;
+                       ; gb                      ; true
+                       ; mb                      ; true
+                       ; tbps                    ;
+                       ; gbps                    ;
+                       ; mbps                    ;
+                       ; unit                    ;
+                       ; phone_minutes           ;
+                       ; international_minutes   ;
+                       ; sms                     ;
+                       ; mobile_data             ;
+                       ; music_pieces            ;
+                       ; replacements            ;
+                       ; month                   ;

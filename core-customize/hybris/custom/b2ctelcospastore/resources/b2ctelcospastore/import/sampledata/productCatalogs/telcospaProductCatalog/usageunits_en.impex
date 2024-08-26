@@ -1,0 +1,31 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Importing Usage Unit Localisations
+$lang = en
+
+UPDATE UsageUnit; id[unique = true]       ; name[lang = $lang]   ; namePlural[lang = $lang]
+                ; radio_stations          ; station              ; stations
+                ; theme_packages          ; package              ; packages
+                ; movies_on_demand        ; movie                ; movies
+                ; documentaries_on_demand ; documentary          ; documentaries
+                ; blockbusters_on_demand  ; blockbuster          ; blockbusters
+                ; videos_on_demand        ; video                ; videos
+                ; sessions                ; TV parallel session  ; TV parallel sessions
+                ; channels                ; TV channel           ; TV Channels
+                ; gb                      ; GB                   ; GB
+                ; mb                      ; MB                   ; MB
+                ; tbps                    ; TB/s                 ; TB/s
+                ; gbps                    ; GB/s                 ; GB/s
+                ; mbps                    ; MB/s                 ; MB/s
+                ; unit                    ; unit                 ; units
+                ; phone_minutes           ; minute               ; minutes
+                ; international_minutes   ; international minute ; international minutes
+                ; sms                     ; text message         ; text messages
+                ; mobile_data             ; MB                   ; MBs
+                ; music_pieces            ; piece                ; music pieces
+                ; replacements            ; replacement          ; replacements
+                ; month                   ; Minute               ; Minutes
+
+

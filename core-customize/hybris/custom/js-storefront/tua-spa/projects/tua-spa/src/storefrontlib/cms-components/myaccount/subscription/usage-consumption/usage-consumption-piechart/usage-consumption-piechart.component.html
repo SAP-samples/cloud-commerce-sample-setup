@@ -1,0 +1,41 @@
+<ng-container *ngIf="usageConsumptionReport$| async as subscriptions">
+  <ng-container *ngIf="subscriptions.bucket as usages">
+    <ng-container *ngIf="usages?.length > 0">
+      <div class="container p-3">
+        <div class="row mx-auto border p-3">
+          <div class="col-4 " *ngFor="let subscription of usages">
+            <div class="row mx-auto d-flex justify-content-center my-2">
+              <div class="row mx-auto w-100 d-flex justify-content-center">
+                <div class="col-1 border background-green"></div>
+                <div class="col">
+                  {{'subscriptions.usageRemainingMsg' | cxTranslate : {usageValue:getRemainingUsage(subscription), usageUnit:'subscriptions.subscriptionUnits.'+subscription.bucketCounter[0].unit | cxTranslate} }}
+                </div>
+              </div>
+              <div class="row mx-auto my-2 w-100 d-flex justify-content-center">
+                <div class="col-1 border background-red"></div>
+                <div class="col">
+                  {{'subscriptions.usageUsedMsg' | cxTranslate : {usageValue:subscription.bucketCounter[0].value, usageUnit:'subscriptions.subscriptionUnits.'+subscription.bucketCounter[0].unit | cxTranslate} }}
+                </div>
+              </div>
+            </div>
+            <div id="doughnut_canvas_div d-flex justify-content-center">
+              <canvas baseChart [datasets]="getDoughnutChartData(subscription)"
+                [labels]="['subscriptions.usageUsed' | cxTranslate, 'subscriptions.usageRemaining' | cxTranslate]"
+                [type]="'pie'" [options]="pieChartOptions" [legend]="pieChartLegend">
+              </canvas>
+            </div>
+            <div class="row mx-auto d-flex justify-content-center my-2">
+              <div class="alert alert-primary text-center px-3 py-3 mn-10" role="alert"
+                *ngIf="isOverUsage(subscription)">
+                {{'subscriptions.overUsedDataLimit' | cxTranslate}}
+              </div>
+            </div>
+            <div class="row mx-auto d-flex justify-content-center my-2">
+              <span>{{getProductName(subscription)}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+</ng-container>

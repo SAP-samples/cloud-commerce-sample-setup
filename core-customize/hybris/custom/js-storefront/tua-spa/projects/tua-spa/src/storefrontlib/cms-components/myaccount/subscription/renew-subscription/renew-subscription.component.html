@@ -1,0 +1,21 @@
+<ng-container *ngIf="currentCart$ | async as currentCart">
+  <ng-container
+    *ngIf="
+      subscriptionTermService.getSelectedSubscriptionTerm()
+        | async as selectedTerm
+    "
+  >
+    <div class="row mx-auto w-100 px-3">
+      <button
+        class="btn btn-primary btn-sm btn-text"
+        type="submit"
+        attr.aria-label="{{ buttonText }}"
+        (click)="addToCartForRenewal(currentCart, selectedTerm)"
+      >
+        {{ buttonText }}
+      </button>
+    </div>
+  </ng-container>
+</ng-container>
+<ngx-spinner [fullScreen]="true" type="ball-clip-rotate-multiple" size="medium">
+</ngx-spinner>

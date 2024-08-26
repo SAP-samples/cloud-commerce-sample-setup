@@ -1,0 +1,38 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Importing sample compatibility policies
+
+$productCatalog = utilitiesSpaProductCatalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+
+# Language
+$lang = en
+
+#####################################################################
+# Eligibility Policy1 (general acquisition policy):
+# A customer is eligible for ACQUISITION flow in all conditions     #
+#####################################################################
+INSERT_UPDATE TmaCompatibilityPolicy; code[unique = true]                                         ; name[lang = $lang]; $catalogVersion
+                                    ; acq_and_device_only_and_switch_service_provider_eligibility ; ACQ and DEVICE_ONLY and SWITCH_SERVICE_PROVIDER flow eligibility
+###########################################################################################################
+# Eligibility Policy (retention policy):
+# A customer is eligible for Retention flow in all conditions     #
+###########################################################################################################
+INSERT_UPDATE TmaCompatibilityPolicy; code[unique = true]; name[lang = $lang]; $catalogVersion;description[lang = $lang];
+; retention_eligibility_policy ; Eligibility Policy for enabling Renewals;;A customer is eligible for Retention flow in all conditions
+
+###########################################################################################################
+# Eligibility Policy (termination policy):
+# A customer is eligible for Termination flow when the remaining contract term is less than 1 day.     #
+###########################################################################################################
+INSERT_UPDATE TmaCompatibilityPolicy; code[unique = true]; name[lang = $lang]; $catalogVersion;description[lang = $lang];
+; termination_eligibility_policy ; Eligibility Policy for enabling Terminations;;A customer is eligible for Termination flow when the remaining contract term is less than 1 day.
+
+###########################################################################################################
+# Eligibility Policy (renewal policy):
+# A customer is eligible for Renewal flow when the remaining contract term is less than 365 days.     #
+###########################################################################################################
+INSERT_UPDATE TmaCompatibilityPolicy; code[unique = true]; name[lang = $lang]; $catalogVersion;description[lang = $lang];
+; renewal_eligibility_policy ; Eligibility Policy for enabling Renewals;;A customer is eligible for Renewal flow when the remaining contract term is less than 365 days.

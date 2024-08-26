@@ -1,0 +1,53 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+#
+# Update the Product Catalog Sync Job
+#
+
+$productCatalog = utilitiesSpaProductCatalog
+
+UPDATE CatalogVersionSyncJob; code[unique = true]                 ; roottypes(code)[mode = append]    ;
+                            ; sync $productCatalog:Staged->Online ; TmaProductSpecification           ;
+                            ; sync $productCatalog:Staged->Online ; TmaProductSpecCharacteristic      ;
+                            ; sync $productCatalog:Staged->Online ; TmaProductSpecCharacteristicValue ;
+                            ; sync $productCatalog:Staged->Online ; TmaProductSpecCharValueUse        ;
+                            ; sync $productCatalog:Staged->Online ; TmaProductOfferingGroup           ;
+                            ; sync $productCatalog:Staged->Online ; TmaCompatibilityPolicy            ;
+                            ; sync $productCatalog:Staged->Online ; TmaBpoPreConfig                   ;
+                            ; sync $productCatalog:Staged->Online ; TmaProductOfferingPrice           ;
+                            ; sync $productCatalog:Staged->Online ; TmaUsageSpecification             ;
+                            ; sync $productCatalog:Staged->Online ; TmaUsageSpecCharacteristic        ;
+                            ; sync $productCatalog:Staged->Online ; TmaUsageSpecCharacteristicValue   ;
+
+# Enable synchronization of refered conditions and actions when synchronizing a compatibility policy
+INSERT_UPDATE SyncAttributeDescriptorConfig; syncjob(code)[forceWrite=true][unique = true]         ; attributeDescriptor(enclosingType(code), qualifier)[unique = true]; copyByValue
+                                           ; sync $productCatalog\:Staged->Online ; TmaCompatibilityPolicy:conditions                                 ; true
+                                           ; sync $productCatalog\:Staged->Online ; TmaCompatibilityPolicy:actions                                    ; true
+                                           ; sync $productCatalog\:Staged->Online ; TmaPolicyCondition:statement                                      ; true
+                                           ; sync $productCatalog\:Staged->Online ; TmaCompositePolicyCondition:children                              ; true
+                                           ; sync $productCatalog\:Staged->Online ; TmaPolicyAction:statement                                         ; true
+
+# Enable synchronization of refered PSCVs when synchronizing an offering or a specification
+                                           ; sync $productCatalog\:Staged->Online ; TmaProductOffering:productSpecCharacteristicValues                ; true
+                                           ; sync $productCatalog\:Staged->Online ; TmaProductOffering:productSpecification                           ; true
+                                           ; sync $productCatalog\:Staged->Online ; TmaProductSpecification:productSpecCharacteristics                ; true
+                                           ; sync $productCatalog\:Staged->Online ; TmaProductSpecCharacteristic:productSpecCharacteristicValues      ; true
+
+# Enable synchronization of referred Usage Specification when synchronizing a Product Offering Price or a Product Specification
+                                           ; sync $productCatalog\:Staged->Online ; TmaUsageProdOfferPriceCharge:productUsageSpec                     ; true
+                                           ; sync $productCatalog\:Staged->Online ; TmaProductSpecification:productUsageSpecification                 ; true
+
+# Enable synchronization of refered Usage Specification Characteristic Values when synchronizing an Usage Specification
+                                           ; sync $productCatalog\:Staged->Online ; TmaUsageSpecification:usageSpecCharacteristics                    ; true
+                                           ; sync $productCatalog\:Staged->Online ; TmaUsageSpecCharacteristic:usageSpecCharacteristicValues          ; true
+                                           ; sync $productCatalog\:Staged->Online ; TmaCompositeProductUsageSpec:children                             ; true
+
+# Enable synchronization of entire structure of Product Offering Price when synchronizing a Price Row
+                                           ; sync $productCatalog\:Staged->Online ; PriceRow:productOfferingPrice                                     ; true
+                                           ; sync $productCatalog\:Staged->Online ; TmaCompositeProdOfferPrice:children                               ; true
+
+# Enable synchronization of Bundled Product Offering Option when synchronizing a Product Offering
+                                           ; sync $productCatalog\:Staged->Online ; TmaProductOffering:parentBpoOptions                               ; true
+                                           ; sync $productCatalog\:Staged->Online ; TmaBundledProdOfferOption:productOffering                         ; true

@@ -1,0 +1,24 @@
+.cx-size-small {
+  font-size: var(--cx-font-size, 0.875rem) !important;
+}
+
+.cx-size-medium {
+  font-size: var(--cx-font-size, 1.125rem);
+}
+
+.cx-size-large {
+  font-size: var(--cx-font-size, 1.3rem);
+}
+
+.cx-bold {
+  font-weight: var(--cx-font-weight-bold);
+}
+
+.close {
+  cursor: pointer;
+  padding: 12px 16px;
+}
+
+.padding-left {
+  padding-left: 40px;
+}

@@ -1,0 +1,28 @@
+<cx-selfcare-card
+  *ngIf="model$ | async as model"
+  i18nRoot="{{ domainType }}"
+  [showHint]="true"
+>
+  <section main class="cardSection">
+    <ng-container *ngIf="model.agreementSpecification as specification; else emptyList">
+      <div class="sectionDetails">
+        <span class="sectionValue">
+          <a
+            class="link"
+            [routerLink]=" { cxRoute: 'AgreementSpecificationDetails', params: model } | cxUrl"
+          >
+          {{ specification.id }}  
+          </a>
+        </span>
+      </div>
+    </ng-container>
+  </section>
+</cx-selfcare-card>
+
+<ng-template #emptyList>
+  <p class="is-empty">
+    {{
+      'selfcare.billingAgreements.details.agreementSpecification.emptyList' | cxTranslate
+    }}
+  </p>
+</ng-template>

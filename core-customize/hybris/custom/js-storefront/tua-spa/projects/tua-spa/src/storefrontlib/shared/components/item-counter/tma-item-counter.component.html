@@ -1,0 +1,36 @@
+<button
+  type="button"
+  class="cx-counter-action"
+  (click)="decrement()"
+  [disabled]="control.disabled || control.value <= min || quantityDisable"
+  tabindex="-1"
+  [cxFocus]="{ key: 'decrement' }"
+  attr.aria-label="{{ 'itemCounter.removeOne' | cxTranslate }}"
+>
+  -
+</button>
+
+<input
+  #qty
+  type="number"
+  [min]="min"
+  [max]="max"
+  [step]="step"
+  [readonly]="readonly"
+  [formControl]="control"
+  [disabled]="quantityDisable"
+  [cxFocus]="{ key: 'qty' }"
+  attr.aria-label="{{ 'itemCounter.quantity' | cxTranslate }}"
+/>
+
+<button
+  type="button"
+  class="cx-counter-action"
+  (click)="increment()"
+  [disabled]="control.disabled || control.value >= max || quantityDisable"
+  tabindex="-1"
+  [cxFocus]="{ key: 'increment' }"
+  attr.aria-label="{{ 'itemCounter.addOneMore' | cxTranslate }}"
+>
+  +
+</button>

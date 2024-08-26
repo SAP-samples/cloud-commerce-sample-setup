@@ -1,0 +1,232 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Importing Products stock levels into B2B Telco SPA Store
+
+# Macros / Replacement Parameter definitions
+$productCatalog = b2btelcospaProductCatalog
+$productCatalogName = B2B Telco SPA Product Catalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+$vendor = b2btelcospa
+
+###########################################
+### Importing Bundled Product Offerings ###
+###########################################
+
+INSERT_UPDATE StockLevel; productCode[unique = true]; available[default = 10]; warehouse(code)[unique = true, default = 'warehouse_b2btelcospa']; inStockStatus(code)[default = forceInStock]; maxPreOrder[default = 0]; maxStockLevelHistoryCount[default = -1]; overSelling[default = 0]; preOrder[default = 0]; reserved[default = 0]
+                        ; satellite_connectivity_deal
+                        ; satellite_connectivity_service
+                        ; satellite_connectivity_speed_plans
+                        ; satellite_terminals
+                        ; satellite_connectivity_addons
+
+##############################
+### Importing ServicePlans ###
+##############################
+
+INSERT_UPDATE StockLevel; productCode[unique = true]; available[default = 10]; warehouse(code)[unique = true, default = 'warehouse_b2btelcospa']; inStockStatus(code)[default = forceInStock]; maxPreOrder[default = 0]; maxStockLevelHistoryCount[default = -1]; overSelling[default = 0]; preOrder[default = 0]; reserved[default = 0]
+                        ; connectivity_service_plan
+                        ; basic_speed_plan
+                        ; std_speed_plan
+                        ; premium_speed_plan
+                        ; ha_speed_plan
+                        ; high_speed_plan
+                        ; sf_speed_plan
+                        ; connect_50
+                        ; connect_100
+                        ; connect_x
+                        ; mobility_connect_100
+                        ; mobility_connect_x
+                        ; bgan_backup_addon
+                        ; gx_voice_addon
+#addons
+                        ; latam_country_addon
+                        ; international_addon
+                        ; international_extra_addon
+                        ; mobile_hotspot_addon
+                        ; mobile_hotspot_one_time_addon
+                        ; mobile_hotspot_monthly_addon
+#internet
+                        ; broadband_internet
+                        ; wireless_internet
+                        ; fixed_wireless_internet
+                        ; wireless_broadband_internet
+#gsm_plans                        
+                        ; business_unlimited_starter_1line
+                        ; business_unlimited_starter_2lines
+                        ; business_unlimited_starter_3lines
+                        ; business_unlimited_starter_4lines
+                        ; business_unlimited_starter_5lines
+                        ; business_unlimited_starter_6lines
+                        ; business_unlimited_starter_25lines
+                        ; business_unlimited_starter_50lines
+                        ; business_unlimited_starter_100lines
+                        ; business_unlimited_starter_200lines
+                        ; business_unlimited_starter_500lines
+                        ; business_unlimited_starter_1000lines
+                        ; business_unlimited_advanced_1line
+                        ; business_unlimited_advanced_2lines
+                        ; business_unlimited_advanced_3lines
+                        ; business_unlimited_advanced_4lines
+                        ; business_unlimited_advanced_5lines
+                        ; business_unlimited_advanced_6lines
+                        ; business_unlimited_advanced_25lines
+                        ; business_unlimited_advanced_50lines
+                        ; business_unlimited_advanced_100lines
+                        ; business_unlimited_advanced_200lines
+                        ; business_unlimited_advanced_500lines
+                        ; business_unlimited_advanced_1000lines
+                        ; business_unlimited_enterprise_1line
+                        ; business_unlimited_enterprise_2lines
+                        ; business_unlimited_enterprise_3lines
+                        ; business_unlimited_enterprise_4lines
+                        ; business_unlimited_enterprise_5lines
+                        ; business_unlimited_enterprise_6lines
+                        ; business_unlimited_enterprise_25lines
+                        ; business_unlimited_enterprise_50lines
+                        ; business_unlimited_enterprise_100lines
+                        ; business_unlimited_enterprise_200lines
+                        ; business_unlimited_enterprise_500lines
+                        ; business_unlimited_enterprise_1000lines
+                        
+INSERT_UPDATE TmaSimpleProductOffering; code[unique = true]           ; stockLevels(productCode, warehouse(code[default = warehouse_b2btelcospa])); $catalogVersion
+                                      ; connectivity_service_plan     ; connectivity_service_plan
+                                      ; basic_speed_plan              ; basic_speed_plan
+                                      ; std_speed_plan                ; std_speed_plan
+                                      ; premium_speed_plan            ; premium_speed_plan
+                                      ; ha_speed_plan                 ; ha_speed_plan
+                                      ; high_speed_plan               ; high_speed_plan
+                                      ; sf_speed_plan                 ; sf_speed_plan
+                                      ; connect_50                    ; connect_50
+                                      ; connect_100                   ; connect_100
+                                      ; connect_x                     ; connect_x
+                                      ; mobility_connect_100          ; mobility_connect_100
+                                      ; mobility_connect_x            ; mobility_connect_x
+                                      ; bgan_backup_addon             ; bgan_backup_addon
+                                      ; gx_voice_addon                ; gx_voice_addon
+#addons                                      
+                                      ; latam_country_addon           ; latam_country_addon
+                                      ; international_addon           ; international_addon
+                                      ; international_extra_addon     ; international_extra_addon
+                                      ; mobile_hotspot_addon          ; mobile_hotspot_addon
+                                      ; mobile_hotspot_one_time_addon ; mobile_hotspot_one_time_addon
+                                      ; mobile_hotspot_monthly_addon  ; mobile_hotspot_monthly_addon
+#internet
+                                      ; broadband_internet          ; broadband_internet
+                                      ; wireless_internet           ; wireless_internet
+                                      ; fixed_wireless_internet     ; fixed_wireless_internet
+                                      ; wireless_broadband_internet ; wireless_broadband_internet
+#gsm_plans
+                                      ; business_unlimited_starter_1line        ; business_unlimited_starter_1line
+                                      ; business_unlimited_starter_2lines       ; business_unlimited_starter_2lines
+                                      ; business_unlimited_starter_3lines       ; business_unlimited_starter_3lines
+                                      ; business_unlimited_starter_4lines       ; business_unlimited_starter_4lines
+                                      ; business_unlimited_starter_5lines       ; business_unlimited_starter_5lines
+                                      ; business_unlimited_starter_6lines       ; business_unlimited_starter_6lines
+                                      ; business_unlimited_starter_25lines      ; business_unlimited_starter_25lines
+                                      ; business_unlimited_starter_50lines      ; business_unlimited_starter_50lines
+                                      ; business_unlimited_starter_100lines     ; business_unlimited_starter_100lines
+                                      ; business_unlimited_starter_200lines     ; business_unlimited_starter_200lines
+                                      ; business_unlimited_starter_500lines     ; business_unlimited_starter_500lines
+                                      ; business_unlimited_starter_1000lines    ; business_unlimited_starter_1000lines
+                                      ; business_unlimited_advanced_1line       ; business_unlimited_advanced_1line
+                                      ; business_unlimited_advanced_2lines      ; business_unlimited_advanced_2lines
+                                      ; business_unlimited_advanced_3lines      ; business_unlimited_advanced_3lines
+                                      ; business_unlimited_advanced_4lines      ; business_unlimited_advanced_4lines
+                                      ; business_unlimited_advanced_5lines      ; business_unlimited_advanced_5lines
+                                      ; business_unlimited_advanced_6lines      ; business_unlimited_advanced_6lines
+                                      ; business_unlimited_advanced_25lines     ; business_unlimited_advanced_25lines
+                                      ; business_unlimited_advanced_50lines     ; business_unlimited_advanced_50lines
+                                      ; business_unlimited_advanced_100lines    ; business_unlimited_advanced_100lines
+                                      ; business_unlimited_advanced_200lines    ; business_unlimited_advanced_200lines
+                                      ; business_unlimited_advanced_500lines    ; business_unlimited_advanced_500lines
+                                      ; business_unlimited_advanced_1000lines   ; business_unlimited_advanced_1000lines
+                                      ; business_unlimited_enterprise_1line     ; business_unlimited_enterprise_1line
+                                      ; business_unlimited_enterprise_2lines    ; business_unlimited_enterprise_2lines
+                                      ; business_unlimited_enterprise_3lines    ; business_unlimited_enterprise_3lines
+                                      ; business_unlimited_enterprise_4lines    ; business_unlimited_enterprise_4lines
+                                      ; business_unlimited_enterprise_5lines    ; business_unlimited_enterprise_5lines
+                                      ; business_unlimited_enterprise_6lines    ; business_unlimited_enterprise_6lines
+                                      ; business_unlimited_enterprise_25lines   ; business_unlimited_enterprise_25lines
+                                      ; business_unlimited_enterprise_50lines   ; business_unlimited_enterprise_50lines
+                                      ; business_unlimited_enterprise_100lines  ; business_unlimited_enterprise_100lines
+                                      ; business_unlimited_enterprise_200lines  ; business_unlimited_enterprise_200lines
+                                      ; business_unlimited_enterprise_500lines  ; business_unlimited_enterprise_500lines
+                                      ; business_unlimited_enterprise_1000lines ; business_unlimited_enterprise_1000lines
+
+# Phones StockLevel
+# ImpEx for Importing Telco B2B Products Stock Levels and Warehouses
+INSERT_UPDATE StockLevel; productCode[unique = true]  ; available[default = 10]; warehouse(code)[unique = true, default = 'warehouse_b2btelcospa']; inStockStatus(code)[default = notSpecified]; maxPreOrder[default = 0]; maxStockLevelHistoryCount[default = -1]; overSelling[default = 0]; preOrder[default = 0]; reserved[default = 0]
+                        ; apple_iphone_12
+                        ; apple_iphone_12_pro
+                        ; apple_iphone_12_pro_max
+                        ; samsung_galaxys_21_plus_5G
+                        ; samsung_galaxys_21_ultra_5G
+                        ; apple_iphone_12_64g
+                        ; apple_iphone_12_128g
+                        ; apple_iphone_12_256g
+                        ; apple_iphone_12_pro_128g
+                        ; apple_iphone_12_pro_256g
+                        ; apple_iphone_12_pro_512g
+                        ; apple_iphone_12_pro_max_128g
+                        ; apple_iphone_12_pro_max_256g
+                        ; apple_iphone_12_pro_max_512g
+                        ; samsung_galaxys_21_plus_5G_128g
+                        ; samsung_galaxys_21_plus_5G_256g
+                        ; samsung_galaxys_21_ultra_5G_128g
+                        ; samsung_galaxys_21_ultra_5G_256g
+
+INSERT_UPDATE TmaSimpleProductOffering; code[unique = true]              ; stockLevels(productCode, warehouse(code[default='warehouse_b2btelcospa'])); vendors(code)[default = $vendor]; $catalogVersion
+                                      ; apple_iphone_12                  ; apple_iphone_12
+                                      ; apple_iphone_12_pro              ; apple_iphone_12_pro
+                                      ; apple_iphone_12_pro_max          ; apple_iphone_12_pro_max
+                                      ; samsung_galaxys_21_plus_5G       ; samsung_galaxys_21_plus_5G
+                                      ; samsung_galaxys_21_ultra_5G      ; samsung_galaxys_21_ultra_5G
+                                      ; apple_iphone_12_64g              ; apple_iphone_12_64g
+                                      ; apple_iphone_12_128g             ; apple_iphone_12_128g
+                                      ; apple_iphone_12_256g             ; apple_iphone_12_256g
+                                      ; apple_iphone_12_pro_128g         ; apple_iphone_12_pro_128g
+                                      ; apple_iphone_12_pro_256g         ; apple_iphone_12_pro_256g
+                                      ; apple_iphone_12_pro_512g         ; apple_iphone_12_pro_512g
+                                      ; apple_iphone_12_pro_max_128g     ; apple_iphone_12_pro_max_128g
+                                      ; apple_iphone_12_pro_max_256g     ; apple_iphone_12_pro_max_256g
+                                      ; apple_iphone_12_pro_max_512g     ; apple_iphone_12_pro_max_512g
+                                      ; samsung_galaxys_21_plus_5G_128g  ; samsung_galaxys_21_plus_5G_128g
+                                      ; samsung_galaxys_21_plus_5G_256g  ; samsung_galaxys_21_plus_5G_256g
+                                      ; samsung_galaxys_21_ultra_5G_128g ; samsung_galaxys_21_ultra_5G_128g
+                                      ; samsung_galaxys_21_ultra_5G_256g ; samsung_galaxys_21_ultra_5G_256g
+
+# Accessories StockLevel
+# ImpEx for Importing Telco B2B Products Stock Levels and Warehouses
+INSERT_UPDATE StockLevel; productCode[unique = true]  ; available[default = 10]; warehouse(code)[unique = true, default = 'warehouse_b2btelcospa']; inStockStatus(code)[default = notSpecified]; maxPreOrder[default = 0]; maxStockLevelHistoryCount[default = -1]; overSelling[default = 0]; preOrder[default = 0]; reserved[default = 0]
+                        ; apple_iphone_car_charger
+                        ; samsung_galaxy_s21_ultra_official_s-pen_international_version
+                        ; samsung_galaxy_s21_ultra_official_s-pen_us_version
+                        ; apple_20w_usb_c_power_adapter
+                        ; apple_airPods_with_wireless_charging_case
+                        ; samsung_super_fast_dual_car_charger
+                        ; samsung_galaxy_s21_plus_5g_clear_protective_cover
+                        ; samsung_galaxy_buds_plus
+                        ; apple_iphone_car_charger_black
+                        ; apple_iphone_car_charger_white
+                        ; samsung_galaxy_buds_plus_red
+                        ; samsung_galaxy_buds_plus_black
+                        ; samsung_galaxy_buds_plus_white
+                        ; samsung_galaxy_buds_plus_blue
+
+INSERT_UPDATE TmaSimpleProductOffering; code[unique = true]                                           ; stockLevels(productCode, warehouse(code[default='warehouse_b2btelcospa'])); vendors(code)[default = $vendor]; $catalogVersion
+                                      ; apple_iphone_car_charger                                      ; apple_iphone_car_charger
+                                      ; samsung_galaxy_s21_ultra_official_s-pen_international_version ; samsung_galaxy_s21_ultra_official_s-pen_international_version
+                                      ; samsung_galaxy_s21_ultra_official_s-pen_us_version            ; samsung_galaxy_s21_ultra_official_s-pen_us_version
+                                      ; apple_20w_usb_c_power_adapter                                 ; apple_20w_usb_c_power_adapter
+                                      ; apple_airPods_with_wireless_charging_case                     ; apple_airPods_with_wireless_charging_case
+                                      ; samsung_super_fast_dual_car_charger                           ; samsung_super_fast_dual_car_charger
+                                      ; samsung_galaxy_s21_plus_5g_clear_protective_cover             ; samsung_galaxy_s21_plus_5g_clear_protective_cover
+                                      ; samsung_galaxy_buds_plus                                      ; samsung_galaxy_buds_plus
+                                      ; apple_iphone_car_charger_black                                ; apple_iphone_car_charger_black
+                                      ; apple_iphone_car_charger_white                                ; apple_iphone_car_charger_white
+                                      ; samsung_galaxy_buds_plus_red                                  ; samsung_galaxy_buds_plus_red
+                                      ; samsung_galaxy_buds_plus_black                                ; samsung_galaxy_buds_plus_black
+                                      ; samsung_galaxy_buds_plus_white                                ; samsung_galaxy_buds_plus_white
+                                      ; samsung_galaxy_buds_plus_blue                                 ; samsung_galaxy_buds_plus_blue

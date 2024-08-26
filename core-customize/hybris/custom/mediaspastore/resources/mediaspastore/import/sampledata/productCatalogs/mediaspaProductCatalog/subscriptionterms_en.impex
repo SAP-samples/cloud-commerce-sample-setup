@@ -1,0 +1,22 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+$lang = en
+
+INSERT_UPDATE SubscriptionTerm; id[unique = true]             ; name[lang = $lang]
+                              ; 6_months_non_renewing_cancel  ; 6 month - cancellable, non-renewing, monthly billing
+                              ; 6_months_auto_renewing_cancel ; 6 month - cancellable, auto-renewing, monthly billing
+                              ; 1_year_auto_renewing_cancel   ; 1 year - cancellable, auto-renewing, monthly billing
+
+INSERT_UPDATE SubscriptionTerm; id[unique = true]; name[lang = $lang]
+                              ; none             ; No contract
+                              ; monthly_1        ; 1 Month - monthly billing
+                              ; monthly_12       ; 12 Months - monthly billing
+                              ; monthly_18       ; 18 Months - monthly billing
+                              ; monthly_24       ; 24 Months - monthly billing
+                              ; monthly_36       ; 36 Months - monthly billing
+                              ; annually_1       ; 1 Year - monthly billing
+                              ; annually_2       ; 2 Years - monthly billing
+                              ; annually_3       ; 3 Years - monthly billing
+                              ; annually_24      ; 24 Months - annually billing

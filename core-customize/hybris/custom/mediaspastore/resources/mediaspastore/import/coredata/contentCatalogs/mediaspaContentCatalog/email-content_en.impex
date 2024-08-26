@@ -1,0 +1,71 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+#
+# Import the CMS content for the B2C Media SPA site emails
+#
+$contentCatalog = mediaspaContentCatalog
+$contentCV = catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]), CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+$lang = en
+
+# Import config properties into impex macros for modulegen for the general config email resource
+INSERT_UPDATE GenericItem[processor = de.hybris.platform.commerceservices.impex.impl.ConfigPropertyImportProcessor]; pk[unique = true]
+$emailResource = $config-emailResourceValue
+
+INSERT_UPDATE RendererTemplate; code[unique = true]                                 ; description[lang = $lang]                          ; templateScript[lang = $lang, translator = de.hybris.platform.commerceservices.impex.impl.FileLoaderValueTranslator]
+                              ; media-BannerComponent-template                      ; "CMSBannerComponent Template"                      ; $emailResource/email-bannerComponentTemplate.vm
+                              ; media-CMSImageComponent-template                    ; "CMSImageComponent Template"                       ; $emailResource/email-cmsImageComponentTemplate.vm
+                              ; media-CMSLinkComponent-template                     ; "CMSLinkComponent Template"                        ; $emailResource/email-cmsLinkComponentTemplate.vm
+                              ; media-CMSParagraphComponent-template                ; "CMSParagraphComponent Template"                   ; $emailResource/email-cmsParagraphComponentTemplate.vm
+                              ; media-SimpleBannerComponent-template                ; "CMSSimpleBannerComponent Template"                ; $emailResource/email-bannerComponentTemplate.vm
+                              ; media_Email_Customer_Registration_Body              ; "Customer Registration Email Body"                 ; $emailResource/email-customerRegistrationBody.vm
+                              ; media_Email_Customer_Registration_Subject           ; "Customer Registration Email Subject"              ; $emailResource/email-customerRegistrationSubject.vm
+                              ; media_Email_Delivery_Sent_Body                      ; "Delivery Sent Email Body"                         ; $emailResource/email-deliverySentBody.vm
+                              ; media_Email_Delivery_Sent_Subject                   ; "Delivery Sent Email Subject"                      ; $emailResource/email-deliverySentSubject.vm
+                              ; media_Email_Forgotten_Password_Body                 ; "Forgotten Password Email Body"                    ; $emailResource/email-forgottenPasswordBody.vm
+                              ; media_Email_Forgotten_Password_Subject              ; "Forgotten Password Email Subject"                 ; $emailResource/email-forgottenPasswordSubject.vm
+                              ; media_Email_NotPickedUpConsignment_Canceled_Body    ; "Not Picked Up Consignment Canceled Email Body"    ; $emailResource/email-notPickedUpConsignmentCanceledBody.vm
+                              ; media_Email_NotPickedUpConsignment_Canceled_Subject ; "Not Picked Up Consignment Canceled Email Subject" ; $emailResource/email-notPickedUpConsignmentCanceledSubject.vm
+                              ; media_Email_Order_Cancelled_Body                    ; "Order Cancelled Email Body"                       ; $emailResource/email-orderCancelledBody.vm
+                              ; media_Email_Order_Cancelled_Subject                 ; "Order Cancelled Email Subject"                    ; $emailResource/email-orderCancelledSubject.vm
+                              ; media_Email_Order_Collection_Reminder_Body          ; "Order Collection Reminder Body"                   ; $emailResource/email-orderCollectionReminderBody.vm
+                              ; media_Email_Order_Collection_Reminder_Subject       ; "Order Collection Reminder Subject"                ; $emailResource/email-orderCollectionReminderSubject.vm
+                              ; media_Email_Order_Move_To_CS_Body                   ; "Order Move To CS Body"                            ; $emailResource/email-orderMoveToCsBody.vm
+                              ; media_Email_Order_Move_To_CS_Subject                ; "Order Move To CS Subject"                         ; $emailResource/email-orderMoveToCsSubject.vm
+                              ; media_Email_Order_Partially_Canceled_Body           ; "Order Partially Canceled Email Body"              ; $emailResource/email-orderPartiallyCanceledBody.vm
+                              ; media_Email_Order_Partially_Canceled_Subject        ; "Order Partially Canceled Email Subject"           ; $emailResource/email-orderPartiallyCanceledSubject.vm
+                              ; media_Email_Order_Partially_Refunded_Body           ; "Order Partially Refunded Email Body"              ; $emailResource/email-orderPartiallyRefundedBody.vm
+                              ; media_Email_Order_Partially_Refunded_Subject        ; "Order Partially Refunded Email Subject"           ; $emailResource/email-orderPartiallyRefundedSubject.vm
+                              ; media_Email_Order_Refund_Body                       ; "Order Refund Email Body"                          ; $emailResource/email-orderRefundBody.vm
+                              ; media_Email_Order_Refund_Subject                    ; "Order Refund Email Subject"                       ; $emailResource/email-orderRefundSubject.vm
+                              ; media_Email_Ready_For_Pickup_Body                   ; "Ready For Pickup Email Body"                      ; $emailResource/email-readyForPickupBody.vm
+                              ; media_Email_Ready_For_Pickup_Subject                ; "Ready For Pickup Email Subject"                   ; $emailResource/email-readyForPickupSubject.vm
+
+# Email Pages
+INSERT_UPDATE EmailPage; $contentCV[unique = true]; uid[unique = true]           ; fromEmail[lang = $lang]       ; fromName[lang = $lang]
+                       ;                          ; CustomerRegistrationEmail    ; "customerservices@hybris.com" ; "Customer Services Team"
+                       ;                          ; DeliverySentEmail            ; "customerservices@hybris.com" ; "Customer Services Team"
+                       ;                          ; ForgottenPasswordEmail       ; "customerservices@hybris.com" ; "Customer Services Team"
+                       ;                          ; OrderCancelledEmail          ; "customerservices@hybris.com" ; "Customer Services Team"
+                       ;                          ; OrderCollectionReminderEmail ; "customerservices@hybris.com" ; "Customer Services Team"
+                       ;                          ; OrderConfirmationEmail       ; "customerservices@hybris.com" ; "Customer Services Team"
+                       ;                          ; OrderMoveToCsEmail           ; "customerservices@hybris.com" ; "Customer Services Team"
+                       ;                          ; OrderPartiallyCanceledEmail  ; "customerservices@hybris.com" ; "Customer Services Team"
+                       ;                          ; OrderPartiallyRefundedEmail  ; "customerservices@hybris.com" ; "Customer Services Team"
+                       ;                          ; OrderRefundEmail             ; "customerservices@hybris.com" ; "Customer Services Team"
+                       ;                          ; ReadyForPickupEmail          ; "customerservices@hybris.com" ; "Customer Services Team"
+                       ;                          ; VerificationEmail            ; "customerservices@hybris.com" ; "Customer Services Team"
+
+
+
+# Import config properties into impex macros for modulegen for the media specific config
+INSERT_UPDATE GenericItem[processor = de.hybris.platform.commerceservices.impex.impl.ConfigPropertyImportProcessor]; pk[unique = true]
+$emailResource = $config-mediaspastoreEmailResourceValue
+
+# CMS components and Email velocity templates
+INSERT_UPDATE RendererTemplate; code[unique = true]                    ; description[lang = $lang]          ; templateScript[lang = $lang, translator = de.hybris.platform.commerceservices.impex.impl.FileLoaderValueTranslator]
+                              ; media_Email_Order_Confirmation_Body    ; "Order Confirmation Email Body"    ; $emailResource/email-orderConfirmationBody.vm
+                              ; media_Email_Order_Confirmation_Subject ; "Order Confirmation Email Subject" ; $emailResource/email-orderConfirmationSubject.vm
+                              ; media_Email_Verification_Body          ; "Verification Email Body"          ; $emailResource/email-loginVerificationTokenBody.vm
+                              ; media_Email_Verification_Subject       ; "Verification Email Subject"       ; $emailResource/email-loginVerificationTokenSubject.vm

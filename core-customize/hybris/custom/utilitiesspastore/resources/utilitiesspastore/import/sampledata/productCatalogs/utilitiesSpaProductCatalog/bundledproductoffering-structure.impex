@@ -1,0 +1,44 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# Macros / Replacement Parameter definitions
+$productCatalog = utilitiesSpaProductCatalog
+$productCatalogName = Utilities SPA Product Catalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+$onlineCatalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Online'])[unique = true, default = $productCatalog:Online]
+$supercategories = supercategories(code, $catalogVersion)
+$baseProduct = baseProduct(code, $catalogVersion)
+$approved = approvalstatus(code)[default = 'approved']
+
+# ImpEx for Importing Products
+# Macros / Replacement Parameter definitions
+$solrIndexedTypeIdentifier = utilitiesspaProductType
+$solrIndexedType = indexedType(identifier[default = $solrIndexedTypeIdentifier])
+
+INSERT_UPDATE TmaBundledProductOffering; code[unique = true]    ; name[lang = en]          ; parents(code, $catalogVersion);unit(code)[default = pieces];$approved; $catalogVersion
+                                       ; quadPlay               ; Quad Play                ;
+                                       ; electricityDeal        ; Electricity Deal         ; quadPlay
+                                       ; starterElectricityDeal ; Starter Electricity Deal ; electricityDeal
+                                       ; homeDeal               ; Home Deal                ; quadPlay
+
+INSERT_UPDATE TmaSimpleProductOffering; code[unique = true]                    ; name[lang = en]                        ; parents(code, $catalogVersion); $approved; $catalogVersion
+#electriciy deal
+                                      ; electric_plan_basic                    ; Basic Electric Plan                    ; electricityDeal, starterElectricityDeal
+                                      ; electric_plan_plus                     ; Plus Electric Plan                     ; electricityDeal
+                                      ; electric_plan_best                     ; Best Electric Plan                     ; electricityDeal
+                                      ; electric_plan_total_comfort            ; Total Home Comfort Electric Plan       ; electricityDeal
+                                      ; lightbulb_energy_efficient             ; Energy Efficient Lightbulb             ; electricityDeal,starterElectricityDeal
+                                      ; lightbulb_led                          ; LED Lightbulb                          ; electricityDeal
+                                      ; lightbulb_led_multipack                ; LED Multipack                          ; electricityDeal
+                                      ; electrical_cord_general                ; Electrical Cord General                ; electricityDeal,starterElectricityDeal
+                                      ; electrical_cord_double_ended_extension ; Electrical Cord Double Ended Extension ; electricityDeal
+                                      ; electrical_cord_slim                   ; Electrical Cord Slim                   ; electricityDeal
+                                      ; installation_electricity               ; Electricity Installation               ; electricityDeal, starterElectricityDeal
+
+INSERT_UPDATE TmaBundledProdOfferOption; bundledProductOffering(code, $catalogVersion)[unique = true]; productOffering(code, $catalogVersion)[unique = true]; $catalogVersion; lowerLimit; upperLimit; default
+# Starter Electricity Deal
+                                       ; starterElectricityDeal                                      ; electric_plan_basic                                  ;                ; 1         ; 1         ; 1
+                                       ; starterElectricityDeal                                      ; installation_electricity                             ;                ; 1         ; 1         ; 1
+                                       ; starterElectricityDeal                                      ; lightbulb_energy_efficient                           ;                ; 0         ; 1         ; 0
+                                       ; starterElectricityDeal                                      ; electrical_cord_general                              ;                ; 0         ; 1         ; 0

@@ -1,0 +1,38 @@
+<div class="col-6 d-flex justify-content-start">
+  <div>
+
+    <img
+      *ngIf="orderItem && orderItem.productOffering && orderItem.productOffering.image"
+      alt="{{orderItem?.productOffering?.image?.description}}"
+      border="0"
+      class="order-item-thumbnail"
+      src="{{orderItem?.productOffering?.image?.url}}">
+
+    <img
+      *ngIf="!orderItem?.productOffering?.image"
+      alt="{{orderItem?.productOffering?.image?.description}}"
+      border="0"
+      class="order-item-thumbnail is-missing">
+
+  </div>
+  <div>
+    <cx-order-details-hierarchical-prices
+      [orderItem]="orderItem"
+      class="align-left">
+    </cx-order-details-hierarchical-prices>
+  </div>
+</div>
+
+<div class="col align-center">
+  {{orderItem.quantity}}
+</div>
+
+<div
+  *ngIf="currencyService.getActive() | async as currencyIso"
+  class="col align-center">
+  <del *ngIf="payOnCheckoutBeforeDiscounts !== payOnCheckoutAfterDiscounts"
+       class="deleted-price">
+    {{ 'common.currencies.currency' | cxTranslate : {context: currencyIso} }} {{payOnCheckoutBeforeDiscounts}}
+  </del>
+  {{ 'common.currencies.currency' | cxTranslate : {context: currencyIso} }} {{payOnCheckoutAfterDiscounts}}
+</div>

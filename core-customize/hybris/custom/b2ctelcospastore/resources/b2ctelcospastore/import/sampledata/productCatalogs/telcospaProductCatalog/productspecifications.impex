@@ -1,0 +1,247 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Product Specifications
+
+$productCatalog = telcospaProductCatalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+$defaultApprovalStatus = approvalstatus(code)[default = 'approved']
+
+############################
+# Customer Facing Services #
+############################
+INSERT_UPDATE TmaCustomerFacingServiceSpec; id[unique = true]   ; $catalogVersion; $defaultApprovalStatus
+                                          ; data_svc
+                                          ; voice_svc
+                                          ; fttx_data_svc
+                                          ; gsm_addon_svc       ;                ; approved
+                                          ; copper_internet_svc ;                ; approved
+                                          ; fiber_internet_svc  ;                ; approved
+                                          ; 5g_internet_svc     ;                ; approved
+                                          ; tv_svc              ;                ; approved
+                                          ; gsm_svc             ;                ; approved
+
+INSERT_UPDATE TmaServiceSpecCharacteristic; id[unique = true]; serviceSpecifications(id, $catalogVersion); $catalogVersion
+                                          ; data_volume      ; data_svc
+                                          ; data_speed       ; data_svc
+                                          ; minutes          ; voice_svc
+                                          ; sms              ; voice_svc
+                                          ; minutes/sms      ; voice_svc
+                                          ; upload_speed     ; fttx_data_svc,copper_internet_svc,fiber_internet_svc,5g_internet_svc
+                                          ; download_speed   ; fttx_data_svc,copper_internet_svc,fiber_internet_svc,5g_internet_svc
+
+INSERT_UPDATE TmaServiceSpecCharacteristicValue; id[unique = true]          ; serviceSpecCharacteristic(id, $catalogVersion); value   ; unitOfMeasure(id); $catalogVersion
+                                               ; 5_gb_data_volume           ; data_volume                                   ; 5       ; gb
+                                               ; 10_gb_data_volume          ; data_volume                                   ; 10      ; gb
+                                               ; 20_gb_data_volume          ; data_volume                                   ; 20      ; gb
+                                               ; 50_10_data_speed           ; data_speed                                    ; 50/10   ; gbps
+                                               ; 20_10_data_speed           ; data_speed                                    ; 20/10   ; gbps
+                                               ; 10_1_data_speed            ; data_speed                                    ; 10/1    ; gbps
+                                               ; 30_gb_data_volume          ; data_volume                                   ; 30      ; gb
+                                               ; up_1                       ; upload_speed                                  ; 1       ; gbps
+                                               ; up_100                     ; upload_speed                                  ; 100     ; mbps
+                                               ; up_200                     ; upload_speed                                  ; 200     ; mbps
+                                               ; up_500                     ; upload_speed                                  ; 500     ; mbps
+                                               ; up_1000                    ; upload_speed                                  ; 1000    ; mbps
+                                               ; down_10                    ; download_speed                                ; 10      ; gbps
+                                               ; down_50                    ; download_speed                                ; 50      ; mbps
+                                               ; down_100                   ; download_speed                                ; 100     ; mbps
+                                               ; down_200                   ; download_speed                                ; 200     ; mbps
+                                               ; down_500                   ; download_speed                                ; 500     ; mbps
+                                               ; down_1000                  ; download_speed                                ; 1000    ; mbps
+
+                                               ; unlimited_minutes          ; minutes                                       ; 5000    ; phone_minutes
+                                               ; unlimited_sms              ; sms                                           ; 5000    ; sms
+                                               ; unlimited_units            ; minutes/sms                                   ; 5000    ; unit
+                                               ; 2000_units                 ; minutes/sms                                   ; 2000    ; unit
+
+                                               ; unlimited_minutes_landline ; minutes/sms                                   ; 1000000 ; phone_minutes
+
+##########################
+# Product Specifications #
+##########################
+# Product Spec Characteristics
+INSERT_UPDATE TmaProductSpecCharacteristic; id[unique = true]     ; productSpecifications(id, $catalogVersion)                  ; configurable[default = false]; $catalogVersion
+                                          ; sms                   ; gsm                                                         ;                              ;
+                                          ; voice                 ; gsm                                                         ;                              ;
+                                          ; data_volume           ; gsm                                                         ;                              ;
+                                          ; data_speed            ;                                                             ;                              ;
+                                          ; sd_channels           ; tv                                                          ;                              ;
+                                          ; hd_channels           ; tv                                                          ;                              ;
+
+                                          ; channel               ; tv                                                          ;                              ;
+                                          ; title_on_demand       ; tv                                                          ;                              ;
+
+                                          ; warrantyservice       ; warranty                                                    ;                              ;
+
+                                          ; upload_speed          ; internet, fiber_internet, 5g_internet, copper_internet, gsm ;                              ;
+                                          ; download_speed        ; internet, fiber_internet, 5g_internet, copper_internet, gsm ;                              ;
+                                          ; msisdn                ; gsm                                                         ; true                         ;
+
+                                          ; call_type             ; gsm                                                         ;                              ;
+                                          ; network               ; gsm                                                         ;                              ;
+                                          ; coverage              ; internet                                                    ; true                         ;
+
+                                          ; national_minutes      ; landline
+                                          ; international_minutes ; landline
+
+INSERT_UPDATE TmaProductSpecCharacteristicValue; id[unique = true]                      ; value         ; unitOfMeasure(id); productSpecCharacteristic(id, $catalogVersion); $catalogVersion; serviceSpecCharacteristicValues(id, $catalogVersion)
+# GSM PSCVs
+                                               ; 100_min                                ; 100           ; phone_minutes    ; voice
+                                               ; 200_min                                ; 200           ; phone_minutes    ; voice
+                                               ; 300_min                                ; 300           ; phone_minutes    ; voice
+                                               ; 600_min                                ; 600           ; phone_minutes    ; voice
+                                               ; 900_min                                ; 900           ; phone_minutes    ; voice
+                                               ; 1200_min                               ; 1200          ; phone_minutes    ; voice
+                                               ; unlimited_min                          ; Unlimited            ; phone_minutes    ; voice                                         ;                ; unlimited_minutes
+
+                                               ; 100_sms                                ; 100           ; sms              ; sms
+                                               ; 300_sms                                ; 300           ; sms              ; sms
+                                               ; 500_sms                                ; 500           ; sms              ; sms
+                                               ; 600_sms                                ; 600           ; sms              ; sms
+                                               ; 900_sms                                ; 900           ; sms              ; sms
+                                               ; 1200_sms                               ; 1200          ; sms              ; sms
+                                               ; unlimited_sms                          ; Unlimited            ; sms              ; sms                                           ;                ; unlimited_sms
+
+                                               ; 100_mb                                 ; 100           ; mb               ; data_volume
+                                               ; 600_mb                                 ; 300           ; mb               ; data_volume
+                                               ; 1000_mb                                ; 1             ; gb               ; data_volume
+                                               ; 2000_mb                                ; 2             ; gb               ; data_volume
+                                               ; 9000_mb                                ; 9             ; gb               ; data_volume
+                                               ; 10_gb                                  ; 10            ; gb               ; data_volume
+                                               ; 12_gb                                  ; 12            ; gb               ; data_volume
+                                               ; 14_gb                                  ; 14            ; gb               ; data_volume
+                                               ; 26_gb                                  ; 26            ; gb               ; data_volume
+                                               ; unlimited_mb                           ; Unlimited            ; mb               ; data_volume
+                                               ; data_5g                                ; 30000         ; mb               ; data_volume                                   ;                ; 30_gb_data_volume
+
+                                               ; 50_10_data_speed                       ; 50/10         ; mbps             ; data_speed
+                                               ; 20_10_data_speed                       ; 20/10         ; mbps             ; data_speed
+                                               ; 10_1_data_speed                        ; 10/1          ; gbps             ; data_speed                                    ;                ; 10_1_data_speed
+
+                                               ; up_20                                  ; 20            ; mbps             ; upload_speed                                  ;
+                                               ; up_30                                  ; 30            ; mbps             ; upload_speed                                  ;
+
+                                               ; down_40                                ; 40            ; mbps             ; download_speed                                ;
+                                               ; down_50                                ; 50            ; mbps             ; download_speed                                ;
+
+                                               ; domestic_calls                         ; Domestic      ;                  ; call_type                                     ;
+                                               ; international_calls                    ; International ;                  ; call_type                                     ;
+
+                                               ; 5g_network                             ; 5G Network    ;                  ; network                                       ;
+
+# TV PSCVs
+                                               ; 40_sd_channels                         ; 40            ; channels         ; sd_channels
+                                               ; 300_sd_channels                        ; 300           ; channels         ; sd_channels
+                                               ; 400_sd_channels                        ; 400           ; channels         ; sd_channels
+#TV Training
+                                               ; 160_channels                           ; 160           ; channels         ; sd_channels
+                                               ; cnn                                    ; CNN           ; channels         ; channel
+                                               ; tnt                                    ; TNT           ; channels         ; channel
+                                               ; 60_hd_channels                         ; 600           ; channels         ; hd_channels
+                                               ; 45000_titles_on_demand                 ; 6             ; month            ; sd_channels
+
+                                               ; 185_channels                           ; 185           ; channels         ; sd_channels
+                                               ; cbs                                    ; CBS Sports    ; channels         ; channel
+                                               ; espn                                   ; ESPN          ; channels         ; channel
+                                               ; espn2                                  ; ESPN2         ; channels         ; channel
+                                               ; 85_hd_channels                         ; 850           ; channels         ; hd_channels
+                                               ; 50000_titles_on_demand                 ; 6             ; month            ; sd_channels
+
+                                               ; 330_channels                           ; 330           ; channels         ; sd_channels
+                                               ; hbo                                    ; HBO Max       ; channels         ; channel
+                                               ; cinemax                                ; Cinemax       ; channels         ; channel
+                                               ; showtime                               ; Showtime      ; channels         ; channel
+                                               ; starz                                  ; Starz         ; channels         ; channel
+                                               ; 185_hd_channels                        ; 1850          ; channels         ; hd_channels
+                                               ; 70000_titles_on_demand                 ; 6             ; month            ; sd_channels
+#
+                                               ; lost_phone                             ; Lost Phone    ;                  ; warrantyservice
+                                               ; screen_crack                           ; Screen Crack  ;                  ; warrantyservice
+#
+                                               ; 4_hd_channels                          ; 40            ; channels         ; hd_channels
+                                               ; 30_hd_channels                         ; 300           ; channels         ; hd_channels
+                                               ; 40_hd_channels                         ; 400           ; channels         ; hd_channels
+
+
+# internet PSCVs
+                                               ; up_1                                   ; 1             ; gbps             ; upload_speed                                  ;                ; up_1
+                                               ; up_100                                 ; 100           ; mbps             ; upload_speed                                  ;                ; up_100
+                                               ; up_200                                 ; 200           ; mbps             ; upload_speed
+                                               ; up_500                                 ; 500           ; mbps             ; upload_speed                                  ;                ; up_500
+                                               ; up_1000                                ; 1000          ; mbps             ; upload_speed
+                                               ; down_10                                ; 10            ; gbps             ; download_speed                                ;                ; down_10
+                                               ; down_100                               ; 100           ; mbps             ; download_speed                                ;                ; down_100
+                                               ; down_200                               ; 200           ; mbps             ; download_speed
+                                               ; down_210                               ; 210           ; mbps             ; download_speed
+                                               ; down_500                               ; 500           ; mbps             ; download_speed                                ;                ; down_500
+                                               ; down_1000                              ; 1000          ; mbps             ; download_speed                                ;                ; down_1000
+
+                                               ; all                                    ; All areas     ;                  ; coverage                                      ;
+                                               ; 02108_area                             ; 02108         ;                  ; coverage                                      ;
+                                               ; 02109_area                             ; 02109         ;                  ; coverage                                      ;
+
+#basic tv
+                                               ; local_and_us_radio_stations_BASIC_TV_1 ; 30            ; month            ; sd_channels
+                                               ; local_and_us_radio_stations_BASIC_TV_2 ; 90            ; month            ; sd_channels
+                                               ; digital_hd_receiver_BASIC_TV           ; 90            ; month            ; sd_channels
+#Big tv
+                                               ; local_and_us_radio_stations_BIG_TV     ; 90            ; month            ; sd_channels
+                                               ; theme_packages_BIG_TV                  ; 6             ; month            ; sd_channels
+                                               ; digital_hd_receiver_BIG_TV             ; 6             ; month            ; sd_channels
+                                               ; spotify_premium_account_BIG_TV         ; 6             ; month            ; sd_channels
+
+
+#PREMIUM TV
+                                               ; local_and_us_radio_stations_PREMIUM_TV ; 90            ; month            ; sd_channels
+                                               ; theme_packages_PREMIUM_TV              ; 6             ; month            ; sd_channels
+                                               ; digital_hd_recorder_PREMIUM_TV         ; 6             ; month            ; sd_channels
+                                               ; spotify_premium_account_PREMIUM_TV     ; 6             ; month            ; sd_channels
+                                               ; video_on_demand_PREMIUM_TV             ; 6             ; month            ; sd_channels
+
+#DELUXE TV
+                                               ; local_and_us_radio_stations_DELUXE_TV  ; 90            ; month            ; sd_channels
+                                               ; theme_packages_DELUXE_TV               ; 6             ; month            ; sd_channels
+                                               ; digital_hd_recorder_DELUXE_TV          ; 6             ; month            ; sd_channels
+                                               ; spotify_premium_account_DELUXE_TV      ; 6             ; month            ; sd_channels
+                                               ; video_on_demand_DELUXE_TV              ; 6             ; month            ; sd_channels
+                                               ; documentary_on_demand_DELUXE_TV        ; 6             ; month            ; sd_channels
+
+#MSISDN
+                                               ; msisdn                                 ; ##            ;                  ; msisdn
+
+#LANDLINE
+                                               ; unlimited_min_landline                 ; Unlimited            ; phone_minutes    ; national_minutes                              ;                ; unlimited_minutes_landline
+                                               ; 5000_min_landline                      ; 5000          ; phone_minutes    ; international_minutes                         ;                ;
+
+# Product Category
+INSERT_UPDATE TmaProductCategory; code[unique = true];
+                                ; service_plan
+                                ; data_addon
+                                ; sms_addon
+                                ; voice_addon
+
+# Product Line
+INSERT_UPDATE TmaProductLine; code[unique = true];
+                            ; gsm
+                            ; tv
+                            ; internet
+                            ; landline
+                            ; broadband
+
+# Product Specifications
+INSERT_UPDATE TmaAtomicProductSpecification; id[unique = true]; productSpecificationTypes(code); onlineDate[dateformat = dd.MM.yyyy]; offlineDate[dateformat = dd.MM.yyyy]; brand; approvalStatus(code)[default = 'approved']; cfsSpecs(id, $catalogVersion); $catalogVersion;
+                                           ; data_add_ons     ; gsm, data_addon                ; 10.10.2017                         ; 10.10.2024                          ;      ;                                           ; data_svc
+                                           ; tv               ; tv, service_plan               ; 10.10.2017                         ; 10.10.2024                          ;      ;                                           ; tv_svc
+                                           ; internet         ; internet, service_plan         ; 10.10.2017                         ; 10.10.2024                          ;      ;                                           ; fttx_data_svc
+                                           ; landline_voip    ; landline, service_plan         ; 10.10.2017                         ; 10.10.2024                          ;      ;                                           ;
+                                           ; landline_pots    ; landline, service_plan         ; 10.10.1917                         ; 10.10.2024                          ;      ;                                           ;
+                                           ; fiber_internet   ; broadband, service_plan        ; 10.10.2020                         ; 10.10.2024                          ;      ;                                           ; fiber_internet_svc
+                                           ; 5g_internet      ; broadband, service_plan        ; 10.10.2020                         ; 10.10.2024                          ;      ;                                           ; 5g_internet_svc
+                                           ; copper_internet  ; broadband, service_plan        ; 10.10.2020                         ; 10.10.2022                          ;      ;                                           ; copper_internet_svc
+                                           ; gsm              ; gsm, service_plan              ; 10.10.2017                         ; 10.10.2040                          ;      ;                                           ; gsm_svc
+                                           ; gsm_addon        ; gsm                            ; 10.10.2017                         ; 10.10.2040                          ;      ;                                           ; gsm_addon_svc
+                                           ; warranty         ; service_plan                   ; 10.10.2017                         ; 10.10.2040                          ;      ;                                           ;
+                                           ; landline         ; landline, service_plan         ; 10.10.2017                         ; 10.10.2040                          ;      ;                                           ;
+

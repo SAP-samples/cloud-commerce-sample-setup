@@ -1,0 +1,51 @@
+<div>
+    <table width="100%" cellspacing="0" style="margin:0;padding:0;table-layout:fixed;border:1px solid #1E4EBF;">
+        <tbody>
+            <tr>
+                <td height="125px" width="35%" rowspan="2" colspan="2" class="structureViewSection">
+                    <cockpit code="SiteLogo"/>
+                </td>
+                <td class="structureViewSection">
+                    <cockpit code="HeaderLinks"/>
+                </td>
+                <td width="20%" rowspan="2" class="structureViewSection">
+                    <cockpit code="MiniCart"/>
+                </td>
+            </tr>
+            <tr>
+                <td height="89px" class="structureViewSection">
+                    <div>Header</div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4" class="structureViewSection">
+                    <cockpit code="NavigationBar"/>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4" height="58px" style="vertical-align:middle;" class="structureViewSection">
+                    <div>Breadcrumb</div>
+                </td>
+            </tr>
+            <tr>
+                <td height="543px" width="80%" colspan="3" class="structureViewSection" style="vertical-align:middle;">
+                    <div>Plan</div>
+                </td>
+                
+              
+            </tr>
+           
+            <tr>
+               <p> This is static vm template and should be filled with cms content later </p>
+            </tr>
+            <tr>
+                <td height="270px" colspan="4" class="structureViewSection">
+                    <cockpit code="Footer"/>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div style="width:100%; border-top: 2px solid #bbb" class="cmsContentEditor">
+        <cockpit code="editor"/>
+    </div>
+</div>

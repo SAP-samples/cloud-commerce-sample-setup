@@ -1,0 +1,35 @@
+<div *ngIf="content" class="cx-card"
+     [tabindex]="border ? 0 : -1" [attr.role]="content.role ?? null"
+     [attr.aria-label]="content.label ? (content.label | cxTranslate: { number: this.index }) : null">
+  <!-- Card Header -->
+  <div *ngIf="!editMode" class="header">
+    <!-- Image -->
+    <div *ngIf="content.img" class="cx-card-img-container cx-card-box">
+      <cx-icon [type]="content.img"></cx-icon>
+      <span class="font-label cx-card-span">{{ 'paymentForm.card' | cxTranslate }}</span>
+    </div>
+  </div>
+  <!-- Card Body -->
+  <div class="card-body cx-card-body" [class.cx-card-delete]="editMode">
+    <!-- Card Content -->
+    <div class="cx-card-container">
+      <!-- Card Label -->
+      <div class="cx-card-label-container">
+        <div *ngIf="content.textBold" class="cx-card-label-bold">
+          {{ content.textBold }}
+        </div>
+        <div *ngFor="let line of content.text">
+          <div
+            *ngIf="!truncateText; else truncate" class="cx-card-label" [ngClass]="content.customClass">
+            {{ line }}
+          </div>
+          <ng-template #truncate>
+            <cx-truncate-text-popover
+              [charactersLimit]="charactersLimit" [content]="line" [customClass]="content.customClass"
+            ></cx-truncate-text-popover>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

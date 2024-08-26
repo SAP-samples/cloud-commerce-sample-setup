@@ -1,0 +1,63 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+$solrIndexedType = mediaspaPriceType
+
+$hIndexType = solrIndexedType(identifier)[unique = true, default = mediaspaPriceType]
+$hName = name[unique = true]
+$hType = type(code)
+$hSortable = sortableType(code)
+$hMulti = multiValue[default = false]
+$hProvider = fieldValueProvider
+$hProviderParam = valueProviderParameter
+$hCurrency = currency[default = false];
+$hLocalized = localized[default = false];
+
+$classficationCatalog = mediaspaClassification
+$classSystemVersion = systemVersion(catalog(id[default = '$classficationCatalog']), version[default = '1.0'])
+$classCatalogVersion = catalogVersion(catalog(id[default = '$classficationCatalog']), version[default = '1.0'])
+$classAttribute = classificationAttribute(code, $classSystemVersion)
+$classClass = classificationClass(code, $classCatalogVersion)
+$classAttributeAssignment = classAttributeAssignment($classClass, $classAttribute, $classSystemVersion)
+$listable = listable[default = true]
+$multiValued = multiValued[default = true]
+
+# Show the classification features in the product lister
+INSERT_UPDATE ClassAttributeAssignment; $classClass[unique = true]    ; $classAttribute[unique = true]; $multiValued; $classSystemVersion[unique = true]; $listable
+                                      ; mediacontentclassification    ; genre
+                                      ; creditsclassification         ; actors
+                                      ; creditsclassification         ; producers
+                                      ; creditsclassification         ; directors
+
+INSERT_UPDATE SolrIndexedProperty; $hIndexType; $hName    ; $hType ; $hProvider                ; $hProviderParam; $classAttributeAssignment                 ; $hSortable; $hCurrency; $hLocalized; $hMulti; facet[default = true]; facetType(code); facetSort(code)[default = Alpha]; priority[default = 1000];
+                                 ;            ; genre     ; string ; sppClassificationProvider ;                ; mediacontentclassification:::genre::::    ;           ;           ;            ; true   ;                      ; MultiSelectOr  ;                                 ;                         ; ;
+                                 ;            ; actors    ; string ; sppClassificationProvider ;                ; creditsclassification:::actors::::        ;           ;           ;            ; true   ;                      ; MultiSelectOr  ;                                 ;                         ; ;
+                                 ;            ; producers ; string ; sppClassificationProvider ;                ; creditsclassification:::producers::::     ;           ;           ; true       ; true   ;                      ; MultiSelectOr  ;                                 ;                         ; ;
+                                 ;            ; directors ; string ; sppClassificationProvider ;                ; creditsclassification:::directors::::     ;           ;           ; true       ; true   ;                      ; MultiSelectOr  ;                                 ;                         ; ;
+
+INSERT_UPDATE SolrSearchQueryProperty; indexedProperty(name, solrIndexedType(identifier))[unique = true]; facetType(code)[default = 'MultiSelectOr']; facet[default = true]; priority[default = 1000]; facetDisplayNameProvider; facetSortProvider; facetTopValuesProvider; includeInResponse[default = true]; searchQueryTemplate(name, indexedType(identifier))[unique = true][default = DEFAULT:$solrIndexedType]
+                                     ; genre:$solrIndexedType
+                                     ; actors:$solrIndexedType
+                                     ; producers:$solrIndexedType
+                                     ; directors:$solrIndexedType
+
+################################################################################################################################
+# facets used for devices
+################################################################################################################################
+INSERT_UPDATE SolrIndexedProperty; $hIndexType; $hName           ; $hType ; $hProvider          ; $hProviderParam   ; $hSortable; $hCurrency; $hLocalized; $hMulti; facet[default = true]; facetType(code); facetSort(code)[default = Alpha]; priority[default = 1000]; visible[default = true]
+                                 ;            ; freeviewchannels ; string ; sppPscvResolver     ; freeview_channels ;           ;           ; true       ; true   ;                      ; MultiSelectOr  ;                                 ;                         ;       ;
+                                 ;            ; youviewplus      ; string ; sppPscvResolver     ; you_view_plus     ;           ;           ; true       ; true   ;                      ; MultiSelectOr  ;                                 ;                         ;       ;
+                                 ;            ; premiumchannels  ; string ; sppPscvResolver     ; premium_channels  ;           ;           ; true       ; true   ;                      ; MultiSelectOr  ;                                 ;                         ;       ;
+                                 ;            ; tveverywhere     ; string ; sppPscvResolver     ; tv_everywhere     ;           ;           ; true       ; true   ;                      ; MultiSelectOr  ;                                 ;                         ;       ;
+                                 ;            ; region           ; string ; priceRegionResolver ;                   ;           ;           ;            ; true   ;                      ; MultiSelectOr  ;                                 ;                         ; false ;
+
+################################################################################################################################
+# facets used for plans
+################################################################################################################################
+INSERT_UPDATE SolrSearchQueryProperty; indexedProperty(name, solrIndexedType(identifier))[unique = true]; facet[default = true]; facetType(code); priority[default = 1000]; facetDisplayNameProvider; facetSortProvider; facetTopValuesProvider; includeInResponse[default = true]; searchQueryTemplate(name, indexedType(identifier))[unique = true][default = DEFAULT:$solrIndexedType]
+                                     ; freeviewchannels:$solrIndexedType                                ;                      ; MultiSelectOr  ;                         ;                         ;                  ;                       ;                                  ;
+                                     ; youviewplus:$solrIndexedType                                     ;                      ; MultiSelectOr  ;                         ;                         ;                  ;                       ;                                  ;
+                                     ; premiumchannels:$solrIndexedType                                 ;                      ; MultiSelectOr  ;                         ;                         ;                  ;                       ;                                  ;
+                                     ; tveverywhere:$solrIndexedType                                    ;                      ; MultiSelectOr  ;                         ;                         ;                  ;                       ;                                  ;
+                                     ; region:$solrIndexedType                                          ;                      ; MultiSelectOr  ;                         ;                         ;                  ;                       ;                                  ;

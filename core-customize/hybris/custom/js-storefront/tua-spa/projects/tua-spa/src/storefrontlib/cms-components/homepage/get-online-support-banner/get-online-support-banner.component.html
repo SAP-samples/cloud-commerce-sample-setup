@@ -1,0 +1,22 @@
+<ng-container *ngIf="data$ | async as data">
+    <ng-container *ngIf="mediaService.getMedia(data.media) as urlMedia">
+        <div
+                class="banner-container"
+                [ngStyle]="{ background: 'url(' + urlMedia.src + ')' }"
+        >
+            <div class="d-flex justify-content-center align-items-center flex-column">
+                <p class="cx-bold banner-container-headline pt-3">{{ data.headline }}</p>
+                <p class="banner-container-content">{{ data.content }}</p>
+                <div>
+                    <button
+                            [routerLink]="{ cxRoute: 'learnMore'} | cxUrl"
+                            class="btn btn-primary mt-2 align-self-end"
+                            [attr.aria-label]="'common.learnMore' | cxTranslate"
+                    >
+                        {{ ('common.learnMore' | cxTranslate) }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</ng-container>

@@ -1,0 +1,18 @@
+cx-page-layout.SwitchProviderPageTemplate {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 1700px;
+  margin: auto;
+
+  cx-page-slot {
+    &.SwitchProviderContentSlot {
+      max-width: var(--cx-page-width-max);
+      margin: 30px auto auto;
+
+      cx-product-list-carousel {
+        max-width: 950px;
+      }
+    }
+  }
+
+}

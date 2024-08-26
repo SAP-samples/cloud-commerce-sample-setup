@@ -1,0 +1,45 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+# ImpEx for Importing Category Classifications into Media SPA Store
+
+# Macros / Replacement Parameter definitions
+$productCatalog = mediaspaProductCatalog
+$productCatalogName = Media SPA Product Catalog
+$catalogVersion = catalogversion(catalog(id[default=$productCatalog]), version[default='Staged'])[unique=true, default=$productCatalog:Staged]
+$classCatalogVersion = catalogversion(catalog(id[default='mediaspaClassification']), version[default='1.0'])[unique=true, default='mediaspaClassification:1.0']
+$classSystemVersion = systemVersion(catalog(id[default='mediaspaClassification']), version[default='1.0'])[unique=true]
+$class = classificationClass(ClassificationClass.code, $classCatalogVersion)[unique=true]
+$supercategories = source(code, $classCatalogVersion)[unique=true]
+$categories = target(code, $catalogVersion)[unique=true]
+$attribute = classificationAttribute(code, $classSystemVersion)[unique=true]
+$unit = unit(code, $classSystemVersion)
+
+INSERT_UPDATE ClassificationClass; code[unique = true]; $classCatalogVersion; allowedPrincipals(uid)[default = 'customergroup']
+                                 ; mediacontentclassification
+                                 ; creditsclassification
+
+INSERT_UPDATE ClassificationAttribute; code[unique = true]; $classSystemVersion
+                                     ; genre
+                                     ; actors
+                                     ; producers
+                                     ; directors
+
+INSERT_UPDATE ClassificationAttributeValue; code[unique = true]; $classSystemVersion
+                                          ; drama
+                                          ; adventure
+                                          ; brady_germogen
+                                          ; dirk_alimjan
+                                          ; moana_chifundo
+                                          ; van_hohenheim
+                                          ; nina_kilik
+                                          ; jon_jacobsen
+                                          ; kayin_qillaq
+
+
+INSERT_UPDATE ClassAttributeAssignment; $class                     ; $attribute; attributeValues(code, $classSystemVersion) ; position; $unit; attributeType(code[default = enum]); multiValued[default = true]; range[default = false]; localized[default = true]
+                                      ; mediacontentclassification ; genre     ; drama,adventure                            ; 0
+                                      ; creditsclassification      ; actors    ; brady_germogen,dirk_alimjan,moana_chifundo ; 1
+                                      ; creditsclassification      ; producers ; van_hohenheim, nina_kilik, jon_jacobsen    ; 2
+                                      ; creditsclassification      ; directors ; kayin_qillaq                               ; 3
+

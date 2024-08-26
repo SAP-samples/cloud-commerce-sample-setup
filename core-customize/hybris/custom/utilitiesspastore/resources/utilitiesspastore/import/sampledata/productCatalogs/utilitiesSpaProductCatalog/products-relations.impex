@@ -1,0 +1,57 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Related Products into Utilities Store
+
+# Macros / Replacement Parameter definitions
+$productCatalog = utilitiesSpaProductCatalog
+$productCatalogName = Utilities Spa Product Catalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+$supercategories = supercategories(code, $catalogVersion)
+$baseProduct = baseProduct(code, $catalogVersion)
+$approved = approvalstatus(code)[default = 'approved']
+
+# ImpEx for Related SBG Products
+
+INSERT_UPDATE ProductReference; source(code, $catalogVersion)[unique = true]; target(code, $catalogVersion)[unique = true]; referenceType(code)[unique = true]; active[default = true]; preselected[default = false]
+                              ; electric_plan_basic                         ; electric_plan_plus                          ; UPSELLING
+                              ; electric_plan_plus                          ; electric_plan_best                          ; UPSELLING
+                              ; electric_plan_best                          ; electric_plan_total_comfort                 ; UPSELLING
+
+
+# ImpEx for Related Utilities Products
+
+# Insert Device References
+INSERT_UPDATE ProductReference; source(code, $catalogVersion)[unique = true]; target(code, $catalogVersion)[unique = true]; referenceType(code)[unique = true]; active[default = true]; preselected[default = false]
+                              ; lightbulb_energy_efficient                  ; lightbulb_led                               ; SIMILAR
+                              ; lightbulb_energy_efficient                  ; lightbulb_led_multipack                     ; SIMILAR
+                              ; lightbulb_energy_efficient                  ; lightbulb_led                               ; OTHERS
+                              ; lightbulb_energy_efficient                  ; lightbulb_led_multipack                     ; OTHERS
+
+                              ; thermostat_basic                            ; thermostat_plus                             ; SIMILAR
+                              ; thermostat_basic                            ; thermostat_plus                             ; OTHERS
+                              ; thermostat_basic                            ; thermostat_premium                          ; OTHERS
+
+# device mass data
+INSERT_UPDATE ProductReference; source(code, $catalogVersion)[unique = true]; target(code, $catalogVersion)[unique = true]; referenceType(code)[default = SIMILAR, unique = true]; active[default = true]; preselected[default = false]
+                              ; electric_plan_basic                         ; electric_plan_plus
+                              ; electric_plan_basic                         ; electric_plan_best
+                              ; electric_plan_plus                          ; electric_plan_best
+                              ; electric_plan_plus                          ; electric_plan_total_comfort
+                              ; electric_plan_best                          ; electric_plan_total_comfort
+
+INSERT_UPDATE ProductReference; source(code, $catalogVersion)[unique = true]; target(code, $catalogVersion)[unique = true]; referenceType(code)[default = OTHERS, unique = true]; active[default = true]; preselected[default = false]
+                              ; electric_plan_best                          ; electric_plan_basic
+                              ; electric_plan_best                          ; electric_plan_plus
+                              ; electric_plan_total_comfort                 ; electric_plan_basic
+                              ; electric_plan_total_comfort                 ; electric_plan_plus
+                              ; electric_plan_total_comfort                 ; electric_plan_best
+
+# Insert References between Devices and Accessories
+INSERT_UPDATE ProductReference; source(code, $catalogVersion)[unique = true]; target(code, $catalogVersion)[unique = true]; referenceType(code)[unique = true]; active[default = true]; preselected[default = false]
+#                              ; plus_electric_plan                          ; philips_light_bulb                          ; ACCESSORIES
+#                              ; plus_electric_plan                          ; cree_light_bulb                             ; ACCESSORIES
+#                              ; basic_electric_plan                         ; madking_filament                            ; ACCESSORIES
+#                              ; basic_electric_plan                         ; philips_light_bulb                          ; ACCESSORIES
+#                              ; total_home_comfort                          ; smart_light_bulb                            ; ACCESSORIES

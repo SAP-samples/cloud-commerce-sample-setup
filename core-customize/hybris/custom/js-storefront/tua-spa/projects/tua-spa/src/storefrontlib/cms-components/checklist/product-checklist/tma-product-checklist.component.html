@@ -1,0 +1,102 @@
+<ng-container *cxFeature="PURCHASE_WITH_ASSURANCE_FEATURE">
+    <cx-dependent-product></cx-dependent-product>
+</ng-container>
+<ng-container *ngIf="currentProduct$ | async as currentProduct">
+    <ng-container
+            *ngIf="getChecklistActions(currentProduct) | async as checklistActions"
+    >
+        <ng-container *ngIf="checklistActions.length > 0">
+
+            <ng-container *ngIf="getDisplayChecklists(currentProduct) | async as displayChecklists">
+                <ng-container
+                        *ngIf="displayChecklists === constants.DEPENDENT_PRODUCT.DEPENDENT_PRODUCT_AND_INSTALLATION_ADDRESS_ARE_SET">
+
+                    <div class="mb-2">
+                        <span>{{ 'common.checklistActionsSteps' | cxTranslate }}</span>
+                    </div>
+                    <ng-container
+                            *ngIf="tmaChecklistActionTypeCheckService.hasJourneyChecklistAction(
+                checklistActions,
+                tmaChecklistActionTypeCheckService.checklistActionType.INSTALLATION_ADDRESS)"
+                    >
+                        <cx-checklist-installation-address
+                                [isInstallationAddress]="isInstallationAddressSelected()"
+                                [showEdit]="true"
+                                [tmaProduct]="this.currentProduct$ | async"
+                                class="w-100 px-0 py-0 col-12"
+                        ></cx-checklist-installation-address>
+                    </ng-container>
+                    <ng-container
+                            *ngIf="tmaChecklistActionTypeCheckService.hasJourneyChecklistAction(
+                checklistActions,
+                tmaChecklistActionTypeCheckService.checklistActionType.APPOINTMENT)"
+                    >
+                        <ng-container>
+                            <cx-journey-checklist-appointment
+                                    [showEdit]="true">
+                            </cx-journey-checklist-appointment>
+                        </ng-container>
+                    </ng-container>
+                    <ng-container
+                            *ngIf="tmaChecklistActionTypeCheckService.hasJourneyChecklistAction(
+                checklistActions,
+                tmaChecklistActionTypeCheckService.checklistActionType.MSISDN)"
+                    >
+                        <tma-logical-resource-picker [tmaProduct]="this.currentProduct$ | async" [showEdit]="true"></tma-logical-resource-picker>
+                    </ng-container>
+                </ng-container>
+                <ng-container *ngIf="displayChecklists === constants.DEPENDENT_PRODUCT.NOTHING_IS_SET">
+                    <div class="mb-2">
+                        <span>{{ 'common.checklistActionsSteps' | cxTranslate }}</span>
+                    </div>
+                    <ng-container
+                            *ngIf="tmaChecklistActionTypeCheckService.hasJourneyChecklistAction(
+                checklistActions,
+                tmaChecklistActionTypeCheckService.checklistActionType.INSTALLATION_ADDRESS)"
+                    >
+                        <cx-checklist-installation-address
+                                [isInstallationAddress]="isInstallationAddressSelected()"
+                                [showEdit]="true"
+                                [tmaProduct]="this.currentProduct$ | async"
+                                class="w-100 px-0 py-0 col-12"
+                        ></cx-checklist-installation-address>
+                    </ng-container>
+                    <ng-container
+                            *ngIf="tmaChecklistActionTypeCheckService.hasJourneyChecklistAction(
+                checklistActions,
+                tmaChecklistActionTypeCheckService.checklistActionType.APPOINTMENT)"
+                    >
+                        <ng-container>
+                            <cx-journey-checklist-appointment
+                                    [showEdit]="true">
+                            </cx-journey-checklist-appointment>
+                        </ng-container>
+                    </ng-container>
+                    <ng-container
+                            *ngIf="tmaChecklistActionTypeCheckService.hasJourneyChecklistAction(
+                checklistActions,
+                tmaChecklistActionTypeCheckService.checklistActionType.MSISDN)"
+                    >
+                        <tma-logical-resource-picker [tmaProduct]="this.currentProduct$ | async" [showEdit]="true"></tma-logical-resource-picker>
+                    </ng-container>
+                </ng-container>
+
+                <ng-template #noChecklist>
+                    <ng-container
+                            *ngIf="shouldDisplayAddToCartButton(
+              checklistActions,
+              (this.currentProduct$ | async)?.productSpecification?.id)"
+                    >
+                        <ng-container>
+                            <cx-tma-configurable-pscvu
+                                    *ngIf="configurablePscvusService.setUpContext(currentProduct$ | async);"
+                                    [product]="(currentProduct$ | async)"
+                            >
+                            </cx-tma-configurable-pscvu>
+                        </ng-container>
+                    </ng-container>
+                </ng-template>
+            </ng-container>
+        </ng-container>
+    </ng-container>
+</ng-container>

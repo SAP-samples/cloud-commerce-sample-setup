@@ -1,0 +1,33 @@
+<ng-container *ngIf="component.data$ | async as data">
+  <ng-container *ngIf="mediaService.getMedia(data.media) as urlMedia">
+    <div
+        class="banner-container mb-2"
+        [ngStyle]="{ background: 'url(' + urlMedia.src + ')' }"
+      >
+      <div class="row banner-content d-flex justify-content-center">
+        <span class="col-12 p-0 title">{{ 'setUpAService.title' | cxTranslate }}</span>
+        <label class="col-12 m-0">
+          <span>
+            {{ 'addressInputs.postalCode.label' | cxTranslate }}</span>
+          <input
+          class="form-control"
+          type="text"
+          placeholder="{{ 'addressInputs.postalCode.placeholder' | cxTranslate }}"
+          [(ngModel)]="postalCode"
+          [attr.aria-label]="'setUpAService.inputAriaLabel' | cxTranslate"
+          />
+      </label>
+      <span class="col-12">{{ data.inputFieldAnnotation}}</span>
+      <div class="col-12 d-flex justify-content-start align-items-center">
+        <button 
+          class="btn btn-primary btn-block col-6 p-0" 
+          [attr.aria-label]="'setUpAService.buttonAriaLabel' | cxTranslate"
+          (click)="navigateTo()"
+          >
+          {{ 'setUpAService.buttonText' | cxTranslate }}
+        </button>
+      </div>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>

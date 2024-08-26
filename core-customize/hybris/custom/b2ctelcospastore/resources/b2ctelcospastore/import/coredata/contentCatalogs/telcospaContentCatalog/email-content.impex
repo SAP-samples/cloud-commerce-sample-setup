@@ -1,0 +1,271 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+#
+# Import the CMS content for the Telco site emails
+#
+
+$contentCatalog = telcospaContentCatalog
+$contentCV = catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]), CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+$wideContent = CMSImageComponent, BannerComponent
+
+# Import modulegen config properties into impex macros
+UPDATE GenericItem[processor = de.hybris.platform.commerceservices.impex.impl.ConfigPropertyImportProcessor]; pk[unique = true]
+$jarResourceCms = $config-jarResourceCmsValue
+$emailPackageName = $config-emailContextPackageName
+$jarResourceCmsB2cTelco = jar:de.hybris.platform.b2ctelcospastore.setup.B2ctelcospaStoreSystemSetup&/b2ctelcospastore/import/cockpits/cmscockpit/acc
+$emailVerificationTokenPackageName = de.hybris.platform.acceleratorservices.process.email.context.impl
+
+# Email page Template
+INSERT_UPDATE EmailPageTemplate; $contentCV[unique = true]; uid[unique = true]                          ; name                                              ; active; frontendTemplateName                ; subject(code)                                          ; htmlTemplate(code)                                  ; restrictedPageTypes(code)
+                               ;                          ; CustomerRegistrationEmailTemplate           ; Customer Registration Email Template              ; true  ; customerRegistrationEmail           ; b2ctelco_Email_Customer_Registration_Subject           ; b2ctelco_Email_Customer_Registration_Body           ; EmailPage
+                               ;                          ; ForgottenPasswordEmailTemplate              ; Forgotten Password Email Template                 ; true  ; forgottenPasswordEmail              ; b2ctelco_Email_Forgotten_Password_Subject              ; b2ctelco_Email_Forgotten_Password_Body              ; EmailPage
+                               ;                          ; OrderConfirmationEmailTemplate              ; Order Confirmation Email Template                 ; true  ; orderConfirmationEmail              ; b2ctelco_Email_Order_Confirmation_Subject              ; b2ctelco_Email_Order_Confirmation_Body              ; EmailPage
+                               ;                          ; DeliverySentEmailTemplate                   ; Delivery Sent Email Template                      ; true  ; deliverySentEmail                   ; b2ctelco_Email_Delivery_Sent_Subject                   ; b2ctelco_Email_Delivery_Sent_Body                   ; EmailPage
+                               ;                          ; ReadyForPickupEmailTemplate                 ; Ready For Pickup Email Template                   ; true  ; readyForPickupEmail                 ; b2ctelco_Email_Ready_For_Pickup_Subject                ; b2ctelco_Email_Ready_For_Pickup_Body                ; EmailPage
+                               ;                          ; OrderCancelledEmailTemplate                 ; Order Cancelled Email Template                    ; true  ; orderCancelledEmail                 ; b2ctelco_Email_Order_Cancelled_Subject                 ; b2ctelco_Email_Order_Cancelled_Body                 ; EmailPage
+                               ;                          ; OrderRefundEmailTemplate                    ; Order Refund Email Template                       ; true  ; orderRefundEmail                    ; b2ctelco_Email_Order_Refund_Subject                    ; b2ctelco_Email_Order_Refund_Body                    ; EmailPage
+                               ;                          ; OrderCollectionReminderEmailTemplate        ; Order Collection Reminder Email Template          ; true  ; orderCollectionReminderEmail        ; b2ctelco_Email_Order_Collection_Reminder_Subject       ; b2ctelco_Email_Order_Collection_Reminder_Body       ; EmailPage
+                               ;                          ; OrderMoveToCsEmailTemplate                  ; Order Moved To CS Email Template                  ; true  ; orderMoveToCsEmail                  ; b2ctelco_Email_Order_Move_To_CS_Subject                ; b2ctelco_Email_Order_Move_To_CS_Body                ; EmailPage
+                               ;                          ; OrderPartiallyCanceledEmailTemplate         ; Order Partially Canceled Email Template           ; true  ; orderPartiallyCanceledEmail         ; b2ctelco_Email_Order_Partially_Canceled_Subject        ; b2ctelco_Email_Order_Partially_Canceled_Body        ; EmailPage
+                               ;                          ; OrderPartiallyRefundedEmailTemplate         ; Order Partially Refunded Email Template           ; true  ; orderPartiallyRefundedEmail         ; b2ctelco_Email_Order_Partially_Refunded_Subject        ; b2ctelco_Email_Order_Partially_Refunded_Body        ; EmailPage
+                               ;                          ; NotPickedUpConsignmentCanceledEmailTemplate ; Not Picked Up Consignment Canceled Email Template ; true  ; notPickedUpConsignmentCanceledEmail ; b2ctelco_Email_NotPickedUpConsignment_Canceled_Subject ; b2ctelco_Email_NotPickedUpConsignment_Canceled_Body ; EmailPage
+                               ;                          ; LoginVerificationTokenEmailTemplate         ; Verification Token Email Template                 ; TRUE  ; verificationTokenEmail              ; b2ctelco_Email_Verification_Subject                    ; b2ctelco_Email_Verification_Body                    ; EmailPage
+
+# Templates for CMS Cockpit Page Edit
+UPDATE EmailPageTemplate; $contentCV[unique = true]; uid[unique = true]                          ; velocityTemplate[translator = de.hybris.platform.commerceservices.impex.impl.FileLoaderValueTranslator]
+                        ;                          ; CustomerRegistrationEmailTemplate           ; $jarResourceCms/structure-view/structure_customerRegistrationEmailTemplate.vm
+                        ;                          ; ForgottenPasswordEmailTemplate              ; $jarResourceCms/structure-view/structure_forgottenPasswordEmailTemplate.vm
+                        ;                          ; OrderConfirmationEmailTemplate              ; $jarResourceCmsB2cTelco/structure-view/structure_orderConfirmationEmailTemplate.vm
+                        ;                          ; DeliverySentEmailTemplate                   ; $jarResourceCms/structure-view/structure_deliverySentEmailTemplate.vm
+                        ;                          ; ReadyForPickupEmailTemplate                 ; $jarResourceCms/structure-view/structure_readyForPickupEmailTemplate.vm
+                        ;                          ; OrderCancelledEmailTemplate                 ; $jarResourceCms/structure-view/structure_orderCancelledEmailTemplate.vm
+                        ;                          ; OrderRefundEmailTemplate                    ; $jarResourceCms/structure-view/structure_orderRefundEmailTemplate.vm
+                        ;                          ; OrderCollectionReminderEmailTemplate        ; $jarResourceCms/structure-view/structure_orderCollectionReminderEmailTemplate.vm
+                        ;                          ; OrderMoveToCsEmailTemplate                  ; $jarResourceCms/structure-view/structure_orderMoveToCSEmailTemplate.vm
+                        ;                          ; OrderPartiallyCanceledEmailTemplate         ; $jarResourceCms/structure-view/structure_orderPartiallyCanceledEmailTemplate.vm
+                        ;                          ; OrderPartiallyRefundedEmailTemplate         ; $jarResourceCms/structure-view/structure_orderPartiallyRefundedEmailTemplate.vm
+                        ;                          ; NotPickedUpConsignmentCanceledEmailTemplate ; $jarResourceCms/structure-view/structure_notPickedUpConsignmentCanceledEmailTemplate.vm
+
+INSERT_UPDATE ContentSlotName; name[unique = true]; template(uid, $contentCV)[unique = true][default = 'CustomerRegistrationEmailTemplate']; validComponentTypes(code)
+                             ; SiteLogo           ;                                                                                        ;              ; logo
+                             ; TopContent         ;                                                                                        ; $wideContent ;
+                             ; BottomContent      ;                                                                                        ; $wideContent ;
+
+INSERT_UPDATE ContentSlotName; name[unique = true]; template(uid, $contentCV)[unique = true][default = 'ForgottenPasswordEmailTemplate']; validComponentTypes(code)
+                             ; SiteLogo           ;                                                                                     ;              ; logo
+                             ; TopContent         ;                                                                                     ; $wideContent ;
+                             ; BottomContent      ;                                                                                     ; $wideContent ;
+
+INSERT_UPDATE ContentSlotName; name[unique = true]; template(uid, $contentCV)[unique = true][default = 'OrderConfirmationEmailTemplate']; validComponentTypes(code)
+                             ; SiteLogo           ;                                                                                     ;              ; logo
+                             ; TopContent         ;                                                                                     ; $wideContent ;
+                             ; BottomContent      ;                                                                                     ; $wideContent ;
+
+INSERT_UPDATE ContentSlotName; name[unique = true]; template(uid, $contentCV)[unique = true][default = 'OrderCancelledEmailTemplate']; validComponentTypes(code)
+                             ; SiteLogo           ;                                                                                  ;              ; logo
+                             ; TopContent         ;                                                                                  ; $wideContent ;
+                             ; BottomContent      ;                                                                                  ; $wideContent ;
+
+INSERT_UPDATE ContentSlotName; name[unique = true]; template(uid, $contentCV)[unique = true][default = 'OrderRefundEmailTemplate']; validComponentTypes(code)
+                             ; SiteLogo           ;                                                                               ;              ; logo
+                             ; TopContent         ;                                                                               ; $wideContent ;
+                             ; BottomContent      ;                                                                               ; $wideContent ;
+
+INSERT_UPDATE ContentSlotName; name[unique = true]; template(uid, $contentCV)[unique = true][default = 'DeliverySentEmailTemplate']; validComponentTypes(code)
+                             ; SiteLogo           ;                                                                                ;              ; logo
+                             ; TopContent         ;                                                                                ; $wideContent ;
+                             ; BottomContent      ;                                                                                ; $wideContent ;
+
+INSERT_UPDATE ContentSlotName; name[unique = true]; template(uid, $contentCV)[unique = true][default = 'ReadyForPickupEmailTemplate']; validComponentTypes(code)
+                             ; SiteLogo           ;                                                                                  ;              ; logo
+                             ; TopContent         ;                                                                                  ; $wideContent ;
+                             ; BottomContent      ;                                                                                  ; $wideContent ;
+
+INSERT_UPDATE ContentSlotName; name[unique = true]; template(uid, $contentCV)[unique = true][default = 'OrderCollectionReminderEmailTemplate']; validComponentTypes(code)
+                             ; SiteLogo           ;                                                                                           ;              ; logo
+                             ; TopContent         ;                                                                                           ; $wideContent ;
+                             ; BottomContent      ;                                                                                           ; $wideContent ;
+
+INSERT_UPDATE ContentSlotName; name[unique = true]; template(uid, $contentCV)[unique = true][default = 'OrderMoveToCsEmailTemplate']; validComponentTypes(code)
+                             ; SiteLogo           ;                                                                                 ;              ; logo
+                             ; TopContent         ;                                                                                 ; $wideContent ;
+                             ; BottomContent      ;                                                                                 ; $wideContent ;
+
+INSERT_UPDATE ContentSlotName; name[unique = true]; template(uid, $contentCV)[unique = true][default = 'OrderPartiallyCanceledEmailTemplate']; validComponentTypes(code)
+                             ; SiteLogo           ;                                                                                          ;              ; logo
+                             ; TopContent         ;                                                                                          ; $wideContent ;
+                             ; BottomContent      ;                                                                                          ; $wideContent ;
+
+INSERT_UPDATE ContentSlotName; name[unique = true]; template(uid, $contentCV)[unique = true][default = 'OrderPartiallyRefundedEmailTemplate']; validComponentTypes(code)
+                             ; SiteLogo           ;                                                                                          ;              ; logo
+                             ; TopContent         ;                                                                                          ; $wideContent ;
+                             ; BottomContent      ;                                                                                          ; $wideContent ;
+
+INSERT_UPDATE ContentSlotName; name[unique = true]; template(uid, $contentCV)[unique = true][default = 'NotPickedUpConsignmentCanceledEmailTemplate']; validComponentTypes(code)
+                             ; SiteLogo           ;                                                                                                  ;              ; logo
+                             ; TopContent         ;                                                                                                  ; $wideContent ;
+                             ; BottomContent      ;                                                                                                  ; $wideContent ;
+
+INSERT_UPDATE ContentSlotName; name[unique = true]; template(uid, $contentCV)[unique = true][default = 'LoginVerificationTokenEmailTemplate']        ; validComponentTypes(code)
+                             ; SiteLogo           ;                                                                                                  ;              ; logo
+                             ; TopContent         ;                                                                                                  ; $wideContent ;
+                             ; BottomContent      ;                                                                                                  ; $wideContent ;
+
+# Create Content Slots
+INSERT_UPDATE ContentSlot; $contentCV[unique = true]; uid[unique = true]; name                      ; active
+                         ;                          ; EmailTopSlot      ; Default Email Top Slot    ; true
+                         ;                          ; EmailBottomSlot   ; Default Email Bottom Slot ; true
+                         ;                          ; EmailSiteLogoSlot ; Default Email Site Slot   ; true
+
+# Bind Content Slots to Email Page Templates
+INSERT_UPDATE ContentSlotForTemplate; $contentCV[unique = true]; uid[unique = true]                      ; position[unique = true]; pageTemplate(uid, $contentCV)[unique = true][default = 'CustomerRegistrationEmailTemplate']; contentSlot(uid, $contentCV)[unique = true]; allowOverwrite
+                                    ;                          ; SiteLogo-CustomerRegistrationEmail      ; SiteLogo               ;                                                                                            ; EmailSiteLogoSlot                          ; true
+                                    ;                          ; TopContent-CustomerRegistrationEmail    ; TopContent             ;                                                                                            ; EmailTopSlot                               ; true
+                                    ;                          ; BottomContent-CustomerRegistrationEmail ; BottomContent          ;                                                                                            ; EmailBottomSlot                            ; true
+
+INSERT_UPDATE ContentSlotForTemplate; $contentCV[unique = true]; uid[unique = true]                   ; position[unique = true]; pageTemplate(uid, $contentCV)[unique = true][default = 'ForgottenPasswordEmailTemplate']; contentSlot(uid, $contentCV)[unique = true]; allowOverwrite
+                                    ;                          ; SiteLogo-ForgottenPasswordEmail      ; SiteLogo               ;                                                                                         ; EmailSiteLogoSlot                          ; true
+                                    ;                          ; TopContent-ForgottenPasswordEmail    ; TopContent             ;                                                                                         ; EmailTopSlot                               ; true
+                                    ;                          ; BottomContent-ForgottenPasswordEmail ; BottomContent          ;                                                                                         ; EmailBottomSlot                            ; true
+
+INSERT_UPDATE ContentSlotForTemplate; $contentCV[unique = true]; uid[unique = true]                   ; position[unique = true]; pageTemplate(uid, $contentCV)[unique = true][default = 'OrderConfirmationEmailTemplate']; contentSlot(uid, $contentCV)[unique = true]; allowOverwrite
+                                    ;                          ; SiteLogo-OrderConfirmationEmail      ; SiteLogo               ;                                                                                         ; EmailSiteLogoSlot                          ; true
+                                    ;                          ; TopContent-OrderConfirmationEmail    ; TopContent             ;                                                                                         ; EmailTopSlot                               ; true
+                                    ;                          ; BottomContent-OrderConfirmationEmail ; BottomContent          ;                                                                                         ; EmailBottomSlot                            ; true
+
+INSERT_UPDATE ContentSlotForTemplate; $contentCV[unique = true]; uid[unique = true]                ; position[unique = true]; pageTemplate(uid, $contentCV)[unique = true][default = 'OrderCancelledEmailTemplate']; contentSlot(uid, $contentCV)[unique = true]; allowOverwrite
+                                    ;                          ; SiteLogo-OrderCancelledEmail      ; SiteLogo               ;                                                                                      ; EmailSiteLogoSlot                          ; true
+                                    ;                          ; TopContent-OrderCancelledEmail    ; TopContent             ;                                                                                      ; EmailTopSlot                               ; true
+                                    ;                          ; BottomContent-OrderCancelledEmail ; BottomContent          ;                                                                                      ; EmailBottomSlot                            ; true
+
+INSERT_UPDATE ContentSlotForTemplate; $contentCV[unique = true]; uid[unique = true]             ; position[unique = true]; pageTemplate(uid, $contentCV)[unique = true][default = 'OrderRefundEmailTemplate']; contentSlot(uid, $contentCV)[unique = true]; allowOverwrite
+                                    ;                          ; SiteLogo-OrderRefundEmail      ; SiteLogo               ;                                                                                   ; EmailSiteLogoSlot                          ; true
+                                    ;                          ; TopContent-OrderRefundEmail    ; TopContent             ;                                                                                   ; EmailTopSlot                               ; true
+                                    ;                          ; BottomContent-OrderRefundEmail ; BottomContent          ;                                                                                   ; EmailBottomSlot                            ; true
+
+INSERT_UPDATE ContentSlotForTemplate; $contentCV[unique = true]; uid[unique = true]              ; position[unique = true]; pageTemplate(uid, $contentCV)[unique = true][default = 'DeliverySentEmailTemplate']; contentSlot(uid, $contentCV)[unique = true]; allowOverwrite
+                                    ;                          ; SiteLogo-DeliverySentEmail      ; SiteLogo               ;                                                                                    ; EmailSiteLogoSlot                          ; true
+                                    ;                          ; TopContent-DeliverySentEmail    ; TopContent             ;                                                                                    ; EmailTopSlot                               ; true
+                                    ;                          ; BottomContent-DeliverySentEmail ; BottomContent          ;                                                                                    ; EmailBottomSlot                            ; true
+
+INSERT_UPDATE ContentSlotForTemplate; $contentCV[unique = true]; uid[unique = true]                ; position[unique = true]; pageTemplate(uid, $contentCV)[unique = true][default = 'ReadyForPickupEmailTemplate']; contentSlot(uid, $contentCV)[unique = true]; allowOverwrite
+                                    ;                          ; SiteLogo-ReadyForPickupEmail      ; SiteLogo               ;                                                                                      ; EmailSiteLogoSlot                          ; true
+                                    ;                          ; TopContent-ReadyForPickupEmail    ; TopContent             ;                                                                                      ; EmailTopSlot                               ; true
+                                    ;                          ; BottomContent-ReadyForPickupEmail ; BottomContent          ;                                                                                      ; EmailBottomSlot                            ; true
+
+INSERT_UPDATE ContentSlotForTemplate; $contentCV[unique = true]; uid[unique = true]                        ; position[unique = true]; pageTemplate(uid, $contentCV)[unique = true][default = 'OrderPartiallyCanceledEmailTemplate']; contentSlot(uid, $contentCV)[unique = true]; allowOverwrite
+                                    ;                          ; SiteLogo-OrderPartiallyCanceledEmail      ; SiteLogo               ;                                                                                              ; EmailSiteLogoSlot                          ; true
+                                    ;                          ; TopContent-OrderPartiallyCanceledEmail    ; TopContent             ;                                                                                              ; EmailTopSlot                               ; true
+                                    ;                          ; BottomContent-OrderPartiallyCanceledEmail ; BottomContent          ;                                                                                              ; EmailBottomSlot                            ; true
+
+INSERT_UPDATE ContentSlotForTemplate; $contentCV[unique = true]; uid[unique = true]                        ; position[unique = true]; pageTemplate(uid, $contentCV)[unique = true][default = 'OrderPartiallyRefundedEmailTemplate']; contentSlot(uid, $contentCV)[unique = true]; allowOverwrite
+                                    ;                          ; SiteLogo-OrderPartiallyRefundedEmail      ; SiteLogo               ;                                                                                              ; EmailSiteLogoSlot                          ; true
+                                    ;                          ; TopContent-OrderPartiallyRefundedEmail    ; TopContent             ;                                                                                              ; EmailTopSlot                               ; true
+                                    ;                          ; BottomContent-OrderPartiallyRefundedEmail ; BottomContent          ;                                                                                              ; EmailBottomSlot                            ; true
+
+INSERT_UPDATE ContentSlotForTemplate; $contentCV[unique = true]; uid[unique = true]                                ; position[unique = true]; pageTemplate(uid, $contentCV)[unique = true][default = 'NotPickedUpConsignmentCanceledEmailTemplate']; contentSlot(uid, $contentCV)[unique = true]; allowOverwrite
+                                    ;                          ; SiteLogo-NotPickedUpConsignmentCanceledEmail      ; SiteLogo               ;                                                                                                      ; EmailSiteLogoSlot                          ; true
+                                    ;                          ; TopContent-NotPickedUpConsignmentCanceledEmail    ; TopContent             ;                                                                                                      ; EmailTopSlot                               ; true
+                                    ;                          ; BottomContent-NotPickedUpConsignmentCanceledEmail ; BottomContent          ;                                                                                                      ; EmailBottomSlot                            ; true
+
+INSERT_UPDATE ContentSlotForTemplate; $contentCV[unique = true]; uid[unique = true]                         ; position[unique = true]; pageTemplate(uid, $contentCV)[unique = true][default = 'OrderCollectionReminderEmailTemplate']; contentSlot(uid, $contentCV)[unique = true]; allowOverwrite
+                                    ;                          ; SiteLogo-OrderCollectionReminderEmail      ; SiteLogo               ;                                                                                               ; EmailSiteLogoSlot                          ; true
+                                    ;                          ; TopContent-OrderCollectionReminderEmail    ; TopContent             ;                                                                                               ; EmailTopSlot                               ; true
+                                    ;                          ; BottomContent-OrderCollectionReminderEmail ; BottomContent          ;                                                                                               ; EmailBottomSlot                            ; true
+
+INSERT_UPDATE ContentSlotForTemplate; $contentCV[unique = true]; uid[unique = true]                                ; position[unique = true]; pageTemplate(uid, $contentCV)[unique = true][default = 'LoginVerificationTokenEmailTemplate']; contentSlot(uid, $contentCV)[unique = true]; allowOverwrite
+                                    ;                          ; SiteLogo-LoginVerificationTokenEmailTemplate      ; SiteLogo               ;                                                                                              ; EmailSiteLogoSlot                          ; true
+                                    ;                          ; TopContent-LoginVerificationTokenEmailTemplate    ; TopContent             ;                                                                                              ; EmailTopSlot                               ; true
+                                    ;                          ; BottomContent-LoginVerificationTokenEmailTemplate ; BottomContent          ;                                                                                              ; EmailBottomSlot                            ; true
+
+# Email Pages
+INSERT_UPDATE EmailPage; $contentCV[unique = true]; uid[unique = true]                  ; name                                     ; masterTemplate(uid, $contentCV)             ; defaultPage; approvalStatus(code)[default = 'approved']
+                       ;                          ; CustomerRegistrationEmail           ; Customer Registration Email              ; CustomerRegistrationEmailTemplate           ; true       ;
+                       ;                          ; ForgottenPasswordEmail              ; Forgotten Password Email                 ; ForgottenPasswordEmailTemplate              ; true       ;
+                       ;                          ; OrderConfirmationEmail              ; Order Confirmation Email                 ; OrderConfirmationEmailTemplate              ; true       ;
+                       ;                          ; DeliverySentEmail                   ; Delivery Sent Email                      ; DeliverySentEmailTemplate                   ; true       ;
+                       ;                          ; ReadyForPickupEmail                 ; Ready For Pickup Email                   ; ReadyForPickupEmailTemplate                 ; true       ;
+                       ;                          ; OrderCancelledEmail                 ; Order Cancelled Email                    ; OrderCancelledEmailTemplate                 ; true       ;
+                       ;                          ; OrderRefundEmail                    ; Order Refund Email                       ; OrderRefundEmailTemplate                    ; true       ;
+                       ;                          ; OrderCollectionReminderEmail        ; Order Collection Reminder Email          ; OrderCollectionReminderEmailTemplate        ; true       ; ; customerservices@hybris.com ; Customer Services Team
+                       ;                          ; OrderMoveToCsEmail                  ; Order Move To CS Email                   ; OrderMoveToCsEmailTemplate                  ; true       ; ; customerservices@hybris.com ; Customer Services Team
+                       ;                          ; OrderPartiallyCanceledEmail         ; Order Partially Canceled Email           ; OrderPartiallyCanceledEmailTemplate         ; true       ;
+                       ;                          ; OrderPartiallyRefundedEmail         ; Order Partially Refunded Email           ; OrderPartiallyRefundedEmailTemplate         ; true       ;
+                       ;                          ; NotPickedUpConsignmentCanceledEmail ; Not Picked Up Consignment Canceled Email ; NotPickedUpConsignmentCanceledEmailTemplate ; true       ;
+                       ;                          ; VerificationEmail                   ; Verification Token Email                 ; LoginVerificationTokenEmailTemplate         ; true       ;
+
+# CMS components velocity templates
+INSERT_UPDATE RendererTemplate; code[unique = true]                     ; contextClass; rendererType(code)[default = 'velocity']
+                              ; b2ctelco-CMSImageComponent-template     ; java.util.Map
+                              ; b2ctelco-BannerComponent-template       ; java.util.Map
+                              ; b2ctelco-SimpleBannerComponent-template ; java.util.Map
+                              ; b2ctelco-CMSLinkComponent-template      ; java.util.Map
+                              ; b2ctelco-CMSParagraphComponent-template ; java.util.Map
+
+# Email velocity templates
+INSERT_UPDATE RendererTemplate; code[unique = true]                                    ; contextClass; rendererType(code)[default = 'velocity']
+                              ; b2ctelco_Email_Customer_Registration_Body              ; $emailPackageName.CustomerEmailContext
+                              ; b2ctelco_Email_Forgotten_Password_Body                 ; $emailPackageName.ForgottenPasswordEmailContext
+                              ; b2ctelco_Email_Delivery_Sent_Body                      ; $emailPackageName.DeliverySentEmailContext
+                              ; b2ctelco_Email_Ready_For_Pickup_Body                   ; $emailPackageName.ReadyForPickupEmailContext
+                              ; b2ctelco_Email_Order_Cancelled_Body                    ; $emailPackageName.OrderCancelledEmailContext
+                              ; b2ctelco_Email_Order_Refund_Body                       ; $emailPackageName.OrderRefundEmailContext
+                              ; b2ctelco_Email_Order_Collection_Reminder_Body          ; $emailPackageName.ConsignmentCollectionReminderEmailContext
+                              ; b2ctelco_Email_Order_Move_To_CS_Body                   ; $emailPackageName.ConsignmentCollectionReminderEmailContext
+                              ; b2ctelco_Email_Order_Partially_Canceled_Body           ; $emailPackageName.OrderPartiallyCanceledEmailContext
+                              ; b2ctelco_Email_Order_Partially_Refunded_Body           ; $emailPackageName.OrderPartiallyRefundedEmailContext
+                              ; b2ctelco_Email_NotPickedUpConsignment_Canceled_Body    ; $emailPackageName.NotPickedUpConsignmentCanceledEmailContext
+                              ; b2ctelco_Email_Customer_Registration_Subject           ; $emailPackageName.CustomerEmailContext
+                              ; b2ctelco_Email_Forgotten_Password_Subject              ; $emailPackageName.ForgottenPasswordEmailContext
+                              ; b2ctelco_Email_Delivery_Sent_Subject                   ; $emailPackageName.DeliverySentEmailContext
+                              ; b2ctelco_Email_Ready_For_Pickup_Subject                ; $emailPackageName.ReadyForPickupEmailContext
+                              ; b2ctelco_Email_Order_Cancelled_Subject                 ; $emailPackageName.OrderCancelledEmailContext
+                              ; b2ctelco_Email_Order_Refund_Subject                    ; $emailPackageName.OrderRefundEmailContext
+                              ; b2ctelco_Email_Order_Collection_Reminder_Subject       ; $emailPackageName.ConsignmentCollectionReminderEmailContext
+                              ; b2ctelco_Email_Order_Move_To_CS_Subject                ; $emailPackageName.ConsignmentCollectionReminderEmailContext
+                              ; b2ctelco_Email_Order_Partially_Canceled_Subject        ; $emailPackageName.OrderPartiallyCanceledEmailContext
+                              ; b2ctelco_Email_Order_Partially_Refunded_Subject        ; $emailPackageName.OrderPartiallyRefundedEmailContext
+                              ; b2ctelco_Email_NotPickedUpConsignment_Canceled_Subject ; $emailPackageName.NotPickedUpConsignmentCanceledEmailContext
+                              ; b2ctelco_Email_Verification_Body                       ; $emailVerificationTokenPackageName.VerificationTokenEmailContext
+                              ; b2ctelco_Email_Verification_Subject                    ; $emailVerificationTokenPackageName.VerificationTokenEmailContext
+
+# Email velocity templates (b2ctelco customized)
+INSERT_UPDATE RendererTemplate; code[unique = true]                       ; contextClass; rendererType(code)[default = 'velocity']
+                              ; b2ctelco_Email_Order_Confirmation_Body    ; de.hybris.platform.b2ctelcospastore.process.email.context.OrderNotificationEmailContext
+                              ; b2ctelco_Email_Order_Confirmation_Subject ; de.hybris.platform.b2ctelcospastore.process.email.context.OrderNotificationEmailContext
+
+
+# Preview Image for use in the CMS Cockpit
+INSERT_UPDATE Media; $contentCV[unique = true]; code[unique = true]                         ; mime     ; realfilename               ; @media[translator = de.hybris.platform.impex.jalo.media.MediaDataTranslator][forceWrite = true]
+                   ;                          ; CustomerRegistrationEmail_preview           ; text/gif ; EmailPageModel_preview.gif ; $jarResourceCms/preview-images/EmailPageModel_preview.gif
+                   ;                          ; ForgottenPasswordEmail_preview              ; text/gif ; EmailPageModel_preview.gif ; $jarResourceCms/preview-images/EmailPageModel_preview.gif
+                   ;                          ; OrderConfirmationEmail_preview              ; text/gif ; EmailPageModel_preview.gif ; $jarResourceCms/preview-images/EmailPageModel_preview.gif
+                   ;                          ; DeliverySentEmail_preview                   ; text/gif ; EmailPageModel_preview.gif ; $jarResourceCms/preview-images/EmailPageModel_preview.gif
+                   ;                          ; ReadyForPickupEmail_preview                 ; text/gif ; EmailPageModel_preview.gif ; $jarResourceCms/preview-images/EmailPageModel_preview.gif
+                   ;                          ; OrderCancelledEmail_preview                 ; text/gif ; EmailPageModel_preview.gif ; $jarResourceCms/preview-images/EmailPageModel_preview.gif
+                   ;                          ; OrderRefundEmail_preview                    ; text/gif ; EmailPageModel_preview.gif ; $jarResourceCms/preview-images/EmailPageModel_preview.gif
+                   ;                          ; OrderCollectionReminderEmail_preview        ; text/gif ; EmailPageModel_preview.gif ; $jarResourceCms/preview-images/EmailPageModel_preview.gif
+                   ;                          ; OrderMoveToCsEmail_preview                  ; text/gif ; EmailPageModel_preview.gif ; $jarResourceCms/preview-images/EmailPageModel_preview.gif
+                   ;                          ; OrderPartiallyCanceledEmail_preview         ; text/gif ; EmailPageModel_preview.gif ; $jarResourceCms/preview-images/EmailPageModel_preview.gif
+                   ;                          ; OrderPartiallyRefundedEmail_preview         ; text/gif ; EmailPageModel_preview.gif ; $jarResourceCms/preview-images/EmailPageModel_preview.gif
+                   ;                          ; NotPickedUpConsignmentCanceledEmail_preview ; text/gif ; EmailPageModel_preview.gif ; $jarResourceCms/preview-images/EmailPageModel_preview.gif
+                   ;                          ; VerificationEmail_preview                   ; text/gif ; EmailPageModel_preview.gif ; $jarResourceCms/preview-images/EmailPageModel_preview.gif
+
+UPDATE EmailPage; $contentCV[unique = true]; uid[unique = true]                  ; previewImage(code, $contentCV)
+                ;                          ; CustomerRegistrationEmail           ; CustomerRegistrationEmail_preview
+                ;                          ; ForgottenPasswordEmail              ; ForgottenPasswordEmail_preview
+                ;                          ; OrderConfirmationEmail              ; OrderConfirmationEmail_preview
+                ;                          ; DeliverySentEmail                   ; DeliverySentEmail_preview
+                ;                          ; ReadyForPickupEmail                 ; ReadyForPickupEmail_preview
+                ;                          ; OrderCancelledEmail                 ; OrderCancelledEmail_preview
+                ;                          ; OrderRefundEmail                    ; OrderRefundEmail_preview
+                ;                          ; OrderCollectionReminderEmail        ; OrderCollectionReminderEmail_preview
+                ;                          ; OrderMoveToCsEmail                  ; OrderMoveToCsEmail_preview
+                ;                          ; OrderPartiallyCanceledEmail         ; OrderPartiallyCanceledEmail_preview
+                ;                          ; OrderPartiallyRefundedEmail         ; OrderPartiallyRefundedEmail_preview
+                ;                          ; NotPickedUpConsignmentCanceledEmail ; NotPickedUpConsignmentCanceledEmail_preview
+                ;                          ; VerificationEmail                   ; VerificationEmail_preview
+
+

@@ -1,0 +1,19 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+#
+# Import Sample CMS Cockpit User
+#
+
+$contentCatalog = telcospaContentCatalog
+
+INSERT_UPDATE UserGroup; UID[unique = true]; groups(uid)[mode = append]
+                       ; cmsmanagergroup   ; cockpitgroup,employeegroup
+
+INSERT_UPDATE Employee; UID[unique = true]; description ; name        ; groups(uid)[mode = append]; sessionLanguage(isocode); sessionCurrency(isocode)
+                      ; cmsmanager        ; CMS manager ; CMS Manager ; cmsmanagergroup           ; en                      ; USD
+
+UPDATE CatalogVersion; catalog(id)[unique = true]; version[unique = true]; writePrincipals(uid)       ;
+                     ; $contentCatalog           ; Online                ; cmsmanagergroup,cmsmanager ;
+                     ; $contentCatalog           ; Staged                ; cmsmanagergroup,cmsmanager ;

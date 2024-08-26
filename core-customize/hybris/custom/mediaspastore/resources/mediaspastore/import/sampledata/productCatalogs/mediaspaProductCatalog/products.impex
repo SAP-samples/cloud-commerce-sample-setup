@@ -1,0 +1,163 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Importing Products into Media SPA Store
+
+$productCatalog = mediaspaProductCatalog
+$productCatalogName = Media SPA Product Catalog
+$catalogVersion = catalogversion(catalog(id[default=$productCatalog]), version[default='Staged'])[unique=true, default=$productCatalog:Staged]
+$supercategories = supercategories(code, $catalogVersion)
+$approved = approvalstatus(code)[default='approved']
+$channels = distributionChannels(code)
+$defaultOnlineDate = onlineDate[dateformat=dd.MM.yyyy][default=30.06.2018]
+$defaultUnit = unit(code)[default=pieces]
+$variantTypeCode = variantType(code)
+$soldIndividuallyFlag = soldIndividually[default=true]
+$defaultVariantTypeCode = variantType(code)[default='TmaPoVariant']
+$basePo = tmaBasePo(code, $catalogVersion)
+$allowedPrincipals = allowedPrincipals(uid)[default='customergroup']
+$unit = unit(code)[default=pieces]
+
+$lang = en
+
+######################## Simple Product Offerings ##################################
+
+# Hardware devices for the subscriptions
+INSERT_UPDATE TmaSimpleProductOffering; code[unique = true]  ; $supercategories; manufacturerName; manufacturerAID; $channels; $approved; $catalogVersion; $soldIndividuallyFlag; $defaultUnit; $defaultOnlineDate
+                                      ; phone_landlinephone  ; hardware        ; Telco And Media ; TMA123/A
+                                      ; standardRouter       ; hardware        ; Telco And Media ; TMA123/A
+                                      ; fibreRouter          ; hardware        ; Telco And Media ; TMA123/A
+                                      ; standardDecoder      ; hardware        ; Telco And Media ; TMA123/A
+                                      ; decoderPlus          ; hardware        ; Telco And Media ; TMA123/A
+                                      ; fibreRouterUnlimited ; hardware        ; Telco And Media ; TMA123/A
+
+# Plans
+INSERT_UPDATE TmaSimpleProductOffering; code[unique = true]          ; $supercategories; productSpecification(id, $catalogVersion); $defaultOnlineDate; $defaultUnit; $channels; $approved; $catalogVersion; $soldIndividuallyFlag
+                                      ; phoneUnlimitedWeekend        ; landlineplans
+                                      ; phoneUnlimitedWeekendEvening ; landlineplans
+                                      ; standardBroadband            ; internetplans
+                                      ; fibreBroadbandLimited        ; internetplans
+                                      ; fibreBroadbandUnlimited      ; internetplans
+                                      ; superFibreUnlimited          ; internetplans
+                                      ; tvStarter                    ; tvplans         ; tv_starter_plan
+                                      ; tvEntertainment              ; tvplans         ; tv_entertainment_plan
+                                      ; tvPremium                    ; tvplans         ; tv_premium_plan
+# AddOns
+INSERT_UPDATE TmaSimpleProductOffering; code[unique = true]    ; $supercategories; productSpecification(id, $catalogVersion); soldIndividually[default = false]; $defaultOnlineDate; $defaultUnit; $channels; $approved; $catalogVersion
+                                      ; sport                  ; tvaddons        ; tv_entertainment_plan
+                                      ; TCO                    ; tvaddons        ; tv_starter_plan
+                                      ; foreignLanguagePackage ; tvaddons
+                                      ; allOnDemand            ; tvaddons
+
+# Merchandise
+INSERT_UPDATE TmaSimpleProductOffering; code[unique = true]; $supercategories; manufacturerName; manufacturerAID; $variantTypeCode; $defaultOnlineDate; $defaultUnit; $approved; $channels; $soldIndividuallyFlag; $catalogVersion
+                                      ; pants_bp           ; underworldbrand ; underworldbrand ; UWB123/A
+                                      ; t-shirt_bp         ; underworldbrand ; underworldbrand ; UWB123/A       ; TmaPoVariant
+                                      ; hoodie             ; underworldbrand ; underworldbrand ; UWB123/A
+                                      ; cap                ; underworldbrand ; underworldbrand ; UWB123/A
+                                      ; shoes_man          ; underworldbrand ; underworldbrand ; UWB123/A
+                                      ; shoes_woman_bp     ; underworldbrand ; underworldbrand ; UWB123/A
+                                      ; handbag            ; underworldbrand ; underworldbrand ; UWB123/A
+                                      ; armagdedon_book    ; underworldbrand ; underworldbrand ; UWB123/A
+
+# TV Shows
+INSERT_UPDATE TmaSimpleProductOffering; code[unique = true]; $supercategories; $defaultOnlineDate; $defaultUnit; $channels; $approved; $catalogVersion; $soldIndividuallyFlag
+                                      ; joy                ; tvshows
+                                      ; the-boss           ; tvshows
+                                      ; venom              ; tvshows
+
+# TV Show Episodes
+INSERT_UPDATE TmaSimpleProductOffering; code[unique = true]; $supercategories; $defaultOnlineDate; $defaultUnit; $channels; $approved; $catalogVersion; $soldIndividuallyFlag
+                                      ; underworld_s1_e1   ; tvepisodes
+                                      ; underworld_s1_e2   ; tvepisodes
+                                      ; underworld_s1_e3   ; tvepisodes
+                                      ; underworld_s1_e4   ; tvepisodes
+                                      ; underworld_s2_e1   ; tvepisodes
+                                      ; underworld_s2_e2   ; tvepisodes
+                                      ; underworld_s2_e3   ; tvepisodes
+                                      ; underworld_s2_e4   ; tvepisodes
+                                      ; underworld_s2_e5   ; tvepisodes
+
+# TV channels
+INSERT_UPDATE TmaSimpleProductOffering; code[unique = true]; $supercategories                                 ; $soldIndividuallyFlag; $defaultOnlineDate; $defaultUnit; $channels; $approved; $catalogVersion
+                                      ; YTV                ; tvchannels,lifestyle_channels                    ;
+                                      ; CubeChannel        ; tvchannels,news_channels                         ;
+                                      ; ANVNetworks        ;                                                  ;
+                                      ; ChannelS           ; tvchannels,lifestyle_channels                    ;
+                                      ; KTV                ;                                                  ;
+                                      ; TRIChannel         ; tvchannels,news_channels                         ;
+                                      ; TCOChannel         ;                                                  ;
+                                      ; VIVOChannel        ;                                                  ;
+                                      ; LightningChannel   ; tvchannels,entertainment_channels,movie_channels ;
+                                      ; SportChannel       ; tvchannels,entertainment_channels                ;
+
+# Movies
+INSERT_UPDATE TmaSimpleProductOffering; code[unique = true]; $supercategories; $defaultOnlineDate; $defaultUnit; $approved; $catalogVersion; $soldIndividuallyFlag
+                                      ; the-last-journey   ; movies,trending
+                                      ; a-doctor-on-board  ; movies,trending
+                                      ; a-perfect-circle   ; movies,trending
+                                      ; about-a-girl       ; movies
+                                      ; battle-of-wills    ; movies
+                                      ; call-the-nanny     ; movies,trending
+                                      ; covered-noise      ; movies
+                                      ; croaking           ; movies
+                                      ; emmas-chaos-effect ; movies,trending
+                                      ; hockey-league      ; movies
+                                      ; hunters            ; movies,trending
+                                      ; infinite-space     ; movies,trending
+                                      ; underworld_movie   ; movies,trending
+
+######################## Bundled Product Offerings ##################################
+
+# Packages
+INSERT_UPDATE TmaBundledProductOffering; code[unique = true]; $defaultOnlineDate; $defaultUnit; $approved; $catalogVersion
+                                       ; entertainmentPack
+                                       ; tricast_shows_pack
+                                       ; tricast_broadband_deal
+                                       ; tricast_channels_pack
+# Underworld TV Show
+INSERT_UPDATE TmaBundledProductOffering; code[unique = true]; $supercategories; $defaultOnlineDate; $defaultUnit; ean; $approved; $catalogVersion; $soldIndividuallyFlag
+                                       ; underworld         ; tvshows
+                                       ; underworld_s1      ; tvseason
+                                       ; underworld_s2      ; tvseason
+
+INSERT_UPDATE TmaProductSpecCharValueUse; name[lang = $lang]; description[lang = $lang]                                             ; productSpecCharacteristicValues(id, $catalogVersion)[unique = true]; minCardinality; maxCardinality; productOfferings(code, $catalogVersion)[unique = true]   ; valueType(code); $catalogVersion; group[lang = $lang]
+# Static PSCVs
+                                        ; Freeview Channels ; Included Freeview TV and radio channels                               ; 10_freeview_channels                                               ; 1             ; 1             ; tvStarter                                                ;                ;                ; Streaming
+                                        ; Freeview Channels ; Included Freeview TV and radio channels                               ; 20_freeview_channels                                               ; 1             ; 1             ; tvEntertainment, tvPremium, TCO,                         ;                ;                ; Streaming
+
+                                        ; YouView+          ; Pause and rewind with YouView+                                        ; unlimited_you_view_plus_access                                     ; 1             ; 1             ; tvStarter, tvEntertainment, tvPremium, TCO               ;                ;                ; Streaming
+
+                                        ; Premium Channels  ; Included Bonus premium channels                                       ; 40_premium_channels                                                ; 1             ; 1             ; tvEntertainment, tvPremium,                              ;                ;                ; Streaming
+
+                                        ; TV Everywhere     ; TV Everywhere                                                         ; 3_tv_everywhere                                                    ; 1             ; 1             ; sport                                                    ;                ;                ; Streaming
+                                        ; TV Everywhere     ; TV Everywhere                                                         ; 5_tv_everywhere                                                    ; 1             ; 1             ; tvPremium                                                ;                ;                ; Streaming
+
+
+INSERT_UPDATE VariantCategory; code[unique = true]; $supercategories; $allowedPrincipals; $catalogVersion
+                             ; color              ;                 ;                   ;
+                             ; size               ; color           ;                   ;
+
+INSERT_UPDATE VariantValueCategory; code[unique = true]; $supercategories; sequence; $allowedPrincipals; $catalogVersion
+                                  ; black              ; color           ; 1       ;                   ;
+                                  ; white              ; color           ; 2       ;                   ;
+                                  ; S                  ; size            ; 1       ;                   ;
+                                  ; M                  ; size            ; 2       ;                   ;
+                                  ; L                  ; size            ; 3       ;                   ;
+                                  ; XL                 ; size            ; 4       ;                   ;
+
+INSERT_UPDATE TmaSimpleProductOffering; code[unique = true]; $supercategories; $defaultVariantTypeCode; $catalogVersion
+                                      ; t-shirt_bp         ; color, size     ;                        ;
+
+INSERT_UPDATE TmaPoVariant; code[unique = true] ; $basePo    ; $supercategories; $unit; $catalogVersion; $approved
+                          ; t-shirt_bp_black_S  ; t-shirt_bp ; black, S        ;      ;                ;
+                          ; t-shirt_bp_black_M  ; t-shirt_bp ; black, M        ;      ;                ;
+                          ; t-shirt_bp_black_L  ; t-shirt_bp ; black, L        ;      ;                ;
+                          ; t-shirt_bp_black_XL ; t-shirt_bp ; black, XL       ;      ;                ;
+
+                          ; t-shirt_bp_white_S  ; t-shirt_bp ; white, S        ;      ;                ;
+                          ; t-shirt_bp_white_M  ; t-shirt_bp ; white, M        ;      ;                ;
+                          ; t-shirt_bp_white_L  ; t-shirt_bp ; white, L        ;      ;                ;
+                          ; t-shirt_bp_white_XL ; t-shirt_bp ; white, XL       ;      ;                ;
+                          

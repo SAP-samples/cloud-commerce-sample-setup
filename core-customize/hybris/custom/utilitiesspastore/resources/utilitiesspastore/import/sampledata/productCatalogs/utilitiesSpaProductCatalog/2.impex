@@ -1,0 +1,28 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImPex for Importing Product Media into Utilities Store
+
+
+# Macros / Replacement Parameter definitions
+$productCatalog = utilitiesSpaProductCatalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+$thumbnail = thumbnail(code, $catalogVersion)
+$picture = picture(code, $catalogVersion)
+$thumbnails = thumbnails(code, $catalogVersion)
+$detail = detail(code, $catalogVersion)
+$normal = normal(code, $catalogVersion)
+$others = others(code, $catalogVersion)
+$medias = medias(code, $catalogVersion)
+$galleryImages = galleryImages(qualifier, $catalogVersion)
+
+# ImPex for Importing Product Media
+
+# Macros / Replacement Parameter definitions
+
+INSERT_UPDATE MediaContainer; qualifier[unique = true]               ; $medias; $catalogVersion
+; HAWA1-JW                ; /1200Wx1200H/electrical_cord_general.png,/515Wx515H/electrical_cord_general.png,/300Wx300H/electrical_cord_general.png,/96Wx96H/electrical_cord_general.png,/65Wx65H/electrical_cord_general.png,/30Wx30H/electrical_cord_general.png
+
+UPDATE TmaSimpleProductOffering; code[unique = true]                    ; $picture                                              ; $thumbnail                                          ; $detail                                                 ; $normal                                               ; $thumbnails                                         ; $others                                                                                                                                                                                                                                                                 ; $galleryImages; $catalogVersion
+; HAWA1-JW                ; /300Wx300H/electrical_cord_general.png                ; /96Wx96H/electrical_cord_general.png                ; /1200Wx1200H/electrical_cord_general.png                ; /300Wx300H/electrical_cord_general.png                ; /96Wx96H/electrical_cord_general.png                ; /515Wx515H/electrical_cord_general.png,/300Wx300H/electrical_cord_general.png,/96Wx96H/electrical_cord_general.png,/65Wx65H/electrical_cord_general.png,/30Wx30H/electrical_cord_general.png                                                                            ; HAWA1-JW

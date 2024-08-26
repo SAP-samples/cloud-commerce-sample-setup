@@ -1,0 +1,114 @@
+<div class="d-flex align-items-center mt-4 col-12 row">
+  <ng-container *ngIf="checkForTechnicalId(item); else nonTechnicalId">
+    <h4 class="font-weight-bolder m-0 pl-0 col-8">
+      {{ 'checkList.installationAddress.serviceDetails' | cxTranslate }}
+    </h4>
+  </ng-container>
+  <ng-template #nonTechnicalId>
+    <h4 class="font-weight-bolder m-0 pl-0 col-8">
+      {{ 'checkList.installationAddress.installationAddress' | cxTranslate }}
+    </h4>
+  </ng-template>
+  <button
+          *ngIf="showSelect && !checkForInstallationAddress(); else displayEditButton"
+          type="button" [attr.aria-label]="'checkList.installationAddress.selectInstallationAddress' | cxTranslate"
+          class="btn btn-tertiary font-label pr-0 col-4"
+          (click)="displayAddressForm()"
+  >
+    {{ 'common.select' | cxTranslate }}
+  </button>
+  <ng-template #displayEditButton>
+    <button
+            *ngIf="!isEdit && this.showEdit"
+            type="button" [attr.aria-label]="'checkList.installationAddress.selectInstallationAddress' | cxTranslate"
+            class="btn btn-tertiary font-label pr-0 col-4"
+            (click)="displayAddressForm()"
+    >
+      {{ 'common.edit' | cxTranslate }}
+    </button>
+  </ng-template>
+</div>
+
+<ng-container *ngIf="isEdit">
+  <div class="mt-2" [formGroup]="installationAddressForm">
+    <cx-address-form
+      [address]="installationAddress"
+      [isDialog]="false"
+      [isEdit]="!isEdit"
+      (countrySelected)="onCountrySelected($event)"
+      (regionSelected)="onRegionSelected($event)"
+      (installationAddressSelected)="getInputAddress($event)"
+    >
+    </cx-address-form>
+  </div>
+
+  <div class="mt-2" *ngIf="checkForTechnicalId(item)" [formGroup]="technicalIdForm">
+    <cx-technical-id-form
+      [technicalId]="technicalDetails"
+      (technicalIdSelected)="getInputTechnicalDetails($event)"
+    >
+    </cx-technical-id-form>
+  </div>
+
+  <div class="d-flex">
+    <button
+      class="btn btn-secondary"
+      (click)="saveAddress()"
+      >
+      <ng-container *ngIf="checkForTechnicalId(item); else nonTechnicalId">
+        {{ 'premiseDetails.checkAvailability' | cxTranslate }}
+      </ng-container>
+      <ng-template #nonTechnicalId>
+        {{ 'common.update' | cxTranslate }}
+      </ng-template>
+    </button>
+
+    <button
+      class="btn btn-tertiary ml-3"
+      (click)="displayAddressForm()"
+      >
+      {{ 'common.cancel' | cxTranslate }}
+    </button>
+  </div>
+
+</ng-container>
+
+<ng-container *ngIf="checkForInstallationAddress() as selectedAddress">
+    <ng-container *ngIf="!isEdit">
+      <div class="d-flex flex-wrap align-items-start justify-content-start">
+        <span *ngIf="selectedAddress.streetNr">
+          {{ selectedAddress.streetNr }},&nbsp;
+        </span>
+        <span *ngIf="selectedAddress.streetName">
+          {{ selectedAddress.streetName }},&nbsp;
+        </span>
+        <span *ngIf="selectedAddress.city">
+          {{ selectedAddress.city }},&nbsp;
+        </span>
+        <span *ngIf="selectedAddress.stateOfProvince">
+          {{ getRegion(selectedAddress.stateOfProvince) }}
+          <div *ngIf="selectedRegion">
+            {{ selectedRegion.name }}, &nbsp;
+          </div>
+        </span>
+        <span *ngIf="selectedAddress.country">
+          {{ getCountry(selectedAddress.country) }}
+          <div *ngIf="country$ | async as country">
+            {{ country.name }}, &nbsp;
+          </div>
+        </span>
+        <span *ngIf="selectedAddress.postcode">
+          {{ selectedAddress.postcode }}
+        </span>
+    </div>
+
+    <ng-container *ngIf="checkForTechnicalId(item)">
+      <div class="pt-4">
+        <h4 class="font-weight-bolder">{{'technicalId.title' | cxTranslate}}</h4>
+        <span *ngIf="technicalDetails">
+          {{'technicalId.technicalDetails.label' | cxTranslate}}: {{ technicalDetails.id }}
+        </span>
+      </div>
+    </ng-container>
+  </ng-container>
+</ng-container>

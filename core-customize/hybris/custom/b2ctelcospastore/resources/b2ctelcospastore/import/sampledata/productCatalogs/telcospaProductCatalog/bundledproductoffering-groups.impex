@@ -1,0 +1,31 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Importing the bundle product offering groups
+
+# Macros / Replacement Parameter definitions
+
+$productCatalog = telcospaProductCatalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+
+INSERT_UPDATE TmaProductOfferingGroup; code[unique = true]; name            ; parentBundleProductOffering(code, $catalogVersion); childProductOfferings(code, $catalogVersion); $catalogVersion;
+                                     ; mobile_devices     ; Mobile devices  ; mobileDeal                                        ; iPhone_13_green_128g, iPhone_13_green_256g,iPhone_13_midnight_128g, iPhone_13_midnight_256g, iPhone_13_white_128g,iPhone_13_white_256g,iPhone_13_Pro_Max_silver_128g,iPhone_13_Pro_Max_silver_256g,samsung_galaxy_S21_phantomgray_128g,samsung_galaxy_S21_phantomgray_256g,samsung_galaxy_S21_phantomviolet_128g,samsung_galaxy_S21_phantomviolet_256g, iPhone_13_blue_128g,  iPhone_13_blue_256g,  iPhone_13_pink_128g,  iPhone_13_pink_256g, iPhone_13_red_128g, iPhone_13_red_256g, iPhone_13_Pro_Max_silver_512g, iPhone_13_Pro_Max_silver_1024g, iPhone_13_Pro_Max_graphite_128g, iPhone_13_Pro_Max_graphite_256g, iPhone_13_Pro_Max_graphite_512g, iPhone_13_Pro_Max_graphite_1024g, iPhone_13_Pro_Max_alpinegreen_128g, iPhone_13_Pro_Max_alpinegreen_256g, iPhone_13_Pro_Max_alpinegreen_512g, iPhone_13_Pro_Max_alpinegreen_1024g, iPhone_13_Pro_Max_gold_128g, iPhone_13_Pro_Max_gold_256g, iPhone_13_Pro_Max_gold_512g, iPhone_13_Pro_Max_gold_1024g, iPhone_13_Pro_Max_sierrablue_128g, iPhone_13_Pro_Max_sierrablue_256g, iPhone_13_Pro_Max_sierrablue_512g, iPhone_13_Pro_Max_sierrablue_1024g, samsung_galaxy_S21_phantompink_128g, samsung_galaxy_S21_phantompink_256g, samsung_galaxy_S21_phantomwhite_128g, samsung_galaxy_S21_phantomwhite_256g, samsung_galaxy_S22_phantomblack_128g, samsung_galaxy_S22_phantomblack_256g, samsung_galaxy_S22_green_128g, samsung_galaxy_S22_green_256g, samsung_galaxy_S22_pinkgold_128g, samsung_galaxy_S22_pinkgold_256g, samsung_galaxy_S22_phantomwhite_128g, samsung_galaxy_S22_phantomwhite_256g
+                                     ; mobile_plans       ; Mobile plans    ; mobileDeal                                        ; gsm_small, gsm_medium, gsm_large
+                                     ; mobile_internet    ; Mobile internet ; mobileDeal                                        ; 4gpow, 5gpow
+                                     ; mobile_addons      ; Mobile addons   ; mobileDeal                                        ; mobile_hotspot, additional_roaming_data, eSim, smartphone_warranty
+
+                                     ; tv_plans           ; TV plans        ; tvDeal                                            ; tv_100, tv_200, tv_unlimited
+                                     ; internet_plans     ; Internet plans  ; internetDeal                                      ; fiber_internet, copper_internet, 5g_internet
+                                     ; media_boxes        ; Media Boxes     ; tvDeal                                            ; mibox_4g, mibox_5g
+
+                                     ; landline_plans     ; Landline plans  ; homeDeal                                          ; unlimitedNationalCalling, unlimitedNationalAndLimitedInternational
+
+                                     ; quad_mobile        ; Quad mobile     ; quadPlay                                          ; mobileDeal
+                                     ; quad_home          ; Quad home       ; quadPlay                                          ; homeDeal
+
+                                     ; routers            ; Routers         ; internetDeal                                      ; router_x, router_x1
+                                     ; modems             ; Modems          ; internetDeal                                      ; modem_4G, modem_5G
+
+
+

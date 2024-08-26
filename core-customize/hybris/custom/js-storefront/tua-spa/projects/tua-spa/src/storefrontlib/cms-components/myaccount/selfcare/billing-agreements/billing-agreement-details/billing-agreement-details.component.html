@@ -1,0 +1,87 @@
+<cx-selfcare-card
+  *ngIf="model$ | async as model"
+  i18nRoot="{{ domainType }}"
+  [showHint]="true"
+  subtitle="{{ 'selfcare.billingAgreements.subtitle' | cxTranslate }}"
+>
+  <section main class="details">
+    <div class="property">
+      <label>{{ 'selfcare.billingAgreements.name' | cxTranslate }}</label>
+      <span class="value">
+        {{model.name}}
+      </span>
+    </div>
+    <div class="property">
+      <label>{{ 'selfcare.billingAgreements.id' | cxTranslate }}</label>
+      <span class="value">
+        {{model.id}}
+      </span>
+    </div>
+    <div class="property">
+      <label>{{ 'selfcare.billingAgreements.details.agreementType' | cxTranslate }}</label>
+      <span class="value">
+        {{model.agreementType}}
+      </span>
+    </div>
+    <div class="property">
+      <label>{{ 'selfcare.billingAgreements.status' | cxTranslate }}</label>
+      <span class="value">
+        {{model.status}}
+      </span>
+    </div>
+    <div class="property">
+      <label>{{ 'selfcare.billingAgreements.details.documentNumber' | cxTranslate }}</label>
+      <span class="value">
+        {{model.documentNumber}}
+      </span>
+    </div>
+    <div class="property">
+      <label>{{ 'selfcare.billingAgreements.details.agreementPeriod' | cxTranslate }}</label>
+      <span class="value">
+        {{ 'selfcare.billingAgreements.details.startDate' | cxTranslate }}
+        {{ model.agreementPeriod.startDateTime | cxDate }}
+        {{ 'selfcare.billingAgreements.details.expiresOn' | cxTranslate }}
+        {{ model.agreementPeriod.endDateTime | cxDate }}
+      </span>
+    </div>
+    <div class="property">
+      <label>{{ 'selfcare.billingAgreements.details.statementOfIntent' | cxTranslate }}</label>
+      <span class="value">
+        {{model.statementOfIntent}}
+      </span>
+    </div>
+  </section>
+
+  <section main class="link-list">
+    <ng-container *ngIf="model.id">
+      <a
+        class="link"
+        [routerLink]="{ cxRoute: 'AgreementItem', params: model } | cxUrl"
+        routerLinkActive="is-current"
+      >
+        {{
+          'selfcare.billingAgreements.details.agreementItem.title' | cxTranslate
+        }}
+      </a>
+      <a
+        class="link"
+        [routerLink]="{ cxRoute: 'AgreementSpecification', params: model } | cxUrl"
+        routerLinkActive="is-current"
+      >
+        {{
+          'selfcare.billingAgreements.details.agreementSpecification.title' | cxTranslate
+        }}
+      </a>
+      <a
+        class="link"
+        [routerLink]="{ cxRoute: 'AgreementEngagedParty', params: model } | cxUrl"
+        routerLinkActive="is-current"
+      >
+        {{
+          'selfcare.billingAgreements.details.engagedParty.title' | cxTranslate
+        }}
+      </a>
+    </ng-container>
+  </section>
+
+</cx-selfcare-card>

@@ -1,0 +1,16 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Consents for telco Store
+#% impex.setLocale( Locale.GERMAN );
+
+$siteUid = telcospa
+
+INSERT_UPDATE ConsentTemplate; id[unique = true]    ; name                                              ; description                                                                                                                                                                       ; version[unique = true]; baseSite(uid)[unique = true, default = $siteUid]; exposed
+                             ; MARKETING_NEWSLETTER ; "Receive e-mails for Marketing campaigns"         ; "I approve to use my personal data for receiving e-mail newsletters for Marketing campaigns."                                                                                     ; 0                     ;                                                 ; true
+                             ; BUSSINESS_PARTNER    ; "Store personal data for identification purposes" ; "I approve the site to use and store my personal data for the purpose of processing my orders and identification for as long as necessary in accordance with the applicable laws" ; 0                     ;                                                 ; true
+###### Following consent management will be requir after MERCHANDISING and PROFILE tracking is integrated ######
+#;MERCHANDISING;"Allow SAP Hybris Merchandising tracking";"Allow SAP Hybris Merchandising tracking";1;;true
+#;PROFILE;"Allow SAP Hybris Profile tracking";"Allow SAP Hybris Profile tracking";1;;true
+################################################################################################################

@@ -1,0 +1,85 @@
+@import "@spartacus/styles/scss/mixins";
+
+.cx-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.cx-product-image-container {
+  display: block;
+  text-align: center;
+}
+
+.cx-product-image {
+  width: 100%;
+  margin: 3rem 0;
+}
+
+.cx-product-rating {
+  text-align: center;
+}
+
+.cx-product-name {
+  @include type('5');
+  text-align: center;
+  display: block;
+  margin: 0 0 3px 0;
+  color: var(--cx-color-dark);
+  text-decoration: none;
+  height: 2.5rem;
+
+  &:hover {
+    color: var(--cx-color-primary);
+  }
+
+  @include media-breakpoint-down(md) {
+    font-size: 0.96rem;
+  }
+}
+
+.cx-product-price-container {
+  flex-grow: 1;
+
+  .cx-product-price {
+    @include type('3');
+    text-align: center;
+    margin: 1rem 0;
+    display: flex;
+    flex-direction: column;
+
+    div {
+      font-weight: 400;
+      font-size: 0.85rem;
+
+      @include media-breakpoint-down(md) {
+        font-size: 0.7rem;
+      }
+    }
+
+    &.old {
+      color: var(--cx-color-secondary);
+      text-decoration: line-through;
+    }
+
+    &.new {
+      margin: 0 0 0 5px;
+      color: var(--cx-color-primary);
+    }
+
+    @include media-breakpoint-down(md) {
+      font-size: 1.1rem;
+    }
+  }
+}
+
+.cx-selected-product {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  z-index: 1000;
+
+  span {
+    color: orange;
+    font-size: 35px;
+  }
+}

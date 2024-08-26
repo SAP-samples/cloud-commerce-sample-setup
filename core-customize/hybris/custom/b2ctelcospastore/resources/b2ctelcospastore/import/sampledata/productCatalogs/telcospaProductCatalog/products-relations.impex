@@ -1,0 +1,12 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Related Products into B2C Telco Store
+
+$productCatalog = telcospaProductCatalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+
+INSERT_UPDATE ProductReference; source(code, $catalogVersion)[unique = true]; target(code, $catalogVersion)[unique = true]; referenceType(code)[unique = true]; active[default = true]; preselected[default = false]
+                              ; tv_100                                      ; tv_200                                      ; UPSELLING
+                              ; tv_200                                      ; tv_unlimited                                ; UPSELLING

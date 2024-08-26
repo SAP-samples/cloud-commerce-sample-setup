@@ -1,0 +1,11 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+#
+# Import the Media SPA BaseStore
+#
+$lang = en
+
+INSERT_UPDATE BaseStore; uid[unique = true]; name[lang = $lang]
+                       ; mediaspa          ; "Media SPA Store"

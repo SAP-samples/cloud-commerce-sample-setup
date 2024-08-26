@@ -1,0 +1,88 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# Macros / Replacement Parameter definitions
+$productCatalog = mediaspaProductCatalog
+$productCatalogName = Media SPA Product Catalog
+$catalogVersion = catalogversion(catalog(id[default=$productCatalog]), version[default='Staged'])[unique=true, default=$productCatalog:Staged]
+$onlineCatalogVersion = catalogversion(catalog(id[default=$productCatalog]), version[default='Online'])[unique=true, default=$productCatalog:Online]
+$supercategories = supercategories(code, $catalogVersion)
+$baseProduct = baseProduct(code, $catalogVersion)
+$approved = approvalstatus(code)[default='approved']
+
+# ImpEx for Importing Products
+# Macros / Replacement Parameter definitions
+$solrIndexedTypeIdentifier = mediaspaProductType
+$solrIndexedType = indexedType(identifier[default=$solrIndexedTypeIdentifier])
+
+INSERT_UPDATE TmaBundledProductOffering; code[unique = true]; parents(code, $catalogVersion); unit(code)[default = pieces]; $catalogVersion
+                                       ; underworld
+                                       ; underworld_s1      ; underworld
+                                       ; underworld_s2      ; underworld
+#tricast_shows_pack BPO
+INSERT_UPDATE TmaSimpleProductOffering; code[unique = true]    ; parents(code, $catalogVersion); $approved; $catalogVersion
+#tricast_tv_show_plans Product Group
+                                      ; tvStarter              ; tricast_shows_pack
+                                      ; tvEntertainment        ; tricast_shows_pack
+                                      ; tvPremium              ; tricast_shows_pack
+                                      ; TCO                    ; tricast_shows_pack
+                                      ; sport                  ; tricast_shows_pack
+                                      ; foreignLanguagePackage ; tricast_shows_pack
+                                      ; allOnDemand            ; tricast_shows_pack
+
+#tricast_movies Product Group
+                                      ; the-last-journey       ; tricast_shows_pack
+                                      ; a-doctor-on-board      ; tricast_shows_pack
+                                      ; a-perfect-circle       ; tricast_shows_pack
+                                      ; call-the-nanny         ; tricast_shows_pack
+                                      ; emmas-chaos-effect     ; tricast_shows_pack
+                                      ; hunters                ; tricast_shows_pack
+                                      ; infinite-space         ; tricast_shows_pack
+                                      ; underworld_movie       ; tricast_shows_pack
+
+#tricast_broadband_deal BPO
+INSERT_UPDATE TmaSimpleProductOffering; code[unique = true]     ; parents(code, $catalogVersion); $approved; $catalogVersion
+#broadband_deals Product Group
+                                      ; standardBroadband       ; tricast_broadband_deal
+                                      ; fibreBroadbandLimited   ; tricast_broadband_deal
+                                      ; fibreBroadbandUnlimited ; tricast_broadband_deal
+                                      ; superFibreUnlimited     ; tricast_broadband_deal
+#router_deals
+                                      ; standardRouter          ; tricast_broadband_deal
+                                      ; fibreRouter             ; tricast_broadband_deal
+                                      ; standardDecoder         ; tricast_broadband_deal
+                                      ; decoderPlus             ; tricast_broadband_deal
+                                      ; fibreRouterUnlimited    ; tricast_broadband_deal
+# tricast_channels_pack BPO
+INSERT_UPDATE TmaSimpleProductOffering; code[unique = true]; parents(code, $catalogVersion)[mode = append]; $approved; $catalogVersion
+                                      ; YTV                ; tricast_channels_pack
+                                      ; CubeChannel        ; tricast_channels_pack
+                                      ; ANVNetworks        ; tricast_channels_pack
+                                      ; ChannelS           ; tricast_channels_pack
+                                      ; KTV                ; tricast_channels_pack
+                                      ; TRIChannel         ; tricast_channels_pack
+                                      ; TCOChannel         ; tricast_channels_pack
+                                      ; VIVOChannel        ; tricast_channels_pack
+                                      ; LightningChannel   ; tricast_channels_pack
+                                      ; SportChannel       ; tricast_channels_pack
+                                      ; tvStarter          ; tricast_channels_pack
+
+# Underworld TV Show
+INSERT_UPDATE TmaSimpleProductOffering; code[unique = true]; parents(code, $catalogVersion); $catalogVersion
+                                      ; underworld_s1_e1   ; underworld_s1
+                                      ; underworld_s1_e2   ; underworld_s1
+                                      ; underworld_s1_e3   ; underworld_s1
+                                      ; underworld_s1_e4   ; underworld_s1
+                                      ; underworld_s2_e1   ; underworld_s2
+                                      ; underworld_s2_e2   ; underworld_s2
+                                      ; underworld_s2_e3   ; underworld_s2
+                                      ; underworld_s2_e4   ; underworld_s2
+                                      ; underworld_s2_e5   ; underworld_s2
+
+INSERT_UPDATE TmaBundledProdOfferOption; bundledProductOffering(code, $catalogVersion)[unique = true]; productOffering(code, $catalogVersion)[unique = true]; $catalogVersion; lowerLimit; upperLimit; default
+#Tricast Shows Pack
+                                       ; tricast_shows_pack                                          ; tvEntertainment                                      ;                ; 1         ; 1         ; 1
+                                       ; tricast_shows_pack                                          ; sport                                                ;                ; 0         ; 1         ; 0
+                                       ; tricast_shows_pack                                          ; foreignLanguagePackage                               ;                ; 0         ; 1         ; 0
+                                       ; tricast_shows_pack                                          ; allOnDemand                                          ;                ; 0         ; 1         ; 0

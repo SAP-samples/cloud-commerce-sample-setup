@@ -1,0 +1,186 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# -----------------------------------------------------------------------
+# ImpEx for Importing Products into Telco Store
+
+$productCatalog = telcospaProductCatalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+$supercategories = supercategories(code, $catalogVersion)
+$approved = approvalstatus(code)[default = 'approved']
+$channels = distributionChannels(code)
+$soldIndividuallyFlag = soldIndividually[default = true]
+$lang = en
+
+# Insert Devices
+
+INSERT_UPDATE TmaSimpleProductOffering; code[unique = true]; $supercategories          ; manufacturerName; manufacturerAID; onlineDate[dateformat = dd.MM.yyyy]; unit(code)[default = pieces]; ean; $channels       ; variantType(code); $approved; $catalogVersion; $soldIndividuallyFlag
+                                      ; iPhone_13          ; smartphone, brand_apple   ; Apple           ;                ; 22.09.2021                         ;                             ;    ; desktop, mobile ;
+                                      ; iPhone_13_Pro_Max  ; smartphone, brand_apple   ; Apple           ;                ; 22.09.2021                         ;                             ;    ; desktop, mobile ;
+                                      ; samsung_galaxy_S21 ; smartphone, brand_samsung ; Samsung         ;                ; 29.01.2021                         ;                             ;    ; desktop, mobile ;
+                                      ; samsung_galaxy_S22 ; smartphone, brand_samsung ; Samsung         ;                ; 29.01.2022                         ;                             ;    ; desktop, mobile ;
+# routers
+                                      ; router_x           ; router, brand_miwifi      ; MiWiFi          ;                ; 30.02.2019                         ;
+                                      ; router_x1          ; router, brand_miwifi      ; MiWiFi          ;                ; 30.02.2019                         ;
+# Media boxes
+                                      ; mibox_4g           ; mediaboxes, brand_miwifi  ; MiWiFi          ;                ; 30.03.2020                         ;
+                                      ; mibox_5g           ; mediaboxes, brand_miwifi  ; MiWiFi          ;                ; 30.02.2021                         ;
+
+
+
+#Insert Training Products
+INSERT_UPDATE TmaSimpleProductOffering; code[unique = true]; $supercategories; manufacturerName; manufacturerAID; onlineDate[dateformat = dd.MM.yyyy]; unit(code)[default = pieces]; ean; $channels; variantType(code); $approved; $catalogVersion; $soldIndividuallyFlag
+                                      ; modem_4G           ; modems          ; MiWiFi          ;                ; 18.04.2022                         ;
+                                      ; modem_5G           ; modems          ; MiWiFi          ;                ; 18.04.2022                         ;
+
+
+#Insert Service Plans (Plans)
+INSERT_UPDATE TmaSimpleProductOffering; code[unique = true]                      ; productSpecification(id, $catalogVersion); $supercategories; manufacturerAID; soldIndividually[default = false]; unit(code)[default = pieces]; $approved; $catalogVersion
+                                      ; tv_100                                   ; tv                                       ; tvplans         ;                ; true                             ;
+                                      ; tv_200                                   ; tv                                       ; tvplans         ;                ; true                             ;
+                                      ; tv_unlimited                             ; tv                                       ; tvplans         ;                ; true
+                                      ; unlimitedNationalCalling                 ; landline                                 ; landline        ;                ; true
+                                      ; unlimitedNationalAndLimitedInternational ; landline                                 ; landline        ;                ; true
+
+                                      ; 5g_router                                ;                                          ;                 ;                ; true
+
+
+                                      ; copper_internet                          ; copper_internet                          ; broadband       ;                ; true
+                                      ; fiber_internet                           ; fiber_internet                           ; broadband       ;                ; true
+                                      ; 5g_internet                              ; 5g_internet                              ; broadband       ;                ; true
+
+
+                                      ; 4gpow                                    ; internet                                 ; internet        ;                ; true
+                                      ; 5gpow                                    ; internet                                 ; internet        ;                ; true
+
+                                      ; gsm_small                                ; gsm                                      ; gsmplans        ;                ; true
+                                      ; gsm_medium                               ; gsm                                      ; gsmplans        ;                ; true
+                                      ; gsm_large                                ; gsm                                      ; gsmplans        ;                ; true
+
+#Insert AddOn Services
+INSERT_UPDATE TmaSimpleProductOffering; code[unique = true]     ; productSpecification(id, $catalogVersion); $supercategories; manufacturerAID; unit(code)[default = pieces]; ean; $approved; $catalogVersion; subscriptionTerm(id)[default = 'none']; soldIndividually[default = false]
+                                      ; installation_service    ; internet                                 ; internetaddons  ;                ;                             ;    ;          ;                ;                                       ;
+                                      ; smartphone_warranty     ; warranty                                 ; gsmaddons       ;                ;                             ;    ;          ;                ;                                       ;
+                                      ; mobile_hotspot          ; gsm_addon                                ; gsmaddons       ;                ;                             ;    ;          ;                ;                                       ;
+                                      ; additional_roaming_data ; gsm_addon                                ; gsmaddons       ;                ;                             ;    ;          ;                ;                                       ;
+                                      ; eSim                    ; gsm_addon                                ; gsmaddons       ;                ;                             ;    ;          ;                ;                                       ; true
+
+
+#Update varint type and categories for base product
+UPDATE TmaSimpleProductOffering; code[unique = true]; $supercategories[mode = append]                ; variantType(code); $catalogVersion
+                               ; iPhone_13          ; smartphone, brand_apple, color, storage_size   ; TmaPoVariant     ;
+                               ; iPhone_13_Pro_Max  ; smartphone, brand_apple, color, storage_size   ; TmaPoVariant     ;
+                               ; samsung_galaxy_S21 ; smartphone, brand_samsung, color, storage_size ; TmaPoVariant     ;
+                               ; samsung_galaxy_S22 ; smartphone, brand_samsung, color, storage_size ; TmaPoVariant     ;
+
+INSERT_UPDATE TmaProductSpecCharValueUse; name[lang = $lang]       ; description[lang = $lang]; productSpecCharacteristicValues(id, $catalogVersion)[unique = true]; minCardinality; maxCardinality; productOfferings(code, $catalogVersion)[unique = true]                                             ; valueType(code); $catalogVersion; group[lang = $lang]
+#Config PSCVs
+                                        ; MSISDN                   ; MSISDN                   ; msisdn                                                             ; 1             ; 1             ; gsm_small, gsm_medium, gsm_large, eSim                                                             ;                ;                ; Communication
+
+##TV Training
+                                        ; HD Channels              ; Included HD Channels     ; 40_hd_channels                                                     ; 1             ; 1             ; tv_100                                                                                             ; STRING         ;                ; Streaming
+                                        ; Channels                 ; Included Channels        ; 160_channels                                                       ; 1             ; 1             ; tv_100                                                                                             ; STRING         ;                ; Streaming
+                                        ; Channel                  ; Included Specific Channel; cnn, tnt                                                           ; 2             ; 2             ; tv_100                                                                                             ; STRING         ;                ; Streaming
+                                        ; Title on Demand          ; Included Titles on demand; 45000_titles_on_demand                                             ; 1             ; 1             ; tv_100                                                                                             ; STRING         ;                ; Streaming
+
+                                        ; HD Channels              ; Included HD Channels     ; 85_hd_channels                                                     ; 1             ; 1             ; tv_200                                                                                             ; STRING         ;                ; Streaming
+                                        ; Channels                 ; Included Channels        ; 185_channels                                                       ; 1             ; 1             ; tv_200                                                                                             ; STRING         ;                ; Streaming
+                                        ; Channel                  ; Included Specific Channel; cnn, espn, espn2, cbs                                              ; 4             ; 4             ; tv_200                                                                                             ; STRING         ;                ; Streaming
+                                        ; Title on Demand          ; Included Titles on demand; 50000_titles_on_demand                                             ; 1             ; 1             ; tv_200                                                                                             ; STRING         ;                ; Streaming
+
+                                        ; HD Channels              ; Included HD Channels     ; 185_hd_channels                                                    ; 1             ; 1             ; tv_unlimited                                                                                       ; STRING         ;                ; Streaming
+                                        ; Channels                 ; Included Channels        ; 330_channels                                                       ; 1             ; 1             ; tv_unlimited                                                                                       ; STRING         ;                ; Streaming
+                                        ; Channel                  ; Included Specific Channel; hbo, cinemax, showtime, starz                                      ; 4             ; 4             ; tv_unlimited                                                                                       ; STRING         ;                ; Streaming
+                                        ; Title on Demand          ; Included Titles on demand; 70000_titles_on_demand                                             ; 1             ; 1             ; tv_unlimited                                                                                       ; STRING         ;                ; Streaming
+                                        ; Phone Warranty           ; Included Features        ; lost_phone, screen_crack                                           ; 2             ; 2             ; smartphone_warranty                                                                                ; STRING         ;                ; Extras
+
+#internet PSCVs
+                                        ; Download Speed           ; Download Speed           ; down_100                                                           ; 1             ; 1             ; copper_internet, 4gpow                                                                             ; NUMERIC        ;                ; Network
+                                        ; Download Speed           ; Download Speed           ; down_210                                                           ; 1             ; 1             ; 5gpow                                                                                              ; NUMERIC        ;                ; Network
+                                        ; Upload Speed             ; Upload Speed             ; up_100                                                             ; 1             ; 1             ; copper_internet                                                                                    ; NUMERIC        ;                ; Network
+                                        ; Download Speed           ; Download Speed           ; down_500                                                           ; 1             ; 1             ; fiber_internet                                                                                     ; NUMERIC        ;                ; Network
+                                        ; Upload Speed             ; Upload Speed             ; up_500                                                             ; 1             ; 1             ; fiber_internet                                                                                     ; NUMERIC        ;                ; Network
+                                        ; Download Speed           ; Download Speed           ; down_10                                                            ; 1             ; 1             ; 5g_internet                                                                                        ; NUMERIC        ;                ; Network
+                                        ; Upload Speed             ; Upload Speed             ; up_1                                                               ; 1             ; 1             ; 5g_internet                                                                                        ; NUMERIC        ;                ; Network
+
+# gsm plans PSCVs
+                                        ; Phone Minutes            ; Included phone minutes   ; 200_min                                                            ; 1             ; 1             ; gsm_small                                                                                          ; STRING         ;                ; Communication
+                                        ; Phone Minutes            ; Included phone minutes   ; unlimited_min                                                      ; 1             ; 1             ; gsm_medium, gsm_large                                                                              ; STRING         ;                ; Communication
+
+                                        ; SMS                      ; Included sms             ; 500_sms                                                            ; 1             ; 1             ; gsm_small,gsm_medium,gsm_large                                                                     ; STRING         ;                ; Communication
+
+                                        ; Data                     ; Included Data            ; 12_gb                                                              ; 1             ; 1             ; gsm_small                                                                                          ; STRING         ;                ; Network
+                                        ; Data                     ; Included Data            ; 14_gb                                                              ; 1             ; 1             ; gsm_medium                                                                                         ; STRING         ;                ; Network
+                                        ; Data                     ; Included Data            ; 26_gb                                                              ; 1             ; 1             ; gsm_large                                                                                          ; STRING         ;                ; Network
+
+                                        ; Download Speed           ; Download Speed           ; down_40                                                            ; 1             ; 1             ; gsm_small                                                                                          ; NUMERIC        ;                ; Network
+                                        ; Download Speed           ; Download Speed           ; down_50                                                            ; 1             ; 1             ; gsm_medium,gsm_large                                                                               ; NUMERIC        ;                ; Network
+                                        ; Upload Speed             ; Upload Speed             ; up_20                                                              ; 1             ; 1             ; gsm_small                                                                                          ; NUMERIC        ;                ; Network
+                                        ; Upload Speed             ; Upload Speed             ; up_30                                                              ; 1             ; 1             ; gsm_medium,gsm_large                                                                               ; NUMERIC        ;                ; Network
+
+                                        ; Call Type                ; Call Type                ; domestic_calls                                                     ; 1             ; 1             ; gsm_small,gsm_medium,gsm_large, unlimitedNationalCalling, unlimitedNationalAndLimitedInternational ; STRING         ;                ; Communication
+                                        ; Call Type                ; Call Type                ; international_calls                                                ; 1             ; 1             ; gsm_medium,gsm_large, unlimitedNationalAndLimitedInternational                                     ; STRING         ;                ; Communication
+                                        ; Network                  ; Network                  ; 5g_network                                                         ; 1             ; 1             ; gsm_small,gsm_medium,gsm_large                                                                     ; STRING         ;                ; Communication
+
+                                        ; Coverage                 ; Coverage                 ; 02108_area                                                         ; 1             ; 1             ; 5gpow                                                                                              ; STRING         ;                ; Network
+                                        ; Coverage                 ; Coverage                 ; 02109_area                                                         ; 1             ; 1             ; 5gpow                                                                                              ; STRING         ;                ; Network
+                                        ; Coverage                 ; Coverage                 ; all                                                                ; 1             ; 1             ; 4gpow                                                                                              ; STRING         ;                ; Network
+
+                                        ; National minutes         ; National minutes         ; unlimited_min_landline                                             ; 1             ; 1             ; unlimitedNationalCalling, unlimitedNationalAndLimitedInternational                                 ; STRING         ;                ; Communication
+                                        ; International minutes    ; International minutes    ; 5000_min_landline                                                  ; 1             ; 1             ; unlimitedNationalAndLimitedInternational                                                           ; STRING         ;                ; Communication
+
+INSERT_UPDATE TmaPoVariant; code[unique = true]                   ; tmaBasePo(code, $catalogVersion); $supercategories; $approved; unit(code)[default = pieces]; $catalogVersion
+                          ; iPhone_13_green_128g                  ; iPhone_13                       ; smartphone, brand_apple, green, 128G
+                          ; iPhone_13_green_256g                  ; iPhone_13                       ; smartphone, brand_apple, green, 256G
+                          ; iPhone_13_midnight_128g               ; iPhone_13                       ; smartphone, brand_apple, midnight, 128G
+                          ; iPhone_13_midnight_256g               ; iPhone_13                       ; smartphone, brand_apple, midnight, 256G
+                          ; iPhone_13_white_128g                  ; iPhone_13                       ; smartphone, brand_apple, white, 128G
+                          ; iPhone_13_white_256g                  ; iPhone_13                       ; smartphone, brand_apple, white, 256G
+                          ; iPhone_13_blue_128g                   ; iPhone_13                       ; smartphone, brand_apple, blue, 128G
+                          ; iPhone_13_blue_256g                   ; iPhone_13                       ; smartphone, brand_apple, blue, 256G
+                          ; iPhone_13_pink_128g                   ; iPhone_13                       ; smartphone, brand_apple, pink, 128G
+                          ; iPhone_13_pink_256g                   ; iPhone_13                       ; smartphone, brand_apple, pink, 256G
+                          ; iPhone_13_red_128g                    ; iPhone_13                       ; smartphone, brand_apple, red, 128G
+                          ; iPhone_13_red_256g                    ; iPhone_13                       ; smartphone, brand_apple, red, 256G
+
+                          ; iPhone_13_Pro_Max_silver_128g         ; iPhone_13_Pro_Max               ; smartphone, brand_apple, silver, 128G
+                          ; iPhone_13_Pro_Max_silver_256g         ; iPhone_13_Pro_Max               ; smartphone, brand_apple, silver, 256G
+                          ; iPhone_13_Pro_Max_silver_512g         ; iPhone_13_Pro_Max               ; smartphone, brand_apple, silver, 512G
+                          ; iPhone_13_Pro_Max_silver_1024g        ; iPhone_13_Pro_Max               ; smartphone, brand_apple, silver, 1024G
+                          ; iPhone_13_Pro_Max_graphite_128g       ; iPhone_13_Pro_Max               ; smartphone, brand_apple, silver, 128G
+                          ; iPhone_13_Pro_Max_graphite_256g       ; iPhone_13_Pro_Max               ; smartphone, brand_apple, graphite, 256G
+                          ; iPhone_13_Pro_Max_graphite_512g       ; iPhone_13_Pro_Max               ; smartphone, brand_apple, graphite, 512G
+                          ; iPhone_13_Pro_Max_graphite_1024g      ; iPhone_13_Pro_Max               ; smartphone, brand_apple, graphite, 1024G
+                          ; iPhone_13_Pro_Max_alpinegreen_128g    ; iPhone_13_Pro_Max               ; smartphone, brand_apple, alpinegreen, 128G
+                          ; iPhone_13_Pro_Max_alpinegreen_256g    ; iPhone_13_Pro_Max               ; smartphone, brand_apple, alpinegreen, 256G
+                          ; iPhone_13_Pro_Max_alpinegreen_512g    ; iPhone_13_Pro_Max               ; smartphone, brand_apple, alpinegreen, 512G
+                          ; iPhone_13_Pro_Max_alpinegreen_1024g   ; iPhone_13_Pro_Max               ; smartphone, brand_apple, alpinegreen, 1024G
+                          ; iPhone_13_Pro_Max_gold_128g           ; iPhone_13_Pro_Max               ; smartphone, brand_apple, gold, 128G
+                          ; iPhone_13_Pro_Max_gold_256g           ; iPhone_13_Pro_Max               ; smartphone, brand_apple, gold, 256G
+                          ; iPhone_13_Pro_Max_gold_512g           ; iPhone_13_Pro_Max               ; smartphone, brand_apple, gold, 512G
+                          ; iPhone_13_Pro_Max_gold_1024g          ; iPhone_13_Pro_Max               ; smartphone, brand_apple, gold, 1024G
+                          ; iPhone_13_Pro_Max_sierrablue_128g     ; iPhone_13_Pro_Max               ; smartphone, brand_apple, sierrablue, 128G
+                          ; iPhone_13_Pro_Max_sierrablue_256g     ; iPhone_13_Pro_Max               ; smartphone, brand_apple, sierrablue, 256G
+                          ; iPhone_13_Pro_Max_sierrablue_512g     ; iPhone_13_Pro_Max               ; smartphone, brand_apple, sierrablue, 512G
+                          ; iPhone_13_Pro_Max_sierrablue_1024g    ; iPhone_13_Pro_Max               ; smartphone, brand_apple, sierrablue, 1024G
+
+                          ; samsung_galaxy_S21_phantomgray_128g   ; samsung_galaxy_S21              ; smartphone, brand_samsung, phantomgray, 128G
+                          ; samsung_galaxy_S21_phantomgray_256g   ; samsung_galaxy_S21              ; smartphone, brand_samsung, phantomgray, 256G
+                          ; samsung_galaxy_S21_phantomviolet_128g ; samsung_galaxy_S21              ; smartphone, brand_samsung, phantomviolet, 128G
+                          ; samsung_galaxy_S21_phantomviolet_256g ; samsung_galaxy_S21              ; smartphone, brand_samsung, phantomviolet, 256G
+                          ; samsung_galaxy_S21_phantompink_128g   ; samsung_galaxy_S21              ; smartphone, brand_samsung, phantompink, 128G
+                          ; samsung_galaxy_S21_phantompink_256g   ; samsung_galaxy_S21              ; smartphone, brand_samsung, phantompink, 256G
+                          ; samsung_galaxy_S21_phantomwhite_128g  ; samsung_galaxy_S21              ; smartphone, brand_samsung, phantomwhite, 128G
+                          ; samsung_galaxy_S21_phantomwhite_256g  ; samsung_galaxy_S21              ; smartphone, brand_samsung, phantomwhite, 256G
+
+                          ; samsung_galaxy_S22_phantomblack_128g  ; samsung_galaxy_S22              ; smartphone, brand_samsung, phantomblack, 128G
+                          ; samsung_galaxy_S22_phantomblack_256g  ; samsung_galaxy_S22              ; smartphone, brand_samsung, phantomblack, 256G
+                          ; samsung_galaxy_S22_green_128g         ; samsung_galaxy_S22              ; smartphone, brand_samsung, green, 128G
+                          ; samsung_galaxy_S22_green_256g         ; samsung_galaxy_S22              ; smartphone, brand_samsung, green, 256G
+                          ; samsung_galaxy_S22_pinkgold_128g      ; samsung_galaxy_S22              ; smartphone, brand_samsung, pinkgold, 128G
+                          ; samsung_galaxy_S22_pinkgold_256g      ; samsung_galaxy_S22              ; smartphone, brand_samsung, pinkgold, 256G
+                          ; samsung_galaxy_S22_phantomwhite_128g  ; samsung_galaxy_S22              ; smartphone, brand_samsung, phantomwhite, 128G
+                          ; samsung_galaxy_S22_phantomwhite_256g  ; samsung_galaxy_S22              ; smartphone, brand_samsung, phantomwhite, 256G
+
+

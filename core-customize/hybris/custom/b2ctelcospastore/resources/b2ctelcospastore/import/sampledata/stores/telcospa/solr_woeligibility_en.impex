@@ -1,0 +1,67 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+#
+# ENGLISH LOCALIZATION
+#
+
+$version = Staged
+$lang = en
+$facetSearchConfigName = telcospaIndex
+$contentCatalog = telcospaContentCatalog
+$contentCatalogVersion = catalogVersion(CatalogVersion.catalog(Catalog.id[default = $contentCatalog]), CatalogVersion.version[default = $version])[default = $contentCatalog:$version]
+$solrIndexedType = telcospaProductType
+
+UPDATE SolrIndexedProperty; solrIndexedType(identifier)[unique = true]; name[unique = true] ; displayName[lang = $lang]
+                          ; $solrIndexedType                          ; color               ; "Color"
+                          ; $solrIndexedType                          ; colorcompatibility  ; "Other Available Colors"
+                          ; $solrIndexedType                          ; displayresolution   ; "Display Resolution"
+                          ; $solrIndexedType                          ; gps                 ; "GPS"
+                          ; $solrIndexedType                          ; camera              ; "Camera"
+                          ; $solrIndexedType                          ; keyboard            ; "KeyBoard"
+                          ; $solrIndexedType                          ; formfactor          ; "Form Factor"
+                          ; $solrIndexedType                          ; touchscreen         ; "Touch Screen"
+                          ; $solrIndexedType                          ; vendorcompatibility ; "Vendor Compatibility"
+                          ; $solrIndexedType                          ; mobileplatform      ; "Operating System"
+                          ; $solrIndexedType                          ; bands               ; "Bands"
+                          ; $solrIndexedType                          ; smsquantity         ; "Sms"
+                          ; $solrIndexedType                          ; voice               ; "Minutes"
+                          ; $solrIndexedType                          ; datavolume          ; "Data volume"
+                          ; $solrIndexedType                          ; dataspeed           ; "Data speed"
+                          ; $solrIndexedType                          ; sdchannels          ; "SD Channels"
+                          ; $solrIndexedType                          ; hdchannels          ; "HD Channels"
+                          ; $solrIndexedType                          ; tvsessions          ; "TV Sessions"
+
+
+#
+# Add additional sample solr index configuration
+#
+
+# Synonyms
+INSERT_UPDATE SolrSynonymConfig; facetSearchConfig(name)[unique = true]; language(isocode)[unique = true, default = $lang]; synonymFrom[unique = true]   ; synonymTo
+                               ; $facetSearchConfigName                ;                                                  ; "Plan,Contract"              ;
+                               ; $facetSearchConfigName                ;                                                  ; "Blutooth"                   ; "Bluetooth"
+                               ; $facetSearchConfigName                ;                                                  ; "Screen,Display"             ;
+                               ; $facetSearchConfigName                ;                                                  ; "Internet,Data,Surf,Surfing" ;
+                               ; $facetSearchConfigName                ;                                                  ; "Abroad"                     ; "Roaming"
+
+# Keyword Redirects
+INSERT_UPDATE SolrFacetSearchKeywordRedirect; facetSearchConfig(name)[unique = true]; language(isocode)[unique = true, default = $lang]; keyword[unique = true]; matchType(code)[unique = true]; ignoreCase[default = true]; redirect(&redirectRefID)
+                                            ; $facetSearchConfigName                ;                                                  ; "cart"                ; CONTAINS                      ;                           ; redirectRefID-cart
+                                            ; $facetSearchConfigName                ;                                                  ; "basket"              ; CONTAINS                      ;                           ; redirectRefID-cart
+                                            ; $facetSearchConfigName                ;                                                  ; "store"               ; EXACT                         ;                           ; redirectRefID-store
+                                            ; $facetSearchConfigName                ;                                                  ; "hybris"              ; EXACT                         ;                           ; redirectRefID-hybris
+                                            ; $facetSearchConfigName                ;                                                  ; "ipad"                ; CONTAINS                      ;                           ; redirectRefID-product-ipad
+                                            ; $facetSearchConfigName                ;                                                  ; "kindle"              ; CONTAINS                      ;                           ; redirectRefID-product-kindle
+                                            ; $facetSearchConfigName                ;                                                  ; "charger"             ; EXACT                         ;                           ; redirectRefID-category-charger
+
+INSERT_UPDATE SolrURIRedirect; url[unique = true]                                                             ; &redirectRefID
+                             ; "/cart"                                                                        ; redirectRefID-cart
+                             ; "/store"                                                                       ; redirectRefID-store
+                             ; "http://www.hybris.com"                                                        ; redirectRefID-hybris
+                             ; "/Open-Catalogue/Devices/Tablet/Apple-iPad-(64GB%2C-Wi-Fi%2C-White)/p/1976032" ; redirectRefID-product-ipad
+                             ; "/Open-Catalogue/Devices/Tablet/Kindle-Fire/p/1974125"                         ; redirectRefID-product-kindle
+                             ; "/Open-Catalogue/Accessories/Chargers-and-Docs/c/chargersanddocks"             ; redirectRefID-category-charger
+
+INSERT_UPDATE SolrPageRedirect; redirectItem(uid, $contentCatalogVersion)[unique = true]; &redirectRefID

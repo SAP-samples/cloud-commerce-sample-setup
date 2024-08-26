@@ -1,0 +1,10 @@
+#-----------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company.  All rights reserved.
+#-----------------------------------------------------------------------
+
+INSERT_UPDATE OAuthClientDetails; clientId[unique = true]; resourceIds; scope    ; authorizedGrantTypes                                         ; authorities         ; clientSecret; registeredRedirectUri
+                                ; spa_client             ; hybris     ; basic    ; password,client_credentials                                  ; ROLE_CLIENT         ; secret      ;                                                                    ;
+                                ; trusted_client         ; hybris     ; extended ; authorization_code,refresh_token,password,client_credentials ; ROLE_TRUSTED_CLIENT ; secret      ;                                                                    ;
+                                ; client-side            ; hybris     ; basic    ; implicit,client_credentials                                  ; ROLE_CLIENT         ; secret      ; http://localhost:9001/authorizationserver/oauth2_implicit_callback ;
+                                ; mobile_android         ; hybris     ; basic    ; authorization_code,refresh_token,password,client_credentials ; ROLE_CLIENT         ; secret      ; http://localhost:9001/authorizationserver/oauth2_callback          ;
+

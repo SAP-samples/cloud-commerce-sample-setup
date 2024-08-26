@@ -1,0 +1,33 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Importing Product Classifications into B2C Media SPA Store
+
+#% impex.setLocale(Locale.ENGLISH);
+
+$productCatalog = mediaspaProductCatalog
+$productCatalogName = Media SPA Product Catalog
+$productCatalogVersion = catalogversion(catalog(id[default=$productCatalog]), version[default='Staged'])[unique=true, default=$productCatalog:Staged]
+$clAttrModifiers = system='mediaspaClassification', version='1.0', translator=de.hybris.platform.catalog.jalo.classification.impex.ClassificationAttributeTranslator, lang=en
+$systemName = mediaspaClassification;
+$systemVersion = 1.0;
+
+$classificationCatalogVersion = catalogVersion(version[default='$systemVersion'], catalog(id[default='$systemName']));
+
+
+$genres = @genre[$clAttrModifiers];
+$actors = @actors[$clAttrModifiers];
+$producers = @producers[$clAttrModifiers];
+$directors = @directors[$clAttrModifiers];
+
+INSERT_UPDATE Category; code[unique = true]; supercategories(code, $classificationCatalogVersion)[mode = append]; $productCatalogVersion
+                      ; movies             ; mediacontentclassification,creditsclassification
+
+# Add genres
+INSERT_UPDATE TmaSimpleProductOffering; code[unique = true]; $genres; $productCatalogVersion
+                                      ; underworld_movie   ; drama,adventure
+
+# Add cast
+INSERT_UPDATE TmaSimpleProductOffering; code[unique = true]; $actors                                    ; $producers                              ; $directors; $productCatalogVersion
+                                      ; underworld_movie   ; brady_germogen,dirk_alimjan,moana_chifundo ; van_hohenheim, nina_kilik, jon_jacobsen ; kayin_qillaq

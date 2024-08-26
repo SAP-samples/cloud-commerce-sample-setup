@@ -1,0 +1,107 @@
+# ImpEx for Importing sample checklist policies
+
+$productCatalog = utilitiesSpaProductCatalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+$lang = en
+
+INSERT_UPDATE TmaPsPolicyStatement; code[unique = true]; min; max; productSpecification(id, $catalogVersion); $catalogVersion
+; electricity_specification ; 1 ; ; electricity ;
+
+INSERT_UPDATE TmaPsPolicyStatement; code[unique = true]; min; max; productSpecification(id, $catalogVersion); $catalogVersion
+; gas_specification ; 1 ; ; gas ;
+
+INSERT_UPDATE TmaAtomicPolicyCondition; code[unique = true]; statement(code, $catalogVersion); $catalogVersion
+; has_electricity_specification ; electricity_specification
+
+INSERT_UPDATE TmaAtomicPolicyCondition; code[unique = true]; statement(code, $catalogVersion); $catalogVersion
+; has_gas_specification ; gas_specification
+
+INSERT_UPDATE TmaCompositePolicyCondition; code[unique = true]; children(code, $catalogVersion); conditionsEvaluatorType(code); $catalogVersion
+; has_electricity_gas ; has_electricity_specification, has_gas_specification ; OR ;
+
+#################################################################################################
+# Policy1
+# A customer needs to have an installation address for any Product Offering specified by
+## the "electricity" Product Specification when he wants to relocate
+#################################################################################################
+INSERT_UPDATE TmaProcessTypesPolicyStatement; code[unique = true]  ; processes(code); $catalogVersion
+                                            ; relocation_statement ; RELOCATION
+
+INSERT_UPDATE TmaAtomicPolicyCondition; code[unique = true]; statement(code, $catalogVersion); $catalogVersion
+                                      ; wants_to_relocate  ; relocation_statement
+
+INSERT_UPDATE TmaPsChecklistPolicyStatement; code[unique = true]           ; type(code)           ; productSpecifications(id, $catalogVersion); $catalogVersion
+                                           ; requires_installation_address ; INSTALLATION_ADDRESS ; electricity                               ;
+
+INSERT_UPDATE TmaPolicyAction; code[unique = true]                 ; statement(code, $catalogVersion); actionType(code); $catalogVersion
+                             ; relocation_req_installation_address ; requires_installation_address   ; CHECKLIST
+
+INSERT_UPDATE TmaCompatibilityPolicy; code[unique = true]                     ; conditions(code, $catalogVersion); actions(code, $catalogVersion)      ; conditionsEvaluatorType(code); $catalogVersion
+                                    ; relocation_require_installation_address ; wants_to_relocate                ; relocation_req_installation_address ; OR
+
+#################################################################################################
+# Policy2(Journey Checklist for SWITCH_SERVICE_PROVIDER):
+# A customer needs to have Service Provider for any Product Offering specified by the "electricity"
+# and "gas" Product Specification when he wants to switch the supplier
+#################################################################################################
+
+INSERT_UPDATE TmaProcessTypesPolicyStatement; code[unique = true]               ; processes(code); $catalogVersion
+                                            ; switch_service_provider_statement ; SWITCH_SERVICE_PROVIDER
+                                            ; acquisition_statement             ; ACQUISITION
+
+INSERT_UPDATE TmaAtomicPolicyCondition; code[unique = true]             ; statement(code, $catalogVersion); $catalogVersion
+                                      ; is_switch_service_provider_flow ; switch_service_provider_statement
+                                      ; is_acquisition_flow             ; acquisition_statement
+
+INSERT_UPDATE TmaCompositePolicyCondition; code[unique = true]                                           ; children(code, $catalogVersion)                                ; conditionsEvaluatorType(code); $catalogVersion
+                                         ; is_switch_service_provider_or_acquisition                     ; is_switch_service_provider_flow, is_acquisition_flow           ; OR                          ;
+                                         ; switch_service_provider_or_acquisition_and_electricity_or_gas ; is_switch_service_provider_or_acquisition, has_electricity_gas ; AND                          ;
+
+INSERT_UPDATE TmaPsChecklistPolicyStatement; code[unique = true]       ; type(code)       ; productSpecifications(id, $catalogVersion); $catalogVersion
+                                           ; requires_service_provider ; SERVICE_PROVIDER ; electricity,gas                           ;
+
+INSERT_UPDATE TmaPolicyAction; code[unique = true]     ; statement(code, $catalogVersion); actionType(code); $catalogVersion
+                             ; service_provider_action ; requires_service_provider       ; CHECKLIST
+
+INSERT_UPDATE TmaCompatibilityPolicy; code[unique = true]                          ; conditions(code, $catalogVersion)                             ; actions(code, $catalogVersion); conditionsEvaluatorType(code); $catalogVersion
+                                    ; switch_service_provider_req_service_provider ; switch_service_provider_or_acquisition_and_electricity_or_gas ; service_provider_action       ; OR
+
+#################################################################################################
+# Policy3 (Journey Checklist for setting contract start date):
+# A customer needs to set a contract start date if he want to purchase
+# "electricity" or "gas"
+#################################################################################################
+
+INSERT_UPDATE TmaProcessTypesPolicyStatement; code[unique = true]               ; processes(code); $catalogVersion
+                                            ; acq_switch_service_provider_relocation_statement ; ACQUISITION,SWITCH_SERVICE_PROVIDER,RELOCATION
+
+INSERT_UPDATE TmaAtomicPolicyCondition; code[unique = true]             ; statement(code, $catalogVersion); $catalogVersion
+                                      ; is_acq_switch_service_provider_relocation_flow ; acq_switch_service_provider_relocation_statement
+
+
+INSERT_UPDATE TmaCompositePolicyCondition; code[unique = true]                          ; children(code, $catalogVersion)                      ; conditionsEvaluatorType(code); $catalogVersion
+                                         ; acq_switch_service_provider_relocation ; is_acq_switch_service_provider_relocation_flow, has_electricity_gas ; AND                          ;
+
+INSERT_UPDATE TmaPsChecklistPolicyStatement; code[unique = true]    ; type(code)          ; productSpecifications(id, $catalogVersion); $catalogVersion;
+                                           ; do_contract_start_date ; CONTRACT_START_DATE ; gas,electricity
+
+INSERT_UPDATE TmaPolicyAction; code[unique = true]          ; statement(code, $catalogVersion); actionType(code); $catalogVersion
+                             ; requires_contract_start_date ; do_contract_start_date          ; CHECKLIST
+
+INSERT_UPDATE TmaCompatibilityPolicy; code[unique = true]        ; conditions(code, $catalogVersion); actions(code, $catalogVersion); conditionsEvaluatorType(code); $catalogVersion
+                                    ; select_contract_start_date ; acq_switch_service_provider_relocation              ; requires_contract_start_date  ; OR
+
+############################################################################################################
+# Policy 5
+# A customer needs to have an installation address if they want to purchase any Product Offering specified by
+# the "electricity" or "gas" Product Specifications
+#############################################################################################################
+
+INSERT_UPDATE TmaPsChecklistPolicyStatement; code[unique = true]     ; type(code)           ; productSpecifications(id, $catalogVersion); $catalogVersion
+                                           ; do_installation_address ; INSTALLATION_ADDRESS ; electricity,gas
+
+INSERT_UPDATE TmaPolicyAction; code[unique = true]           ; statement(code, $catalogVersion); actionType(code); $catalogVersion
+                             ; requires_installation_address ; do_installation_address         ; CHECKLIST
+
+INSERT_UPDATE TmaCompatibilityPolicy; code[unique = true]         ; conditions(code, $catalogVersion); actions(code, $catalogVersion); conditionsEvaluatorType(code); $catalogVersion
+                                    ; select_installation_address ; acq_switch_service_provider_relocation              ; requires_installation_address ; OR

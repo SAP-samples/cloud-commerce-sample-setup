@@ -1,0 +1,135 @@
+<div *ngIf="hasHeader" class="d-none d-md-block d-lg-block d-xl-block px-3">
+  <div
+    class="row d-flex justify-content-center"
+    *ngFor="
+      let compatibilityMessage of getCompatibilityErrorsForCart()
+    "
+  >
+    <div class="col-md-11 col-lg-11 col-xl-11 text-danger">
+      {{ compatibilityMessage }}
+    </div>
+  </div>
+
+  <div class="cx-item-list-header row cx-bold py-3">
+    <div class="cx-item-list-desc col-md-5 col-lg-5 col-xl-5">
+      {{ 'cartItems.item' | cxTranslate }}
+    </div>
+    <div class="cx-item-list-desc col-2">
+      {{ 'cartItems.price.itemPrice' | cxTranslate }}
+    </div>
+    <div class="cx-item-list-qty d-flex justify-content-center col-1">
+      {{ 'cartItems.quantity' | cxTranslate }}
+    </div>
+    <div class="cx-item-list-price col-md-3 col-lg-4 col-xl-3">
+      {{ 'cartItems.price.amountDue' | cxTranslate }}
+    </div>
+
+    <ng-container *ngIf="options.isSaveForLater">
+      <div class="cx-item-list-total col-md-2 col-lg-2 col-xl-2">
+        {{ 'saveForLaterItems.stock' | cxTranslate }}
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+<div [formGroup]="form">
+  <div class="cx-item-list-row" *ngFor="let group of groupedItems | keyvalue">
+    <ng-container *ngIf="group.key && group.value">
+      <ng-container *ngIf="group.value[0].rootBpoCode">
+        <div class="row">
+          <div class="col-md-4 col-lg-4 col-xl-4 d-flex justify-content-center">
+            <button *ngIf="!readonly" class="bpo-action-btn"
+                    type="button"
+                    attr.aria-label="{{ 'cartItems.removeItem' | cxTranslate }}"
+                    (click)="removeBpo(group.key)">
+              <span class="material-icons pointer-cursor">highlight_off</span>
+            </button>
+            <button
+              class="material-icons pointer-cursor bpo-action-btn edit-bpo-btn" type="button"
+              *ngIf="!readonly && !isCartEntryForRenewal(group.value) && !isFixedPricedBpo(group.value[0].rootBpoCode)"
+              (click)="prepareCgsForEdit(group.key, group.value, 0)" attr.aria-label="{{ 'cartItems.editItem' | cxTranslate }}">
+              <span class="material-icons pointer-cursor">edit</span>
+            </button>
+            <ng-container *ngIf="getProduct(group.value[0].rootBpoCode) | async as bpo">
+              <label class="label text-nowrap text-capitalize">
+                <strong class="h3">&nbsp;&nbsp;{{ bpo.name }}</strong>
+              </label>
+            </ng-container>
+          </div>
+        </div>
+        <div
+        class="row d-flex justify-content-center"
+        *ngFor="
+          let compatibilityMessage of getCompatibilityErrorsForEntryGroup(
+            group.key
+          )
+        "
+      >
+        <div class="col-md-11 col-lg-11 col-xl-11 text-danger">
+          {{ compatibilityMessage.message }}
+        </div>
+      </div>
+        <br/>
+      </ng-container>
+      <ng-container *ngIf="isFixedPricedBpo(group.value[0].rootBpoCode) as price">
+        <div class="row justify-content-end">
+          <div class="col-md-11 col-lg-11 col-xl-11">
+            <cx-cart-item-price-display [price]="price"></cx-cart-item-price-display>
+          </div>
+        </div>
+        <br/>
+      </ng-container>
+
+      <ng-container *ngFor="let item of group.value">
+        <ng-container *ngIf="!item.entries">
+          <div class="cx-item-list-items">
+            <div
+            >
+              <div *ngIf="item.subscribedProduct.id">
+                <span class="flash-warn">{{
+                  'subscriptions.processType.processType'
+                    | cxTranslate: { context: item.processType.id }
+                }}</span>
+              </div>
+              <ng-container *ngIf="item.rootBpoCode === undefined">
+                <span *ngIf="isCartEntryForRenewal([item])">
+                  <span class="right-arrow">
+                    {{ 'subscriptions.renew' | cxTranslate }} &nbsp;{{
+                      item.subscriptionTerm.name
+                    }}
+                </span>
+              </span>
+            </ng-container>
+            <div
+              class="cx-item-list-items"
+              *ngIf="getControl(item) | async as control"
+              [class.is-changed]="control.get('quantity').dirty"
+            >
+              <cx-cart-item
+                [showEdit]="showEdit"
+                [item]="item"
+                [quantityControl]="control.get('quantity')"
+                [readonly]="readonly"
+                [promotionLocation]="promotionLocation"
+                [enableChecklistActions] = "enableChecklistActions"
+                [isPremiseDetailsReadOnly]="isPremiseDetailsReadOnly"
+                [isRemovable]="!item.rootBpoCode"
+                (remove)="removeEntry($event)"
+                [options]="options"
+              >
+              </cx-cart-item>
+              <ng-container
+                *ngIf="
+                  item.rootBpoCode === undefined &&
+                  getOrderEntryArray(item) as orderEntries
+                "
+              >
+              </ng-container>
+            </div>
+          </div>
+          </div>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+  </div>
+</div>

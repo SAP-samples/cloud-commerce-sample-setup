@@ -1,0 +1,198 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# Import essential data for the Accelerator
+#
+# Includes:
+# * Languages
+# * Currencies
+# * Titles
+# * Vendors
+# * Warehouses
+# * Supported Credit/Debit cards
+# * User Groups
+# * DistanceUnits for Storelocator
+# * MediaFolders
+# * MediaFormats
+# * Tax & Tax Groups
+# * Jobs
+# * Delivery Modes
+
+$usCurrency = USD
+
+# Languages
+INSERT_UPDATE Language; isocode[unique = true]; fallbackLanguages(isocode); active[default = true]
+                      ; en                    ;                           ; ;
+                      ; de                    ; en                        ; ;
+                      ; ja                    ; en                        ; ;
+                      ; zh                    ; en                        ; ;
+
+# Currencies
+INSERT_UPDATE Currency; isocode[unique = true]; conversion; digits; symbol
+                      ; GBP                   ; 1         ; 2     ; £
+                      ; EUR                   ; 1         ; 2     ; €
+                      ; USD                   ; 1,4       ; 2     ; $
+                      ; JPY                   ; 120       ; 0     ; ¥
+
+# SiteMap Language Currencies
+INSERT_UPDATE SiteMapLanguageCurrency; &siteMapLanguageCurrency; language(isoCode)[unique = true]; currency(isocode)[unique = true];
+                                     ; enUsd                   ; en                              ; USD
+                                     ; enJpy                   ; en                              ; JPY
+                                     ; enGbp                   ; en                              ; GBP
+                                     ; enEur                   ; en                              ; EUR
+                                     ; jaUsd                   ; ja                              ; USD
+                                     ; jaJpy                   ; ja                              ; JPY
+                                     ; jaGbp                   ; ja                              ; GBP
+                                     ; jaEur                   ; ja                              ; EUR
+                                     ; deUsd                   ; de                              ; USD
+                                     ; deJpy                   ; de                              ; JPY
+                                     ; deGbp                   ; de                              ; GBP
+                                     ; deEur                   ; de                              ; EUR
+                                     ; zhUsd                   ; zh                              ; USD
+                                     ; zhJpy                   ; zh                              ; JPY
+                                     ; zhGbp                   ; zh                              ; GBP
+                                     ; zhEur                   ; zh                              ; EUR
+
+
+# Vendor
+INSERT_UPDATE Vendor; code[unique = true]; name
+                    ; b2btelcospa        ; b2btelcospa
+
+# Warehouse
+INSERT_UPDATE Warehouse; code[unique = true]   ; name                    ; vendor(code)[default = default]; default[default = true]
+                       ; warehouse_b2btelcospa ; Warehouse B2B Telco SPA ; b2btelcospa
+
+# Disable preview for email pages
+UPDATE CMSPageType; code[unique = true]; previewDisabled
+                  ; EmailPage          ; true
+
+INSERT_UPDATE ComponentTypeGroup; code[unique = true]
+                                ; storefinder
+
+# Titles
+INSERT_UPDATE Title; code[unique = true]
+                   ; mr
+                   ; mrs
+                   ; miss
+                   ; ms
+                   ; dr
+                   ; rev
+
+# Media Folders
+INSERT_UPDATE MediaFolder; qualifier[unique = true]; path[unique = true]
+                         ; images                  ; images
+                         ; email-body              ; email-body
+                         ; email-attachments       ; email-attachments
+
+# Media formats
+INSERT_UPDATE MediaFormat; qualifier[unique = true]
+                         ; 1200Wx1200H
+                         ; 515Wx515H
+                         ; 365Wx246H
+                         ; 300Wx300H
+                         ; 96Wx96H
+                         ; 65Wx65H
+                         ; 30Wx30H
+                         ; mobile
+                         ; tablet
+                         ; desktop
+                         ; widescreen
+
+# Tax & Tax Groups
+INSERT_UPDATE UserTaxGroup; code[unique = true]
+                          ; de-taxes
+                          ; jp-taxes
+                          ; uk-taxes
+                          ; us-taxes
+                          ; ca-taxes
+
+INSERT_UPDATE ProductTaxGroup; code[unique = true]
+                             ; jp-vat-full
+                             ; eu-vat-full
+                             ; eu-vat-half
+                             ; us-sales-tax-full
+                             ; ca-sales-tax-full
+                             ; jp-vat-full_eur
+                             ; eu-vat-full_eur
+                             ; eu-vat-half_eur
+                             ; us-sales-tax-full_eur
+                             ; ca-sales-tax-full_eur
+
+
+INSERT_UPDATE Tax; code[unique = true]; value; currency(isocode)
+                 ; de-vat-full        ; 19
+                 ; de-vat-half        ; 7
+                 ; jp-vat-full        ; 5
+                 ; uk-vat-full        ; 20
+                 ; uk-vat-half        ; 5
+                 ; us-sales-tax-full  ; 10
+                 ; ca-sales-tax-full  ; 0
+
+INSERT_UPDATE Tax; code[unique = true]   ; value; currency(isocode)
+                 ; de-vat-full_eur       ; 19   ; EUR
+                 ; de-vat-half_eur       ; 7    ; EUR
+                 ; jp-vat-full_eur       ; 5    ; EUR
+                 ; uk-vat-full_eur       ; 20   ; EUR
+                 ; uk-vat-half_eur       ; 5    ; EUR
+                 ; us-sales-tax-full_eur ; 10   ; EUR
+                 ; ca-sales-tax-full_eur ; 0    ; EUR
+
+INSERT_UPDATE ServicelayerJob; code[unique = true]; springId[unique = true]
+                             ; cartRemovalJob     ; cartRemovalJob
+                             ; siteMapMediaJob    ; siteMapMediaJob
+
+INSERT_UPDATE Country; isocode[unique = true]; name[lang = en]; active[default = true]
+                     ; US                    ; "United States"
+                     ; EU                    ; "Europe"
+
+INSERT_UPDATE Region; country(isocode); isocode[unique = true]; isocodeShort; name[lang = en]; active[default = true]
+                    ; GB              ; GB-ENG                ; ENG         ; England        ;
+
+# Delivery Zones
+INSERT_UPDATE Zone; code[unique = true]; countries(isocode)
+                  ; usa                ; US
+
+# Zone Delivery Modes
+INSERT_UPDATE ZoneDeliveryMode; code[unique = true]; net; active[default = true]
+                              ; premium-net        ; true
+                              ; standard-net       ; true
+                              ; premium-gross      ; false
+                              ; standard-gross     ; false
+
+# USA
+INSERT_UPDATE ZoneDeliveryModeValue; deliveryMode(code)[unique = true]; zone(code)[default = 'usa'][unique = true]; currency(isocode)[unique = true]; value ; minimum[unique = true]
+                                   ; premium-net                      ;                                           ; $usCurrency                     ; 16,99 ; 0,00
+                                   ; premium-gross                    ;                                           ; $usCurrency                     ; 19,99 ; 0,00
+                                   ; standard-net                     ;                                           ; $usCurrency                     ; 9,99  ; 0,00
+                                   ; standard-gross                   ;                                           ; $usCurrency                     ; 11,99 ; 0,00
+
+INSERT_UPDATE PickUpDeliveryMode; code[unique = true]; active[default=true]
+                                ; subscription-only
+
+##############################
+# Insert DeliveryMode taxes
+##############################
+INSERT_UPDATE ProductTaxCode; productCode[unique = true]; taxCode  ; taxArea[unique = true]
+                            ; premium-gross             ; FR000000 ; US
+                            ; standard-gross            ; FR000000 ; US
+                            ; standard-net              ; FR000000 ; US
+                            ; pickup                    ; FR000000 ; US
+                            ; premium-net               ; FR000000 ; US
+
+# Deactivate Frontend Restriction on category by default for perfomance purposes
+UPDATE SearchRestriction; code[unique = true]; active[default = false]
+                        ; Frontend_RestrictedCategory
+
+INSERT_UPDATE SearchRestriction; code[unique = true]              ; restrictedType(code)    ; active[default = true]; generate[default = false]; query                                                                                                                                                                                                                                                                                                                                          ; principal(uid)
+                               ; Frontend_TmaPolicyStatement      ; TmaPolicyStatement      ;                       ;                          ; {item:catalogVersion} IN (?session.catalogversions)                                                                                                                                                                                                                                                                                            ; customergroup
+                               ; Frontend_TmaPolicyAction         ; TmaPolicyAction         ;                       ;                          ; {item:catalogVersion} IN (?session.catalogversions)                                                                                                                                                                                                                                                                                            ; customergroup
+                               ; Frontend_TmaPolicy_validity      ; TmaCompatibilityPolicy  ;                       ;                          ; ({onlineFrom} IS NULL AND {onlineTo} IS NULL) OR ({onlineTo} IS NULL AND ({onlineFrom} IS NOT NULL AND {onlineFrom} <= ?session.user.currentDate)) OR ({onlineFrom} IS NULL AND {onlineTo} IS NOT NULL AND {onlineTo} >= ?session.user.currentDate) OR ({onlineFrom} <= ?session.user.currentDate AND {onlineTo} >= ?session.user.currentDate) ; customergroup
+                               ; Pricerow_ValidDate               ; PriceRow                ;                       ;                          ; ( {startTime} IS NULL OR {startTime} <= ?session.user.currentDate) AND ( {endTime} IS NULL OR {endTime} >= ?session.user.currentDate)                                                                                                                                                                                                          ; customergroup
+                               ; Frontend_TmaProductOfferingPrice ; TmaProductOfferingPrice ;                       ;                          ; {item:catalogVersion} IN (?session.catalogversions)                                                                                                                                                                                                                                                                                            ; customergroup
+                               ; Frontend_TmaProductSpecification ; TmaProductSpecification ;                       ;                          ; {item:catalogVersion} IN (?session.catalogversions)                                                                                                                                                                                                                                                                                            ; customergroup
+
+INSERT_UPDATE SearchRestriction; code[unique = true]  ; active[default = true]
+                               ; branch_restriction   ; false
+                               ; employee_restriction ; false
+                               ; b2border_restriction ; false

@@ -1,0 +1,41 @@
+<tr class="row">
+  <td (click)="toggleDetails(true)" class="col cx-order-approval-code text-align-center pointer-cursor" tabindex="0">
+    {{productOrder.id}}
+  </td>
+
+  <td class="col cx-order-approval-placed text-align-center" tabindex="0">
+    {{productOrder.relatedParty[0].name}}
+  </td>
+
+  <td class="col cx-order-approval-date text-align-center" tabindex="0">
+    {{productOrder.orderDate | date: 'yyyy-MM-dd'}}
+  </td>
+
+  <td class="col cx-order-approval-status text-align-center" tabindex="0">
+    {{productOrder.state}}
+  </td>
+
+  <td class="col cx-order-approval-status text-align-center">
+    <div *ngIf="productOrder.state === OrderStateType.PENDING_APPROVAL">
+      <button (click)="updateOrder(productOrder.id,OrderStateType.APPROVED,productOrder?.relatedParty[0]?.id)"
+              class="btn btn-success btn-block" [attr.aria-label]="'common.approveOrder' | cxTranslate : {orderNumber:productOrder.id}">{{ 'orderApprovalDetails.form.submit_APPROVE' | cxTranslate }}</button>
+    </div>
+  </td>
+
+  <td class="col cx-order-approval-status text-align-center">
+    <div *ngIf="productOrder.state === OrderStateType.PENDING_APPROVAL">
+      <button (click)="updateOrder(productOrder.id,OrderStateType.REJECTED,productOrder?.relatedParty[0]?.id)"
+              class="btn btn-danger btn-block" [attr.aria-label]="'common.rejectOrder' | cxTranslate : {orderNumber:productOrder.id}">{{ 'orderApprovalDetails.form.submit_REJECT' | cxTranslate }}</button>
+    </div>
+  </td>
+</tr>
+
+<!-- DETAILS DROPDOWN -->
+<ng-container *ngIf="showDetails">
+  <hr>
+  <cx-order-details-dropdown
+    (closeDetails)="toggleDetails($event)"
+    [productOrder]="productOrder"
+  >
+  </cx-order-details-dropdown>
+</ng-container>

@@ -1,0 +1,97 @@
+<cx-selfcare-card
+  *ngIf="model$ | async as model"
+  i18nRoot="{{ domainType }}"
+  [showHint]="true"
+  subtitle="{{ 'selfcare.billingAccounts.subtitle' | cxTranslate }}"
+>
+  <section main class="details">
+    <div class="property">
+      <label>{{ 'selfcare.billingAccounts.name' | cxTranslate }}</label>
+      <span class="value">
+        {{ model.name }}
+      </span>
+    </div>
+    <div class="property">
+      <label>{{ 'selfcare.billingAccounts.id' | cxTranslate }}</label>
+      <span class="value">
+        {{ model.id }}
+      </span>
+    </div>
+    <div class="property">
+      <label>{{
+        'selfcare.billingAccounts.details.accountType' | cxTranslate
+      }}</label>
+      <span class="value">
+        {{ model.accountType | titlecase }}
+      </span>
+    </div>
+    <div class="property">
+      <label>{{
+        'selfcare.billingAccounts.details.paymentStatus' | cxTranslate
+      }}</label>
+      <span class="value">
+        {{ model.paymentStatus | titlecase }}
+      </span>
+    </div>
+    <div class="property">
+      <label>{{
+        'selfcare.billingAccounts.details.ratingType' | cxTranslate
+      }}</label>
+      <span class="value">
+        {{ model.ratingType | titlecase }}
+      </span>
+    </div>
+  </section>
+  <section main class="link-list">
+    <ng-container *ngIf="model.id">
+      <a
+        class="link"
+        [routerLink]="{ cxRoute: 'AccountBalance', params: model } | cxUrl"
+        routerLinkActive="is-current"
+      >
+        {{
+          'selfcare.billingAccounts.details.accountBalance.title' | cxTranslate
+        }}
+      </a>
+      <a
+        class="link"
+        [routerLink]="{ cxRoute: 'BillStructure', params: model } | cxUrl"
+        routerLinkActive="is-current"
+      >
+        {{
+          'selfcare.billingAccounts.details.billStructure.title' | cxTranslate
+        }}
+      </a>
+      <a
+        class="link"
+        [routerLink]="{ cxRoute: 'BillingContact', params: model } | cxUrl"
+        routerLinkActive="is-current"
+      >
+        {{ 'selfcare.billingAccounts.details.contact.title' | cxTranslate }}
+      </a>
+      <a
+        class="link"
+        [routerLink]="{ cxRoute: 'CreditLimit', params: model } | cxUrl"
+        routerLinkActive="is-current"
+      >
+        {{ 'selfcare.billingAccounts.details.creditLimit.title' | cxTranslate }}
+      </a>
+      <a
+        class="link"
+        [routerLink]="{ cxRoute: 'PaymentPlan', params: model } | cxUrl"
+        routerLinkActive="is-current"
+      >
+        {{ 'selfcare.billingAccounts.details.paymentPlan.title' | cxTranslate }}
+      </a>
+      <a
+        class="link"
+        [routerLink]="{ cxRoute: 'RelatedParty', params: model } | cxUrl"
+        routerLinkActive="is-current"
+      >
+        {{
+          'selfcare.billingAccounts.details.relatedParty.title' | cxTranslate
+        }}
+      </a>
+    </ng-container>
+  </section>
+</cx-selfcare-card>

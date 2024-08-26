@@ -1,0 +1,191 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2022 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+#
+# Import the Solr Discount configuration for the B2CTelco store
+#
+
+
+#######################
+# used as import data #
+#######################
+$productCatalog = telcospaProductCatalog
+$catalogVersions = catalogVersions(catalog(id), version);
+
+$solrIndexedType = telcospaDiscountType
+$prefix = telcospaDiscount
+
+$facetSearchCfg = telcospaDiscountIndex
+$searchCfg = telcospaDiscountSearchConfig
+
+$indexBaseStore = telcospa
+$indexLanguages = en
+$indexCurrencies = USD
+
+###################
+# used in headers #
+###################
+$hIndexType = solrIndexedType(identifier)[unique = true, default = telcospaDiscountType]
+$hIndexTypes = solrIndexedTypes(identifier)
+$hId = identifier[unique = true]
+$hName = name[unique = true]
+$hCode = code[unique = true]
+$hType = type(code)
+$hJob = job(code)[forceWrite=true]
+$hSortable = sortableType(code)
+$hDefaultSortOrder = defaultSortOrder;
+$hMulti = multiValue[default = false]
+$hProvider = fieldValueProvider
+$hProviderParam = valueProviderParameter
+$hProviderParams = valueProviderParameters[map-delimiter = |]
+$hParams = solrIndexerQueryParameters(name)
+$hPage = pageSize[unique = true]
+$hDescription = description[unique = true]
+$hLangFallback = enabledLanguageFallbackMechanism
+$hCurrency = currency[default = false];
+$hLocalized = localized[default = false];
+$hSpellcheck = useForSpellchecking[default = false];
+$hAutoComplete = useForAutocomplete[default = false];
+
+$hSearchCfg = solrSearchConfig(description)
+$hServerCfg = solrServerConfig(name)
+$hIndexCfg = solrIndexConfig(name)
+$hFacetSearchCfg = facetSearchConfig(name)
+
+###################
+### data import ###
+###################
+
+
+################################################################################################################################
+#
+# 1. DEFINE INDEXED TYPE
+#
+################################################################################################################################
+# - type
+# - properties
+# - facet search config
+################################################################################################################################
+
+
+################################################################################################################################
+# Indexed type
+################################################################################################################################
+INSERT_UPDATE SolrIndexedType; $hId             ; $hType      ; variant; defaultFieldValueProvider    ; sorts(&sortRefID)
+                             ; $solrIndexedType ; DiscountRow ; false  ; modelAttributesValueResolver ; sortRef1,sortRef2,sortRef3
+
+################################################################################################################################
+# Non-facet properties
+################################################################################################################################
+$userPriceGroup = ug == null ? '' : ug;
+$user = user == null ? '' : user.getUid();
+$currency = currency.isocode;
+$affectedProductOffering = affectedProductOffering == null ? '' : affectedProductOffering.getCode();
+
+INSERT_UPDATE SolrIndexedProperty; $hIndexType; $hName                   ; $hType ; $hSortable; $hMulti; $hProvider                                ; $hProviderParam          ;
+                                 ;            ; code                     ; string ;           ;        ; springELValueProvider                     ; code                     ;
+                                 ;            ; terms                    ; string ;           ; true   ; tmaDiscountTermCodeResolver               ;                          ;
+                                 ;            ; channel                  ; string ;           ; true   ; tmaPriceChannelResolver                   ;                          ;
+                                 ;            ; currency                 ; string ;           ;        ; springELValueProvider                     ; $currency                ;
+                                 ;            ; userpricegroup           ; string ;           ;        ; springELValueProvider                     ; $userPriceGroup          ;
+                                 ;            ; user                     ; string ;           ;        ; springELValueProvider                     ; $user                    ;
+                                 ;            ; pricePriority            ; int    ;           ;        ; pricePriorityValueResolver                ;                          ;
+                                 ;            ; requiredProductOfferings ; string ;           ; true   ; tmaDiscountRequiredProductsResolver       ;                          ;
+                                 ;            ; requiredProductClasses   ; string ;           ; true   ; tmaDiscountRequiredProductClassesResolver ;                          ;
+                                 ;            ; affectedProductOffering  ; string ;           ;        ; springELValueProvider                     ; $affectedProductOffering ;
+                                 ;            ; appliedToPops            ; string ;           ; true   ; tmaDiscountAppliedToPopsResolver          ;                          ;
+
+
+################################################################################################################################
+# facet properties
+
+INSERT_UPDATE SolrIndexedProperty; $hIndexType; $hName     ; $hType ; $hProvider                  ; $hProviderParams; $hSortable; $hCurrency; $hLocalized; $hMulti; $hSpellcheck; $hAutoComplete; facet[default = false]; facetType(code); facetSort(code); priority; facetDisplayNameProvider; customFacetSortProvider; rangeSets(name)
+                                 ;            ; termLimits ; string ; tmaDiscountTermNameResolver ;                 ;           ; true      ; true       ; true   ;             ;               ;                       ; MultiSelectOr  ; Alpha          ; 1000    ;                         ;                        ; ;
+
+INSERT_UPDATE SolrIndexedProperty; $hIndexType; $hName        ; $hType ; $hProvider                    ; $hProviderParam; $hSortable; $hCurrency; $hLocalized; $hMulti; facet[default = true]; facetType(code); facetSort(code)[default = Alpha]; priority[default = 1000]; visible[default = true]
+                                 ;            ; region        ; string ; priceRegionResolver           ;                ;           ;           ;            ; true   ;                      ; MultiSelectOr  ;                                 ;                         ; false ;
+                                 ;            ; process       ; string ; tmaPriceProcessResolver       ;                ;           ;           ;            ; true   ;                      ; MultiSelectOr  ;                                 ;                         ; false ;
+                                 ;            ; popAlteration ; string ; tmaPopAlterationValueResolver ;                ;           ;           ;            ; false  ;                      ;                ;                                 ; 6000                    ; false ;
+
+
+################################################################################################################################
+#
+# 2. SOLR FACET SEARCH CONFIG
+#
+################################################################################################################################
+# - searchConfig  - telcoDiscountSearchConfig
+# - indexConfig   - Default
+# - serverConfig  - Default
+################################################################################################################################
+INSERT_UPDATE SolrSearchConfig; &Item      ; $hPage; $hDescription; $hDefaultSortOrder; legacyMode; restrictFieldsInResponse;
+                              ; $searchCfg ; 20    ; $searchCfg   ; score,pk          ; false     ; true                    ;
+
+INSERT_UPDATE SolrIndexerQuery; $hIndexType      ; $hId                ; $hType ; query                                                                                                                                                                                                                ; user(uid) ; $hParams; injectCurrentDate[default = true]; injectCurrentTime[default = true]; injectLastIndexTime[default = true]
+                              ; $solrIndexedType ; $prefix-fullQuery   ; full   ; "select {pr:pk} from {DiscountRow as pr} WHERE {pr.catalogVersion} IN({{SELECT {cv.PK} FROM {catalogversion as cv} Where {cv.catalog} IN ({{SELECT {c.PK} FROM {catalog as c} where {c.id} ='$productCatalog'}})}})" ; anonymous ;         ;                                  ;                                  ; false ;
+                              ; $solrIndexedType ; $prefix-updateQuery ; update ; "
+SELECT {dr:pk} FROM {DiscountRow as dr}  WHERE
+   {dr.catalogVersion} IN
+    ({{SELECT {cv.PK} FROM {catalogversion as cv} WHERE {cv.catalog} IN
+          ({{SELECT {c.PK} FROM {catalog as c} WHERE {c.id} ='$productCatalog'}})
+      }})
+    AND
+    ({dr:modifiedtime} >= ?lastIndexTime
+       OR
+       ({dr.popAlteration} IN
+          (
+            {{SELECT {pop.PK} FROM {TmaProdOfferPriceAlteration AS pop} WHERE {pop:modifiedtime} >= ?lastIndexTime}}
+           )
+       )
+    )
+"                                                                                                                                                                                                                    ; anonymous ;         ;                                  ;                                  ;       ;
+
+INSERT_UPDATE SolrFacetSearchConfig; $hName          ; $hSearchCfg; $hIndexCfg; $hServerCfg; indexNamePrefix; $hIndexTypes     ; $catalogVersions       ; description      ; $hLangFallback; languages(isocode); currencies(isocode);
+                                   ; $facetSearchCfg ; $searchCfg ; Default   ; Default    ; $prefix        ; $solrIndexedType ; $productCatalog:Online ; telco Solr index ; true          ; $indexLanguages   ; $indexCurrencies   ;
+
+UPDATE BaseStore; uid[unique = true]; discountSolrFacetSearchConfiguration(name)
+                ; $indexBaseStore   ; $facetSearchCfg
+
+################################################################################################################################
+# 2.1 CronJob
+################################################################################################################################
+# - job      - solrIndexerJob
+# - trigger  -
+################################################################################################################################
+INSERT_UPDATE SolrIndexerCronJob; $hCode                               ; $hJob          ; singleExecutable; sessionLanguage(isocode); active; $hFacetSearchCfg; indexerOperation(code)
+                                ; full-telcospaDiscountIndex-cronJob   ; solrIndexerJob ; false           ; en                      ; true  ; $facetSearchCfg ; full
+                                ; update-telcospaDiscountIndex-cronJob ; solrIndexerJob ; false           ; en                      ; true  ; $facetSearchCfg ; update
+
+
+INSERT_UPDATE Trigger; cronJob(code)[unique = true]         ; second; minute; hour; day; month; year; relative; active; maxAcceptableDelay
+# Run the full-telcoDiscountIndex-cronJob at 3:05 AM every day
+                     ; full-telcospaDiscountIndex-cronJob   ; 0     ; 5     ; 3   ; -1 ; -1   ; -1  ; false   ; false ; -1
+
+# Run the update-telcoDiscountIndex-cronJob every 1 minutes
+                     ; update-telcospaDiscountIndex-cronJob ; 0     ; 1     ; -1  ; -1 ; -1   ; -1  ; true    ; false ; -1
+################################################################################################################################
+#
+# 3. SEARCH QUERY
+#
+################################################################################################################################
+# - template
+# - sorts
+# - diaply facets
+################################################################################################################################
+# Search query template
+INSERT_UPDATE SolrSearchQueryTemplate; name[unique = true]; indexedType(identifier)[unique = true]; ftsQueryBuilder
+                                     ; DEFAULT            ; $solrIndexedType                      ; defaultFreeTextQueryBuilder
+
+################################################################################################################################
+# Define the available sorts
+################################################################################################################################
+INSERT_UPDATE SolrSort; indexedType(identifier)[unique = true]; &sortRefID; code[unique = true]; useBoost
+                      ; $solrIndexedType                      ; sortRef1  ; code-asc           ; false
+                      ; $solrIndexedType                      ; sortRef2  ; code-desc          ; false
+                      ; $solrIndexedType                      ; sortRef3  ; pricePriority-desc ; false
+
+# Define the sort fields
+INSERT_UPDATE SolrSortField; sort(indexedType(identifier), code)[unique = true]; fieldName[unique = true]; ascending[unique = true]
+                           ; $solrIndexedType:code-asc                         ; code                    ; true
+                           ; $solrIndexedType:code-desc                        ; code                    ; false
+                           ; $solrIndexedType:pricePriority-desc               ; pricePriority           ; false

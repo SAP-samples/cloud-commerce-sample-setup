@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<!--
+ Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+
+<project name="b2btelcospastore_buildcallbacks">
+
+  <!--OVERRIDING the default macro definition-->
+  <macrodef name="extension_build_number">
+    <attribute name="extname"/>
+    <attribute name="destdir"/>
+
+    <sequential>
+      <!-- Just leave the file as it is declared into the custom extension-->
+    </sequential>
+  </macrodef>
+
+  <!--
+      Called whenever 'ant ear' is used. this callback can be used to modify the content of the ear file
+
+       ${ear.path}: 			path to ear
+   -->
+  <macrodef name="b2btelcospastore_before_ear">
+    <sequential>
+
+      <!-- you can do anything before the EAR file is being packed -->
+
+    </sequential>
+  </macrodef>
+
+  <macrodef name="b2btelcospastore_before_dist_copy">
+    <sequential>
+
+      <replaceregexp byline="true">
+        <fileset dir="${ext.b2btelcospastore.path}">
+          <include name="**/*.java"/>
+          <include name="**/*.jsp"/>
+          <include name="**/*.tag"/>
+          <include name="**/*.xml"/>
+          <include name="**/*.impex"/>
+          <include name="**/*.csv"/>
+          <include name="**/*.vm"/>
+          <include name="**/*.properties"/>
+          <exclude name="**/buildcallbacks.xml"/>
+        </fileset>
+        <regexp pattern="(.+)TELCO_(START|END)(.+|)"/>
+        <substitution expression=""/>
+      </replaceregexp>
+
+      <delete>
+        <fileset dir="${ext.b2btelcospastore.path}" includes="**/*.deleted"/>
+        <fileset dir="${ext.b2btelcospastore.path}" includes="**/leftblankintentionally.txt"/>
+      </delete>
+
+    </sequential>
+  </macrodef>
+
+  <patternset id="b2btelcospastore.localization.pattern">
+    <!-- core and hmc -->
+    <include name="**/*locales*_en.properties"/>
+    <exclude name="**/hmc/web/webroot/WEB-INF/classes/**/*"/>
+    <exclude name="**/unittest/**/*"/>
+    <!-- cockpit (ng) -->
+    <include name="**/i3-label_en.properties"/>
+    <include name="**/labels_en.properties"/>
+    <include name="**/i3-label.properties" if="processing.en"/>
+    <include name="**/labels.properties" if="processing.en"/>
+    <!-- messages -->
+    <include name="**/*messages_en.properties"/>
+    <include name="**/*messages.properties" if="processing.en"/>
+    <!-- frontend properties files in WEB-INF/messages folder -->
+    <include name="**/WEB-INF/messages/*_en.properties"/>
+    <!-- csv and impex -->
+    <include name="**/lang-en.properties"/>
+    <!-- email localizations from yacceleratorcore -->
+    <include name="resources/**/messages/*_en.properties"/>
+    <!-- include validation messages -->
+    <include name="resources/**/ValidationMessages.properties"/>
+  </patternset>
+
+</project>

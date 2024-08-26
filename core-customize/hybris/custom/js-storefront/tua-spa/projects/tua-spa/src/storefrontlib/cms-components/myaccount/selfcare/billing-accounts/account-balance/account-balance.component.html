@@ -1,0 +1,33 @@
+<cx-selfcare-card
+  *ngIf="model$ | async as model"
+  i18nRoot="{{ domainType }}"
+  [showHint]="true"
+>
+  <section main class="cardSection">
+    <ng-container *ngIf="model.accountBalance as accounts; else emptyList">
+      <div class="sectionDetails" *ngFor="let account of accounts">
+        <span class="sectionValue">
+          <a
+            class="link"
+            [routerLink]="
+              {
+                cxRoute: 'BalanceDetails',
+                params: { id: model.id, balanceType: account.balanceType }
+              } | cxUrl
+            "
+          >
+            {{ account.balanceType }}
+          </a>
+        </span>
+      </div>
+    </ng-container>
+  </section>
+</cx-selfcare-card>
+
+<ng-template #emptyList>
+  <p class="is-empty">
+    {{
+      'selfcare.billingAccounts.details.accountBalance.emptyList' | cxTranslate
+    }}
+  </p>
+</ng-template>

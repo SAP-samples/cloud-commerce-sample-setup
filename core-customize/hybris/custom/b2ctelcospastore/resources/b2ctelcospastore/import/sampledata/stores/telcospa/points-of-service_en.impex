@@ -1,0 +1,20 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+$lang = en
+
+UPDATE SpecialOpeningDay; openingSchedule(code)[unique = true]; date[unique = true, dateformat = dd.MM.yyyy]; name[lang = $lang]; message[lang = $lang]
+
+UPDATE StoreLocatorFeature; code[unique = true]    ; name[lang = $lang]
+                          ; wheelchair             ; "Wheelchair Access"
+                          ; creche                 ; "Creche"
+                          ; sundayWorkshops        ; "Sunday Workshops"
+                          ; buyOnlinePickupInStore ; "Buy Online Pick Up In Store"
+
+UPDATE PointOfService; name[unique = true]                        ; displayName                                ;
+                     ; Hybris Telco Spa - Chicago Premium Outlets ; Hybris Telco Spa - Chicago Premium Outlets ;
+                     ; Hybris Telco Spa - Chrysler Building       ; Hybris Telco Spa - Chrysler Building       ;
+                     ; Hybris Telco Spa - San Francisco Center    ; Hybris Telco Spa - San Francisco Center    ;
+                     ; Hybris Telco Spa - Seattle Premium Outlets ; Hybris Telco Spa - Seattle Premium Outlets ;
+                     ; Hybris Telco Spa - Riverwalk Marketplace   ; Hybris Telco Spa - Riverwalk Marketplace   ;

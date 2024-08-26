@@ -1,0 +1,67 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Product Specifications
+
+$productCatalog = mediaspaProductCatalog
+$catalogVersion = catalogversion(catalog(id[default=$productCatalog]), version[default='Staged'])[unique=true, default=$productCatalog:Staged]
+
+$lang = en
+
+############################
+# Customer Facing Services #
+############################
+INSERT_UPDATE TmaCustomerFacingServiceSpec; id[unique = true]; name[lang = $lang]; description[lang = $lang]; $catalogVersion
+                                          ; data_svc         ; Data Service      ; Data Service Specification
+                                          ; voice_svc        ; Voice Service     ; Voice Service Specification
+
+INSERT_UPDATE TmaServiceSpecCharacteristic; id[unique = true]; name[lang = $lang]; description[lang = $lang]; $catalogVersion
+                                          ; data_volume      ; Data Volume       ; Available amount of Data
+                                          ; data_speed       ; Data Speed        ; Speed of Data
+                                          ; minutes          ; Minutes           ; Available Minutes
+                                          ; sms              ; SMS               ; Available SMSs
+                                          ; minutes/sms      ; Minutes/SMS       ; Available Minutes and SMSs
+
+##########################
+# Product Specifications #
+##########################
+INSERT_UPDATE TmaProductSpecCharacteristic; id[unique = true] ; name[lang = $lang]; description[lang = $lang]; $catalogVersion
+                                          ; freeview_channels ; Freeview Channels ; All our TV packages come with up to 10 Freeview TV and radio channels
+                                          ; you_view_plus     ; YouView+          ; Pause and rewind with YouView+
+                                          ; premium_channels  ; Premium Channels  ; Bonus premium channels
+                                          ; tv_everywhere     ; TV Everywhere     ; TV Everywhere
+
+INSERT_UPDATE TmaProductSpecCharacteristicValue; id[unique = true]              ; description[lang = $lang]; $catalogVersion
+
+# values for freeview_channels
+                                               ; 10_freeview_channels           ; up to 10 Freeview TV and radio channels. You will need a TV aerial already installed to get everything.
+                                               ; 20_freeview_channels           ; up to 20 Freeview TV and radio channels. You will need a TV aerial already installed to get everything.
+                                               ; 100_freeview_channels          ; up to 100 Freeview TV and radio channels. You will need a TV aerial already installed to get everything.
+
+# values for you_view_plus access
+                                               ; unlimited_you_view_plus_access ; You can pause and rewind live TV with your YouView box.
+
+# values for premium_channels
+                                               ; 40_premium_channels            ; Enjoy great entertainment with 40 extra premium channels, including BBC one, BBC two, Sky NEWS and VIVA
+                                               ; 80_premium_channels            ; Enjoy great entertainment with 80 extra premium channels, including BBC one, BBC two, Sky NEWS and VIVA
+                                               ; 100_premium_channels           ; Enjoy great entertainment with 100 extra premium channels, including BBC one, BBC two, Sky NEWS and VIVA
+
+# values for tv_everywhere
+                                               ; 3_tv_everywhere                ; Watch your favorite shows wherever you are. Never miss your favorite programs - watch the TV channels you have subscribed to on 5 devices of your choice.
+                                               ; 5_tv_everywhere                ; Watch your favorite shows wherever you are. Never miss your favorite programs - watch the TV channels you have subscribed to on 5 devices of your choice.
+                                               ; 7_tv_everywhere                ; Watch your favorite shows wherever you are. Never miss your favorite programs - watch the TV channels you have subscribed to on 5 devices of your choice.
+
+# Product Category
+INSERT_UPDATE TmaProductCategory; code[unique = true]; description
+                                ; service_plan       ; Product Catagory describing service plan specifications
+                                ; data_addon         ; Product Catagory describing data addon specifications
+
+# Product Line
+INSERT_UPDATE TmaProductLine; code[unique = true]; description
+                            ; tv                 ; Product Line describing tv specifications
+
+INSERT_UPDATE TmaAtomicProductSpecification; id[unique = true]     ; name[lang = $lang]; description[lang = $lang]; $catalogVersion
+                                           ; tv_starter_plan       ; TV Starter Plans
+                                           ; tv_entertainment_plan ; TV Entertainment Plans
+                                           ; tv_premium_plan       ; TV Premium Plans

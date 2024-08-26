@@ -1,0 +1,58 @@
+<cx-selfcare-card
+  *ngIf="getPaymentDetails$ | async as paymentDetails"
+  i18nRoot="{{ domainType }}"
+  [showHint]="true"
+>
+  <section main class="details">
+    <div class="property">
+      <label>{{
+        'selfcare.billingAccounts.details.paymentPlan.details.paymentFrequency'
+          | cxTranslate
+      }}</label>
+      <span class="value"> {{ paymentDetails.paymentFrequency }} </span>
+    </div>
+
+    <div class="property">
+      <label>{{
+        'selfcare.billingAccounts.details.paymentPlan.details.noOfPayments'
+          | cxTranslate
+      }}</label>
+      <span class="value">
+        {{ paymentDetails.numberOfPayments }}
+      </span>
+    </div>
+
+    <div class="property full-width">
+      <label>{{
+        'selfcare.billingAccounts.details.paymentPlan.details.status'
+          | cxTranslate
+      }}</label>
+      <span class="value">
+        {{ paymentDetails.status | titlecase }}
+      </span>
+    </div>
+
+    <div class="property">
+      <label>{{
+        'selfcare.billingAccounts.details.paymentPlan.details.totalAmount'
+          | cxTranslate
+      }}</label>
+      <span class="value">
+        {{ paymentDetails.totalAmount.value }}
+        {{
+          'common.currencies.currency'
+            | cxTranslate: { context: paymentDetails.totalAmount.units }
+        }}
+      </span>
+    </div>
+  </section>
+</cx-selfcare-card>
+
+<ng-template #emptyList>
+  <p class="is-empty">
+    {{
+      'selfcare.billingAccounts.details.paymentPlan.details.emptyList'
+        | cxTranslate
+    }}
+  </p>
+</ng-template>

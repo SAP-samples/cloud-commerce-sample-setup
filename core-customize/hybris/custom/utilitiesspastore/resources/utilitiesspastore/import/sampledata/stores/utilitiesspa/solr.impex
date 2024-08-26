@@ -1,0 +1,113 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for SOLR Configuration
+
+# Macros / Replacement Parameter definitions
+$classficationCatalog = utilitiesSpaClassification
+
+$classSystemVersion = systemVersion(catalog(id[default = '$classficationCatalog']), version[default = '1.0'])
+$classCatalogVersion = catalogVersion(catalog(id[default = '$classficationCatalog']), version[default = '1.0'])
+$classAttribute = classificationAttribute(code, $classSystemVersion)
+$classClass = classificationClass(code, $classCatalogVersion)
+$classAttributeAssignment = classAttributeAssignment($classClass, $classAttribute, $classSystemVersion)
+$solrIndexedType = utilitiesspaPriceType
+
+$hProvider = fieldValueProvider
+$hProviderParam = valueProviderParameter
+
+$hIndexType = solrIndexedType(identifier)[unique = true, default = utilitiesspaPriceType]
+$hIndexTypes = solrIndexedTypes(identifier)
+$hId = identifier[unique = true]
+$hName = name[unique = true]
+$hCode = code[unique = true]
+$hType = type(code)
+$hJob = job(code)[forceWrite=true]
+$hSortable = sortableType(code)
+$hDefaultSortOrder = defaultSortOrder;
+$hMulti = multiValue[default = false]
+$hProvider = fieldValueProvider
+$hProviderParam = valueProviderParameter
+$hParams = solrIndexerQueryParameters(name)
+$hPage = pageSize[unique = true]
+$hDescription = description[unique = true]
+$hLangFallback = enabledLanguageFallbackMechanism
+$hCurrency = currency[default = false];
+$hLocalized = localized[default = false];
+$hSpellcheck = useForSpellchecking[default = false];
+$hAutoComplete = useForAutocomplete[default = false];
+
+$hSearchCfg = solrSearchConfig(description)
+$hServerCfg = solrServerConfig(name)
+$hIndexCfg = solrIndexConfig(name)
+
+INSERT_UPDATE SolrIndexedProperty; solrIndexedType(identifier)[unique = true, default = $solrIndexedType]; name[unique = true]; type(code); $hProvider; $hProviderParam; sortableType(code); currency[default = false]; localized[default = false]; multiValue[default = false]; facet[default = true]; facetType(code); facetSort(code)[default = Alpha]; priority[default = 1000]; $classAttributeAssignment; visible[default = true]
+; ; color    ; string ; sppClassificationProvider ; ; ; ;      ;      ; ; MultiSelectOr ; ; ; electricitydeviceclassification:::color::::
+; ; lifespan ; string ; sppClassificationProvider ; ; ; ; true ;      ; ; Refine        ; ; ; electricitydeviceclassification:::lifespan::::
+; ; material ; string ; sppClassificationProvider ; ; ; ; true ;      ; ; Refine        ; ; ; electricitydeviceclassification:::material::::
+; ; power    ; string ; sppClassificationProvider ; ; ; ; true ;      ; ; Refine        ; ; ; electricitydeviceclassification:::power::::
+; ; voltage  ; string ; sppClassificationProvider ; ; ; ; true ;      ; ; Refine        ; ; ; electricitydeviceclassification:::voltage::::
+; ; region   ; string ; priceRegionResolver       ; ; ; ;      ; true ; ; MultiSelectOr ; ; ; ; false ;
+
+# Show the classification features in the product lister
+INSERT_UPDATE ClassAttributeAssignment; $classClass[unique = true]; $classAttribute[unique = true]; $classSystemVersion[unique = true]; listable
+; electricitydeviceclassification ; color    ; ; false
+; electricitydeviceclassification ; lifespan ; ; true
+; electricitydeviceclassification ; material ; ; false
+; electricitydeviceclassification ; power    ; ; true
+; electricitydeviceclassification ; voltage  ; ; false
+
+INSERT_UPDATE SolrSearchQueryProperty; indexedProperty(name, solrIndexedType(identifier))[unique = true]; facet[default = true]; facetType(code); priority[default = 1000]; facetDisplayNameProvider; facetSortProvider; facetTopValuesProvider; includeInResponse[default = true]; searchQueryTemplate(name, indexedType(identifier))[unique = true][default = DEFAULT:$solrIndexedType]
+; color:$solrIndexedType    ; ; MultiSelectOr ; ; ; ; ; ;
+; lifespan:$solrIndexedType ; ; Refine        ; ; ; ; ; ;
+; material:$solrIndexedType ; ; Refine        ; ; ; ; ; ;
+; power:$solrIndexedType    ; ; Refine        ; ; ; ; ; ;
+; voltage:$solrIndexedType  ; ; Refine        ; ; ; ; ; ;
+; region:$solrIndexedType   ; ; MultiSelectOr ; ; ; ; ; ;
+
+
+################################################################################################################################
+#
+################################################################################################################################
+INSERT_UPDATE SolrSearchQueryProperty; indexedProperty(name, solrIndexedType(identifier))[unique = true]; searchQueryTemplate(name, indexedType(identifier))[unique = true][default = DEFAULT:$solrIndexedType]; facet; ftsPhraseQuery[default = false]; ftsPhraseQueryBoost; ftsQuery[default = false]; ftsQueryBoost; ftsFuzzyQuery[default = false]; ftsFuzzyQueryBoost; ftsWildcardQuery[default = false]; ftsWildcardQueryType(code)[default = POSTFIX]; ftsWildcardQueryBoost; ftsWildcardQueryMinTermLength; includeInResponse[default = true]
+; itemtype:$solrIndexedType         ; ; ;      ;     ;      ;    ;      ;    ; ;         ;    ;
+; code:$solrIndexedType             ; ; ; TRUE ; 90  ;      ;    ; TRUE ;    ; ; POSTFIX ; 45 ; 3 ;
+; name:$solrIndexedType             ; ; ; TRUE ; 100 ; TRUE ; 50 ; TRUE ; 25 ; ;         ;    ;
+; description:$solrIndexedType      ; ; ; TRUE ; 50  ; TRUE ; 25 ; TRUE ; 10 ; ;         ;    ;
+; summary:$solrIndexedType          ; ; ;      ;     ;      ;    ;      ;    ; ;         ;    ;
+; manufacturerName:$solrIndexedType ; ; ; TRUE ; 80  ; TRUE ; 40 ; TRUE ; 20 ; ;         ;    ;
+; manufacturerAID:$solrIndexedType  ; ; ;      ;     ;      ;    ;      ;    ; ;         ;    ;
+; ean:$solrIndexedType              ; ; ; TRUE ; 100 ;      ;    ; TRUE ;    ; ; POSTFIX ; 50 ; 3 ;
+; keywords:$solrIndexedType         ; ; ; TRUE ; 40  ; TRUE ; 20 ; TRUE ; 10 ; ;         ;    ;
+
+
+################################################################################################################################
+# facets used for devices
+################################################################################################################################
+INSERT_UPDATE SolrSearchQueryProperty; indexedProperty(name, solrIndexedType(identifier))[unique = true]; facet[default = true]; facetType(code); priority[default = 1000]; facetDisplayNameProvider; facetSortProvider; facetTopValuesProvider; includeInResponse[default = true]; searchQueryTemplate(name, indexedType(identifier))[unique = true][default = DEFAULT:$solrIndexedType]
+; availableInStores:$solrIndexedType ; ; MultiSelectOr ; 5000 ; ; ; ; ;
+
+INSERT_UPDATE SolrSearchQueryProperty; indexedProperty(name, solrIndexedType(identifier))[unique = true]; facet[default = true]; facetType(code); searchQueryTemplate(name, indexedType(identifier))[unique = true][default = DEFAULT:$solrIndexedType]; includeInResponse[default = true]; facetDisplayNameProvider; facetSortProvider; facetTopValuesProvider
+; category:$solrIndexedType ; ; Refine ; ; ; categoryFacetDisplayNameProvider ; ;
+
+
+INSERT_UPDATE SolrIndexedProperty; $hIndexType; $hName; $hType; $hProvider; $hProviderParam; $hSortable; $hCurrency; $hLocalized; $hMulti; facet[default = true]; facetType(code); facetSort(code)[default = Alpha]; priority[default = 1000];
+; ; electricitypower   ; string ; sppPscvResolver ; electricity_power    ; ; ; true ; true ; ; MultiSelectOr ; ; ; ; ;
+; ; gasvolume          ; string ; sppPscvResolver ; gas_volume           ; ; ; true ; true ; ; MultiSelectOr ; ; ; ; ;
+; ; homewarrantyperiod ; string ; sppPscvResolver ; home_warranty_period ; ; ; true ; true ; ; MultiSelectOr ; ; ; ; ;
+; ; homewarrantyamount ; string ; sppPscvResolver ; home_warranty_amount ; ; ; true ; true ; ; MultiSelectOr ; ; ; ; ;
+; ; energytype         ; string ; sppPscvResolver ; energy_type          ; ; ; true ; true ; ; MultiSelectOr ; ; ; ; ;
+; ; metertype          ; string ; sppPscvResolver ; meter_type           ; ; ; true ; true ; ; MultiSelectOr ; ; ; ; ;
+
+
+################################################################################################################################
+# facets used for plans
+################################################################################################################################
+INSERT_UPDATE SolrSearchQueryProperty; indexedProperty(name, solrIndexedType(identifier))[unique = true]; facet[default = true]; facetType(code); priority[default = 1000]; facetDisplayNameProvider; facetSortProvider; facetTopValuesProvider; includeInResponse[default = true]; searchQueryTemplate(name, indexedType(identifier))[unique = true][default = DEFAULT:$solrIndexedType]
+; electricitypower:$solrIndexedType   ; ; MultiSelectOr ; ; ; ; ; ;
+; gasvolume:$solrIndexedType          ; ; MultiSelectOr ; ; ; ; ; ;
+; homewarrantyperiod:$solrIndexedType ; ; MultiSelectOr ; ; ; ; ; ;
+; homewarrantyamount:$solrIndexedType ; ; MultiSelectOr ; ; ; ; ; ;
+; energytype:$solrIndexedType         ; ; MultiSelectOr ; ; ; ; ; ;
+; metertype:$solrIndexedType          ; ; MultiSelectOr ; ; ; ; ; ;

@@ -1,0 +1,29 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+$productCatalog = mediaspaProductCatalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+$lang = en
+
+##################################################
+# Policy1 (General cardinality rules):
+# A customer can select only one tv plan.
+#################################################
+INSERT_UPDATE TmaCompatibilityPolicy; code[unique = true] ; name[lang = $lang]                                  ; $catalogVersion; description[lang = $lang]
+                                    ; tv_show_plans       ; Pick exactly 1 TV Shows Plan                        ;                ; When customer will Pick exactly 1 TV Shows Plan then policy will compatible
+                                    ; tv_channel_plans    ; Pick exactly 1 TV Channels Plan                     ;                ; When customer will Pick exactly 1 TV Channels Plan then policy will compatible
+                                    ; allOnDemand_disable ; allOnDemand addon is not compatible with TV Premium ;                ; allOnDemand addon is not compatible with TV Premium
+
+########################################################################################################
+# Policy2 (Channel cardinality):
+# A customer is allowed to buy  max 4 YTV Channels                                                         #
+########################################################################################################
+INSERT_UPDATE TmaCompatibilityPolicy; code[unique = true]; name[lang = $lang]          ; $catalogVersion; description[lang = $lang];
+                                    ; YTV_cardinality    ; YTV cardinality restriction ;                ; A customer is allowed to buy  max 4 YTV Channels
+
+###################################################################################################
+# Eligibility Policy1 (general acquisition, device only and switch supplier policy):              #
+# A customer is eligible for ACQUISITION DEVICE_ONLY and SWITCH_SERVICE_PROVIDER flows in all conditions  #
+###################################################################################################
+INSERT_UPDATE TmaCompatibilityPolicy; code[unique = true]                                         ; name[lang = $lang]                                               ; $catalogVersion; description[lang = $lang]
+                                    ; acq_and_device_only_and_switch_service_provider_eligibility ; ACQ and DEVICE_ONLY and SWITCH_SERVICE_PROVIDER flow eligibility ;                ; A customer is eligible for ACQUISITION flow in all conditions

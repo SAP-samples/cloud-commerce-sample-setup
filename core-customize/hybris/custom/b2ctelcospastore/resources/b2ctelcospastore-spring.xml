@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<context:annotation-config />
+	<bean id="b2ctelcospaStoreSystemSetup"
+		class="de.hybris.platform.b2ctelcospastore.setup.B2ctelcospaStoreSystemSetup"
+		parent="abstractCoreSystemSetup">
+		<property name="coreDataImportService" ref="coreDataImportService" />
+		<property name="sampleDataImportService" ref="defaultB2ctelcospaSampleDataImportService" />
+	</bean>
+
+	<bean id="defaultB2ctelcospaSampleDataImportService"
+		class="de.hybris.platform.b2ctelcospastore.setup.B2ctelcospaSampleDataImportService"
+		parent="defaultSampleDataImportService">
+		<property name="typeService" ref="typeService" />
+		<property name="modelService" ref="modelService" />
+	</bean>
+	
+		<bean id="telcoOrderNotificationContext" class="de.hybris.platform.b2ctelcospastore.process.email.context.OrderNotificationEmailContext"
+		  parent="abstractEmailContext" scope="prototype" >
+		<property name="orderConverter" ref="orderConverter"/>
+	</bean>
+
+</beans>

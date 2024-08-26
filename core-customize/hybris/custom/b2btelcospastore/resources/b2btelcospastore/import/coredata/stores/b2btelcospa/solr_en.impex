@@ -1,0 +1,71 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+#
+# ENGLISH LOCALIZATION
+#
+
+$lang = en
+$facetSearchCfg = b2btelcospaIndex
+$solrIndexedType = b2btelcospaPriceType
+
+###################
+# used in headers #
+###################
+$hIndexType = solrIndexedType(identifier)[unique = true, default = b2btelcospaPriceType]
+$hName = name[unique = true]
+$hCode = code[unique = true]
+$hDisplayName = displayName[lang = en]
+$hLang = language(isocode)[unique = true, default = en]
+$hFacetSearchCfg = facetSearchConfig(name)[unique = true]
+UPDATE SolrIndexedProperty; $hIndexType; $hName               ; $hDisplayName
+#; ; allPromotions        ; "Promotion"
+                          ;            ; availableInStores    ; "Stores"
+                          ;            ; category             ; "Category"
+                          ;            ; code                 ; "Code"
+                          ;            ; description          ; "Description"
+                          ;            ; manufacturerName     ; "Manufacturer Name"
+                          ;            ; name                 ; "Name"
+                          ;            ; summary              ; "Summary"
+                          ;            ; reviewAvgRating      ; "Review Avg Rating"
+                          ;            ; numberOfReviews      ; "Reviews"
+                          ;            ; termLimits           ; "Term Limits"
+                          ;            ; pricePriority        ; "Price Priority"
+                          ;            ; productOfferingPrice ; "Product Offering Price"
+
+UPDATE SolrSort; indexedType(identifier)[unique = true]; code[unique = true]; name[lang = $lang]
+               ; $solrIndexedType                      ; name-asc           ; "Name (ascending)"
+               ; $solrIndexedType                      ; name-desc          ; "Name (descending)"
+               ; $solrIndexedType                      ; relevance          ; "Relevance"
+               ; $solrIndexedType                      ; topRated           ; "Top Rated"
+               ; $solrIndexedType                      ; pricePriority-desc ; "Price Priority (highest first)"
+
+#
+# Add additional sample solr index configuration
+#
+# Synonyms
+INSERT_UPDATE SolrSynonymConfig; $hFacetSearchCfg; $hLang; synonymFrom[unique = true]   ; synonymTo
+                               ; $facetSearchCfg ;       ; "Plan,Contract"              ;
+                               ; $facetSearchCfg ;       ; "Blutooth"                   ; "Bluetooth"
+                               ; $facetSearchCfg ;       ; "Screen,Display"             ;
+                               ; $facetSearchCfg ;       ; "Internet,Data,Surf,Surfing" ;
+                               ; $facetSearchCfg ;       ; "Abroad"                     ; "Roaming"
+
+# Keyword Redirects
+INSERT_UPDATE SolrFacetSearchKeywordRedirect; $hFacetSearchCfg; $hLang; keyword[unique = true]; matchType(code)[unique = true]; ignoreCase[default = true]; redirect(&redirectRefID)
+                                            ; $facetSearchCfg ;       ; "cart"                ; CONTAINS                      ;                           ; redirectRefID-cart
+                                            ; $facetSearchCfg ;       ; "basket"              ; CONTAINS                      ;                           ; redirectRefID-cart
+                                            ; $facetSearchCfg ;       ; "store"               ; EXACT                         ;                           ; redirectRefID-store
+                                            ; $facetSearchCfg ;       ; "hybris"              ; EXACT                         ;                           ; redirectRefID-hybris
+                                            ; $facetSearchCfg ;       ; "ipad"                ; CONTAINS                      ;                           ; redirectRefID-product-ipad
+                                            ; $facetSearchCfg ;       ; "kindle"              ; CONTAINS                      ;                           ; redirectRefID-product-kindle
+                                            ; $facetSearchCfg ;       ; "charger"             ; EXACT                         ;                           ; redirectRefID-category-charger
+
+INSERT_UPDATE SolrURIRedirect; url[unique = true]                                                             ; &redirectRefID
+                             ; "/cart"                                                                        ; redirectRefID-cart
+                             ; "/store"                                                                       ; redirectRefID-store
+                             ; "http://www.hybris.com"                                                        ; redirectRefID-hybris
+                             ; "/Open-Catalogue/Devices/Tablet/Apple-iPad-(64GB%2C-Wi-Fi%2C-White)/p/1976032" ; redirectRefID-product-ipad
+                             ; "/Open-Catalogue/Devices/Tablet/Kindle-Fire/p/1974125"                         ; redirectRefID-product-kindle
+                             ; "/Open-Catalogue/Accessories/Chargers-and-Docs/c/chargersanddocks"             ; redirectRefID-category-charger

@@ -1,0 +1,14 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+#
+# Import the CMS Site configuration for the B2btelco spa store
+#
+
+# Language
+$lang = en
+
+# Create CMS Site
+UPDATE CMSSite; uid[unique = true]; name[lang = $lang]   ; locale[lang = $lang]
+              ; b2btelcospa       ; "B2B Telco SPA Site" ; en_GB

@@ -1,0 +1,93 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Importing Categories into Telco Store
+
+# Macros / Replacement Parameter definitions
+$productCatalog = telcospaProductCatalog
+$productCatalogName = Telco SPA Product Catalog
+$catalogVersion = catalogversion(catalog(id[default=$productCatalog]), version[default='Staged'])[unique=true, default=$productCatalog:Staged]
+$supercategories = source(code, $catalogVersion)[unique=true]
+$categories = target(code, $catalogVersion)[unique=true]
+$allowedPrincipals = allowedPrincipals(uid)[default = 'customergroup']
+
+# Insert Categories
+INSERT_UPDATE Category; code[unique = true]; $allowedPrincipals; $catalogVersion
+                      ; 1
+
+# ImpEx for Importing Categories into Telco Store
+
+# Insert Categories
+INSERT_UPDATE Category; code[unique = true]; $allowedPrincipals; $catalogVersion
+                      ; devices
+                      ; smartphone
+                      ; accessories
+                      ; plans
+                      ; broadband
+                      ; gsmplans
+                      ; gsmaddons
+                      ; addons
+                      ; home_packages
+                      ; internet
+                      ; internetaddons
+                      ; tvplans
+                      ; tvaddons
+                      ; landline
+                      ; mediaboxes
+                      ; modems
+                      ; router
+
+# Insert Category Structure
+INSERT_UPDATE CategoryCategoryRelation; $categories    ; $supercategories
+                                      ; devices        ; 1
+                                      ; accessories    ; 1
+                                      ; plans          ; 1
+                                      ; broadband      ; 1
+                                      ; gsmplans       ; plans
+                                      ; addons         ; 1
+                                      ; smartphone     ; devices
+                                      ; gsmaddons      ; addons
+                                      ; internet       ; 1
+                                      ; internetaddons ; addons
+                                      ; tvplans        ; plans
+                                      ; tvaddons       ; addons
+                                      ; landline       ; plans
+                                      ; mediaboxes     ; devices
+                                      ; modems         ; devices
+                                      ; router         ; devices
+
+#Insert Variant Categories
+INSERT_UPDATE VariantCategory; code[unique = true]; supercategories(code, $catalogVersion); hasImage; $allowedPrincipals; $catalogVersion
+                             ; color              ;                                       ; true    ;
+                             ; storage_size       ; color                                 ; false   ;
+
+#Insert Variant Value Categories
+INSERT_UPDATE VariantValueCategory; code[unique = true]; supercategories(code, $catalogVersion); sequence; colorCode; $allowedPrincipals; $catalogVersion
+                                  ; space_gray         ; color                                 ; 1       ; #5f5f62
+                                  ; silver             ; color                                 ; 2       ; #e0e2e3
+                                  ; gold               ; color                                 ; 3       ; #f5e5da
+                                  ; red                ; color                                 ; 4       ; #c82636
+
+                                  ; green              ; color                                 ; 5       ; #008000
+                                  ; midnight           ; color                                 ; 6       ; #191970
+                                  ; white              ; color                                 ; 7       ; #FFFFFF
+                                  ; blue               ; color                                 ; 8       ; #0000FF
+                                  ; pink               ; color                                 ; 9       ; #FFC0CB
+                                  ; graphite           ; color                                 ; 10      ; #251607
+                                  ; alpinegreen        ; color                                 ; 11      ; #496a4d
+                                  ; sierrablue         ; color                                 ; 12      ; #69abce
+                                  ; phantomgray        ; color                                 ; 13      ; #6a6a64
+                                  ; phantomviolet      ; color                                 ; 14      ; #5d3847
+                                  ; phantompink        ; color                                 ; 15      ; #8b5158
+                                  ; phantomwhite       ; color                                 ; 16      ; #f8f8ff
+                                  ; phantomblack       ; color                                 ; 17      ; #2d3134
+                                  ; pinkgold           ; color                                 ; 18      ; #B76E79
+
+                                  ; 16G                ; storage_size                          ; 1       ;
+                                  ; 32G                ; storage_size                          ; 2       ;
+                                  ; 64G                ; storage_size                          ; 3       ;
+                                  ; 128G               ; storage_size                          ; 4       ;
+                                  ; 256G               ; storage_size                          ; 5       ;
+                                  ; 512G               ; storage_size                          ; 6       ;
+                                  ; 1024G              ; storage_size                          ; 7       ;

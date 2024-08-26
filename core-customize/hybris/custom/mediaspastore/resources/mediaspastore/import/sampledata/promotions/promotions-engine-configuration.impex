@@ -1,0 +1,32 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+$productCatalog=mediaspaProductCatalog
+
+INSERT_UPDATE DroolsKIEModule;name[unique=true];mvnGroupId;mvnArtifactId;mvnVersion;ruleType(code);active;version;
+;promotions-preview-module;hybris-rules;promotions-preview;1.0.0;PROMOTION;true;-1;
+
+#Create KIE Base associated with newly created KIE Module
+INSERT_UPDATE DroolsKIEBase;name[unique=true];kieModule(name)[unique=true];equalityBehavior(code);eventProcessingMode(code)
+;promotions-preview-base;promotions-preview-module;EQUALITY;STREAM
+
+#Create KIE Session and associated with newly created KIE Base
+INSERT_UPDATE DroolsKIESession;name[unique=true];kieBase(name)[unique=true];sessionType(code)
+;promotions-preview-session;promotions-preview-base;STATELESS
+
+#Combine KIE Module with Default KIE Base
+UPDATE DroolsKIEModule;name[unique=true];defaultKIEBase(name)
+;promotions-preview-module;promotions-preview-base
+
+#Combine KIE Base with Default KIE Session
+UPDATE DroolsKIEBase;name[unique=true];defaultKIESession(name)
+;promotions-preview-base;promotions-preview-session
+
+#Associate KIE Session With Rule Engine Context
+INSERT_UPDATE DroolsRuleEngineContext;name[unique=true];kieSession(name);ruleFiringLimit
+;promotions-preview-context;promotions-preview-session;200;
+
+INSERT_UPDATE CatalogVersionToRuleEngineContextMapping;context(name)[unique=true];catalogVersion(catalog(id),version)[unique=true]
+;promotions-context;$productCatalog:Online
+;promotions-preview-context;$productCatalog:Staged

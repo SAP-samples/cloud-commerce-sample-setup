@@ -1,0 +1,89 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# Macros / Replacement Parameter definitions
+$productCatalog = utilitiesSpaProductCatalog
+$productCatalogName = Utilities Spa Product Catalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+$vendor = utilitiesspa
+
+
+# Create some Warehouses for the Vendor
+INSERT_UPDATE Warehouse; code[unique = true]; vendor(code)[default = $vendor]; default[default = 'false']
+                       ; Hybris Utilities Spa - Chicago Premium Outlets
+                       ; Hybris Utilities Spa - Chrysler Building
+                       ; Hybris Utilities Spa - San Francisco Center
+                       ; Hybris Utilities Spa - Seattle Premium Outlets
+                       ; Hybris Utilities Spa - Riverwalk Marketplace
+
+INSERT_UPDATE StockLevel; available; warehouse(code)[default = 'Hybris Utilities Spa - Chicago Premium Outlets', unique = true]; inStockStatus(code)[default = 'notSpecified']; overSelling; preOrder; productCode[unique = true]             ; reserved
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; lightbulb_energy_efficient             ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; lightbulb_led                          ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; lightbulb_led_multipack                ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; electrical_cord_general                ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; electrical_cord_double_ended_extension ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; electrical_cord_slim                   ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; solar_panel                            ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; solar_panel_plus                       ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; solar_panel_premium                    ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; thermostat_basic                       ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; thermostat_plus                        ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; thermostat_premium                     ; 0
+
+INSERT_UPDATE StockLevel; available; warehouse(code)[default = 'Hybris Utilities Spa - Chrysler Building', unique = true]; inStockStatus(code)[default = 'notSpecified']; overSelling; preOrder; productCode[unique = true]             ; reserved
+                        ; 10       ;                                                                                 ;                                              ; 0          ; 0       ; lightbulb_energy_efficient             ; 0
+                        ; 10       ;                                                                                 ;                                              ; 0          ; 0       ; lightbulb_led                          ; 0
+                        ; 10       ;                                                                                 ;                                              ; 0          ; 0       ; lightbulb_led_multipack                ; 0
+                        ; 10       ;                                                                                 ;                                              ; 0          ; 0       ; electrical_cord_general                ; 0
+                        ; 10       ;                                                                                 ;                                              ; 0          ; 0       ; electrical_cord_double_ended_extension ; 0
+                        ; 10       ;                                                                                 ;                                              ; 0          ; 0       ; electrical_cord_slim                   ; 0
+                        ; 10       ;                                                                                 ;                                              ; 0          ; 0       ; solar_panel                            ; 0
+                        ; 10       ;                                                                                 ;                                              ; 0          ; 0       ; solar_panel_plus                       ; 0
+                        ; 10       ;                                                                                 ;                                              ; 0          ; 0       ; solar_panel_premium                    ; 0
+                        ; 10       ;                                                                                 ;                                              ; 0          ; 0       ; thermostat_basic                       ; 0
+                        ; 10       ;                                                                                 ;                                              ; 0          ; 0       ; thermostat_plus                        ; 0
+                        ; 10       ;                                                                                 ;                                              ; 0          ; 0       ; thermostat_premium                     ; 0
+
+
+INSERT_UPDATE StockLevel; available; warehouse(code)[default = 'Hybris Utilities Spa - San Francisco Center', unique = true]; inStockStatus(code)[default = 'notSpecified']; overSelling; preOrder; productCode[unique = true]             ; reserved
+                        ; 10       ;                                                                                    ;                                              ; 0          ; 0       ; lightbulb_energy_efficient             ; 0
+                        ; 10       ;                                                                                    ;                                              ; 0          ; 0       ; lightbulb_led                          ; 0
+                        ; 10       ;                                                                                    ;                                              ; 0          ; 0       ; lightbulb_led_multipack                ; 0
+                        ; 10       ;                                                                                    ;                                              ; 0          ; 0       ; electrical_cord_general                ; 0
+                        ; 10       ;                                                                                    ;                                              ; 0          ; 0       ; electrical_cord_double_ended_extension ; 0
+                        ; 10       ;                                                                                    ;                                              ; 0          ; 0       ; electrical_cord_slim                   ; 0
+                        ; 10       ;                                                                                    ;                                              ; 0          ; 0       ; solar_panel                            ; 0
+                        ; 10       ;                                                                                    ;                                              ; 0          ; 0       ; solar_panel_plus                       ; 0
+                        ; 10       ;                                                                                    ;                                              ; 0          ; 0       ; solar_panel_premium                    ; 0
+                        ; 10       ;                                                                                    ;                                              ; 0          ; 0       ; thermostat_basic                       ; 0
+                        ; 10       ;                                                                                    ;                                              ; 0          ; 0       ; thermostat_plus                        ; 0
+                        ; 10       ;                                                                                    ;                                              ; 0          ; 0       ; thermostat_premium                     ; 0
+
+INSERT_UPDATE StockLevel; available; warehouse(code)[default = 'Hybris Utilities Spa - Seattle Premium Outlets', unique = true]; inStockStatus(code)[default = 'notSpecified']; overSelling; preOrder; productCode[unique = true]             ; reserved
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; lightbulb_energy_efficient             ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; lightbulb_led                          ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; lightbulb_led_multipack                ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; electrical_cord_general                ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; electrical_cord_double_ended_extension ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; electrical_cord_slim                   ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; solar_panel                            ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; solar_panel_plus                       ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; solar_panel_premium                    ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; thermostat_basic                       ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; thermostat_plus                        ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; thermostat_premium                     ; 0
+
+INSERT_UPDATE StockLevel; available; warehouse(code)[default = 'Hybris Utilities Spa - Riverwalk Marketplace', unique = true]; inStockStatus(code)[default = 'notSpecified']; overSelling; preOrder; productCode[unique = true]             ; reserved
+                        ; 10       ;                                                                                     ;                                              ; 0          ; 0       ; lightbulb_energy_efficient             ; 0
+                        ; 10       ;                                                                                     ;                                              ; 0          ; 0       ; lightbulb_led                          ; 0
+                        ; 10       ;                                                                                     ;                                              ; 0          ; 0       ; lightbulb_led_multipack                ; 0
+                        ; 10       ;                                                                                     ;                                              ; 0          ; 0       ; electrical_cord_general                ; 0
+                        ; 10       ;                                                                                     ;                                              ; 0          ; 0       ; electrical_cord_double_ended_extension ; 0
+                        ; 10       ;                                                                                     ;                                              ; 0          ; 0       ; electrical_cord_slim                   ; 0
+                        ; 10       ;                                                                                     ;                                              ; 0          ; 0       ; solar_panel                            ; 0
+                        ; 10       ;                                                                                     ;                                              ; 0          ; 0       ; solar_panel_plus                       ; 0
+                        ; 10       ;                                                                                     ;                                              ; 0          ; 0       ; solar_panel_premium                    ; 0
+                        ; 10       ;                                                                                     ;                                              ; 0          ; 0       ; thermostat_basic                       ; 0
+                        ; 10       ;                                                                                     ;                                              ; 0          ; 0       ; thermostat_plus                        ; 0
+                        ; 10       ;                                                                                     ;                                              ; 0          ; 0       ; thermostat_premium                     ; 0

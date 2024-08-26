@@ -1,0 +1,30 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Importing Product Reviews
+
+$catalog-Staged = Staged
+$productCatalog = mediaspaProductCatalog
+$approved = approvalstatus(code)[default='approved']
+$lang = language(isocode)[default='en'];
+# Marking the default catalog version as online, as CustomerReview is not catalog aware
+$catalogVersion = catalogversion(catalog(id[default=$productCatalog]), version[default=Online])[unique=true, default=$productCatalog:Online]
+
+INSERT_UPDATE CustomerReview; product(code, $catalogVersion)[unique = true]; rating; user(uid)[unique = true]; alias          ; headline                                    ; comment; $approved; $lang
+                            ; venom                                        ; 5     ; etta.berg@hybris.com    ; Etta Berg      ; Best TV Ever!                               ; Not only acting, story line, pictures, writing, dialogue, Directing. The suspicious, the actors, I mean its all great.<br/>I really do recommend to watch this spectacular show!
+                            ; underworld                                   ; 4     ; ronnie.ray@hybris.com   ; Ronald Ray     ;                                             ; Excellent.....simply excellent.<br/>I was hooked from the first episode. Finally someone is portraying the ad industry correctly.<br/>That is how all drama should be on TV.<br/>The scripts are sharp, intelligent and the characters interesting.<br/>More importantly the show is very faithful to the period in every detail. Even the color has the quality of a Douglas Sirk movie.<br/>The direction it takes,however after Season 1 is another matter. This could be a two season show at the most, unless the quality is maintained. Certainly the main subject matter "advertising in its heyday" is rich in stories, from takeovers to breakaways let alone the weird and wonderful personalities that created the industry.
+                            ; underworld                                   ; 2     ; etta.berg@hybris.com    ; Etta Berg      ;                                             ; For me boring story, but for genre fans it could be interesting.
+                            ; underworld                                   ; 5     ; tim.james@hybris.com    ; Tim James      ; Great show!                                 ; I really enjoyed time when watching underworld.
+                            ; underworld                                   ; 3     ; reggy.ray@hybris.com    ; Regginald Kray ;                                             ; Good series!
+                            ; t-shirt_bp                                   ; 3     ; reggy.ray@hybris.com    ; Regginald Kray ;                                             ; Good series!
+                            ; t-shirt_bp                                   ; 4     ; etta.berg@hybris.com    ; Etta Berg      ;                                             ; Good series!
+                            ; t-shirt_bp                                   ; 5     ; tim.james@hybris.com    ; Tim James      ;                                             ; Good series!
+                            ; t-shirt_bp_black_S                           ; 2     ; reggy.ray@hybris.com    ; Regginald Kray ;                                             ; Good series!
+                            ; t-shirt_bp_black_S                           ; 1     ; etta.berg@hybris.com    ; Etta Berg      ;                                             ; Good series!
+                            ; underworld_movie                             ; 5     ; etta.berg@hybris.com    ; Etta Berg      ; Perfect composition of adventure and nature ; For sure I will return to cinema for the movie to enjoy this incradible trip again. I recommend it!!
+                            ; underworld_movie                             ; 5     ; tim.james@hybris.com    ; Tim James      ; Best adventure movie for all family         ; We go to cinema with all the family, and we surprised that all of us, 3 generations, was amazed by storyline and nature
+                            ; the-last-journey                             ; 5     ; etta.berg@hybris.com    ; Etta Berg      ; Amazing movie!                              ; I really enjoyed time when watching The Last Journey.
+                            ; the-last-journey                             ; 5     ; tim.james@hybris.com    ; Tim James      ; Best  movie for all                         ; The Last Journey is one of the best adventure movie in years
+                            ; the-last-journey                             ; 2     ; ronnie.ray@hybris.com   ; Ronald Ray     ; Waste of time                               ; This movie isn`t for everybody
+                            ; the-last-journey                             ; 3     ; reggy.ray@hybris.com    ; Regginald Kray ; Medium                                      ; It`s nothing special

@@ -1,0 +1,43 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for importing the orders.
+
+$catalog-id = utilitiesSpaProductCatalog
+$catalog-version = Online
+$catalogVersion = catalogversion(catalog(id[default = $catalog-id]), version[default = $catalog-version])[unique = true, default = $catalog-id:$catalog-version]
+$storeUid = utilitiesspa
+$siteUid = utilitiesspa
+$currency = currency(isocode)[default = USD]
+
+#sample data of orders
+INSERT_UPDATE TmaCartSubscriptionInfo ; id[unique = true] ; subscriptionTerm(id)
+                                      ; ST124MON          ; monthly_12
+                                      ; ST125MON          ; monthly_12
+                                      ; ST126MON          ; monthly_12
+
+
+INSERT_UPDATE Order ; code[unique = true] ; user(uid)                  ; date[dateformat = dd.MM.yyyy HH:mm] ; currency(isocode) ; net   ; deliveryMode(code) ; Discounts(code) ; calculated ; store(uid) ; site(uid) ; status(code)
+                    ; 90000200            ; rachel.green@hybris.com    ; 31.03.2020 04:58                          ; USD               ; false ;                    ;                 ; false      ; $storeUid  ; $siteUid  ; COMPLETED
+                    ; 90000201            ; monica.geller@hybris.com   ; 31.03.2020 04:58                          ; USD               ; false ;                    ;                 ; false      ; $storeUid  ; $siteUid  ; COMPLETED
+                    ; 90000202            ; rachel.green@hybris.com    ; 31.03.2020 04:58                          ; USD               ; false ;                    ;                 ; false      ; $storeUid  ; $siteUid  ; COMPLETED
+
+INSERT_UPDATE OrderEntry ; order(code)[unique = true] ; product(code, catalogVersion(catalog(id), version))[unique = true] ; quantity ; calculated ; unit(code) ; entryNumber ; subscriptionInfo(id) ; price(id)        ; processType(code); bpo(code, $catalogVersion) ; masterEntry(order(code), entryNumber);
+                         ; 90000200                   ; electric_plan_best :$catalog-id:$catalog-version                       ; 1        ; false      ; pieces     ; 0           ; ST124MON             ; 99FIB016         ; ACQUISITION      ;                            ; 
+                         ; 90000201                   ; electric_plan_best :$catalog-id:$catalog-version                       ; 1        ; false      ; pieces     ; 0           ; ST125MON             ; 99FIB017         ; ACQUISITION      ;                            ; 
+                         ; 90000202                   ; electric_plan_best :$catalog-id:$catalog-version                       ; 1        ; false      ; pieces     ; 0           ; ST126MON             ; 99FIB018         ; ACQUISITION      ;                            ; 
+
+
+#ORDER PRICES
+INSERT_UPDATE TmaAbstractOrderCompositePrice ; id[unique = true] ; childPrices(id)
+                                             ; 99FIB016          ; 990FIIN1
+                                             ; 99FIB017          ; 990FIIN2
+                                             ; 99FIB018          ; 990FIIN3
+
+
+INSERT_UPDATE TmaAbstractOrderRecurringChargePrice ; id[unique = true] ; taxIncludedAmount ; dutyFreeAmount ; priceType(code) ; billingTime(code) ; currency(isocode) ; taxRate ; cycleStart ; cycleEnd
+
+                                                   ; 990FIIN1          ; 40.0              ; 36.36          ; PRODUCT_PRICE   ; monthly           ; USD               ; 3.64    ; 1          ;
+                                                   ; 990FIIN2          ; 40.0              ; 36.36          ; PRODUCT_PRICE   ; monthly           ; USD               ; 3.64    ; 1          ;
+                                                   ; 990FIIN3          ; 40.0              ; 36.36          ; PRODUCT_PRICE   ; monthly           ; USD               ; 3.64    ; 1          ;

@@ -1,0 +1,181 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Product Specifications
+
+$productCatalog = telcospaProductCatalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+$lang = en
+
+############################
+# Customer Facing Services #
+############################
+INSERT_UPDATE TmaCustomerFacingServiceSpec; id[unique = true]   ; name[lang = $lang]           ; description[lang = $lang]; $catalogVersion
+                                          ; data_svc            ; Data Service                 ; Data Service Specification
+                                          ; voice_svc           ; Voice Service                ; Voice Service Specification
+                                          ; copper_internet_svc ; Copper Internet              ; Copper Internet Service Specification
+                                          ; fiber_internet_svc  ; Fiber Internet               ; Fiber Internet Service Specification
+                                          ; 5g_internet_svc     ; 5g Internet                  ; 5g Internet Service Specification
+                                          ; tv_svc              ; Cable Tv, Ip Tv,Satellite Tv ; Cable Tv Service Specification
+
+INSERT_UPDATE TmaServiceSpecCharacteristic; id[unique = true]; name[lang = $lang]; description[lang = $lang]; $catalogVersion
+                                          ; data_volume      ; Data Volume       ; Available amount of Data
+                                          ; data_speed       ; Data Speed        ; Speed of Data
+                                          ; minutes          ; Minutes           ; Available Minutes
+                                          ; sms              ; SMS               ; Available SMSs
+                                          ; minutes/sms      ; Minutes/SMS       ; Available Minutes and SMSs
+                                          ; upload_speed     ; Upload Speed      ; Upload Speed of the Internet
+                                          ; download_speed   ; Download Speed    ; Download Speed Of Internet
+
+################################
+# Product Spec Characteristics #
+################################
+UPDATE TmaProductSpecCharacteristic; id[unique = true]     ; $catalogVersion; name[lang = $lang]    ; description[lang = $lang]
+                                   ; sms                   ;                ; SMS                   ; Included sms
+                                   ; voice                 ;                ; Phone Minutes         ; Included national minutes
+                                   ; data_volume           ;                ; Data                  ; Included Data
+                                   ; data_speed            ;                ; Data Speed            ; Included Upload/Download speeds
+                                   ; sd_channels           ;                ; SD Channels           ; Included SD Channels
+                                   ; hd_channels           ;                ; HD Channels           ; Included HD Channels
+
+                                   ; channel               ;                ; Channels              ; Included Channels
+                                   ; title_on_demand       ;                ; Title on Demand       ; Included Titles
+                                   ; warrantyservice       ;                ; Phone Warranty        ; Phone Warranty
+                                   ; msisdn                ;                ; MSISDN                ; MSISDN is a number uniquely identifying a subscription
+                                   ; upload_speed          ;                ; Upload Speed          ; Upload Speed
+                                   ; download_speed        ;                ; Download Speed        ; Download Speeed
+                                   ; call_type             ;                ; Call Type             ; Call Type
+                                   ; network               ;                ; Network               ; Network
+                                   ; coverage              ;                ; Coverage              ; Coverage
+
+                                   ; national_minutes      ;                ; National Minutes      ; National Minutes
+                                   ; international_minutes ;                ; International Minutes ; International Minutes
+
+INSERT_UPDATE TmaProductSpecCharacteristicValue; id[unique = true]                      ; $catalogVersion; description[lang = $lang]
+# GSM PSCVs
+                                               ; 100_min                                ;                ; Includes 100 national minutes
+                                               ; 200_min                                ;                ; Includes 200 national minutes
+                                               ; 300_min                                ;                ; Includes 300 national minutes
+                                               ; 600_min                                ;                ; Includes 600 national minutes
+                                               ; 900_min                                ;                ; Includes 900 national minutes
+                                               ; 1200_min                               ;                ; Includes 1200 national minutes
+                                               ; unlimited_min                          ;                ; Includes unlimited national minutes
+
+                                               ; 100_sms                                ;                ; Includes 100 national sms
+                                               ; 300_sms                                ;                ; Includes 300 national sms
+                                               ; 500_sms                                ;                ; Includes 500 national sms
+                                               ; 600_sms                                ;                ; Includes 600 national sms
+                                               ; 900_sms                                ;                ; Includes 900 national sms
+                                               ; 1200_sms                               ;                ; Includes 1200 national sms
+                                               ; unlimited_sms                          ;                ; Includes unlimited national sms
+
+                                               ; 100_mb                                 ;                ; Includes 100 mb data
+                                               ; 600_mb                                 ;                ; Includes 600 mb data
+                                               ; 1000_mb                                ;                ; Includes 1000 mb data
+                                               ; 2000_mb                                ;                ; Includes 2gb data
+                                               ; 9000_mb                                ;                ; Includes 9gb data
+                                               ; 12_gb                                  ;                ; Includes 12gb data
+                                               ; 14_gb                                  ;                ; Includes 14gb data
+                                               ; 26_gb                                  ;                ; Includes 26gb data
+                                               ; unlimited_mb                           ;                ; Includes unlimited data
+                                               ; data_5g                                ;                ; Includes unlimited data (5g)
+
+
+                                               ; 50_10_data_speed                       ;                ; Download @50mbps Upload @10mbps
+                                               ; 20_10_data_speed                       ;                ; Download @20mbps Upload @10mbps
+
+                                               ; up_20                                  ;                ; Upload 20 mbps
+                                               ; up_30                                  ;                ; Upload 30 mbps
+                                               ; down_40                                ;                ; Download 40 mbps
+                                               ; down_50                                ;                ; Download 50 mbps
+
+                                               ; domestic_calls                         ;                ; Domestic calls
+                                               ; international_calls                    ;                ; International calls
+
+                                               ; 5g_network                             ;                ; 5G Network
+
+# TV PSCVs
+                                               ; 40_sd_channels                         ;                ; Includes 40 SD channels
+                                               ; 300_sd_channels                        ;                ; Includes 300 SD channels
+                                               ; 400_sd_channels                        ;                ; Includes 400 SD channels
+                                               ; 160_channels                           ;                ; Includes 160 channels
+                                               ; cnn                                    ;                ; Includes CNN channel
+                                               ; tnt                                    ;                ; Includes TNT channel
+                                               ; 185_channels                           ;                ; Includes 185 channels
+                                               ; espn                                   ;                ; Includes ESPN channel
+                                               ; espn2                                  ;                ; Includes ESPN2 channel
+                                               ; cbs                                    ;                ; Includes CBS Sports channel
+                                               ; 330_channels                           ;                ; Includes 330 channels
+                                               ; hbo                                    ;                ; Includes HBO Max channel
+                                               ; cinemax                                ;                ; Includes Cinemax channel
+                                               ; showtime                               ;                ; Includes Showtime channel
+                                               ; starz                                  ;                ; Includes Starz channel
+
+                                               ; 4_hd_channels                          ;                ; Includes 4 HD channels
+                                               ; 30_hd_channels                         ;                ; Includes 30 HD channels
+                                               ; 40_hd_channels                         ;                ; Includes 40 HD channels
+                                               ; 60_hd_channels                         ;                ; Includes 60 HD channels
+                                               ; 45000_title_on_demand                  ;                ; Access to over 45000 titles on demand
+                                               ; 85_hd_channels                         ;                ; Includes 85 HD channels
+                                               ; 50000_title_on_demand                  ;                ; Access to over 50000 titles on demand
+                                               ; 185_hd_channels                        ;                ; Includes 185 HD channels
+                                               ; 70000_title_on_demand                  ;                ; Access to over 70000 titles on demand
+
+                                               ; lost_phone                             ;                ; Lost Phone Feature
+                                               ; screen_crack                           ;                ; Screen Crack Feature
+
+                                               ; 1_session                              ;                ; Watch it on your device
+                                               ; 2_sessions                             ;                ; Watch in parallel on up to 2 devices
+                                               ; 4_sessions                             ;                ; Watch in parallel on up to 4 devices
+
+# internet PSCVs
+                                               ; 100_100_data_speed                     ;                ; Download/Upload @100mbps
+                                               ; 500_500_data_speed                     ;                ; Download/Upload @500mbps
+                                               ; 1000_1000_data_speed                   ;                ; Download/Upload @1gbps
+
+#basic tv
+                                               ; local_and_us_radio_stations_BASIC_TV_1 ;                ; Access to 120 local TV channels with 30 in HD
+                                               ; local_and_us_radio_stations_BASIC_TV_2 ;                ; Access to 90 local radio Stations
+                                               ; digital_hd_receiver_BASIC_TV           ;                ; Free Digital HD-Receiver for BASIC TV
+
+#big tv
+                                               ; local_and_us_radio_stations_BIG_TV     ;                ; Local and US radio stations Up to 240 TV channels with 70 in HD
+                                               ; theme_packages_BIG_TV                  ;                ; Additional 6 theme packages
+                                               ; digital_hd_receiver_BIG_TV             ;                ; Free Digital HD-Receiver for BIG_TV
+                                               ; spotify_premium_account_BIG_TV         ;                ; Free Spotify Premium Account
+
+#PREMIUM TV
+                                               ; local_and_us_radio_stations_PREMIUM_TV ;                ; Local and US radio stations Up to 280 TV channels with 90 in HD
+                                               ; theme_packages_PREMIUM_TV              ;                ; Additional 9 theme packages
+                                               ; digital_hd_recorder_PREMIUM_TV         ;                ; Free Digital HD-Receiver for PREMIUM_TV
+                                               ; spotify_premium_account_PREMIUM_TV     ;                ; Free Spotify Premium Account
+                                               ; video_on_demand_PREMIUM_TV             ;                ; Access to video on demand
+
+
+#DELUXE TV
+                                               ; local_and_us_radio_stations_DELUXE_TV  ;                ; Local and US radio stations Up to 300 TV channels with 100 in HD
+                                               ; theme_packages_DELUXE_TV               ;                ; Additional 12 theme packages
+                                               ; digital_hd_recorder_DELUXE_TV          ;                ; Free Digital HD-Receiver for DELUXE_TV
+                                               ; spotify_premium_account_DELUXE_TV      ;                ; Free Spotify Premium Account
+                                               ; video_on_demand_DELUXE_TV              ;                ; Access to video on demand
+                                               ; documentary_on_demand_DELUXE_TV        ;                ; Access to documentaries on demand
+
+                                               ; msisdn                                 ;                ; MSISDN
+
+
+# Product Specification
+INSERT_UPDATE TmaAtomicProductSpecification; id[unique = true]; name[lang = $lang]; description[lang = $lang]; $catalogVersion
+                                           ; tv               ; TV Spec           ; TV
+                                           ; internet         ; Internet          ; Internet
+                                           ; landline_voip    ; Landline          ; Landline
+                                           ; landline_pots    ; Landline          ; Landline
+                                           ; data_add_ons     ; Data Addons       ; Data Addons
+                                           ; fiber_internet   ; Fiber Internet    ; Fiber Internet
+                                           ; 5g_internet      ; 5g Internet       ; 5g Internet
+                                           ; copper_internet  ; Copper Internet   ; Copper Internet
+                                           ; gsm              ; GSM               ; GSM
+                                           ; warranty         ; Warranty          ; Smartphone Warranty
+
+
+

@@ -1,0 +1,43 @@
+<ng-container *ngIf="cart$ | async as cart">
+  <ng-container *ngIf="entries$ | async as entries">
+    {{ resetChecklist() }}
+    <ng-container *ngIf="tmfCartService.getGroupedItems(entries) as groupedItems">
+      <ng-container *ngFor="let group of groupedItems | keyvalue">
+        <ng-container *ngIf="group.key && group.value">
+          <ng-container *ngFor="let item of group.value">
+            <ng-container *ngIf="hasChecklistFulfilled">
+              <ng-container
+                *ngIf="
+                  checklistActionService.getChecklistActionForProductCode(
+                    baseSiteId,
+                    item.product.code,
+                    item.processType.id
+                  ) | async as checklistActions
+                "
+              >
+                {{ enableCheckout(checklistActions, item) }}
+              </ng-container>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+
+    <cx-order-summary [cart]="cart"></cx-order-summary>
+    <button
+      [routerLink]="{ cxRoute: 'checkout' } | cxUrl"
+      *ngIf="entries.length"
+      class="btn btn-primary btn-block"
+      type="button"
+      [disabled]="
+        hasCompatibilityErrors(cart) ||
+        !hasChecklistFulfilled ||
+        (hasCancelledReservations$ | async) ||
+        (hasAppointmentError$ | async) ||
+        (hasCancelledAppointment$ | async)
+      "
+    >
+      {{ 'cartDetails.proceedToCheckout' | cxTranslate }}
+    </button>
+  </ng-container>
+</ng-container>

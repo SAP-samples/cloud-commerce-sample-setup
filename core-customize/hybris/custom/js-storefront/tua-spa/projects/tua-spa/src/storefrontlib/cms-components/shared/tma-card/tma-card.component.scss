@@ -1,0 +1,27 @@
+.card .header {
+  display: flex;
+  justify-content: space-between;
+  background-color: var(--cx-color-inverse);
+  border-bottom: 1px solid var(--cx-color-light);
+  padding: 40px 30px 20px;
+  height: 130px;
+  align-items: center;
+}
+
+.title-bar {
+  display: flex;
+  align-items: center;
+  flex: 100%;
+  justify-content: space-between;
+}
+
+h3 {
+  margin: 0 0 5px;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+h4 {
+  font-size: 15px;
+  color: gray;
+}

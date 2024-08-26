@@ -1,0 +1,11 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+#
+# Import the Media SPA Content Catalog
+#
+$lang = en
+
+INSERT_UPDATE ContentCatalog; id[unique = true]      ; name[lang = $lang]
+                            ; mediaspaContentCatalog ; "Media SPA Content Catalog"

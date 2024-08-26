@@ -1,0 +1,72 @@
+<cx-selfcare-card
+  *ngIf="model$ | async as model"
+  i18nRoot="{{ domainType }}"
+  [showHint]="true"
+>
+  <section main class="details">
+    <div class="property">
+      <label>{{
+        'selfcare.billingAccounts.details.billStructure.details.name'
+          | cxTranslate
+      }}</label>
+      <span class="value">
+        {{ model.billStructure.cycleSpecification.name }}
+      </span>
+    </div>
+
+    <div class="property">
+      <label>{{
+        'selfcare.billingAccounts.details.billStructure.details.id'
+          | cxTranslate
+      }}</label>
+      <span class="value">
+        {{ model.billStructure.cycleSpecification.id }}
+      </span>
+    </div>
+
+    <div class="property full-width">
+      <label>{{
+        'selfcare.billingAccounts.details.billStructure.details.validPeriod'
+          | cxTranslate
+      }}</label>
+      <span class="value">
+        {{
+          'selfcare.billingAccounts.details.billStructure.details.startDate'
+            | cxTranslate
+        }}:
+        {{
+          model.billStructure.cycleSpecification.validFor.startDateTime | cxDate
+        }}
+      </span>
+    </div>
+
+    <div class="property">
+      <label>{{
+        'selfcare.billingAccounts.details.billStructure.details.billingFrequency'
+          | cxTranslate
+      }}</label>
+      <span class="value">
+        {{ model.billStructure.cycleSpecification.frequency }}
+      </span>
+    </div>
+
+    <div class="property">
+      <label>{{
+        'selfcare.billingAccounts.details.billStructure.details.billFormat'
+          | cxTranslate
+      }}</label>
+      <span class="value">
+        {{ model.billStructure.format.name }}
+      </span>
+    </div>
+  </section>
+</cx-selfcare-card>
+
+<ng-template #emptyList>
+  <p class="is-empty">
+    {{
+      'selfcare.billingAccounts.details.paymentPlan.details.emptyList'
+        | cxTranslate
+    }}
+  </p>
+</ng-template>

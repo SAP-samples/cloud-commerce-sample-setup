@@ -1,0 +1,77 @@
+<div style="margin-bottom: 2rem">
+  <div *ngIf="product" class="d-flex align-items-start flex-wrap">
+    <div
+      *ngFor="let pscvu of product.poSpecCharValueUses"
+      class="configurablePscvuContainer"
+    >
+      <ng-container *ngIf="pscvu.valueType === 'BOOLEAN'">
+        <cx-tma-boolean-configurable-pscvu
+          [pscvu]="pscvu"
+          [productCode]="product.code"
+        ></cx-tma-boolean-configurable-pscvu>
+      </ng-container>
+
+      <ng-container
+        *ngIf="
+          pscvu.valueType === 'NUMERIC' &&
+          (pscvu.productSpecCharacteristicValue.length === 0 ||
+            (pscvu.productSpecCharacteristicValue.length === 1 &&
+              pscvu.productSpecCharacteristicValue[0].value === '##'))
+        "
+      >
+        <cx-tma-number-configurable-pscvu
+          [pscvu]="pscvu"
+          [productCode]="product.code"
+        ></cx-tma-number-configurable-pscvu>
+      </ng-container>
+
+      <ng-container
+        *ngIf="
+          pscvu.valueType === 'DATE_TIME' &&
+          (pscvu.productSpecCharacteristicValue?.length === 0 ||
+            (pscvu.productSpecCharacteristicValue?.length === 1 &&
+              pscvu.productSpecCharacteristicValue[0]?.value === '##'))
+        "
+      >
+        <cx-tma-date-configurable-pscvu
+          [pscvu]="pscvu"
+          [productCode]="product.code"
+        ></cx-tma-date-configurable-pscvu>
+      </ng-container>
+
+      <ng-container
+        *ngIf="
+          pscvu.valueType === 'STRING' &&
+          (pscvu.productSpecCharacteristicValue?.length === 0 ||
+            (pscvu.productSpecCharacteristicValue?.length === 1 &&
+              pscvu.productSpecCharacteristicValue[0]?.value === '##'))
+        "
+      >
+        <cx-tma-text-configurable-pscvu
+          [pscvu]="pscvu"
+          [productCode]="product.code"
+        ></cx-tma-text-configurable-pscvu>
+      </ng-container>
+
+      <ng-container *ngIf="pscvu.valueType === 'ENUM'">
+        <cx-tma-selection-configurable-pscvu
+          *ngIf="
+            pscvu.maxCardinality && pscvu.maxCardinality === 1;
+            else multipleSelection
+          "
+          [pscvu]="pscvu"
+          [productCode]="product.code"
+        >
+        </cx-tma-selection-configurable-pscvu>
+
+        <ng-template #multipleSelection>
+          <cx-tma-multiple-selection-configurable-pscvu
+            [pscvu]="pscvu"
+            [productCode]="product.code"
+          >
+          </cx-tma-multiple-selection-configurable-pscvu>
+        </ng-template>
+      </ng-container>
+    </div>
+  </div>
+</div>

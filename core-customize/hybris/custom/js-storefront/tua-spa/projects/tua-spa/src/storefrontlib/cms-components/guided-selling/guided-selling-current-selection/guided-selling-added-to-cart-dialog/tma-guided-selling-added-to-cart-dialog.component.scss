@@ -1,0 +1,130 @@
+.cx-modal-container {
+  max-height: calc(100vh - 100px);
+  margin: 50px auto;
+}
+
+.cx-modal-content {
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
+}
+
+.cx-dialog-header {
+  padding: 2rem 1.75rem 0.85rem;
+  border-width: 0;
+}
+
+.cx-dialog-body {
+  padding: 1rem 1rem 0 1rem;
+
+  cx-media.is-missing {
+    min-width: 100%;
+    background-size: 85px;
+  }
+}
+
+.cx-dialog-row {
+  margin: 0;
+  display: flex;
+  padding: 0 0.875rem 2.875rem;
+  max-width: 100%;
+  flex-wrap: wrap;
+}
+
+.cx-dialog-item {
+  .cx-compact {
+    .cx-price,
+    .cx-quantity,
+    .cx-total {
+      .cx-label {
+        font-weight: var(--cx-font-weight-normal);
+      }
+    }
+
+    .cx-dialog-item ::ng-deep .cx-image-container a {
+      padding: 0 !important;
+    }
+
+    .cx-actions {
+      button.link {
+        font-weight: var(--cx-font-weight-normal);
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+.cx-dialog-separator {
+  border-width: 1px 0 0 0;
+  border-style: solid;
+  border-color: var(--cx-color-light);
+}
+
+.cx-dialog-actions {
+  display: flex;
+  flex-direction: column;
+  padding: 0 1rem 0 2.5rem;
+  border-width: 0 0 0 1px;
+  border-style: solid;
+  border-color: var(--cx-color-light);
+}
+
+.cx-dialog-promotions {
+  padding: 0 0 1.25rem 0;
+}
+
+.cx-dialog-total {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 0 1.25rem 0;
+}
+
+.cx-dialog-buttons {
+  display: flex;
+  flex-direction: column;
+
+  .btn-primary {
+    margin: 0 0 0.625rem 0;
+  }
+}
+
+.cx-smaller {
+  font-size: var(--cx-font-small, 0.55rem);
+}
+
+.badge {
+  background-color: #28A745;
+  color: #FFFFFF;
+  padding: 0px 5px;
+  border-radius: 5px;
+  position: absolute;
+  top: 0%;
+  left: 40%;
+}
+
+.right-arrow {
+  display: inline-block;
+  color: #000000;
+  font-size: 1rem;
+  line-height: 30px;
+  margin-bottom: 5px;
+  padding-left: 10px;
+  position: relative;
+  width: auto;
+  background-color: #a8f83f;
+}
+.right-arrow:after {
+  content: '';
+  border-style: solid;
+  height: 0;
+  position: absolute;
+  width: 0px;
+  border-color: transparent #a8f83f;
+  right: -15px;
+  border-width: 15px 0 15px 15px;
+}
+
+.dialog-height {
+  max-height: 80%;
+  margin-top: 5%;
+  overflow-y: auto;
+}

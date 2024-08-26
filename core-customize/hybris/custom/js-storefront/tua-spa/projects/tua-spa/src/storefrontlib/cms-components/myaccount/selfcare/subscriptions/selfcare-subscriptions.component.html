@@ -1,0 +1,18 @@
+<cx-split-view [hideMode]="false">
+  <ng-container *ngIf="structure$ as structure">
+    <cx-view *ngIf="listData$ | async as subscriptions">
+      <section class="cx-selfcare-list">
+        <cx-table
+          *ngIf="subscriptions.values.length > 0"
+          [structure]="structure"
+          [data]="subscriptions.values"
+          [i18nRoot]="domainType"
+          [currentItem]="{ property: key, value: getCurrentKey() | async }"
+          (launch)="launchItem($event)"
+        ></cx-table>
+      </section>
+    </cx-view>
+    <!-- nested split views are rendered inside child routes -->
+    <router-outlet></router-outlet>
+  </ng-container>
+</cx-split-view>

@@ -1,0 +1,175 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for importing the orders.
+
+$catalog-id = mediaspaProductCatalog
+$catalog-version = Online
+$catalogVersion = catalogversion(catalog(id[default = $catalog-id]), version[default = $catalog-version])[unique = true, default = $catalog-id:$catalog-version]
+$storeUid = mediaspa
+$siteUid = mediaspa
+$currency = currency(isocode)[default = USD]
+
+#sample data of orders
+INSERT_UPDATE TmaCartSubscriptionInfo; id[unique = true]; subscriptionTerm(id)
+                                     ; S000T100         ; monthly_12
+                                     ; S000T101         ; monthly_12
+
+INSERT_UPDATE Order; code[unique = true]; user(uid)             ; date[dateformat = dd.MM.yyyy HH:mm]; currency(isocode); net   ; deliveryMode(code); Discounts(code); calculated; store(uid); site(uid); status(code)
+                   ; 90000100           ; ronnie.ray@hybris.com ; 31.03.2021 04:58                   ; USD              ; false ;                   ;                ; false     ; $storeUid ; $siteUid ; COMPLETED
+                   ; 90000101           ; ronnie.ray@hybris.com ; 31.03.2021 04:58                   ; USD              ; false ;                   ;                ; false     ; $storeUid ; $siteUid ; COMPLETED
+
+INSERT_UPDATE OrderEntry; order(code)[unique = true]; product(code, catalogVersion(catalog(id), version))[unique = true]; quantity; calculated; unit(code); entryNumber; subscriptionInfo(id); price(id) ; processType(code); bpo(code, $catalogVersion); masterEntry(order(code), entryNumber);
+                        ; 90000100                  ; tvEntertainment :$catalog-id:$catalog-version                     ; 1       ; false     ; pieces    ; 0          ; S000T100            ; 90FIB016  ; ACQUISITION      ;                           ;
+                        ; 90000100                  ; foreignLanguagePackage :$catalog-id:$catalog-version              ; 1       ; false     ; pieces    ; 1          ; S000T100            ; 9000TVL4  ; ACQUISITION      ;                           ;
+                        ; 90000100                  ; allOnDemand :$catalog-id:$catalog-version                         ; 1       ; false     ; pieces    ; 2          ; S000T100            ; 90FIB100  ; ACQUISITION      ;                           ;
+
+                        ; 90000101                  ; TCO :$catalog-id:$catalog-version                                 ; 1       ; false     ; pieces    ; 0          ; S000T101            ; 90SUPZ2Z1 ; ACQUISITION      ;                           ;
+
+
+#ORDER PRICES
+INSERT_UPDATE TmaAbstractOrderCompositePrice; id[unique = true]; childPrices(id)
+                                            ; 90SUPZ2Z1        ; 90SUPCOM
+                                            ; 90SUPCOM         ; 9SUP0CA1,90SUPRC0,9SUP0OU1,9SUP0OU2,9SUP0OU3,SUP0PERD,9SUPOTC0
+                                            ; 90SUPRC0         ; 9SUP0RC1,9SUP0RC2
+                                            ; 9SUPOTC0         ; 9SUPOTC1,SUP0FIXD
+
+                                            ; 9000Z2Z2         ; 900010GB
+
+                                            ; 9000Z2Z3         ; 9000Y2Y5
+
+                                            ; 9000Z2Z4         ; 90DOMORE
+                                            ; 90DOMORE         ; 9000Y2Y4,9DOMOREUC1
+
+                                            ; 9000Z2Z5         ; 9PUPUC01,9PUPUC02,9PUPRC01
+
+                                            ; 9000Z2Z6         ; 9000Y2Y6
+                                            ; 9000Z2Z7         ; 9000Y2Y7,9000O2O1
+
+                                            ; 9000Z2Z8         ; 9000TVM9
+                                            ; 9000TVM9         ; 9000Y2Y8,9000TVM8,9000O2O2,9TVMTOU5
+
+                                            ; 9000Z2Z9         ; 9000Y2Y9
+                                            ; 9000Z2C1         ; 9000Y2R1
+
+                                            ; 9000Z2C2         ; 900USPCP
+                                            ; 900USPCP         ; 9000Y2R2,9000U3U2,9000U3U3,9000U3U4
+
+                                            ; 9000Z2C3         ; 90FIB100
+                                            ; 90FIB100         ; 9000Y2R3,9000O2O3
+
+                                            ; 9000Z2C4         ; 9000TVL4
+                                            ; 9000TVL4         ; 9000O2O4,900TVLR1,900TVLR2,9TVLTOU1
+
+                                            ; 9000Z2U1         ; 9000U2U1
+                                            ; 9000Z2U2         ; 9000U2U2
+
+                                            ; 9016Z2U1         ; 9016Y2R1
+                                            ; 9016Z2U2         ; 9016Y2R2
+                                            ; 9016Z2U3         ; 9016Y2R3
+
+                                            ; APPLEOCP         ; APPLEOTC
+
+                                            ; 90FIB016         ; 90FIOT01,900FIIN1
+
+
+INSERT_UPDATE TmaAbstractOrderRecurringChargePrice; id[unique = true]; taxIncludedAmount; dutyFreeAmount; priceType(code); billingTime(code); currency(isocode); taxRate; cycleStart; cycleEnd
+                                                  ; 9000Y2Y1         ; 20.0             ; 18.18         ; PRODUCT_PRICE  ; monthly          ; USD              ; 1.1    ; 1         ;
+                                                  ; 9000Y2Y2         ; 5.0              ; 4.55          ; PRODUCT_PRICE  ; monthly          ; USD              ; 0.45   ; 1         ;
+                                                  ; 9000Y2Y3         ; 30.0             ; 27.27         ; PRODUCT_PRICE  ; monthly          ; USD              ; 2.73   ; 1         ;
+                                                  ; 9000Y2Y4         ; 15.0             ; 13.64         ; PRODUCT_PRICE  ; monthly          ; USD              ; 1.36   ; 1         ;
+                                                  ; 9000Y2Y5         ; 55.0             ; 50            ; PRODUCT_PRICE  ; monthly          ; USD              ; 5      ; 1         ;
+                                                  ; 9000Y2Y6         ; 5.0              ; 4.55          ; PRODUCT_PRICE  ; monthly          ; USD              ; 0.45   ; 1         ;
+                                                  ; 9000Y2Y7         ; 10.0             ; 9.55          ; PRODUCT_PRICE  ; monthly          ; USD              ; 0.45   ; 1         ;
+
+                                                  ; 9000Y2Y8         ; 10.0             ; 9.09          ; PRODUCT_PRICE  ; monthly          ; USD              ; 0.91   ; 1         ; 3
+                                                  ; 9000TVM8         ; 30               ; 27.27         ; PRODUCT_PRICE  ; monthly          ; USD              ; 2.73   ; 4         ;
+
+                                                  ; 9000Y2Y9         ; 5.0              ; 4.55          ; PRODUCT_PRICE  ; monthly          ; USD              ; 0.45   ; 1         ;
+                                                  ; 9000Y2R1         ; 5.0              ; 4.55          ; PRODUCT_PRICE  ; monthly          ; USD              ; 0.45   ; 1         ;
+                                                  ; 9000Y2R2         ; 30.0             ; 27.27         ; PRODUCT_PRICE  ; monthly          ; USD              ; 2.73   ; 1         ;
+                                                  ; 9000Y2R3         ; 20.0             ; 18.18         ; PRODUCT_PRICE  ; monthly          ; USD              ; 1.82   ; 1         ;
+
+                                                  ; 900TVLR1         ; 10.0             ; 9.09          ; PRODUCT_PRICE  ; monthly          ; USD              ; 0.91   ; 1         ; 3
+                                                  ; 900TVLR2         ; 40.0             ; 36.36         ; PRODUCT_PRICE  ; monthly          ; USD              ; 3.64   ; 4         ;
+
+                                                  ; 9016Y2R1         ; 40.0             ; 40.0          ; PRODUCT_PRICE  ; monthly          ; USD              ; 0      ; 1         ;
+                                                  ; 9016Y2R2         ; 10.0             ; 10.0          ; PRODUCT_PRICE  ; monthly          ; USD              ; 0      ; 1         ;
+                                                  ; 9016Y2R3         ; 5.0              ; 4.55          ; PRODUCT_PRICE  ; monthly          ; USD              ; 0.45   ; 1         ;
+
+                                                  ; 900010GB         ; 10.0             ; 10.0          ; PRODUCT_PRICE  ; monthly          ; USD              ; 0      ; 1         ;
+
+                                                  ; 9SUP0RC1         ; 50.0             ; 45.45         ; PRODUCT_PRICE  ; monthly          ; USD              ; 4.55   ; 1         ;
+                                                  ; 9PUPRC01         ; 30.0             ; 27.27         ; PRODUCT_PRICE  ; monthly          ; USD              ; 2.73   ; 1         ;
+
+                                                  ; 900FIIN1         ; 40.0             ; 36.36         ; PRODUCT_PRICE  ; monthly          ; USD              ; 3.64   ; 1         ;
+
+INSERT_UPDATE TmaAbstractOrderTierUsageCompositePrice; id[unique = true]; childPrices(id)                                       ; usageChargeType(code)   ; catalogCode
+                                                     ; 9TVMTOU5         ; 9000U2U5,9000U2U6,9000U2U7,9000U2U8,9000U2U9,9000U3U1 ; each_respective_tier    ; 9000Z2U5
+                                                     ; 9TVLTOU1         ; 9TVLU2U5,9TVLU2U6,9TVLU2U7,9TVLU2U8,9TVLU2U9,9TVLU3U1 ; highest_applicable_tier ; 9TVLTOU1
+                                                     ; 9SUP0OU1         ; 9SUPU3U2,9SUPU3U3,9SUPU3U4                            ; highest_applicable_tier ; 9SUP0OU1
+                                                     ; 9SUP0OU2         ; 9SUPU3U5                                              ; each_respective_tier    ; 9SUP0OU2
+                                                     ; 9SUP0OU3         ; 9SUPU3U6,9SUPU3U7,9SUPU3U8,9SUPU3U9                   ; each_respective_tier    ; 9SUP0OU3
+
+INSERT_UPDATE TmaAbstractOrderUsageChargePrice; id[unique = true]; taxIncludedAmount; dutyFreeAmount; priceType(code); billingTime(code); currency(isocode); taxRate; tierStart; tierEnd; usageUnit(id)
+
+                                              ; 9000U2U1         ; 0.09             ; 0.08          ; PRODUCT_PRICE  ; monthly          ; USD              ; 0.01   ;          ;        ; phone_minutes
+                                              ; 9000U2U2         ; 0.09             ; 0.08          ; PRODUCT_PRICE  ; monthly          ; USD              ; 0.01   ;          ;        ; sms
+                                              ; 9000U2U3         ; 0.09             ; 0.08          ; PRODUCT_PRICE  ; monthly          ; USD              ; 0.01   ; 1        ;        ; phone_minutes
+                                              ; 9000U2U4         ; 0.09             ; 0.08          ; PRODUCT_PRICE  ; monthly          ; USD              ; 0.01   ; 1        ;        ; sms
+
+                                              ; 9000U2U5         ; 5                ; 4.55          ; PRODUCT_PRICE  ; monthly          ; USD              ; 0.45   ; 1        ; 5      ; blockbusters_on_demand
+                                              ; 9000U2U6         ; 4                ; 3.64          ; PRODUCT_PRICE  ; monthly          ; USD              ; 0.36   ; 1        ;        ; blockbusters_on_demand
+                                              ; 9000U2U7         ; 2                ; 1.82          ; PRODUCT_PRICE  ; monthly          ; USD              ; 0.18   ; 1        ;        ; documentaries_on_demand
+                                              ; 9000U2U8         ; 3                ; 2.73          ; PRODUCT_PRICE  ; monthly          ; USD              ; 0.27   ; 1        ; 5      ; documentaries_on_demand
+                                              ; 9000U2U9         ; 3                ; 2.73          ; PRODUCT_PRICE  ; monthly          ; USD              ; 0.27   ; 1        ;        ; movies_on_demand
+                                              ; 9000U3U1         ; 4                ; 3.64          ; PRODUCT_PRICE  ; monthly          ; USD              ; 0.01   ; 1        ; 5      ; movies_on_demand
+
+                                              ; 9TVLU2U5         ; 5                ; 4.55          ; PRODUCT_PRICE  ; monthly          ; USD              ; 0.45   ; 1        ; 5      ; blockbusters_on_demand
+                                              ; 9TVLU2U6         ; 4                ; 3.64          ; PRODUCT_PRICE  ; monthly          ; USD              ; 0.36   ; 1        ;        ; blockbusters_on_demand
+                                              ; 9TVLU2U7         ; 2                ; 1.82          ; PRODUCT_PRICE  ; monthly          ; USD              ; 0.18   ; 1        ;        ; documentaries_on_demand
+                                              ; 9TVLU2U8         ; 3                ; 2.73          ; PRODUCT_PRICE  ; monthly          ; USD              ; 0.27   ; 1        ; 5      ; documentaries_on_demand
+                                              ; 9TVLU2U9         ; 3                ; 2.73          ; PRODUCT_PRICE  ; monthly          ; USD              ; 0.27   ; 1        ;        ; movies_on_demand
+                                              ; 9TVLU3U1         ; 4                ; 3.64          ; PRODUCT_PRICE  ; monthly          ; USD              ; 0.01   ; 1        ; 5      ; movies_on_demand
+
+                                              ; 9000U3U2         ; 0.09             ; 0.08          ; PRODUCT_PRICE  ; monthly          ; USD              ; 0.01   ; 1        ;        ; sms
+                                              ; 9000U3U3         ; 0.09             ; 0.08          ; PRODUCT_PRICE  ; monthly          ; USD              ; 0.01   ; 1        ;        ; phone_minutes
+                                              ; 9000U3U4         ; 0.09             ; 0.08          ; PRODUCT_PRICE  ; monthly          ; USD              ; 0.01   ; 1        ;        ; mb
+
+                                              ; 9000U3U5         ; 3                ; 0.08          ; PRODUCT_PRICE  ; monthly          ; USD              ; 0.01   ; 1        ; 5      ; blockbusters_on_demand
+                                              ; 9000U3U6         ; 2.5              ; 0.08          ; PRODUCT_PRICE  ; monthly          ; USD              ; 0.01   ; 6        ;        ; blockbusters_on_demand
+                                              ; 9000U3U7         ; 1.5              ; 0.08          ; PRODUCT_PRICE  ; monthly          ; USD              ; 0.01   ; 1        ; 5      ; documentaries_on_demand
+                                              ; 9000U3U8         ; 1.2              ; 0.08          ; PRODUCT_PRICE  ; monthly          ; USD              ; 0.01   ; 6        ;        ; documentaries_on_demand
+                                              ; 9000U3U9         ; 2                ; 0.08          ; PRODUCT_PRICE  ; monthly          ; USD              ; 0.01   ; 1        ; 5      ; movies_on_demand
+                                              ; 9000U4U1         ; 1.5              ; 0.08          ; PRODUCT_PRICE  ; monthly          ; USD              ; 0.01   ; 6        ;        ; movies_on_demand
+
+                                              ; 9SUPU3U2         ; 0.5              ; 0.45          ; PRODUCT_PRICE  ; monthly          ; USD              ; 0.05   ; 513      ; 1024   ; mb
+                                              ; 9SUPU3U3         ; 0.3              ; 0.27          ; PRODUCT_PRICE  ; monthly          ; USD              ; 0.03   ; 1025     ;        ; mb
+                                              ; 9SUPU3U4         ; 0.7              ; 0.64          ; PRODUCT_PRICE  ; monthly          ; USD              ; 0.06   ; 1        ; 512    ; mb
+                                              ; 9SUPU3U5         ; 0.09             ; 0.08          ; PRODUCT_PRICE  ; monthly          ; USD              ; 0.01   ; 1        ;        ; sms
+                                              ; 9SUPU3U6         ; 0.06             ; 0.05          ; PRODUCT_PRICE  ; monthly          ; USD              ; 0.01   ; 101      ; 200    ; phone_minutes
+                                              ; 9SUPU3U7         ; 0.04             ; 0.04          ; PRODUCT_PRICE  ; monthly          ; USD              ; 0.00   ; 201      ; 300    ; phone_minutes
+                                              ; 9SUPU3U8         ; 0.08             ; 0.07          ; PRODUCT_PRICE  ; monthly          ; USD              ; 0.01   ; 1        ; 100    ; phone_minutes
+                                              ; 9SUPU3U9         ; 0.03             ; 0.03          ; PRODUCT_PRICE  ; monthly          ; USD              ; 0.00   ; 301      ;        ; phone_minutes
+
+                                              ; 9PUPUC01         ; 0.09             ; 0.08          ; PRODUCT_PRICE  ; monthly          ; USD              ; 0.01   ; 1        ;        ; phone_minutes
+                                              ; 9PUPUC02         ; 0.09             ; 0.08          ; PRODUCT_PRICE  ; monthly          ; USD              ; 0.01   ; 1        ;        ; sms
+
+                                              ; 9DOMOREUC1       ; 0.09             ; 0.08          ; PRODUCT_PRICE  ; monthly          ; USD              ; 0.01   ; 1        ;        ; mb
+INSERT_UPDATE TmaAbstractOrderOneTimeChargePrice; id[unique = true]; taxIncludedAmount; dutyFreeAmount; priceType(code); billingTime(code); currency(isocode); taxRate
+                                                ; 9000O2O1         ; 4.0              ; 3.64          ; PRODUCT_PRICE  ; paynow           ; USD              ; 0.36
+                                                ; 9000O2O2         ; 4.0              ; 3.64          ; PRODUCT_PRICE  ; paynow           ; USD              ; 0.36
+                                                ; 9000O2O3         ; 4.0              ; 3.64          ; PRODUCT_PRICE  ; paynow           ; USD              ; 0.36
+                                                ; 9000O2O4         ; 4.0              ; 3.64          ; PRODUCT_PRICE  ; paynow           ; USD              ; 0.36
+
+                                                ; 9SUP0CA1         ; 25               ; 22.73         ; PRODUCT_PRICE  ; oncancellation   ; USD              ; 2.27
+                                                ; 9SUPOTC1         ; 50               ; 45.45         ; PRODUCT_PRICE  ; paynow           ; USD              ; 4.55
+                                                ; APPLEOTC         ; 949              ; 862.73        ; PRODUCT_PRICE  ; paynow           ; USD              ; 86.27
+
+                                                ; 90FIOT01         ; 4.0              ; 3.64          ; PRODUCT_PRICE  ; paynow           ; USD              ; 0.36
+
+INSERT_UPDATE TmaAbstractOrderDiscountAlterationPrice; id[unique = true]; dutyFreeAmount; taxIncludedAmount; cycleStart; cycleEnd; $currency; priceType(code)           ; billingTime(code); percentage; taxRate; catalogCode;
+                                                     ; SUP0PERD         ;               ;                  ;           ;         ; USD      ; DISCOUNT_PRICE_ALTERATION ; paynow           ; 20        ;        ; SUP0PERD   ;
+                                                     ; SUP0FIXD         ; 9.09          ; 10.0             ;           ;         ; USD      ; DISCOUNT_PRICE_ALTERATION ; paynow           ;           ; 0.91   ; SUP0FIXD   ;
+                                                     ; 9SUP0RC2         ; 9.09          ; 10.0             ; 1         ; 6       ; USD      ; DISCOUNT_PRICE_ALTERATION ; monthly          ;           ; 0.91   ; SUP0FIXD   ;

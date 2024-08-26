@@ -1,0 +1,87 @@
+<div style="margin-top: 2rem">
+  <div class="col">
+    <strong
+    ><label for="{{ id }}">{{ pscvu.name }}</label></strong
+    >
+    <select
+      class="form-control"
+      (change)="sendSelectionInput()"
+      [required]="pscvu.minCardinality > 0"
+      [ngClass]="{
+        'is-invalid':
+          isAnyError(productCode) &&
+          pscvu.minCardinality > 0 &&
+          (configurablePscvusService.addToCartPressed ||
+            configurablePscvusService.selectPressed) &&
+          !isSelected
+      }"
+      id="{{ id }}"
+      style="width: 100%"
+    >
+      <option hidden selected>No value selected</option>
+      <option
+        *ngFor="let pscv of pscvu.productSpecCharacteristicValue"
+        value="{{ pscv.value }}"
+      >
+        {{ pscv.value }}
+      </option>
+    </select>
+  </div>
+
+  <div
+    *ngIf="
+      isAnyError(productCode) &&
+      pscvu.minCardinality > 0 &&
+      (configurablePscvusService.addToCartPressed ||
+        configurablePscvusService.selectPressed) &&
+      !isSelected
+    "
+    class="text-danger small"
+  >
+    <ng-container
+      *ngIf="
+        pscvu.maxCardinality !== undefined &&
+        pscvu.minCardinality === pscvu.maxCardinality &&
+        pscvu.maxCardinality === 1
+      "
+    >
+      {{
+      'productDetails.productSpecificCharacteristics.mandatoryField'
+        | cxTranslate
+      }}
+    </ng-container>
+
+    <ng-container
+      *ngIf="
+        pscvu.maxCardinality !== undefined &&
+        pscvu.minCardinality === pscvu.maxCardinality &&
+        pscvu.maxCardinality !== 1
+      "
+    >
+      {{
+      'productDetails.productSpecificCharacteristics.mandatoryFieldValues'
+        | cxTranslate: {quantity: pscvu.minCardinality}
+      }}
+    </ng-container>
+
+    <ng-container
+      *ngIf="
+        pscvu.maxCardinality !== undefined &&
+        pscvu.minCardinality !== pscvu.maxCardinality
+      "
+    >
+      {{
+      'productDetails.productSpecificCharacteristics.selectBetweenMinAndMax'
+        | cxTranslate
+        : {min: pscvu.minCardinality, max: pscvu.maxCardinality}
+      }}
+    </ng-container>
+
+    <ng-container *ngIf="pscvu.maxCardinality === undefined">
+      {{
+      'productDetails.productSpecificCharacteristics.selectAtLeast'
+        | cxTranslate: {min: pscvu.minCardinality}
+      }}
+    </ng-container>
+  </div>
+</div>

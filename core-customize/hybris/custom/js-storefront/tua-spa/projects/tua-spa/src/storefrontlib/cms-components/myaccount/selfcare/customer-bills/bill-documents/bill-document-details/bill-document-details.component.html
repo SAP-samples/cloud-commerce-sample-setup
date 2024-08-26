@@ -1,0 +1,22 @@
+<cx-selfcare-card
+  *ngIf="getBillDocumentDetails$ | async as billDocumentDetails ; else emptyList"
+  i18nRoot="{{ domainType }}"
+  [showHint]="true"
+  >
+  <section main class="details">
+    <div class="property">
+      <label>{{ 'selfcare.customerBills.details.billDocument.name' | cxTranslate }}</label>
+      <span class="value"> {{ billDocumentDetails.name }} </span>
+    </div>
+    <div class="property">
+      <label>{{ 'selfcare.customerBills.details.billDocument.id' | cxTranslate }}</label>
+      <span class="value"> {{ billDocumentDetails.id }} </span>
+    </div>
+  </section>
+</cx-selfcare-card>
+
+<ng-template #emptyList>
+  <p class="is-empty">
+    {{ 'selfcare.customerBills.details.account.emptyList' | cxTranslate }}
+  </p>
+</ng-template>

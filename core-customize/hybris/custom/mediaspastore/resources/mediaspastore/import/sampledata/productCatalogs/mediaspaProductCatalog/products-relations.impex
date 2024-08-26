@@ -1,0 +1,130 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Related Products into Media SPA Store
+
+$productCatalog = mediaspaProductCatalog
+$productCatalogName = Media SPA Product Catalog
+$catalogVersion = catalogversion(catalog(id[default=$productCatalog]), version[default='Staged'])[unique=true, default=$productCatalog:Staged]
+$supercategories = supercategories(code, $catalogVersion)
+$approved = approvalstatus(code)[default='approved']
+
+INSERT_UPDATE ProductReference; source(code, $catalogVersion)[unique = true]; target(code, $catalogVersion)[unique = true]; referenceType(code); active[default = true]; preselected[default = false]
+#TV
+                              ; tvStarter                                   ; tvEntertainment                             ; UPSELLING
+                              ; tvStarter                                   ; tvPremium                                   ; UPSELLING
+                              ; tvEntertainment                             ; tvPremium                                   ; UPSELLING
+#Router
+                              ; standardRouter                              ; fibreRouter                                 ; UPSELLING
+                              ; standardRouter                              ; fibreRouterUnlimited                        ; UPSELLING
+                              ; fibreRouter                                 ; fibreRouterUnlimited                        ; UPSELLING
+#Decoder
+                              ; standardDecoder                             ; decoderPlus                                 ; UPSELLING
+#Broadband
+                              ; standardBroadband                           ; fibreBroadbandLimited                       ; UPSELLING
+                              ; standardBroadband                           ; fibreBroadbandUnlimited                     ; UPSELLING
+                              ; standardBroadband                           ; superFibreUnlimited                         ; UPSELLING
+                              ; fibreBroadbandLimited                       ; fibreBroadbandUnlimited                     ; UPSELLING
+                              ; fibreBroadbandLimited                       ; superFibreUnlimited                         ; UPSELLING
+                              ; fibreBroadbandUnlimited                     ; superFibreUnlimited                         ; UPSELLING
+# Phone
+                              ; phoneUnlimitedWeekend                       ; phoneUnlimitedWeekendEvening                ; OTHERS
+# TV Channels
+                              ; YTV                                         ; SportChannel                                ; SIMILAR
+                              ; CubeChannel                                 ; YTV                                         ; SIMILAR
+                              ; ANVNetworks                                 ; CubeChannel                                 ; SIMILAR
+                              ; ChannelS                                    ; ANVNetworks                                 ; SIMILAR
+                              ; KTV                                         ; ChannelS                                    ; SIMILAR
+                              ; TRIChannel                                  ; KTV                                         ; SIMILAR
+                              ; TCOChannel                                  ; TRIChannel                                  ; SIMILAR
+                              ; VIVOChannel                                 ; TCOChannel                                  ; SIMILAR
+                              ; LightningChannel                            ; VIVOChannel                                 ; SIMILAR
+                              ; SportChannel                                ; LightningChannel                            ; SIMILAR
+                              ; YTV                                         ; LightningChannel                            ; SIMILAR
+                              ; CubeChannel                                 ; SportChannel                                ; SIMILAR
+                              ; ANVNetworks                                 ; YTV                                         ; SIMILAR
+                              ; ChannelS                                    ; CubeChannel                                 ; SIMILAR
+                              ; KTV                                         ; ANVNetworks                                 ; SIMILAR
+                              ; TRIChannel                                  ; ChannelS                                    ; SIMILAR
+                              ; TCOChannel                                  ; KTV                                         ; SIMILAR
+                              ; VIVOChannel                                 ; TRIChannel                                  ; SIMILAR
+                              ; LightningChannel                            ; TCOChannel                                  ; SIMILAR
+                              ; SportChannel                                ; VIVOChannel                                 ; SIMILAR
+                              ; YTV                                         ; VIVOChannel                                 ; SIMILAR
+                              ; CubeChannel                                 ; LightningChannel                            ; SIMILAR
+                              ; ANVNetworks                                 ; SportChannel                                ; SIMILAR
+                              ; ChannelS                                    ; YTV                                         ; SIMILAR
+                              ; KTV                                         ; CubeChannel                                 ; SIMILAR
+                              ; TRIChannel                                  ; ANVNetworks                                 ; SIMILAR
+                              ; TCOChannel                                  ; ChannelS                                    ; SIMILAR
+                              ; VIVOChannel                                 ; KTV                                         ; SIMILAR
+                              ; LightningChannel                            ; TRIChannel                                  ; SIMILAR
+                              ; SportChannel                                ; TCOChannel                                  ; SIMILAR
+                              ; YTV                                         ; TCOChannel                                  ; SIMILAR
+                              ; CubeChannel                                 ; VIVOChannel                                 ; SIMILAR
+                              ; ANVNetworks                                 ; LightningChannel                            ; SIMILAR
+                              ; ChannelS                                    ; SportChannel                                ; SIMILAR
+                              ; KTV                                         ; YTV                                         ; SIMILAR
+                              ; TRIChannel                                  ; CubeChannel                                 ; SIMILAR
+                              ; TCOChannel                                  ; ANVNetworks                                 ; SIMILAR
+                              ; VIVOChannel                                 ; ChannelS                                    ; SIMILAR
+                              ; LightningChannel                            ; KTV                                         ; SIMILAR
+                              ; SportChannel                                ; TRIChannel                                  ; SIMILAR
+                              ; YTV                                         ; TRIChannel                                  ; SIMILAR
+                              ; CubeChannel                                 ; TCOChannel                                  ; SIMILAR
+                              ; ANVNetworks                                 ; VIVOChannel                                 ; SIMILAR
+                              ; ChannelS                                    ; LightningChannel                            ; SIMILAR
+                              ; KTV                                         ; SportChannel                                ; SIMILAR
+                              ; TRIChannel                                  ; YTV                                         ; SIMILAR
+                              ; TCOChannel                                  ; CubeChannel                                 ; SIMILAR
+                              ; VIVOChannel                                 ; ANVNetworks                                 ; SIMILAR
+                              ; LightningChannel                            ; ChannelS                                    ; SIMILAR
+                              ; SportChannel                                ; KTV                                         ; SIMILAR
+                              ; YTV                                         ; KTV                                         ; SIMILAR
+                              ; CubeChannel                                 ; TRIChannel                                  ; SIMILAR
+                              ; ANVNetworks                                 ; TCOChannel                                  ; SIMILAR
+                              ; ChannelS                                    ; VIVOChannel                                 ; SIMILAR
+                              ; KTV                                         ; LightningChannel                            ; SIMILAR
+                              ; TRIChannel                                  ; SportChannel                                ; SIMILAR
+                              ; TCOChannel                                  ; YTV                                         ; SIMILAR
+                              ; VIVOChannel                                 ; CubeChannel                                 ; SIMILAR
+                              ; LightningChannel                            ; ANVNetworks                                 ; SIMILAR
+                              ; SportChannel                                ; ChannelS                                    ; SIMILAR
+                              ; YTV                                         ; ChannelS                                    ; SIMILAR
+                              ; CubeChannel                                 ; KTV                                         ; SIMILAR
+                              ; ANVNetworks                                 ; TRIChannel                                  ; SIMILAR
+                              ; ChannelS                                    ; TCOChannel                                  ; SIMILAR
+                              ; KTV                                         ; VIVOChannel                                 ; SIMILAR
+                              ; TRIChannel                                  ; LightningChannel                            ; SIMILAR
+                              ; TCOChannel                                  ; SportChannel                                ; SIMILAR
+                              ; VIVOChannel                                 ; YTV                                         ; SIMILAR
+                              ; LightningChannel                            ; CubeChannel                                 ; SIMILAR
+                              ; SportChannel                                ; ANVNetworks                                 ; SIMILAR
+                              ; YTV                                         ; ANVNetworks                                 ; SIMILAR
+                              ; CubeChannel                                 ; ChannelS                                    ; SIMILAR
+                              ; ANVNetworks                                 ; KTV                                         ; SIMILAR
+                              ; ChannelS                                    ; TRIChannel                                  ; SIMILAR
+                              ; KTV                                         ; TCOChannel                                  ; SIMILAR
+                              ; TRIChannel                                  ; VIVOChannel                                 ; SIMILAR
+                              ; TCOChannel                                  ; LightningChannel                            ; SIMILAR
+                              ; VIVOChannel                                 ; SportChannel                                ; SIMILAR
+                              ; LightningChannel                            ; YTV                                         ; SIMILAR
+                              ; SportChannel                                ; CubeChannel                                 ; SIMILAR
+                              ; YTV                                         ; CubeChannel                                 ; SIMILAR
+                              ; CubeChannel                                 ; ANVNetworks                                 ; SIMILAR
+                              ; ANVNetworks                                 ; ChannelS                                    ; SIMILAR
+                              ; ChannelS                                    ; KTV                                         ; SIMILAR
+                              ; KTV                                         ; TRIChannel                                  ; SIMILAR
+                              ; TRIChannel                                  ; TCOChannel                                  ; SIMILAR
+                              ; TCOChannel                                  ; VIVOChannel                                 ; SIMILAR
+                              ; VIVOChannel                                 ; LightningChannel                            ; SIMILAR
+                              ; LightningChannel                            ; SportChannel                                ; SIMILAR
+                              ; SportChannel                                ; YTV                                         ; SIMILAR
+# Movies
+                              ; underworld_movie                            ; a-doctor-on-board                           ; CROSSELLING
+                              ; underworld_movie                            ; the-last-journey                            ; CROSSELLING
+                              ; underworld_movie                            ; emmas-chaos-effect                          ; CROSSELLING
+                              ; underworld_movie                            ; hunters                                     ; CROSSELLING
+                              ; underworld_movie                            ; infinite-space                              ; CROSSELLING
+                              ; underworld_movie                            ; venom                                       ; CROSSELLING

@@ -1,0 +1,94 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+#% impex.setLocale(Locale.ENGLISH);
+
+$productCatalog = mediaspaProductCatalog
+$catalogVersion = catalogversion(catalog(id[default=$productCatalog]), version[default='Staged'])[unique=true, default='$productCatalog:Staged']
+$priceEvent = priceEvent(code)[default='paynow']
+$priceEventRcUc = priceEvent(code)[default='monthly']
+$currency = currency(isocode)[default=USD]
+
+$lang = en
+
+################################################
+###            One time charges              ###
+################################################
+
+INSERT_UPDATE TmaOneTimeProdOfferPriceCharge ; id[unique = true] ; $catalogVersion ; value ; $currency ; $priceEvent ; description[lang = $lang]
+                                             ; OTC_0_USD         ;                 ; 0.0   ;           ;             ; Pay one time charge of 0$.
+                                             ; OTC_1_99_USD      ;                 ; 1.99  ;           ;             ; Pay one time charge of 1.99$.
+                                             ; OTC_6_99_USD      ;                 ; 6.99  ;           ;             ; Pay one time charge of 6.99$.
+                                             ; OTC_9_60_USD      ;                 ; 9.60  ;           ;             ; Pay one time charge of 9.60$.
+                                             ; OTC_9_99_USD      ;                 ; 9.99  ;           ;             ; Pay one time charge of 9.99$.
+                                             ; OTC_12_99_USD     ;                 ; 12.99 ;           ;             ; Pay one time charge of 12.99$.
+                                             ; OTC_15_99_USD     ;                 ; 15.99 ;           ;             ; Pay one time charge of 15.99$.
+                                             ; OTC_15_46_USD     ;                 ; 15.46 ;           ;             ; Pay one time charge of 15.46$.
+                                             ; OTC_19_99_USD     ;                 ; 19.99 ;           ;             ; Pay one time charge of 19.99$.
+                                             ; OTC_29_99_USD     ;                 ; 29.99 ;           ;             ; Pay one time charge of 29.99$.
+                                             ; OTC_34_55_USD     ;                 ; 34.55 ;           ;             ; Pay one time charge of 34.55$.
+                                             ; OTC_34_99_USD     ;                 ; 34.99 ;           ;             ; Pay one time charge of 34.99$.
+                                             ; OTC_50_USD        ;                 ; 50.00 ;           ;             ; Pay one time charge of 50$.
+                                             ; OTC_51_21_USD     ;                 ; 51.21 ;           ;             ; Pay one time charge of 51.21$.
+                                             ; OTC_59_99_USD     ;                 ; 59.99 ;           ;             ; Pay one time charge of 59.99$.
+                                             ; OTC_65_30_USD     ;                 ; 65.30 ;           ;             ; Pay one time charge of 65.30$.
+                                             ; OTC_79_99_USD     ;                 ; 79.99 ;           ;             ; Pay one time charge of 79.99$.
+                                             ; OTC_9_6_USD       ;                 ; 9.60  ;           ;             ; Pay one time charge of 9.60$.
+                                             ; OTC_11_60_USD     ;                 ; 11.60 ;           ;             ; Pay one time charge of 11.60$.
+################################################
+###              Recurring charges           ###
+################################################
+
+INSERT_UPDATE TmaRecurringProdOfferPriceCharge ; id[unique = true]    ; $catalogVersion ; value ; $currency ; $priceEventRcUc ; cycleStart ; cycleEnd ; description[lang = $lang]
+                                               ; RC_16_99_USD_start_1 ;                 ; 16.99 ;           ;                 ; 1          ;          ; Pay 16.99$ every month.
+                                               ; RC_3_USD_start_1     ;                 ; 3     ;           ;                 ; 1          ;          ; Pay 3$ every month.
+                                               ; RC_4_75_USD_start_1  ;                 ; 4.75  ;           ;                 ; 1          ;          ; Pay 4.75$ every month.
+                                               ; RC_6_5_USD_start_1   ;                 ; 6.5   ;           ;                 ; 1          ;          ; Pay 6.5$ every month.
+                                               ; RC_15_USD_start_1    ;                 ; 15    ;           ;                 ; 1          ;          ; Pay 15$ every month.
+                                               ; RC_25_USD_start_1    ;                 ; 25    ;           ;                 ; 1          ;          ; Pay 25$ every month.
+                                               ; RC_10_USD_start_1    ;                 ; 10    ;           ;                 ; 1          ;          ; Pay 10$ every month.
+                                               ; RC_12_USD_start_1    ;                 ; 12    ;           ;                 ; 1          ;          ; Pay 12$ every month.
+                                               ; RC_7_USD_start_1     ;                 ; 7     ;           ;                 ; 1          ;          ; Pay 7$ every month.
+                                               ; RC_5_USD_start_1     ;                 ; 5     ;           ;                 ; 1          ;          ; Pay 5$ every month.
+
+INSERT_UPDATE TmaUsageProdOfferPriceCharge; id[unique = true]; value; tierStart; tierEnd; usageUnit(id)   ; $currency; compositeProdOfferPrices(id); $catalogVersion; $priceEventRcUc; productUsageSpec(id, $catalogVersion); productSpecCharacteristicValues(id, $catalogVersion); description[lang = $lang]
+                                          ; UC_sport_USD_pop ; 3.0  ; 1        ;        ; games_on_demand ;          ;                             ;                ;                ; media_tv_spec                        ;                                                      ; Pay 3$ and enjoy games on demand.
+
+################################################
+###              Usage charges               ###
+################################################
+
+INSERT_UPDATE TmaTierUsageChargeCompositePop ; id[unique = true]          ; usageChargeType(code) ; children(id, $catalogVersion) ; $catalogVersion ; productSpecCharacteristicValues(id, $catalogVersion) ; description[lang = $lang]
+                                             ; UC_sport_USD_composite_pop ; each_respective_tier  ; UC_sport_USD_pop              ;                 ; 3_tv_everywhere                                      ; Pay 3$ and enjoy games on demand.
+
+################################################
+###             Allowance alterations        ###
+################################################
+
+INSERT_UPDATE TmaAllowanceProdOfferPriceAlteration ; id[unique = true]  ; value ; $currency ; $priceEvent ; $catalogVersion ; isPercentage[default = false] ; type(code)[default = CREDIT] ; description[lang = $lang]
+                                                   ; standardRouter_alw ; 5     ;           ;             ;                 ;                               ;                              ; Enjoy discount worth 5$.
+                                                   ; sportChannel_alw   ; 2     ;           ;             ;                 ;                               ;                              ; Enjoy discount worth 2$.
+
+################################################
+###              Composite prices            ###
+################################################
+
+INSERT_UPDATE TmaCompositeProdOfferPrice ; id[unique = true]                     ; $catalogVersion ; children(id, $catalogVersion)                                  ; description[lang = $lang]
+                                         ; phoneUnlimitedWeekend_USD_pop         ;                 ; OTC_50_USD, RC_16_99_USD_start_1                               ; Pay one time charge of 50$ and 16.99$ every month.
+                                         ; standardBroadband_USD_pop             ;                 ; OTC_50_USD, RC_4_75_USD_start_1                                ; Pay one time charge of 50$ and 4.75$ every month.
+                                         ; fibreBroadbandLimited_USD_pop         ;                 ; OTC_50_USD, RC_6_5_USD_start_1                                 ; Pay one time charge of 50$ and 6.5$ every month.
+                                         ; fibreBroadbandUnlimited_USD_pop       ;                 ; OTC_50_USD, RC_15_USD_start_1                                  ; Pay one time charge of 50$ and 15$ every month.
+                                         ; fibreBroadbandUnlimited_USD_promo_pop ;                 ; OTC_50_USD, RC_15_USD_start_1, fibreBroadbandUnlimited_USD_dsc ; Pay one time charge of 50$ and 15$ every month with discount of 20%.
+                                         ; superFibreUnlimited_USD_pop           ;                 ; OTC_50_USD, RC_25_USD_start_1                                  ; Pay one time charge of 50$ and 25$ every month.
+                                         ; underworld_movie_promo_pop            ;                 ; OTC_19_99_USD, underworld_movie_dsc                            ; Pay one time charge of 19.99$ and get discount worth 2$.
+                                         ; standardRouter_pr_alw_pop             ;                 ; OTC_9_99_USD, standardRouter_alw                               ; Pay one time charge of 9.99$ and get discount worth 5$.
+                                         ; sportChannel_pr_alw_pop               ;                 ; OTC_0_USD, sportChannel_alw                                    ; Enjoy zero one time charge and discount worth 2$.
+
+################################################
+###              Discount alterations        ###
+################################################
+
+INSERT_UPDATE TmaDiscountProdOfferPriceAlteration ; id[unique = true]               ; value ; cycleStart ; cycleEnd ; $currency ; $priceEvent ; $catalogVersion ; isPercentage[default = false] ; description[lang = $lang]
+                                                  ; underworld_movie_dsc            ; 2     ;            ;          ;           ;             ;                 ;                               ; Enjoy discount worth 2$.
+                                                  ; fibreBroadbandUnlimited_USD_dsc ; 20    ;            ;          ;           ;             ;                 ; true                          ; Enjoy 20% of discount.

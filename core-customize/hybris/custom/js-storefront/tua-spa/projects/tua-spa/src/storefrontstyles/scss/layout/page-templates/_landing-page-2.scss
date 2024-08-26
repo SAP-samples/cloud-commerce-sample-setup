@@ -1,0 +1,12 @@
+%LandingPage2Template {
+  @extend %LandingPage2Template !optional;
+
+.Section2 {
+  cx-navigation-banner {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 850px;
+    margin: 20px auto;
+  }
+}
+}

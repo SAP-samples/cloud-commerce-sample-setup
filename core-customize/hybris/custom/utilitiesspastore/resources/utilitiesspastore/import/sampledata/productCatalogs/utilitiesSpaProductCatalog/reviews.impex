@@ -1,0 +1,32 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Importing Product Reviews
+
+# Macros / Replacement Parameter definitions
+$catalog-Online = Online
+$product-catalog = utilitiesSpaProductCatalog
+$productCV = catalogVersion(CatalogVersion.catalog(Catalog.id[default = $product-catalog]), CatalogVersion.version[default = $catalog-Online])[default = $product-catalog:$catalog-Online]
+
+$defaultPassword = password
+
+# Reviews from Customers
+
+INSERT_UPDATE Customer; groups(uid)     ; uid[unique = true]         ; name               ; password[default = $defaultPassword]; customerId
+                      ; "customergroup" ; "keenreviewer1@hybris.com" ; "Kenneth Reviewer" ;                                     ; "keenreviewer1@hybris.com" ;
+                      ; "customergroup" ; "keenreviewer2@hybris.com" ; "Ken Reviewer"     ;                                     ; "keenreviewer2@hybris.com" ;
+                      ; "customergroup" ; "keenreviewer3@hybris.com" ; "John Reviewer"    ;                                     ; "keenreviewer3@hybris.com" ;
+                      ; "customergroup" ; "keenreviewer4@hybris.com" ; "Steve Reviewer"   ;                                     ; "keenreviewer4@hybris.com" ;
+                      ; "customergroup" ; "keenreviewer5@hybris.com" ; "Adam Reviewer"    ;                                     ; "keenreviewer5@hybris.com" ;
+                      ; "customergroup" ; "keenreviewer6@hybris.com" ; "Honda Reviewer"   ;                                     ; "keenreviewer6@hybris.com" ;
+                      ; "customergroup" ; "keenreviewer7@hybris.com" ; "Roger Reviewer"   ;                                     ; "keenreviewer7@hybris.com" ;
+                      ; "customergroup" ; "keenreviewer8@hybris.com" ; "Ronald Reviewer"  ;                                     ; "keenreviewer8@hybris.com" ;
+                      ; "customergroup" ; "keenreviewer9@hybris.com" ; "Klaus Reviewer"   ;                                     ; "keenreviewer9@hybris.com" ;
+
+# ImpEx for Importing Utilities Product Reviews
+
+# Reviews from Customers
+
+INSERT_UPDATE CustomerReview; product(code, $productCV)[unique = true]; rating; user(uid)[unique = true] ; headline                    ; comment; approvalStatus(code)[default = 'approved']; language(isocode)[default = 'en']
+                            ; electric_plan_basic                     ; 5     ; keenreviewer9@hybris.com ; I would recommend this plan ; I feel that our priorities, considerations and expectations as customers were completely met and even exceeded.  We could not be happier.

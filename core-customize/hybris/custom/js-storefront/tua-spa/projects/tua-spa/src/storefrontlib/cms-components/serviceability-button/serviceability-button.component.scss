@@ -1,0 +1,12 @@
+.headerText {
+  font-size: var(--cx-font-size, 1.375rem);
+    font-weight: var(--cx-font-weight-semi);
+    line-height: var(--cx-line-height, 1.2222222222);
+    text-align: left;
+}
+.address {
+  font-size: var(--cx-font-size, 1.175rem);
+  font-weight: var(--cx-font-weight-semi);
+  line-height: var(--cx-line-height, 1.2222222222);
+  text-align: center;
+}

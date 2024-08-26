@@ -1,0 +1,62 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Importing Suppliers into Utilities Store
+
+# Macros / Replacement Parameter definitions
+$productCatalog = utilitiesSpaProductCatalog
+$productCatalogName = Utilities Spa Product Catalog
+$catalogVersion = catalogversion(catalog(id[default=$productCatalog]), version[default='Staged'])[unique=true, default=$productCatalog:Staged]
+$superCategories = superCategories(code, $catalogVersion)
+
+# ImpEx for Importing Utilities Suppliers
+
+# Create Supplier Categories
+INSERT_UPDATE Category; code[unique = true] ; $superCategories; allowedPrincipals(uid)[default = 'customergroup']; $catalogVersion
+                      ; brands              ;
+                      ; brand_adapt         ; brands
+                      ; brand_amazon        ; brands
+                      ; brand_apple         ; brands
+                      ; brand_arcticcooling ; brands
+                      ; brand_beez          ; brands
+                      ; brand_belkin        ; brands
+                      ; brand_blackberry    ; brands
+                      ; brand_bluetrek      ; brands
+                      ; brand_brodit        ; brands
+                      ; brand_casemate      ; brands
+                      ; brand_cellularline  ; brands
+                      ; brand_globocomm     ; brands
+                      ; brand_griffin       ; brands
+                      ; brand_hama          ; brands
+                      ; brand_htc           ; brands
+                      ; brand_ifrogz        ; brands
+                      ; brand_iluv          ; brands
+                      ; brand_kensington    ; brands
+                      ; brand_kingston      ; brands
+                      ; brand_lg            ; brands
+                      ; brand_mca           ; brands
+                      ; brand_mcab          ; brands
+                      ; brand_motorola      ; brands
+                      ; brand_multibrackets ; brands
+                      ; brand_nlu           ; brands
+                      ; brand_nokia         ; brands
+                      ; brand_philips       ; brands
+                      ; brand_plantronics   ; brands
+                      ; brand_proporta      ; brands
+                      ; brand_puro          ; brands
+                      ; brand_qtek          ; brands
+                      ; brand_rim           ; brands
+                      ; brand_samsung       ; brands
+                      ; brand_sandisk       ; brands
+                      ; brand_sonim         ; brands
+                      ; brand_sony          ; brands
+                      ; brand_telepower     ; brands
+                      ; brand_tiptel        ; brands
+                      ; brand_transcend     ; brands
+                      ; brand_trexta        ; brands
+                      ; brand_trust         ; brands
+                      ; brand_tucano        ; brands
+                      ; brand_vivanco       ; brands
+                      ; brand_wentronic     ; brands
+                      ; brand_xtrememac     ; brands

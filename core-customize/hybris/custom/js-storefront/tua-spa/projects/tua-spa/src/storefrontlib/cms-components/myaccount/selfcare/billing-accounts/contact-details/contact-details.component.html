@@ -1,0 +1,46 @@
+<cx-selfcare-card
+  *ngIf="getContactDetails$ | async as contact"
+  i18nRoot="{{ domainType }}"
+  [showHint]="true"
+>
+  <section main class="details">
+    <div class="property">
+      <label>{{
+        'selfcare.billingAccounts.details.contact.details.phoneNumber'
+          | cxTranslate
+      }}</label>
+      <span class="value">
+        {{ contact.characteristic.phoneNumber }}
+      </span>
+    </div>
+
+    <div class="property">
+      <label>{{
+        'selfcare.billingAccounts.details.contact.details.email' | cxTranslate
+      }}</label>
+      <span class="value">
+        {{ contact.characteristic.emailAddress }}
+      </span>
+    </div>
+
+    <div class="property full-width">
+      <label>{{
+        'selfcare.billingAccounts.details.contact.details.address' | cxTranslate
+      }}</label>
+      <span class="value">
+        {{ contact.characteristic.street1 }}
+      </span>
+      <span class="value">
+        {{ contact.characteristic.city }}, {{ contact.characteristic.country }}
+      </span>
+    </div>
+  </section>
+</cx-selfcare-card>
+
+<ng-template #emptyList>
+  <p class="is-empty">
+    {{
+      'selfcare.billingAccounts.details.contact.details.emptyList' | cxTranslate
+    }}
+  </p>
+</ng-template>

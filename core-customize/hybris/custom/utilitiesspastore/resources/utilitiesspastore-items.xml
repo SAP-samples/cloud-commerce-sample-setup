@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<!--
+	ATTENTION: This is just an example file. You have to edit it according to your needs.
+-->
+
+<items xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="items.xsd">
+
+  <itemtypes>
+    <!--
+                <itemtype generate="true"
+                   code="MyProduct"
+                   jaloclass="de.hybris.platform.utilitiesspastore.jalo.MyProduct"
+                   extends="Product"
+                   autocreate="true"
+               >
+                    <attributes>
+                        <attribute qualifier="myExampleInitialStringField" type="java.lang.String">
+                            <description>My Example Initial String Value</description>
+                            <modifiers initial="true"/>
+                            <persistence type="property"/>
+                        </attribute>
+
+                        <attribute qualifier="myExampleBooleanField" type="java.lang.Boolean">
+                            <description>Example Initial Boolean Field</description>
+                       <persistence type="property"/>
+                        </attribute>
+
+                        <attribute qualifier="media" type="Media">
+                            <persistence type="property"/>
+                        </attribute>
+
+                    </attributes>
+                </itemtype>
+        -->
+  </itemtypes>
+</items>

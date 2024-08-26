@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<configuration>
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <Pattern>[%level] [%logger] %msg%n</Pattern>
+    </encoder>
+  </appender>
+
+  <logger name="javax.validation" level="info"/>
+  <logger name="org.apache" level="info"/>
+
+  <logger name="org.springframework.beans.factory" level="warn"/>
+  <logger name="org.springframework.transaction" level="info"/>
+  <logger name="org.springframework.validation" level="info"/>
+  <logger name="org.springframework.test" level="warn"/>
+  <logger name="org.springframework.jdbc" level="warn"/>
+
+  <logger name="com.hybris.kernel.services.aggregation" level="info"/>
+  <logger name="com.hybris.kernel" level="info"/>
+  <logger name="com.hybris.kernel.typesystem" level="info"/>
+  <!--logger name="com.hybris.kernel.engine.jdbc" level="trace" /-->
+  <logger name="com.hybris.kernel.utils.SystemInformationLogger" level="info"/>
+  <logger name="com.hybris.services.entitlements" level="info"/>
+  <logger name="com.sun.jersey.api.container.filter.LoggingFilter" level="info"/>
+
+  <root level="error">
+    <appender-ref ref="STDOUT"/>
+  </root>
+
+  <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
+    <resetJUL>true</resetJUL>
+  </contextListener>
+</configuration>

@@ -1,0 +1,12 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Importing the pre configured bundle product offerings
+
+# Macros / Replacement Parameter definitions
+$productCatalog = utilitiesSpaProductCatalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+
+INSERT_UPDATE TmaBpoPreConfig; code[unique = true]      ; name[lang = en]             ; rootBpo(code, $catalogVersion); preConfigSpos(code, $catalogVersion)            ; $catalogVersion;
+                             ; preconfigElectricityDeal ; Pre Config Electricity Deal ; electricityDeal               ; electric_plan_basic, lightbulb_energy_efficient ;

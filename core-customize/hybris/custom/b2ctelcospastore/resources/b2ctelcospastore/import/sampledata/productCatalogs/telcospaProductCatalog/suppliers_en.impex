@@ -1,0 +1,74 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Importing Suppliers into Telco Store
+
+$productCatalog = telcospaProductCatalog
+$catalogVersion = catalogversion(catalog(id[default=$productCatalog]), version[default='Staged'])[unique=true, default=$productCatalog:Staged]
+$lang = en
+
+UPDATE Category; code[unique = true] ; name[lang = $lang]; description[lang = $lang]; $catalogVersion
+               ; brands              ; Brands            ; Brands                   ;
+               ; brand_adapt         ; Adapt             ;                          ;
+               ; brand_amazon        ; Amazon            ;                          ;
+               ; brand_apple         ; Apple             ;                          ;
+               ; brand_arcticcooling ; Arctic Cooling    ;                          ;
+               ; brand_beez          ; be-ez             ;                          ;
+               ; brand_belkin        ; Belkin            ;                          ;
+               ; brand_blackberry    ; BlackBerry        ;                          ;
+               ; brand_bluetrek      ; Bluetrek          ;                          ;
+               ; brand_brodit        ; Brodit            ;                          ;
+               ; brand_casemate      ; Case-mate         ;                          ;
+               ; brand_cellularline  ; Cellular Line     ;                          ;
+               ; brand_globocomm     ; GloboComm         ;                          ;
+               ; brand_griffin       ; Griffin           ;                          ;
+               ; brand_hama          ; Hama              ;                          ;
+               ; brand_htc           ; HTC               ;                          ;
+               ; brand_ifrogz        ; ifrogz            ;                          ;
+               ; brand_iluv          ; iLuv              ;                          ;
+               ; brand_kensington    ; Kensington        ;                          ;
+               ; brand_kingston      ; Kingston          ;                          ;
+               ; brand_lg            ; LG                ;                          ;
+               ; brand_mca           ; M-Cab             ;                          ;
+               ; brand_mcab          ; MCA               ;                          ;
+               ; brand_motorola      ; Motorola          ;                          ;
+               ; brand_multibrackets ; Multibrackets     ;                          ;
+               ; brand_nlu           ; NLU               ;                          ;
+               ; brand_nokia         ; Nokia             ;                          ;
+               ; brand_philips       ; Philips           ;                          ;
+               ; brand_plantronics   ; Plantronics       ;                          ;
+               ; brand_proporta      ; Proporta          ;                          ;
+               ; brand_puro          ; PURO              ;                          ;
+               ; brand_qtek          ; Qtek              ;                          ;
+               ; brand_rim           ; RIM / Blackberry  ;                          ;
+               ; brand_samsung       ; Samsung           ;                          ;
+               ; brand_sandisk       ; Sandisk           ;                          ;
+               ; brand_sonim         ; Sonim             ;                          ;
+               ; brand_sony          ; Sony Ericsson     ;                          ;
+               ; brand_telepower     ; Telepower         ;                          ;
+               ; brand_tiptel        ; Tiptel            ;                          ;
+               ; brand_transcend     ; Transcend         ;                          ;
+               ; brand_trexta        ; Trexta            ;                          ;
+               ; brand_trust         ; Trust             ;                          ;
+               ; brand_tucano        ; Tucano            ;                          ;
+               ; brand_vivanco       ; Vivanco           ;                          ;
+               ; brand_wentronic     ; Wentronic         ;                          ;
+               ; brand_xtrememac     ; XtremeMac         ;                          ;
+               ; brand_miwifi        ; MiWiFi            ;                          ;
+               ; brand_1             ; HP                ; HP                       ;
+               ; brand_10            ; Canon             ; Canon                    ;
+               ; brand_103           ; NEC               ; NEC                      ;
+               ; brand_128           ; Targus            ; Targus                   ;
+               ; brand_18            ; Kingston          ; Kingston                 ;
+               ; brand_2             ; Toshiba           ; Toshiba                  ;
+               ; brand_2171          ; ICIDU             ; ICIDU                    ;
+               ; brand_251           ; TDK               ; TDK                      ;
+               ; brand_26            ; Samsung           ; Samsung                  ;
+               ; brand_5             ; Sony              ; Sony                     ;
+               ; brand_702           ; Sweex             ; Sweex                    ;
+               ; brand_745           ; Canyon            ; Canyon                   ;
+               ; brand_75            ; Fujifilm          ; Fujifilm                 ;
+               ; brand_750           ; Dane-Elec         ; Dane-Elec                ;
+               ; brand_88            ; Kodak             ; Kodak                    ;
+               ; brand_91            ; Logitech          ; Logitech                 ;

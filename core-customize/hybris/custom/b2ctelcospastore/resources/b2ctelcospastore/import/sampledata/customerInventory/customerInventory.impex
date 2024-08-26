@@ -1,0 +1,189 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for importing the customer product inventory.
+
+$catalog-id = telcospaProductCatalog
+$catalog-version = Online
+$catalogVersion = catalogversion(catalog(id[default = $catalog-id]), version[default = $catalog-version])[unique = true, default = $catalog-id:$catalog-version]
+
+#% setAccessibility(true)
+#% Date date = new Date();
+#% date.setMonth(date.getMonth()+1);
+#% impex.definitions.put("$oneMonthAfterCurrent", new java.text.SimpleDateFormat("dd.MM.yyyy").format(date))
+
+#% setAccessibility(true)
+#% Date date = new Date();
+#% date.setDate(date.getDate()+7);
+#% impex.definitions.put("$oneWeekAfterCurrent", new java.text.SimpleDateFormat("dd.MM.yyyy").format(date))
+
+# Import sample subscribed products (tmForum/SID Product equivalent)
+INSERT_UPDATE TmaSubscribedProduct; id[unique = true]                          ; serviceType(code); startDate[dateformat = dd.MM.yyyy]; endDate[dateformat = dd.MM.yyyy]; billingFrequency; productCode                              ; name                                                           ; bundledProductCode; subscriptionStatus; contractDuration; billingsystemId[unique = true]; billingSubscriptionId; contractFrequency; paymentMethodId; productSpecification(id, $catalogVersion); orderNumber; orderEntryNumber
+# standalone gsm subscribed products
+                                  ; GSM_Large_Mark_Johnson                     ; TARIFF_PLAN      ; 13.10.2022                        ; 13.10.2025                      ; monthly         ; gsm_large                                ; GSM Unlimited Plan                                             ;                   ; ACTIVE            ; 36              ; IN                            ; bsid10001            ; months           ; 9874687087554  ; gsm                                      ; 90000001   ; 0
+                                  ; GSM_Medium_David_Brown                     ; TARIFF_PLAN      ; 01.02.2020                        ; 31.01.2025                      ; monthly         ; gsm_medium                               ; GSM Medium Plan                                                ;                   ; ACTIVE            ; 5               ; IN                            ; bsid10031            ; years            ;                ; gsm                                      ; 90000014   ; 0
+                                  ; GSM_Small_Joseph_Williams                  ; TARIFF_PLAN      ; 12.09.2021                        ; 12.09.2022                      ; monthly         ; gsm_small                                ; GSM Small Plan                                                 ;                   ; ACTIVE            ; 12              ; IN                            ; bsid100211           ; months           ; 9874687087554  ; gsm                                      ; 90000009   ; 0
+
+# standalone internet subscribed products
+                                  ; Internet_Copper_Etta_Berg                  ; TARIFF_PLAN      ; 12.08.2021                        ; 12.08.2022                      ; monthly         ; copper_internet                          ; Internet Copper                                                ;                   ; ACTIVE            ; 12              ; IN                            ; bsid10011            ; months           ; 9874687087554  ; copper_internet                          ; 90000020   ; 0
+
+# mobile deal gsm subscribed products
+                                  ; GSM_Medium_Emma_Smith                      ; TARIFF_PLAN      ; 12.09.2021                        ; 12.09.2022                      ; monthly         ; gsm_medium                               ; GSM Medium Plan                                                ; mobileDeal        ; ACTIVE            ; 12              ; IN                            ; bsid10022            ; months           ; 9874687087554  ; gsm                                      ; 90000002   ; 1
+                                  ; GSM_Medium_Etta_Berg                       ; TARIFF_PLAN      ; 14.06.2022                        ; 13.06.2025                      ; monthly         ; gsm_medium                               ; GSM Medium Plan                                                ; mobileDeal        ; ACTIVE            ; 36              ; IN                            ; bsid10012            ; months           ;                ; gsm                                      ; 90000007   ; 0
+                                  ; GSM_Small_Etta_Berg                        ; TARIFF_PLAN      ; 12.09.2021                        ; 12.09.2022                      ; monthly         ; gsm_small                                ; GSM Small Plan                                                 ;                   ; ACTIVE            ; 12              ; IN                            ; bsid10013            ; months           ; 9874687087554  ; gsm                                      ; 90000012   ; 0
+                                  ; GSM_Small_David_Brown                      ; TARIFF_PLAN      ; 07.04.2022                        ; $oneWeekAfterCurrent            ; monthly         ; gsm_small                                ; GSM Small Plan                                                 ; mobileDeal        ; ACTIVE            ; 12              ; IN                            ; bsid10020            ; months           ; 9874687087554  ; gsm                                      ; 90000004   ; 0
+                                  ; GSM_Large_David_Brown                      ; TARIFF_PLAN      ; 01.02.2020                        ; 07.09.2022                      ; monthly         ; gsm_large                                ; GSM Large Plan                                                 ; mobileDeal        ; ACTIVE            ; 5               ; IN                            ; bsid10032            ; years            ; 9874687087554  ; gsm                                      ; 90000004   ; 1
+                                  ; GSM_Small_Ronnie_Ray                       ; TARIFF_PLAN      ; 12.09.2022                        ; $oneMonthAfterCurrent           ; monthly         ; gsm_small                                ; GSM Small Plan                                                 ;                   ; ACTIVE            ; 12              ; IN                            ; bsid10232            ; months           ; 9874687087554  ; gsm                                      ; 90000013   ; 0
+
+# mobile deal addons subscribed products
+                                  ; smartphone_warranty_Etta_Berg              ; ADD_ON           ; 14.06.2022                        ; 13.06.2025                      ;                 ; smartphone_warranty                      ; Smartphone Warranty                                            ; mobileDeal        ; ACTIVE            ; 36              ; IN                            ; bsid10014            ; months           ;                ; warranty                                 ; 90000007   ; 1
+                                  ; smartphone_warranty_David_Brown            ; ADD_ON           ; 01.02.2020                        ; 31.01.2025                      ;                 ; smartphone_warranty                      ; Smartphone Warranty                                            ; mobileDeal        ; ACTIVE            ; 5               ; IN                            ; bsid10033            ; years            ;                ; warranty                                 ; 90000004   ; 2
+                                  ; eSim_David_Brown                           ; ADD_ON           ; 01.02.2020                        ; 31.01.2025                      ;                 ; eSim                                     ; eSIM                                                           ; mobileDeal        ; ACTIVE            ; 5               ; IN                            ; bsid10034            ; years            ;                ; gsm                                      ; 90000004   ; 3
+                                  ; 5gpow_David_Brown                          ; ADD_ON           ; 01.02.2020                        ; 31.01.2025                      ; monthly         ; 5gpow                                    ; 5G Pow                                                         ; mobileDeal        ; ACTIVE            ; 5               ; IN                            ; bsid10035            ; years            ;                ; internet                                 ; 90000004   ; 4
+
+# mobile deal devices subscribed products
+                                  ; iPhone_13_Etta_Berg                        ; ADD_ON           ; 14.06.2022                        ; 13.06.2025                      ; monthly         ; iPhone_13_midnight_128g                  ; iPhone 13                                                      ; mobileDeal        ; ACTIVE            ; 36              ; IN                            ; bsid10015            ; months           ;                ;                                          ; 90000007   ; 2
+                                  ; iPhone_13_Pro_Max_David_Brown              ; ADD_ON           ; 01.02.2020                        ; 31.01.2025                      ; monthly         ; iPhone_13_Pro_Max_silver_128g            ; iPhone 13 Pro Max                                              ; mobileDeal        ; ACTIVE            ; 5               ; IN                            ; bsid10036            ; years            ;                ;                                          ; 90000004   ; 6
+
+# quad play gsm subscribed products
+                                  ; GSM_Large_Tim_James                        ; TARIFF_PLAN      ; 20.09.2023                        ; 19.09.2025                      ; monthly         ; gsm_large                                ; GSM Unlimited Plan                                             ; quadPlay          ; ACTIVE            ; 24              ; IN                            ; bsid10041            ; months           ; 9874687087554  ; gsm                                      ; 90000003   ; 1
+                                  ; eSim_Tim_James                             ; ADD_ON           ; 20.09.2023                        ; 19.09.2025                      ; monthly         ; eSim                                     ; eSIM                                                           ; quadPlay          ; ACTIVE            ; 24              ; IN                            ; bsid10042            ; months           ; 9874687087554  ; gsm                                      ; 90000003   ; 2
+
+# quad play internet subscribed products
+                                  ; Fiber_Internet_Tim_James                   ; TARIFF_PLAN      ; 20.09.2023                        ; 19.09.2025                      ; monthly         ; fiber_internet                           ; Fiber Internet                                                 ; quadPlay          ; ACTIVE            ; 24              ; IN                            ; bsid10043            ; months           ; 9874687087554  ; fiber_internet                           ; 90000003   ; 3
+                                  ; Router_X1_Tim_James                        ; ADD_ON           ; 20.09.2023                        ; 19.09.2025                      ; monthly         ; router_x1                                ; Router X1                                                      ; quadPlay          ; ACTIVE            ; 24              ; IN                            ; bsid10044            ; months           ; 9874687087554  ;                                          ; 90000003   ; 4
+                                  ; Tv_Unlimited_Tim_James                     ; TARIFF_PLAN      ; 20.09.2023                        ; 19.09.2025                      ; monthly         ; tv_unlimited                             ; TV Unlimited                                                   ; quadPlay          ; ACTIVE            ; 24              ; IN                            ; bsid10045            ; months           ; 9874687087554  ; tv                                       ; 90000003   ; 5
+                                  ; MiBox_5G_Tim_James                         ; ADD_ON           ; 20.09.2023                        ; 19.09.2025                      ; monthly         ; mibox_5g                                 ; MiBox 5G                                                       ; quadPlay          ; ACTIVE            ; 24              ; IN                            ; bsid10046            ; months           ; 9874687087554  ;                                          ; 90000003   ; 6
+
+# home deal subscribed products
+                                  ; Internet_5G_Joseph_Williams                ; TARIFF_PLAN      ; 14.06.2022                        ; 13.06.2025                      ; monthly         ; 5g_internet                              ; Internet 5G                                                    ; homeDeal          ; ACTIVE            ; 36              ; IN                            ; bsid1012             ; months           ; 9874687087554  ; 5g_internet                              ; 90000008   ; 0
+                                  ; Internet_5G_Joseph_Williams_Unlimited      ; TARIFF_PLAN      ; 14.06.2022                        ; 13.06.2025                      ; monthly         ; 5g_internet                              ; Unlimited Internet 5G                                          ; homeDeal          ; ACTIVE            ; 36              ; IN                            ; bsid10114            ; months           ; 9874687087554  ; 5g_internet                              ; 90000008   ; 4
+                                  ; Modem_5G_Joseph_Williams                   ; ADD_ON           ; 14.06.2022                        ; 13.06.2025                      ;                 ; modem_5G                                 ; Modem 5G                                                       ; homeDeal          ; ACTIVE            ; 36              ; IN                            ; bsid1013             ; months           ; 9874687087554  ;                                          ; 90000008   ; 1
+
+                                  ; Installation_Service_Joseph_Williams       ; ADD_ON           ; 14.06.2022                        ; 13.06.2025                      ;                 ; installation_service                     ; Internet 5G - Installation Service                             ; homeDeal          ; ACTIVE            ; 36              ; IN                            ; bsid1014             ; months           ; 9874687087554  ; internet                                 ; 90000008   ; 2
+                                  ; TV_200_Joseph_Williams                     ; TARIFF_PLAN      ; 14.06.2022                        ; 13.06.2025                      ; monthly         ; tv_200                                   ; TV 200 Plan                                                    ; homeDeal          ; ACTIVE            ; 36              ; IN                            ; bsid1015             ; months           ; 9874687087554  ; tv                                       ; 90000008   ; 3
+                                  ; GSM_Large_Etta_Berg                        ; TARIFF_PLAN      ; 14.06.2022                        ; 13.06.2025                      ; monthly         ; gsm_large                                ; GSM Unlimited Plan                                             ; homeDeal          ; ACTIVE            ; 36              ; IN                            ; bsid10016            ; months           ; 9874687087554  ; gsm                                      ; 90000007   ; 3
+                                  ; Fiber_Internet_Etta_Berg                   ; TARIFF_PLAN      ; 14.06.2022                        ; 13.06.2025                      ; monthly         ; fiber_internet                           ; Fiber Internet                                                 ; homeDeal          ; ACTIVE            ; 36              ; IN                            ; bsid10017            ; months           ; 9874687087554  ; fiber_internet                           ; 90000007   ; 4
+                                  ; TV_200_Etta_Berg                           ; TARIFF_PLAN      ; 14.06.2022                        ; 13.06.2025                      ; monthly         ; tv_200                                   ; TV 200 Plan                                                    ; homeDeal          ; ACTIVE            ; 36              ; IN                            ; bsid10018            ; months           ; 9874687087554  ; tv                                       ; 90000007   ; 5
+                                  ; MiBox_4G_Etta_Berg                         ; ADD_ON           ; 14.06.2022                        ; 13.06.2025                      ; monthly         ; mibox_4g                                 ; MiBox 4G                                                       ; homeDeal          ; ACTIVE            ; 36              ; IN                            ; bsid10019            ; months           ; 9874687087554  ;                                          ; 90000007   ; 6
+
+                                  ; Internet_5G_David_Brown                    ; TARIFF_PLAN      ; 01.02.2020                        ; 31.01.2025                      ; monthly         ; 5g_internet                              ; Internet 5G                                                    ; homeDeal          ; ACTIVE            ; 5               ; IN                            ; bsid10037            ; years            ; 9874687087554  ; 5g_internet                              ; 90000004   ; 8
+                                  ; Router_X1_David_Brown                      ; ADD_ON           ; 01.02.2020                        ; 31.01.2025                      ;                 ; router_x1                                ; Router X1                                                      ; homeDeal          ; ACTIVE            ; 5               ; IN                            ; bsid10038            ; years            ; 9874687087554  ;                                          ; 90000004   ; 9
+                                  ; Tv_Unlimited_David_Brown                   ; TARIFF_PLAN      ; 01.02.2020                        ; 31.01.2025                      ; monthly         ; tv_unlimited                             ; TV Unlimited                                                   ; homeDeal          ; ACTIVE            ; 5               ; IN                            ; bsid10039            ; years            ; 9874687087554  ; tv                                       ; 90000004   ; 10
+                                  ; MiBox_5G_David_Brown                       ; ADD_ON           ; 01.02.2020                        ; 31.01.2025                      ;                 ; mibox_5g                                 ; MiBox 5G                                                       ; homeDeal          ; ACTIVE            ; 5               ; IN                            ; bsid100310           ; years            ; 9874687087554  ;                                          ; 90000004   ; 11
+                                  ; Unlimited_Nat_Limited_Internat_David_Brown ; TARIFF_PLAN      ; 01.02.2020                        ; 31.01.2025                      ; monthly         ; unlimitedNationalAndLimitedInternational ; Landline: Unlimited National and Limited International Calling ; homeDeal          ; ACTIVE            ; 5               ; IN                            ; bsid100311           ; years            ;                ;                                          ; 90000004   ; 12
+
+
+# Import sample subscription bases with associated subscribed products and subscription accesses
+INSERT_UPDATE TmaSubscriptionBase; subscriberIdentity[unique = true]; billingSystemId[unique = true]; subscribedProducts(id)
+                                 ; Mark_Johnson_Standalone          ; IN                            ; GSM_Large_Mark_Johnson
+                                 ; Joseph_Williams_GSM_Small        ; IN                            ; GSM_Small_Joseph_Williams
+                                 ; Emma_Smith_GSM_Medium            ; IN                            ; GSM_Medium_Emma_Smith
+                                 ; Joseph_Williams_HomeDeal         ; IN                            ; Internet_5G_Joseph_Williams, Internet_5G_Joseph_Williams_Unlimited, Modem_5G_Joseph_Williams, Installation_Service_Joseph_Williams, TV_200_Joseph_Williams
+                                 ; Tim_James_QuadPlayDeal           ; IN                            ; GSM_Large_Tim_James, eSim_Tim_James, Fiber_Internet_Tim_James, Router_X1_Tim_James, Tv_Unlimited_Tim_James, MiBox_5G_Tim_James
+                                 ; Etta_Berg_HomeDeal               ; IN                            ; GSM_Large_Etta_Berg, Fiber_Internet_Etta_Berg, TV_200_Etta_Berg,  MiBox_4G_Etta_Berg
+                                 ; Etta_Berg_Mobile_Deal            ; IN                            ; GSM_Medium_Etta_Berg, smartphone_warranty_Etta_Berg, iPhone_13_Etta_Berg
+                                 ; Etta_Berg_GSM                    ; IN                            ; GSM_Small_Etta_Berg
+                                 ; David_Brown_GSM                  ; IN                            ; GSM_Small_David_Brown
+                                 ; Etta_Berg_Internet_Standalone    ; IN                            ; Internet_Copper_Etta_Berg
+                                 ; David_Brown_Standalone           ; IN                            ; GSM_Medium_David_Brown
+                                 ; David_Brown_HomeDeal             ; IN                            ; Internet_5G_David_Brown, Router_X1_David_Brown, Tv_Unlimited_David_Brown, MiBox_5G_David_Brown, Unlimited_Nat_Limited_Internat_David_Brown
+                                 ; David_Brown_GSM_Large            ; IN                            ; GSM_Large_David_Brown, smartphone_warranty_David_Brown, eSim_David_Brown, 5gpow_David_Brown, iPhone_13_Pro_Max_David_Brown
+                                 ; Ronnie_Ray_GSM_Small             ; IN                            ; GSM_Small_Ronnie_Ray
+
+# Import sample subscription accesses for B2C customers
+INSERT_UPDATE TmaSubscriptionAccess; principal(uid)[unique = true]; subscriptionBase(billingSystemId, subscriberIdentity)[unique = true]; accessType(code)
+                                   ; mark.johnson@hybris.com      ; IN:Mark_Johnson_Standalone                                          ; OWNER
+                                   ; joseph.williams@hybris.com   ; IN:Joseph_Williams_GSM_Small                                        ; OWNER
+                                   ; emma.smith@hybris.com        ; IN:Emma_Smith_GSM_Medium                                            ; OWNER
+                                   ; ronnie.ray@hybris.com        ; IN:Ronnie_Ray_GSM_Small                                             ; OWNER
+                                   ; joseph.williams@hybris.com   ; IN:Joseph_Williams_HomeDeal                                         ; OWNER
+                                   ; tim.james@hybris.com         ; IN:Tim_James_QuadPlayDeal                                           ; OWNER
+                                   ; etta.berg@hybris.com         ; IN:Etta_Berg_HomeDeal                                               ; OWNER
+                                   ; etta.berg@hybris.com         ; IN:Etta_Berg_Mobile_Deal                                            ; OWNER
+                                   ; etta.berg@hybris.com         ; IN:Etta_Berg_GSM                                                    ; OWNER
+                                   ; david.brown@hybris.com       ; IN:David_Brown_GSM                                                  ; OWNER
+                                   ; etta.berg@hybris.com         ; IN:Etta_Berg_Internet_Standalone                                    ; OWNER
+                                   ; david.brown@hybris.com       ; IN:David_Brown_Standalone                                           ; OWNER
+                                   ; david.brown@hybris.com       ; IN:David_Brown_HomeDeal                                             ; OWNER
+                                   ; david.brown@hybris.com       ; IN:David_Brown_GSM_Large                                            ; OWNER
+                                   ; olivia.ann@hybris.com        ; IN:David_Brown_GSM_Large                                            ; BENEFICIARY
+
+# Import sample billing accounts
+INSERT_UPDATE TmaBillingAccount; billingAccountId[unique = true]; billingSystemId[unique = true]; subscriptionBases(subscriberIdentity); parent(billingAccountId, billingSystemId)
+                               ; Mark_Johnson_BAcc              ; IN                            ; Mark_Johnson_Standalone
+                               ; Emma_Smith_BAcc                ; IN                            ; Emma_Smith_GSM_Medium
+                               ; Joseph_Williams_BAcc           ; IN                            ; Joseph_Williams_HomeDeal,Joseph_Williams_GSM_Small
+                               ; Tim_James_BAcc                 ; IN                            ; Tim_James_QuadPlayDeal
+                               ; Etta_Berg_BAcc                 ; IN                            ; Etta_Berg_HomeDeal, Etta_Berg_GSM, Etta_Berg_Internet_Standalone, Etta_Berg_Mobile_Deal
+                               ; David_Brown_BAcc               ; IN                            ; David_Brown_Standalone, David_Brown_HomeDeal, David_Brown_GSM_Large, David_Brown_GSM
+                               ; Ronnie_Ray_BAcc                ; IN                            ; Ronnie_Ray_GSM_Small
+
+# Import sample billing agreement and billing agreement item
+INSERT_UPDATE TmaBillingAgreementItem; id[unique = true]                ; subscribedProducts(id)
+                                     ; GSM_Large_Standalone_BaItem      ; GSM_Large_Mark_Johnson
+                                     ; GSM_Small_BaItem                 ; GSM_Small_Etta_Berg
+                                     ; MobileDeal_Etta_Berg_BaItem      ; GSM_Medium_Etta_Berg,smartphone_warranty_Etta_Berg,iPhone_13_Etta_Berg
+                                     ; HomeDeal_Etta_Berg_BaItem        ; GSM_Large_Etta_Berg,Fiber_Internet_Etta_Berg,TV_200_Etta_Berg,MiBox_4G_Etta_Berg
+                                     ; GSM_Small_BaItem_David_Brown     ; GSM_Small_David_Brown
+                                     ; Internet_Standalone_BaItem       ; Internet_Copper_Etta_Berg
+                                     ; GSM_Medium_Emma_Smith_BaItem     ; GSM_Medium_Emma_Smith
+                                     ; GSM_Small_Joseph_Williams_BaItem ; GSM_Small_Joseph_Williams
+                                     ; HomeDeal_Joseph_Williams_BaItem  ; Internet_5G_Joseph_Williams, Internet_5G_Joseph_Williams_Unlimited, Modem_5G_Joseph_Williams, Installation_Service_Joseph_Williams, TV_200_Joseph_Williams
+                                     ; GSM_Small_Ronnie_Ray_BaItem      ; GSM_Small_Ronnie_Ray
+
+INSERT_UPDATE TmaBillingAgreementTerm; id[unique = true]         ; billingSystemId; start[dateformat = dd.MM.yyyy]; end[dateformat = dd.MM.yyyy]; length; frequency(code); offerTermRef
+                                     ; 12_months_term_renewal    ; IN             ; 07.04.2022                    ; $oneWeekAfterCurrent        ; 12    ; monthly        ; monthly_12
+                                     ; 12_months_term            ; IN             ; 12.09.2021                    ; 12.09.2022                  ; 12    ; monthly        ; monthly_12
+                                     ; 12_months_term_ronnie     ; IN             ; 12.09.2022                    ; $oneMonthAfterCurrent       ; 12    ; monthly        ; monthly_12
+                                     ; internet_term             ; IN             ; 12.08.2021                    ; 12.08.2022                  ; 12    ; monthly        ; monthly_12
+                                     ; gsm_term_etta_berg        ; IN             ; 12.09.2021                    ; 12.09.2022                  ; 12    ; monthly        ; monthly_12
+                                     ; homeDeal_term_etta_berg   ; IN             ; 14.06.2022                    ; 13.06.2025                  ; 36    ; monthly        ; monthly_36
+                                     ; mobileDeal_term_etta_berg ; IN             ; 14.06.2022                    ; 13.06.2025                  ; 36    ; monthly        ; monthly_36
+                                     ; 36_months_term            ; IN             ; 13.10.2022                    ; 13.10.2025                  ; 36    ; monthly        ; monthly_36
+
+INSERT_UPDATE TmaBillingAgreement; id[unique = true]                      ; billingSystemId; term(id)               ; agreementItems(id)
+                                 ; gsm_contract_12_6_2021                 ; IN             ; 12_months_term         ; GSM_Small_BaItem
+                                 ; gsm_contract_12_6_2021_David_Brown     ; IN             ; 12_months_term_renewal ; GSM_Small_BaItem_David_Brown
+                                 ; gsm_contract_emma_smith                ; IN             ; 12_months_term         ; GSM_Medium_Emma_Smith_BaItem
+                                 ; gsm_contract_joseph_williams           ; IN             ; 12_months_term         ; GSM_Small_Joseph_Williams_BaItem
+                                 ; homeDeal_contract_joseph_williams      ; IN             ; 36_months_term         ; HomeDeal_Joseph_Williams_BaItem
+                                 ; internet_standalone_contract_etta_berg ; IN             ; internet_term          ; Internet_Standalone_BaItem
+                                 ; homeDeal_contract_etta_berg            ; IN             ; internet_term          ; HomeDeal_Etta_Berg_BaItem
+                                 ; mobileDeal_contract_etta_berg          ; IN             ; internet_term          ; MobileDeal_Etta_Berg_BaItem
+                                 ; gsm_contract_etta_berg                 ; IN             ; gsm_term_etta_berg     ; GSM_Small_BaItem
+                                 ; gsm_contract_ronnie_ray                ; IN             ; 12_months_term_ronnie  ; GSM_Small_Ronnie_Ray_BaItem
+                                 ; gsm_contract_mark_johnson              ; IN             ; 36_months_term         ; GSM_Large_Standalone_BaItem
+
+#Import sample Usage unit conversion map
+INSERT_UPDATE UsageUnit; id[unique = true]       ; unitConversionMap(key(UsageUnit(code)), value)[map-delimiter = |]
+                       ; gb                      ; mb->1024|gb->1
+                       ; radio_stations          ; radio_stations->1
+                       ; theme_packages          ; theme_packages->1
+                       ; movies_on_demand        ; movies_on_demand->1
+                       ; documentaries_on_demand ; documentaries_on_demand->1
+                       ; blockbusters_on_demand  ; blockbusters_on_demand->1
+                       ; videos_on_demand        ; videos_on_demand->1
+                       ; sessions                ; sessions->1
+                       ; channels                ; channels->1
+                       ; unit                    ; unit->1
+                       ; phone_minutes           ; phone_minutes->1
+                       ; sms                     ; sms->1
+                       ; mobile_data             ; mobile_data->1|mb->1|gb->0.0009765625
+                       ; music_pieces            ; music_pieces->1
+                       ; replacements            ; replacements->1
+                       ; mb                      ; mb->1|gb->0.0009765625
+                       ; gbps                    ; gbps->1|mbps->1024
+                       ; mbps                    ; mbps->1|gbps->0.0009765625
+
+#Identification sample data
+INSERT_UPDATE TmaIdentification; identificationType(code); identificationNumber[unique = true]; customers(uid)
+                               ; DRIVING_LICENSE         ; NHL12506878                        ; mark.johnson@hybris.com
+                               ; NATIONAL_ID             ; 380645180851                       ; emma.smith@hybris.com
+                               ; PASSPORT                ; J8369867                           ; anne.taylor@hybris.com
+                               ; SOCIAL_SECURITY         ; 67925538927                        ; david.brown@hybris.com
+                               ; SOCIAL_SECURITY         ; 67925538928                        ; etta.berg@hybris.com
+                               ; SOCIAL_SECURITY         ; 67925538929                        ; tim.james@hybris.com
+
+

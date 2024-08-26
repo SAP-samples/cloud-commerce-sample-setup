@@ -1,0 +1,435 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# Impex for Importing Product Media into Media SPA Store
+
+$productCatalog = mediaspaProductCatalog
+$catalogVersion = catalogversion(catalog(id[default=$productCatalog]), version[default='Staged'])[unique=true, default=$productCatalog:Staged]
+$thumbnail = thumbnail(code, $catalogVersion)
+$picture = picture(code, $catalogVersion)
+$thumbnails = thumbnails(code, $catalogVersion)
+$detail = detail(code, $catalogVersion)
+$normal = normal(code, $catalogVersion)
+$others = others(code, $catalogVersion)
+$data_sheet = data_sheet(code, $catalogVersion)
+$medias = medias(code, $catalogVersion)
+$galleryImages = galleryImages(qualifier, $catalogVersion)
+$siteResource = jar:de.hybris.platform.mediaspastore.constants.MediaspastoreConstants&/mediaspastore/import/sampledata/productCatalogs/$productCatalog
+
+INSERT_UPDATE Media; mediaFormat(qualifier); code[unique = true]                         ; @media[translator = de.hybris.platform.impex.jalo.media.MediaDataTranslator]; mime[default = 'image/jpg']; $catalogVersion; folder(qualifier)[default = images][forceWrite = true]
+#########################################
+########       Digital Media     #######
+#########################################
+# Underworld TV Show
+                   ; 1200Wx1200H           ; /1200Wx1200H/underworld.jpg                 ; $siteResource/images/1200Wx1200H/underworld.jpg
+                   ; 515Wx515H             ; /515Wx515H/underworld.jpg                   ; $siteResource/images/515Wx515H/underworld.jpg
+                   ; 300Wx300H             ; /300Wx300H/underworld.jpg                   ; $siteResource/images/300Wx300H/underworld.jpg
+                   ; 96Wx96H               ; /96Wx96H/underworld.jpg                     ; $siteResource/images/96Wx96H/underworld.jpg
+                   ; 65Wx65H               ; /65Wx65H/underworld.jpg                     ; $siteResource/images/65Wx65H/underworld.jpg
+                   ; 30Wx30H               ; /30Wx30H/underworld.jpg                     ; $siteResource/images/30Wx30H/underworld.jpg
+# Underworld Movie
+                   ; 1200Wx1200H           ; /1200Wx1200H/underworld_movie.jpg           ; $siteResource/images/1200Wx1200H/underworld_movie.jpg
+                   ; 515Wx515H             ; /515Wx515H/underworld_movie.jpg             ; $siteResource/images/515Wx515H/underworld_movie.jpg
+                   ; 300Wx300H             ; /300Wx300H/underworld_movie.jpg             ; $siteResource/images/300Wx300H/underworld_movie.jpg
+                   ; 96Wx96H               ; /96Wx96H/underworld_movie.jpg               ; $siteResource/images/96Wx96H/underworld_movie.jpg
+                   ; 65Wx65H               ; /65Wx65H/underworld_movie.jpg               ; $siteResource/images/65Wx65H/underworld_movie.jpg
+                   ; 30Wx30H               ; /30Wx30H/underworld_movie.jpg               ; $siteResource/images/30Wx30H/underworld_movie.jpg
+
+# The Last Journey
+                   ; 1200Wx1200H           ; /1200Wx1200H/the-last-journey.jpg           ; $siteResource/images/1200Wx1200H/the-last-journey.jpg
+                   ; 515Wx515H             ; /515Wx515H/the-last-journey.jpg             ; $siteResource/images/515Wx515H/the-last-journey.jpg
+                   ; 300Wx300H             ; /300Wx300H/the-last-journey.jpg             ; $siteResource/images/300Wx300H/the-last-journey.jpg
+                   ; 96Wx96H               ; /96Wx96H/the-last-journey.jpg               ; $siteResource/images/96Wx96H/the-last-journey.jpg
+                   ; 65Wx65H               ; /65Wx65H/the-last-journey.jpg               ; $siteResource/images/65Wx65H/the-last-journey.jpg
+                   ; 30Wx30H               ; /30Wx30H/the-last-journey.jpg               ; $siteResource/images/30Wx30H/the-last-journey.jpg
+
+# A Doctor on Board
+                   ; 1200Wx1200H           ; /1200Wx1200H/a-doctor-on-board.jpg          ; $siteResource/images/1200Wx1200H/a-doctor-on-board.jpg
+                   ; 515Wx515H             ; /515Wx515H/a-doctor-on-board.jpg            ; $siteResource/images/515Wx515H/a-doctor-on-board.jpg
+                   ; 300Wx300H             ; /300Wx300H/a-doctor-on-board.jpg            ; $siteResource/images/300Wx300H/a-doctor-on-board.jpg
+                   ; 96Wx96H               ; /96Wx96H/a-doctor-on-board.jpg              ; $siteResource/images/96Wx96H/a-doctor-on-board.jpg
+                   ; 65Wx65H               ; /65Wx65H/a-doctor-on-board.jpg              ; $siteResource/images/65Wx65H/a-doctor-on-board.jpg
+                   ; 30Wx30H               ; /30Wx30H/a-doctor-on-board.jpg              ; $siteResource/images/30Wx30H/a-doctor-on-board.jpg
+
+# A Perfect Cycle
+                   ; 1200Wx1200H           ; /1200Wx1200H/a-perfect-circle.jpg           ; $siteResource/images/1200Wx1200H/a-perfect-circle.jpg
+                   ; 515Wx515H             ; /515Wx515H/a-perfect-circle.jpg             ; $siteResource/images/515Wx515H/a-perfect-circle.jpg
+                   ; 300Wx300H             ; /300Wx300H/a-perfect-circle.jpg             ; $siteResource/images/300Wx300H/a-perfect-circle.jpg
+                   ; 96Wx96H               ; /96Wx96H/a-perfect-circle.jpg               ; $siteResource/images/96Wx96H/a-perfect-circle.jpg
+                   ; 65Wx65H               ; /65Wx65H/a-perfect-circle.jpg               ; $siteResource/images/65Wx65H/a-perfect-circle.jpg
+                   ; 30Wx30H               ; /30Wx30H/a-perfect-circle.jpg               ; $siteResource/images/30Wx30H/a-perfect-circle.jpg
+
+# Call the nanny
+                   ; 1200Wx1200H           ; /1200Wx1200H/call-the-nanny.jpg             ; $siteResource/images/1200Wx1200H/call-the-nanny.jpg
+                   ; 515Wx515H             ; /515Wx515H/call-the-nanny.jpg               ; $siteResource/images/515Wx515H/call-the-nanny.jpg
+                   ; 300Wx300H             ; /300Wx300H/call-the-nanny.jpg               ; $siteResource/images/300Wx300H/call-the-nanny.jpg
+                   ; 96Wx96H               ; /96Wx96H/call-the-nanny.jpg                 ; $siteResource/images/96Wx96H/call-the-nanny.jpg
+                   ; 65Wx65H               ; /65Wx65H/call-the-nanny.jpg                 ; $siteResource/images/65Wx65H/call-the-nanny.jpg
+                   ; 30Wx30H               ; /30Wx30H/call-the-nanny.jpg                 ; $siteResource/images/30Wx30H/call-the-nanny.jpg
+
+# Hunters
+                   ; 1200Wx1200H           ; /1200Wx1200H/hunters.jpg                    ; $siteResource/images/1200Wx1200H/hunters.jpg
+                   ; 515Wx515H             ; /515Wx515H/hunters.jpg                      ; $siteResource/images/515Wx515H/hunters.jpg
+                   ; 300Wx300H             ; /300Wx300H/hunters.jpg                      ; $siteResource/images/300Wx300H/hunters.jpg
+                   ; 96Wx96H               ; /96Wx96H/hunters.jpg                        ; $siteResource/images/96Wx96H/hunters.jpg
+                   ; 65Wx65H               ; /65Wx65H/hunters.jpg                        ; $siteResource/images/65Wx65H/hunters.jpg
+                   ; 30Wx30H               ; /30Wx30H/hunters.jpg                        ; $siteResource/images/30Wx30H/hunters.jpg
+
+# Emma's Chaos Effect
+                   ; 1200Wx1200H           ; /1200Wx1200H/emmas-chaos-effect.jpg         ; $siteResource/images/1200Wx1200H/emmas-chaos-effect.jpg
+                   ; 515Wx515H             ; /515Wx515H/emmas-chaos-effect.jpg           ; $siteResource/images/515Wx515H/emmas-chaos-effect.jpg
+                   ; 300Wx300H             ; /300Wx300H/emmas-chaos-effect.jpg           ; $siteResource/images/300Wx300H/emmas-chaos-effect.jpg
+                   ; 96Wx96H               ; /96Wx96H/emmas-chaos-effect.jpg             ; $siteResource/images/96Wx96H/emmas-chaos-effect.jpg
+                   ; 65Wx65H               ; /65Wx65H/emmas-chaos-effect.jpg             ; $siteResource/images/65Wx65H/emmas-chaos-effect.jpg
+                   ; 30Wx30H               ; /30Wx30H/emmas-chaos-effect.jpg             ; $siteResource/images/30Wx30H/emmas-chaos-effect.jpg
+
+# Infinite Space
+                   ; 1200Wx1200H           ; /1200Wx1200H/infinite-space.jpg             ; $siteResource/images/1200Wx1200H/infinite-space.jpg
+                   ; 515Wx515H             ; /515Wx515H/infinite-space.jpg               ; $siteResource/images/515Wx515H/infinite-space.jpg
+                   ; 300Wx300H             ; /300Wx300H/infinite-space.jpg               ; $siteResource/images/300Wx300H/infinite-space.jpg
+                   ; 96Wx96H               ; /96Wx96H/infinite-space.jpg                 ; $siteResource/images/96Wx96H/infinite-space.jpg
+                   ; 65Wx65H               ; /65Wx65H/infinite-space.jpg                 ; $siteResource/images/65Wx65H/infinite-space.jpg
+                   ; 30Wx30H               ; /30Wx30H/infinite-space.jpg                 ; $siteResource/images/30Wx30H/infinite-space.jpg
+
+# ANV Networks Channel
+                   ; 1200Wx1200H           ; /1200Wx1200H/ANVNetworks.jpg                ; $siteResource/images/1200Wx1200H/ANVNetworks.jpg
+                   ; 515Wx515H             ; /515Wx515H/ANVNetworks.jpg                  ; $siteResource/images/515Wx515H/ANVNetworks.jpg
+                   ; 300Wx300H             ; /300Wx300H/ANVNetworks.jpg                  ; $siteResource/images/300Wx300H/ANVNetworks.jpg
+                   ; 96Wx96H               ; /96Wx96H/ANVNetworks.jpg                    ; $siteResource/images/96Wx96H/ANVNetworks.jpg
+                   ; 65Wx65H               ; /65Wx65H/ANVNetworks.jpg                    ; $siteResource/images/65Wx65H/ANVNetworks.jpg
+                   ; 30Wx30H               ; /30Wx30H/ANVNetworks.jpg                    ; $siteResource/images/30Wx30H/ANVNetworks.jpg
+
+# Channel S
+                   ; 1200Wx1200H           ; /1200Wx1200H/ChannelS.jpg                   ; $siteResource/images/1200Wx1200H/ChannelS.jpg
+                   ; 515Wx515H             ; /515Wx515H/ChannelS.jpg                     ; $siteResource/images/515Wx515H/ChannelS.jpg
+                   ; 300Wx300H             ; /300Wx300H/ChannelS.jpg                     ; $siteResource/images/300Wx300H/ChannelS.jpg
+                   ; 96Wx96H               ; /96Wx96H/ChannelS.jpg                       ; $siteResource/images/96Wx96H/ChannelS.jpg
+                   ; 65Wx65H               ; /65Wx65H/ChannelS.jpg                       ; $siteResource/images/65Wx65H/ChannelS.jpg
+                   ; 30Wx30H               ; /30Wx30H/ChannelS.jpg                       ; $siteResource/images/30Wx30H/ChannelS.jpg
+
+# Cube Channel
+                   ; 1200Wx1200H           ; /1200Wx1200H/CubeChannel.jpg                ; $siteResource/images/1200Wx1200H/CubeChannel.jpg
+                   ; 515Wx515H             ; /515Wx515H/CubeChannel.jpg                  ; $siteResource/images/515Wx515H/CubeChannel.jpg
+                   ; 300Wx300H             ; /300Wx300H/CubeChannel.jpg                  ; $siteResource/images/300Wx300H/CubeChannel.jpg
+                   ; 96Wx96H               ; /96Wx96H/CubeChannel.jpg                    ; $siteResource/images/96Wx96H/CubeChannel.jpg
+                   ; 65Wx65H               ; /65Wx65H/CubeChannel.jpg                    ; $siteResource/images/65Wx65H/CubeChannel.jpg
+                   ; 30Wx30H               ; /30Wx30H/CubeChannel.jpg                    ; $siteResource/images/30Wx30H/CubeChannel.jpg
+
+# KTV Channel
+                   ; 1200Wx1200H           ; /1200Wx1200H/KTV.jpg                        ; $siteResource/images/1200Wx1200H/KTV.jpg
+                   ; 515Wx515H             ; /515Wx515H/KTV.jpg                          ; $siteResource/images/515Wx515H/KTV.jpg
+                   ; 300Wx300H             ; /300Wx300H/KTV.jpg                          ; $siteResource/images/300Wx300H/KTV.jpg
+                   ; 96Wx96H               ; /96Wx96H/KTV.jpg                            ; $siteResource/images/96Wx96H/KTV.jpg
+                   ; 65Wx65H               ; /65Wx65H/KTV.jpg                            ; $siteResource/images/65Wx65H/KTV.jpg
+                   ; 30Wx30H               ; /30Wx30H/KTV.jpg                            ; $siteResource/images/30Wx30H/KTV.jpg
+
+# Lightning Channel
+                   ; 1200Wx1200H           ; /1200Wx1200H/LightningChannel.jpg           ; $siteResource/images/1200Wx1200H/LightningChannel.jpg
+                   ; 515Wx515H             ; /515Wx515H/LightningChannel.jpg             ; $siteResource/images/515Wx515H/LightningChannel.jpg
+                   ; 300Wx300H             ; /300Wx300H/LightningChannel.jpg             ; $siteResource/images/300Wx300H/LightningChannel.jpg
+                   ; 96Wx96H               ; /96Wx96H/LightningChannel.jpg               ; $siteResource/images/96Wx96H/LightningChannel.jpg
+                   ; 65Wx65H               ; /65Wx65H/LightningChannel.jpg               ; $siteResource/images/65Wx65H/LightningChannel.jpg
+                   ; 30Wx30H               ; /30Wx30H/LightningChannel.jpg               ; $siteResource/images/30Wx30H/LightningChannel.jpg
+
+# Sport Channel
+                   ; 1200Wx1200H           ; /1200Wx1200H/SportChannel.jpg               ; $siteResource/images/1200Wx1200H/SportChannel.jpg
+                   ; 515Wx515H             ; /515Wx515H/SportChannel.jpg                 ; $siteResource/images/515Wx515H/SportChannel.jpg
+                   ; 300Wx300H             ; /300Wx300H/SportChannel.jpg                 ; $siteResource/images/300Wx300H/SportChannel.jpg
+                   ; 96Wx96H               ; /96Wx96H/SportChannel.jpg                   ; $siteResource/images/96Wx96H/SportChannel.jpg
+                   ; 65Wx65H               ; /65Wx65H/SportChannel.jpg                   ; $siteResource/images/65Wx65H/SportChannel.jpg
+                   ; 30Wx30H               ; /30Wx30H/SportChannel.jpg                   ; $siteResource/images/30Wx30H/SportChannel.jpg
+
+# TCO Channel
+                   ; 1200Wx1200H           ; /1200Wx1200H/TCOChannel.jpg                 ; $siteResource/images/1200Wx1200H/TCOChannel.jpg
+                   ; 515Wx515H             ; /515Wx515H/TCOChannel.jpg                   ; $siteResource/images/515Wx515H/TCOChannel.jpg
+                   ; 300Wx300H             ; /300Wx300H/TCOChannel.jpg                   ; $siteResource/images/300Wx300H/TCOChannel.jpg
+                   ; 96Wx96H               ; /96Wx96H/TCOChannel.jpg                     ; $siteResource/images/96Wx96H/TCOChannel.jpg
+                   ; 65Wx65H               ; /65Wx65H/TCOChannel.jpg                     ; $siteResource/images/65Wx65H/TCOChannel.jpg
+                   ; 30Wx30H               ; /30Wx30H/TCOChannel.jpg                     ; $siteResource/images/30Wx30H/TCOChannel.jpg
+
+# TRI Channel
+                   ; 1200Wx1200H           ; /1200Wx1200H/TRIChannel.jpg                 ; $siteResource/images/1200Wx1200H/TRIChannel.jpg
+                   ; 515Wx515H             ; /515Wx515H/TRIChannel.jpg                   ; $siteResource/images/515Wx515H/TRIChannel.jpg
+                   ; 300Wx300H             ; /300Wx300H/TRIChannel.jpg                   ; $siteResource/images/300Wx300H/TRIChannel.jpg
+                   ; 96Wx96H               ; /96Wx96H/TRIChannel.jpg                     ; $siteResource/images/96Wx96H/TRIChannel.jpg
+                   ; 65Wx65H               ; /65Wx65H/TRIChannel.jpg                     ; $siteResource/images/65Wx65H/TRIChannel.jpg
+                   ; 30Wx30H               ; /30Wx30H/TRIChannel.jpg                     ; $siteResource/images/30Wx30H/TRIChannel.jpg
+
+# VIVO Channel
+                   ; 1200Wx1200H           ; /1200Wx1200H/VIVOChannel.jpg                ; $siteResource/images/1200Wx1200H/VIVOChannel.jpg
+                   ; 515Wx515H             ; /515Wx515H/VIVOChannel.jpg                  ; $siteResource/images/515Wx515H/VIVOChannel.jpg
+                   ; 300Wx300H             ; /300Wx300H/VIVOChannel.jpg                  ; $siteResource/images/300Wx300H/VIVOChannel.jpg
+                   ; 96Wx96H               ; /96Wx96H/VIVOChannel.jpg                    ; $siteResource/images/96Wx96H/VIVOChannel.jpg
+                   ; 65Wx65H               ; /65Wx65H/VIVOChannel.jpg                    ; $siteResource/images/65Wx65H/VIVOChannel.jpg
+                   ; 30Wx30H               ; /30Wx30H/VIVOChannel.jpg                    ; $siteResource/images/30Wx30H/VIVOChannel.jpg
+
+# Y TV
+                   ; 1200Wx1200H           ; /1200Wx1200H/YTV.jpg                        ; $siteResource/images/1200Wx1200H/YTV.jpg
+                   ; 515Wx515H             ; /515Wx515H/YTV.jpg                          ; $siteResource/images/515Wx515H/YTV.jpg
+                   ; 300Wx300H             ; /300Wx300H/YTV.jpg                          ; $siteResource/images/300Wx300H/YTV.jpg
+                   ; 96Wx96H               ; /96Wx96H/YTV.jpg                            ; $siteResource/images/96Wx96H/YTV.jpg
+                   ; 65Wx65H               ; /65Wx65H/YTV.jpg                            ; $siteResource/images/65Wx65H/YTV.jpg
+                   ; 30Wx30H               ; /30Wx30H/YTV.jpg                            ; $siteResource/images/30Wx30H/YTV.jpg
+#########################################
+########        Merchandise       #######
+#########################################
+# Armagdedon Book
+                   ; 1200Wx1200H           ; /1200Wx1200H/armagdedon_book.jpg            ; $siteResource/images/1200Wx1200H/armagdedon_book.jpg
+                   ; 515Wx515H             ; /515Wx515H/armagdedon_book.jpg              ; $siteResource/images/515Wx515H/armagdedon_book.jpg
+                   ; 300Wx300H             ; /300Wx300H/armagdedon_book.jpg              ; $siteResource/images/300Wx300H/armagdedon_book.jpg
+                   ; 96Wx96H               ; /96Wx96H/armagdedon_book.jpg                ; $siteResource/images/96Wx96H/armagdedon_book.jpg
+                   ; 65Wx65H               ; /65Wx65H/armagdedon_book.jpg                ; $siteResource/images/65Wx65H/armagdedon_book.jpg
+                   ; 30Wx30H               ; /30Wx30H/armagdedon_book.jpg                ; $siteResource/images/30Wx30H/armagdedon_book.jpg
+
+# Cap
+                   ; 1200Wx1200H           ; /1200Wx1200H/cap.jpg                        ; $siteResource/images/1200Wx1200H/cap.jpg
+                   ; 515Wx515H             ; /515Wx515H/cap.jpg                          ; $siteResource/images/515Wx515H/cap.jpg
+                   ; 300Wx300H             ; /300Wx300H/cap.jpg                          ; $siteResource/images/300Wx300H/cap.jpg
+                   ; 96Wx96H               ; /96Wx96H/cap.jpg                            ; $siteResource/images/96Wx96H/cap.jpg
+                   ; 65Wx65H               ; /65Wx65H/cap.jpg                            ; $siteResource/images/65Wx65H/cap.jpg
+                   ; 30Wx30H               ; /30Wx30H/cap.jpg                            ; $siteResource/images/30Wx30H/cap.jpg
+# Handbag
+                   ; 1200Wx1200H           ; /1200Wx1200H/handbag.jpg                    ; $siteResource/images/1200Wx1200H/handbag.jpg
+                   ; 515Wx515H             ; /515Wx515H/handbag.jpg                      ; $siteResource/images/515Wx515H/handbag.jpg
+                   ; 300Wx300H             ; /300Wx300H/handbag.jpg                      ; $siteResource/images/300Wx300H/handbag.jpg
+                   ; 96Wx96H               ; /96Wx96H/handbag.jpg                        ; $siteResource/images/96Wx96H/handbag.jpg
+                   ; 65Wx65H               ; /65Wx65H/handbag.jpg                        ; $siteResource/images/65Wx65H/handbag.jpg
+                   ; 30Wx30H               ; /30Wx30H/handbag.jpg                        ; $siteResource/images/30Wx30H/handbag.jpg
+# Hoodie
+                   ; 1200Wx1200H           ; /1200Wx1200H/hoodie.jpg                     ; $siteResource/images/1200Wx1200H/hoodie.jpg
+                   ; 515Wx515H             ; /515Wx515H/hoodie.jpg                       ; $siteResource/images/515Wx515H/hoodie.jpg
+                   ; 300Wx300H             ; /300Wx300H/hoodie.jpg                       ; $siteResource/images/300Wx300H/hoodie.jpg
+                   ; 96Wx96H               ; /96Wx96H/hoodie.jpg                         ; $siteResource/images/96Wx96H/hoodie.jpg
+                   ; 65Wx65H               ; /65Wx65H/hoodie.jpg                         ; $siteResource/images/65Wx65H/hoodie.jpg
+                   ; 30Wx30H               ; /30Wx30H/hoodie.jpg                         ; $siteResource/images/30Wx30H/hoodie.jpg
+# Man Pants
+                   ; 1200Wx1200H           ; /1200Wx1200H/pants_bp.jpg                   ; $siteResource/images/1200Wx1200H/pants_bp.jpg
+                   ; 515Wx515H             ; /515Wx515H/pants_bp.jpg                     ; $siteResource/images/515Wx515H/pants_bp.jpg
+                   ; 300Wx300H             ; /300Wx300H/pants_bp.jpg                     ; $siteResource/images/300Wx300H/pants_bp.jpg
+                   ; 96Wx96H               ; /96Wx96H/pants_bp.jpg                       ; $siteResource/images/96Wx96H/pants_bp.jpg
+                   ; 65Wx65H               ; /65Wx65H/pants_bp.jpg                       ; $siteResource/images/65Wx65H/pants_bp.jpg
+                   ; 30Wx30H               ; /30Wx30H/pants_bp.jpg                       ; $siteResource/images/30Wx30H/pants_bp.jpg
+# Man Shoes
+                   ; 1200Wx1200H           ; /1200Wx1200H/shoes_man.jpg                  ; $siteResource/images/1200Wx1200H/shoes_man.jpg
+                   ; 515Wx515H             ; /515Wx515H/shoes_man.jpg                    ; $siteResource/images/515Wx515H/shoes_man.jpg
+                   ; 300Wx300H             ; /300Wx300H/shoes_man.jpg                    ; $siteResource/images/300Wx300H/shoes_man.jpg
+                   ; 96Wx96H               ; /96Wx96H/shoes_man.jpg                      ; $siteResource/images/96Wx96H/shoes_man.jpg
+                   ; 65Wx65H               ; /65Wx65H/shoes_man.jpg                      ; $siteResource/images/65Wx65H/shoes_man.jpg
+                   ; 30Wx30H               ; /30Wx30H/shoes_man.jpg                      ; $siteResource/images/30Wx30H/shoes_man.jpg
+# Woman Shoes
+                   ; 1200Wx1200H           ; /1200Wx1200H/shoes_woman_bp.jpg             ; $siteResource/images/1200Wx1200H/shoes_woman_bp.jpg
+                   ; 515Wx515H             ; /515Wx515H/shoes_woman_bp.jpg               ; $siteResource/images/515Wx515H/shoes_woman_bp.jpg
+                   ; 300Wx300H             ; /300Wx300H/shoes_woman_bp.jpg               ; $siteResource/images/300Wx300H/shoes_woman_bp.jpg
+                   ; 96Wx96H               ; /96Wx96H/shoes_woman_bp.jpg                 ; $siteResource/images/96Wx96H/shoes_woman_bp.jpg
+                   ; 65Wx65H               ; /65Wx65H/shoes_woman_bp.jpg                 ; $siteResource/images/65Wx65H/shoes_woman_bp.jpg
+                   ; 30Wx30H               ; /30Wx30H/shoes_woman_bp.jpg                 ; $siteResource/images/30Wx30H/shoes_woman_bp.jpg
+#########################################
+########           Plans          #######
+#########################################
+# Fibre Broadband Limited
+                   ; 300Wx300H             ; /300Wx300H/fibreBroadbandLimited.jpg        ; $siteResource/images/300Wx300H/fibreBroadbandLimited.jpg
+                   ; 96Wx96H               ; /96Wx96H/fibreBroadbandLimited.jpg          ; $siteResource/images/96Wx96H/fibreBroadbandLimited.jpg
+                   ; 65Wx65H               ; /65Wx65H/fibreBroadbandLimited.jpg          ; $siteResource/images/65Wx65H/fibreBroadbandLimited.jpg
+                   ; 30Wx30H               ; /30Wx30H/fibreBroadbandLimited.jpg          ; $siteResource/images/30Wx30H/fibreBroadbandLimited.jpg
+
+# Fibre Broadband Unlimited
+                   ; 300Wx300H             ; /300Wx300H/fibreBroadbandUnlimited.jpg      ; $siteResource/images/300Wx300H/fibreBroadbandUnlimited.jpg
+                   ; 96Wx96H               ; /96Wx96H/fibreBroadbandUnlimited.jpg        ; $siteResource/images/96Wx96H/fibreBroadbandUnlimited.jpg
+                   ; 65Wx65H               ; /65Wx65H/fibreBroadbandUnlimited.jpg        ; $siteResource/images/65Wx65H/fibreBroadbandUnlimited.jpg
+                   ; 30Wx30H               ; /30Wx30H/fibreBroadbandUnlimited.jpg        ; $siteResource/images/30Wx30H/fibreBroadbandUnlimited.jpg
+
+# Phone Unlimited Weekend
+                   ; 300Wx300H             ; /300Wx300H/phoneUnlimitedWeekend.jpg        ; $siteResource/images/300Wx300H/phoneUnlimitedWeekend.jpg
+                   ; 96Wx96H               ; /96Wx96H/phoneUnlimitedWeekend.jpg          ; $siteResource/images/96Wx96H/phoneUnlimitedWeekend.jpg
+                   ; 65Wx65H               ; /65Wx65H/phoneUnlimitedWeekend.jpg          ; $siteResource/images/65Wx65H/phoneUnlimitedWeekend.jpg
+                   ; 30Wx30H               ; /30Wx30H/phoneUnlimitedWeekend.jpg          ; $siteResource/images/30Wx30H/phoneUnlimitedWeekend.jpg
+
+# Phone Unlimited Weekend Evening
+                   ; 300Wx300H             ; /300Wx300H/phoneUnlimitedWeekendEvening.jpg ; $siteResource/images/300Wx300H/phoneUnlimitedWeekendEvening.jpg
+                   ; 96Wx96H               ; /96Wx96H/phoneUnlimitedWeekendEvening.jpg   ; $siteResource/images/96Wx96H/phoneUnlimitedWeekendEvening.jpg
+                   ; 65Wx65H               ; /65Wx65H/phoneUnlimitedWeekendEvening.jpg   ; $siteResource/images/65Wx65H/phoneUnlimitedWeekendEvening.jpg
+                   ; 30Wx30H               ; /30Wx30H/phoneUnlimitedWeekendEvening.jpg   ; $siteResource/images/30Wx30H/phoneUnlimitedWeekendEvening.jpg
+
+# Suber Fibre Unlimited
+                   ; 300Wx300H             ; /300Wx300H/superFibreUnlimited.jpg          ; $siteResource/images/300Wx300H/superFibreUnlimited.jpg
+                   ; 96Wx96H               ; /96Wx96H/superFibreUnlimited.jpg            ; $siteResource/images/96Wx96H/superFibreUnlimited.jpg
+                   ; 65Wx65H               ; /65Wx65H/superFibreUnlimited.jpg            ; $siteResource/images/65Wx65H/superFibreUnlimited.jpg
+                   ; 30Wx30H               ; /30Wx30H/superFibreUnlimited.jpg            ; $siteResource/images/30Wx30H/superFibreUnlimited.jpg
+
+# TV Entertainment
+                   ; 300Wx300H             ; /300Wx300H/tvEntertainment.jpg              ; $siteResource/images/300Wx300H/tvEntertainment.jpg
+                   ; 96Wx96H               ; /96Wx96H/tvEntertainment.jpg                ; $siteResource/images/96Wx96H/tvEntertainment.jpg
+                   ; 65Wx65H               ; /65Wx65H/tvEntertainment.jpg                ; $siteResource/images/65Wx65H/tvEntertainment.jpg
+                   ; 30Wx30H               ; /30Wx30H/tvEntertainment.jpg                ; $siteResource/images/30Wx30H/tvEntertainment.jpg
+
+# TV Premium
+                   ; 300Wx300H             ; /300Wx300H/tvPremium.jpg                    ; $siteResource/images/300Wx300H/tvPremium.jpg
+                   ; 96Wx96H               ; /96Wx96H/tvPremium.jpg                      ; $siteResource/images/96Wx96H/tvPremium.jpg
+                   ; 65Wx65H               ; /65Wx65H/tvPremium.jpg                      ; $siteResource/images/65Wx65H/tvPremium.jpg
+                   ; 30Wx30H               ; /30Wx30H/tvPremium.jpg                      ; $siteResource/images/30Wx30H/tvPremium.jpg
+
+# TV Starter
+                   ; 300Wx300H             ; /300Wx300H/tvStarter.jpg                    ; $siteResource/images/300Wx300H/tvStarter.jpg
+                   ; 96Wx96H               ; /96Wx96H/tvStarter.jpg                      ; $siteResource/images/96Wx96H/tvStarter.jpg
+                   ; 65Wx65H               ; /65Wx65H/tvStarter.jpg                      ; $siteResource/images/65Wx65H/tvStarter.jpg
+                   ; 30Wx30H               ; /30Wx30H/tvStarter.jpg                      ; $siteResource/images/30Wx30H/tvStarter.jpg
+
+#########################################
+########           AddOns         #######
+#########################################
+# All On Demand
+                   ; 300Wx300H             ; /300Wx300H/allOnDemand.jpg                  ; $siteResource/images/300Wx300H/allOnDemand.jpg
+                   ; 96Wx96H               ; /96Wx96H/allOnDemand.jpg                    ; $siteResource/images/96Wx96H/allOnDemand.jpg
+                   ; 65Wx65H               ; /65Wx65H/allOnDemand.jpg                    ; $siteResource/images/65Wx65H/allOnDemand.jpg
+                   ; 30Wx30H               ; /30Wx30H/allOnDemand.jpg                    ; $siteResource/images/30Wx30H/allOnDemand.jpg
+
+# Foreign Language Package
+                   ; 300Wx300H             ; /300Wx300H/foreignLanguagePackage.jpg       ; $siteResource/images/300Wx300H/foreignLanguagePackage.jpg
+                   ; 96Wx96H               ; /96Wx96H/foreignLanguagePackage.jpg         ; $siteResource/images/96Wx96H/foreignLanguagePackage.jpg
+                   ; 65Wx65H               ; /65Wx65H/foreignLanguagePackage.jpg         ; $siteResource/images/65Wx65H/foreignLanguagePackage.jpg
+                   ; 30Wx30H               ; /30Wx30H/foreignLanguagePackage.jpg         ; $siteResource/images/30Wx30H/foreignLanguagePackage.jpg
+
+# Sport
+                   ; 300Wx300H             ; /300Wx300H/sport.jpg                        ; $siteResource/images/300Wx300H/sport.jpg
+                   ; 96Wx96H               ; /96Wx96H/sport.jpg                          ; $siteResource/images/96Wx96H/sport.jpg
+                   ; 65Wx65H               ; /65Wx65H/sport.jpg                          ; $siteResource/images/65Wx65H/sport.jpg
+                   ; 30Wx30H               ; /30Wx30H/sport.jpg                          ; $siteResource/images/30Wx30H/sport.jpg
+
+# TCO
+                   ; 300Wx300H             ; /300Wx300H/TCO.jpg                          ; $siteResource/images/300Wx300H/TCO.jpg
+                   ; 96Wx96H               ; /96Wx96H/TCO.jpg                            ; $siteResource/images/96Wx96H/TCO.jpg
+                   ; 65Wx65H               ; /65Wx65H/TCO.jpg                            ; $siteResource/images/65Wx65H/TCO.jpg
+                   ; 30Wx30H               ; /30Wx30H/TCO.jpg                            ; $siteResource/images/30Wx30H/TCO.jpg
+
+#########################################
+########           T-Shirt         #######
+#########################################
+INSERT_UPDATE Media; mediaFormat(qualifier); code[unique = true]                ; @media[translator = de.hybris.platform.impex.jalo.media.MediaDataTranslator]; mime[default = 'image/jpg']; $catalogVersion; folder(qualifier)[default = images][forceWrite = true]
+# BP T-Shirt Black
+                   ; 1200Wx1200H           ; /1200Wx1200H/t-shirt_bp_black.jpg  ; $siteResource/images/1200Wx1200H/t-shirt_bp_black.jpg
+                   ; 515Wx515H             ; /515Wx515H/t-shirt_bp_black.jpg    ; $siteResource/images/515Wx515H/t-shirt_bp_black.jpg
+                   ; 300Wx300H             ; /300Wx300H/t-shirt_bp_black.jpg    ; $siteResource/images/300Wx300H/t-shirt_bp_black.jpg
+                   ; 96Wx96H               ; /96Wx96H/t-shirt_bp_black.jpg      ; $siteResource/images/96Wx96H/t-shirt_bp_black.jpg
+                   ; 65Wx65H               ; /65Wx65H/t-shirt_bp_black.jpg      ; $siteResource/images/65Wx65H/t-shirt_bp_black.jpg
+                   ; 30Wx30H               ; /30Wx30H/t-shirt_bp_black.jpg      ; $siteResource/images/30Wx30H/t-shirt_bp_black.jpg
+
+                   ; 1200Wx1200H           ; /1200Wx1200H/t-shirt_bp_black2.jpg ; $siteResource/images/1200Wx1200H/t-shirt_bp_black2.jpg
+                   ; 515Wx515H             ; /515Wx515H/t-shirt_bp_black2.jpg   ; $siteResource/images/515Wx515H/t-shirt_bp_black2.jpg
+                   ; 300Wx300H             ; /300Wx300H/t-shirt_bp_black2.jpg   ; $siteResource/images/300Wx300H/t-shirt_bp_black2.jpg
+                   ; 96Wx96H               ; /96Wx96H/t-shirt_bp_black2.jpg     ; $siteResource/images/96Wx96H/t-shirt_bp_black2.jpg
+                   ; 65Wx65H               ; /65Wx65H/t-shirt_bp_black2.jpg     ; $siteResource/images/65Wx65H/t-shirt_bp_black2.jpg
+                   ; 30Wx30H               ; /30Wx30H/t-shirt_bp_black2.jpg     ; $siteResource/images/30Wx30H/t-shirt_bp_black2.jpg
+
+# BP T-Shirt White
+                   ; 1200Wx1200H           ; /1200Wx1200H/t-shirt_bp_white.jpg  ; $siteResource/images/1200Wx1200H/t-shirt_bp_white.jpg
+                   ; 515Wx515H             ; /515Wx515H/t-shirt_bp_white.jpg    ; $siteResource/images/515Wx515H/t-shirt_bp_white.jpg
+                   ; 300Wx300H             ; /300Wx300H/t-shirt_bp_white.jpg    ; $siteResource/images/300Wx300H/t-shirt_bp_white.jpg
+                   ; 96Wx96H               ; /96Wx96H/t-shirt_bp_white.jpg      ; $siteResource/images/96Wx96H/t-shirt_bp_white.jpg
+                   ; 65Wx65H               ; /65Wx65H/t-shirt_bp_white.jpg      ; $siteResource/images/65Wx65H/t-shirt_bp_white.jpg
+                   ; 30Wx30H               ; /30Wx30H/t-shirt_bp_white.jpg      ; $siteResource/images/30Wx30H/t-shirt_bp_white.jpg
+
+                   ; 1200Wx1200H           ; /1200Wx1200H/t-shirt_bp_white2.jpg ; $siteResource/images/1200Wx1200H/t-shirt_bp_white2.jpg
+                   ; 515Wx515H             ; /515Wx515H/t-shirt_bp_white2.jpg   ; $siteResource/images/515Wx515H/t-shirt_bp_white2.jpg
+                   ; 300Wx300H             ; /300Wx300H/t-shirt_bp_white2.jpg   ; $siteResource/images/300Wx300H/t-shirt_bp_white2.jpg
+                   ; 96Wx96H               ; /96Wx96H/t-shirt_bp_white2.jpg     ; $siteResource/images/96Wx96H/t-shirt_bp_white2.jpg
+                   ; 65Wx65H               ; /65Wx65H/t-shirt_bp_white2.jpg     ; $siteResource/images/65Wx65H/t-shirt_bp_white2.jpg
+                   ; 30Wx30H               ; /30Wx30H/t-shirt_bp_white2.jpg     ; $siteResource/images/30Wx30H/t-shirt_bp_white2.jpg
+
+INSERT_UPDATE MediaContainer; qualifier[unique = true]; $medias; $catalogVersion
+                            ; t-shirt_bp_black        ; /1200Wx1200H/t-shirt_bp_black.jpg,/515Wx515H/t-shirt_bp_black.jpg,/300Wx300H/t-shirt_bp_black.jpg,/96Wx96H/t-shirt_bp_black.jpg,/65Wx65H/t-shirt_bp_black.jpg,/30Wx30H/t-shirt_bp_black.jpg,/1200Wx1200H/t-shirt_bp_black2.jpg,/515Wx515H/t-shirt_bp_black2.jpg,/300Wx300H/t-shirt_bp_black2.jpg,/96Wx96H/t-shirt_bp_black2.jpg,/65Wx65H/t-shirt_bp_black2.jpg,/30Wx30H/t-shirt_bp_black2.jpg
+                            ; t-shirt_bp_white        ; /1200Wx1200H/t-shirt_bp_white.jpg,/515Wx515H/t-shirt_bp_white.jpg,/300Wx300H/t-shirt_bp_white.jpg,/96Wx96H/t-shirt_bp_white.jpg,/65Wx65H/t-shirt_bp_white.jpg,/30Wx30H/t-shirt_bp_white.jpg,/1200Wx1200H/t-shirt_bp_white2.jpg,/515Wx515H/t-shirt_bp_white2.jpg,/300Wx300H/t-shirt_bp_white2.jpg,/96Wx96H/t-shirt_bp_white2.jpg,/65Wx65H/t-shirt_bp_white2.jpg,/30Wx30H/t-shirt_bp_white2.jpg
+
+INSERT_UPDATE TmaPoVariant; code[unique = true] ; $picture                        ; $thumbnail                    ; $detail                           ; $normal                         ; $thumbnails                   ; $galleryImages; $catalogVersion
+                          ; t-shirt_bp_black_S  ; /300Wx300H/t-shirt_bp_black.jpg ; /96Wx96H/t-shirt_bp_black.jpg ; /1200Wx1200H/t-shirt_bp_black.jpg ; /300Wx300H/t-shirt_bp_black.jpg ; /96Wx96H/t-shirt_bp_black.jpg ; t-shirt_bp_black
+                          ; t-shirt_bp_black_M  ; /300Wx300H/t-shirt_bp_black.jpg ; /96Wx96H/t-shirt_bp_black.jpg ; /1200Wx1200H/t-shirt_bp_black.jpg ; /300Wx300H/t-shirt_bp_black.jpg ; /96Wx96H/t-shirt_bp_black.jpg ; t-shirt_bp_black
+                          ; t-shirt_bp_black_L  ; /300Wx300H/t-shirt_bp_black.jpg ; /96Wx96H/t-shirt_bp_black.jpg ; /1200Wx1200H/t-shirt_bp_black.jpg ; /300Wx300H/t-shirt_bp_black.jpg ; /96Wx96H/t-shirt_bp_black.jpg ; t-shirt_bp_black
+                          ; t-shirt_bp_black_XL ; /300Wx300H/t-shirt_bp_black.jpg ; /96Wx96H/t-shirt_bp_black.jpg ; /1200Wx1200H/t-shirt_bp_black.jpg ; /300Wx300H/t-shirt_bp_black.jpg ; /96Wx96H/t-shirt_bp_black.jpg ; t-shirt_bp_black
+
+                          ; t-shirt_bp_white_S  ; /300Wx300H/t-shirt_bp_white.jpg ; /96Wx96H/t-shirt_bp_white.jpg ; /1200Wx1200H/t-shirt_bp_white.jpg ; /300Wx300H/t-shirt_bp_white.jpg ; /96Wx96H/t-shirt_bp_white.jpg ; t-shirt_bp_white
+                          ; t-shirt_bp_white_M  ; /300Wx300H/t-shirt_bp_white.jpg ; /96Wx96H/t-shirt_bp_white.jpg ; /1200Wx1200H/t-shirt_bp_white.jpg ; /300Wx300H/t-shirt_bp_white.jpg ; /96Wx96H/t-shirt_bp_white.jpg ; t-shirt_bp_white
+                          ; t-shirt_bp_white_L  ; /300Wx300H/t-shirt_bp_white.jpg ; /96Wx96H/t-shirt_bp_white.jpg ; /1200Wx1200H/t-shirt_bp_white.jpg ; /300Wx300H/t-shirt_bp_white.jpg ; /96Wx96H/t-shirt_bp_white.jpg ; t-shirt_bp_white
+                          ; t-shirt_bp_white_XL ; /300Wx300H/t-shirt_bp_white.jpg ; /96Wx96H/t-shirt_bp_white.jpg ; /1200Wx1200H/t-shirt_bp_white.jpg ; /300Wx300H/t-shirt_bp_white.jpg ; /96Wx96H/t-shirt_bp_white.jpg ; t-shirt_bp_white
+
+
+INSERT_UPDATE MediaContainer; qualifier[unique = true]     ; $medias; $catalogVersion
+                            ; underworld_tvshow            ; /1200Wx1200H/underworld.jpg,/515Wx515H/underworld.jpg,/300Wx300H/underworld.jpg,/96Wx96H/underworld.jpg,/65Wx65H/underworld.jpg,/30Wx30H/underworld.jpg
+                            ; underworld_movie             ; /1200Wx1200H/underworld_movie.jpg,/515Wx515H/underworld_movie.jpg,/300Wx300H/underworld_movie.jpg,/96Wx96H/underworld_movie.jpg,/65Wx65H/underworld_movie.jpg,/30Wx30H/underworld_movie.jpg
+                            ; the-last-journey             ; /1200Wx1200H/the-last-journey.jpg,/515Wx515H/the-last-journey.jpg,/300Wx300H/the-last-journey.jpg,/96Wx96H/the-last-journey.jpg,/65Wx65H/the-last-journey.jpg,/30Wx30H/the-last-journey.jpg
+                            ; a-doctor-on-board            ; /1200Wx1200H/a-doctor-on-board.jpg,/515Wx515H/a-doctor-on-board.jpg,/300Wx300H/a-doctor-on-board.jpg,/96Wx96H/a-doctor-on-board.jpg,/65Wx65H/a-doctor-on-board.jpg,/30Wx30H/a-doctor-on-board.jpg
+                            ; a-perfect-circle             ; /1200Wx1200H/a-perfect-circle.jpg,/515Wx515H/a-perfect-circle.jpg,/300Wx300H/a-perfect-circle.jpg,/96Wx96H/a-perfect-circle.jpg,/65Wx65H/a-perfect-circle.jpg,/30Wx30H/a-perfect-circle.jpg
+                            ; call-the-nanny               ; /1200Wx1200H/call-the-nanny.jpg,/515Wx515H/call-the-nanny.jpg,/300Wx300H/call-the-nanny.jpg,/96Wx96H/call-the-nanny.jpg,/65Wx65H/call-the-nanny.jpg,/30Wx30H/call-the-nanny.jpg
+                            ; hunters                      ; /1200Wx1200H/hunters.jpg,/515Wx515H/hunters.jpg,/300Wx300H/hunters.jpg,/96Wx96H/hunters.jpg,/65Wx65H/hunters.jpg,/30Wx30H/hunters.jpg
+                            ; emmas-chaos-effect           ; /1200Wx1200H/emmas-chaos-effect.jpg,/515Wx515H/emmas-chaos-effect.jpg,/300Wx300H/emmas-chaos-effect.jpg,/96Wx96H/emmas-chaos-effect.jpg,/65Wx65H/emmas-chaos-effect.jpg,/30Wx30H/emmas-chaos-effect.jpg
+                            ; infinite-space               ; /1200Wx1200H/infinite-space.jpg,/515Wx515H/infinite-space.jpg,/300Wx300H/infinite-space.jpg,/96Wx96H/infinite-space.jpg,/65Wx65H/infinite-space.jpg,/30Wx30H/infinite-space.jpg
+                            ; ANVNetworks                  ; /1200Wx1200H/ANVNetworks.jpg,/515Wx515H/ANVNetworks.jpg,/300Wx300H/ANVNetworks.jpg,/96Wx96H/ANVNetworks.jpg,/65Wx65H/ANVNetworks.jpg,/30Wx30H/ANVNetworks.jpg
+                            ; ChannelS                     ; /1200Wx1200H/ChannelS.jpg,/515Wx515H/ChannelS.jpg,/300Wx300H/ChannelS.jpg,/96Wx96H/ChannelS.jpg,/65Wx65H/ChannelS.jpg,/30Wx30H/ChannelS.jpg
+                            ; CubeChannel                  ; /1200Wx1200H/CubeChannel.jpg,/515Wx515H/CubeChannel.jpg,/300Wx300H/CubeChannel.jpg,/96Wx96H/CubeChannel.jpg,/65Wx65H/CubeChannel.jpg,/30Wx30H/CubeChannel.jpg
+                            ; KTV                          ; /1200Wx1200H/KTV.jpg,/515Wx515H/KTV.jpg,/300Wx300H/KTV.jpg,/96Wx96H/KTV.jpg,/65Wx65H/KTV.jpg,/30Wx30H/KTV.jpg
+                            ; LightningChannel             ; /1200Wx1200H/LightningChannel.jpg,/515Wx515H/LightningChannel.jpg,/300Wx300H/LightningChannel.jpg,/96Wx96H/LightningChannel.jpg,/65Wx65H/LightningChannel.jpg,/30Wx30H/LightningChannel.jpg
+                            ; SportChannel                 ; /1200Wx1200H/SportChannel.jpg,/515Wx515H/SportChannel.jpg,/300Wx300H/SportChannel.jpg,/96Wx96H/SportChannel.jpg,/65Wx65H/SportChannel.jpg,/30Wx30H/SportChannel.jpg
+                            ; TCOChannel                   ; /1200Wx1200H/TCOChannel.jpg,/515Wx515H/TCOChannel.jpg,/300Wx300H/TCOChannel.jpg,/96Wx96H/TCOChannel.jpg,/65Wx65H/TCOChannel.jpg,/30Wx30H/TCOChannel.jpg
+                            ; TRIChannel                   ; /1200Wx1200H/TRIChannel.jpg,/515Wx515H/TRIChannel.jpg,/300Wx300H/TRIChannel.jpg,/96Wx96H/TRIChannel.jpg,/65Wx65H/TRIChannel.jpg,/30Wx30H/TRIChannel.jpg
+                            ; VIVOChannel                  ; /1200Wx1200H/VIVOChannel.jpg,/515Wx515H/VIVOChannel.jpg,/300Wx300H/VIVOChannel.jpg,/96Wx96H/VIVOChannel.jpg,/65Wx65H/VIVOChannel.jpg,/30Wx30H/VIVOChannel.jpg
+                            ; YTV                          ; /1200Wx1200H/YTV.jpg,/515Wx515H/YTV.jpg,/300Wx300H/YTV.jpg,/96Wx96H/YTV.jpg,/65Wx65H/YTV.jpg,/30Wx30H/YTV.jpg
+                            ; armagdedon_book              ; /1200Wx1200H/armagdedon_book.jpg,/515Wx515H/armagdedon_book.jpg,/300Wx300H/armagdedon_book.jpg,/96Wx96H/armagdedon_book.jpg,/65Wx65H/armagdedon_book.jpg,/30Wx30H/armagdedon_book.jpg
+                            ; cap                          ; /1200Wx1200H/cap.jpg,/515Wx515H/cap.jpg,/300Wx300H/cap.jpg,/96Wx96H/cap.jpg,/65Wx65H/cap.jpg,/30Wx30H/cap.jpg
+                            ; handbag                      ; /1200Wx1200H/handbag.jpg,/515Wx515H/handbag.jpg,/300Wx300H/handbag.jpg,/96Wx96H/handbag.jpg,/65Wx65H/handbag.jpg,/30Wx30H/handbag.jpg
+                            ; hoodie                       ; /1200Wx1200H/hoodie.jpg,/515Wx515H/hoodie.jpg,/300Wx300H/hoodie.jpg,/96Wx96H/hoodie.jpg,/65Wx65H/hoodie.jpg,/30Wx30H/hoodie.jpg
+                            ; pants_bp                     ; /1200Wx1200H/pants_bp.jpg,/515Wx515H/pants_bp.jpg,/300Wx300H/pants_bp.jpg,/96Wx96H/pants_bp.jpg,/65Wx65H/pants_bp.jpg,/30Wx30H/pants_bp.jpg
+                            ; shoes_man                    ; /1200Wx1200H/shoes_man.jpg,/515Wx515H/shoes_man.jpg,/300Wx300H/shoes_man.jpg,/96Wx96H/shoes_man.jpg,/65Wx65H/shoes_man.jpg,/30Wx30H/shoes_man.jpg
+                            ; shoes_woman_bp               ; /1200Wx1200H/shoes_woman_bp.jpg,/515Wx515H/shoes_woman_bp.jpg,/300Wx300H/shoes_woman_bp.jpg,/96Wx96H/shoes_woman_bp.jpg,/65Wx65H/shoes_woman_bp.jpg,/30Wx30H/shoes_woman_bp.jpg
+                            ; fibreBroadbandLimited        ; /300Wx300H/fibreBroadbandLimited.jpg,/96Wx96H/fibreBroadbandLimited.jpg,/65Wx65H/fibreBroadbandLimited.jpg,/30Wx30H/fibreBroadbandLimited.jpg
+                            ; fibreBroadbandUnlimited      ; /300Wx300H/fibreBroadbandUnlimited.jpg,/96Wx96H/fibreBroadbandUnlimited.jpg,/65Wx65H/fibreBroadbandUnlimited.jpg,/30Wx30H/fibreBroadbandUnlimited.jpg
+                            ; phoneUnlimitedWeekend        ; /300Wx300H/phoneUnlimitedWeekend.jpg,/96Wx96H/phoneUnlimitedWeekend.jpg,/65Wx65H/phoneUnlimitedWeekend.jpg,/30Wx30H/phoneUnlimitedWeekend.jpg
+                            ; phoneUnlimitedWeekendEvening ; /300Wx300H/phoneUnlimitedWeekendEvening.jpg,/96Wx96H/phoneUnlimitedWeekendEvening.jpg,/65Wx65H/phoneUnlimitedWeekendEvening.jpg,/30Wx30H/phoneUnlimitedWeekendEvening.jpg
+                            ; superFibreUnlimited          ; /300Wx300H/superFibreUnlimited.jpg,/96Wx96H/superFibreUnlimited.jpg,/65Wx65H/superFibreUnlimited.jpg,/30Wx30H/superFibreUnlimited.jpg
+                            ; tvEntertainment              ; /300Wx300H/tvEntertainment.jpg,/96Wx96H/tvEntertainment.jpg,/65Wx65H/tvEntertainment.jpg,/30Wx30H/tvEntertainment.jpg
+                            ; tvPremium                    ; /300Wx300H/tvPremium.jpg,/96Wx96H/tvPremium.jpg,/65Wx65H/tvPremium.jpg,/30Wx30H/tvPremium.jpg
+                            ; tvStarter                    ; /300Wx300H/tvStarter.jpg,/96Wx96H/tvStarter.jpg,/65Wx65H/tvStarter.jpg,/30Wx30H/tvStarter.jpg
+                            ; allOnDemand                  ; /300Wx300H/allOnDemand.jpg,/96Wx96H/allOnDemand.jpg,/65Wx65H/allOnDemand.jpg,/30Wx30H/allOnDemand.jpg
+                            ; foreignLanguagePackage       ; /300Wx300H/foreignLanguagePackage.jpg,/96Wx96H/foreignLanguagePackage.jpg,/65Wx65H/foreignLanguagePackage.jpg,/30Wx30H/foreignLanguagePackage.jpg
+                            ; sport                        ; /300Wx300H/sport.jpg,/96Wx96H/sport.jpg,/65Wx65H/sport.jpg,/30Wx30H/sport.jpg
+                            ; TCO                          ; /300Wx300H/TCO.jpg,/96Wx96H/TCO.jpg,/65Wx65H/TCO.jpg,/30Wx30H/TCO.jpg
+
+INSERT_UPDATE TmaBundledProductOffering; code[unique = true]; $picture                  ; $thumbnail              ; $detail                     ; $normal                   ; $thumbnails             ; $others                                                                                                                                                 ; $galleryImages; $catalogVersion
+                                       ; underworld         ; /300Wx300H/underworld.jpg ; /96Wx96H/underworld.jpg ; /1200Wx1200H/underworld.jpg ; /300Wx300H/underworld.jpg ; /96Wx96H/underworld.jpg ; /1200Wx1200H/underworld.jpg,/515Wx515H/underworld.jpg,/300Wx300H/underworld.jpg,/96Wx96H/underworld.jpg,/65Wx65H/underworld.jpg,/30Wx30H/underworld.jpg ; underworld_tvshow
+
+INSERT_UPDATE TmaSimpleProductOffering; code[unique = true]          ; $picture                                    ; $thumbnail                                ; $detail                                     ; $normal                                     ; $thumbnails                               ; $others                                                                                                                                                                                                 ; $galleryImages; $catalogVersion
+                                      ; underworld_movie             ; /300Wx300H/underworld_movie.jpg             ; /96Wx96H/underworld_movie.jpg             ; /1200Wx1200H/underworld_movie.jpg           ; /300Wx300H/underworld_movie.jpg             ; /96Wx96H/underworld_movie.jpg             ; /1200Wx1200H/underworld_movie.jpg,/515Wx515H/underworld_movie.jpg,/300Wx300H/underworld_movie.jpg,/96Wx96H/underworld_movie.jpg,/65Wx65H/underworld_movie.jpg,/30Wx30H/underworld_movie.jpg             ; underworld_movie
+                                      ; the-last-journey             ; /300Wx300H/the-last-journey.jpg             ; /96Wx96H/the-last-journey.jpg             ; /1200Wx1200H/the-last-journey.jpg           ; /300Wx300H/the-last-journey.jpg             ; /96Wx96H/the-last-journey.jpg             ; /1200Wx1200H/the-last-journey.jpg,/515Wx515H/the-last-journey.jpg,/300Wx300H/the-last-journey.jpg,/96Wx96H/the-last-journey.jpg,/65Wx65H/the-last-journey.jpg,/30Wx30H/the-last-journey.jpg             ; the-last-journey
+                                      ; a-doctor-on-board            ; /300Wx300H/a-doctor-on-board.jpg            ; /96Wx96H/a-doctor-on-board.jpg            ; /1200Wx1200H/a-doctor-on-board.jpg          ; /300Wx300H/a-doctor-on-board.jpg            ; /96Wx96H/a-doctor-on-board.jpg            ; /1200Wx1200H/a-doctor-on-board.jpg,/515Wx515H/a-doctor-on-board.jpg,/300Wx300H/a-doctor-on-board.jpg,/96Wx96H/a-doctor-on-board.jpg,/65Wx65H/a-doctor-on-board.jpg,/30Wx30H/a-doctor-on-board.jpg       ; a-doctor-on-board
+                                      ; a-perfect-circle             ; /300Wx300H/a-perfect-circle.jpg             ; /96Wx96H/a-perfect-circle.jpg             ; /1200Wx1200H/a-perfect-circle.jpg           ; /300Wx300H/a-perfect-circle.jpg             ; /96Wx96H/a-perfect-circle.jpg             ; /1200Wx1200H/a-perfect-circle.jpg,/515Wx515H/a-perfect-circle.jpg,/300Wx300H/a-perfect-circle.jpg,/96Wx96H/a-perfect-circle.jpg,/65Wx65H/a-perfect-circle.jpg,/30Wx30H/a-perfect-circle.jpg             ; a-perfect-circle
+                                      ; call-the-nanny               ; /300Wx300H/call-the-nanny.jpg               ; /96Wx96H/call-the-nanny.jpg               ; /1200Wx1200H/call-the-nanny.jpg             ; /300Wx300H/call-the-nanny.jpg               ; /96Wx96H/call-the-nanny.jpg               ; /1200Wx1200H/call-the-nanny.jpg,/515Wx515H/call-the-nanny.jpg,/300Wx300H/call-the-nanny.jpg,/96Wx96H/call-the-nanny.jpg,/65Wx65H/call-the-nanny.jpg,/30Wx30H/call-the-nanny.jpg                         ; call-the-nanny
+                                      ; hunters                      ; /300Wx300H/hunters.jpg                      ; /96Wx96H/hunters.jpg                      ; /1200Wx1200H/hunters.jpg                    ; /300Wx300H/hunters.jpg                      ; /96Wx96H/hunters.jpg                      ; /1200Wx1200H/hunters.jpg,/515Wx515H/hunters.jpg,/300Wx300H/hunters.jpg,/96Wx96H/hunters.jpg,/65Wx65H/hunters.jpg,/30Wx30H/hunters.jpg                                                                   ; hunters
+                                      ; emmas-chaos-effect           ; /300Wx300H/emmas-chaos-effect.jpg           ; /96Wx96H/emmas-chaos-effect.jpg           ; /1200Wx1200H/emmas-chaos-effect.jpg         ; /300Wx300H/emmas-chaos-effect.jpg           ; /96Wx96H/emmas-chaos-effect.jpg           ; /1200Wx1200H/emmas-chaos-effect.jpg,/515Wx515H/emmas-chaos-effect.jpg,/300Wx300H/emmas-chaos-effect.jpg,/96Wx96H/emmas-chaos-effect.jpg,/65Wx65H/emmas-chaos-effect.jpg,/30Wx30H/emmas-chaos-effect.jpg ; emmas-chaos-effect
+                                      ; infinite-space               ; /300Wx300H/infinite-space.jpg               ; /96Wx96H/infinite-space.jpg               ; /1200Wx1200H/infinite-space.jpg             ; /300Wx300H/infinite-space.jpg               ; /96Wx96H/infinite-space.jpg               ; /1200Wx1200H/infinite-space.jpg,/515Wx515H/infinite-space.jpg,/300Wx300H/infinite-space.jpg,/96Wx96H/infinite-space.jpg,/65Wx65H/infinite-space.jpg,/30Wx30H/infinite-space.jpg                         ; infinite-space
+                                      ; ANVNetworks                  ; /300Wx300H/ANVNetworks.jpg                  ; /96Wx96H/ANVNetworks.jpg                  ; /1200Wx1200H/ANVNetworks.jpg                ; /300Wx300H/ANVNetworks.jpg                  ; /96Wx96H/ANVNetworks.jpg                  ; /1200Wx1200H/ANVNetworks.jpg,/515Wx515H/ANVNetworks.jpg,/300Wx300H/ANVNetworks.jpg,/96Wx96H/ANVNetworks.jpg,/65Wx65H/ANVNetworks.jpg,/30Wx30H/ANVNetworks.jpg                                           ; ANVNetworks
+                                      ; ChannelS                     ; /300Wx300H/ChannelS.jpg                     ; /96Wx96H/ChannelS.jpg                     ; /1200Wx1200H/ChannelS.jpg                   ; /300Wx300H/ChannelS.jpg                     ; /96Wx96H/ChannelS.jpg                     ; /1200Wx1200H/ChannelS.jpg,/515Wx515H/ChannelS.jpg,/300Wx300H/ChannelS.jpg,/96Wx96H/ChannelS.jpg,/65Wx65H/ChannelS.jpg,/30Wx30H/ChannelS.jpg                                                             ; ChannelS
+                                      ; CubeChannel                  ; /300Wx300H/CubeChannel.jpg                  ; /96Wx96H/CubeChannel.jpg                  ; /1200Wx1200H/CubeChannel.jpg                ; /300Wx300H/CubeChannel.jpg                  ; /96Wx96H/CubeChannel.jpg                  ; /1200Wx1200H/CubeChannel.jpg,/515Wx515H/CubeChannel.jpg,/300Wx300H/CubeChannel.jpg,/96Wx96H/CubeChannel.jpg,/65Wx65H/CubeChannel.jpg,/30Wx30H/CubeChannel.jpg                                           ; CubeChannel
+                                      ; KTV                          ; /300Wx300H/KTV.jpg                          ; /96Wx96H/KTV.jpg                          ; /1200Wx1200H/KTV.jpg                        ; /300Wx300H/KTV.jpg                          ; /96Wx96H/KTV.jpg                          ; /1200Wx1200H/KTV.jpg,/515Wx515H/KTV.jpg,/300Wx300H/KTV.jpg,/96Wx96H/KTV.jpg,/65Wx65H/KTV.jpg,/30Wx30H/KTV.jpg                                                                                           ; KTV
+                                      ; LightningChannel             ; /300Wx300H/LightningChannel.jpg             ; /96Wx96H/LightningChannel.jpg             ; /1200Wx1200H/LightningChannel.jpg           ; /300Wx300H/LightningChannel.jpg             ; /96Wx96H/LightningChannel.jpg             ; /1200Wx1200H/LightningChannel.jpg,/515Wx515H/LightningChannel.jpg,/300Wx300H/LightningChannel.jpg,/96Wx96H/LightningChannel.jpg,/65Wx65H/LightningChannel.jpg,/30Wx30H/LightningChannel.jpg             ; LightningChannel
+                                      ; SportChannel                 ; /300Wx300H/SportChannel.jpg                 ; /96Wx96H/SportChannel.jpg                 ; /1200Wx1200H/SportChannel.jpg               ; /300Wx300H/SportChannel.jpg                 ; /96Wx96H/SportChannel.jpg                 ; /1200Wx1200H/SportChannel.jpg,/515Wx515H/SportChannel.jpg,/300Wx300H/SportChannel.jpg,/96Wx96H/SportChannel.jpg,/65Wx65H/SportChannel.jpg,/30Wx30H/SportChannel.jpg                                     ; SportChannel
+                                      ; TCOChannel                   ; /300Wx300H/TCOChannel.jpg                   ; /96Wx96H/TCOChannel.jpg                   ; /1200Wx1200H/TCOChannel.jpg                 ; /300Wx300H/TCOChannel.jpg                   ; /96Wx96H/TCOChannel.jpg                   ; /1200Wx1200H/TCOChannel.jpg,/515Wx515H/TCOChannel.jpg,/300Wx300H/TCOChannel.jpg,/96Wx96H/TCOChannel.jpg,/65Wx65H/TCOChannel.jpg,/30Wx30H/TCOChannel.jpg                                                 ; TCOChannel
+                                      ; TRIChannel                   ; /300Wx300H/TRIChannel.jpg                   ; /96Wx96H/TRIChannel.jpg                   ; /1200Wx1200H/TRIChannel.jpg                 ; /300Wx300H/TRIChannel.jpg                   ; /96Wx96H/TRIChannel.jpg                   ; /1200Wx1200H/TRIChannel.jpg,/515Wx515H/TRIChannel.jpg,/300Wx300H/TRIChannel.jpg,/96Wx96H/TRIChannel.jpg,/65Wx65H/TRIChannel.jpg,/30Wx30H/TRIChannel.jpg                                                 ; TRIChannel
+                                      ; VIVOChannel                  ; /300Wx300H/VIVOChannel.jpg                  ; /96Wx96H/VIVOChannel.jpg                  ; /1200Wx1200H/VIVOChannel.jpg                ; /300Wx300H/VIVOChannel.jpg                  ; /96Wx96H/VIVOChannel.jpg                  ; /1200Wx1200H/VIVOChannel.jpg,/515Wx515H/VIVOChannel.jpg,/300Wx300H/VIVOChannel.jpg,/96Wx96H/VIVOChannel.jpg,/65Wx65H/VIVOChannel.jpg,/30Wx30H/VIVOChannel.jpg                                           ; VIVOChannel
+                                      ; YTV                          ; /300Wx300H/YTV.jpg                          ; /96Wx96H/YTV.jpg                          ; /1200Wx1200H/YTV.jpg                        ; /300Wx300H/YTV.jpg                          ; /96Wx96H/YTV.jpg                          ; /1200Wx1200H/YTV.jpg,/515Wx515H/YTV.jpg,/300Wx300H/YTV.jpg,/96Wx96H/YTV.jpg,/65Wx65H/YTV.jpg,/30Wx30H/YTV.jpg                                                                                           ; YTV
+                                      ; armagdedon_book              ; /300Wx300H/armagdedon_book.jpg              ; /96Wx96H/armagdedon_book.jpg              ; /1200Wx1200H/armagdedon_book.jpg            ; /300Wx300H/armagdedon_book.jpg              ; /96Wx96H/armagdedon_book.jpg              ; /1200Wx1200H/armagdedon_book.jpg,/515Wx515H/armagdedon_book.jpg,/300Wx300H/armagdedon_book.jpg,/96Wx96H/armagdedon_book.jpg,/65Wx65H/armagdedon_book.jpg,/30Wx30H/armagdedon_book.jpg                   ; armagdedon_book
+                                      ; cap                          ; /300Wx300H/cap.jpg                          ; /96Wx96H/cap.jpg                          ; /1200Wx1200H/cap.jpg                        ; /300Wx300H/cap.jpg                          ; /96Wx96H/cap.jpg                          ; /1200Wx1200H/cap.jpg,/515Wx515H/cap.jpg,/300Wx300H/cap.jpg,/96Wx96H/cap.jpg,/65Wx65H/cap.jpg,/30Wx30H/cap.jpg                                                                                           ; cap
+                                      ; handbag                      ; /300Wx300H/handbag.jpg                      ; /96Wx96H/handbag.jpg                      ; /1200Wx1200H/handbag.jpg                    ; /300Wx300H/handbag.jpg                      ; /96Wx96H/handbag.jpg                      ; /1200Wx1200H/handbag.jpg,/515Wx515H/handbag.jpg,/300Wx300H/handbag.jpg,/96Wx96H/handbag.jpg,/65Wx65H/handbag.jpg,/30Wx30H/handbag.jpg                                                                   ; handbag
+                                      ; hoodie                       ; /300Wx300H/hoodie.jpg                       ; /96Wx96H/hoodie.jpg                       ; /1200Wx1200H/hoodie.jpg                     ; /300Wx300H/hoodie.jpg                       ; /96Wx96H/hoodie.jpg                       ; /1200Wx1200H/hoodie.jpg,/515Wx515H/hoodie.jpg,/300Wx300H/hoodie.jpg,/96Wx96H/hoodie.jpg,/65Wx65H/hoodie.jpg,/30Wx30H/hoodie.jpg                                                                         ; hoodie
+                                      ; pants_bp                     ; /300Wx300H/pants_bp.jpg                     ; /96Wx96H/pants_bp.jpg                     ; /1200Wx1200H/pants_bp.jpg                   ; /300Wx300H/pants_bp.jpg                     ; /96Wx96H/pants_bp.jpg                     ; /1200Wx1200H/pants_bp.jpg,/515Wx515H/pants_bp.jpg,/300Wx300H/pants_bp.jpg,/96Wx96H/pants_bp.jpg,/65Wx65H/pants_bp.jpg,/30Wx30H/pants_bp.jpg                                                             ; pants_bp
+                                      ; shoes_man                    ; /300Wx300H/shoes_man.jpg                    ; /96Wx96H/shoes_man.jpg                    ; /1200Wx1200H/shoes_man.jpg                  ; /300Wx300H/shoes_man.jpg                    ; /96Wx96H/shoes_man.jpg                    ; /1200Wx1200H/shoes_man.jpg,/515Wx515H/shoes_man.jpg,/300Wx300H/shoes_man.jpg,/96Wx96H/shoes_man.jpg,/65Wx65H/shoes_man.jpg,/30Wx30H/shoes_man.jpg                                                       ; shoes_man
+                                      ; shoes_woman_bp               ; /300Wx300H/shoes_woman_bp.jpg               ; /96Wx96H/shoes_woman_bp.jpg               ; /1200Wx1200H/shoes_woman_bp.jpg             ; /300Wx300H/shoes_woman_bp.jpg               ; /96Wx96H/shoes_woman_bp.jpg               ; /1200Wx1200H/shoes_woman_bp.jpg,/515Wx515H/shoes_woman_bp.jpg,/300Wx300H/shoes_woman_bp.jpg,/96Wx96H/shoes_woman_bp.jpg,/65Wx65H/shoes_woman_bp.jpg,/30Wx30H/shoes_woman_bp.jpg                         ; shoes_woman_bp
+                                      ; fibreBroadbandLimited        ; /300Wx300H/fibreBroadbandLimited.jpg        ; /96Wx96H/fibreBroadbandLimited.jpg        ; /300Wx300H/fibreBroadbandLimited.jpg        ; /300Wx300H/fibreBroadbandLimited.jpg        ; /96Wx96H/fibreBroadbandLimited.jpg        ; /300Wx300H/fibreBroadbandLimited.jpg,/96Wx96H/fibreBroadbandLimited.jpg,/65Wx65H/fibreBroadbandLimited.jpg,/30Wx30H/fibreBroadbandLimited.jpg                                                           ; fibreBroadbandLimited
+                                      ; fibreBroadbandUnlimited      ; /300Wx300H/fibreBroadbandUnlimited.jpg      ; /96Wx96H/fibreBroadbandUnlimited.jpg      ; /300Wx300H/fibreBroadbandUnlimited.jpg      ; /300Wx300H/fibreBroadbandUnlimited.jpg      ; /96Wx96H/fibreBroadbandUnlimited.jpg      ; /300Wx300H/fibreBroadbandUnlimited.jpg,/96Wx96H/fibreBroadbandUnlimited.jpg,/65Wx65H/fibreBroadbandUnlimited.jpg,/30Wx30H/fibreBroadbandUnlimited.jpg                                                   ; fibreBroadbandUnlimited
+                                      ; phoneUnlimitedWeekend        ; /300Wx300H/phoneUnlimitedWeekend.jpg        ; /96Wx96H/phoneUnlimitedWeekend.jpg        ; /300Wx300H/phoneUnlimitedWeekend.jpg        ; /300Wx300H/phoneUnlimitedWeekend.jpg        ; /96Wx96H/phoneUnlimitedWeekend.jpg        ; /300Wx300H/phoneUnlimitedWeekend.jpg,/96Wx96H/phoneUnlimitedWeekend.jpg,/65Wx65H/phoneUnlimitedWeekend.jpg,/30Wx30H/phoneUnlimitedWeekend.jpg                                                           ; phoneUnlimitedWeekend
+                                      ; phoneUnlimitedWeekendEvening ; /300Wx300H/phoneUnlimitedWeekendEvening.jpg ; /96Wx96H/phoneUnlimitedWeekendEvening.jpg ; /300Wx300H/phoneUnlimitedWeekendEvening.jpg ; /300Wx300H/phoneUnlimitedWeekendEvening.jpg ; /96Wx96H/phoneUnlimitedWeekendEvening.jpg ; /300Wx300H/phoneUnlimitedWeekendEvening.jpg,/96Wx96H/phoneUnlimitedWeekendEvening.jpg,/65Wx65H/phoneUnlimitedWeekendEvening.jpg,/30Wx30H/phoneUnlimitedWeekendEvening.jpg                               ; phoneUnlimitedWeekendEvening
+                                      ; superFibreUnlimited          ; /300Wx300H/superFibreUnlimited.jpg          ; /96Wx96H/superFibreUnlimited.jpg          ; /300Wx300H/superFibreUnlimited.jpg          ; /300Wx300H/superFibreUnlimited.jpg          ; /96Wx96H/superFibreUnlimited.jpg          ; /300Wx300H/superFibreUnlimited.jpg,/96Wx96H/superFibreUnlimited.jpg,/65Wx65H/superFibreUnlimited.jpg,/30Wx30H/superFibreUnlimited.jpg                                                                   ; superFibreUnlimited
+                                      ; tvEntertainment              ; /300Wx300H/tvEntertainment.jpg              ; /96Wx96H/tvEntertainment.jpg              ; /300Wx300H/tvEntertainment.jpg              ; /300Wx300H/tvEntertainment.jpg              ; /96Wx96H/tvEntertainment.jpg              ; /300Wx300H/tvEntertainment.jpg,/96Wx96H/tvEntertainment.jpg,/65Wx65H/tvEntertainment.jpg,/30Wx30H/tvEntertainment.jpg                                                                                   ; tvEntertainment
+                                      ; tvPremium                    ; /300Wx300H/tvPremium.jpg                    ; /96Wx96H/tvPremium.jpg                    ; /300Wx300H/tvPremium.jpg                    ; /300Wx300H/tvPremium.jpg                    ; /96Wx96H/tvPremium.jpg                    ; /300Wx300H/tvPremium.jpg,/96Wx96H/tvPremium.jpg,/65Wx65H/tvPremium.jpg,/30Wx30H/tvPremium.jpg                                                                                                           ; tvPremium
+                                      ; tvStarter                    ; /300Wx300H/tvStarter.jpg                    ; /96Wx96H/tvStarter.jpg                    ; /300Wx300H/tvStarter.jpg                    ; /300Wx300H/tvStarter.jpg                    ; /96Wx96H/tvStarter.jpg                    ; /300Wx300H/tvStarter.jpg,/96Wx96H/tvStarter.jpg,/65Wx65H/tvStarter.jpg,/30Wx30H/tvStarter.jpg                                                                                                           ; tvStarter
+                                      ; allOnDemand                  ; /300Wx300H/allOnDemand.jpg                  ; /96Wx96H/allOnDemand.jpg                  ; /300Wx300H/allOnDemand.jpg                  ; /300Wx300H/allOnDemand.jpg                  ; /96Wx96H/allOnDemand.jpg                  ; /300Wx300H/allOnDemand.jpg,/96Wx96H/allOnDemand.jpg,/65Wx65H/allOnDemand.jpg,/30Wx30H/allOnDemand.jpg                                                                                                   ; allOnDemand
+                                      ; foreignLanguagePackage       ; /300Wx300H/foreignLanguagePackage.jpg       ; /96Wx96H/foreignLanguagePackage.jpg       ; /300Wx300H/foreignLanguagePackage.jpg       ; /300Wx300H/foreignLanguagePackage.jpg       ; /96Wx96H/foreignLanguagePackage.jpg       ; /300Wx300H/foreignLanguagePackage.jpg,/96Wx96H/foreignLanguagePackage.jpg,/65Wx65H/foreignLanguagePackage.jpg,/30Wx30H/foreignLanguagePackage.jpg                                                       ; foreignLanguagePackage
+                                      ; sport                        ; /300Wx300H/sport.jpg                        ; /96Wx96H/sport.jpg                        ; /300Wx300H/sport.jpg                        ; /300Wx300H/sport.jpg                        ; /96Wx96H/sport.jpg                        ; /300Wx300H/sport.jpg,/96Wx96H/sport.jpg,/65Wx65H/sport.jpg,/30Wx30H/sport.jpg                                                                                                                           ; sport
+                                      ; TCO                          ; /300Wx300H/TCO.jpg                          ; /96Wx96H/TCO.jpg                          ; /300Wx300H/TCO.jpg                          ; /300Wx300H/TCO.jpg                          ; /96Wx96H/TCO.jpg                          ; /300Wx300H/TCO.jpg,/96Wx96H/TCO.jpg,/65Wx65H/TCO.jpg,/30Wx30H/TCO.jpg                                                                                                                                   ; TCO

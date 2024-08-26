@@ -1,0 +1,14 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Importing the pre configured bundle product off
+
+# Macros / Replacement Parameter definitions
+$productCatalog = telcospaProductCatalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+
+INSERT_UPDATE TmaBpoPreConfig; code[unique = true]; name[lang = en]      ; rootBpo(code, $catalogVersion); preConfigSpos(code, $catalogVersion)                   ; $catalogVersion;
+                             ; preconfigQuadPlay  ; Pre Config Quad Play ; quadPlay                      ; iPhone_13, gsm_small, 4gpow,installation_service, eSim ;
+                             ; preconfigHomeDeal  ; Pre Config Home Deal ; homeDeal                      ; tv_unlimited, installation_service, mibox_4g           ;
+

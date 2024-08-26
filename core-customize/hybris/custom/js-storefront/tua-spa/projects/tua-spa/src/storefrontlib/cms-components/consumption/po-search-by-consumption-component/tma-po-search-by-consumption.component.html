@@ -1,0 +1,21 @@
+<div *ngIf="poConsumption.name" class="row">
+  <span class="col-12 font-weight-bolder">{{
+    'consumption.selectConsumption'
+      | cxTranslate: {name: poConsumption.name, usageUnit: poConsumption.usageUnit.name}
+    }}</span>
+  <div 
+    *ngIf="consumptionOptions"
+    class="col-12"
+    [formGroup]="consumptionForm">
+    <ng-select [items]="consumptionOptions"
+      [searchable]="false"
+      [hideSelected]="true"
+      [clearable]="false"
+      [(ngModel)]="selectedValue"
+      formControlName="consumptionInput"
+      bindLabel="name"
+      (change)="saveConsumption()
+    ">
+    </ng-select>
+  </div>
+</div>

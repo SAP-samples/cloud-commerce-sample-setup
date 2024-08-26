@@ -1,0 +1,11 @@
+/* You can add global styles to this file, and also import other style files */
+$styleVersion: 6.0;
+$useLatestStyles: true;
+@import '@spartacus/styles';
+@import '@spartacus/cart';
+@import '@spartacus/checkout';
+@import '@spartacus/organization';
+@import '@spartacus/user';
+@import '@spartacus/order';
+@import '../../tua-spa/src/storefrontstyles/_index.scss';
+@import '~material-design-icons/iconfont/material-icons.css';

@@ -1,0 +1,20 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Importing the bundle product offering groups
+# Macros / Replacement Parameter definitions
+
+$productCatalog = mediaspaProductCatalog
+$catalogVersion = catalogversion(catalog(id[default=$productCatalog]), version[default='Staged'])[unique=true, default=$productCatalog:Staged]
+
+INSERT_UPDATE TmaProductOfferingGroup; code[unique = true]          ; name                   ; parentBundleProductOffering(code, $catalogVersion); childProductOfferings(code, $catalogVersion); $catalogVersion;
+                                     ; tricast_tv_show_plans        ; Tricast Tv Show Plans  ; tricast_shows_pack                                ; tvStarter,tvEntertainment,tvPremium
+                                     ; tricast_movies               ; Tricast Movies         ; tricast_shows_pack                                ; the-last-journey,a-doctor-on-board,a-perfect-circle,call-the-nanny,emmas-chaos-effect,hunters,infinite-space,underworld_movie
+                                     ; tricast_addons               ; Tricast Addons         ; tricast_shows_pack                                ; TCO,sport,foreignLanguagePackage,allOnDemand
+
+                                     ; tricast_channels_group       ; Tricast Channels       ; tricast_channels_pack                             ; YTV,CubeChannel,ANVNetworks,ChannelS,KTV,TRIChannel,TCOChannel,VIVOChannel,LightningChannel,SportChannel
+                                     ; tricast_channels_plans_group ; Tricast Channels Plans ; tricast_channels_pack                             ; tvStarter
+
+                                     ; broadband_deals              ; Broadband deals        ; tricast_broadband_deal                            ; fibreBroadbandLimited, fibreBroadbandUnlimited,superFibreUnlimited
+                                     ; routerd_deals                ; Routerd deals          ; tricast_broadband_deal                            ; standardRouter,fibreRouter,standardDecoder,decoderPlus,fibreRouterUnlimited

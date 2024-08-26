@@ -1,0 +1,177 @@
+@mixin font($size, $weight, $color) {
+  font-size: $size;
+  font-weight: $weight;
+  color: $color;
+}
+
+@media (max-width: 375.98px) {
+  .banner-container {
+    height: 140px;
+
+    .head-font {
+      @include font(1rem, 900, #ffffff)
+    }
+
+    .sec-font {
+      @include font(.89rem, 600, #ffffff)
+    }
+
+    .margin-leftTop {
+      margin-top: 25%;
+      margin-left: 5%;
+    }
+
+    .btn {
+      padding-top: 0;
+      padding-bottom: 0;
+      height: 30px !important;
+      max-height: 30px !important;
+      min-width: 30px !important;
+      font-size: 0.8rem;
+    }
+
+  }
+}
+
+@media (min-width: 376px) and (max-width: 575px) {
+  .banner-container {
+    height: 240px;
+
+    .head-font {
+      @include font(1rem, 900, #ffffff)
+    }
+
+    .sec-font {
+      @include font(.89rem, 600, #ffffff)
+    }
+
+    .margin-leftTop {
+      margin-top: 25%;
+      margin-left: 5%;
+    }
+
+    .btn {
+      padding-top: 0;
+      padding-bottom: 0;
+      height: 30px !important;
+      max-height: 30px !important;
+      min-width: 30px !important;
+      font-size: 0.8rem;
+    }
+
+  }
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .banner-container {
+    height: 400px;
+
+    .head-font {
+      @include font(2.2rem, 900, #ffffff)
+    }
+
+    .sec-font {
+      @include font(1.5rem, 600, #ffffff)
+    }
+
+    .margin-leftTop {
+      margin-top: 25%;
+      margin-left: 5%;
+    }
+
+    .btn {
+      padding-top: 0;
+      padding-bottom: 0;
+      height: 30px !important;
+      max-height: 30px !important;
+      min-width: 30px !important;
+    }
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .banner-container {
+    height: 250px;
+
+    .head-font {
+      @include font(2.8rem, 900, #ffffff)
+    }
+
+    .sec-font {
+      @include font(1.8rem, 600, #ffffff)
+    }
+
+    .margin-leftTop {
+      margin-top: 25%;
+      margin-left: 5%;
+    }
+
+    .btn {
+      padding-top: 0;
+      padding-bottom: 0;
+      height: 30px !important;
+      max-height: 30px !important;
+      min-width: 30px !important;
+    }
+
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1299.98px) {
+  .banner-container {
+    height: 350px;
+
+    .head-font {
+      @include font(2.8rem, 900, #ffffff)
+    }
+
+    .sec-font {
+      @include font(1.8rem, 600, #ffffff)
+    }
+
+    .margin-leftTop {
+      margin-top: 25%;
+      margin-left: 5%;
+    }
+
+    .btn {
+      padding-top: 0;
+      padding-bottom: 0;
+      height: 40px !important;
+      max-height: 40px !important;
+      min-width: 40px !important;
+    }
+  }
+}
+
+@media (min-width: 1200px) {
+  .banner-container {
+    height: 400px;
+
+    .head-font {
+      @include font(2.8rem, 900, #ffffff)
+    }
+
+    .sec-font {
+      @include font(1.8rem, 600, #ffffff)
+    }
+
+    .margin-leftTop {
+      margin-top: 25%;
+      margin-left: 5%;
+    }
+
+    .btn {
+      height: 60px !important;
+      max-height: 60px !important;
+      min-width: 60px !important;
+      font-size: 1.1rem;
+    }
+  }
+}
+
+.banner-container {
+  background-repeat: no-repeat !important;
+  background-size: 100% !important;
+  margin: 10px 0px;
+}

@@ -1,0 +1,36 @@
+<cx-selfcare-card
+  *ngIf="model$ | async as model"
+  i18nRoot="{{ domainType }}"
+  [showHint]="true"
+>
+  <section main class="cardSection">
+    <ng-container *ngIf="model.contact as contacts; else emptyList">
+      <div class="cardDetails" *ngFor="let contact of contacts">
+        <div class="cardItems" *ngFor="let medium of contact.contactMedium">
+          <span class="sectionValue">
+            <a
+              class="link"
+              [routerLink]="
+                {
+                  cxRoute: 'ContactDetails',
+                  params: {
+                    id: model.id,
+                    contactMedium: medium.mediumType
+                  }
+                } | cxUrl
+              "
+            >
+              {{ medium.mediumType }}
+            </a>
+          </span>
+        </div>
+      </div>
+    </ng-container>
+  </section>
+</cx-selfcare-card>
+
+<ng-template #emptyList>
+  <p class="is-empty">
+    {{ 'selfcare.billingAccounts.details.contact.emptyList' | cxTranslate }}
+  </p>
+</ng-template>

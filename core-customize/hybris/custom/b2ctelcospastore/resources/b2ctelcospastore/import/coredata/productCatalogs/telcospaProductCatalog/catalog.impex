@@ -1,0 +1,49 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+#
+# Import the Product Catalog and Classification Catalog
+#
+
+$productCatalog = telcospaProductCatalog
+$classificationCatalog = telcospaClassification
+$catalogVersion = catalogversion(catalog(id[default=$productCatalog]), version[default='Staged'])[unique=true, default=$productCatalog:Staged]
+$languages = en
+
+# Product catalog
+INSERT_UPDATE Catalog; id[unique = true]
+                     ; $productCatalog
+
+# B2C Telco Classification catalog
+INSERT_UPDATE ClassificationSystem; id[unique = true]
+                                  ; $classificationCatalog
+
+# Product versions for product catalogs
+INSERT_UPDATE CatalogVersion; catalog(id)[unique = true]; version[unique = true]; active; languages(isoCode); readPrincipals(uid)
+                            ; $productCatalog           ; Staged                ; false ; $languages        ; employeegroup
+                            ; $productCatalog           ; Online                ; true  ; $languages        ; employeegroup
+
+# Insert Classifications System Version
+INSERT_UPDATE ClassificationSystemVersion; catalog(id)[unique = true]; version[unique = true]; active; inclPacking[virtual = true, default = true]; inclDuty[virtual = true, default = true]; inclFreight[virtual = true, default = true]; inclAssurance[virtual = true, default = true]
+                                         ; $classificationCatalog    ; 1.0                   ; true
+
+# Create default tax row for all products in product catalog
+INSERT_UPDATE TaxRow; $catalogVersion; tax(code)[unique = true]; pg(code)[unique = true]; ug(code)[unique = true]
+                    ;                ; jp-vat-full             ; jp-vat-full            ; jp-taxes
+                    ;                ; us-sales-tax-full       ; us-sales-tax-full      ; us-taxes
+                    ;                ; us-sales-tax-full_eur   ; us-sales-tax-full_eur  ; us-taxes
+
+
+#
+# Import the Telco Classification Catalog
+#
+INSERT_UPDATE BillingFrequency; code[unique = true]; order; cartAware[default = true]
+                              ; monthly            ; 5
+                              ; quarterly          ; 6
+                              ; yearly             ; 7
+
+INSERT_UPDATE BillingEvent; code[unique = true]; order; cartAware[default = true]
+                          ; paynow             ; 1
+                          ; onfirstbill        ; 2
+                          ; oncancellation     ; 0    ; false

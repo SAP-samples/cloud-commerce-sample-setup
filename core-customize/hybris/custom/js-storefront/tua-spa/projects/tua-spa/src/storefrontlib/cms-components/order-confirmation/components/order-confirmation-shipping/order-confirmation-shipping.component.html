@@ -1,0 +1,34 @@
+<div class="cx-order-items" *ngIf="order$ | async as order">
+  <ng-container *ngIf="!showItemList || entries?.length > 0">
+    <h2 class="cx-review-header">
+      {{ 'checkoutMode.deliveryEntries' | cxTranslate }}
+    </h2>
+
+    <div class="cx-review-summary cx-review-shipping-summary">
+      <!-- DELIVERY ADDRESS SECTION -->
+      <div class="cx-review-summary-card-container">
+        <div class="cx-review-summary-card cx-review-card-address">
+          <cx-card
+            [content]="getDeliveryAddressCard(order.deliveryAddress) | async"
+          ></cx-card>
+        </div>
+      </div>
+
+      <!-- DELIVERY MODE SECTION -->
+      <div class="cx-review-summary-card-container">
+        <div class="cx-review-summary-card cx-review-card-address">
+          <cx-card
+            [content]="getDeliveryModeCard(order.deliveryMode) | async"
+          ></cx-card>
+        </div>
+      </div>
+    </div>
+
+    <cx-cart-item-list
+            [items]="order.entries"
+            [readonly]="true"
+            [isPremiseDetailsReadOnly]="true"
+    >
+    </cx-cart-item-list>
+  </ng-container>
+</div>

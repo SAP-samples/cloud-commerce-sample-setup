@@ -1,0 +1,85 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Importing sample compatibility policies
+
+$productCatalog = b2btelcospaProductCatalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+
+########################################################################################################
+# Eligibility Policy1 (retention policy):
+# A customer is eligible for RETENTION flow when the remaining contract term is less than 3 months     #
+########################################################################################################
+INSERT_UPDATE TmaProcessTypesPolicyStatement; code[unique = true] ; processes(code); $catalogVersion
+                                            ; retention_statement ; RETENTION
+
+INSERT_UPDATE TmaRemainingCommittedPeriodPolicyStatement; code[unique = true]; days; $catalogVersion
+                                                        ; 3months_statement  ; 90
+
+INSERT_UPDATE TmaAtomicPolicyCondition; code[unique = true]          ; statement(code, $catalogVersion); $catalogVersion
+                                      ; remainingPeriodConditions_90 ; 3months_statement
+
+INSERT_UPDATE TmaPolicyAction; code[unique = true]; statement(code, $catalogVersion); actionType(code); $catalogVersion
+                             ; allow_retention    ; retention_statement             ; ALLOW
+
+INSERT_UPDATE TmaCompatibilityPolicy; code[unique = true]                 ; conditionsEvaluatorType(code); conditions(code, $catalogVersion); actions(code, $catalogVersion); onlineFrom[dateformat = dd.MM.yyyy]; onlineTo[dateformat = dd.MM.yyyy]; $catalogVersion
+                                    ; 3months_remainingPeriod_eligibility ; AND                          ; remainingPeriodConditions_90     ; allow_retention               ;
+
+###################################################################################################
+# Eligibility Policy2 (general acquisition, device only and switch supplier policy):              #
+# A customer is eligible for ACQUISITION DEVICE_ONLY and SWITCH_SERVICE_PROVIDER flows in all conditions  #
+###################################################################################################
+INSERT_UPDATE TmaProcessTypesPolicyStatement; code[unique = true]                                       ; processes(code); $catalogVersion
+                                            ; acq_and_device_only_and_switch_service_provider_statement ; ACQUISITION,DEVICE_ONLY,SWITCH_SERVICE_PROVIDER
+
+INSERT_UPDATE TmaPolicyAction; code[unique = true]                                   ; statement(code, $catalogVersion)                          ; actionType(code); $catalogVersion
+                             ; allow_acq_and_device_only_and_switch_service_provider ; acq_and_device_only_and_switch_service_provider_statement ; ALLOW
+
+INSERT_UPDATE TmaCompatibilityPolicy; code[unique = true]                                         ; conditionsEvaluatorType(code); conditions(code, $catalogVersion); actions(code, $catalogVersion)                        ; onlineFrom[dateformat = dd.MM.yyyy]; onlineTo[dateformat = dd.MM.yyyy]; $catalogVersion
+                                    ; acq_and_device_only_and_switch_service_provider_eligibility ; AND                          ;                                  ; allow_acq_and_device_only_and_switch_service_provider ;
+
+
+
+########################################################################
+# General cardinality rules:
+# A customer can select only one satellite connectivity service plan.  #
+########################################################################
+INSERT_UPDATE TmaPoGroupPolicyStatement; code[unique = true]             ; min; max; productOfferingGroup(code, $catalogVersion); $catalogVersion
+                                       ; satellite_connectivity_services ; 0  ; 1  ; satellite_connectivity_services            ;
+
+INSERT_UPDATE TmaPolicyAction; code[unique = true]             ; statement(code, $catalogVersion); actionType(code); $catalogVersion
+                             ; satellite_connectivity_services ; satellite_connectivity_services ; SELECT
+
+INSERT_UPDATE TmaCompatibilityPolicy; code[unique = true]             ; conditions(code, $catalogVersion); actions(code, $catalogVersion)  ; conditionsEvaluatorType(code); onlineFrom[dateformat = dd.MM.yyyy]; onlineTo[dateformat = dd.MM.yyyy]; $catalogVersion
+                                    ; satellite_connectivity_services ;                                  ; satellite_connectivity_services ; AND                          ; 03.05.2019                         ; 07.05.2099                       ;
+
+
+#########################################################
+# General cardinality rules:
+# A customer can select only one satellite speed plan.  #
+#########################################################
+INSERT_UPDATE TmaPoGroupPolicyStatement; code[unique = true]                ; min; max; productOfferingGroup(code, $catalogVersion); $catalogVersion
+                                       ; satellite_connectivity_speed_plans ; 0  ; 1  ; satellite_connectivity_speed_plans         ;
+
+INSERT_UPDATE TmaPolicyAction; code[unique = true]                ; statement(code, $catalogVersion)   ; actionType(code); $catalogVersion
+                             ; satellite_connectivity_speed_plans ; satellite_connectivity_speed_plans ; SELECT
+
+INSERT_UPDATE TmaCompatibilityPolicy; code[unique = true]                ; conditions(code, $catalogVersion); actions(code, $catalogVersion)     ; conditionsEvaluatorType(code); onlineFrom[dateformat = dd.MM.yyyy]; onlineTo[dateformat = dd.MM.yyyy]; $catalogVersion
+                                    ; satellite_connectivity_speed_plans ;                                  ; satellite_connectivity_speed_plans ; AND                          ; 03.05.2019                         ; 07.05.2099                       ;
+
+
+
+####################################################
+# General cardinality rules:
+# A customer can select only one satellite addons. #
+####################################################
+INSERT_UPDATE TmaPoGroupPolicyStatement; code[unique = true]           ; min; max; productOfferingGroup(code, $catalogVersion); $catalogVersion
+                                       ; satellite_connectivity_addons ; 0  ; 1  ; satellite_connectivity_addons              ;
+
+INSERT_UPDATE TmaPolicyAction; code[unique = true]           ; statement(code, $catalogVersion); actionType(code); $catalogVersion
+                             ; satellite_connectivity_addons ; satellite_connectivity_addons   ; SELECT
+
+INSERT_UPDATE TmaCompatibilityPolicy; code[unique = true]           ; conditions(code, $catalogVersion); actions(code, $catalogVersion); conditionsEvaluatorType(code); onlineFrom[dateformat = dd.MM.yyyy]; onlineTo[dateformat = dd.MM.yyyy]; $catalogVersion
+                                    ; satellite_connectivity_addons ;                                  ; satellite_connectivity_addons ; AND                          ; 03.05.2019                         ; 07.05.2099                       ;
+

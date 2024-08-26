@@ -1,0 +1,33 @@
+.banner-container {
+  margin: 20px auto;
+  cx-generic-link {
+    ::ng-deep {
+      a {
+        position: relative;
+
+        p:first-child {
+          position: absolute;
+          top: 80px;
+          bottom: 0;
+          right: 0;
+          left: 0;
+          text-align: center;
+          z-index: 9;
+          font-weight: var(--cx-font-weight-bold);
+          color: var(--cx-color-inverse);
+        }
+      }
+    }
+    cx-media {
+      ::ng-deep {
+        img {
+          border-radius: 8px;
+          width: 182.5px;
+          height: 182.5px;
+          object-fit: cover;
+          object-position: center;
+        }
+      }
+    }
+  }
+}

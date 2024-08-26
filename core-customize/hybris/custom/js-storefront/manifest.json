@@ -1,0 +1,9 @@
+{
+    "applications": [
+        {
+            "name": "application",
+            "path": "tua-spa"            
+        }
+    ],
+    "nodeVersion": "18"
+}

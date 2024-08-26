@@ -1,0 +1,130 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# Macros / Replacement Parameter definitions
+$productCatalog = telcospaProductCatalog
+$productCatalogName = Telco SPA Product Catalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+$StagedCatalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+$supercategories = supercategories(code, $catalogVersion)
+$baseProduct = baseProduct(code, $catalogVersion)
+$approved = approvalstatus(code)[default = 'approved']
+$supercategories = supercategories(code, $catalogVersion)
+$unit = unit(code)[default = pieces]
+
+INSERT_UPDATE TmaBundledProductOffering; code[unique = true]; name[lang = en]      ; parents(code, $catalogVersion); $approved; $catalogVersion; $unit
+                                       ; quadPlay           ; Quad Play            ;
+                                       ; allInOneDeal       ; All-In-One           ;
+                                       ; mobileDeal         ; Mobile Deal          ; quadPlay
+                                       ; homeDeal           ; Internet and TV Deal ; quadPlay
+                                       ; tvDeal             ; TV Deal              ; homeDeal
+                                       ; internetDeal       ; Internet Deal        ; homeDeal
+
+INSERT_UPDATE TmaSimpleProductOffering; code[unique = true]; parents(code, $catalogVersion); $approved; manufacturerName; $catalogVersion
+#mobile deal
+                                      ; iPhone_13          ; mobileDeal, allInOneDeal      ;          ;
+                                      ; iPhone_13_Pro_Max  ; mobileDeal, allInOneDeal      ;          ;
+                                      ; samsung_galaxy_S21 ; mobileDeal, allInOneDeal      ;          ;
+                                      ; samsung_galaxy_S22 ; mobileDeal, allInOneDeal      ;          ;
+
+
+INSERT_UPDATE TmaSimpleProductOffering; code[unique = true]                      ; parents(code, $catalogVersion); manufacturerName; $approved; $catalogVersion
+# mobile deal - plans
+                                      ; gsm_small                                ; mobileDeal, allInOneDeal      ;
+                                      ; gsm_medium                               ; mobileDeal, allInOneDeal      ;
+                                      ; gsm_large                                ; mobileDeal, allInOneDeal      ;
+# mobile deal - addons
+                                      ; 4gpow                                    ; mobileDeal, allInOneDeal
+                                      ; 5gpow                                    ; mobileDeal, allInOneDeal      ;
+                                      ; additional_roaming_data                  ; mobileDeal, allInOneDeal      ;
+                                      ; eSim                                     ; mobileDeal, allInOneDeal      ;
+                                      ; mobile_hotspot                           ; mobileDeal, allInOneDeal      ;
+                                      ; smartphone_warranty                      ; mobileDeal, allInOneDeal      ;
+
+### home deal - landline
+                                      ; unlimitedNationalCalling                 ; homeDeal, allInOneDeal        ;
+                                      ; unlimitedNationalAndLimitedInternational ; homeDeal, allInOneDeal        ;
+
+#### home deal - routers
+                                      ; router_x                                 ; internetDeal, allInOneDeal    ;
+                                      ; router_x1                                ; internetDeal, allInOneDeal    ;
+### home deal - modems
+                                      ; modem_4G                                 ; internetDeal, allInOneDeal    ;
+                                      ; modem_5G                                 ; internetDeal, allInOneDeal    ;
+
+### home deal - internet & tv
+
+# media boxes
+                                      ; mibox_4g                                 ; tvDeal, allInOneDeal          ;
+                                      ; mibox_5g                                 ; tvDeal, allInOneDeal          ;
+# tv deal - plans
+                                      ; tv_100                                   ; tvDeal, allInOneDeal          ;
+                                      ; tv_200                                   ; tvDeal, allInOneDeal          ;
+                                      ; tv_unlimited                             ; tvDeal, allInOneDeal          ;
+# internet deal - plans
+                                      ; fiber_internet                           ; internetDeal, allInOneDeal    ;
+                                      ; copper_internet                          ; internetDeal, allInOneDeal    ;
+                                      ; 5g_internet                              ; internetDeal, allInOneDeal    ;
+# internet deal - addons
+                                      ; installation_service                     ; internetDeal, allInOneDeal    ;
+
+
+### variants
+                                      ; iPhone_13_green_128g                     ; mobileDeal, allInOneDeal      ;
+                                      ; iPhone_13_green_256g                     ; mobileDeal, allInOneDeal      ;
+                                      ; iPhone_13_midnight_128g                  ; mobileDeal, allInOneDeal      ;
+                                      ; iPhone_13_midnight_256g                  ; mobileDeal, allInOneDeal      ;
+                                      ; iPhone_13_white_128g                     ; mobileDeal, allInOneDeal      ;
+                                      ; iPhone_13_white_256g                     ; mobileDeal, allInOneDeal      ;
+                                      ; iPhone_13_blue_128g                      ; mobileDeal, allInOneDeal      ;
+                                      ; iPhone_13_blue_256g                      ; mobileDeal, allInOneDeal      ;
+                                      ; iPhone_13_pink_128g                      ; mobileDeal, allInOneDeal      ;
+                                      ; iPhone_13_pink_256g                      ; mobileDeal, allInOneDeal      ;
+                                      ; iPhone_13_red_128g                       ; mobileDeal, allInOneDeal      ;
+                                      ; iPhone_13_red_256g                       ; mobileDeal, allInOneDeal      ;
+
+                                      ; iPhone_13_Pro_Max_silver_128g            ; mobileDeal, allInOneDeal      ;
+                                      ; iPhone_13_Pro_Max_silver_256g            ; mobileDeal, allInOneDeal      ;
+                                      ; iPhone_13_Pro_Max_silver_512g            ; mobileDeal, allInOneDeal      ;
+                                      ; iPhone_13_Pro_Max_silver_1024g           ; mobileDeal, allInOneDeal      ;
+                                      ; iPhone_13_Pro_Max_graphite_128g          ; mobileDeal, allInOneDeal      ;
+                                      ; iPhone_13_Pro_Max_graphite_256g          ; mobileDeal, allInOneDeal      ;
+                                      ; iPhone_13_Pro_Max_graphite_512g          ; mobileDeal, allInOneDeal      ;
+                                      ; iPhone_13_Pro_Max_graphite_1024g         ; mobileDeal, allInOneDeal      ;
+                                      ; iPhone_13_Pro_Max_alpinegreen_128g       ; mobileDeal, allInOneDeal      ;
+                                      ; iPhone_13_Pro_Max_alpinegreen_256g       ; mobileDeal, allInOneDeal      ;
+                                      ; iPhone_13_Pro_Max_alpinegreen_512g       ; mobileDeal, allInOneDeal      ;
+                                      ; iPhone_13_Pro_Max_alpinegreen_1024g      ; mobileDeal, allInOneDeal      ;
+                                      ; iPhone_13_Pro_Max_gold_128g              ; mobileDeal, allInOneDeal      ;
+                                      ; iPhone_13_Pro_Max_gold_256g              ; mobileDeal, allInOneDeal      ;
+                                      ; iPhone_13_Pro_Max_gold_512g              ; mobileDeal, allInOneDeal      ;
+                                      ; iPhone_13_Pro_Max_gold_1024g             ; mobileDeal, allInOneDeal      ;
+                                      ; iPhone_13_Pro_Max_sierrablue_128g        ; mobileDeal, allInOneDeal      ;
+                                      ; iPhone_13_Pro_Max_sierrablue_256g        ; mobileDeal, allInOneDeal      ;
+                                      ; iPhone_13_Pro_Max_sierrablue_512g        ; mobileDeal, allInOneDeal      ;
+                                      ; iPhone_13_Pro_Max_sierrablue_1024g       ; mobileDeal, allInOneDeal      ;
+
+                                      ; samsung_galaxy_S21_phantomgray_128g      ; mobileDeal, allInOneDeal      ;
+                                      ; samsung_galaxy_S21_phantomgray_256g      ; mobileDeal, allInOneDeal      ;
+                                      ; samsung_galaxy_S21_phantomviolet_128g    ; mobileDeal, allInOneDeal      ;
+                                      ; samsung_galaxy_S21_phantomviolet_256g    ; mobileDeal, allInOneDeal      ;
+                                      ; samsung_galaxy_S21_phantompink_128g      ; mobileDeal, allInOneDeal      ;
+                                      ; samsung_galaxy_S21_phantompink_256g      ; mobileDeal, allInOneDeal      ;
+                                      ; samsung_galaxy_S21_phantomwhite_128g     ; mobileDeal, allInOneDeal      ;
+                                      ; samsung_galaxy_S21_phantomwhite_256g     ; mobileDeal, allInOneDeal      ;
+
+                                      ; samsung_galaxy_S22_phantomblack_128g     ; mobileDeal, allInOneDeal      ;
+                                      ; samsung_galaxy_S22_phantomblack_256g     ; mobileDeal, allInOneDeal      ;
+                                      ; samsung_galaxy_S22_green_128g            ; mobileDeal, allInOneDeal      ;
+                                      ; samsung_galaxy_S22_green_256g            ; mobileDeal, allInOneDeal      ;
+                                      ; samsung_galaxy_S22_pinkgold_128g         ; mobileDeal, allInOneDeal      ;
+                                      ; samsung_galaxy_S22_pinkgold_256g         ; mobileDeal, allInOneDeal      ;
+                                      ; samsung_galaxy_S22_phantomwhite_128g     ; mobileDeal, allInOneDeal      ;
+                                      ; samsung_galaxy_S22_phantomwhite_256g     ; mobileDeal, allInOneDeal      ;
+
+
+INSERT_UPDATE TmaFixedBundledProductOffering; code[unique = true]; name[lang = en]   ; children(code, $catalogVersion)              ; $unit; $supercategories; $approved; $catalogVersion; description                                                ; summary
+                                            ; homeComfortDeal    ; Home Comfort Deal ; gsm_medium, router_x, fiber_internet, tv_200 ;      ; home_packages   ;          ;                ; Home Internet, tv, router and GSM plan in one fixed bundle ; Home Internet, tv, router and GSM plan in one fixed bundle
+                                            ; winterDeal         ; Winter Deal       ; gsm_small, 5gpow                             ;      ; home_packages   ;          ;                ; Home Internet and GSM plan deal in one fixed bundle        ; Home Internet and GSM plan deal in one fixed bundle
+                                            ; homeDealBundle     ; Home Deal Bundle  ; tv_unlimited, 5g_internet                    ;      ; home_packages   ;          ;                ; Home Internet and TV plan deal in one fixed bundle         ; Home Internet and TV plan deal in one fixed bundle

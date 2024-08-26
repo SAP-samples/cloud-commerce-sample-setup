@@ -1,0 +1,48 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "ES2022",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2020",
+      "dom"
+    ],
+    "paths": {
+      "tua-spa": [
+        "dist/tua-spa"
+      ],
+      "tua-spa/*": [
+        "dist/tua-spa/*"
+      ],
+      "application": [
+        "dist/application"
+      ],
+      "application/*": [
+        "dist/application/*"
+      ],
+      "b2bapplication": [
+        "dist/b2bapplication"
+      ],
+      "b2bapplication/*": [
+        "dist/b2bapplication/*"
+      ]
+    },
+    "useDefineForClassFields": false
+  },
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": true,
+    "strictInjectionParameters": true,
+    "enableIvy": true
+  }
+}

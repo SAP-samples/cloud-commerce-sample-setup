@@ -1,0 +1,31 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+
+$productCatalog = telcospaProductCatalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = '$productCatalog:Staged']
+$currency = currency(isocode)[default = USD]
+$unit = unit(code)[default = pieces]
+$product = product(code, $catalogVersion)[unique = true]
+$processTypes = processTypes(code)[unique = true]
+$distributionChannels = distributionChannels(code)
+$subscriptionTerms = subscriptionTerms(id)[unique = true]
+$regions = regions(isocode)
+$price = price[default = 0.0]
+$priority = priority[default = 50]
+
+############################################
+### FIXED BUNDLED PRODUCT OFFERING PRICE ###
+############################################
+
+INSERT_UPDATE PriceRow; code[unique = true]          ; $product        ; $processTypes; $subscriptionTerms     ; $distributionChannels; $currency; $unit; $catalogVersion; $regions; productOfferingPrice(id, $catalogVersion); $priority; $price;
+                      ; winterdeal-acq-24-price      ; winterDeal      ; ACQUISITION  ; monthly_24             ;                      ;          ;      ;                ;         ; winterdeal_usd_pop_24months              ; 100      ;
+                      ; winterdeal-acq-price         ; winterDeal      ; ACQUISITION  ;                        ;                      ;          ;      ;                ;         ; winterdeal_usd_pop                       ; 200      ;
+                      ; winterdeal-ret-price         ; winterDeal      ; RETENTION    ; monthly_12, monthly_24 ;                      ;          ;      ;                ;         ; winterdeal_usd_ret_pop                   ; 300      ;
+                      ; homecomfortdeal-acq-24-price ; homeComfortDeal ; ACQUISITION  ; monthly_24             ;                      ;          ;      ;                ;         ; homedeal_usd_pop_24months                ; 100      ;
+                      ; homecomfortdeal-acq-price    ; homeComfortDeal ; ACQUISITION  ;                        ;                      ;          ;      ;                ;         ; homedeal_usd_pop                         ; 200      ;
+                      ; homecomfortdeal-ret-price    ; homeComfortDeal ; RETENTION    ; monthly_12, monthly_24 ;                      ;          ;      ;                ;         ; homedeal_usd_ret_pop                     ; 300      ;
+                      ; homedealbundle-acq-24-price  ; homeDealBundle  ; ACQUISITION  ; monthly_24             ;                      ;          ;      ;                ;         ; homedealbundle_usd_pop_24months          ; 100      ;
+                      ; homedealbundle-acq-price     ; homeDealBundle  ; ACQUISITION  ;                        ;                      ;          ;      ;                ;         ; homedealbundle_usd_pop                   ; 200      ;
+                      ; homedealbundle-ret-price     ; homeDealBundle  ; RETENTION    ; monthly_12, monthly_24 ;                      ;          ;      ;                ;         ; homedealbundle_usd_ret_pop               ; 300      ;

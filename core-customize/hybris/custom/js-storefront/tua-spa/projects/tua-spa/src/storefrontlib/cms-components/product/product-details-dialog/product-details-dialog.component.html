@@ -1,0 +1,60 @@
+<div class="cx-modal-container">
+  <div class="cx-modal-content">
+    <div class="row mx-auto w-100 p-0 product-spec-container">
+      <ng-container *ngIf="productService.get(simpleProductOffering.code)| async as product">
+        <div class="card border-0 w-100">
+          <div class="card-header bg-white border-0">
+            <div class="row mx-auto d-flex justify-content-center">
+          <span class="header-text"> {{product.productSpecification.name}}
+            {{ 'serviceability.checkTargetArea' | cxTranslate }}</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="row mx-auto d-flex justify-content-start">
+              <span class="nameText">{{product.name}}</span>
+            </div>
+            <div class="row mx-auto pt-4">
+              <div class="col-2">
+                <div class="row mx-auto w-100 px-0 d-flex justify-content-center">
+                  <cx-media class="cx-product-image" [container]="product.images?.PRIMARY" format="product"
+                            [alt]="product.summary"></cx-media>
+                </div>
+              </div>
+              <div class="col-5">
+                <div class="row mx-auto d-flex justify-content-center">
+              <span class="nameText" [innerHtml]="product.description">
+              </span>
+                </div>
+              </div>
+              <div class="col-4 priceText">
+                <ng-container *ngIf="priceService.getHighestPriorityPriceForSPO(product) as highestPriorityPrice">
+                  <cx-price-display class="childCss" [price]="highestPriorityPrice"></cx-price-display>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer bg-white">
+            <div class="row mx-auto d-flex justify-content-center">
+              <div class="col-4">
+                <cx-add-to-cart
+                  [product]="product"
+                  [showQuantity]="false"
+                  [targetProductCode]="simpleProductOffering.code"
+                  [seeDetails]="false"
+                  [skipChecklistActionCheck]="true"
+                  [rootProductCode]="bundleProductOffering!== undefined ? bundleProductOffering.code: undefined"
+                  [childProductCodes]="childProductCodes"
+                  [showCart]="false"
+                ></cx-add-to-cart>
+              </div>
+              <div class="col-4">
+                <button class="btn btn-light btn-block"
+                        (click)="closeModal('Cross click')">{{ 'common.cancel' | cxTranslate }}</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

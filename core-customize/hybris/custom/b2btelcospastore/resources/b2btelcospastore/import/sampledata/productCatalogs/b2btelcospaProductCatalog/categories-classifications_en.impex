@@ -1,0 +1,89 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Importing Classification Categories into B2B Telco SPA Store
+
+# Macros / Replacement Parameter definitions
+$productCatalog= b2btelcospaProductCatalog
+$classificationCatalog = b2btelcospaClassification
+$productCatalogName= B2B Telco SPA Product Catalog
+$classCatalogVersion=catalogversion(catalog(id[default=$classificationCatalog]),version[default='1.0'])[unique=true,default='$classificationCatalog:1.0']
+$classSystemVersion=systemVersion(catalog(id[default='b2btelcospaClassification']),version[default='1.0'])[unique=true]
+
+# Language
+$lang = en
+
+INSERT_UPDATE ClassificationSystem; id[unique = true]      ; name[lang = $lang]              ;
+                                  ; $classificationCatalog ; B2B Telco Classification System ;
+
+# Insert Classifications
+UPDATE ClassificationClass;$classCatalogVersion; code[unique=true]         ; name[lang=$lang]
+                          ;                    ; mobilephoneclassification ; B2B Telco Phones 
+                          ;                    ; accessoriesclassification ; B2B Telco Accesories
+
+# Phones Classification Attributes
+# Insert Classification Attributes
+UPDATE ClassificationAttribute; code[unique=true]  ; name[lang=$lang]; $classSystemVersion
+                              ;mobileplatform      ; Operating System
+                              ;storage             ; Storage
+                              ;processor           ; Processor
+                              ;cameratype          ; Camera
+                              ;cameraresolution    ; Camera Resolution
+                              ;zoom                ; Zoom
+                              ;displaysize         ; Display size
+                              ;touchscreen         ; Has touchScreen
+                              ;height              ; Height
+                              ;weight              ; Weight
+                              ;width               ; Width
+                              ;depth               ; Depth
+                              ;batterycharge       ; Battery Charge
+
+INSERT_UPDATE ClassificationAttributeValue; code[unique=true] ; name[lang=$lang]; $classSystemVersion
+                                          ; platform_ios      ; IOS
+                                          ; platform_android  ; Android
+                                          ; octa_core         ; Octa-core 2.84 GHz CPU
+                                          ; a14_bionic        ; A14 Bionic
+                                          ; dual_camera       ; Dual Camera
+                                          ; pro_camera        ; Pro Camera
+                                          ; quad_camera       ; Rear Quad Camera
+                                          ; zoom_30           ; Zoom x30
+                                          ; zoom_100          ; Zoom x100
+                                          ; zoom_digital_12   ; Digital Zoom x12
+                                          ; zoom_optical_10   ; Optical Zoom x10
+                                          ; zoom_digital_10   ; Digital Zoom x10
+                                          ; touchscreen_true  ; Has touchScreen
+                                          ; touchscreen_false ; No touchScreen
+
+# Accessories Classification Attributes
+# Insert Classification Attributes
+UPDATE ClassificationAttribute; code[unique=true]       ; name[lang=$lang]; $classSystemVersion
+                              ; brand                   ; Brand
+                              ; color                   ; Color
+                              ; batteries               ; Requires Batteries
+                              ; connectivity_technology ; Connectivity Technology
+                              ; form_factor             ; Form Factor
+                              ; power                   ; Total Power
+                              ; screensize              ; Screen Size
+                              ; port_type               ; Port Type
+                              ; cable                   ; Has Cable
+                              ; output_current          ; Output Current
+
+INSERT_UPDATE ClassificationAttributeValue; code[unique=true] ; name[lang=$lang]; $classSystemVersion
+                                          ; brand_apple        ; Apple
+                                          ; brand_samsung      ; Samsung
+                                          ; color_white        ; White
+                                          ; color_transparent  ; Transparent
+                                          ; color_black        ; Black
+                                          ; color_red          ; Red
+                                          ; color_blue         ; Blue
+                                          ; batteries_required ; Required
+                                          ; no_batteries       ; Not Required
+                                          ; connect_bluetooth  ; Bluetooth
+                                          ; connect_nfc        ; NFC
+                                          ; form_basic_case    ; Basic Case
+                                          ; form_in_ear        ; In Ear
+                                          ; port_usb_a         ; USB A
+                                          ; port_usb_c         ; USB C
+                                          ; has_cable          ; Has Cable
+                                          ; no_cable           ; No Cable

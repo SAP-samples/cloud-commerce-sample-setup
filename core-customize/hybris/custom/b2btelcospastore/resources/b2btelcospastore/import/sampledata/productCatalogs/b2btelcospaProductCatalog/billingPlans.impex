@@ -1,0 +1,12 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for BillingPlans
+
+# Macros / Replacement Parameter definitions
+$billingFrequency = billingFrequency(code)[default='monthly']
+
+INSERT_UPDATE BillingPlan; id[unique = true]; billingCycleDay(code); billingCycleType(code); $billingFrequency
+                         ; MonthlyPlan      ;                      ; subscription_start    ; monthly
+                         ; AnnuallyPlan     ;                      ; subscription_start    ; yearly

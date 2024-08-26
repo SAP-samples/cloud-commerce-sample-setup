@@ -1,0 +1,126 @@
+<ng-container *ngIf="displayForm$ | async">
+  <div class="d-flex justify-content-center align-items-center my-5">
+    <ng-container *ngIf="checklistActions$ | async as checklistActions else loading">
+      <ng-container *ngIf="checklistActions.length > 0">
+        <div
+          class="row col-12 col-sm-10 d-flex justify-content-center align-items-center"
+          >
+          <div class="col-12 details-container">
+            <ng-container *ngIf="poConsumptionComponents">
+
+              <span class="font-weight-bolder">{{ 'setUpAService.setUpAServiceForm.typeOfService' | cxTranslate}}</span>
+
+              <div class="row">
+                <div class="col-12 mt-3">
+                  <ng-container
+                    *ngFor="let poConsumptionComponent of poConsumptionComponents; index as i"
+                    >
+                      <div class="form-check">
+                        <input
+                        class="form-control"
+                        aria-checked="true"
+                        [checked]="poConsumptionComponent.name === selectedDivision"
+                        [id]="'division' + i"
+                        (change)="changeDivision(poConsumptionComponent.name)"
+                        name="{{ poConsumptionComponent.name }}"
+                        type="radio"
+                        role=""
+                      />
+                      <label [for]="'division' + i">{{ poConsumptionComponent.name }}</label>
+                    </div>
+
+                  </ng-container>
+                </div>
+                <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6" [formGroup]="consumptionForm">
+                  <ng-container
+                    *ngFor="let poConsumption of poConsumptionComponents"
+                    >
+                    <ng-container *ngIf="poConsumption.name === selectedDivision">
+                      <cx-po-search-by-consumption
+                        [selectedDivision]="selectedDivision"
+                        [poConsumption]="poConsumption"
+                        (consumptionSelected)="getInputConsumption($event)">
+                      </cx-po-search-by-consumption>
+                    </ng-container>
+                  </ng-container>
+                </div>
+
+                                <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6" [formGroup]="technicalIdForm">
+                                    <cx-technical-id-form
+                                            [technicalId]="technicalDetails"
+                                            (technicalIdSelected)="getInputTechnicalDetails($event)">
+                                    </cx-technical-id-form>
+                                </div>
+                                <ng-container *ngIf="url$ | async as url">
+                                    <ng-container *ngIf="tmaChecklistActionTypeCheckService.hasJourneyChecklistAction(
+                                                checklistActions, tmaChecklistActionTypeCheckService.checklistActionType.CONTRACT_START_DATE)
+                                                || tmaChecklistActionTypeCheckService.hasChecklistActionOfType(
+                                                checklistActions, tmaChecklistActionTypeCheckService.checklistActionType.SERVICE_PROVIDER)">
+                                        <div class="col-12" [formGroup]="purchaseReasonForm">
+                                            <cx-purchase-reason
+                                                    [contractStartDate]="contractStartDate"
+                                                    [serviceProvider]="serviceProvider"
+                                                    [selectedReasonPurchase]="setPurchaseReason(url)"
+                                                    [checklistAction$]="checklistActions$"
+                                                    (updatePurchaseReason)="getInputPurchaseReason($event)">
+                                            </cx-purchase-reason>
+                                        </div>
+                                    </ng-container>
+                                </ng-container>
+                            </div>
+                        </ng-container>
+
+                        <ng-container *ngIf="queryParams$ | async as queryParams">
+                            <ng-container
+                                    *ngIf="tmaChecklistActionTypeCheckService.hasJourneyChecklistAction(
+                                            checklistActions,
+                                            tmaChecklistActionTypeCheckService.checklistActionType.INSTALLATION_ADDRESS)">
+                                <div class="mt-2" [formGroup]="installationAddressForm">
+                                    <cx-address-form
+                                            [address]="installationAddress"
+                                            [isDialog]="false"
+                                            [postalCode]="queryParams?.postalCode ? queryParams.postalCode : ''"
+                                            (countrySelected)="onCountrySelected($event)"
+                                            (regionSelected)="onRegionSelected($event)"
+                                            (installationAddressSelected)="getInputAddress($event)">
+                                    </cx-address-form>
+                                </div>
+                            </ng-container>
+                        </ng-container>
+                    </div>
+
+                    <ng-template #switchProvider>
+                        <div class="row d-flex justify-content-around col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                            <button class="btn btn-secondary col-12 col-sm-5 col-md-5 col-lg-5 col-xl-5 p-0 mb-3"
+                                    [routerLink]="{ cxRoute: '/' } | cxUrl">
+                                {{ 'switchProvider.switchProviderForm.backButton' | cxTranslate }}
+                            </button>
+                            <button class="btn btn-primary col-12 col-sm-5 col-md-5 col-lg-5 col-xl-5 p-0 mb-3"
+                                    (click)="storeDataAndViewProducts()">
+                                {{ 'switchProvider.switchProviderForm.viewPlansButton' | cxTranslate }}
+                            </button>
+                        </div>
+                    </ng-template>
+
+                    <ng-container *ngIf="url$ | async as url">
+                        <ng-template [ngIf]="!isPurchaseReasonSwitchProvider(url)" [ngIfElse]="switchProvider">
+                            <button class="btn btn-primary col-12 col-sm-5 col-md-5 col-lg-5 col-xl-5 p-0 mb-3"
+                                    (click)="storeDataAndViewProducts()">
+                                {{ 'setUpAService.setUpAServiceForm.viewOffersButton' | cxTranslate }}
+                            </button>
+                        </ng-template>
+                    </ng-container>
+
+                </div>
+            </ng-container>
+        </ng-container>
+    </div>
+</ng-container>
+
+<ng-template #loading>
+  <div class="cx-spinner">
+    <cx-spinner></cx-spinner>
+  </div>
+</ng-template>
+
+<router-outlet></router-outlet>

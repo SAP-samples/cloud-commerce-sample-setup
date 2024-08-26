@@ -1,0 +1,80 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+#
+# Grant assisted service role to use
+#
+
+$defaultPassword = 123456
+$storeUid = telcospa
+$lang = en
+
+UPDATE CustomerList; uid[unique = true]; locname[lang = $lang]
+                   ; instoreCustomers  ; "Current In-Store Customers"
+
+INSERT_UPDATE PointOfService; name[unique = true]; type(code); basestore(uid)[default = $storeUid];
+                            ; Chicago            ; STORE     ;
+                            ; SanFrancisco       ; STORE
+
+INSERT_UPDATE StoreEmployeeGroup; UID[unique = true]         ; locname[lang = en]                  ; store(name)  ; groups[ignorenull = false, default = ]
+                                ; chicagostoreemployees      ; Chicago Store Employee Group        ; Chicago      ;
+                                ; sanfranciscostoreemployees ; San Francisco  Store Employee Group ; SanFrancisco ;
+
+INSERT_UPDATE Employee; name                                 ; password[default = $defaultPassword]; uid[unique = true]                ; groups[ignorenull = false, default = ]
+                      ; Chicago Customer Support Agent       ;                                     ; customer.support@chicago.com      ;
+                      ; San Francisco Customer Support Agent ;                                     ; customer.support@sanfrancisco.com ;
+
+INSERT_UPDATE UserGroup; UID[unique = true]; locname[lang = en]                 ; groups[ignorenull = false, default = ]
+                       ; POS_CHICAGO       ; Chicago Store Customer Group       ;
+                       ; POS_SANFRANCISCO  ; San francisco Store Customer Group ;
+
+INSERT_UPDATE Customer; uid[unique = true]                  ; name                     ; customerId                          ; defaultShipmentAddress(owner(Customer.uid), streetname, postalcode, duplicate); groups[ignorenull = false, default = ]
+                      ; mark.johnson.customer@hybris.com    ; mark.johnson Customer    ; mark.johnson.customer@hybris.com    ; mark.johnson.customer@hybris.com:115th Street & King Drive:60628:FALSE        ;
+                      ; emma.smith.customer@hybris.com      ; emma.smith Customer      ; emma.smith.customer@hybris.com      ; emma.smith.customer@hybris.com:119th Street:66061:FALSE                       ;
+                      ; anne.taylor.customer@hybris.com     ; anne.taylor Customer     ; anne.taylor.customer@hybris.com     ; anne.taylor.customer@hybris.com:1500 East:60610:FALSE                         ;
+                      ; david.brown.customer@hybris.com     ; david.brown Customer     ; david.brown.customer@hybris.com     ; david.brown.customer@hybris.com:1600 East:60601:FALSE                         ;
+                      ; joseph.williams.customer@hybris.com ; joseph.williams Customer ; joseph.williams.customer@hybris.com ; joseph.williams.customer@hybris.com:1700 East:60637:FALSE                     ;
+                      ; etta.berg.customer@hybris.com       ; etta.berg Customer       ; etta.berg.customer@hybris.com       ; etta.berg.customer@hybris.com:1800 East:60622:FALSE                           ;
+                      ; tim.james.customer@hybris.com       ; tim.james Customer       ; tim.james.customer@hybris.com       ; tim.james.customer@hybris.com:1832 East:60632:FALSE                           ;
+                      ; ronnie.ray.customer@hybris.com      ; ronnie.ray Customer      ; ronnie.ray.customer@hybris.com      ; ronnie.ray.customer@hybris.com:1900 East:60602:FALSE                          ;
+                      ; reggy.ray.customer@hybris.com       ; reggy.ray Customer       ; reggy.ray.customer@hybris.com       ; reggy.ray.customer@hybris.com:Birchwood Ct:94134:FALSE                        ;
+                      ; olivia.ann.customer@hybris.com      ; olivia.ann Customer      ; olivia.ann.customer@hybris.com      ; olivia.ann.customer@hybris.com:Blairwood Ln:92867:FALSE                       ;
+                      ; rachel.green.customer@hybris.com    ; rachel.green Customer    ; rachel.green.customer@hybris.com    ; rachel.green.customer@hybris.com:Bradford St:94110:FALSE                      ;
+
+INSERT_UPDATE PrincipalGroupRelation; source(uid)[unique = true]          ; target(uid)[unique = true]
+                                    ; chicagostoreemployees               ; asagentgroup
+                                    ; sanfranciscostoreemployees          ; asagentgroup
+                                    ; customer.support@chicago.com        ; chicagostoreemployees
+                                    ; customer.support@sanfrancisco.com   ; sanfranciscostoreemployees
+                                    ; asagent                             ; sanfranciscostoreemployees
+                                    ; asagent                             ; chicagostoreemployees
+                                    ; POS_CHICAGO                         ; customergroup
+                                    ; POS_SANFRANCISCO                    ; customergroup
+                                    ; mark.johnson.customer@hybris.com    ; POS_CHICAGO
+                                    ; emma.smith.customer@hybris.com      ; POS_CHICAGO
+                                    ; anne.taylor.customer@hybris.com     ; POS_CHICAGO
+                                    ; david.brown.customer@hybris.com     ; POS_CHICAGO
+                                    ; joseph.williams.customer@hybris.com ; POS_CHICAGO
+                                    ; etta.berg.customer@hybris.com       ; POS_CHICAGO
+                                    ; tim.james.customer@hybris.com       ; POS_CHICAGO
+                                    ; ronnie.ray.customer@hybris.com      ; POS_CHICAGO
+                                    ; reggy.ray.customer@hybris.com       ; POS_SANFRANCISCO
+                                    ; olivia.ann.customer@hybris.com      ; POS_SANFRANCISCO
+                                    ; rachel.green.customer@hybris.com    ; POS_SANFRANCISCO
+
+INSERT_UPDATE Address; owner(Customer.uid)[unique = true]  ; streetname[unique = true] ; streetnumber[unique = true]; postalcode[unique = true]; duplicate[unique = true]; town; country(isocode); billingAddress; contactAddress; shippingAddress; unloadingAddress; firstname       ; lastname ; email                               ; gender(code); middlename; phone1        ; title(code); url; company     ; fax; department
+                     ; mark.johnson.customer@hybris.com    ; 115th Street & King Drive ;                            ; 60628                    ; FALSE                   ;     ; IL              ; TRUE          ; FALSE         ; TRUE           ; TRUE            ; mark.johnson    ; Customer ; mark.johnson.customer@hybris.com    ; FEMALE      ;           ; 090 0987 653  ;            ;    ; hybris GmbH ;    ;
+                     ; emma.smith.customer@hybris.com      ; 119th Street              ;                            ; 66061                    ; FALSE                   ;     ; IL              ; TRUE          ; FALSE         ; TRUE           ; TRUE            ; emma.smith      ; Customer ; emma.smith.customer@hybris.com      ; FEMALE      ;           ; 090 77777 666 ;            ;    ; hybris GmbH ;    ;
+                     ; anne.taylor.customer@hybris.com     ; 1500 East                 ;                            ; 60610                    ; FALSE                   ;     ; IL              ; TRUE          ; FALSE         ; TRUE           ; TRUE            ; anne.taylor     ; Customer ; anne.taylor.customer@hybris.com     ; FEMALE      ;           ; 090 12345 678 ;            ;    ; hybris GmbH ;    ;
+                     ; david.brown.customer@hybris.com     ; 1600 East                 ;                            ; 60601                    ; FALSE                   ;     ; IL              ; TRUE          ; FALSE         ; TRUE           ; TRUE            ; david.brown     ; Customer ; david.brown.customer@hybris.com     ; FEMALE      ;           ; 090 12345 678 ;            ;    ; hybris GmbH ;    ;
+                     ; joseph.williams.customer@hybris.com ; 1700 East                 ;                            ; 60637                    ; FALSE                   ;     ; IL              ; TRUE          ; FALSE         ; TRUE           ; TRUE            ; joseph.williams ; Customer ; joseph.williams.customer@hybris.com ; FEMALE      ;           ; 090 01233 547 ;            ;    ; hybris GmbH ;    ;
+                     ; etta.berg.customer@hybris.com       ; 1800 East                 ;                            ; 60622                    ; FALSE                   ;     ; IL              ; TRUE          ; FALSE         ; TRUE           ; TRUE            ; etta.berg       ; Customer ; etta.berg.customer@hybris.com       ; FEMALE      ;           ; 090 12345 678 ;            ;    ; hybris GmbH ;    ;
+                     ; tim.james.customer@hybris.com       ; 1832 East                 ;                            ; 60632                    ; FALSE                   ;     ; IL              ; TRUE          ; FALSE         ; TRUE           ; TRUE            ; tim.james       ; Customer ; tim.james.customer@hybris.com       ; FEMALE      ;           ; 090 12345 678 ;            ;    ; hybris GmbH ;    ;
+                     ; ronnie.ray.customer@hybris.com      ; 1900 East                 ;                            ; 60602                    ; FALSE                   ;     ; IL              ; TRUE          ; FALSE         ; TRUE           ; TRUE            ; ronnie.ray      ; Customer ; ronnie.ray.customer@hybris.com      ; FEMALE      ;           ; 090 12345 977 ;            ;    ; hybris GmbH ;    ;
+                     ; reggy.ray.customer@hybris.com       ; Birchwood Ct              ;                            ; 94134                    ; FALSE                   ;     ; US              ; TRUE          ; FALSE         ; TRUE           ; TRUE            ; reggy.ray       ; Customer ; reggy.ray.customer@hybris.com       ; FEMALE      ;           ; 090 12345 678 ;            ;    ; hybris GmbH ;    ;
+                     ; olivia.ann.customer@hybris.com      ; Blairwood Ln              ;                            ; 92867                    ; FALSE                   ;     ; US              ; TRUE          ; FALSE         ; TRUE           ; TRUE            ; olivia.ann      ; Customer ; olivia.ann.customer@hybris.com      ; MALE        ;           ; 090 05253 547 ;            ;    ; hybris GmbH ;    ;
+                     ; rachel.green.customer@hybris.com    ; Bradford St               ;                            ; 94110                    ; FALSE                   ;     ; US              ; TRUE          ; FALSE         ; TRUE           ; TRUE            ; rachel.green    ; Customer ; rachel.green.customer@hybris.com    ; MALE        ;           ; 090 12645 689 ;            ;    ; hybris GmbH ;    ;
+
+INSERT_UPDATE CustomerList; uid[unique = true]; implementationType; priority; members(uid)[mode = append]                                            ;
+                          ; instoreCustomers  ; "IN_STORE"        ; 3       ; asagent,customer.support@chicago.com,customer.support@sanfrancisco.com ;

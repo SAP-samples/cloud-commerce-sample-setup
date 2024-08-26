@@ -1,0 +1,23 @@
+<cx-selfcare-card
+  *ngIf="model$ | async as model"
+  i18nRoot="{{ domainType }}"
+  [showHint]="true"
+>
+  <section main class="cardSection">
+    <ng-container *ngIf="model.product as products">
+      <div class="sectionDetails" *ngFor="let product of products">
+        <label>{{ product.name }}</label>
+        <span class="value">
+          <a
+            class="link"
+            [routerLink]="
+              { cxRoute: 'SubscriptionsChildProducts', params: model } | cxUrl
+            "
+          >
+            {{ product.id }}
+          </a>
+        </span>
+      </div>
+    </ng-container>
+  </section>
+</cx-selfcare-card>

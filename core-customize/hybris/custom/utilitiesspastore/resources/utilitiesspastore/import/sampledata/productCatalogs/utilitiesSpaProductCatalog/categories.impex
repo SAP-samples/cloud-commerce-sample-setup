@@ -1,0 +1,54 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Importing Categories into Utilities Store
+
+# Macros / Replacement Parameter definitions
+$productCatalog = utilitiesSpaProductCatalog
+$productCatalogName = Utilities Spa Product Catalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+$supercategories = source(code, $catalogVersion)[unique = true]
+$categories = target(code, $catalogVersion)[unique = true]
+# Insert Categories
+INSERT_UPDATE Category; code[unique = true]; allowedPrincipals(uid)[default = 'customergroup']; $catalogVersion
+                      ; 1
+
+# ImpEx for Importing Categories into Utilities Store
+# Insert Categories
+INSERT_UPDATE Category; code[unique = true]; allowedPrincipals(uid)[default = 'customergroup']; $catalogVersion
+                      ; energy
+                      ; homeservices
+                      ; smarthome
+                      ; accessories
+                      ; electricity
+                      ; gas
+                      ; installation
+                      ; warranty
+                      ; internet
+                      ; landline
+                      ; thermostats
+                      ; cameras
+                      ; sensors
+                      ; solarpanels
+                      ; lightbulbs
+                      ; electricalcords
+
+# Insert Category Structure
+INSERT_UPDATE CategoryCategoryRelation; $categories     ; $supercategories
+                                      ; energy          ; 1
+                                      ; electricity     ; energy
+                                      ; gas             ; energy
+                                      ; homeservices    ; 1
+                                      ; installation    ; homeservices
+                                      ; warranty        ; homeservices
+                                      ; internet        ; homeservices
+                                      ; landline        ; homeservices
+                                      ; smarthome       ; 1
+                                      ; thermostats     ; smarthome
+                                      ; cameras         ; smarthome
+                                      ; sensors         ; smarthome
+                                      ; solarpanels     ; smarthome
+                                      ; accessories     ; 1
+                                      ; lightbulbs      ; accessories
+                                      ; electricalcords ; accessories

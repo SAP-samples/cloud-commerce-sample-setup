@@ -1,0 +1,93 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Importing Utilities Store Prices
+#% impex.setLocale( Locale.ENGLISH );
+
+$productCatalog = utilitiesSpaProductCatalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = '$productCatalog:Staged']
+
+$approved = approvalstatus(code)[default = 'approved']
+
+$currency = currency(isocode)[default = USD]
+$unit = unit(code)[default = pieces]
+$product = product(code, $catalogVersion)
+$regions = regions(isocode)
+
+$processTypes = processTypes(code)
+$subscriptionTerms = subscriptionTerms(id)
+$price = price[default=0.0]
+$priority = priority[default = 50]
+
+###############################
+### Price Classes For Plans ###
+###############################
+INSERT_UPDATE TmaProductPriceClass; id[unique = true]; productOfferings(code, $catalogVersion)
+                                  ; low              ; electric_plan_basic, gas_plan_basic
+                                  ; medium           ; electric_plan_plus
+                                  ; high             ; electric_plan_best, electric_plan_total_comfort, gas_plan_total_comfort
+
+
+
+INSERT_UPDATE PriceRow; code[unique = true]            ; product(code, $catalogVersion)[unique = true]; $processTypes[unique = true]; $subscriptionTerms     ; $catalogVersion; currency(isocode)[default = USD]; unit(code)[default = pieces]; $regions                ; productOfferingPrice(id, $catalogVersion); $priority; $price
+                      ; pp_electric_plan_basic         ; electric_plan_basic                          ;                             ; monthly_12, monthly_24 ;                ;                                 ;                             ; JP-40,JP-25             ; pp_electric_plan_basic_pop               ; 100      ;
+                      ; pp_electric_plan_plus          ; electric_plan_plus                           ;                             ; monthly_12, monthly_24 ;                ;                                 ;                             ;                         ; pp_electric_plan_plus_pop                ; 100      ;
+                      ; pp_electric_plan_best          ; electric_plan_best                           ;                             ; monthly_12, monthly_24 ;                ;                                 ;                             ; JP-27                   ; pp_electric_plan_best_pop                ; 100      ;
+                      ; pp_electric_plan_total_comfort ; electric_plan_total_comfort                  ;                             ; monthly_12, monthly_24 ;                ;                                 ;                             ;                         ; pp_electric_plan_total_comfort_pop       ; 100      ;
+
+                      ; pp_gas_plan_basic              ; gas_plan_basic                               ;                             ; monthly_12, monthly_24 ;                ;                                 ;                             ;                         ; pp_gas_plan_basic_pop                    ; 100      ;
+                      ; pp_gas_plan_plus               ; gas_plan_plus                                ;                             ; monthly_12, monthly_24 ;                ;                                 ;                             ; JP-13,JP-33,JP-27       ; pp_gas_plan_plus_pop                     ; 100      ;
+                      ; pp_gas_plan_best               ; gas_plan_best                                ;                             ; monthly_12, monthly_24 ;                ;                                 ;                             ;                         ; pp_gas_plan_best_pop                     ; 100      ;
+                      ; pp_gas_plan_total_comfort      ; gas_plan_total_comfort                       ;                             ; monthly_12, monthly_24 ;                ;                                 ;                             ; JP-16                   ; pp_gas_plan_total_comfort_pop            ; 100      ;
+
+                      ; pp_home_warranty               ; home_warranty                                ;                             ; monthly_12, monthly_24 ;                ;                                 ;                             ; JP-31,JP-25,JP-13,JP-16 ; pp_home_warranty_pop                     ; 100      ;
+                      ; pp_home_warranty_alw           ; home_warranty                                ;                             ; monthly_12, monthly_24 ;                ;                                 ;                             ; JP-27                   ; pp_home_warranty_pop_alw                 ; 50       ;
+                      ; pp_home_warranty_plus          ; home_warranty_plus                           ;                             ; monthly_12, monthly_24 ;                ;                                 ;                             ;                         ; pp_home_warranty_plus_pop                ; 100      ;
+                      ; pp_home_warranty_total_comfort ; home_warranty_total_comfort                  ;                             ; monthly_12, monthly_24 ;                ;                                 ;                             ;                         ; pp_home_warranty_total_comfort_pop       ; 100      ;
+
+
+                      ; pp_noncommodity_int_100        ; noncommodity_int_100                         ;                             ; monthly_12, monthly_24 ;                ;                                 ;                             ;                         ; pp_noncommodity_int_100_pop              ; 100      ;
+                      ; pp_noncommodity_int_500        ; noncommodity_int_500                         ;                             ; monthly_12, monthly_24 ;                ;                                 ;                             ;                         ; pp_noncommodity_int_500_pop              ; 100      ;
+                      ; pp_noncommodity_int_1000       ; noncommodity_int_1000                        ;                             ; monthly_12, monthly_24 ;                ;                                 ;                             ;                         ; pp_noncommodity_int_1000_pop             ; 100      ;
+
+                      ; pp_noncommodity_ll_voip        ; noncommodity_ll_voip                         ;                             ; monthly_12, monthly_24 ;                ;                                 ;                             ;                         ; pp_noncommodity_ll_voip_pop              ; 100      ;
+                      ; pp_noncommodity_ll_pots        ; noncommodity_ll_pots                         ;                             ; monthly_12, monthly_24 ;                ;                                 ;                             ;                         ; pp_noncommodity_ll_pots_pop              ; 100      ;
+
+                      ; pp_electric_plan_best_USD             	  ; electric_plan_best                ;                             ; monthly_12             ;                ;                                 ;                             ;                         ; pp_electric_plan_best_pop                ; 1        ;
+                      ; pp_electric_plan_best_USD_RET_12          ; electric_plan_best                ; RETENTION                   ; monthly_18             ;                ;                                 ;                             ;                         ; pp_electric_plan_best_ret_1              ; 10       ;
+                      ; pp_electric_plan_best_USD_RET_24          ; electric_plan_best                ; RETENTION                   ; monthly_24             ;                ;                                 ;                             ;                         ; pp_electric_plan_best_ret_2              ; 20       ;
+                      ; pp_electric_plan_best_USD_RET_36          ; electric_plan_best                ; RETENTION                   ; monthly_36             ;                ;                                 ;                             ;                         ; pp_electric_plan_best_ret_3              ; 30       ;
+                      ; pp_electric_plan_best_USD_RET_48          ; electric_plan_best                ; RETENTION                   ; monthly_48             ;                ;                                 ;                             ;                         ; pp_electric_plan_best_ret_4              ; 100      ;
+                      ; pp_electric_plan_best_USD_RENEW_12        ; electric_plan_best                ; RENEWAL                     ; monthly_18             ;                ;                                 ;                             ;                         ; pp_electric_plan_best_renew_1            ; 110       ;
+                      ; pp_electric_plan_best_USD_RENEW_24        ; electric_plan_best                ; RENEWAL                     ; monthly_24             ;                ;                                 ;                             ;                         ; pp_electric_plan_best_renew_2            ; 120       ;
+                      ; pp_electric_plan_best_USD_RENEW_36        ; electric_plan_best                ; RENEWAL                     ; monthly_36             ;                ;                                 ;                             ;                         ; pp_electric_plan_best_renew_3            ; 130       ;
+                      ; pp_electric_plan_best_USD_RENEW_48        ; electric_plan_best                ; RENEWAL                     ; monthly_48             ;                ;                                 ;                             ;                         ; pp_electric_plan_best_renew_4            ; 140      ;
+
+
+INSERT_UPDATE PriceRow; code[unique = true]                       ; product(code, $catalogVersion)[unique = true]; $processTypes[unique = true]; $catalogVersion; currency(isocode)[default = USD]; unit(code)[default = pieces]; productOfferingPrice(id, $catalogVersion)  ; $priority; $price
+                      ; pp_lightbulb_energy_efficient             ; lightbulb_energy_efficient                   ;                             ;                ;                                 ;                             ; lightbulb_energy_efficient_otc             ; 100      ;
+                      ; pp_lightbulb_led                          ; lightbulb_led                                ;                             ;                ;                                 ;                             ; lightbulb_led_otc                          ; 100      ;
+                      ; pp_lightbulb_led_multipack                ; lightbulb_led_multipack                      ;                             ;                ;                                 ;                             ; lightbulb_led_multipack_otc                ; 100      ;
+
+                      ; pp_electrical_cord_general                ; electrical_cord_general                      ;                             ;                ;                                 ;                             ; electrical_cord_general_otc                ; 100      ;
+                      ; pp_electrical_cord_double_ended_extension ; electrical_cord_double_ended_extension       ;                             ;                ;                                 ;                             ; electrical_cord_double_ended_extension_otc ; 100      ;
+                      ; pp_electrical_cord_slim                   ; electrical_cord_slim                         ;                             ;                ;                                 ;                             ; electrical_cord_slim_otc                   ; 100      ;
+
+                      ; pp_solar_panel                            ; solar_panel                                  ;                             ;                ;                                 ;                             ; solar_panel_otc                            ; 100      ;
+                      ; pp_solar_panel_plus                       ; solar_panel_plus                             ;                             ;                ;                                 ;                             ; solar_panel_plus_otc                       ; 100      ;
+                      ; pp_solar_panel_premium                    ; solar_panel_premium                          ;                             ;                ;                                 ;                             ; solar_panel_premium_otc                    ; 50       ;
+
+                      ; pp_thermostat_basic                       ; thermostat_basic                             ;                             ;                ;                                 ;                             ; thermostat_basic_otc                       ; 100      ;
+                      ; pp_thermostat_plus                        ; thermostat_plus                              ;                             ;                ;                                 ;                             ; thermostat_plus_otc                        ; 100      ;
+                      ; pp_thermostat_premium                     ; thermostat_premium                           ;                             ;                ;                                 ;                             ; thermostat_premium_otc                     ; 100      ;
+
+                      ; pp_installation_electricity               ; installation_electricity                     ;                             ;                ;                                 ;                             ; installation_electricity_otc               ; 100      ;
+                      ; pp_installation_gas                       ; installation_gas                             ;                             ;                ;                                 ;                             ; installation_gas_otc                       ; 100      ;
+                      ; pp_installation_solar_panel               ; installation_solar_panel                     ;                             ;                ;                                 ;                             ; installation_solar_panel_otc               ; 100      ;
+
+                      ; pp_cameras_ring_spotlight                 ; cameras_ring_spotlight                       ;                             ;                ;                                 ;                             ; cameras_ring_spotlight_otc                 ; 100      ;
+                      ; pp_cameras_smart_securty                  ; cameras_smart_securty                        ;                             ;                ;                                 ;                             ; cameras_smart_securty_otc                  ; 100      ;
+
+                      ; pp_sensors_light                          ; sensors_light                                ;                             ;                ;                                 ;                             ; sensors_light_otc                          ; 100      ;
+                      ; pp_sensors_motion                         ; sensors_motion                               ;                             ;                ;                                 ;                             ; sensors_motion_otc                         ; 100      ;

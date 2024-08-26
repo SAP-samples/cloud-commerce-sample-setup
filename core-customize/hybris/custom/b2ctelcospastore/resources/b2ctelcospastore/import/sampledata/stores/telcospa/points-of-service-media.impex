@@ -1,0 +1,26 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Importing Media into Telco Store
+
+# Macros / Replacement Parameter definitions
+$productCatalog = telcospaProductCatalog
+$catalogVersion = catalogversion(catalog(id[default=$productCatalog]), version[default='Staged'])[unique=true, default=$productCatalog:Staged]
+$media = @media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator]
+$siteResource = jar:de.hybris.platform.b2ctelcospastore.constants.B2ctelcospastoreConstants&/b2ctelcospastore/import/sampledata/stores/telcospa
+$medias = medias(code, $catalogVersion)
+
+# Create medias
+INSERT_UPDATE Media; mediaFormat(qualifier); code[unique = true]          ; $media                                                         ; mime[default = 'image/jpeg']; $catalogVersion; folder(qualifier)
+                   ; 365Wx246H             ; /365Wx246H/b2ctelco_store_01 ; $siteResource/images/storefinder/b2ctelco_store_365x246_01.jpg ;                             ;                ; images
+                   ; 365Wx246H             ; /365Wx246H/b2ctelco_store_02 ; $siteResource/images/storefinder/b2ctelco_store_365x246_02.jpg ;                             ;                ; images
+                   ; 365Wx246H             ; /365Wx246H/b2ctelco_store_03 ; $siteResource/images/storefinder/b2ctelco_store_365x246_03.jpg ;                             ;                ; images
+                   ; 65Wx65H               ; /65Wx65H/b2ctelco_store_01   ; $siteResource/images/storefinder/b2ctelco_store_65x65_01.jpg   ;                             ;                ; images
+                   ; 65Wx65H               ; /65Wx65H/b2ctelco_store_02   ; $siteResource/images/storefinder/b2ctelco_store_65x65_02.jpg   ;                             ;                ; images
+                   ; 65Wx65H               ; /65Wx65H/b2ctelco_store_03   ; $siteResource/images/storefinder/b2ctelco_store_65x65_03.jpg   ;                             ;                ; images
+
+INSERT_UPDATE MediaContainer; qualifier[unique = true]; $medias; $catalogVersion
+                            ; b2ctelco_store_01       ; /365Wx246H/b2ctelco_store_01,/65Wx65H/b2ctelco_store_01
+                            ; b2ctelco_store_02       ; /365Wx246H/b2ctelco_store_02,/65Wx65H/b2ctelco_store_02
+                            ; b2ctelco_store_03       ; /365Wx246H/b2ctelco_store_03,/65Wx65H/b2ctelco_store_03

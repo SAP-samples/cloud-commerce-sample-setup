@@ -1,0 +1,16 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for importing the customer product inventory.
+
+$defaultPassword = 1234
+
+INSERT_UPDATE Usergroup; uid[unique = true]
+                       ; customergroup
+
+INSERT_UPDATE Customer; originalUid[unique = true]; uid[unique = true]    ; customerID            ; name         ; groups(uid)[default = customergroup]; password[default = $defaultPassword]
+                      ; etta.berg@hybris.com      ; etta.berg@hybris.com  ; etta.berg@hybris.com  ; Etta Berg    ;                                     ;
+                      ; tim.james@hybris.com      ; tim.james@hybris.com  ; tim.james@hybris.com  ; Tim James    ;                                     ;
+                      ; ronnie.ray@hybris.com     ; ronnie.ray@hybris.com ; ronnie.ray@hybris.com ; Ronald Ray   ;                                     ;
+                      ; reggy.ray@hybris.com      ; reggy.ray@hybris.com  ; reggy.ray@hybris.com  ; Reginald Ray ;                                     ;

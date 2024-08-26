@@ -1,0 +1,25 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Importing Units
+# English Localisation
+
+# Macros / Replacement Parameter definitions
+
+$systemName = b2btelcospaClassification;
+$systemVersion = 1.0;
+
+$sysVer = systemVersion(catalog(id[default=$systemName]), version[default=$systemVersion]);
+
+# Language
+$lang = en
+
+UPDATE ClassificationAttributeUnit; code[unique = true]; name[lang = $lang]; $sysVer[virtual = true, unique = true]
+                                  ; pound              ; pounds
+                                  ; inch               ; inch
+                                  ; gb                 ; gigabyte
+                                  ; mp                 ; megapixel
+                                  ; mah                ; miliamper-hour
+                                  ; w                  ; watt
+                                  ; a                  ; ampere

@@ -1,0 +1,17 @@
+<cx-split-view [hideMode] = "false">
+  <ng-container *ngIf="structure$ as structure">
+    <cx-view *ngIf="listData$ | async as billingAgreements">
+      <section class="cx-billing-agreements-list">
+        <cx-table
+          *ngIf="billingAgreements.length > 0"
+          [structure]="structure"
+          [data]="billingAgreements"
+          [i18nRoot]="domainType"
+          [currentItem]="{ property: key, value:getCurrentKey() | async}"
+          (launch)="launchItem($event)"
+        ></cx-table>
+      </section>
+    </cx-view>
+    <router-outlet></router-outlet>
+  </ng-container>
+</cx-split-view>

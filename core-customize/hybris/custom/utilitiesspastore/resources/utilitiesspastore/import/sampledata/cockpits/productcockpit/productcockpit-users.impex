@@ -1,0 +1,33 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+#
+# Import Sample Product Cockpit User
+#
+
+$defaultPassword = 1234
+$productCatalog = utilitiesSpaProductCatalog
+$classificationCatalog = utilitiesSpaClassification
+
+INSERT_UPDATE UserGroup; UID[unique = true]  ; groups(uid)[mode = append]
+                       ; productmanagergroup ; cockpitgroup,employeegroup
+
+$START_USERRIGHTS; ; ; ; ; ; ; ; ;
+Type      ; UID           ; MemberOfGroups ; Password ; Target                            ; read ; change ; create ; remove ; change_perm
+UserGroup ; employeegroup ;                ;          ;                                   ;      ;        ;        ;        ;
+          ;               ;                ;          ; TmaProductSpecification           ; +    ; -      ; -      ; -      ; -
+          ;               ;                ;          ; TmaProductSpecCharacteristic      ; +    ; -      ; -      ; -      ; -
+          ;               ;                ;          ; TmaProductSpecCharacteristicValue ; +    ; -      ; -      ; -      ; -
+          ;               ;                ;          ; TmaProductSpecCharValueUse        ; +    ; +      ; +      ; +      ; +
+$END_USERRIGHTS; ; ; ; ;
+
+INSERT_UPDATE Employee; UID[unique = true]; password[default = $defaultPassword]; description     ; name            ; groups(uid)         ; sessionLanguage(isocode); sessionCurrency(isocode)
+                      ; productmanager    ;                                     ; Product manager ; Product Manager ; productmanagergroup ; en                      ; EUR
+
+UPDATE CatalogVersion; catalog(id)[unique = true]; version[unique = true]; writePrincipals(uid)               ;
+                     ; $productCatalog           ; Online                ; productmanagergroup,productmanager ;
+                     ; $productCatalog           ; Staged                ; productmanagergroup,productmanager ;
+
+UPDATE ClassificationSystemVersion; catalog(id)[unique = true]; version[unique = true]; writePrincipals(uid); readPrincipals(uid)
+                                  ; $classificationCatalog    ; 1.0                   ; productmanager      ; productmanager

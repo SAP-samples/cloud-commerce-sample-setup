@@ -1,0 +1,20 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Importing Usage Unit Localisations
+
+# Language
+$lang = en
+
+UPDATE UsageUnit; id[unique = true]; name[lang = $lang]; namePlural[lang = $lang]
+                ; unit             ; unit              ; units
+                ; kwh              ; kWh               ; kWhs
+                ; cubic_meter      ; Cubic meter       ; Cubic meters
+                ; energy           ; Energy            ; Energy
+                ; month            ; Month             ; Months
+                ; years            ; Years             ; Years
+                ; hours            ; Hours             ; Hours
+                ; USD              ; USD               ; USD
+                ; mbps             ; MB/s              ; MB/s
+                ; meter_type       ; Meter type        ; Meter Types

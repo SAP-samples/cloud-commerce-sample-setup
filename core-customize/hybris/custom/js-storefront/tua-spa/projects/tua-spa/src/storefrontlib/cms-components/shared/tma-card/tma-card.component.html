@@ -1,0 +1,43 @@
+<cx-view class="card">
+  <div class="header">
+    <div class="title-bar">
+      <div class="title">
+        <h2>
+          {{ i18nRoot + '.title' | cxTranslate }}
+        </h2>
+        <h3>
+          {{ subtitle || (i18nRoot + '.subtitle' | cxTranslate) }}
+        </h3>
+      </div>
+      <div class="actions">
+        <ng-content select="[actions]"></ng-content>
+      </div>
+    </div>
+    <button
+      *ngIf="!!previous"
+      class="link close"
+      [attr.aria-label]="'common.close' | cxTranslate"
+      routerLink="../"
+    >
+      <cx-icon
+        *ngIf="previous === true; else prevLabel"
+        type="CLOSE"
+        (click)="closeView($event)"
+      ></cx-icon>
+      <ng-template #prevLabel>{{ previousLabel | cxTranslate }}</ng-template>
+    </button>
+  </div>
+
+  <div class="main">
+    <ng-content select="[info]"></ng-content>
+    <ng-content select="[main]"></ng-content>
+  </div>
+</cx-view>
+
+<router-outlet></router-outlet>
+
+<ng-template #detailHint>
+  <p>
+    {{ i18nRoot + '.hint' | cxTranslate }}
+  </p>
+</ng-template>

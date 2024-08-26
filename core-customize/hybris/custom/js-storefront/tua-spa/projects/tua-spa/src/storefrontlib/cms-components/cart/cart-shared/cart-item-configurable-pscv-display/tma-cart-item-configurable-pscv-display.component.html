@@ -1,0 +1,9 @@
+<div class="fullWidth" *ngIf="groupedCharacterstics">
+  <div *ngFor="let item of groupedCharacterstics">
+      <div class="displayInline textAlignLeft">{{ item[0].name }}:</div>
+      <div class="displayInline" *ngFor="let value of item; let i = index">
+        {{ value.value }}
+        <p class="displayInline" *ngIf="i < item.length - 1">,</p>
+      </div>
+  </div>
+</div>

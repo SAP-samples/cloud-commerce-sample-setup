@@ -1,0 +1,14 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# Impex for defining Product Offering relations to Product Specification
+
+# Macros / Replacement Parameter definitions
+$productCatalog = mediaspaProductCatalog
+$catalogVersion = catalogversion(catalog(id[default=$productCatalog]), version[default='Staged'])[unique=true, default='$productCatalog:Staged']
+
+INSERT_UPDATE TmaProductPriceClass; id[unique = true];
+                                  ; tv_plan_high_value
+                                  ; tv_plan_medium_value
+                                  ; tv_plan_low_value

@@ -1,0 +1,100 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+#
+# Import essential data for the Accelerator
+#
+
+# Language
+$lang = en
+
+# Languages
+UPDATE Language; isocode[unique = true]; name[lang = $lang]
+               ; de                    ; "German"
+               ; en                    ; "English"
+
+# Currencies
+UPDATE Currency; isocode[unique = true]; name[lang = $lang]
+               ; EUR                   ; "Euro"
+               ; USD                   ; "US Dollar"
+
+
+# Credit / Debit Cards
+UPDATE CreditCardType; code[unique = true] ; name[lang = $lang]
+                     ; amex                ; "American Express"
+                     ; diners              ; "Diner's Club"
+                     ; maestro             ; "Maestro"
+                     ; master              ; "Mastercard"
+                     ; mastercard_eurocard ; "Mastercard/Eurocard"
+                     ; switch              ; "Switch"
+                     ; visa                ; "Visa"
+
+# DistanceUnits for Storelocator
+UPDATE DistanceUnit; code[unique = true]; name[lang = $lang]
+                   ; km                 ; "km"
+                   ; miles              ; "miles"
+
+# MediaFormats
+UPDATE MediaFormat; qualifier[unique = true]; name[lang = $lang];
+                  ; 1200Wx1200H             ; "1200Wx1200H"
+                  ; 1001Wx1001H             ; "1001Wx1001H"
+                  ; 300Wx300H               ; "300Wx300H"
+                  ; 500Wx500H               ; "500Wx500H"
+                  ; 30Wx30H                 ; "30Wx30H"
+                  ; 365Wx246H               ; "365Wx246H"
+                  ; 515Wx515H               ; "515Wx515H"
+                  ; 90Wx90H                 ; "90Wx90H"
+                  ; 65Wx65H                 ; "65Wx65H"
+                  ; 40Wx40H                 ; "40Wx40H"
+                  ; 96Wx96H                 ; "96Wx96H"
+
+# Product Tax Groups
+UPDATE ProductTaxGroup; code[unique = true]; name[lang = $lang]
+                      ; ca-sales-tax-full  ; "CA Sales Tax"
+                      ; eu-vat-full        ; "EU Full Tax rate"
+                      ; eu-vat-half        ; "EU Half Tax rate"
+                      ; jp-vat-full        ; "JP Consumption Tax"
+                      ; us-sales-tax-full  ; "US Sales Tax"
+
+# User Tax Groups
+UPDATE UserTaxGroup; code[unique = true]; name[lang = $lang]
+                   ; ca-taxes           ; "CA Taxes"
+                   ; de-taxes           ; "DE Taxes"
+                   ; jp-taxes           ; "JP Taxes"
+                   ; uk-taxes           ; "UK Taxes"
+                   ; us-taxes           ; "US Taxes"
+
+# Tax
+UPDATE Tax; code[unique = true]; name[lang = $lang]
+          ; ca-sales-tax-full  ; "Sales Tax"
+          ; de-vat-full        ; "DE VAT full"
+          ; de-vat-half        ; "DE VAT half"
+          ; jp-vat-full        ; "Consumption Tax"
+          ; uk-vat-full        ; "UK VAT full"
+          ; uk-vat-half        ; "UK VAT half"
+          ; us-sales-tax-full  ; "Sales Tax"
+
+# Consginment statuses
+UPDATE ConsignmentStatus; code[unique = true]; name[lang = $lang]
+                        ; CANCELLED          ; "Cancelled"
+                        ; PICKPACK           ; "Pickpack"
+                        ; PICKUP_COMPLETE    ; "Pickup complete"
+                        ; READY              ; "Ready"
+                        ; READY_FOR_PICKUP   ; "Ready for pickup"
+                        ; SHIPPED            ; "Shipped"
+                        ; WAITING            ; "Waiting"
+
+# Zone Delivery Modes
+UPDATE ZoneDeliveryMode; code[unique = true]     ; name[lang = $lang]           ; description[lang = $lang]
+                       ; premium-gross           ; "Premium Delivery"           ; "1-2 business days"
+                       ; premium-net             ; "Premium Delivery"           ; "1-2 business days"
+                       ; standard-gross          ; "Standard Delivery"          ; "3-5 business days"
+                       ; standard-net            ; "Standard Delivery"          ; "3-5 business days"
+
+INSERT_UPDATE PickUpDeliveryMode; code[unique = true]; name[lang = en]              ; description[lang = en]
+                                ; subscription-only  ; "Subscription Only Delivery" ; "0 business days"
+# Process Types
+UPDATE TmaProcessType; code[unique = true]; name[lang = $lang]
+                     ; TERMINATION        ; "Termination"
+                     ; RENEWAL            ; "Renewal"

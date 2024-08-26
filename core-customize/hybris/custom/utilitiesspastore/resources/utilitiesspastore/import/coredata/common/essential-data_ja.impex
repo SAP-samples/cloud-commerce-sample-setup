@@ -1,0 +1,85 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+#
+# Import essential data for the Accelerator
+#
+# Language
+$lang = ja
+
+# Languages
+UPDATE Language; isocode[unique = true]; name[lang = $lang]
+               ; de                    ; "ドイツ語"
+               ; en                    ; "英語"
+               ; ja                    ; "日本語"
+               ; zh                    ; "中国語"
+
+# Currencies
+UPDATE Currency; isocode[unique = true]; name[lang = $lang]
+               ; EUR                   ; "ユーロ"
+               ; GBP                   ; "ポンド"
+               ; JPY                   ; "日本円"
+               ; USD                   ; "米ドル"
+
+
+# Credit / Debit Cards
+UPDATE CreditCardType; code[unique = true] ; name[lang = $lang]
+                     ; amex                ; "American Express"
+                     ; diners              ; "Diner's Club"
+                     ; maestro             ; "Maestro"
+                     ; master              ; "Mastercard"
+                     ; mastercard_eurocard ; "Mastercard/Eurocard"
+                     ; switch              ; "Switch"
+                     ; visa                ; "Visa"
+
+# DistanceUnits for Storelocator 
+UPDATE DistanceUnit; code[unique = true]; name[lang = $lang]
+                   ; km                 ; "キロ"
+                   ; miles              ; "マイル"
+
+# MediaFormats
+UPDATE MediaFormat; qualifier[unique = true]; name[lang = $lang];
+                  ; 1200Wx1200H             ; "1200Wx1200H"
+                  ; 300Wx300H               ; "300Wx300H"
+                  ; 30Wx30H                 ; "30Wx30H"
+                  ; 365Wx246H               ; "365Wx246H"
+                  ; 515Wx515H               ; "515Wx515H"
+                  ; 65Wx65H                 ; "65Wx65H"
+                  ; 96Wx96H                 ; "96Wx96H"
+                  ; 50Wx50H                 ; "50Wx50H"
+# Product Tax Groups
+UPDATE ProductTaxGroup; code[unique = true]; name[lang = $lang]
+                      ; ca-sales-tax-full  ; "売上税 (カナダ)"
+                      ; eu-vat-full        ; "消費税"
+                      ; eu-vat-half        ; "ハーフタックス率 (EU)"
+                      ; jp-vat-full        ; "消費税"
+                      ; us-sales-tax-full  ; "売上税 (米国)"
+
+# User Tax Groups
+UPDATE UserTaxGroup; code[unique = true]; name[lang = $lang]
+                   ; ca-taxes           ; "税金 (カナダ)"
+                   ; de-taxes           ; "税金 (ドイツ)"
+                   ; jp-taxes           ; "税金"
+                   ; uk-taxes           ; "税金"
+                   ; us-taxes           ; "税金 (米国)"
+
+# Tax
+UPDATE Tax; code[unique = true]; name[lang = $lang]
+          ; ca-sales-tax-full  ; "売上税"
+          ; de-vat-full        ; "消費税"
+          ; de-vat-half        ; "VAT ハーフ (ドイツ)"
+          ; jp-vat-full        ; "消費税"
+          ; uk-vat-full        ; "VAT フル (英国)"
+          ; uk-vat-half        ; "VAT ハーフ (英国)"
+          ; us-sales-tax-full  ; "売上税"
+
+# Consginment statuses
+UPDATE ConsignmentStatus; code[unique = true]; name[lang = $lang]
+                        ; CANCELLED          ; "キャンセル済み"
+                        ; PICKPACK           ; "ビックパック"
+                        ; PICKUP_COMPLETE    ; "集荷完了"
+                        ; READY              ; "準備完了"
+                        ; READY_FOR_PICKUP   ; "集荷準備完了"
+                        ; SHIPPED            ; "出荷済み"
+                        ; WAITING            ; "待機中"

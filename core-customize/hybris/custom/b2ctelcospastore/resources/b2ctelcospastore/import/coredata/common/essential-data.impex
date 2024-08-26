@@ -1,0 +1,236 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# Import essential data for the Accelerator
+#
+# Includes:
+# * Languages
+# * Currencies
+# * Titles
+# * Vendors
+# * Warehouses
+# * Supported Credit/Debit cards
+# * User Groups
+# * DistanceUnits for Storelocator
+# * MediaFolders
+# * MediaFormats
+# * Tax & Tax Groups
+# * Jobs
+# * Delivery Modes
+
+$catalog-id = telcospaProductCatalog
+$catalog-version = Online
+$catalogversion = catalogversion(catalog(id), version)[unique=true, default=$catalog-id:$catalog-version]
+$catalogVersions = catalogVersions(catalog(id), version);
+
+$usCurrency = USD
+
+# Languages
+INSERT_UPDATE Language; isocode[unique = true]; fallbackLanguages(isocode); active[default = true]
+                      ; en                    ;                           ; ;
+                      ; de                    ; en                        ; ;
+
+# Currencies
+INSERT_UPDATE Currency; isocode[unique = true]; conversion; digits; symbol
+                      ; EUR                   ; 1         ; 2     ; €
+                      ; USD                   ; 1,4       ; 2     ; $
+
+# SiteMap Language Currencies
+INSERT_UPDATE SiteMapLanguageCurrency; &siteMapLanguageCurrency; language(isoCode)[unique = true]; currency(isocode)[unique = true];
+                                     ; enUsd                   ; en                              ; USD
+                                     ; enEur                   ; en                              ; EUR
+                                     ; deUsd                   ; de                              ; USD
+                                     ; deEur                   ; de                              ; EUR
+
+
+# Vendor
+INSERT_UPDATE Vendor; code[unique = true]; name
+                    ; telcospa           ; telcospa
+
+# Warehouse
+INSERT_UPDATE Warehouse; code[unique = true]; name            ; vendor(code)[default = default]; default[default = true]
+                       ; warehouse_telcospa ; Warehouse Telco ; telcospa
+
+# Disable preview for email pages
+UPDATE CMSPageType; code[unique = true]; previewDisabled
+                  ; EmailPage          ; true
+
+INSERT_UPDATE ComponentTypeGroup; code[unique = true]
+                                ; storefinder
+
+INSERT_UPDATE ComponentTypeGroups2ComponentType; source(code)[unique = true]; target(code)[unique = true]
+                                               ; storefinder                ; StoreFinderHeaderComponent
+
+# Titles
+INSERT_UPDATE Title; code[unique = true]
+                   ; mr
+                   ; mrs
+                   ; miss
+                   ; ms
+                   ; dr
+                   ; rev
+
+# Media Folders
+INSERT_UPDATE MediaFolder; qualifier[unique = true]; path[unique = true]
+                         ; images                  ; images
+                         ; email-body              ; email-body
+                         ; email-attachments       ; email-attachments
+
+# Media formats
+INSERT_UPDATE MediaFormat; qualifier[unique = true]
+                         ; 1200Wx1200H
+                         ; 1001Wx1001H
+                         ; 515Wx515H
+                         ; 500Wx500H
+                         ; 365Wx246H
+                         ; 300Wx300H
+                         ; 96Wx96H
+                         ; 90Wx90H
+                         ; 65Wx65H
+                         ; 40Wx40H
+                         ; 30Wx30H
+                         ; mobile
+                         ; tablet
+                         ; desktop
+                         ; widescreen
+
+# Tax & Tax Groups
+INSERT_UPDATE UserTaxGroup; code[unique = true]
+                          ; de-taxes
+                          ; jp-taxes
+                          ; uk-taxes
+                          ; us-taxes
+                          ; ca-taxes
+
+INSERT_UPDATE ProductTaxGroup; code[unique = true]
+                             ; jp-vat-full
+                             ; eu-vat-full
+                             ; eu-vat-half
+                             ; us-sales-tax-full
+                             ; ca-sales-tax-full
+                             ; jp-vat-full_eur
+                             ; eu-vat-full_eur
+                             ; eu-vat-half_eur
+                             ; us-sales-tax-full_eur
+                             ; ca-sales-tax-full_eur
+
+
+INSERT_UPDATE Tax; code[unique = true]; value; currency(isocode)
+                 ; de-vat-full        ; 19
+                 ; de-vat-half        ; 7
+                 ; jp-vat-full        ; 5
+                 ; uk-vat-full        ; 20
+                 ; uk-vat-half        ; 5
+                 ; us-sales-tax-full  ; 10
+                 ; ca-sales-tax-full  ; 0
+
+INSERT_UPDATE Tax; code[unique = true]   ; value; currency(isocode)
+                 ; de-vat-full_eur       ; 19   ; EUR
+                 ; de-vat-half_eur       ; 7    ; EUR
+                 ; jp-vat-full_eur       ; 5    ; EUR
+                 ; uk-vat-full_eur       ; 20   ; EUR
+                 ; uk-vat-half_eur       ; 5    ; EUR
+                 ; us-sales-tax-full_eur ; 10   ; EUR
+                 ; ca-sales-tax-full_eur ; 0    ; EUR
+
+INSERT_UPDATE ServicelayerJob; code[unique = true]; springId[unique = true]
+                             ; cartRemovalJob     ; cartRemovalJob
+                             ; siteMapMediaJob    ; siteMapMediaJob
+
+INSERT_UPDATE Country; isocode[unique = true]; name[lang = en]; active[default = true]
+                     ; US                    ; "United States"
+
+# Delivery Zones
+INSERT_UPDATE Zone; code[unique = true]; countries(isocode)
+                  ; usa                ; US
+                  ; uk                 ; GB,GG,IM,JE
+                  ; continentalEurope  ; AD,AL,AT,BA,BE,BG,BY,CH,CY,CZ,DE,DK,EE,ES,FI,FO,FR,GI,GL,GR,HR,HU,IE,IS,IT,LI,LT,LU,LV,MC,MD,ME,MK,MT,NL,NO,PL,PT,RO,RS,RU,SE,SI,SK,SM,TR,UA,VA
+                  ; ca                 ; CA
+                  ; japan              ; JP
+                  ; china              ; CN
+                  ; otherAsianRegions  ; VN,HK,KP,KR
+
+INSERT_UPDATE PickUpDeliveryMode; code[unique = true]; active[default = true]
+                                ; subscription-only
+
+# Zone Delivery Modes
+INSERT_UPDATE ZoneDeliveryMode; code[unique = true]     ; net; active[default = true]
+                              ; premium-net             ; true
+                              ; standard-net            ; true
+                              ; premium-gross           ; false
+                              ; standard-gross          ; false
+
+# USA
+INSERT_UPDATE ZoneDeliveryModeValue; deliveryMode(code)[unique = true]; zone(code)[default = 'usa'][unique = true]; currency(isocode)[unique = true]; value; minimum[unique = true]
+                                   ; premium-net                      ;                                           ; $usCurrency                     ; 43   ; 0,00
+                                   ; premium-gross                    ;                                           ; $usCurrency                     ; 50   ; 0,00
+                                   ; standard-net                     ;                                           ; $usCurrency                     ; 25   ; 0,00
+                                   ; standard-gross                   ;                                           ; $usCurrency                     ; 30   ; 0,00
+
+# uk
+INSERT_UPDATE ZoneDeliveryModeValue; deliveryMode(code)[unique = true]; zone(code)[default = 'uk'][unique = true]; currency(isocode)[unique = true]; value; minimum[unique = true]
+                                   ; premium-net                      ;                                          ; $usCurrency                     ; 43   ; 0,00
+                                   ; premium-gross                    ;                                          ; $usCurrency                     ; 50   ; 0,00
+                                   ; standard-net                     ;                                          ; $usCurrency                     ; 25   ; 0,00
+                                   ; standard-gross                   ;                                          ; $usCurrency                     ; 30   ; 0,00
+
+# continentalEurope
+INSERT_UPDATE ZoneDeliveryModeValue; deliveryMode(code)[unique = true]; zone(code)[default = 'continentalEurope'][unique = true]; currency(isocode)[unique = true]; value; minimum[unique = true]
+                                   ; premium-net                      ;                                                         ; $usCurrency                     ; 43   ; 0,00
+                                   ; premium-gross                    ;                                                         ; $usCurrency                     ; 50   ; 0,00
+                                   ; standard-net                     ;                                                         ; $usCurrency                     ; 25   ; 0,00
+                                   ; standard-gross                   ;                                                         ; $usCurrency                     ; 30   ; 0,00
+
+# ca
+INSERT_UPDATE ZoneDeliveryModeValue; deliveryMode(code)[unique = true]; zone(code)[default = 'ca'][unique = true]; currency(isocode)[unique = true]; value; minimum[unique = true]
+                                   ; premium-net                      ;                                          ; $usCurrency                     ; 43   ; 0,00
+                                   ; premium-gross                    ;                                          ; $usCurrency                     ; 50   ; 0,00
+                                   ; standard-net                     ;                                          ; $usCurrency                     ; 25   ; 0,00
+                                   ; standard-gross                   ;                                          ; $usCurrency                     ; 30   ; 0,00
+
+# japan
+INSERT_UPDATE ZoneDeliveryModeValue; deliveryMode(code)[unique = true]; zone(code)[default = 'japan'][unique = true]; currency(isocode)[unique = true]; value; minimum[unique = true]
+                                   ; premium-net                      ;                                             ; $usCurrency                     ; 43   ; 0,00
+                                   ; premium-gross                    ;                                             ; $usCurrency                     ; 50   ; 0,00
+                                   ; standard-net                     ;                                             ; $usCurrency                     ; 25   ; 0,00
+                                   ; standard-gross                   ;                                             ; $usCurrency                     ; 30   ; 0,00
+
+# china
+INSERT_UPDATE ZoneDeliveryModeValue; deliveryMode(code)[unique = true]; zone(code)[default = 'china'][unique = true]; currency(isocode)[unique = true]; value; minimum[unique = true]
+                                   ; premium-net                      ;                                             ; $usCurrency                     ; 43   ; 0,00
+                                   ; premium-gross                    ;                                             ; $usCurrency                     ; 50   ; 0,00
+                                   ; standard-net                     ;                                             ; $usCurrency                     ; 25   ; 0,00
+                                   ; standard-gross                   ;                                             ; $usCurrency                     ; 30   ; 0,00
+
+# otherAsianRegions
+INSERT_UPDATE ZoneDeliveryModeValue; deliveryMode(code)[unique = true]; zone(code)[default = 'otherAsianRegions'][unique = true]; currency(isocode)[unique = true]; value; minimum[unique = true]
+                                   ; premium-net                      ;                                                         ; $usCurrency                     ; 43   ; 0,00
+                                   ; premium-gross                    ;                                                         ; $usCurrency                     ; 50   ; 0,00
+                                   ; standard-net                     ;                                                         ; $usCurrency                     ; 25   ; 0,00
+                                   ; standard-gross                   ;                                                         ; $usCurrency                     ; 30   ; 0,00
+
+##############################
+# Insert DeliveryMode taxes
+##############################
+INSERT_UPDATE ProductTaxCode; productCode[unique = true]; taxCode  ; taxArea[unique = true]
+                            ; premium-gross             ; FR000000 ; US
+                            ; standard-gross            ; FR000000 ; US
+                            ; standard-net              ; FR000000 ; US
+                            ; pickup                    ; FR000000 ; US
+                            ; premium-net               ; FR000000 ; US
+                            ; subscription-only         ; FR000000 ; US
+
+# Deactivate Frontend Restriction on category by default for perfomance purposes
+UPDATE SearchRestriction; code[unique = true]; active[default = false]
+                        ; Frontend_RestrictedCategory
+
+INSERT_UPDATE SearchRestriction; code[unique = true]         ; restrictedType(code)   ; active[default = true]; generate[default = false]; query                                                                                                                                                                                                                                                                                                                                          ; principal(uid)
+                               ; Frontend_TmaPolicyStatement ; TmaPolicyStatement     ;                       ;                          ; {item:catalogVersion} IN (?session.catalogversions)                                                                                                                                                                                                                                                                                            ; customergroup
+                               ; Frontend_TmaPolicyAction    ; TmaPolicyAction        ;                       ;                          ; {item:catalogVersion} IN (?session.catalogversions)                                                                                                                                                                                                                                                                                            ; customergroup
+                               ; Frontend_TmaPolicy_validity ; TmaCompatibilityPolicy ;                       ;                          ; ({onlineFrom} IS NULL AND {onlineTo} IS NULL) OR ({onlineTo} IS NULL AND ({onlineFrom} IS NOT NULL AND {onlineFrom} <= ?session.user.currentDate)) OR ({onlineFrom} IS NULL AND {onlineTo} IS NOT NULL AND {onlineTo} >= ?session.user.currentDate) OR ({onlineFrom} <= ?session.user.currentDate AND {onlineTo} >= ?session.user.currentDate) ; customergroup
+                               ; Pricerow_ValidDate          ; PriceRow               ;                       ;                          ; ( {startTime} IS NULL OR {startTime} <= ?session.user.currentDate) AND ( {endTime} IS NULL OR {endTime} >= ?session.user.currentDate)                                                                                                                                                                                                          ; customergroup
+
+INSERT_UPDATE TmaProcessType; code[unique = true]
+                            ; TERMINATION
+                            ; RENEWAL

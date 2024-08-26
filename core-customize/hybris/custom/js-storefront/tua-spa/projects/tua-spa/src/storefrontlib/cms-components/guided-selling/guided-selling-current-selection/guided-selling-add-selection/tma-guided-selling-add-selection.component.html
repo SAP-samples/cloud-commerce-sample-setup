@@ -1,0 +1,3 @@
+<button class="btn btn-primary btn-block" [disabled]="isFromSubscription" (click)="selectProduct()" attr.aria-label="{{ ( isSelected ? 'guidedSelling.addSelection.buttonLabel_unselect' : 'guidedSelling.addSelection.buttonLabel_select' ) | cxTranslate }}">
+  {{'guidedSelling.addSelection.buttonLabel' | cxTranslate : {context: isSelected ? 'unselect' : 'select'} }}
+</button>

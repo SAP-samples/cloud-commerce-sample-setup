@@ -1,0 +1,98 @@
+<div class="cx-modal-container">
+  <div class="cx-modal-content">
+    <div class="row mx-auto">
+      <div class="card w-100">
+        <div *ngIf="!errorForm" class="card-header">
+          <div class="row mx-auto d-flex justify-content-center py-3">
+            <div class="col-sm-11 col-10">
+              <div class="row mx-auto d-flex justify-content-center">
+            <span class="headText pl-2">
+              {{ 'serviceability.checkAvailability' | cxTranslate }}
+            </span>
+              </div>
+            </div>
+            <div class="col-1 col-sm-1">
+              <div class="row mx-auto d-flex justify-content-end">
+                <button
+                  (click)="closeModal('Cross click')"
+                  attr.aria-label="{{ 'common.close' | cxTranslate }}"
+                  class="close"
+                  type="button"
+                >
+    <span aria-hidden="true">
+      <cx-icon [type]="iconTypes.CLOSE"></cx-icon>
+    </span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row mx-auto d-flex justify-content-end" *ngIf="errorForm">
+            <button
+              (click)="closeModal('Cross click')"
+              attr.aria-label="{{ 'common.close' | cxTranslate }}"
+              class="close"
+              type="button"
+            >
+    <span aria-hidden="true">
+      <cx-icon [type]="iconTypes.CLOSE"></cx-icon>
+    </span>
+            </button>
+          </div>
+          <div class="row mx-auto d-flex justify-content-center mb-2 w-100">
+            <div class="w-100" [formGroup]="installationAddressDetails">
+              <cx-address-form
+                [address]="installationAddress"
+                [isDialog]="false"
+                [hasError]="errorForm"
+                (countrySelected)="onCountrySelected($event)"
+                (regionSelected)="onRegionSelected($event)"
+              ></cx-address-form>
+            </div>
+          </div>
+          <div class="row mx-auto d-flex justify-content-center mb-2 w-100">
+            <ng-container *ngIf="productNotServiceableError">
+              <div class="alert alert-primary w-100 m-4" role="alert">
+                {{
+                'serviceability.notServiceable'
+                  | cxTranslate: {code: productsNotServiceable}
+                }}
+              </div>
+            </ng-container>
+            <ng-container *ngIf="systemNotAvailable && !productNotServiceableError">
+              <div class="alert alert-primary w-100 m-4" role="alert">
+                {{ 'serviceability.serviceNotAvailable' | cxTranslate }}
+              </div>
+            </ng-container>
+            <ng-container *ngIf="!systemNotAvailable">
+              <ng-container *ngIf="!productNotServiceableError">
+                <ng-container *ngIf="addressError">
+                  <div class="alert alert-primary w-100" role="alert">
+                    {{ 'addressForm.invalidAddress' | cxTranslate }}
+                  </div>
+                </ng-container>
+              </ng-container>
+            </ng-container>
+          </div>
+        </div>
+        <div class="card-footer" *ngIf="!errorForm">
+          <div class="row mx-auto d-flex justify-content-center">
+            <button
+              [disabled]="installationAddressDetails.invalid"
+              (click)="checkServiceability()"
+              class="btn btn-primary btn-sm btn-wd-40"
+            >
+              {{ 'serviceability.check' | cxTranslate }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ngx-spinner
+  [fullScreen]="false"
+  type="ball-clip-rotate-multiple"
+  size="medium"
+></ngx-spinner>

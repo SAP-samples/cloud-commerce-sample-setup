@@ -1,0 +1,59 @@
+<ng-container *ngIf="checklistAction$ | async as checklistAction">
+  <ng-container [ngSwitch]="selectedReasonPurchase">
+    <!-- Contract Start Date -->
+    <ng-container *ngSwitchCase="constants.REASON_FOR_PURCHASE.MOVE">
+      <ng-container *ngIf="hasChecklistActionOfType(checklistAction, checklistActionType.CONTRACT_START_DATE)">
+        <div class="row">
+          <div class="form-group col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6" [formGroup]="purchaseReasonForm">
+            <label class="font-weight-bolder"
+                   for="contract-start-date">{{ 'purchaseReason.desiredContractStartDate' | cxTranslate}}
+              <input class="form-control" id="contract-start-date" type="date" min="{{minDate | date:'dd-mm-yyyy'}}"
+                     max="{{maxDate | date:'dd-mm-yyyy'}}"
+                     name="contract-start-date" formControlName="contractStartDateInput"/>
+              <cx-form-errors
+                class="form-message--danger"
+                [control]="purchaseReasonForm.get('contractStartDateInput')"
+              ></cx-form-errors>
+            </label>
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
+
+    <!-- Switch provider -->
+    <ng-container *ngSwitchCase="constants.REASON_FOR_PURCHASE.SWITCH_PROVIDER">
+      <ng-container *ngIf="hasChecklistActionOfType(checklistAction, checklistActionType.SERVICE_PROVIDER)">
+        <div class="row" [formGroup]="purchaseReasonForm">
+          <div class="form-group col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+            <label class="font-weight-bolder"
+                   for="current_provider">{{ 'purchaseReason.previousEnergySupplier' | cxTranslate }}
+              <input class="form-control" id="current_provider" type="text"
+                     name="current_provider"
+                     maxlength="50"
+                     formControlName="previousProviderName"
+                     value="{{serviceProvider}}"
+              />
+              <cx-form-errors
+                class="form-message--danger"
+                [control]="purchaseReasonForm.get('previousProviderName')" >
+              </cx-form-errors>
+            </label>
+          </div>
+          <div class="form-group col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+            <label class="font-weight-bolder"
+                   for="desired-change-date">{{ 'purchaseReason.desiredChangeDate' | cxTranslate}}
+              <input class="form-control" id="desired-change-date" type="date" min="{{minDate | date:'dd-mm-yyyy'}}"
+                     max="{{maxDate | date:'dd-mm-yyyy'}}"
+                     name="desired-change-date" formControlName="contractStartDateInput"/>
+              <cx-form-errors
+                      class="form-message--danger"
+                      [control]="purchaseReasonForm.get('contractStartDateInput')"
+              ></cx-form-errors>
+            </label>
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
+    <ng-container *ngIf="updatePurchaseReasonForm(purchaseReasonForm)"></ng-container>
+  </ng-container>
+</ng-container>

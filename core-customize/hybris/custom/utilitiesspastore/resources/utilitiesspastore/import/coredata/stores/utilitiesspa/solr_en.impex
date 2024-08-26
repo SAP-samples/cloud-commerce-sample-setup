@@ -1,0 +1,36 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+#
+# Import the Solr configuration for the utilities store
+#
+
+# Index Type
+$solrIndexedType = utilitiesspaPriceType
+
+# Language
+$lang = en
+
+# Solr Indexed Property
+UPDATE SolrIndexedProperty; solrIndexedType(identifier)[unique = true]; name[unique = true]; displayName[lang = $lang]
+                          ; $solrIndexedType                          ; availableInStores  ; "Stores"
+                          ; $solrIndexedType                          ; brand              ; "Brand"
+                          ; $solrIndexedType                          ; category           ; "Category"
+                          ; $solrIndexedType                          ; code               ; "Code"
+                          ; $solrIndexedType                          ; description        ; "Description"
+                          ; $solrIndexedType                          ; manufacturerName   ; "Manufacturer Name"
+                          ; $solrIndexedType                          ; name               ; "Name"
+                          ; $solrIndexedType                          ; summary            ; "Summary"
+                          ; $solrIndexedType                          ; reviewAvgRating    ; "Review Avg Rating"
+                          ; $solrIndexedType                          ; numberOfReviews    ; "Reviews"
+                          ; $solrIndexedType                          ; termLimits         ; "Term Limits"
+                          ; $solrIndexedType                          ; billingTimes       ; "Billing Times"
+
+# Define the available sorts
+UPDATE SolrSort; indexedType(identifier)[unique = true]; code[unique = true]; name[lang = $lang]
+               ; $solrIndexedType                      ; name-asc           ; "Name (ascending)"
+               ; $solrIndexedType                      ; name-desc          ; "Name (descending)"
+               ; $solrIndexedType                      ; relevance          ; "Relevance"
+               ; $solrIndexedType                      ; topRated           ; "Top Rated"
+               ; $solrIndexedType                      ; pricePriority-desc ; "Price Priority (highest first)"

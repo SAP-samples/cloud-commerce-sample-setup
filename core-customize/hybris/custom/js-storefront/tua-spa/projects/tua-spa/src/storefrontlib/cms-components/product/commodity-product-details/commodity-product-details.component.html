@@ -1,0 +1,142 @@
+
+<div class="row px-2">
+  <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+    <cx-product-images></cx-product-images>
+  </div>
+
+  <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+    <ng-container *ngIf="currentProduct$ | async as product">
+      <h1 class="product-name">{{ product.name }}</h1>
+      <cx-product-intro></cx-product-intro>
+      <ng-container *ngIf="currency$ | async as currency">
+          <div class="price">
+            <span>{{ getAverageCostPerMonth(product, currency) }} </span>
+            <span>{{ 'productList.perMonth' | cxTranslate }}
+              <ng-container *ngIf="averagePerMonthWithOutDiscount.value !== averagePerMonth.value">
+            <span>{{ 'productList.withBonus' | cxTranslate }}</span>
+          </ng-container>
+          &nbsp;
+          <span>
+            {{ 'common.openBracket' | cxTranslate }}
+            {{ getAverageCostPerYear(product, currency) }}
+          </span>
+          <span>{{ 'productList.perYear' | cxTranslate }} </span>
+          <ng-container *ngIf="averagePerMonthWithOutDiscount.value !== averagePerMonth.value; else closedBracket">
+            <span>
+              {{ 'productList.withBonus' | cxTranslate }} 
+              {{ 'common.closedBracket' | cxTranslate }}
+            </span>
+          </ng-container>
+          <ng-template #closedBracket>
+            {{ 'common.closedBracket' | cxTranslate }}
+          </ng-template>
+          </span>
+          </div>
+          <div class="price-row">
+            <div class="d-flex price pb-1"  *ngIf="getUsageChargePerUnit(product, currency)">
+              <span>{{ 'productList.priceDetails' | cxTranslate }}</span>
+            </div>
+            <div class="d-flex pb-1" *ngIf="getUsageChargePerUnit(product, currency)">
+              <div>{{ 'productList.UsagePrice' | cxTranslate }}</div>
+              <div>{{ getUsageChargePerUnit(product, currency) }}
+                <span *ngIf="averagePerMonthWithOutDiscount.value !== averagePerMonth.value">{{ 'productList.withoutBonus' | cxTranslate }}</span>
+              </div>
+            </div>
+            <div class="d-flex price pb-1">
+              <span>{{ 'productList.additionalCharges' | cxTranslate }}</span>
+            </div>
+            <div class="d-flex pb-1">
+              <div>{{ 'productList.BaseCharge' | cxTranslate }}</div>
+              <div>{{ getBaseChargePerMonth(product, currency) }} {{ 'productList.perMonth' | cxTranslate }}</div>
+            </div>
+            <div class="d-flex">
+              <div>{{ getFormattedSubscriptionTerms(product) }}</div>
+            </div>
+            <ng-container class="d-flex" *ngIf="product?.classifications">
+              <ng-container *ngFor="let classification of product.classifications">
+                <ng-container class="d-flex" *ngIf="classification?.features">
+                  <ng-container *ngFor="let feature of classification.features">
+                    <div>
+                      {{ feature?.featureValues[0]?.value }} {{ feature?.featureUnit?.name }} {{ feature?.name }}
+                    </div>
+                  </ng-container>
+                </ng-container>
+              </ng-container>
+            </ng-container>
+          </div>
+      </ng-container>
+      <ng-container *ngIf="product?.productSpecCharValues?.length">
+        <ng-container *ngFor="let spec of product.productSpecCharValues">
+          <div class="product-spec-description font-weight-bolder" *ngIf="spec.value !== '##'">
+          <cx-icon class="product-spec-description-icon" [type]="iconTypes.SUCCESS"></cx-icon>
+          {{spec.description}}
+          </div>
+        </ng-container>
+      </ng-container>
+      <cx-add-to-cart
+        class="row col-12 col-sm-10 col-md-6 col-lg-5 col-xl-5"
+        [product]="product"
+        [productCode]="product.code"
+        [isPdpServicePage]="true"
+      ></cx-add-to-cart>
+    </ng-container>
+  </div>
+
+  <div class="col-12 my-5">
+      <ng-container *ngIf="components$ | async as components">
+        <div
+          role="region"
+          tabindex="-1"
+          [attr.aria-label]="ariaLabel | cxTranslate"
+          class="tabs-container"
+        >
+          <ng-container *ngFor="let component of components; let i = index">
+            <ng-container *ngIf="component">
+              <button
+                [class.active]="i === activeTabNum"
+                (click)="select(i, $event)"
+                [attr.aria-expanded]="i === activeTabNum"
+              >
+                {{
+                  component.title | cxTranslate: { param: tabTitleParams[i] | async }
+                }}
+
+                <span class="accordion-icon" aria-hidden="true"></span>
+              </button>
+
+              <div
+                [class.active]="i === activeTabNum"
+                class="cx-tab-paragraph-content"
+                tabindex="0"
+                role="presentation"
+              >
+                <ng-template [cxOutlet]="component.flexType" [cxOutletContext]="{}">
+                  <ng-container
+                    [cxComponentWrapper]="component"
+                    (cxComponentRef)="tabCompLoaded($event)"
+                  ></ng-container>
+                </ng-template>
+              </div>
+            </ng-container>
+          </ng-container>
+
+        </div>
+      </ng-container>
+  </div>
+  <cx-carousel
+    class="mb-5"
+    *ngIf="items$ | async as items"
+    role="region"
+    [attr.aria-label]="
+      'productCarousel.carouselLabel' | cxTranslate: { title: title$ | async }
+    "
+    [items]="items"
+    [title]="title$ | async"
+    [template]="carouselItem"
+    itemWidth="285px"
+    >
+    </cx-carousel>
+    <ng-template #carouselItem let-item="item">
+      <cx-product-carousel-item [item]="item"></cx-product-carousel-item>
+    </ng-template>
+</div>

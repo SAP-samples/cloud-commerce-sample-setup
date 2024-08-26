@@ -1,0 +1,72 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Importing sample compatibility policies
+
+$productCatalog = utilitiesSpaProductCatalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+
+###################################################################################################
+# Eligibility Policy1 (general acquisition, device only and switch supplier policy):              #
+# A customer is eligible for ACQUISITION DEVICE_ONLY and SWITCH_SERVICE_PROVIDER flows in all conditions  #
+###################################################################################################
+INSERT_UPDATE TmaProcessTypesPolicyStatement; code[unique = true]; processes(code); $catalogVersion
+; acq_and_device_only_and_switch_service_provider_statement ; ACQUISITION,DEVICE_ONLY,SWITCH_SERVICE_PROVIDER
+
+INSERT_UPDATE TmaPolicyAction; code[unique = true]; statement(code, $catalogVersion); actionType(code); $catalogVersion
+; allow_acq_and_device_only_and_switch_service_provider ; acq_and_device_only_and_switch_service_provider_statement ; ALLOW
+
+INSERT_UPDATE TmaCompatibilityPolicy; code[unique = true]; conditionsEvaluatorType(code); conditions(code, $catalogVersion); actions(code, $catalogVersion); onlineFrom[dateformat = dd.MM.yyyy]; onlineTo[dateformat = dd.MM.yyyy]; $catalogVersion
+; acq_and_device_only_and_switch_service_provider_eligibility ; AND ; ; allow_acq_and_device_only_and_switch_service_provider ;
+
+########################################################################################################
+# Eligibility Policy (Termination policy):
+# A customer is eligible for Termination flow when the remaining contract term is less than 1 day    #
+########################################################################################################
+INSERT_UPDATE TmaProcessTypesPolicyStatement; code[unique = true]; processes(code); $catalogVersion
+; termination_statement ; TERMINATION
+
+INSERT_UPDATE TmaRemainingCommittedPeriodPolicyStatement; code[unique = true]; days; $catalogVersion
+; termination_remaining_period_statement ; 1
+
+INSERT_UPDATE TmaAtomicPolicyCondition; code[unique = true]; statement(code, $catalogVersion); $catalogVersion
+; termination_remaining_period_statement ; termination_remaining_period_statement
+
+INSERT_UPDATE TmaPolicyAction; code[unique = true]; statement(code, $catalogVersion); actionType(code); $catalogVersion
+; allow_termination ; termination_statement ; ALLOW
+
+INSERT_UPDATE TmaCompatibilityPolicy; code[unique = true]; conditionsEvaluatorType(code); conditions(code, $catalogVersion); actions(code, $catalogVersion); onlineFrom[dateformat = dd.MM.yyyy]; onlineTo[dateformat = dd.MM.yyyy]; $catalogVersion
+; termination_eligibility_policy ; AND ; termination_remaining_period_statement ; allow_termination ;
+
+########################################################################################################
+# Eligibility Policy (retention policy):
+# A customer is eligible for RETENTION flow in all conditions    #
+########################################################################################################
+INSERT_UPDATE TmaProcessTypesPolicyStatement; code[unique = true]; processes(code); $catalogVersion
+; retention_statement ; RETENTION
+
+INSERT_UPDATE TmaPolicyAction; code[unique = true]; statement(code, $catalogVersion); actionType(code); $catalogVersion
+; allow_retention ; retention_statement ; ALLOW
+
+INSERT_UPDATE TmaCompatibilityPolicy; code[unique = true]; conditionsEvaluatorType(code); conditions(code, $catalogVersion); actions(code, $catalogVersion); onlineFrom[dateformat = dd.MM.yyyy]; onlineTo[dateformat = dd.MM.yyyy]; $catalogVersion
+; retention_eligibility_policy ; AND ; ; allow_retention ;
+
+########################################################################################################
+# Eligibility Policy (renewal policy):
+# A customer is eligible for RENEWAL flow when the remaining contract term is less than 1 year     #
+########################################################################################################
+INSERT_UPDATE TmaProcessTypesPolicyStatement; code[unique = true]; processes(code); $catalogVersion
+; renewal_statement ; RENEWAL
+
+INSERT_UPDATE TmaRemainingCommittedPeriodPolicyStatement; code[unique = true]; days; $catalogVersion
+; renewal_remaining_period_statement  ; 365
+
+INSERT_UPDATE TmaAtomicPolicyCondition; code[unique = true]; statement(code, $catalogVersion); $catalogVersion
+; renewal_remaining_period_statement  ; renewal_remaining_period_statement
+
+INSERT_UPDATE TmaPolicyAction; code[unique = true]; statement(code, $catalogVersion); actionType(code); $catalogVersion
+; allow_renewal  ; renewal_statement  ; ALLOW
+
+INSERT_UPDATE TmaCompatibilityPolicy; code[unique = true]; conditionsEvaluatorType(code); conditions(code, $catalogVersion); actions(code, $catalogVersion); onlineFrom[dateformat = dd.MM.yyyy]; onlineTo[dateformat = dd.MM.yyyy]; $catalogVersion
+; renewal_eligibility_policy ; AND ; renewal_remaining_period_statement  ; allow_renewal  ;
