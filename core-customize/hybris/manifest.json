@@ -1,0 +1,997 @@
+{
+  "commerceSuiteVersion": "2211",
+  "solrVersion": "9.5",
+    "extensions": [
+      "acceleratorcms",
+      "adaptivesearchbackoffice",
+      "adaptivesearchsolr",
+      "addonsupport",
+      "b2ctelcoaddon",
+      "b2ctelcobackoffice",
+      "b2ctelcofulfillmentprocess",
+      "b2ctelcocms",
+      "b2ctelcospastore",
+      "utilitiesspastore",
+      "mediaspastore",
+      "b2ctelcotmfwebservices",
+      "b2ctelcowebservices",
+      "b2ctelcocommercewebservicescommons",
+      "b2ctelcoocc",
+      "b2ctelcoserviceabilityclient",
+      "commerceservicesbackoffice",
+      "solrfacetsearchbackoffice",
+      "solrserver",
+      "subscriptionbackoffice",
+      "yacceleratorcore",
+      "commercewebservices",
+      "cmsbackoffice",
+      "cmswebservices",
+      "previewwebservices",
+      "smarteditwebservices",
+      "cmssmarteditwebservices",
+      "permissionswebservices",
+      "cmssmartedit",
+      "cmsocc",
+      "acceleratorocc",
+      "customersupportbackoffice",
+      "personalizationwebservices",
+      "previewpersonalizationweb",
+      "personalizationcmsweb",
+      "personalizationsmartedit",
+      "personalizationservicesbackoffice",
+      "personalizationcmsbackoffice",
+      "personalizationservices",
+      "personalizationfacades",
+      "acceleratorservices",
+      "assistedservicefacades",
+      "rulebuilderbackoffice",
+      "couponbackoffice",
+      "droolsruleengineservices",
+      "couponfacades",
+      "couponservices",
+      "smarteditaddon",
+      "assistedservicestorefront",
+      "assistedservicecustomerinterestsaddon",
+      "customerticketingaddon",
+      "pcmbackofficesamplesaddon",
+      "yacceleratorstorefront",
+      "b2ctelcomocks",
+      "tuadatamodel",
+      "tuawebservicesresources",
+      "tuadatacommonsservices",
+      "productqualificationservices",
+      "productqualificationtmfwebservices",
+      "billingaccountservices",
+      "billingaccounttmfwebservices",
+      "agreementservices",
+      "agreementtmfwebservices",
+      "subscribedproductservices",
+      "subscribedproducttmfwebservices",
+      "billmanagementservices",
+      "billmanagementtmfwebservices",
+      "partyservices",
+      "partytmfwebservices",
+      "partyroleservices",
+      "partyroletmfwebservices",
+      "usageconsumptionservices",
+      "usageconsumptiontmfwebservices",
+      "configbootstrap",
+      "b2ctelcoteststore"
+    ],
+    "properties": [
+      {
+        "key": "billmanagementtmfwebservices.api.restrictions.disabled.endpoints",
+        "value": ""
+      },
+      {
+        "key": "billingaccounttmfwebservices.api.restrictions.disabled.endpoints",
+        "value": ""
+      },
+      {
+        "key": "b2ctelcotmfwebservices.api.restrictions.disabled.endpoints",
+        "value": ""
+      },
+      {
+        "key": "flexible.search.exception.show.query.details",
+        "value": "true"
+      },
+      {
+        "key": "solrfacetsearch.fullSpELSupport",
+        "value": "true"
+      },
+      {
+        "key": "impex.import.workers",
+        "value": "1"
+      },
+      {
+        "key": "storefrontContextRoot",
+        "value": "telcospa"
+      },
+      {
+        "key": "catalog.sync.workers",
+        "value": "1"
+      },
+      {
+        "key": "kernel.events.cluster.jgroups.channel",
+        "value": "disable"
+      },
+      {
+        "key": "datahub.publication.saveImpex",
+        "value": ""
+      },
+      {
+        "key": "kernel.autoInitMode",
+        "value": "update"
+      },
+      {
+        "key": "mail.from",
+        "value": "testmail9110@gmail.com"
+      },
+      {
+        "key": "mail.replyto",
+        "value": "testmail9110@gmail.com"
+      },
+      {
+        "key": "mail.smtp.server",
+        "value": "smtp.gmail.com"
+      },
+      {
+        "key": "mail.smtp.port",
+        "value": "587"
+      },
+      {
+        "key": "mail.smtp.user",
+        "value": "testmail9110@gmail.com"
+      },
+      {
+        "key": "mail.smtp.password",
+        "value": "PWD11111"
+      },
+      {
+        "key": "mail.smtp.starttls.enable",
+        "value": "true"
+      },
+      {
+        "key": "mail.use.tls",
+        "value": "true"
+      },
+      {
+        "key": "storefront.show.debug.info",
+        "value": "true"
+      },
+      {
+        "key": "commerceservices.default.desktop.ui.experience",
+        "value": "responsive"
+      },
+      {
+        "key": "googleEmbedApiKey",
+        "value": "AIzaSyD34TXbUsiyJnysJ-1Un657elxVy_OYpTs"
+      },
+      {
+        "key": "storefront.show.checkout.flows",
+        "value": "true"
+      },
+      {
+        "key": "agreementtmfwebservices.api.base.url",
+        "value": "${ccv2.services.api.url.0}"
+      },
+      {
+        "key": "b2ctelcocommercewebservicescommons.api.base.url",
+        "value": "${ccv2.services.api.url.0}"
+      },
+      {
+        "key": "b2ctelcotmfevents.api.base.url",
+        "value": "${ccv2.services.api.url.0}"
+      },
+      {
+        "key": "b2ctelcotmfresources.api.base.url",
+        "value": "${ccv2.services.api.url.0}"
+      },
+      {
+        "key": "b2ctelcotmfwebservices.api.base.url",
+        "value": "${ccv2.services.api.url.0}"
+      },
+      {
+        "key": "billingaccounttmfwebservices.api.base.url",
+        "value": "${ccv2.services.api.url.0}"
+      },
+      {
+        "key": "billmanagementtmfwebservices.api.base.url",
+        "value": "${ccv2.services.api.url.0}"
+      },
+      {
+        "key": "partyroletmfwebservices.api.base.url",
+        "value": "${ccv2.services.api.url.0}"
+      },
+      {
+        "key": "partytmfwebservices.api.base.url",
+        "value": "${ccv2.services.api.url.0}"
+      },
+      {
+        "key": "subscribedproducttmfwebservices.api.base.url",
+        "value": "${ccv2.services.api.url.0}"
+      },
+      {
+        "key": "usageconsumptiontmfwebservices.api.base.url",
+        "value": "${ccv2.services.api.url.0}"
+      },
+      {
+        "key": "productqualificationtmfwebservices.api.base.url",
+        "value": "${ccv2.services.api.url.0}"
+      },
+      {
+        "key": "b2ctelcomocks.api.base.url",
+        "value": "${ccv2.services.api.url.0}"
+      },
+      {
+        "key": "commercewebservices.oauth2.tokenUrl",
+        "value": "${ccv2.services.api.url.0}/authorizationserver/oauth/token"
+      },
+      {
+        "key": "commercewebservices.sap.server.default.url",
+        "value": "${ccv2.services.api.url.0}/occ/v2"
+      },
+      {
+        "key": "cmswebservices.oauth.host",
+        "value": "${ccv2.services.api.url.0}"
+      },
+      {
+        "key": "cmswebservices.oauth2.tokenUrl",
+        "value": "${ccv2.services.api.url.0}/authorizationserver/oauth/token"
+      },
+      {
+        "key": "ext.cmsocc.extension.webmodule.webroot",
+        "value": "${ccv2.services.api.url.0}/occ/v2"
+      },
+      {
+        "key": "cmswebservices.sap.server.default.url",
+        "value": "${ccv2.services.api.url.0}/cmswebservices"
+      },
+      {
+        "key": "session.default.baseSiteId",
+        "value": "telcospa"
+      },
+      {
+        "key": "session.default.baseStoreId",
+        "value": "telcospa"
+      },
+      {
+        "key": "sop.post.url",
+        "value": "${ccv2.services.api.url.0}/acceleratorservices/sop-mock/process"
+      },
+      {
+        "key": "system.unlocking.disabled",
+        "value": "false"
+      },
+      {
+        "key": "installed.tenants",
+        "value": ""
+      },
+      {
+        "key": "task.engine.loadonstartup",
+        "value": "true"
+      },
+      {
+        "key": "ruleengineservices.compiler.task.predestroytimeout",
+        "value": "60000000"
+      },
+      {
+        "key": "occ.rewrite.overlapping.paths.enabled",
+        "value": "true"
+      },
+      {
+        "key": "api.compatibility.b2c.channels",
+        "value": "B2C"
+      },
+      {
+        "key": "api.compatibility.b2b.channels",
+        "value": "B2B"
+      },
+      {
+        "key": "ycommercewebservices.oauth2.tokenUrl",
+        "value": "${ccv2.services.api.url.0}/authorizationserver/oauth/token"
+      },
+      {
+        "key": "ycommercewebservices.sap.server.default.url",
+        "value": "${ccv2.services.api.url.0}/rest/v2"
+      },
+      {
+        "key": "webservicescommons.apiEnv.oauth2.tokenUrl",
+        "value": "${ccv2.services.api.url.0}/authorizationserver/oauth/token"
+      },
+      {
+        "key": "corsfilter.default.allowedOrigins",
+        "value": "*"
+      },
+      {
+        "key": "corsfilter.acceleratorservices.allowedOrigins",
+        "value": "*"
+      },
+      {
+        "key": "corsfilter.permissionswebservices.allowedOrigins",
+        "value": "*"
+      },
+      {
+        "key": "corsfilter.ycommercewebservices.allowedOrigins",
+        "value": "${ccv2.services.jsapps.url.0}"
+      },
+      {
+        "key": "corsfilter.ycommercewebservices.allowedHeaders",
+        "value": "origin content-type accept authorization cache-control if-none-match x-anonymous-consents"
+      },
+      {
+        "key": "corsfilter.ycommercewebservices.allowedMethods",
+        "value": "GET HEAD OPTIONS PATCH PUT POST DELETE"
+      },
+      {
+        "key": "corsfilter.ycommercewebservices.exposedHeaders",
+        "value": "x-anonymous-consents occ-personalization-id occ-personalization-time"
+      },
+      {
+        "key": "corsfilter.commercewebservices.allowedOrigins",
+        "value": "${ccv2.services.jsapps.url.0}"
+      },
+      {
+        "key": "corsfilter.commercewebservices.allowedHeaders",
+        "value": "origin content-type accept authorization cache-control if-none-match x-anonymous-consents"
+      },
+      {
+        "key": "corsfilter.commercewebservices.allowedMethods",
+        "value": "GET HEAD OPTIONS PATCH PUT POST DELETE"
+      },
+      {
+        "key": "corsfilter.acceleratorservices.allowedOrigins",
+        "value": "${ccv2.services.jsapps.url.0} ${ccv2.services.b2ctelco.url.0}"
+      },
+      {
+        "key": "corsfilter.acceleratorservices.allowedHeaders",
+        "value": "origin content-type accept authorization cache-control if-none-match x-anonymous-consents"
+      },
+      {
+        "key": "corsfilter.acceleratorservices.allowedMethods",
+        "value": "GET HEAD OPTIONS PATCH PUT POST DELETE"
+      },
+      {
+        "key": "corsfilter.b2ctelcotmfwebservices.allowedOrigins",
+        "value": "${ccv2.services.jsapps.url.0}"
+      },
+      {
+        "key": "corsfilter.b2ctelcotmfwebservices.allowedHeaders",
+        "value": "origin content-type accept authorization cache-control if-none-match x-anonymous-consents"
+      },
+      {
+        "key": "corsfilter.b2ctelcotmfwebservices.allowedMethods",
+        "value": "GET HEAD OPTIONS PATCH PUT POST DELETE"
+      },
+      {
+        "key": "corsfilter.subscribedproducttmfwebservices.allowedOrigins",
+        "value": "${ccv2.services.jsapps.url.0}"
+      },
+      {
+        "key": "corsfilter.subscribedproducttmfwebservices.allowedHeaders",
+        "value": "origin content-type accept authorization cache-control if-none-match x-anonymous-consents"
+      },
+      {
+        "key": "corsfilter.subscribedproducttmfwebservices.allowedMethods",
+        "value": "GET HEAD OPTIONS PATCH PUT POST DELETE"
+      },
+      {
+        "key": "corsfilter.billingaccounttmfwebservices.allowedOrigins",
+        "value": "${ccv2.services.jsapps.url.0}"
+      },
+      {
+        "key": "corsfilter.billingaccounttmfwebservices.allowedHeaders",
+        "value": "origin content-type accept authorization cache-control if-none-match x-anonymous-consents"
+      },
+      {
+        "key": "corsfilter.billingaccounttmfwebservices.allowedMethods",
+        "value": "GET HEAD OPTIONS PATCH PUT POST DELETE"
+      },
+      {
+        "key": "corsfilter.agreementtmfwebservices.allowedOrigins",
+        "value": "${ccv2.services.jsapps.url.0}"
+      },
+      {
+        "key": "corsfilter.agreementtmfwebservices.allowedHeaders",
+        "value": "origin content-type accept authorization cache-control if-none-match x-anonymous-consents"
+      },
+      {
+        "key": "corsfilter.agreementtmfwebservices.allowedMethods",
+        "value": "GET HEAD OPTIONS PATCH PUT POST DELETE"
+      },
+      {
+        "key": "corsfilter.productqualificationtmfwebservices.allowedOrigins",
+        "value": "${ccv2.services.jsapps.url.0}"
+      },
+      {
+        "key": "corsfilter.productqualificationtmfwebservices.allowedHeaders",
+        "value": "origin content-type accept authorization cache-control if-none-match x-anonymous-consents"
+      },
+      {
+        "key": "corsfilter.productqualificationtmfwebservices.allowedMethods",
+        "value": "GET HEAD OPTIONS PATCH PUT POST DELETE"
+      },
+      {
+        "key": "corsfilter.billmanagementtmfwebservices.allowedOrigins",
+        "value": "${ccv2.services.jsapps.url.0}"
+      },
+      {
+        "key": "corsfilter.billmanagementtmfwebservices.allowedHeaders",
+        "value": "origin content-type accept authorization cache-control if-none-match x-anonymous-consents"
+      },
+      {
+        "key": "corsfilter.billmanagementtmfwebservices.allowedMethods",
+        "value": "GET HEAD OPTIONS PATCH PUT POST DELETE"
+      },
+      {
+        "key": "corsfilter.partytmfwebservices.allowedOrigins",
+        "value": "${ccv2.services.jsapps.url.0}"
+      },
+      {
+        "key": "corsfilter.partytmfwebservices.allowedHeaders",
+        "value": "origin content-type accept authorization cache-control if-none-match x-anonymous-consents"
+      },
+      {
+        "key": "corsfilter.partytmfwebservices.allowedMethods",
+        "value": "GET HEAD OPTIONS PATCH PUT POST DELETE"
+      },
+      {
+        "key": "corsfilter.partyroletmfwebservices.allowedOrigins",
+        "value": "${ccv2.services.jsapps.url.0}"
+      },
+      {
+        "key": "corsfilter.partyroletmfwebservices.allowedHeaders",
+        "value": "origin content-type accept authorization cache-control if-none-match x-anonymous-consents"
+      },
+      {
+        "key": "corsfilter.partyroletmfwebservices.allowedMethods",
+        "value": "GET HEAD OPTIONS PATCH PUT POST DELETE"
+      },
+      {
+        "key": "corsfilter.usageconsumptiontmfwebservices.allowedOrigins",
+        "value": "${ccv2.services.jsapps.url.0}"
+      },
+      {
+        "key": "corsfilter.usageconsumptiontmfwebservices.allowedHeaders",
+        "value": "origin content-type accept authorization cache-control if-none-match x-anonymous-consents"
+      },
+      {
+        "key": "corsfilter.usageconsumptiontmfwebservices.allowedMethods",
+        "value": "GET HEAD OPTIONS PATCH PUT POST DELETE"
+      },
+      {
+        "key": "corsfilter.b2ctelcomocks.allowedOrigins",
+        "value": "*"
+      },
+      {
+        "key": "corsfilter.b2ctelcomocks.allowedHeaders",
+        "value": "origin content-type accept authorization cache-control if-none-match x-anonymous-consents"
+      },
+      {
+        "key": "corsfilter.b2ctelcomocks.allowedMethods",
+        "value": "GET HEAD OPTIONS PATCH PUT POST DELETE"
+      },
+      {
+        "key": "website.utilitiesspa.https",
+        "value": "${ccv2.services.jsapps.url.0}"
+      },
+      {
+        "key": "website.utilitiesspa.http",
+        "value": "${ccv2.services.jsapps.url.0}"
+      },
+      {
+        "key": "website.telcospa.https",
+        "value": "${ccv2.services.jsapps.url.0}"
+      },
+      {
+        "key": "website.telcospa.http",
+        "value": "${ccv2.services.jsapps.url.0}"
+      },
+      {
+        "key": "website.mediaspa.https",
+        "value": "${ccv2.services.jsapps.url.0}"
+      },
+      {
+        "key": "website.mediaspa.http",
+        "value": "${ccv2.services.jsapps.url.0}"
+      },
+      {
+        "key": "occ.rewrite.overlapping.paths.enabled",
+        "value": "true"
+      },
+      {
+        "key": "b2ctelcotmfwebservices.api.basesiteId",
+        "value": "/telcospa"
+      },
+      {
+        "key": "mockup.payment.label.billTo.region",
+        "value": "billTo_state"
+      },
+      {
+        "key": "mockup.payment.label.billTo.phoneNumber",
+        "value": "billTo_phoneNumber"
+      },
+      {
+        "key": "yacceleratorordermanagement.fraud.scoreLimit",
+        "value": "500000"
+      },
+      {
+        "key": "yacceleratorordermanagement.fraud.scoreTolerance",
+        "value": "500000"
+      },
+      {
+        "key": "yacceleratorordermanagement.fraud.scoreLimitExternal",
+        "value": "500000"
+      },
+      {
+        "key": "yacceleratorordermanagement.fraud.scoreToleranceExternal",
+        "value": "500000"
+      },
+      {
+        "key": "smarteditaddon.dynamicattribute.enabled",
+        "value": "true"
+      },
+      {
+        "key": "acceleratorservices.payment.sopmock.enabled",
+        "value": "true"
+      }
+    ],
+    "storefrontAddons": [
+      {
+        "addon": "b2ctelcoaddon",
+        "storefront": "yacceleratorstorefront",
+        "template": "yacceleratorstorefront"
+      },
+      {
+        "addon": "smarteditaddon",
+        "storefront": "yacceleratorstorefront",
+        "template": "yacceleratorstorefront"
+      },
+      {
+        "addon": "assistedservicestorefront",
+        "storefront": "yacceleratorstorefront",
+        "template": "yacceleratorstorefront"
+      },
+      {
+        "addon": "assistedservicecustomerinterestsaddon",
+        "storefront": "yacceleratorstorefront",
+        "template": "yacceleratorstorefront"
+      },
+      {
+        "addon": "customerticketingaddon",
+        "storefront": "yacceleratorstorefront",
+        "template": "yacceleratorstorefront"
+      },
+      {
+        "addon": "pcmbackofficesamplesaddon",
+        "storefront": "yacceleratorstorefront",
+        "template": "yacceleratorstorefront"
+      }
+    ],
+    "aspects": [
+      {
+        "name": "backoffice",
+        "properties": [
+          {
+            "key": "test.property.1",
+            "value": "test.property-1-value-prod-backoffice",
+            "persona": "production"
+          },
+          {
+            "key": "test.property.2",
+            "value": "test.property-2-value-backoffice"
+          }
+        ],
+        "webapps": [
+          {
+            "name": "hac",
+            "contextPath": "/hac"
+          },
+          {
+            "name": "mediaweb",
+            "contextPath": "/medias"
+          },
+          {
+            "name": "backoffice",
+            "contextPath": "/backoffice"
+          },
+          {
+            "name": "odata2webservices",
+            "contextPath": "/odata2webservices"
+          }
+        ]
+      },
+      {
+        "name": "accstorefront",
+        "properties": [
+          {
+            "key": "spring.session.enabled",
+            "value": "false"
+          },
+          {
+            "key": "storefrontContextRoot",
+            "value": "/yacceleratorstorefront"
+          }
+        ],
+        "webapps": [
+          {
+            "name": "mediaweb",
+            "contextPath": "/medias"
+          },
+          {
+            "name": "yacceleratorstorefront",
+            "contextPath": "/yacceleratorstorefront"
+          },
+          {
+            "name": "b2ctelcowebservices",
+            "contextPath": "/b2ctelcowebservices"
+          },
+          {
+            "name": "oauth2",
+            "contextPath": "/authorizationserver"
+          },
+          {
+            "name": "acceleratorservices",
+            "contextPath": "/acceleratorservices"
+          },
+          {
+            "name": "smartedit",
+            "contextPath": "/smartedit"
+          },
+          {
+            "name": "cmssmartedit",
+            "contextPath": "/cmssmartedit"
+          },
+          {
+            "name": "cmssmarteditwebservices",
+            "contextPath": "/cmssmarteditwebservices"
+          },
+          {
+            "name": "smarteditwebservices",
+            "contextPath": "/smarteditwebservices"
+          },
+          {
+            "name": "cmscockpit",
+            "contextPath": "/cmscockpit"
+          },
+          {
+            "name": "cmswebservices",
+            "contextPath": "/cmswebservices"
+          },
+          {
+            "name": "cscockpit",
+            "contextPath": "/cscockpit"
+          },
+          {
+            "name": "maintenanceweb",
+            "contextPath": "/maintenance"
+          },
+          {
+            "name": "permissionswebservices",
+            "contextPath": "/permissionswebservices"
+          },
+          {
+            "name": "personalizationsmartedit",
+            "contextPath": "/personalizationsmartedit"
+          },
+          {
+            "name": "personalizationwebservices",
+            "contextPath": "/personalizationwebservices"
+          },
+          {
+            "name": "previewwebservices",
+            "contextPath": "/previewwebservices"
+          },
+          {
+            "name": "commercewebservices",
+            "contextPath": "/occ"
+          },
+          {
+            "name": "b2ctelcotmfwebservices",
+            "contextPath": "/b2ctelcotmfwebservices"
+          },
+          {
+            "name": "b2ctelcomocks",
+            "contextPath": "/b2ctelcomocks"
+          },
+          {
+            "name": "productqualificationtmfwebservices",
+            "contextPath": "/productqualificationtmfwebservices"
+          },
+          {
+            "name": "billingaccounttmfwebservices",
+            "contextPath": "/billingaccounttmfwebservices"
+          },
+          {
+            "name": "agreementtmfwebservices",
+            "contextPath": "/agreementtmfwebservices"
+          },
+          {
+            "name": "subscribedproducttmfwebservices",
+            "contextPath": "/subscribedproducttmfwebservices"
+          },
+          {
+            "name": "billmanagementtmfwebservices",
+            "contextPath": "/billmanagementtmfwebservices"
+          },
+          {
+            "name": "partytmfwebservices",
+            "contextPath": "/partytmfwebservices"
+          },
+          {
+            "name": "partyroletmfwebservices",
+            "contextPath": "/partyroletmfwebservices"
+          },
+          {
+            "name": "usageconsumptiontmfwebservices",
+            "contextPath": "/usageconsumptiontmfwebservices"
+          }
+        ]
+      },
+      {
+        "name": "api",
+        "properties": [
+          {
+            "key": "corsfilter.ycommercewebservices.allowedOrigins",
+            "value": "${ccv2.services.jsapps.url.0}"
+          },
+          {
+            "key": "corsfilter.ycommercewebservices.allowedHeaders",
+            "value": "origin content-type accept authorization cache-control if-none-match x-anonymous-consents"
+          },
+          {
+            "key": "corsfilter.ycommercewebservices.allowedMethods",
+            "value": "GET HEAD OPTIONS PATCH PUT POST DELETE"
+          },
+          {
+            "key": "corsfilter.ycommercewebservices.exposedHeaders",
+            "value": "x-anonymous-consents occ-personalization-id occ-personalization-time"
+          },
+          {
+            "key": "corsfilter.commercewebservices.allowedOrigins",
+            "value": "${ccv2.services.jsapps.url.0}"
+          },
+          {
+            "key": "corsfilter.commercewebservices.allowedHeaders",
+            "value": "origin content-type accept authorization cache-control if-none-match x-anonymous-consents"
+          },
+          {
+            "key": "corsfilter.commercewebservices.allowedMethods",
+            "value": "GET HEAD OPTIONS PATCH PUT POST DELETE"
+          },
+          {
+            "key": "corsfilter.acceleratorservices.allowedOrigins",
+            "value": "${ccv2.services.jsapps.url.0} ${ccv2.services.b2ctelco.url.0}"
+          },
+          {
+            "key": "corsfilter.acceleratorservices.allowedHeaders",
+            "value": "origin content-type accept authorization cache-control if-none-match x-anonymous-consents"
+          },
+          {
+            "key": "corsfilter.acceleratorservices.allowedMethods",
+            "value": "GET HEAD OPTIONS PATCH PUT POST DELETE"
+          },
+          {
+            "key": "corsfilter.b2ctelcotmfwebservices.allowedOrigins",
+            "value": "${ccv2.services.jsapps.url.0}"
+          },
+          {
+            "key": "corsfilter.b2ctelcotmfwebservices.allowedHeaders",
+            "value": "origin content-type accept authorization cache-control if-none-match x-anonymous-consents"
+          },
+          {
+            "key": "corsfilter.b2ctelcotmfwebservices.allowedMethods",
+            "value": "GET HEAD OPTIONS PATCH PUT POST DELETE"
+          },
+          {
+            "key": "corsfilter.subscribedproducttmfwebservices.allowedOrigins",
+            "value": "${ccv2.services.jsapps.url.0}"
+          },
+          {
+            "key": "corsfilter.subscribedproducttmfwebservices.allowedHeaders",
+            "value": "origin content-type accept authorization cache-control if-none-match x-anonymous-consents"
+          },
+          {
+            "key": "corsfilter.subscribedproducttmfwebservices.allowedMethods",
+            "value": "GET HEAD OPTIONS PATCH PUT POST DELETE"
+          },
+          {
+            "key": "corsfilter.billingaccounttmfwebservices.allowedOrigins",
+            "value": "${ccv2.services.jsapps.url.0}"
+          },
+          {
+            "key": "corsfilter.billingaccounttmfwebservices.allowedHeaders",
+            "value": "origin content-type accept authorization cache-control if-none-match x-anonymous-consents"
+          },
+          {
+            "key": "corsfilter.billingaccounttmfwebservices.allowedMethods",
+            "value": "GET HEAD OPTIONS PATCH PUT POST DELETE"
+          },
+          {
+            "key": "corsfilter.agreementtmfwebservices.allowedOrigins",
+            "value": "${ccv2.services.jsapps.url.0}"
+          },
+          {
+            "key": "corsfilter.agreementtmfwebservices.allowedHeaders",
+            "value": "origin content-type accept authorization cache-control if-none-match x-anonymous-consents"
+          },
+          {
+            "key": "corsfilter.agreementtmfwebservices.allowedMethods",
+            "value": "GET HEAD OPTIONS PATCH PUT POST DELETE"
+          },
+          {
+            "key": "corsfilter.productqualificationtmfwebservices.allowedOrigins",
+            "value": "${ccv2.services.jsapps.url.0}"
+          },
+          {
+            "key": "corsfilter.productqualificationtmfwebservices.allowedHeaders",
+            "value": "origin content-type accept authorization cache-control if-none-match x-anonymous-consents"
+          },
+          {
+            "key": "corsfilter.productqualificationtmfwebservices.allowedMethods",
+            "value": "GET HEAD OPTIONS PATCH PUT POST DELETE"
+          },
+          {
+            "key": "corsfilter.billmanagementtmfwebservices.allowedOrigins",
+            "value": "${ccv2.services.jsapps.url.0}"
+          },
+          {
+            "key": "corsfilter.billmanagementtmfwebservices.allowedHeaders",
+            "value": "origin content-type accept authorization cache-control if-none-match x-anonymous-consents"
+          },
+          {
+            "key": "corsfilter.billmanagementtmfwebservices.allowedMethods",
+            "value": "GET HEAD OPTIONS PATCH PUT POST DELETE"
+          },
+          {
+            "key": "corsfilter.partytmfwebservices.allowedOrigins",
+            "value": "${ccv2.services.jsapps.url.0}"
+          },
+          {
+            "key": "corsfilter.partytmfwebservices.allowedHeaders",
+            "value": "origin content-type accept authorization cache-control if-none-match x-anonymous-consents"
+          },
+          {
+            "key": "corsfilter.partytmfwebservices.allowedMethods",
+            "value": "GET HEAD OPTIONS PATCH PUT POST DELETE"
+          },
+          {
+            "key": "corsfilter.partyroletmfwebservices.allowedOrigins",
+            "value": "${ccv2.services.jsapps.url.0}"
+          },
+          {
+            "key": "corsfilter.partyroletmfwebservices.allowedHeaders",
+            "value": "origin content-type accept authorization cache-control if-none-match x-anonymous-consents"
+          },
+          {
+            "key": "corsfilter.partyroletmfwebservices.allowedMethods",
+            "value": "GET HEAD OPTIONS PATCH PUT POST DELETE"
+          },
+          {
+            "key": "corsfilter.usageconsumptiontmfwebservices.allowedOrigins",
+            "value": "${ccv2.services.jsapps.url.0}"
+          },
+          {
+            "key": "corsfilter.usageconsumptiontmfwebservices.allowedHeaders",
+            "value": "origin content-type accept authorization cache-control if-none-match x-anonymous-consents"
+          },
+          {
+            "key": "corsfilter.usageconsumptiontmfwebservices.allowedMethods",
+            "value": "GET HEAD OPTIONS PATCH PUT POST DELETE"
+          },
+          {
+            "key": "corsfilter.b2ctelcomocks.allowedOrigins",
+            "value": "*"
+          },
+          {
+            "key": "corsfilter.b2ctelcomocks.allowedHeaders",
+            "value": "origin content-type accept authorization cache-control if-none-match x-anonymous-consents"
+          },
+          {
+            "key": "corsfilter.b2ctelcomocks.allowedMethods",
+            "value": "GET HEAD OPTIONS PATCH PUT POST DELETE"
+          },
+          {
+            "key": "website.utilitiesspa.https",
+            "value": "${ccv2.services.jsapps.url.0}"
+          },
+          {
+            "key": "website.utilitiesspa.http",
+            "value": "${ccv2.services.jsapps.url.0}"
+          },
+          {
+            "key": "website.telcospa.https",
+            "value": "${ccv2.services.jsapps.url.0}"
+          },
+          {
+            "key": "website.telcospa.http",
+            "value": "${ccv2.services.jsapps.url.0}"
+          },
+          {
+            "key": "website.mediaspa.https",
+            "value": "${ccv2.services.jsapps.url.0}"
+          },
+          {
+            "key": "website.mediaspa.http",
+            "value": "${ccv2.services.jsapps.url.0}"
+          },
+          {
+            "key": "occ.rewrite.overlapping.paths.enabled",
+            "value": "true"
+          }
+        ],
+        "webapps": [
+          {
+            "name": "commercewebservices",
+            "contextPath": "/occ"
+          },
+          {
+            "name": "acceleratorservices",
+            "contextPath": "/acceleratorservices"
+          },
+          {
+            "name": "oauth2",
+            "contextPath": "/authorizationserver"
+          },
+          {
+            "name": "mediaweb",
+            "contextPath": "/medias"
+          },
+          {
+            "name": "b2ctelcotmfwebservices",
+            "contextPath": "/b2ctelcotmfwebservices"
+          },
+          {
+            "name": "b2ctelcomocks",
+            "contextPath": "/b2ctelcomocks"
+          },
+          {
+            "name": "productqualificationtmfwebservices",
+            "contextPath": "/productqualificationtmfwebservices"
+          },
+          {
+            "name": "billingaccounttmfwebservices",
+            "contextPath": "/billingaccounttmfwebservices"
+          },
+          {
+            "name": "agreementtmfwebservices",
+            "contextPath": "/agreementtmfwebservices"
+          },
+          {
+            "name": "subscribedproducttmfwebservices",
+            "contextPath": "/subscribedproducttmfwebservices"
+          },
+          {
+            "name": "billmanagementtmfwebservices",
+            "contextPath": "/billmanagementtmfwebservices"
+          },
+          {
+            "name": "partytmfwebservices",
+            "contextPath": "/partytmfwebservices"
+          },
+          {
+            "name": "partyroletmfwebservices",
+            "contextPath": "/partyroletmfwebservices"
+          },
+          {
+            "name": "usageconsumptiontmfwebservices",
+            "contextPath": "/usageconsumptiontmfwebservices"
+          }
+        ]
+      },
+      {
+        "name": "backgroundProcessing",
+        "properties": [],
+        "webapps": [
+          {
+            "name": "hac",
+            "contextPath": ""
+          },
+          {
+            "name": "mediaweb",
+            "contextPath": "/medias"
+          }
+        ]
+      }
+    ]
+  }
