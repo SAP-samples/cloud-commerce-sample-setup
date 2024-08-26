@@ -1,6 +1,12 @@
 {
   "commerceSuiteVersion": "2211",
   "solrVersion": "9.5",
+  "extensionPacks": [
+    {
+      "name": "hybris-b2ctelco-suite",
+      "version": "2302.6"
+    }
+  ],
     "extensions": [
       "acceleratorcms",
       "adaptivesearchbackoffice",
