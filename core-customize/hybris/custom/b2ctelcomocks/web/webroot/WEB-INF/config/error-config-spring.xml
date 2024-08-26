@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util
+		http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<bean id="restHandlerExceptionResolver" class="de.hybris.platform.webservicescommons.resolver.RestExceptionResolver"
+		parent="wsBaseRestExceptionResolver">
+		<property name="webserviceErrorFactory" ref="webserviceErrorFactory" />
+		<property name="messageConverters" ref="jaxbMessageConverters" />
+		<property name="extensionName" value="b2ctelcomocks" />
+	</bean>
+
+	<!-- webservice error factory & converters -->
+
+	<alias alias="webserviceErrorFactory" name="defaultWebserviceErrorFactory" />
+	<bean id="defaultWebserviceErrorFactory" class="de.hybris.platform.webservicescommons.errors.factory.impl.DefaultWebserviceErrorFactory">
+		<property name="converters">
+			<list>
+				<ref bean="validationErrorConverter" />
+				<ref bean="webserviceExceptionConverter" />
+				<ref bean="exceptionConverter" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="abstractLocalizedErrorConverter" abstract="true"
+		class="de.hybris.platform.webservicescommons.errors.converters.AbstractLocalizedErrorConverter">
+		<property name="messageSource" ref="messageSource" />
+	</bean>
+
+	<alias alias="validationErrorConverter" name="defaultValidationErrorConverter" />
+	<bean name="defaultValidationErrorConverter" class="de.hybris.platform.webservicescommons.errors.converters.ValidationErrorConverter"
+		parent="abstractLocalizedErrorConverter">
+		<property name="i18NService" ref="i18NService" />
+	</bean>
+
+	<alias alias="webserviceExceptionConverter" name="defaultWebserviceExceptionConverter" />
+	<bean name="defaultWebserviceExceptionConverter" class="de.hybris.platform.webservicescommons.errors.converters.WebserviceExceptionConverter" />
+
+	<util:list id="exceptionResolvers">
+		<ref bean="restHandlerExceptionResolver" />
+	</util:list>
+</beans>

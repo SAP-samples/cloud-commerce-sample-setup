@@ -1,0 +1,9 @@
+{
+  "dateLibrary": "legacy",
+  "interfaceOnly": true,
+  "typeMappings": {
+    "Any": "java.lang.Object",
+    "Error": "de.hybris.platform.b2ctelcomocks.v1.dto.Error",
+    "Appointment": "de.hybris.platform.b2ctelcomocks.v1.dto.Appointment"
+  }
+}

@@ -1,0 +1,1860 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "B2C Telco Mocks",
+    "description": "B2C Telco Mocks",
+    "version": "1.0.0"
+  },
+  "host": "serverRoot",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json;charset=utf-8"
+  ],
+  "produces": [
+    "application/json;charset=utf-8"
+  ],
+  "tags": [
+    {
+      "name": "b2ctelcoMocks"
+    }
+  ],
+  "paths": {
+    "/premise/premiselookup": {
+      "post": {
+        "operationId": "premiselookup",
+        "summary": "",
+        "description": "",
+        "tags": [
+          "premise"
+        ],
+        "parameters": [
+          {
+            "name": "premiseDetails",
+            "description": "",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PremiseDetails"
+            },
+            "in": "body"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/PremiseLookupResp"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "405": {
+            "description": "Method Not allowed",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/appointment": {
+      "post": {
+        "operationId": "createAppointment",
+        "summary": "Creates an Appointment",
+        "description": "This operation creates a Appointment entity.",
+        "tags": [
+          "appointment"
+        ],
+        "parameters": [
+          {
+            "name": "appointment",
+            "description": "The Appointment to be created",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Appointment"
+            },
+            "in": "body"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/Appointment"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "405": {
+            "description": "Method Not allowed",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/appointment/{appointmentId}": {
+      "get": {
+        "tags": [
+          "Appointment"
+        ],
+        "operationId": "appointmentGet",
+        "summary": "Appointment",
+        "description": "This operation retrieves a appointment entity.",
+        "deprecated": false,
+        "parameters": [
+          {
+            "name": "appointmentId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Appointment"
+            }
+          },
+          "400": {
+            "description": "Bad Request\n\nList of supported error codes:\n- 20: Invalid URL parameter value\n- 21: Missing body\n- 22: Invalid body\n- 23: Missing body field\n- 24: Invalid body field\n- 25: Missing header\n- 26: Invalid header value\n- 27: Missing query-string parameter\n- 28: Invalid query-string parameter value",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "404": {
+            "description": "Not Found\n\nList of supported error codes:\n- 60: Resource not found",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "405": {
+            "description": "Method Not Allowed\n\nList of supported error codes:\n- 61: Method not allowed",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "409": {
+            "description": "Conflict\n\nThe request could not be completed due to a conflict with the current state of the target resource.",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity\n\nFunctional error",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error\n\nList of supported error codes:\n- 1: Internal error",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Appointment"
+        ],
+        "operationId": "appointmentPatch",
+        "summary": "Patch an appointment",
+        "description": "This operation allows partial updates of a appointment entity",
+        "deprecated": false,
+        "parameters": [
+          {
+            "name": "appointmentId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "Appointment",
+            "required": true,
+            "in": "body",
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Appointment"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Appointment"
+            }
+          },
+          "400": {
+            "description": "Bad Request\n\nList of supported error codes:\n- 20: Invalid URL parameter value\n- 21: Missing body\n- 22: Invalid body\n- 23: Missing body field\n- 24: Invalid body field\n- 25: Missing header\n- 26: Invalid header value\n- 27: Missing query-string parameter\n- 28: Invalid query-string parameter value",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "404": {
+            "description": "Not Found\n\nList of supported error codes:\n- 60: Resource not found",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "405": {
+            "description": "Method Not Allowed\n\nList of supported error codes:\n- 61: Method not allowed",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "409": {
+            "description": "Conflict\n\nThe request could not be completed due to a conflict with the current state of the target resource.",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity\n\nFunctional error",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error\n\nList of supported error codes:\n- 1: Internal error",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          }
+        }
+      }
+    },
+    "/appointment/searchTimeSlot": {
+      "post": {
+        "operationId": "searchTimeSlot",
+        "summary": "Search a time slot",
+        "description": "This operation search a Time Slot entity.",
+        "tags": [
+          "timeSlot"
+        ],
+        "parameters": [
+          {
+            "name": "timeSlot",
+            "description": "The Time Slot to be created",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SearchTimeSlot"
+            },
+            "in": "body"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/SearchTimeSlot"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "405": {
+            "description": "Method Not allowed",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/resourcePoolManagement/reservation": {
+      "post": {
+        "operationId": "createReservation",
+        "summary": "Creates an Reservation",
+        "description": "This operation creates a Reservation entity.",
+        "tags": [
+          "Reservation"
+        ],
+        "parameters": [
+          {
+            "name": "Reservation",
+            "description": "The Reservation to be created",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Reservation"
+            },
+            "in": "body"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/Reservation"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "405": {
+            "description": "Method Not allowed",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "reservationGet",
+        "summary": "Retrieves a list of Reservations",
+        "description": "This operation retrieves a list of Reservation entity.",
+        "tags": [
+          "Reservation"
+        ],
+        "parameters": [
+          {
+            "type": "string",
+            "required": true,
+            "in": "query",
+            "name": "relatedParty.id",
+            "description": "Identifier of the Related Party"
+          },
+          {
+            "type": "string",
+            "required": false,
+            "in": "query",
+            "name": "value",
+            "description": "reservationItem.appliedCapacityAmount.resource.value"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Reservation"
+            }
+          },
+          "400": {
+            "description": "Bad Request\n\nList of supported error codes:\n- 20: Invalid URL parameter value\n- 21: Missing body\n- 22: Invalid body\n- 23: Missing body field\n- 24: Invalid body field\n- 25: Missing header\n- 26: Invalid header value\n- 27: Missing query-string parameter\n- 28: Invalid query-string parameter value",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "404": {
+            "description": "Not Found\n\nList of supported error codes:\n- 60: Resource not found",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "405": {
+            "description": "Method Not Allowed\n\nList of supported error codes:\n- 61: Method not allowed",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "409": {
+            "description": "Conflict\n\nThe request could not be completed due to a conflict with the current state of the target resource.",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity\n\nFunctional error",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error\n\nList of supported error codes:\n- 1: Internal error",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          }
+        }
+      }
+    },
+    "/resourcePoolManagement/availabilityCheck": {
+      "post": {
+        "operationId": "availabilityCheck",
+        "summary": "Checks the availability",
+        "description": "This operation checks the availability",
+        "tags": [
+          "AvailabilityCheck"
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/Availability"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "405": {
+            "description": "Method Not allowed",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/resourcePoolManagement/reservation/{reservationId}": {
+      "patch": {
+        "tags": [
+          "Reservation"
+        ],
+        "operationId": "reservationPatch",
+        "summary": "Patch a Reservation",
+        "description": "This operation allows partial updates of a Reservation entity",
+        "deprecated": false,
+        "parameters": [
+          {
+            "name": "reservationId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "Resource",
+            "required": true,
+            "in": "body",
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ValueRef"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Reservation"
+            }
+          },
+          "400": {
+            "description": "Bad Request\n\nList of supported error codes:\n- 20: Invalid URL parameter value\n- 21: Missing body\n- 22: Invalid body\n- 23: Missing body field\n- 24: Invalid body field\n- 25: Missing header\n- 26: Invalid header value\n- 27: Missing query-string parameter\n- 28: Invalid query-string parameter value",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "404": {
+            "description": "Not Found\n\nList of supported error codes:\n- 60: Resource not found",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "405": {
+            "description": "Method Not Allowed\n\nList of supported error codes:\n- 61: Method not allowed",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "409": {
+            "description": "Conflict\n\nThe request could not be completed due to a conflict with the current state of the target resource.",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity\n\nFunctional error",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error\n\nList of supported error codes:\n- 1: Internal error",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          }
+        }
+      }
+    },
+    "/queryServiceQualification": {
+      "post": {
+        "operationId": "createQueryServiceQualification",
+        "summary": "Creates a QueryServiceQualification",
+        "description": "This operation creates a QueryServiceQualification entity.",
+        "tags": [
+          "QueryServiceQualification"
+        ],
+        "parameters": [
+          {
+            "name": "QueryServiceQualification",
+            "description": "The QueryServiceQualification to be created",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/QueryServiceQualification"
+            },
+            "in": "body"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/QueryServiceQualification"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "405": {
+            "description": "Method Not allowed",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Appointment": {
+      "description": "The requested appointment",
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "Unique identifier of the appointment",
+          "type": "string"
+        },
+        "href": {
+          "description": "Reference of the appointment",
+          "type": "string"
+        },
+        "category": {
+          "type": "string",
+          "description": "Appointment's category"
+        },
+        "creationTime": {
+          "description": "Appointment's creation time",
+          "type": "string",
+          "format": "date-time"
+        },
+        "description": {
+          "type": "string",
+          "description": "Appointment's description"
+        },
+        "externalId": {
+          "type": "string",
+          "description": "Appointment's external id"
+        },
+        "lastUpdate": {
+          "description": "Last update of the appointment",
+          "type": "string",
+          "format": "date-time"
+        },
+        "status": {
+          "type": "string",
+          "$ref": "#/definitions/AppointmentStateType"
+        },
+        "validFor": {
+          "$ref": "#/definitions/TimePeriod",
+          "description": "Reference to the time period"
+        },
+        "calendarEvent": {
+          "$ref": "#/definitions/CalendarEventRef",
+          "description": "Reference to the time period"
+        },
+        "note": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Note"
+          }
+        },
+        "relatedEntity": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/RelatedParty"
+          }
+        },
+        "attachment": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AttachmentRefOrValue"
+          }
+        },
+        "contactMedium": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ContactMedium"
+          }
+        },
+        "relatedParty": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/RelatedParty"
+          }
+        },
+        "relatedPlace": {
+          "$ref": "#/definitions/RelatedPlaceRefOrValue",
+          "description": "A related place ref or value ("
+        },
+        "creationDate": {
+          "description": "A date time (DateTime). Appointment creation date.",
+          "type": "string",
+          "format": "date-time"
+        },
+        "@schemaLocation": {
+          "type": "string",
+          "format": "uri",
+          "description": "A URI to a JSON-Schema file that defines additional attributes and relationships"
+        },
+        "@type": {
+          "type": "string",
+          "description": "When sub-classing, this defines the sub-class entity name"
+        },
+        "@baseType": {
+          "type": "string",
+          "description": "When sub-classing, this defines the sub-class entity name"
+        }
+      }
+    },
+    "SearchTimeSlot": {
+      "description": "The requested time slot",
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "Unique identifier of the time slot",
+          "type": "string"
+        },
+        "availableTimeSlot": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TimeSlot"
+          }
+        },
+        "searchResult": {
+          "type": "string",
+          "description": "Search result"
+        },
+        "status": {
+          "type": "string",
+          "description": "Status"
+        },
+        "requestedTimeSlot": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TimeSlot"
+          }
+        },
+        "searchDate": {
+          "description": "A date time (DateTime). Appointment creation date.",
+          "type": "string",
+          "format": "date-time"
+        },
+        "relatedPlace": {
+          "$ref": "#/definitions/RelatedPlaceRefOrValue",
+          "description": "Reference to the related place."
+        },
+        "href": {
+          "description": "Reference of the related party",
+          "type": "string"
+        },
+        "@schemaLocation": {
+          "type": "string",
+          "format": "uri",
+          "description": "A URI to a JSON-Schema file that defines additional attributes and relationships"
+        },
+        "@type": {
+          "type": "string",
+          "description": "When sub-classing, this defines the sub-class entity name"
+        }
+      }
+    },
+    "TimeSlot": {
+      "description": "The requested time slot",
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "Unique identifier of the time slot",
+          "type": "string"
+        },
+        "href": {
+          "description": "Reference of the related party",
+          "type": "string"
+        },
+        "relatedParty": {
+          "$ref": "#/definitions/TmaTmfRelatedParty",
+          "description": "Reference to the tma tmf related party."
+        },
+        "validFor": {
+          "$ref": "#/definitions/TimePeriod",
+          "description": "Reference to the time period"
+        }
+      }
+    },
+    "TimePeriod": {
+      "type": "object",
+      "description": "TmaTimePeriodMock",
+      "properties": {
+        "startDateTime": {
+          "description": "Start date time",
+          "type": "string",
+          "format": "date-time"
+        },
+        "endDateTime": {
+          "description": "End date time",
+          "type": "string",
+          "format": "date-time"
+        },
+        "href": {
+          "type": "string",
+          "description": "Url used to reference the time period"
+        },
+        "@referredType": {
+          "type": "string",
+          "description": "(Class) type of the referred time period"
+        },
+        "@type": {
+          "type": "string",
+          "description": "(Class) type of the time period"
+        }
+      }
+    },
+    "RelatedParty": {
+      "description": "The party which the appointment is related with.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "Unique identifier of the related party",
+          "type": "string"
+        },
+        "href": {
+          "description": "Reference of the related party",
+          "type": "string"
+        },
+        "name": {
+          "description": "Name of the related party",
+          "type": "string"
+        },
+        "role": {
+          "description": "Role played by the related party",
+          "type": "string"
+        },
+        "@schemaLocation": {
+          "type": "string",
+          "format": "uri",
+          "description": "A URI to a JSON-Schema file that defines additional attributes and relationships"
+        },
+        "@type": {
+          "type": "string",
+          "description": "When sub-classing, this defines the sub-class entity name"
+        }
+      }
+    },
+    "TmaTmfRelatedParty": {
+      "description": "The party which the appointment is related with.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "Unique identifier of the related party",
+          "type": "string"
+        },
+        "href": {
+          "description": "Reference of the related party",
+          "type": "string"
+        },
+        "name": {
+          "description": "Name of the related party",
+          "type": "string"
+        },
+        "role": {
+          "description": "Role played by the related party",
+          "type": "string"
+        }
+      }
+    },
+    "RelatedPlaceRefOrValue": {
+      "description": "Related Entity reference. A related place defines a place described by reference or by value linked to a\nspecific entity.",
+      "type": "object",
+      "properties": {
+        "role": {
+          "description": "Role played by the related party",
+          "type": "string"
+        },
+        "city": {
+          "description": "The city",
+          "type": "string"
+        },
+        "postcode": {
+          "description": "The postcode",
+          "type": "string"
+        },
+        "streetName": {
+          "description": "",
+          "type": "string"
+        },
+        "streetType": {
+          "description": "",
+          "type": "string"
+        },
+        "streetNr": {
+          "description": "",
+          "type": "string"
+        },
+        "country": {
+          "description": "",
+          "type": "string"
+        },
+        "stateOfProvince": {
+          "description": "",
+          "type": "string"
+        },
+        "geographicAddress": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/GeographicAddress"
+          }
+        },
+        "@type": {
+          "type": "string",
+          "format": "uri",
+          "description": "The actual type of the target instance when needed for\ndisambiguation."
+        }
+      }
+    },
+    "GeographicAddress": {
+      "description": "Related Entity reference. A related place defines a place described by reference or by value linked to a\nspecific entity.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "",
+          "type": "string"
+        },
+        "href": {
+          "description": "",
+          "type": "string"
+        },
+        "streetNr": {
+          "description": "",
+          "type": "string"
+        },
+        "streetNrLast": {
+          "description": "",
+          "type": "string"
+        },
+        "streetNrLastSuffix": {
+          "description": "",
+          "type": "string"
+        },
+        "streetName": {
+          "description": "",
+          "type": "string"
+        },
+        "streetType": {
+          "description": "",
+          "type": "string"
+        },
+        "streetSuffix": {
+          "description": "",
+          "type": "string"
+        },
+        "postcode": {
+          "description": "",
+          "type": "string"
+        },
+        "locality": {
+          "description": "",
+          "type": "string"
+        },
+        "city": {
+          "description": "",
+          "type": "string"
+        },
+        "stateOfProvince": {
+          "description": "",
+          "type": "string"
+        },
+        "country": {
+          "description": "",
+          "type": "string"
+        },
+        "relatedParty": {
+          "type": "string",
+          "$ref": "#/definitions/TmaTmfRelatedParty"
+        },
+        "geographicSubAddress": {
+          "type": "string",
+          "$ref": "#/definitions/GeographicSubAddress"
+        },
+        "isInstallationAddress": {
+          "description": "A boolean. ",
+          "type": "boolean",
+          "default": false
+        },
+        "isUnloadingAddress": {
+          "description": "A boolean. ",
+          "type": "boolean",
+          "default": false
+        },
+        "isContactAddress": {
+          "description": "A boolean. ",
+          "type": "boolean",
+          "default": false
+        },
+        "isShippingAddress": {
+          "description": "A boolean. ",
+          "type": "boolean",
+          "default": false
+        },
+        "isBillingAddress": {
+          "description": "A boolean. ",
+          "type": "boolean",
+          "default": false
+        },
+        "@type": {
+          "type": "string",
+          "format": "uri",
+          "description": "The actual type of the target instance when needed for\ndisambiguation."
+        }
+      }
+    },
+    "GeographicSubAddress": {
+      "description": "Related Entity reference. A related place defines a place described by reference or by value linked to a\nspecific entity.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "",
+          "type": "string"
+        },
+        "href": {
+          "description": "",
+          "type": "string"
+        },
+        "name": {
+          "description": "",
+          "type": "string"
+        },
+        "type": {
+          "description": "",
+          "type": "string"
+        },
+        "subUnitType": {
+          "description": "",
+          "type": "string"
+        },
+        "subUnitNumber": {
+          "description": "",
+          "type": "string"
+        },
+        "levelType": {
+          "description": "",
+          "type": "string"
+        },
+        "levelNumber": {
+          "description": "",
+          "type": "string"
+        },
+        "buildingName": {
+          "description": "",
+          "type": "string"
+        },
+        "privateStreetNumber": {
+          "description": "",
+          "type": "string"
+        },
+        "privateStreetName": {
+          "description": "",
+          "type": "string"
+        }
+      }
+    },
+    "CalendarEventRef": {
+      "description": "A calendar event reference",
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "A string. Unique identifier of the calendar event.",
+          "type": "string"
+        },
+        "href": {
+          "description": "A string. Unique reference of the calendar event.",
+          "type": "string"
+        },
+        "name": {
+          "description": "A user-friendly name for the calendar event",
+          "type": "string"
+        },
+        "@referredType": {
+          "type": "string",
+          "format": "uri",
+          "description": "The actual type of the target instance when needed for\ndisambiguation."
+        }
+      }
+    },
+    "Note": {
+      "description": "Note resource",
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "A string. Unique identifier of the note",
+          "type": "string"
+        },
+        "author": {
+          "description": "A string. Unique reference of the note",
+          "type": "string"
+        },
+        "text": {
+          "description": "Text of the note.",
+          "type": "string"
+        },
+        "date": {
+          "description": "Date time",
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "AttachmentRefOrValue": {
+      "description": "An attachment by value or by reference.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "A string. Unique identifier of the note",
+          "type": "string"
+        },
+        "href": {
+          "description": "A string. Unique reference of the note",
+          "type": "string"
+        },
+        "description": {
+          "description": "Text of the note.",
+          "type": "string"
+        },
+        "url": {
+          "description": "Text of the note.",
+          "type": "string"
+        },
+        "@referredType": {
+          "type": "string",
+          "format": "uri",
+          "description": "The actual type of the target instance when needed for\ndisambiguation."
+        },
+        "name": {
+          "description": "A string. Unique reference of the note",
+          "type": "string"
+        },
+        "attachmentType": {
+          "description": "A string. Unique reference of the note",
+          "type": "string"
+        },
+        "mimeType": {
+          "description": "A string. Unique reference of the note",
+          "type": "string"
+        },
+        "isRef": {
+          "description": "A boolean. ",
+          "type": "boolean",
+          "default": false
+        },
+        "size": {
+          "$ref": "#/definitions/Quantity",
+          "description": "Quantity"
+        },
+        "validFor": {
+          "$ref": "#/definitions/TimePeriod",
+          "description": "Reference to the time period"
+        }
+      }
+    },
+    "Quantity": {
+      "description": "Description of a quantity like for the Duration attribute",
+      "required": [
+        "amount",
+        "units"
+      ],
+      "type": "object",
+      "properties": {
+        "amount": {
+          "description": "A value for the quantity",
+          "type": "number",
+          "format": "float"
+        },
+        "units": {
+          "description": "A unit associated with the quantity (for example months)",
+          "type": "string"
+        }
+      }
+    },
+    "ContactMedium": {
+      "description": "ContactMedium resource",
+      "type": "object",
+      "properties": {
+        "characteristic": {
+          "$ref": "#/definitions/MediumCharacteristic",
+          "description": "A medium characteristic (MediumCharacteristic). Any additional\ncharacteristic(s) of this contact medium."
+        },
+        "mediumType": {
+          "description": "A string. Type of the contact medium, such as: email address, telephone\nnumber, postal address",
+          "type": "string"
+        },
+        "preferred": {
+          "description": "A boolean. ",
+          "type": "boolean",
+          "default": false
+        },
+        "validFor": {
+          "$ref": "#/definitions/TimePeriod",
+          "description": "Reference to the time period"
+        }
+      }
+    },
+    "MediumCharacteristic": {
+      "description": "MediumCharacteristic resource",
+      "type": "object",
+      "properties": {
+        "city": {
+          "description": "The city",
+          "type": "string"
+        },
+        "country": {
+          "description": "The country",
+          "type": "string"
+        },
+        "emailAddress": {
+          "description": "Full email address in standard format.",
+          "type": "string"
+        },
+        "faxNumber": {
+          "description": "The fax number of the contac",
+          "type": "string"
+        },
+        "phoneNumber": {
+          "description": "The primary phone number of the contact.",
+          "type": "string"
+        },
+        "postCode": {
+          "description": "The post code",
+          "type": "string"
+        },
+        "socialNetworkId": {
+          "description": "Identifier as a member of a social network",
+          "type": "string"
+        },
+        "stateOrProvince": {
+          "description": "State or province.",
+          "type": "string"
+        },
+        "street1": {
+          "description": "Describes the stree",
+          "type": "string"
+        },
+        "street2": {
+          "description": "Complementary street description.",
+          "type": "string"
+        },
+        "type": {
+          "description": "The type of phone number such as mobile, fixed home, fixed office",
+          "type": "string"
+        }
+      }
+    },
+    "AppliedCapacityAmount": {
+      "description": "TmfAppliedCapacityAmount resource",
+      "type": "object",
+      "properties": {
+        "appliedCapacityAmount": {
+          "type": "number",
+          "format": "float",
+          "description": "A positive floating point number"
+        },
+        "type": {
+          "description": "",
+          "type": "string"
+        },
+        "baseType": {
+          "description": "",
+          "type": "string"
+        },
+        "resource": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ResourceRef"
+          }
+        }
+      }
+    },
+    "ResourceRef": {
+      "description": "TmfResourceRef resource",
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "",
+          "type": "string"
+        },
+        "href": {
+          "description": "",
+          "type": "string"
+        },
+        "value": {
+          "description": "",
+          "type": "string"
+        },
+        "type": {
+          "description": "",
+          "type": "string"
+        },
+        "referredType": {
+          "description": "",
+          "type": "string"
+        }
+      }
+    },
+    "ValueRef": {
+      "description": "Value resource",
+      "type": "object",
+      "properties": {
+        "op": {
+          "description": "",
+          "type": "string"
+        },
+        "value": {
+          "$ref": "#/definitions/ResourceRef",
+          "description": "ResourceRef"
+        }
+      }
+    },
+    "TmfReservation": {
+      "description": "TmfReservation resource",
+      "type": "object",
+      "properties": {
+        "baseType": {
+          "description": "",
+          "type": "string"
+        },
+        "schemaLocation": {
+          "description": "",
+          "type": "string"
+        },
+        "type": {
+          "description": "",
+          "type": "string"
+        },
+        "description": {
+          "description": "",
+          "type": "string"
+        },
+        "href": {
+          "description": "",
+          "type": "string"
+        },
+        "id": {
+          "description": "",
+          "type": "string"
+        },
+        "reservationState": {
+          "type": "string",
+          "description": ""
+        },
+        "validFor": {
+          "$ref": "#/definitions/TmfValidDate",
+          "description": "Reference to the time period"
+        },
+        "reservationItem": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ReservationItem"
+          }
+        },
+        "relatedParty": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ReservationItem"
+          }
+        }
+      }
+    },
+    "Reservation": {
+      "description": "TmfAppliedCapacityAmount resource",
+      "type": "object",
+      "properties": {
+        "@baseType": {
+          "description": "",
+          "type": "string"
+        },
+        "@schemaLocation": {
+          "description": "",
+          "type": "string"
+        },
+        "@type": {
+          "description": "",
+          "type": "string"
+        },
+        "description": {
+          "description": "",
+          "type": "string"
+        },
+        "href": {
+          "description": "",
+          "type": "string"
+        },
+        "id": {
+          "description": "",
+          "type": "string"
+        },
+        "reservationState": {
+          "type": "string",
+          "$ref": "#/definitions/ReservationStateType"
+        },
+        "reservationItem": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ReservationItem"
+          }
+        },
+        "relatedParty": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TmaTmfRelatedParty"
+          }
+        },
+        "productOffering": {
+          "type": "string",
+          "$ref": "#/definitions/ProductOfferingRef"
+        }
+      }
+    },
+    "ProductOfferingRef": {
+      "type": "object",
+      "description": "ProductOfferingRef",
+      "properties": {
+        "id": {
+          "description": "",
+          "type": "string"
+        },
+        "name": {
+          "description": "",
+          "type": "string"
+        },
+        "href": {
+          "description": "",
+          "type": "string"
+        }
+      }
+    },
+    "TmfValidDate": {
+      "type": "object",
+      "description": "TmaTimePeriodMock",
+      "properties": {
+        "startDate": {
+          "description": "Start date time",
+          "type": "string",
+          "format": "date-time"
+        },
+        "endDate": {
+          "description": "End date time",
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "ReservationItem": {
+      "type": "object",
+      "description": "ReservationItem",
+      "properties": {
+        "quantity": {
+          "type": "number",
+          "format": "float",
+          "description": "A positive floating point number"
+        },
+        "subReservationState": {
+          "description": "",
+          "type": "string"
+        },
+        "resourceCapacity": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ResourceCapacityDemand"
+          }
+        },
+        "appliedCapacityAmount": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AppliedCapacityAmount"
+          }
+        }
+      }
+    },
+    "ResourceCapacityDemand": {
+      "type": "object",
+      "description": "ResourceCapacityDemand",
+      "properties": {
+        "capacityDemandAmount": {
+          "type": "number",
+          "format": "float",
+          "description": "A positive floating point number"
+        },
+        "type": {
+          "description": "",
+          "type": "string"
+        }
+      }
+    },
+    "AppliedResourceCapacity": {
+      "type": "object",
+      "description": "AppliedResourceCapacity",
+      "properties": {
+        "appliedCapacityAmount": {
+          "description": "",
+          "type": "string"
+        },
+        "resource": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ResourceRef"
+          }
+        }
+      }
+    },
+    "Availability": {
+      "type": "object",
+      "description": "Availability",
+      "properties": {
+        "appliedResourceCapacity": {
+          "type": "string",
+          "$ref": "#/definitions/AppliedResourceCapacity"
+        }
+      }
+    },
+    "ServiceSpecificationRef": {
+      "type": "object",
+      "description": "ServiceSpecificationRef",
+      "properties": {
+        "id": {
+          "description": "",
+          "type": "string"
+        },
+        "name": {
+          "description": "",
+          "type": "string"
+        },
+        "href": {
+          "description": "",
+          "type": "string"
+        },
+        "type": {
+          "description": "",
+          "type": "string"
+        }
+      }
+    },
+    "ServiceCharacteristic": {
+      "type": "object",
+      "description": "ServiceCharacteristic",
+      "properties": {
+        "value": {
+          "description": "",
+          "type": "string"
+        },
+        "name": {
+          "description": "",
+          "type": "string"
+        },
+        "valueType": {
+          "description": "",
+          "type": "string"
+        }
+      }
+    },
+    "ServiceRefOrValue": {
+      "type": "object",
+      "description": "ServiceRefOrValue",
+      "properties": {
+        "place": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/RelatedPlaceRefOrValue"
+          }
+        },
+        "serviceSpecification": {
+          "type": "string",
+          "$ref": "#/definitions/ServiceSpecificationRef"
+        },
+        "serviceCharacteristic": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ServiceCharacteristic"
+          }
+        }
+      }
+    },
+    "ServiceQualificationItem": {
+      "type": "object",
+      "description": "ServiceQualificationItem",
+      "properties": {
+        "id": {
+          "description": "",
+          "type": "string"
+        },
+        "service": {
+          "type": "string",
+          "$ref": "#/definitions/ServiceRefOrValue"
+        },
+        "type": {
+          "description": "",
+          "type": "string"
+        }
+      }
+    },
+    "QueryServiceQualification": {
+      "type": "object",
+      "description": "QueryServiceQualification",
+      "properties": {
+        "id": {
+          "description": "",
+          "type": "string"
+        },
+        "href": {
+          "description": "",
+          "type": "string"
+        },
+        "description": {
+          "description": "",
+          "type": "string"
+        },
+        "effectiveQualificationDate": {
+          "type": "string",
+          "$ref": "#/definitions/TimePeriod"
+        },
+        "estimatedResponseDate": {
+          "type": "string",
+          "$ref": "#/definitions/TimePeriod"
+        },
+        "expectedQualificationDate": {
+          "type": "string",
+          "$ref": "#/definitions/TimePeriod"
+        },
+        "expirationDate": {
+          "type": "string",
+          "$ref": "#/definitions/TimePeriod"
+        },
+        "externalId": {
+          "description": "",
+          "type": "string"
+        },
+        "instantSyncQualification": {
+          "description": "A boolean. ",
+          "type": "boolean",
+          "default": false
+        },
+        "queryServiceQualificationDate": {
+          "type": "string",
+          "$ref": "#/definitions/TimePeriod"
+        },
+        "searchCriteria": {
+          "type": "string",
+          "$ref": "#/definitions/ServiceQualificationItem"
+        },
+        "serviceQualificationItem": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ServiceQualificationItem"
+          }
+        },
+        "state": {
+          "description": "",
+          "type": "string"
+        },
+        "type": {
+          "description": "",
+          "type": "string"
+        }
+      }
+    },
+    "Street": {
+      "type": "object",
+      "description": "Street item",
+      "properties": {
+        "name": {
+          "description": "",
+          "type": "string"
+        },
+        "number": {
+          "description": "",
+          "type": "string"
+        },
+        "suite": {
+          "description": "",
+          "type": "string"
+        }
+      }
+    },
+    "Town": {
+      "type": "object",
+      "description": "Town item",
+      "properties": {
+        "code": {
+          "description": "",
+          "type": "string"
+        },
+        "country": {
+          "description": "",
+          "type": "string"
+        },
+        "name": {
+          "description": "",
+          "type": "string"
+        },
+        "regionCode": {
+          "description": "",
+          "type": "string"
+        }
+      }
+    },
+    "PremiseAddress": {
+      "type": "object",
+      "description": "PremiseAddress item",
+      "properties": {
+        "streetDetail": {
+          "type": "string",
+          "$ref": "#/definitions/Street"
+        },
+        "townDetail": {
+          "type": "string",
+          "$ref": "#/definitions/Town"
+        }
+      }
+    },
+    "PremiseDetails": {
+      "type": "object",
+      "description": "InstallationAddress item",
+      "properties": {
+        "premiseAddress": {
+          "type": "string",
+          "$ref": "#/definitions/PremiseAddress"
+        },
+        "serialNumber": {
+          "description": "",
+          "type": "string"
+        },
+        "division": {
+          "description": "",
+          "type": "string"
+        }
+      }
+    },
+    "TechnicalResource": {
+      "type": "object",
+      "description": "TechnicalResource item",
+      "properties": {
+        "id": {
+          "description": "",
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "$ref": "#/definitions/TechnicalResourceType"
+        }
+      }
+    },
+    "PremiseLookupResp": {
+      "type": "object",
+      "description": "PremiseLookupResp item",
+      "properties": {
+        "status": {
+          "description": "",
+          "type": "string"
+        },
+        "technicalResources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TechnicalResource"
+          }
+        }
+      }
+    },
+    "Error": {
+      "required": [
+        "code",
+        "message"
+      ],
+      "properties": {
+        "code": {
+          "type": "integer",
+          "description": "An integer coding the error type. This is given to caller so he can translate them if required."
+        },
+        "message": {
+          "type": "string",
+          "description": "A short localized string that describes the error."
+        },
+        "description": {
+          "type": "string",
+          "description": "(optional) A long localized error description if needed. It can contain precise information about which parameter is missing, or what are the identifier acceptable values."
+        },
+        "infoURL": {
+          "type": "string",
+          "description": "(optional) A URL to online documentation that provides more information about the error."
+        }
+      }
+    },
+    "ErrorRepresentation": {
+      "description": "Error Representation",
+      "required": [
+        "code",
+        "reason"
+      ],
+      "type": "object",
+      "properties": {
+        "code": {
+          "description": "",
+          "type": "integer",
+          "format": "int32"
+        },
+        "reason": {
+          "description": "",
+          "type": "string"
+        },
+        "message": {
+          "description": "",
+          "type": "string"
+        },
+        "status": {
+          "description": "",
+          "type": "string"
+        },
+        "referenceError": {
+          "description": "",
+          "type": "string"
+        },
+        "@type": {
+          "description": "",
+          "type": "string"
+        },
+        "@schemaLocation": {
+          "description": "",
+          "type": "string"
+        }
+      }
+    },
+    "AppointmentStateType": {
+      "description": "Status Type of the appointment.",
+      "type": "string",
+      "enum": [
+        "INITIALIZED",
+        "CONFIRMED",
+        "CANCELLED",
+        "COMPLETED",
+        "FAILED"
+      ]
+    },
+    "ReservationStateType": {
+      "description": "State Type of the reservation.",
+      "type": "string",
+      "enum": [
+        "INITIALIZED",
+        "CONFIRMED",
+        "CANCELLED",
+        "COMPLETED",
+        "FAILED",
+        "REJECTED"
+      ]
+    },
+    "TechnicalResourceType": {
+      "description": "The type of the technical resource.",
+      "type": "string",
+      "enum": [
+        "DIVISION",
+        "INSTALLATION",
+        "METER",
+        "READING_TYPE"
+      ]
+    }
+  }
+}

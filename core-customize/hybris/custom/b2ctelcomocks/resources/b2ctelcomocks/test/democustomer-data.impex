@@ -1,0 +1,30 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+
+# Import essential data for the tests
+#
+# Includes:
+# * Users
+# * Languages
+# * Currencies
+# * Titles
+# * Warehouses
+
+# Users
+$defaultPassword=1234
+
+$regulargroup=regulargroup
+$customergroup=customergroup
+
+# Create Customer Group
+INSERT_UPDATE Usergroup;uid[unique=true];groups(uid)[mode=append]
+;$regulargroup;customergroup
+
+INSERT_UPDATE Customer;uid[unique=true];groups(uid);password[default=$defaultPassword];name
+;testoauthcustomer;customergroup;;Demo Customer
+
+
+INSERT_UPDATE OAuthClientDetails;clientId[unique=true]	;resourceIds	;scope		;authorizedGrantTypes											;authorities			;clientSecret	;registeredRedirectUri
+								;mobile_android			;hybris			;basic		;authorization_code,refresh_token,password,client_credentials	;ROLE_CLIENT			;secret	;http://localhost:9001/authorizationserver/oauth2_callback;
+
