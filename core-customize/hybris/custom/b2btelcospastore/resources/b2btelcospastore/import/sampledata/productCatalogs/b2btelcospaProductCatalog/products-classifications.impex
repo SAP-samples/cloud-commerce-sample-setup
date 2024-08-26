@@ -1,0 +1,100 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Importing Product Classifications into Telco Store
+
+#% impex.setLocale(Locale.ENGLISH);
+
+# Macros / Replacement Parameter definitions
+$productCatalog = b2btelcospaProductCatalog
+$productCatalogName = B2B Telco SPA Product Catalog
+$systemName = b2btelcospaClassification;
+$systemVersion = 1.0;
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+$clAttrModifiers = system = $systemName, version = '1.0', translator = de.hybris.platform.catalog.jalo.classification.impex.ClassificationAttributeTranslator, lang = en
+
+# ImpEx for Importing Product Classifications
+
+$catVer = catalogVersion(version[default = 'Staged'], catalog(id[default = $productCatalog]));
+$clSysVer = catalogVersion(version[default = '$systemVersion'], catalog(id[default = '$systemName']));
+# -------------------------------------;
+# telco classified products;
+# 1. assign class to category so that all ;
+#    contained products are automatically classified as such;
+UPDATE Category; $catVer[virtual = true, unique = true]; code[unique = true]       ; supercategories(code, $clSysVer)[mode = append];
+               ; phones                                ; mobilephoneclassification ;
+               ; accessories                           ; accessoriesclassification ;
+
+# Mobile Phones features
+$feature2 = @mobileplatform[$clAttrModifiers];
+$feature3 = @storage[$clAttrModifiers];
+$feature4 = @processor[$clAttrModifiers];
+$feature5 = @cameratype[$clAttrModifiers];
+$feature6 = @cameraresolution[$clAttrModifiers];
+$feature7 = @zoom[$clAttrModifiers];
+$feature8 = @displaysize[$clAttrModifiers];
+$feature9 = @touchscreen[$clAttrModifiers];
+$feature10 = @height[$clAttrModifiers];
+$feature11 = @weight[$clAttrModifiers];
+$feature12 = @width[$clAttrModifiers];
+$feature13 = @depth[$clAttrModifiers];
+$feature14 = @batterycharge[$clAttrModifiers];
+
+# Accessories features
+$feature15 = @brand[$clAttrModifiers];
+$feature16 = @color[$clAttrModifiers];
+$feature17 = @batteries[$clAttrModifiers];
+$feature18 = @connectivity_technology[$clAttrModifiers];
+$feature19 = @form_factor[$clAttrModifiers];
+$feature20 = @power[$clAttrModifiers];
+$feature21 = @screensize[$clAttrModifiers];
+$feature22 = @port_type[$clAttrModifiers];
+$feature23 = @cable[$clAttrModifiers];
+$feature24 = @output_current[$clAttrModifiers];
+
+# Insert Product Classifications
+# Phones Classifications
+INSERT_UPDATE TmaSimpleProductOffering; code[unique = true]              ; $feature2         ; $feature3; $feature4    ; $feature5         ; $feature6 ; $feature7       ; $feature8 ; $feature9         ; $feature10 ; $feature11 ; $feature12 ; $feature13 ; $feature14    ; $catalogVersion; unit(code)[default = pieces]
+                                      ; apple_iphone_12                  ; platform_ios      ; 64       ; a14_bionic   ; dual_camera       ;           ;                 ; 6.1       ; touchscreen_true  ;            ;            ;            ;            ;              ;
+                                      ; apple_iphone_12_pro              ; platform_ios      ; 128      ; a14_bionic   ; pro_camera        ;           ; zoom_digital_10 ; 6.1       ; touchscreen_true  ;            ;            ;            ;            ;              ;
+                                      ; apple_iphone_12_pro_max          ; platform_ios      ; 128      ; a14_bionic   ; pro_camera        ;           ; zoom_digital_12 ; 6.7       ; touchscreen_true  ;            ;            ;            ;            ;              ;
+                                      ; samsung_galaxys_21_plus_5G       ; platform_android  ; 128      ; octa_core    ; quad_camera       ; 64        ; zoom_30         ; 6.7       ; touchscreen_true  ; 6.36       ; 7.13       ; 2.98       ; 0.31       ; 4800         ;
+                                      ; samsung_galaxys_21_ultra_5G      ; platform_android  ; 128      ; octa_core    ; quad_camera       ; 108       ; zoom_100        ; 6.8       ; touchscreen_true  ; 6.50       ; 8.08       ; 2.98       ; 0.35       ; 5000         ;
+
+# variants
+                                      ; apple_iphone_12_64g              ; platform_ios      ; 64       ; a14_bionic   ; dual_camera       ;           ;                 ; 6.1       ; touchscreen_true  ;            ;            ;            ;            ;              ;
+                                      ; apple_iphone_12_128g             ; platform_ios      ; 128      ; a14_bionic   ; dual_camera       ;           ;                 ; 6.1       ; touchscreen_true  ;            ;            ;            ;            ;              ;
+                                      ; apple_iphone_12_256g             ; platform_ios      ; 256      ; a14_bionic   ; dual_camera       ;           ;                 ; 6.1       ; touchscreen_true  ;            ;            ;            ;            ;              ;
+                                      ; apple_iphone_12_pro_128g         ; platform_ios      ; 128      ; a14_bionic   ; pro_camera        ;           ; zoom_digital_10 ; 6.1       ; touchscreen_true  ;            ;            ;            ;            ;              ;
+                                      ; apple_iphone_12_pro_256g         ; platform_ios      ; 256      ; a14_bionic   ; pro_camera        ;           ; zoom_digital_10 ; 6.1       ; touchscreen_true  ;            ;            ;            ;            ;              ;
+                                      ; apple_iphone_12_pro_512g         ; platform_ios      ; 512      ; a14_bionic   ; pro_camera        ;           ; zoom_digital_10 ; 6.1       ; touchscreen_true  ;            ;            ;            ;            ;              ;
+                                      ; apple_iphone_12_pro_max_128g     ; platform_ios      ; 128      ; a14_bionic   ; pro_camera        ;           ; zoom_digital_12 ; 6.7       ; touchscreen_true  ;            ;            ;            ;            ;              ;
+                                      ; apple_iphone_12_pro_max_256g     ; platform_ios      ; 256      ; a14_bionic   ; pro_camera        ;           ; zoom_digital_12 ; 6.7       ; touchscreen_true  ;            ;            ;            ;            ;              ;
+                                      ; apple_iphone_12_pro_max_512g     ; platform_ios      ; 512      ; a14_bionic   ; pro_camera        ;           ; zoom_digital_12 ; 6.7       ; touchscreen_true  ;            ;            ;            ;            ;              ;
+                                      ; samsung_galaxys_21_plus_5G_128g  ; platform_android  ; 128      ; octa_core    ; quad_camera       ; 64        ; zoom_30         ; 6.7       ; touchscreen_true  ; 6.36       ; 7.13       ; 2.98       ; 0.31       ; 4800         ;
+                                      ; samsung_galaxys_21_plus_5G_256g  ; platform_android  ; 256      ; octa_core    ; quad_camera       ; 64        ; zoom_30         ; 6.7       ; touchscreen_true  ; 6.36       ; 7.13       ; 2.98       ; 0.31       ; 4800         ;
+                                      ; samsung_galaxys_21_ultra_5G_128g ; platform_android  ; 128      ; octa_core    ; quad_camera       ; 108       ; zoom_100        ; 6.8       ; touchscreen_true  ; 6.50       ; 8.08       ; 2.98       ; 0.35       ; 5000         ;
+                                      ; samsung_galaxys_21_ultra_5G_256g ; platform_android  ; 256      ; octa_core    ; quad_camera       ; 108       ; zoom_100        ; 6.8       ; touchscreen_true  ; 6.50       ; 8.08       ; 2.98       ; 0.35       ; 5000         ;
+
+# Insert Product Classifications
+# Accessories Classifications
+INSERT_UPDATE TmaSimpleProductOffering; code[unique = true]                                           ; $feature15        ; $feature16        ; $feature17         ; $feature18        ; $feature19      ; $feature20      ; $feature21 ; $feature22        ; $feature23 ; $feature24 ; $catalogVersion; unit(code)[default = pieces]
+                                      ; apple_iphone_car_charger                                      ; brand_apple       ;                   ; no_batteries       ;                   ;                 ;                 ;            ; port_usb_a        ; has_cable  ; 5.2        ;
+                                      ; samsung_galaxy_buds_plus                                      ; brand_samsung     ;                   ; no_batteries       ; connect_bluetooth ; form_in_ear     ;                 ;            ;                   ; no_cable   ;            ;
+                                      ; samsung_galaxy_s21_ultra_official_s-pen_us_version            ; brand_samsung     ;                   ; batteries_required ;                   ;                 ;                 ;            ;                   ;            ;            ;
+                                      ; samsung_galaxy_s21_ultra_official_s-pen_international_version ; brand_samsung     ;                   ; batteries_required ;                   ;                 ;                 ;            ;                   ;            ;            ;
+                                      ; apple_20w_usb_c_power_adapter                                 ; brand_apple       ;                   ;                    ;                   ;                 ; 20.0            ;            ; port_usb_c        ; has_cable  ;            ;
+                                      ; apple_airPods_with_wireless_charging_case                     ; brand_apple       ; color_white       ; no_batteries       ; connect_nfc       ; form_in_ear     ;                 ;            ;                   ; no_cable   ;            ;
+                                      ; samsung_super_fast_dual_car_charger                           ; brand_samsung     ; color_black       ;                    ;                   ;                 ; 60.0            ;            ; port_usb_c        ; has_cable  ; 3.0        ;
+                                      ; samsung_galaxy_s21_plus_5g_clear_protective_cover             ; brand_samsung     ; color_transparent ;                    ;                   ; form_basic_case ;                 ; 6.7        ;                   ;            ;            ;
+
+#variants
+                                      ; apple_iphone_car_charger_black                                ; brand_apple       ; color_black        ; no_batteries      ;                   ;                 ;                 ;           ; port_usb_a        ; has_cable  ; 5.2        ;
+                                      ; apple_iphone_car_charger_white                                ; brand_apple       ; color_white        ; no_batteries      ;                   ;                 ;                 ;           ; port_usb_a        ; has_cable  ; 5.2        ;
+                                      ; samsung_galaxy_buds_plus_red                                  ; brand_samsung     ; color_red          ; no_batteries      ; connect_bluetooth ; form_in_ear     ;                 ;           ;                   ; no_cable   ;            ;
+                                      ; samsung_galaxy_buds_plus_black                                ; brand_samsung     ; color_black        ; no_batteries      ; connect_bluetooth ; form_in_ear     ;                 ;           ;                   ; no_cable   ;            ;
+                                      ; samsung_galaxy_buds_plus_white                                ; brand_samsung     ; color_white        ; no_batteries      ; connect_bluetooth ; form_in_ear     ;                 ;           ;                   ; no_cable   ;            ;
+                                      ; samsung_galaxy_buds_plus_blue                                 ; brand_samsung     ; color_blue         ; no_batteries      ; connect_bluetooth ; form_in_ear     ;                 ;           ;                   ; no_cable   ;            ;
+
+

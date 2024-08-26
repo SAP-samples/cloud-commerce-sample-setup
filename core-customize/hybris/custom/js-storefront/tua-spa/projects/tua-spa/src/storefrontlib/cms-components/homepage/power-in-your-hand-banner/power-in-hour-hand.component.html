@@ -1,0 +1,18 @@
+<div class="row mr-0 mb-2" *ngIf="data$ | async as data">
+    <div class="col-12 col-sm-12 pr-0 col-md-12 col-lg-6 col-xl-7">
+        <cx-media [container]="data.media"></cx-media>
+    </div>
+    <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-5 banner-background d-flex justify-content-center align-items-center ">
+        <div class="banner-text d-flex flex-column">
+            <p class="headline cx-bold pt-4" *ngIf="data.headline" [innerHTML]="data.headline"></p>
+            <p class="content mb-0" *ngIf="data.content" [innerHTML]="data.content"></p>
+            <button
+                    [routerLink]="{ cxRoute: 'learnMore'} | cxUrl"
+                    class="btn btn-secondary mt-2 align-self-end"
+                    [attr.aria-label]="'common.learnMore' | cxTranslate"
+            >
+                {{ ('common.learnMore' | cxTranslate) }}
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,49 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Importing Supplier Media into Telco Store
+
+# Macros / Replacement Parameter definitions
+$productCatalog = telcospaProductCatalog
+$catalogVersion = catalogversion(catalog(id[default=$productCatalog]), version[default='Staged'])[unique=true, default=$productCatalog:Staged]
+$thumbnail = thumbnail(code, $catalogVersion)
+$siteResource = jar:de.hybris.platform.b2ctelcospastore.constants.B2ctelcospastoreConstants&/b2ctelcospastore/import/sampledata/productCatalogs/$productCatalog
+
+
+INSERT_UPDATE Media; code[unique = true] ; realfilename; @media[translator = de.hybris.platform.impex.jalo.media.MediaDataTranslator]; mime[default = 'image/jpeg']; $catalogVersion
+                   ; /thumbs/SUP1.jpg    ; SUP1.jpg    ; $siteResource/images/thumbs/SUP1.jpg
+                   ; /thumbs/SUP2.jpg    ; SUP2.jpg    ; $siteResource/images/thumbs/SUP2.jpg
+                   ; /thumbs/SUP5.jpg    ; SUP5.jpg    ; $siteResource/images/thumbs/SUP5.jpg
+                   ; /thumbs/SUP10.jpg   ; SUP10.jpg   ; $siteResource/images/thumbs/SUP10.jpg
+                   ; /thumbs/SUP18.jpg   ; SUP18.jpg   ; $siteResource/images/thumbs/SUP18.jpg
+                   ; /thumbs/SUP26.jpg   ; SUP26.jpg   ; $siteResource/images/thumbs/SUP26.jpg
+                   ; /thumbs/SUP75.jpg   ; SUP75.jpg   ; $siteResource/images/thumbs/SUP75.jpg
+                   ; /thumbs/SUP88.jpg   ; SUP88.jpg   ; $siteResource/images/thumbs/SUP88.jpg
+                   ; /thumbs/SUP91.jpg   ; SUP91.jpg   ; $siteResource/images/thumbs/SUP91.jpg
+                   ; /thumbs/SUP103.jpg  ; SUP103.jpg  ; $siteResource/images/thumbs/SUP103.jpg
+                   ; /thumbs/SUP128.jpg  ; SUP128.jpg  ; $siteResource/images/thumbs/SUP128.jpg
+                   ; /thumbs/SUP251.jpg  ; SUP251.jpg  ; $siteResource/images/thumbs/SUP251.jpg
+                   ; /thumbs/SUP702.jpg  ; SUP702.jpg  ; $siteResource/images/thumbs/SUP702.jpg
+                   ; /thumbs/SUP745.jpg  ; SUP745.jpg  ; $siteResource/images/thumbs/SUP745.jpg
+                   ; /thumbs/SUP750.jpg  ; SUP750.jpg  ; $siteResource/images/thumbs/SUP750.jpg
+                   ; /thumbs/SUP2171.jpg ; SUP2171.jpg ; $siteResource/images/thumbs/SUP2171.jpg
+
+UPDATE Category; code[unique = true]; $thumbnail; allowedPrincipals(uid)[default = 'customergroup']; $catalogVersion
+               ; brand_1            ; /thumbs/SUP1.jpg
+               ; brand_2            ; /thumbs/SUP2.jpg
+               ; brand_5            ; /thumbs/SUP5.jpg
+               ; brand_10           ; /thumbs/SUP10.jpg
+               ; brand_18           ; /thumbs/SUP18.jpg
+               ; brand_26           ; /thumbs/SUP26.jpg
+               ; brand_75           ; /thumbs/SUP75.jpg
+               ; brand_88           ; /thumbs/SUP88.jpg
+               ; brand_91           ; /thumbs/SUP91.jpg
+               ; brand_103          ; /thumbs/SUP103.jpg
+               ; brand_128          ; /thumbs/SUP128.jpg
+               ; brand_251          ; /thumbs/SUP251.jpg
+               ; brand_702          ; /thumbs/SUP702.jpg
+               ; brand_745          ; /thumbs/SUP745.jpg
+               ; brand_750          ; /thumbs/SUP750.jpg
+               ; brand_2171         ; /thumbs/SUP2171.jpg
+

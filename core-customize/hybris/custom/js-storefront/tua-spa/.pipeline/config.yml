@@ -1,0 +1,38 @@
+general:
+  buildTool: 'npm'
+  productiveBranch: 'develop'
+  pipelineOptimization: false
+  repository: 'tmu-spa'
+  owner: 'tua-spa-organization'
+  vaultPath: 'piper/PIPELINE-GROUP-3652'
+  vaultBasePath: 'piper/PIPELINE-GROUP-3652'
+  vaultPipelineName: 'PIPELINE-19816'
+  vaultServerUrl: 'https://vault.tools.sap'
+  vaultNamespace: 'ies/hyperspace/pipelines'
+  nativeBuild: true
+  artifactVersionWithTimestamp: true
+stages:
+  Build:
+steps:
+  artifactPrepareVersion:
+    gitHttpsCredentialVaultSecretName: 'GROUP-SECRETS/github-telco-spa-pipeline-serviceuser'
+  sapCallStagingService:
+    url: 'https://staging.repositories.cloud.sap/stage/api'
+    profile: 'group-3652-default'
+  whitesourceExecuteScan:
+    whitesourceProductName: 'SHC - COMPOSABLE STOREFRONT TUA 1.0'
+    whitesourceProductToken: 'e0aae33e9b81412281d0da07dba50bdb4578f8edb7fe42f2bd3ececc3aaca8ac'
+  sapCheckPPMSCompliance:
+    ppmsID: '73555000100200018254'
+    uploadChangeRequest: true
+    whitesourceProductToken: 'e0aae33e9b81412281d0da07dba50bdb4578f8edb7fe42f2bd3ececc3aaca8ac'
+    buildVersion: '01 FPS 6.0 release'
+  sonarExecuteScan:
+    serverUrl: 'https://sonar.tools.sap'
+    sonarVaultSecretName: 'GROUP-SECRETS/sonar-sonar'
+  checkmarxExecuteScan:
+    projectName: 'Composable-Storefront-TUA'
+    teamName: '/CxServer/SP/SAP/Hybris/ProductManagement/ProductDevelopment/EC/Accelerators'
+    preset: '100205' # https://github.wdf.sap.corp/pages/Security-Testing/doc/checkmarx/Presets/
+  sapCumulusUpload:
+    pipelineId: 'd3919ad5-398b-4055-890b-873b3a5822e8'

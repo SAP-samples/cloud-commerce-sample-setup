@@ -1,0 +1,8 @@
+
+{{oneTimeCharge.price.value}}
+<span *ngIf="!oneTimeCharge.isPercentage">{{ 'common.currencies.currency' | cxTranslate : {context: oneTimeCharge.price.currencyIso} }}</span>
+<span *ngIf="oneTimeCharge.isPercentage">%</span>
+{{
+  'productDetails.price.priceTypes.billingEvents.billingEvent'
+    | cxTranslate: { context: oneTimeCharge.billingEvent }
+  }}

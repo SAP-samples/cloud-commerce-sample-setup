@@ -1,0 +1,5 @@
+{{oneTimeCharge.taxIncludedAmount.value}}&nbsp;{{ 'common.currencies.currency' | cxTranslate : {context: oneTimeCharge.taxIncludedAmount.currencyIso} }}
+{{
+'productDetails.price.priceTypes.billingEvents.billingEvent'
+  | cxTranslate: { context: oneTimeCharge.recurringChargePeriod }
+}}

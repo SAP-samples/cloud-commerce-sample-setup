@@ -1,0 +1,108 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Importing Products stock levels into Utilities Store
+
+# Macros / Replacement Parameter definitions
+$productCatalog = utilitiesSpaProductCatalog
+$productCatalogName = Utilities Spa Product Catalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+$vendor = utilitiesspa
+
+INSERT_UPDATE Vendor; code[unique = true]
+                    ; $vendor
+### Importing Hardware ###
+# ImpEx for Importing Utilities Products Stock Levels and Warehouses
+INSERT_UPDATE StockLevel; productCode[unique = true]             ; available[default = 10]; warehouse(code)[unique = true, default = warehouse_utilitiesspa]; inStockStatus(code)[default = notSpecified]; maxPreOrder[default = 0]; maxStockLevelHistoryCount[default = -1]; overSelling[default = 0]; preOrder[default = 0]; reserved[default = 0]
+                        ; lightbulb_energy_efficient             ; 32
+                        ; lightbulb_led                          ; 55
+                        ; lightbulb_led_multipack                ; 45
+
+                        ; electrical_cord_general                ; 45
+                        ; electrical_cord_double_ended_extension ; 45
+                        ; electrical_cord_slim                   ; 45
+
+                        ; solar_panel                            ; 45
+                        ; solar_panel_plus                       ; 45
+                        ; solar_panel_premium                    ; 45
+
+                        ; thermostat_basic                       ; 45
+                        ; thermostat_plus                        ; 45
+                        ; thermostat_premium                     ; 45
+
+                        ; installation_electricity               ; 45
+                        ; installation_gas                       ; 45
+                        ; installation_solar_panel               ; 45
+
+                        ; cameras_ring_spotlight                 ; 45
+                        ; cameras_smart_securty                  ; 45
+
+                        ; sensors_light                          ; 45
+                        ; sensors_motion                         ; 45
+
+### Importing ServicePlans ###
+# Attention: default stockStatus is here forceInStock and so different to the products imported before
+INSERT_UPDATE StockLevel; productCode[unique = true]; available[default = 10]; warehouse(code)[unique = true, default = warehouse_utilitiesspa]; inStockStatus(code)[default = forceInStock]; maxPreOrder[default = 0]; maxStockLevelHistoryCount[default = -1]; overSelling[default = 0]; preOrder[default = 0]; reserved[default = 0]
+                        ; electric_plan_basic
+                        ; electric_plan_plus
+                        ; electric_plan_best
+                        ; electric_plan_total_comfort
+
+                        ; gas_plan_basic
+                        ; gas_plan_plus
+                        ; gas_plan_best
+                        ; gas_plan_total_comfort
+
+                        ; installation_electricity
+                        ; installation_gas
+                        ; installation_solar_panel
+
+                        ; home_warranty
+                        ; home_warranty_plus
+                        ; home_warranty_total_comfort
+
+                        ; noncommodity_int_100
+                        ; noncommodity_int_500
+                        ; noncommodity_int_1000
+
+                        ; noncommodity_ll_voip
+                        ; noncommodity_ll_pots
+
+                        ; quadPlay
+                        ; electricityDeal
+                        ; starterElectricityDeal
+                        ; homeDeal
+
+INSERT_UPDATE TmaSimpleProductOffering; code[unique = true]         ; stockLevels(productCode, warehouse(code)); vendors(code)[default = $vendor]; $catalogVersion
+### SERVICE PLANS ###
+                                      ; electric_plan_basic         ; electric_plan_basic:warehouse_utilitiesspa
+                                      ; electric_plan_plus          ; electric_plan_plus:warehouse_utilitiesspa
+                                      ; electric_plan_best          ; electric_plan_best:warehouse_utilitiesspa
+                                      ; electric_plan_total_comfort ; electric_plan_total_comfort:warehouse_utilitiesspa
+
+                                      ; gas_plan_basic              ; gas_plan_basic:warehouse_utilitiesspa
+                                      ; gas_plan_plus               ; gas_plan_plus:warehouse_utilitiesspa
+                                      ; gas_plan_best               ; gas_plan_best:warehouse_utilitiesspa
+                                      ; gas_plan_total_comfort      ; gas_plan_total_comfort:warehouse_utilitiesspa
+
+                                      ; installation_electricity    ; installation_electricity:warehouse_utilitiesspa
+                                      ; installation_gas            ; installation_gas:warehouse_utilitiesspa
+                                      ; installation_solar_panel    ; installation_solar_panel:warehouse_utilitiesspa
+
+                                      ; home_warranty               ; home_warranty:warehouse_utilitiesspa
+                                      ; home_warranty_plus          ; home_warranty_plus:warehouse_utilitiesspa
+                                      ; home_warranty_total_comfort ; home_warranty_total_comfort:warehouse_utilitiesspa
+
+                                      ; noncommodity_int_100        ; noncommodity_int_100:warehouse_utilitiesspa
+                                      ; noncommodity_int_500        ; noncommodity_int_500:warehouse_utilitiesspa
+                                      ; noncommodity_int_1000       ; noncommodity_int_1000:warehouse_utilitiesspa
+
+                                      ; noncommodity_ll_voip        ; noncommodity_ll_voip:warehouse_utilitiesspa
+                                      ; noncommodity_ll_pots        ; noncommodity_ll_pots:warehouse_utilitiesspa
+
+INSERT_UPDATE TmaBundledProductOffering; code[unique = true]         ; stockLevels(productCode, warehouse(code)); vendors(code)[default = $vendor]; $catalogVersion
+                                       ; quadPlay                    ; quadPlay:warehouse_utilitiesspa
+                                       ; electricityDeal             ; electricityDeal:warehouse_utilitiesspa
+                                       ; starterElectricityDeal      ; starterElectricityDeal:warehouse_utilitiesspa
+                                       ; homeDeal                    ; homeDeal:warehouse_utilitiesspa

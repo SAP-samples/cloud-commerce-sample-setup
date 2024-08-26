@@ -1,0 +1,59 @@
+<ng-container *ngIf="priceAlterations">
+  <ng-container *ngFor="let priceAlteration of priceAlterations">
+
+    <ul>
+      <li *ngIf="priceAlteration.price && priceAlteration.price.taxIncludedAmount" class="discount-price">
+        {{ 'productDetails.price.common.fixedDiscount' | cxTranslate:
+          {
+              price: priceAlteration.price.dutyFreeAmount.value,
+              currency: 'common.currencies.currency' | cxTranslate : {context: priceAlteration.price.dutyFreeAmount.unit}
+          }
+        }}
+      </li>
+      <li *ngIf="priceAlteration.price && priceAlteration.price.percentage" class="discount-price">
+        {{ 'productDetails.price.common.percentageDiscount' | cxTranslate:{price: priceAlteration.price.percentage} }}
+      </li>
+    </ul>
+
+  </ng-container>
+</ng-container>
+
+<ng-container *ngIf="itemPrices">
+  <ng-container *ngFor="let itemPrice of itemPrices">
+
+    <ul>
+      <li *ngIf="!itemPrice.price && itemPrice.orderPrice">
+        {{ 'productDetails.price.common.hierarchical_price' | cxTranslate }} {{itemPrice.recurringChargePeriod}}
+      </li>
+
+      <li *ngIf="!('UsageChargeOrderPrice' === itemPrice['@type'])
+        && itemPrice.price
+        && itemPrice.price.dutyFreeAmount">
+
+        {{itemPrice?.price?.dutyFreeAmount?.value}} {{ 'common.currencies.currency' | cxTranslate : {context: itemPrice?.price?.dutyFreeAmount?.unit} }} {{itemPrice.recurringChargePeriod}}
+
+      </li>
+
+      <li *ngIf="'UsageChargeOrderPrice' === itemPrice['@type']
+      && itemPrice.price
+      && itemPrice.price.dutyFreeAmount">
+
+        {{itemPrice?.price?.dutyFreeAmount?.value}}
+        {{ 'common.currencies.currency' | cxTranslate : {context: itemPrice?.price?.dutyFreeAmount?.unit} }}
+        {{'productDetails.price.common.usage_charge_cost' | cxTranslate: {unit: itemPrice?.productOfferingPrice?.name} }}
+
+      </li>
+
+      <cx-order-details-hierarchical-price
+        *ngIf="itemPrice.priceAlteration"
+        [priceAlterations]="itemPrice.priceAlteration">
+      </cx-order-details-hierarchical-price>
+
+      <cx-order-details-hierarchical-price
+        *ngIf="itemPrice.orderPrice"
+        [itemPrices]="itemPrice.orderPrice">
+      </cx-order-details-hierarchical-price>
+    </ul>
+
+  </ng-container>
+</ng-container>

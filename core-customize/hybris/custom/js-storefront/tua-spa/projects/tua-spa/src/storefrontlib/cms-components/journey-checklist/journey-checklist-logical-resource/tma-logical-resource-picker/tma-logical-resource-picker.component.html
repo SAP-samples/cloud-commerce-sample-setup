@@ -1,0 +1,108 @@
+<ng-container>
+  <div class="row">
+    <div class="col-8">
+      <div class="cx-bold pt-3">
+        <label>{{
+          'checkList.msisdn.phoneNumber'
+            | cxTranslate
+          }}
+        </label>
+      </div>
+      <ng-container *ngIf="!showEdit && enableEditView">
+        <ng-container>
+          <div class="font-small">
+            <label>{{
+              'checkList.msisdn.headline'
+                | cxTranslate
+              }}
+            </label>
+          </div>
+          <ng-container *ngIf="reservationError$ | async">
+            <span class="text-danger">
+              {{ 'msisdnReservationError.getReservationError' | cxTranslate }}
+            </span>
+          </ng-container>
+          <ng-container *ngIf="error$ | async">
+            <div class="alert alert-primary w-100" role="alert">
+              {{ 'availabilityCheckError.fetchAvailabilityCheck' | cxTranslate }}
+            </div>
+          </ng-container>
+          <ng-container>
+            <ng-container *ngIf="errPatch">
+              <div class="alert alert-primary w-100 mt-2" role="alert">
+                {{ 'msisdnReservationError.patchError' | cxTranslate }}
+              </div>
+            </ng-container>
+            <ng-container *ngIf="!errPatch">
+              <div class="cx-bold">
+                <label class="font-small"
+                >{{
+                  'checkList.msisdn.phoneNumber'
+                    | cxTranslate
+                  }}
+                </label>
+              </div>
+              <div>
+                <ng-container>
+                  <ng-container *ngIf="logicalResources$ | async as logicalResources">
+                    <ng-container [formGroup]="msisdnForm">
+                      <ng-select [items]="logicalResources"
+                                 formControlName="msisdn"
+                                 bindLabel="value"
+                                 [(ngModel)]="defaultMsisdn"
+                                 placeholder ="{{ 'checkList.msisdn.selectNumber'| cxTranslate }}"
+                                 [searchable]="false"
+                                 [clearable]="false"
+                                 (change)="selectedLogicalResource($event)"
+                                 autofocus="true">
+                      </ng-select>
+                      <cx-form-errors
+                        class="form-message--danger"
+                        [control]="msisdnForm.get('msisdn')"
+                      ></cx-form-errors>
+                    </ng-container>
+                  </ng-container>
+                </ng-container>
+                <div class="d-flex mb-2 mt-2">
+                  <button
+                    (click)="updateReservation()"
+                    class="btn btn-secondary"
+                  >
+                    {{ ('common.update' | cxTranslate) }}
+                  </button>
+
+                  <button
+                    (click)="cancelReservation()"
+                    class="btn btn-tertiary ml-3"
+                  >
+                    {{ ('common.cancel' | cxTranslate) }}
+                  </button>
+                </div>
+              </div>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+    </div>
+    <div class="col-4" *ngIf="!enableEditView && showEdit">
+      <button type="button" [attr.aria-label]="'checkList.msisdn.selectNumber' | cxTranslate"
+
+        (click)="switchEditButton()"
+        class="btn qualification-btn pt-3"
+      >
+        {{ 'common.edit' | cxTranslate }}
+      </button>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="!enableEditView">
+  <ng-container *ngIf="!cartEntryMsisdn && selectedMsisdn; else cartResourceValue">
+    <div>
+      {{ selectedMsisdn }}
+    </div>
+  </ng-container>
+  <ng-template #cartResourceValue>
+      <div>{{ cartEntryMsisdn }}</div>
+  </ng-template>
+</ng-container>
+

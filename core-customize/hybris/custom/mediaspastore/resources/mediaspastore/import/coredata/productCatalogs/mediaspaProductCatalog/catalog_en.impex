@@ -1,0 +1,22 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+#
+# Import the Product Catalog and Classification Catalog
+#
+
+$lang = en
+
+INSERT_UPDATE Catalog; id[unique = true]      ; name[lang = $lang]
+                     ; mediaspaProductCatalog ; "Media SPA Product Catalog"
+
+INSERT_UPDATE BillingFrequency; code[unique = true]; nameInCart[lang = $lang]; nameInOrder[lang = $lang]; description[lang = $lang]
+                              ; monthly            ; Monthly                 ;                          ; Monthly
+                              ; quarterly          ; Quarterly               ;                          ; Quarterly
+                              ; yearly             ; Annually                ;                          ; Yearly
+
+INSERT_UPDATE BillingEvent; code[unique = true]; nameInCart[lang = $lang]; nameInOrder[lang = $lang]; description[lang = $lang]
+                          ; paynow             ; Pay On Checkout         ; Paid On Order            ; Pay Now
+                          ; onfirstbill        ; On First Bill           ;                          ; On First Bill
+                          ; oncancellation     ; On Cancellation         ;                          ; Charged when subscription is canceled

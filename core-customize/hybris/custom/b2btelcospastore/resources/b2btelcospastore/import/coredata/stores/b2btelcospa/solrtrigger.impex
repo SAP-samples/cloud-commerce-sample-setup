@@ -1,0 +1,14 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+#
+# Import the Solr CronJob Trigger configuration for the B2B Telco SPA Product Catalog
+#
+
+INSERT_UPDATE Trigger; cronjob(code)[forceWrite=true][unique = true]    ; second; minute; hour; day; month; year; relative; active; maxAcceptableDelay
+# Run the full-b2btelcospaIndex-cronJob at 3:05 AM every day
+                     ; full-b2btelcospaIndex-cronJob   ; 0     ; 5     ; 3   ; -1 ; -1   ; -1  ; false   ; false ; -1
+
+# Run the update-b2btelcospaIndex-cronJob every 1 minutes
+                     ; update-b2btelcospaIndex-cronJob ; 0     ; 1     ; -1  ; -1 ; -1   ; -1  ; true    ; false ; -1

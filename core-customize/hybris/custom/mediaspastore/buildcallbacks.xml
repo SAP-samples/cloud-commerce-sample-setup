@@ -1,0 +1,143 @@
+<?xml version="1.0"?>
+<!--
+ Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<!--
+ All hybris buildcallbacks.xml macrodefinitions:
+
+ Build/Documentation
+
+	 before/after ant macro "clean"
+		 <macrodef name="mediaspastore_before_clean"/>
+		 <macrodef name="mediaspastore_after_clean"/>
+
+	 before/after ant macro "build"
+		 <macrodef name="mediaspastore_before_build"/>
+		 <macrodef name="mediaspastore_after_build"/>
+
+	 before/after ant macro "compile_core" - the core module of the extension
+		 <macrodef name="mediaspastore_before_compile_core">
+		 <macrodef name="mediaspastore_after_compile_core">
+
+	 before/after ant macro "compile_web" - the web module of the extension
+		 <macrodef name="mediaspastore_before_compile_web" />
+		 <macrodef name="mediaspastore_after_compile_web" />
+
+	 before/after ant macro "compile_hmc" - the hmc module of the extension
+		 <macrodef name="mediaspastore_before_compile_hmc" />
+		 <macrodef name="mediaspastore_after_compile_hmc" />
+
+ Preparing extension
+
+	 will be called in the beginning of the ant call and only once (also when using multiple
+	 ant targets e.g. ant build yunittest)
+		 <macrodef name="mediaspastore_only_once_prepare"/>
+
+ Creating ear module/production
+
+	 before/after ant macro "ear"
+		 <macrodef name="mediaspastore_before_ear"/>
+		 <macrodef name="mediaspastore_after_ear"/>
+
+	 before/after ant macro "production" - for hybris server only
+		 <macrodef name="mediaspastore_before_production" />
+		 <macrodef name="mediaspastore_after_production" />
+
+ JUnit Test
+
+	 before/after ant macro "yunitinit"
+		 <macrodef name="mediaspastore_before_yunitinit" />
+		 <macrodef name="mediaspastore_after_yunitinit" />
+
+	 before/after ant macro "yunit"
+		 <macrodef name="mediaspastore_before_yunit" />
+		 <macrodef name="mediaspastore_after_yunit" />
+
+ Distribution package
+
+ 	 before/after ant macro "dist" - internal target; only for use when platform is available in source code
+		 <macrodef name="mediaspastore_after_dist"/>
+		 <macrodef name="mediaspastore_before_dist"/>
+
+	 before/after ant macro "dist_copy" - internal target; only for use when platform is available in source code
+		 <macrodef name="mediaspastore_before_dist_copy"/>
+		 <macrodef name="mediaspastore_after_dist_copy"/>
+
+-->
+
+<project name="mediaspastore_buildcallbacks">
+
+  <!--OVERRIDING the default macro definition-->
+  <macrodef name="extension_build_number">
+    <attribute name="extname"/>
+    <attribute name="destdir"/>
+
+    <sequential>
+      <!-- Just leave the file as it is declared into the custom extension-->
+    </sequential>
+  </macrodef>
+
+  <!--
+      Called whenever 'ant ear' is used. this callback can be used to modify the content of the ear file
+
+       ${ear.path}: 			path to ear
+   -->
+  <macrodef name="mediaspastore_before_ear">
+    <sequential>
+
+      <!-- you can do anything before the EAR file is being packed -->
+
+    </sequential>
+  </macrodef>
+
+  <macrodef name="mediaspastore_before_dist_copy">
+    <sequential>
+
+      <replaceregexp byline="true">
+        <fileset dir="${ext.mediaspastore.path}">
+          <include name="**/*.java"/>
+          <include name="**/*.jsp"/>
+          <include name="**/*.tag"/>
+          <include name="**/*.xml"/>
+          <include name="**/*.impex"/>
+          <include name="**/*.csv"/>
+          <include name="**/*.vm"/>
+          <include name="**/*.properties"/>
+          <exclude name="**/buildcallbacks.xml"/>
+        </fileset>
+        <regexp pattern="(.+)MEDIA_(START|END)(.+|)"/>
+        <substitution expression=""/>
+      </replaceregexp>
+
+      <delete>
+        <fileset dir="${ext.mediaspastore.path}" includes="**/*.deleted"/>
+        <fileset dir="${ext.mediaspastore.path}" includes="**/leftblankintentionally.txt"/>
+      </delete>
+
+    </sequential>
+  </macrodef>
+
+  <patternset id="mediaspastore.localization.pattern">
+    <!-- core and hmc -->
+    <include name="**/*locales*_en.properties"/>
+    <exclude name="**/hmc/web/webroot/WEB-INF/classes/**/*"/>
+    <exclude name="**/unittest/**/*"/>
+    <!-- cockpit (ng) -->
+    <include name="**/i3-label_en.properties"/>
+    <include name="**/labels_en.properties"/>
+    <include name="**/i3-label.properties" if="processing.en"/>
+    <include name="**/labels.properties" if="processing.en"/>
+    <!-- messages -->
+    <include name="**/*messages_en.properties"/>
+    <include name="**/*messages.properties" if="processing.en"/>
+    <!-- frontend properties files in WEB-INF/messages folder -->
+    <include name="**/WEB-INF/messages/*_en.properties"/>
+    <!-- csv and impex -->
+    <include name="**/lang-en.properties"/>
+    <!-- email localizations from yacceleratorcore -->
+    <include name="resources/**/messages/*_en.properties"/>
+    <!-- include validation messages -->
+    <include name="resources/**/ValidationMessages.properties"/>
+  </patternset>
+
+</project>

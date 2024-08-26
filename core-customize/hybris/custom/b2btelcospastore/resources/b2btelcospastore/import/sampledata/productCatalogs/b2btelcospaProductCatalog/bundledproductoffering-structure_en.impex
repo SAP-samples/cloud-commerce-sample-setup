@@ -1,0 +1,12 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# Macros / Replacement Parameter definitions
+$productCatalog = b2btelcospaProductCatalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+
+$lang = en
+
+INSERT_UPDATE TmaBundledProductOffering; code[unique = true]               ; name[lang = en]                   ; summary[lang = $lang]                                         ; description[lang = $lang]                                                                                                                                       ; $catalogVersion
+                                       ; satellite_connectivity_deal       ; Satellite Connectivity Deal       ; "Satellite Connectivity to support your business everywhere!" ; "The Satellite Connectivity Deal provides connectivity services around voice and data wherever required - and for various plans, all to support your business." ;

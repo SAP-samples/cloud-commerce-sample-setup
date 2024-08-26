@@ -1,0 +1,224 @@
+<ng-container *ngIf="qualifiedProductOffering$ | async as qualifiedProductOffering; else isCartPage">
+    <ng-container *ngIf="qualifiedProductOffering.length !== 0 && !isCartOrOrderAndPurchaseWithAssurance(); else notPurchaseWithAssurance">
+        <div *ngIf="!showEdit" class="font-weight-bolder pb-4">
+            {{ 'common.purchaseWithAssuranceInfo' | cxTranslate }}
+        </div>
+        <ng-container *ngIf="!showEdit">
+            <ng-container *ngIf="qualifiedProductOffering$ | async">
+                <ng-container>
+                    <div class="form-group form-check d-flex"
+                         *ngFor="let eligibleSubscription of eligibleSubscriptions; index as i">
+                        <input class="form-check-input align-self-center" type="radio" id="option-{{i}}"
+                               name="eligibleSubscription"
+                               [checked]="checked[i]" [(ngModel)]="selectedEligibleSubscription" [value]="eligibleSubscription"
+                               (change)="toggleEligibleSubscription(eligibleSubscription)" [defaultChecked]="true">
+                        <label class="form-check-label ml-2 subscription-details" for="option-{{i}}">
+                            <span class="subscription-name font-weight-bolder"> {{ eligibleSubscription.name }} </span>
+                            <br/>
+                            <ng-container *ngIf="subscriptionsInstallationAddress$ | async as installationAddress">
+                                <div class="d-flex">
+                        <span>
+                            {{ installationAddress?.get(eligibleSubscription?.id)?.streetName }},
+                        </span>
+                                    <span>
+                            {{ installationAddress?.get(eligibleSubscription?.id)?.city }},&nbsp;
+                        </span>
+                                    <span>
+                            {{ installationAddress?.get(eligibleSubscription?.id)?.countryName }},&nbsp;
+                        </span>
+                                    <span>
+                            {{ installationAddress?.get(eligibleSubscription?.id)?.postcode }}
+                        </span>
+                                </div>
+                            </ng-container>
+                        </label>
+                        <br/>
+                    </div>
+                    <ng-container *ngIf="dependentBundle">
+                        <div class="form-group form-check d-flex">
+                            <input class="form-check-input align-self-center" type="radio" id="newsubscription" name="newSubscription"
+                                   [(ngModel)]="selectedEligibleSubscription" (change)="toggleEligibleSubscription(undefined)">
+                            <label class="form-check-label ml-2 subscription-details font-weight-bolder" for="newSubscription">
+                                {{ 'common.buyNewPlan' | cxTranslate }}
+                            </label>
+                        </div>
+                    </ng-container>
+                </ng-container>
+            </ng-container>
+        </ng-container>
+
+        <ng-container *ngIf="showEdit" class="container">
+            <div class="font-weight-bolder pb-4">
+                {{ 'common.purchaseWithAssurancePlanSelectedInfo' | cxTranslate }}
+            </div>
+            <div class="row col-12 pb-4">
+                <div class="col-8 m-0 p-0">
+                    <label class="form-check-label subscription-details font-weight-bolder">
+                        <span class="subscription-name"> {{ selectedEligibleSubscription?.name }} </span>
+                    </label>
+                    <ng-container *ngIf="subscriptionsInstallationAddress$ | async as installationAddress">
+                        <div class="d-flex">
+                            <span>
+                                {{ installationAddress?.get(selectedEligibleSubscription?.id)?.streetName }},
+                            </span>
+                            <span>
+                               {{ installationAddress?.get(selectedEligibleSubscription?.id)?.city }},&nbsp;
+                            </span>
+                            <span>
+                                {{ installationAddress?.get(selectedEligibleSubscription?.id)?.countryName }},&nbsp;
+                            </span>
+                            <span>
+                            {{ installationAddress?.get(selectedEligibleSubscription?.id)?.postcode }}
+                            </span>
+                        </div>
+                    </ng-container>
+                </div>
+                <ng-container *ngIf="showEdit">
+                    <button
+                            class="col-4 btn btn-tertiary font-label pr-0 col-4"
+                            (click)="switchFlags()"
+                    >
+                        {{ 'common.edit' | cxTranslate }}
+                    </button>
+                </ng-container>
+            </div>
+        </ng-container>
+
+        <div *ngIf="showContinue">
+            <button
+                    class="btn btn-primary cx-bottom-fixed mt-1"
+                    *ngIf="selectedEligibleSubscription; else redirectToProduct"
+                    (click)="continueToChecklistActions()"
+            >
+                {{ 'common.continue' | cxTranslate }}
+            </button>
+            <ng-template #redirectToProduct>
+                <ng-container *ngIf="dependentBundle">
+                    <button class="btn btn-primary cx-bottom-fixed mt-1" (click)="redirectToDependentBundle(dependentBundle)">
+                        {{ 'common.continue' | cxTranslate }}
+                    </button>
+                </ng-container>
+            </ng-template>
+        </div>
+
+    </ng-container>
+    <ng-template #notPurchaseWithAssurance>
+    </ng-template>
+</ng-container>
+<ng-template #isCartPage>
+    <ng-container *ngIf="isCartOrOrderAndPurchaseWithAssurance()" class="container">
+            <ng-container *ngIf="cartShowEdit;else selectAnotherSubscription" class="container">
+                <div class="font-weight-bolder pb-4">
+                    {{ 'common.purchaseWithAssurancePlanSelectedInfo' | cxTranslate }}
+                </div>
+                <div class="row col-12 pb-4">
+                    <div class="col-8 m-0 p-0">
+                        <label class="form-check-label subscription-details">
+                            <span class="subscription-name font-weight-bolder cx-name">
+                                <a class="link"
+                                   [routerLink]="{ cxRoute: 'selfcareSubscriptionsDetail', params: selectedEligibleSubscription } | cxUrl">{{ selectedEligibleSubscription?.name }}</a>
+                            </span>
+                        </label>
+                        <ng-container
+                                *ngIf="subscriptionsInstallationAddress$ | async as installationAddress; else installationFromCartItem">
+                            <div class="d-flex">
+                            <span>
+                                {{ installationAddress?.get(selectedEligibleSubscription?.id)?.streetName }},
+                            </span>
+                                <span>
+                                {{ installationAddress?.get(selectedEligibleSubscription?.id)?.city }},&nbsp;
+                            </span>
+                                <span>
+                                {{ installationAddress?.get(selectedEligibleSubscription?.id)?.countryName }},&nbsp;
+                            </span>
+                                <span>
+                                {{ installationAddress?.get(selectedEligibleSubscription?.id)?.postcode }}
+                            </span>
+                            </div>
+                        </ng-container>
+                        <ng-template #installationFromCartItem>
+                            <ng-container *ngIf="installationAddress | async as installationAddress; ">
+                                <div class="d-flex">
+                                <span>
+                                    {{ installationAddress?.streetName }},
+                                </span>
+                                    <span>
+                                    {{ installationAddress?.city }},&nbsp;
+                                </span>
+                                    <span>
+                                    {{ installationAddress?.countryName }},&nbsp;
+                                </span>
+                                    <span>
+                                    {{ installationAddress?.postcode }}
+                                </span>
+                                </div>
+                            </ng-container>
+                        </ng-template>
+                    </div>
+                    <ng-container *ngIf="showEdit">
+                        <button
+                                class="col-4 btn btn-tertiary font-label pr-0 col-4"
+                                (click)="showEditCartClicked()"
+                        >
+                            {{ 'common.edit' | cxTranslate }}
+                        </button>
+                    </ng-container>
+                </div>
+            </ng-container>
+            <ng-template #selectAnotherSubscription>
+                <ng-container class="container">
+                    <div class="font-weight-bolder pb-4">
+                        {{ 'common.purchaseWithAssurancePlanSelectedInfo' | cxTranslate }}
+                    </div>
+                    <ng-container class="row" *ngIf="cartQualifiedProductOffering$ | async">
+                        <ng-container>
+                            <div class="form-group form-check d-flex"
+                                 *ngFor="let eligibleSubscription of eligibleSubscriptions; index as i">
+                                <input class="form-check-input align-self-center" type="radio" id="option-{{i}}"
+                                       name="eligibleSubscription"
+                                       [checked]="checked[i]" [(ngModel)]="selectedEligibleSubscription"
+                                       [value]="eligibleSubscription"
+                                       (change)="toggleEligibleSubscription(eligibleSubscription)" [defaultChecked]="true">
+                                <label class="form-check-label ml-2 subscription-details" for="option-{{i}}">
+                                    <span class="subscription-name font-weight-bolder"> {{ eligibleSubscription.name }} </span>
+                                    <br/>
+                                    <ng-container *ngIf="subscriptionsInstallationAddress$ | async as installationAddress">
+                                        <div class="d-flex">
+                                        <span>
+                                            {{ installationAddress?.get(eligibleSubscription?.id)?.streetName }},
+                                        </span>
+                                            <span>
+                                            {{ installationAddress?.get(eligibleSubscription?.id)?.city }},&nbsp;
+                                        </span>
+                                            <span>
+                                            {{ installationAddress?.get(eligibleSubscription?.id)?.countryName }},&nbsp;
+                                        </span>
+                                            <span>
+                                            {{ installationAddress?.get(eligibleSubscription?.id)?.postcode }}
+                                        </span>
+                                        </div>
+                                    </ng-container>
+                                </label>
+                                <br/>
+                            </div>
+                        </ng-container>
+                    </ng-container>
+                    <br/>
+                    <ng-container class="row">
+                        <button
+                                class="btn btn-secondary"
+                                (click)="updateButton()"
+                        >
+                            {{ 'common.update' | cxTranslate }}
+                        </button>
+                        <button
+                                class="ml-3 btn btn-tertiary"
+                                (click)="cancelButton()"
+                        >
+                            {{ 'common.cancel' | cxTranslate }}
+                        </button>
+                    </ng-container>
+                </ng-container>
+            </ng-template>
+        </ng-container>
+</ng-template>

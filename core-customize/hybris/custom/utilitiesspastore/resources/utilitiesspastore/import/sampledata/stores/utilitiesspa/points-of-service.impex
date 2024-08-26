@@ -1,0 +1,62 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for BUtilities Store
+#% impex.setLocale( Locale.GERMAN ); 
+
+$storeUid = utilitiesspa
+$productCatalog = utilitiesSpaProductCatalog
+$catalogVersion = catalogversion(catalog(id[default=$productCatalog]), version[default='Staged'])[unique=true, default=$productCatalog:Staged]
+$storeImage = storeImage(qualifier, $catalogVersion)
+
+
+$standardHours = utilitiesspa-us-standard-hours
+
+INSERT_UPDATE OpeningSchedule; code[unique = true];
+                             ; $standardHours     ;
+
+INSERT_UPDATE WeekdayOpeningDay; openingSchedule(code)[unique = true]; dayOfWeek(code)[unique = true]; openingTime[dateformat = hh:mm]; closingTime[dateformat = hh:mm];
+                               ; $standardHours                      ; MONDAY                        ; 10:00                          ; 21:00
+                               ; $standardHours                      ; TUESDAY                       ; 10:00                          ; 21:00
+                               ; $standardHours                      ; WEDNESDAY                     ; 10:00                          ; 21:00
+                               ; $standardHours                      ; THURSDAY                      ; 10:00                          ; 21:00
+                               ; $standardHours                      ; FRIDAY                        ; 10:00                          ; 21:00
+                               ; $standardHours                      ; SATURDAY                      ; 10:00                          ; 19:00
+
+
+INSERT_UPDATE PointOfService; name[unique = true]                        ; type(code); address(&addrID); latitude ; longitude  ; geocodeTimestamp[dateformat = dd-MM-yyyy]; $storeImage        ; openingSchedule(code); basestore(uid)[default = $storeUid]; features(code)
+
+                            ; Hybris Utilities Spa - Chicago Premium Outlets ; STORE     ; addr01          ; 41,8013  ; -88,27789  ; 29-04-2025                               ; utilities_store_01 ; $standardHours
+                            ; Hybris Utilities Spa - Chrysler Building       ; STORE     ; addr02          ; 40,75147 ; -73,97528  ; 29-04-2025                               ; utilities_store_01 ; $standardHours
+                            ; Hybris Utilities Spa - San Francisco Center    ; STORE     ; addr03          ; 37,78395 ; -122,40716 ; 29-04-2025                               ; utilities_store_01 ; $standardHours
+                            ; Hybris Utilities Spa - Seattle Premium Outlets ; STORE     ; addr04          ; 48,09679 ; -122,19137 ; 29-04-2025                               ; utilities_store_01 ; $standardHours
+                            ; Hybris Utilities Spa - Riverwalk Marketplace   ; STORE     ; addr05          ; 29,94818 ; -90,06486  ; 29-04-2025                               ; utilities_store_01 ; $standardHours
+
+INSERT_UPDATE Address; &addrID; streetname            ; streetnumber; postalcode[unique = true]; town[unique = true]; country(isocode); region(isocode); phone1       ; owner(PointOfService.name)[unique = true]
+                     ; addr01 ; Premium Outlets Blvd. ; 1650        ; 60504                    ; Aurora             ; US              ;                ; 630.585.9566 ; Hybris Utilities Spa - Chicago Premium Outlets
+                     ; addr02 ; East 42nd Street      ; 139         ; 10017                    ; New York           ; US              ;                ; 212.661.0208 ; Hybris Utilities Spa - Chrysler Building
+                     ; addr03 ; Market Street         ; 865         ; 94103                    ; San Francisco      ; US              ;                ; 949.347.8392 ; Hybris Utilities Spa - San Francisco Center
+                     ; addr04 ; Quil-Ceda Blvd.       ; 10600       ; 98271                    ; Tulalip            ; US              ;                ; 360.657.2690 ; Hybris Utilities Spa - Seattle Premium Outlets
+                     ; addr05 ; Poydras Street        ; 1           ; 70130                    ; New Orleans        ; US              ;                ; 504.525.9052 ; Hybris Utilities Spa - Riverwalk Marketplace
+
+
+INSERT_UPDATE StoreLocatorFeature; code[unique = true]
+                                 ; wheelchair
+                                 ; creche
+                                 ; sundayWorkshops
+                                 ; buyOnlinePickupInStore
+
+UPDATE PointOfService; name[unique = true]                        ; features(code)                                ;
+                     ; Hybris Utilities Spa - Chicago Premium Outlets ; wheelchair,creche,buyOnlinePickupInStore      ;
+                     ; Hybris Utilities Spa - Chrysler Building       ; wheelchair,creche,buyOnlinePickupInStore      ;
+                     ; Hybris Utilities Spa - San Francisco Center    ; wheelchair,creche,buyOnlinePickupInStore      ;
+                     ; Hybris Utilities Spa - Seattle Premium Outlets ; wheelchair,buyOnlinePickupInStore             ;
+                     ; Hybris Utilities Spa - Riverwalk Marketplace   ; creche,sundayWorkshops,buyOnlinePickupInStore ;
+
+INSERT_UPDATE PoS2WarehouseRel; source(name)[unique = true]                ; target(code)[unique = true]
+                              ; Hybris Utilities Spa - Chicago Premium Outlets ; Hybris Utilities Spa - Chicago Premium Outlets
+                              ; Hybris Utilities Spa - Chrysler Building       ; Hybris Utilities Spa - Chrysler Building
+                              ; Hybris Utilities Spa - San Francisco Center    ; Hybris Utilities Spa - San Francisco Center
+                              ; Hybris Utilities Spa - Seattle Premium Outlets ; Hybris Utilities Spa - Seattle Premium Outlets
+                              ; Hybris Utilities Spa - Riverwalk Marketplace   ; Hybris Utilities Spa - Riverwalk Marketplace

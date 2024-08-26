@@ -1,0 +1,68 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+$productCatalog = telcospaProductCatalog
+$productCatalogName = Telco SPA Product Catalog
+$catalogVersion = catalogversion(catalog(id[default=$productCatalog]), version[default='Staged'])[unique=true, default=$productCatalog:Staged]
+
+
+# Language
+$lang = en
+
+# Create Categories
+UPDATE Category; code[unique = true]; $catalogVersion; name[lang = $lang]
+               ; 1                  ;                ; Open Catalogue ;
+
+# ImpEx for Importing Categories into telco Store (English)
+UPDATE Category; code[unique = true]; name[lang = $lang]; description[lang = $lang]; $catalogVersion
+               ; devices            ; Devices           ; Devices
+               ; accessories        ; Accessories       ; Accessories
+               ; gsmplans           ; GSM Plans         ; GSM Plans
+               ; plans              ; Plans             ; Plans
+               ; gsmaddons          ; GSM Addons        ; GSM Addons
+               ; smartphone         ; Smartphones       ; Smartphones
+               ; addons             ; Add Ons           ; Add Ons
+               ; internet           ; Internet          ; Internet
+               ; home_packages      ; Home Packages     ; Home Packages
+               ; broadband          ; Broadband         ; Broadband
+               ; internetaddons     ; Internet Addons   ; Internet Addons
+               ; tvplans            ; TV Plans          ; TV Plans
+               ; landline           ; Land Lines        ; Land Lines
+               ; tvaddons           ; TV Addons         ; TV Addons
+               ; mediaboxes         ; Media Boxes       ; Media Boxes
+               ; modems             ; Modems            ; Modems
+               ; router             ; Router            ; Router
+
+# ImpEx for Importing Variant Categories into telco Store (English)
+UPDATE VariantCategory; code[unique = true]; name[lang = $lang]; $catalogVersion
+                      ; color              ; Color
+                      ; storage_size       ; Storage Size
+
+# ImpEx for Variant Value Categories into telco Store (English)
+UPDATE VariantValueCategory; code[unique = true]; name[lang = $lang]; $catalogVersion
+                           ; space_gray         ; Space Gray
+                           ; silver             ; Silver
+                           ; gold               ; Gold
+                           ; red                ; Red
+
+                           ; green              ; Green
+                           ; midnight           ; Midnight
+                           ; white              ; White
+                           ; blue               ; Blue
+                           ; pink               ; Pink
+                           ; graphite           ; Graphite
+                           ; alpinegreen        ; Alpine Green
+                           ; sierrablue         ; Sierra Blue
+                           ; phantomgray        ; Phantom Gray
+                           ; phantomviolet      ; Phantom Violet
+                           ; phantompink        ; Phantom Pink
+                           ; phantomwhite       ; Phantom White
+                           ; phantomblack       ; Phantom Black
+                           ; pinkgold           ; Pink Gold
+
+                           ; 16G                ; 16G
+                           ; 32G                ; 32G
+                           ; 64G                ; 64G
+                           ; 128G               ; 128G
+                           ; 256G               ; 256G

@@ -1,0 +1,17 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Importing the bundle product offering groups
+
+# Macros / Replacement Parameter definitions
+
+$productCatalog = utilitiesSpaProductCatalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+
+INSERT_UPDATE TmaProductOfferingGroup; code[unique = true]; name; parentBundleProductOffering(code, $catalogVersion); childProductOfferings(code, $catalogVersion); $catalogVersion;
+; electricity_plans        ; Electricity plans        ; electricityDeal        ; electric_plan_basic, electric_plan_plus, electric_plan_best, electric_plan_total_comfort
+; electricity_installation ; Electricity Installation ; starterElectricityDeal ; installation_electricity
+; electrical_lightbulbs    ; Lightbulbs               ; electricityDeal        ; lightbulb_led, lightbulb_energy_efficient, lightbulb_led_multipack
+; electrical_cords         ; Electrical cords         ; electricityDeal        ; electrical_cord_general, electrical_cord_double_ended_extension, electrical_cord_slim
+

@@ -1,0 +1,17 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Importing Units into Store
+
+# Macros / Replacement Parameter definitions
+$classificationCatalog = telcospaClassification
+$systemVersion = systemVersion(catalog(id[default=$classificationCatalog]), version[default='1.0'])
+
+# ImpEx for Importing Units into Telco Store
+
+INSERT_UPDATE ClassificationAttributeUnit; code[unique = true]; symbol; unitType; conversionFactor[default = 1]; $systemVersion[unique = true]
+                                         ; pound              ; lbs   ; pound   ;
+                                         ; inch               ; inch  ; inch    ;
+                                         ; gb                 ; GB    ; data    ; 1
+                                         ; mbps               ; mbps  ; data    ; 1

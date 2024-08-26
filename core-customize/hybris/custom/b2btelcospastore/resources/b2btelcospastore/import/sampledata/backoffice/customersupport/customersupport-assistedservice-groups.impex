@@ -1,0 +1,16 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+#
+# Grant assisted service role to customer support
+#
+
+INSERT_UPDATE UserGroup; UID[unique = true]       ; groups(uid)[mode = append]; locname[lang = en]                                ; description
+                       ; asagentgroup             ;                           ; "Common Assisted Service Agent Group"             ;
+                       ; asagentsalesgroup        ; asagentgroup              ; "Assisted Service Customer Support Agent Group"   ; "The ASM CS Support Agent can provide sales and service support to a customer, but may be restricted, so that they cannot checkout a customer's cart, or authorise a customer's quote request for example."
+                       ; asagentsalesmanagergroup ; asagentsalesgroup         ; "Assisted Service Customer Support Manager Group" ; "The ASM CS Support Manager can do everything an 'ASM CS Support Agent' can do, and more, such as authorising a customer's quote request for example."
+
+INSERT_UPDATE CsAgentGroup; UID[unique = true]          ; groups(uid)[mode = append]                                                                                    ; locname[lang = en]             ; description
+                          ; customersupportmanagergroup ; customersupportmanagerrole,customersupportagentrole,asagentsalesmanagergroup,csagentgroup,csagentmanagergroup ; Customer Support Manager Group ; The Customer Support Manager Group has access to the Customer Support Backoffice's Customer Support Manager Group and Customer Support Agent Group views AND/OR the Assisted Service Module.
+                          ; customersupportagentgroup   ; customersupportagentrole,asagentsalesgroup,csagentgroup                                                       ; Customer Support Agent Group   ; The Customer Support Agent Group has access to the Customer Support Backoffice's Customer Support Agent Group views and AND/OR the Assisted Service Module.

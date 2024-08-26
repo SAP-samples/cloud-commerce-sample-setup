@@ -1,0 +1,42 @@
+#
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+#
+
+# -----------------------------------------------------------------------
+# ImpEx for Importing UsageSpecifications into B2C Telco Store
+
+# Macros / Replacement Parameter definitions
+$productCatalog = mediaspaProductCatalog
+$catalogVersion = catalogversion(catalog(id[default=$productCatalog]), version[default='Staged'])[unique=true, default=$productCatalog:Staged]
+$defaultApprovalStatus = approvalstatus(code)[default='approved']
+$valueType = valueType(code)
+
+INSERT_UPDATE TmaUsageCharacteristicCategory; id[unique = true]
+                                            ; WHERE
+                                            ; WHO
+                                            ; WHEN
+                                            ; WHAT
+
+INSERT_UPDATE TmaUsageSpecCharacteristicValue; id[unique = true] ; $valueType; value; valueFrom; valueTo; default[default = false]; $catalogVersion; allowedValues
+                                             ; creationTime      ; DATE_TIME ;      ;          ;        ;                         ;                ;
+                                             ; serviceIdentifier ; STRING    ;      ;          ;        ;                         ;                ;
+                                             ; locationName      ; STRING    ;      ;          ;        ;                         ;                ;
+                                             ; service_type_tv   ; ENUM      ;      ;          ;        ;                         ;                ; Linear/Broadcast, Pay Per View, Video on Demand
+                                             ; channel_id        ; STRING    ;      ;          ;        ;                         ;                ;
+                                             ; consumer_id       ; STRING    ;      ;          ;        ;                         ;                ;
+                                             ; recType           ; ENUM      ;      ;          ;        ;                         ;                ; Start, Interim, Stop
+                                             ; subtitleSelected  ; BOOLEAN   ;      ;          ;        ;                         ;                ;
+
+INSERT_UPDATE TmaUsageSpecCharacteristic; id[unique = true] ; mandatory[default = false]; category(id); $catalogVersion; usageSpecCharacteristicValues(id, $catalogVersion)
+                                        ; creationTime      ;                           ; WHEN        ;                ; creationTime
+                                        ; serviceIdentifier ; true                      ; WHAT        ;                ; serviceIdentifier
+                                        ; locationName      ;                           ; WHERE       ;                ; locationName
+                                        ; serviceType_tv    ; true                      ; WHAT        ;                ; service_type_tv
+                                        ; channelId         ; true                      ; WHAT        ;                ; channel_id
+                                        ; consumer_id       ; true                      ; WHO         ;                ; consumer_id
+                                        ; recType           ; true                      ; WHO         ;                ; recType
+                                        ; subtitleSelected  ; false                     ; WHAT        ;                ; subtitleSelected
+
+INSERT_UPDATE TmaAtomicProductUsageSpec; id[unique = true]; $catalogVersion; $defaultApprovalStatus; usageSpecCharacteristics(id, $catalogVersion);
+                                       ; media_tv_spec    ;                ;                       ; creationTime,serviceIdentifier,serviceType_tv,channelId,consumer_id,recType,subtitleSelected,locationName
+

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+ Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<extensioninfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="extensioninfo.xsd">
+
+  <extension abstractclassprefix="Generated" classprefix="B2btelcospastore" managername="B2bTelcoSpaStoreManager"
+             managersuperclass="de.hybris.platform.jalo.extension.Extension" name="b2btelcospastore">
+
+    <requires-extension name="b2btelcoservices"/>
+    <requires-extension name="adaptivesearch"/>
+
+    <coremodule generated="true" manager="de.hybris.platform.b2btelcospastore.jalo.B2bTelcoSpaStoreManager"
+                packageroot="de.hybris.platform.b2btelcospastore"/>
+
+  </extension>
+
+</extensioninfo>

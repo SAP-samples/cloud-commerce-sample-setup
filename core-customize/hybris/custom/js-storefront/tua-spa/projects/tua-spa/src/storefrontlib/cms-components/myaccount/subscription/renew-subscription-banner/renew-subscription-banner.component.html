@@ -1,0 +1,65 @@
+<div class="container px-0">
+  <div class="row w-110 px-3 my-2">
+    <button
+      class="btn btn-primary btn-action full-width"
+      [routerLink]="{ cxRoute: 'subscriptions' } | cxUrl"
+    >
+      {{ 'subscriptions.backToSubscriptions' | cxTranslate }}
+    </button>
+  </div>
+  <ng-container *ngIf="subscriptionDetail$ | async as subscriptionDetail">
+    <ng-container
+      *ngIf="renewalEligibility$ | async as isEligibleForRenew">
+      <div *ngIf="!subscriptionDetail.tmfProduct.isBundle">
+        <ng-container *ngIf="component.data$ | async as data">
+          <ng-container *ngIf="mediaService.getMedia(data.media) as urlMedia">
+            <ng-container
+              *ngFor="let product of tmfProductOfferings"
+            >
+              <ng-container *ngIf="eligibleTerms.length > 0">
+                <div
+                  class="row mx-auto banner-container hidden-sm"
+                  [ngStyle]="{ background: 'url(' + urlMedia.src + ')' }"
+                >
+                  <div class="dropdownPosition">
+                    <ng-container
+                      *ngIf="selectedTermId$ | async as selectedTermId">
+                      <div class="col-12">
+                        <div class="form-group w-100">
+                          <label>{{ 'subscriptions.selectContract' | cxTranslate }}</label>
+                          <ng-select [items]="eligibleTerms"
+                                     [searchable]="false"
+                                     [clearable]="false"
+                                     [(ngModel)]="eligibleTerms[0].id"
+                                     bindLabel="name"
+                                     bindValue="id"
+                                     (change)="setSubscriptionTermAndPrice(
+                                        eligibleTerms,
+                                        product.productOfferingPrice,
+                                        $event.id
+                                )">
+                          </ng-select>
+                        </div>
+                      </div>
+                    </ng-container>
+
+                  </div>
+                  <div class="margin-leftTop">
+                    <cx-renew-subscription
+                      [subscription]="subscriptionDetail.tmfProduct"
+                      [subscribedProducts]="
+                            validSubscribedProducts
+                          "
+                      [buttonText]="data.buttonText"
+                    >
+                    </cx-renew-subscription>
+                  </div>
+                </div>
+              </ng-container>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+      </div>
+    </ng-container>
+  </ng-container>
+</div>

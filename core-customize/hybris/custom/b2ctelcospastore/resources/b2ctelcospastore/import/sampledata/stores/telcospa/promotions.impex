@@ -1,0 +1,38 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Promotions for Telco Store
+#% impex.setLocale( Locale.GERMAN ); 
+
+$defaultPromoGrp = telcospaPromoGrp
+$regulargroup = regulargroup
+
+#### Order Discount ####
+INSERT PromotionPriceRow; &tresholdId; Currency(isocode); price
+                        ; 2          ; USD              ; 200
+
+INSERT PromotionPriceRow; &priceId; Currency(isocode); price
+                        ; 8       ; USD              ; 20
+
+INSERT_UPDATE OrderThresholdDiscountPromotion; PromotionGroup(Identifier[default = $defaultPromoGrp]); enabled[default = true, unique = true]; code[unique = true]      ; title                                            ; description                                      ; messageFired[lang = en]             ; messageFired[lang = de]                                       ; priority; thresholdTotals(&tresholdId); discountPrices(&priceId)
+                                             ;                                                       ;                                       ; OrderThreshold15Discount ; You saved bunch of bucks for spending quite much ; You saved bunch of bucks for spending quite much ; You saved {3} for spending over {1} ; Sie haben {3} gespart, weil Sie mehr als {1} ausgegeben haben ; 500     ; 2                           ; 8
+
+INSERT_UPDATE PromotionUserRestriction; positive; promotion(code)[unique = true]; users(uid)
+                                      ; TRUE    ; OrderThreshold15Discount      ; $regulargroup
+
+INSERT PromotionPriceRow; &tresholdId; Currency(isocode); price
+                        ; 5          ; USD              ; 300
+
+#### Multi-buy on films ####
+INSERT PromotionPriceRow; &priceId; Currency(isocode); price
+                        ; 1       ; USD              ; 10
+
+#### Perfect partner on Digital SLR Camera DSLR-A100H and InfoLITHIUM-Akku battery ####
+INSERT PromotionPriceRow; &priceId; Currency(isocode); price
+                        ; 3       ; USD              ; 75
+
+#### Product bundle on HDR-CX105E Red ####
+INSERT PromotionPriceRow; &priceId; Currency(isocode); price
+                        ; 5       ; USD              ; 500
+

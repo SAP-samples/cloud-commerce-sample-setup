@@ -1,0 +1,33 @@
+<div>
+    <table width="100%" cellspacing="0" style="margin:0;padding:0;table-layout:auto;border:1px solid #1E4EBF;">
+        <tbody>
+        <tr>
+            <td colspan="2" height="125px" width="35%" rowspan="2" class="structureViewSection">
+                <cockpit code="SiteLogo"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" height="89px" class="structureViewSection">
+                <div>Header</div>
+            </td>
+        </tr>
+        <tr>
+            <td height="170px" colspan="6" class="structureViewSection">
+                <cockpit code="TopContent"/>
+            </td>
+        </tr>
+        <tr>
+            <td height="300px" colspan="6" class="structureViewSection">
+            </td>
+        </tr>
+        <tr>
+            <td height="170px" colspan="6" class="structureViewSection">
+                <cockpit code="BottomContent"/>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div style="width:100%; border-top: 2px solid #bbb" class="cmsContentEditor">
+        <cockpit code="editor"/>
+    </div>
+</div>

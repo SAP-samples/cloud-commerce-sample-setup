@@ -1,0 +1,80 @@
+<a
+  [routerLink]="{ cxRoute: 'product', params: product } | cxUrl"
+  class="cx-product-image-container"
+>
+  <cx-media
+    class="cx-product-image"
+    [container]="product.images?.PRIMARY"
+    format="product"
+    [alt]="product.summary"
+  >
+  </cx-media>
+</a>
+<a
+  [routerLink]="{ cxRoute: 'product', params: product } | cxUrl"
+  class="cx-product-name"
+  [innerHTML]="product.nameHtml"
+></a>
+<div class="cx-product-rating">
+  <cx-star-rating
+    *ngIf="product.averageRating"
+    [rating]="product?.averageRating"
+    [disabled]="true"
+  ></cx-star-rating>
+  <div *ngIf="!product.averageRating">
+    {{ 'productDetails.noReviews' | cxTranslate }}
+  </div>
+</div>
+
+<ng-container *ngIf="!(productSpecificationForAverageCost || productSpecificationForViewDetails)">
+  <div class="cx-product-price-container">
+    <div class="cx-product-price" aria-label="Product price">
+      <ng-container *ngIf="product.price.formattedValue; else compositePrice">
+        {{ product.price?.formattedValue }}
+      </ng-container>
+    </div>
+  </div>
+  <ng-template #compositePrice>
+    <cx-price-display [price]="product.productOfferingPrice[0]" [discounts]="priceService.getDiscountPricesForSPO(product)"></cx-price-display>
+  </ng-template>
+</ng-container>
+
+<ng-container *ngIf="productSpecificationForViewDetails && consumptionComponent">
+  <ng-container *ngIf="detailedProduct$ | async as detailedProduct else loading">
+    <ng-container *ngIf="priceService.getHighestPriorityPriceForSPO(detailedProduct) as highestPriorityPrice">
+      <button [routerLink]="{ cxRoute: 'setUpAService' } | cxUrl" class="btn btn-primary btn-block"
+              type="button">
+        {{'serviceability.checkAvailability' | cxTranslate}}
+      </button>
+    </ng-container>
+  </ng-container>
+</ng-container>
+
+<ng-container *ngIf="!productSpecificationForViewDetails">
+  <ng-container
+    *ngIf="getChecklistActions(product.code) | async as checklistActions"
+  >
+    <ng-container
+      *ngIf="checklistActions.length > 0; else noChecklist"
+    >
+      <button
+        [routerLink]="{ cxRoute: 'product', params: product } | cxUrl"
+        class="btn btn-primary btn-block"
+        type="button"
+      >
+        {{ 'productList.seeDetails' | cxTranslate }}
+      </button>
+    </ng-container>
+  </ng-container>
+  <ng-template #noChecklist>
+    <ng-template [cxOutlet]="ProductListOutlets.ITEM_ACTIONS">
+      <ng-container cxInnerComponentsHost></ng-container>
+    </ng-template>
+  </ng-template>
+</ng-container>
+
+<ng-template #loading>
+  <div class="cx-spinner">
+    <cx-spinner></cx-spinner>
+  </div>
+</ng-template>

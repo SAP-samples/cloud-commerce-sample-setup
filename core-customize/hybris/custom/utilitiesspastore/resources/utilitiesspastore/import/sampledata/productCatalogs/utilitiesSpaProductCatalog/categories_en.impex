@@ -1,0 +1,39 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+#******************************This file is generated - please do not edit it. It will be regenerated after every build.********************************#
+# ImpEx for Importing Categories into Utilities Store
+
+# Macros / Replacement Parameter definitions
+$productCatalog = utilitiesSpaProductCatalog
+$productCatalogName = Utilities Spa Product Catalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+
+
+# Language
+$lang = en
+
+# Create Categories
+UPDATE Category; code[unique = true]; $catalogVersion; name[lang = $lang]
+               ; 1                  ;                ; Open Catalogue ;
+
+
+# ImpEx for Importing Categories into Utilities Store (English)
+UPDATE Category; code[unique = true]; name[lang = $lang]; description[lang = $lang]; $catalogVersion
+               ; energy             ; Energy            ; Energy
+               ; homeservices       ; Home Services     ; Home Services
+               ; smarthome          ; Smart Home        ; Smart Home
+               ; accessories        ; Accessories       ; Accessories
+               ; electricity        ; Electricity       ; Electricity
+               ; gas                ; Gas               ; Gas
+               ; installation       ; Installation      ; Installation
+               ; warranty           ; Warranty          ; Warranty
+               ; internet           ; Internet          ; Internet
+               ; landline           ; Landline          ; Landline
+               ; thermostats        ; Thermostats       ; Thermostats
+               ; cameras            ; Cameras           ; Cameras
+               ; sensors            ; Sensors           ; Sensors
+               ; solarpanels        ; Solar Panels      ; Solar Panels
+               ; lightbulbs         ; Lightbulbs        ; Lightbulbs
+               ; electricalcords    ; Electrical Cords  ; Electrical Cords

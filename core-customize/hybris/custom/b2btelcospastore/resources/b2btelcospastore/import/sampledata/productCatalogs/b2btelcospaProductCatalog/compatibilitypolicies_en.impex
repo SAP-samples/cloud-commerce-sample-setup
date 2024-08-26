@@ -1,0 +1,25 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Importing sample compatibility policies
+
+$productCatalog = b2btelcospaProductCatalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+
+# Language
+$lang = en
+
+########################################################################################################
+# Eligibility Policy1 (Disabled rule expired policy):
+# A customer is eligible for Retention when the remaining contract term is less than 3 months          #
+########################################################################################################
+INSERT_UPDATE TmaCompatibilityPolicy; code[unique = true]                 ; name[lang = $lang]                              ; $catalogVersion; description[lang = $lang]
+                                    ; 3months_remainingPeriod_eligibility ; 3 Months remaining committed period eligibility ;                ; A customer is eligible for Retention when the remaining contract term is less than 3 months
+
+######################################################################
+# Eligibility Policy2 (general acquisition policy):
+# A customer is eligible for ACQUISITION flow in all conditions     #
+#####################################################################
+INSERT_UPDATE TmaCompatibilityPolicy; code[unique = true]                                         ; name[lang = $lang]                                               ; $catalogVersion; description[lang = $lang]
+                                    ; acq_and_device_only_and_switch_service_provider_eligibility ; ACQ and DEVICE_ONLY and SWITCH_SERVICE_PROVIDER flow eligibility ;                ; A customer is eligible for ACQUISITION flow in all conditions

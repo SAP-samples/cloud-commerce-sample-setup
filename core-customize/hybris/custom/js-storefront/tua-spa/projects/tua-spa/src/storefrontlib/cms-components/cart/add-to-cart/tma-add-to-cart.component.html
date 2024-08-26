@@ -1,0 +1,28 @@
+<ng-container *ngIf="isPlpCarouselPage; else nonCarousel">
+  <button
+    class="btn btn-primary btn-block"
+    [disabled]="(quantity <= 0 ||
+                          quantity > maxQuantity ||
+                          disableAddToCart(checklistActions))"
+    (click)="addToCart()"
+  >
+    {{ 'addToCart.addToCart' | cxTranslate }}
+  </button>
+</ng-container>
+
+<ng-template #nonCarousel>
+  <ng-container *ngIf="getDisplayChecklists(productCode) | async as displayChecklists">
+    <ng-container
+      *ngIf="displayChecklists === constants.DEPENDENT_PRODUCT.DEPENDENT_PRODUCT_AND_INSTALLATION_ADDRESS_ARE_SET || displayChecklists === constants.DEPENDENT_PRODUCT.NOTHING_IS_SET">
+      <button
+        class="btn btn-primary btn-block"
+        [disabled]="(quantity <= 0 ||
+                          quantity > maxQuantity ||
+                          disableAddToCart(checklistActions))"
+        (click)="addToCart()"
+      >
+        {{ 'addToCart.addToCart' | cxTranslate }}
+      </button>
+    </ng-container>
+  </ng-container>
+</ng-template>

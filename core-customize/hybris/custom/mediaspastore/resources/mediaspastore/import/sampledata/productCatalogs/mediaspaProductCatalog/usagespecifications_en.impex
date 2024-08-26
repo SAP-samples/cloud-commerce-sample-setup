@@ -1,0 +1,41 @@
+#
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+#
+
+# -----------------------------------------------------------------------
+# ImpEx for Importing UsageSpecifications into B2C Telco Store
+
+# Macros / Replacement Parameter definitions
+$productCatalog = mediaspaProductCatalog
+$catalogVersion = catalogversion(catalog(id[default=$productCatalog]), version[default='Staged'])[unique=true, default=$productCatalog:Staged]
+$lang = en
+
+INSERT_UPDATE TmaUsageCharacteristicCategory; id[unique = true]; name[lang = $lang];
+                                            ; WHERE            ; Where             ;
+                                            ; WHO              ; Who               ;
+                                            ; WHEN             ; When              ;
+                                            ; WHAT             ; What              ;
+
+INSERT_UPDATE TmaUsageSpecCharacteristicValue; id[unique = true] ; name[lang = $lang]; $catalogVersion
+                                             ; creationTime      ; creationTime
+                                             ; serviceIdentifier ; serviceIdentifier
+                                             ; locationName      ; locationName
+                                             ; service_type_tv   ; service_type_tv
+                                             ; channel_id        ; channel_id
+                                             ; consumer_id       ; consumer_id
+                                             ; recType           ; recType
+                                             ; subtitleSelected  ; subtitleSelected
+
+INSERT_UPDATE TmaUsageSpecCharacteristic; id[unique = true] ; name[lang = $lang]; description[lang = $lang]; $catalogVersion
+                                        ; creationTime      ; creationTime      ; The time when the event has been generated
+                                        ; serviceIdentifier ; serviceIdentifier ; Identifier of the service, relevant to corelate the usage detail record to the specific service
+                                        ; locationName      ; locationName      ; Descriptive location name of where the service is provided
+                                        ; serviceType_tv    ; serviceType       ; Type of the service associated with the service.
+                                        ; channelId         ; channelId         ; Identifier of the main channel the viewer is viewing at the time of the event
+                                        ; consumer_id       ; consumerId        ; Identifier of the TV Consumer and TV viewer Profile
+                                        ; recType           ; recType           ; Record type
+                                        ; subtitleSelected  ; subtitleSelected  ; Indicates whether subtitle was selected
+
+INSERT_UPDATE TmaAtomicProductUsageSpec; id[unique = true]; name[lang = $lang]; $catalogVersion
+                                       ; media_tv_spec    ; media_tv_spec     ;
+

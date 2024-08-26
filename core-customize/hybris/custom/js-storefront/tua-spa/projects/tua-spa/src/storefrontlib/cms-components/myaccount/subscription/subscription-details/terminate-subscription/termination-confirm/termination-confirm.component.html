@@ -1,0 +1,61 @@
+<div class="cx-modal-container"
+     [cxFocus]="focusConfig"
+     (esc)="closeModal()">
+  <!-- Modal Header -->
+  <div class="cx-modal-content">
+    <ng-container *ngIf="state && !state.loading; else loading" class="termination-confirm-container w-100 p-0">
+      <div class="card border-0 w-100 p-4">
+        <div class="card-header text-left bg-white text-dark border-0 pleft-50">
+        <span class="header-text">
+          {{'subscriptions.confirmTermination' | cxTranslate}}
+        </span>
+        </div>
+        <ng-container *ngFor="let entry of cart.entries">
+          <div *ngIf="getEntryProduct(entry) as entryProduct" class="card-body pl-5">
+            <div class="row mx-auto">
+              <div class="col-6">
+                <div class="row mx-auto p-0">
+                <span class="productName">
+                  {{ entryProduct.name }}
+                </span>
+                </div>
+                <div class="row mx-auto">
+                <span class="productId">
+                  {{ entryProduct.id }}
+                </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+        <div class="card-footer bg-white border-0 pb-0">
+          <div class="row mx-auto d-flex justify-content-center">
+            <button
+              class="btn btn-primary btn-wd-40 btn-sm mx-2"
+              (click)="createPaymentDetails()"
+            >
+              {{'common.yes' | cxTranslate}}
+              <ngx-spinner
+                [fullScreen]="false"
+                type="ball-clip-rotate-multiple"
+                size="small"
+              >
+              </ngx-spinner>
+            </button>
+            <button
+              class="btn btn-custom btn-wd-40 btn-sm mx-2"
+              (click)="closeModal()"
+            >
+              {{'common.no' | cxTranslate}}
+            </button>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>
+<ng-template #loading>
+  <div class="cx-spinner">
+    <cx-spinner></cx-spinner>
+  </div>
+</ng-template>

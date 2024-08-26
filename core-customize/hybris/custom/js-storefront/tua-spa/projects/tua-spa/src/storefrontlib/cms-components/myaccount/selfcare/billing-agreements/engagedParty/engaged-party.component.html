@@ -1,0 +1,29 @@
+<cx-selfcare-card
+  *ngIf="model$ | async as model"
+  i18nRoot="{{ domainType }}"
+  [showHint]="true"
+>
+  <section main class="cardSection">
+    <ng-container *ngIf="model.engagedParty as engagedParties; else emptyList">
+      <div class="sectionDetails" *ngFor="let party of engagedParties">
+        <label>{{ party.name }}</label>
+        <span class="value">
+          <a
+            class="link"
+            [routerLink]=" { cxRoute: 'AgreementEngagedParty', params: model } | cxUrl"
+          >
+          {{ party.id }}  
+          </a>
+        </span>
+      </div>
+    </ng-container>
+  </section>
+</cx-selfcare-card>
+
+<ng-template #emptyList>
+  <p class="is-empty">
+    {{
+      'selfcare.billingAgreements.details.engagedParty.emptyList' | cxTranslate
+    }}
+  </p>
+</ng-template>

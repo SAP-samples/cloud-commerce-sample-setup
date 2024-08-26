@@ -1,0 +1,30 @@
+<cx-selfcare-card
+  *ngIf="model$ | async as model"
+  i18nRoot="{{ domainType }}"
+  [showHint]="true"
+>
+  <section main>
+    <ng-container *ngIf="model.billStructure; else emptyList">
+      <div class="sectionDetails">
+        <span class="sectionValue">
+          <a
+            class="link"
+            [routerLink]="
+              { cxRoute: 'BillStructureDetails', params: model } | cxUrl
+            "
+          >
+            {{ model.billStructure.cycleSpecification.id }}
+          </a>
+        </span>
+      </div>
+    </ng-container>
+  </section>
+</cx-selfcare-card>
+
+<ng-template #emptyList>
+  <p class="is-empty">
+    {{
+      'selfcare.billingAccounts.details.billStructure.emptyList' | cxTranslate
+    }}
+  </p>
+</ng-template>

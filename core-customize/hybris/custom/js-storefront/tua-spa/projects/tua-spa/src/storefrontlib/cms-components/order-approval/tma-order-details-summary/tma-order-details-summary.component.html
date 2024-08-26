@@ -1,0 +1,53 @@
+<div class="row d-flex justify-content-end">
+
+  <div
+    *ngIf="currencyService.getActive() | async as currencyIso"
+    class="col-4">
+
+    <strong class="text-uppercase">{{ 'orderCost.orderSummary' | cxTranslate }}</strong>
+
+    <div>
+      <div class="float-left">{{ 'orderCost.subtotal' | cxTranslate }}</div>
+      <div
+        class="float-right">{{ 'common.currencies.currency' | cxTranslate : {context: currencyIso} }} {{subtotalAfterDiscounts.toLocaleString(undefined, {
+          minimumFractionDigits: 1,
+          maximumFractionDigits: 2
+      })
+        }}</div>
+      <br>
+    </div>
+
+    <div>
+      <div class="float-left">{{ 'orderCost.shipping' | cxTranslate }}</div>
+      <div
+        class="float-right">{{ 'common.currencies.currency' | cxTranslate : {context: currencyIso} }} {{shippingCost.toLocaleString(undefined, {
+          minimumFractionDigits: 1,
+          maximumFractionDigits: 2
+      })
+        }}</div>
+      <br>
+    </div>
+
+    <div>
+      <div class="float-left"><strong>{{ 'orderCost.total' | cxTranslate }}</strong></div>
+      <div
+        class="float-right">{{ 'common.currencies.currency' | cxTranslate : {context: currencyIso} }} {{totalCost.toLocaleString(undefined, {
+          minimumFractionDigits: 1,
+          maximumFractionDigits: 2
+      })
+        }}</div>
+      <br>
+    </div>
+
+    <div
+      class="clear-floats">{{ 'orderCost.grossTax' | cxTranslate }} {{ 'common.currencies.currency' | cxTranslate : {context: currencyIso} }} {{taxAmount.toLocaleString(undefined, {
+        minimumFractionDigits: 1,
+        maximumFractionDigits: 2
+    })
+      }}
+      .
+    </div>
+
+  </div>
+
+</div>

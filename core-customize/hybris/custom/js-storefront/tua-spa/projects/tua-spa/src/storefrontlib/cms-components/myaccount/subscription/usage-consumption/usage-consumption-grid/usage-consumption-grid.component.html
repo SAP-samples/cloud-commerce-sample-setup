@@ -1,0 +1,38 @@
+<ng-container *ngIf="usageConsumptionReport$| async as subscriptions">
+  <ng-container *ngIf="subscriptions.bucket as usages">
+    <ng-container *ngIf="usages['length'] > 0">
+      <div class="container">
+        <div class="card w-100 border-0">
+          <div class="card-body px-0 py-0 border-0">
+            <div class="row mx-auto">
+              <table class="table table-striped">
+                <thead class="thead-dark">
+                  <tr>
+                    <th>{{'subscriptions.serviceName' | cxTranslate}}</th>
+                    <th>{{'subscriptions.startDate' | cxTranslate}}</th>
+                    <th>{{'subscriptions.endDate' | cxTranslate}}</th>
+                    <th>{{'subscriptions.usagePercentage' | cxTranslate}}</th>
+                    <th>{{'subscriptions.usage' | cxTranslate}}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <ng-container *ngFor="let subscription of usages">
+                    <tr>
+                      <td>{{getProductName(subscription)}}</td>
+                      <td>{{getStartDate(subscription) | cxDate}}</td>
+                      <td>{{getEndDate(subscription) | cxDate}}</td>
+                      <td>{{getUsagePercentage(subscription)}}</td>
+                      <td>
+                        {{'subscriptions.usageConsumptionMsg' | cxTranslate : {usageValue:subscription.bucketCounter[0].value, usageUnit:'subscriptions.subscriptionUnits.'+subscription.bucketCounter[0].unit | cxTranslate, total:getTotalUsage(subscription)} }}
+                      </td>
+                    </tr>
+                  </ng-container>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+</ng-container>

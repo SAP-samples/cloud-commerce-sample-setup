@@ -1,0 +1,34 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+$classficationCatalog = mediaspaClassification
+
+$classSystemVersion = systemVersion(catalog(id[default='$classficationCatalog']), version[default='1.0'])
+$classCatalogVersion = catalogVersion(catalog(id[default='$classficationCatalog']), version[default='1.0'])
+$classAttribute = classificationAttribute(code, $classSystemVersion)
+$classClass = classificationClass(code, $classCatalogVersion)
+$classAttributeAssignment = classAttributeAssignment($classClass, $classAttribute, $classSystemVersion)
+$solrIndexedType = mediaspaProductType
+$listable = listable[default=true]
+$multiValued = multiValued[default=true]
+
+INSERT_UPDATE SolrIndexedProperty; name[unique = true]; type(code); sortableType(code); currency[default = true]; localized[default = false]; multiValue[default = true]; facet[default = true]; facetType(code); facetSort(code)[default = Alpha]; priority[default = 1000]; fieldValueProvider[default = commerceClassificationPropertyValueProvider]; $classAttributeAssignment; solrIndexedType(identifier)[unique = true, default = $solrIndexedType]
+                                 ; genre              ; string    ;                   ;                         ; true                      ;                           ;                      ; MultiSelectOr  ;                                 ;                         ;                                                                          ; mediacontentclassification:::genre::::
+                                 ; actors             ; string    ;                   ;                         ; true                      ;                           ;                      ; MultiSelectOr  ;                                 ;                         ;                                                                          ; creditsclassification:::actors::::
+                                 ; producers          ; string    ;                   ;                         ; true                      ;                           ;                      ; MultiSelectOr  ;                                 ;                         ;                                                                          ; creditsclassification:::producers::::
+                                 ; directors          ; string    ;                   ;                         ; true                      ;                           ;                      ; MultiSelectOr  ;                                 ;                         ;                                                                          ; creditsclassification:::directors::::
+
+
+# Show the classification features in the product lister
+INSERT_UPDATE ClassAttributeAssignment; $classClass[unique = true]    ; $classAttribute[unique = true]; $multiValued; $classSystemVersion[unique = true]; $listable
+                                      ; mediacontentclassification    ; genre
+                                      ; creditsclassification         ; actors
+                                      ; creditsclassification         ; producers
+                                      ; creditsclassification         ; directors
+
+INSERT_UPDATE SolrSearchQueryProperty; indexedProperty(name, solrIndexedType(identifier))[unique = true]; facetType(code)[default = 'MultiSelectOr']; facet[default = true]; priority[default = 1000]; facetDisplayNameProvider; facetSortProvider; facetTopValuesProvider; includeInResponse[default = true]; searchQueryTemplate(name, indexedType(identifier))[unique = true][default = DEFAULT:$solrIndexedType]
+                                     ; genre:$solrIndexedType
+                                     ; actors:$solrIndexedType
+                                     ; producers:$solrIndexedType
+                                     ; directors:$solrIndexedType

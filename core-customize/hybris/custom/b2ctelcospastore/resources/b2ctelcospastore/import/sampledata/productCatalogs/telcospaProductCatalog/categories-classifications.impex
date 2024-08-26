@@ -1,0 +1,134 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Importing Category Classifications into Telco Store
+
+# Macros / Replacement Parameter definitions
+$productCatalog = telcospaProductCatalog
+$classificationCatalog = telcospaClassification
+$productCatalogName = Telco SPA Product Catalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+$classCatalogVersion = catalogversion(catalog(id[default = $classificationCatalog]), version[default = '1.0'])[unique = true, default = '$classificationCatalog:1.0']
+$classSystemVersion = systemVersion(catalog(id[default = $classificationCatalog]), version[default = '1.0'])[unique = true]
+$class = classificationClass(ClassificationClass.code, $classCatalogVersion)[unique = true]
+$supercategories = source(code, $classCatalogVersion)[unique = true]
+$categories = target(code, $catalogVersion)[unique = true]
+$attribute = classificationAttribute(code, $classSystemVersion)[unique = true]
+$unit = unit(code, $classSystemVersion)
+
+# Insert Classifications
+INSERT_UPDATE ClassificationClass; $classCatalogVersion; code[unique = true]         ; allowedPrincipals(uid)[default = 'customergroup']
+                                 ;                     ; compatibilityclassification ;
+                                 ;                     ; mobilephoneclassification   ;
+                                 ;                     ; accessoryclassification     ;
+                                 ;                     ; serviceplanclassification   ;
+                                 ;                     ; modemsclassification        ;
+
+# Insert Classification Attributes
+INSERT_UPDATE ClassificationAttribute; $classSystemVersion; code[unique = true]
+                                     ;                    ; featurecompatibility
+                                     ;                    ; mobileplatform
+                                     ;                    ; storage
+                                     ;                    ; camera
+                                     ;                    ; gps
+                                     ;                    ; keyboard
+                                     ;                    ; formfactor
+                                     ;                    ; displayresolution
+                                     ;                    ; displaysize
+                                     ;                    ; maxspeed
+                                     ;                    ; networksupport
+                                     ;                    ; touchscreen
+                                     ;                    ; color
+                                     ;                    ; colorcompatibility
+                                     ;                    ; height
+                                     ;                    ; weight
+                                     ;                    ; width
+                                     ;                    ; depth
+                                     ;                    ; bands
+                                     ;                    ; vendorcompatibility
+                                     ;                    ; cameraresolution
+                                     ;                    ; ram_memory
+                                     ;                    ; wifitype
+                                     ;                    ; simcard
+                                     ;                    ; videoformat
+                                     ;                    ; operatingsystem
+                                     ;                    ; model
+                                     ;                    ; cpu
+
+INSERT_UPDATE ClassAttributeAssignment; $class                      ; $attribute           ; position; $unit    ; attributeType(code[default = string]); multiValued[default = false]; range[default = false]; localized[default = false]; attributeValues(code, $classSystemVersion)
+                                      ; compatibilityclassification ; featurecompatibility ; 0       ;          ; enum                                 ; true                        ;                       ;                           ; feature_bt10,feature_bt20,feature_bt21,feature_usb1,feature_usb2,feature_microsd,feature_sdhc,feature_memorystickmicro,feature_multimediacard,feature_microsdhc,feature_8pinmicrosd
+                                      ; mobilephoneclassification   ; mobileplatform       ; 1       ;          ; enum                                 ;                             ;                       ;                           ; platform_ios,platform_android,platform_rim,platform_symbian,platform_ms
+                                      ; mobilephoneclassification   ; storage              ; 2       ; gb       ; number                               ;
+                                      ; mobilephoneclassification   ; camera               ; 3       ;          ; enum                                 ;                             ;                       ;                           ; camera_true,camera_false
+                                      ; mobilephoneclassification   ; gps                  ; 4       ;          ; enum                                 ;                             ;                       ;                           ; gps_true,gps_false
+                                      ; mobilephoneclassification   ; keyboard             ; 5       ;          ; enum                                 ;                             ;                       ;                           ; keyboard_true,keyboard_false
+                                      ; mobilephoneclassification   ; formfactor           ; 6       ;          ; enum                                 ;                             ;                       ;                           ; formfactor_slider,formfactor_bar,formfactor_clamshell
+                                      ; mobilephoneclassification   ; displayresolution    ; 7       ;
+                                      ; modemsclassification        ; maxspeed             ; 1       ; mbps     ; number                               ;
+                                      ; mobilephoneclassification   ; displaysize          ; 8       ; inch     ; number                               ;
+                                      ; mobilephoneclassification   ; touchscreen          ; 9       ;          ; enum                                 ;                             ;                       ;                           ; touchscreen_true,touchscreen_false
+                                      ; mobilephoneclassification   ; color                ; 10      ; <ignore> ;
+                                      ; compatibilityclassification ; colorcompatibility   ; 11      ; <ignore> ;
+                                      ; mobilephoneclassification   ; height               ; 12      ;
+                                      ; mobilephoneclassification   ; width                ; 13      ;
+                                      ; mobilephoneclassification   ; depth                ; 14      ;
+                                      ; mobilephoneclassification   ; weight               ; 15      ; pound
+                                      ; mobilephoneclassification   ; bands                ; 16      ;          ; enum                                 ;                             ;                       ;                           ; band_dualband,band_triband,band_quadband,band_umts,band_lte
+                                      ; accessoryclassification     ; vendorcompatibility  ; 1       ;          ; string                               ; true                        ;
+
+                                      ; mobilephoneclassification   ; cameraresolution     ; 17      ;          ; number
+                                      ; mobilephoneclassification   ; ram_memory           ; 18      ; gb       ; number
+                                      ; mobilephoneclassification   ; wifitype             ; 19      ;          ; enum                                 ;                             ;                       ;                           ; wifi6,wifi802_11ax
+                                      ; compatibilityclassification ; networksupport       ; 20      ;          ; enum                                 ; true                        ;                       ;                           ; 4g,5g
+                                      ; accessoryclassification     ; simcard              ; 21      ;          ; enum                                 ;                             ;                       ;                           ; simcard_true,simcard_false
+                                      ; mobilephoneclassification   ; videoformat          ; 22      ;          ; enum                                 ;                             ;                       ;                           ; hd,4k_uhd
+                                      ; mobilephoneclassification   ; operatingsystem      ; 23      ;          ; enum                                 ;                             ;                       ;                           ; android8_1
+                                      ; mobilephoneclassification   ; model                ; 24      ;          ; enum                                 ;                             ;                       ;                           ; mibox_4glk1,mibox_5glk1
+                                      ; mobilephoneclassification   ; cpu                  ; 25      ;          ; enum                                 ;                             ;                       ;                           ; quad_core
+
+INSERT_UPDATE ClassificationAttributeValue; code[unique = true]; $classSystemVersion
+                                          ; feature_bt10
+                                          ; feature_bt20
+                                          ; feature_bt21
+                                          ; feature_usb1
+                                          ; feature_usb2
+                                          ; feature_microsd
+                                          ; feature_sdhc
+                                          ; feature_memorystickmicro
+                                          ; feature_multimediacard
+                                          ; feature_microsdhc
+                                          ; feature_8pinmicrosd
+                                          ; platform_ios
+                                          ; platform_android
+                                          ; platform_rim
+                                          ; platform_symbian
+                                          ; platform_ms
+                                          ; band_dualband
+                                          ; band_triband
+                                          ; band_quadband
+                                          ; band_umts
+                                          ; band_lte
+                                          ; formfactor_slider
+                                          ; formfactor_bar
+                                          ; formfactor_clamshell
+                                          ; gps_true
+                                          ; gps_false
+                                          ; camera_true
+                                          ; camera_false
+                                          ; keyboard_true
+                                          ; keyboard_false
+                                          ; touchscreen_true
+                                          ; touchscreen_false
+                                          ; wifi6
+                                          ; wifi802_11ax
+                                          ; 4g
+                                          ; 5g
+                                          ; simcard_true
+                                          ; simcard_false
+                                          ; hd
+                                          ; 4k_uhd
+                                          ; android8_1
+                                          ; mibox_4glk1
+                                          ; mibox_5glk1
+                                          ; quad_core

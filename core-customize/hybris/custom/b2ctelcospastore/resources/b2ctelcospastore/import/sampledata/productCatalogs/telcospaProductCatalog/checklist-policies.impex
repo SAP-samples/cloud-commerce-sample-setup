@@ -1,0 +1,144 @@
+# ImpEx for Importing sample checklist policies
+
+$productCatalog = telcospaProductCatalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+$lang = en
+
+#################################################################################################
+# Policy2 (Journey Checklist for MSISDN selection):
+# A customer needs to choose a MSISDN when buying new gsm plan with an iphone x.
+#################################################################################################
+
+INSERT_UPDATE TmaPsPolicyStatement; code[unique = true]; min; max; productSpecification(id, $catalogVersion); $catalogVersion
+                                  ; gsm_spec_ps        ; 1  ;    ; gsm
+
+INSERT_UPDATE TmaAtomicPolicyCondition; code[unique = true]; statement(code, $catalogVersion); $catalogVersion
+                                      ; has_gsm_spec       ; gsm_spec_ps
+
+INSERT_UPDATE TmaProcessTypesPolicyStatement; code[unique = true]; processes(code); $catalogVersion
+                                            ; acquisition_ps     ; ACQUISITION
+
+INSERT_UPDATE TmaAtomicPolicyCondition; code[unique = true] ; statement(code, $catalogVersion); $catalogVersion
+                                      ; is_acquisition_flow ; acquisition_ps
+
+INSERT_UPDATE TmaCompositePolicyCondition; code[unique = true] ; children(code, $catalogVersion)   ; conditionsEvaluatorType(code); $catalogVersion
+                                         ; is_acq_and_gsm_plan ; is_acquisition_flow, has_gsm_spec ; AND                          ;
+
+INSERT_UPDATE TmaConfigurablePscvPolicyStatement; code[unique = true]; productSpecCharacteristic(id, $catalogVersion); type(code); $catalogVersion
+                                                ; requires_msisdn_ps ; msisdn                                        ; MSISDN    ;
+
+INSERT_UPDATE TmaPolicyAction; code[unique = true]       ; statement(code, $catalogVersion); actionType(code); $catalogVersion
+                             ; requires_msisdn_selection ; requires_msisdn_ps              ; CHECKLIST
+
+INSERT_UPDATE TmaCompatibilityPolicy; code[unique = true]           ; conditions(code, $catalogVersion); actions(code, $catalogVersion); conditionsEvaluatorType(code); $catalogVersion
+                                    ; gsm_requires_msisdn_selection ; is_acq_and_gsm_plan              ; requires_msisdn_selection     ; OR
+
+#################################################################################################
+# Policy3 (Journey Checklist for Installation Address selection)
+# A customer needs to have an installation address for any Product Offering specified by the copper and fiber Product Specifications.
+#################################################################################################
+INSERT_UPDATE TmaPsPolicyStatement; code[unique = true]     ; min; max; productSpecification(id, $catalogVersion); $catalogVersion
+                                  ; fiber_internet_spec_ps  ; 1  ;    ; fiber_internet
+                                  ; copper_internet_spec_ps ; 1  ;    ; copper_internet
+                                  ; 5g_internet_spec_ps     ; 1  ;    ; 5g_internet
+
+INSERT_UPDATE TmaAtomicPolicyCondition; code[unique = true]; statement(code, $catalogVersion); $catalogVersion
+                                      ; has_fiber_spec     ; fiber_internet_spec_ps
+                                      ; has_copper_spec    ; copper_internet_spec_ps
+                                      ; has_5g_spec        ; 5g_internet_spec_ps
+
+INSERT_UPDATE TmaCompositePolicyCondition; code[unique = true] ; children(code, $catalogVersion)              ; conditionsEvaluatorType(code); $catalogVersion
+                                         ; has_broadband_plans ; has_fiber_spec, has_copper_spec, has_5g_spec ; OR                           ;
+
+INSERT_UPDATE TmaProcessTypesPolicyStatement; code[unique = true]; processes(code); $catalogVersion
+                                            ; acquisition_ps     ; ACQUISITION
+
+INSERT_UPDATE TmaAtomicPolicyCondition; code[unique = true] ; statement(code, $catalogVersion); $catalogVersion
+                                      ; is_acquisition_flow ; acquisition_ps
+
+INSERT_UPDATE TmaCompositePolicyCondition; code[unique = true]       ; children(code, $catalogVersion)          ; conditionsEvaluatorType(code); $catalogVersion
+                                         ; is_acq_and_broadband_plan ; is_acquisition_flow, has_broadband_plans ; AND                          ;
+
+INSERT_UPDATE TmaPsChecklistPolicyStatement; code[unique = true]               ; type(code)           ; productSpecifications(id, $catalogVersion)   ; $catalogVersion
+                                           ; broadband_plan_check_installation ; INSTALLATION_ADDRESS ; fiber_internet, copper_internet, 5g_internet ;
+
+INSERT_UPDATE TmaPolicyAction; code[unique = true]                     ; statement(code, $catalogVersion)  ; actionType(code); $catalogVersion
+                             ; broadband_plan_req_serviceability_check ; broadband_plan_check_installation ; CHECKLIST
+
+INSERT_UPDATE TmaCompatibilityPolicy; code[unique = true]                  ; conditions(code, $catalogVersion); actions(code, $catalogVersion)          ; conditionsEvaluatorType(code); $catalogVersion
+                                    ; broadband_plan_requires_installation ; is_acq_and_broadband_plan        ; broadband_plan_req_serviceability_check ; OR
+
+#################################################################################################
+# Policy5 (Journey Checklist for Appointment selection)
+#A customer needs to perform a Appointment check if he purchases a Product Offering specified by the copper and fiber Product Specifications.
+#################################################################################################
+INSERT_UPDATE TmaPsChecklistPolicyStatement; code[unique = true]               ; type(code)  ; productSpecifications(id, $catalogVersion); $catalogVersion
+                                           ; broadband_plans_check_appointment ; APPOINTMENT ; fiber_internet, copper_internet           ;
+
+INSERT_UPDATE TmaPolicyAction; code[unique = true]                  ; statement(code, $catalogVersion)  ; actionType(code); $catalogVersion
+                             ; broadband_plan_req_appointment_check ; broadband_plans_check_appointment ; CHECKLIST
+
+INSERT_UPDATE TmaCompatibilityPolicy; code[unique = true]                  ; conditions(code, $catalogVersion); actions(code, $catalogVersion)       ; conditionsEvaluatorType(code); $catalogVersion
+                                    ; broadband_plans_requires_appointment ; is_acq_and_broadband_plan        ; broadband_plan_req_appointment_check ; OR
+
+#################################################################################################
+# Policy4 (Journey Checklist for Installation Address selection)
+# A customer needs to have an installation address for any Product Offering specified by the tv Product Specification
+#################################################################################################
+INSERT_UPDATE TmaPsPolicyStatement; code[unique = true]; min; max; productSpecification(id, $catalogVersion); $catalogVersion
+                                  ; tv_spec_ps         ; 1  ;    ; tv
+
+INSERT_UPDATE TmaAtomicPolicyCondition; code[unique = true]; statement(code, $catalogVersion); $catalogVersion
+                                      ; has_tv_spec        ; tv_spec_ps
+
+INSERT_UPDATE TmaCompositePolicyCondition; code[unique = true]   ; children(code, $catalogVersion); conditionsEvaluatorType(code); $catalogVersion
+                                         ; has_tv_specific_plans ; has_tv_spec                    ; OR                           ;
+
+INSERT_UPDATE TmaProcessTypesPolicyStatement; code[unique = true]; processes(code); $catalogVersion
+                                            ; acquisition_ps     ; ACQUISITION
+
+INSERT_UPDATE TmaAtomicPolicyCondition; code[unique = true] ; statement(code, $catalogVersion); $catalogVersion
+                                      ; is_acquisition_flow ; acquisition_ps
+
+INSERT_UPDATE TmaCompositePolicyCondition; code[unique = true]; children(code, $catalogVersion)            ; conditionsEvaluatorType(code); $catalogVersion
+                                         ; is_acq_and_Tv_plan ; is_acquisition_flow, has_tv_specific_plans ; AND                          ;
+
+INSERT_UPDATE TmaPsChecklistPolicyStatement; code[unique = true]        ; type(code)           ; productSpecifications(id, $catalogVersion); $catalogVersion
+                                           ; tv_plan_check_installation ; INSTALLATION_ADDRESS ; tv                                        ;
+
+INSERT_UPDATE TmaPolicyAction; code[unique = true]              ; statement(code, $catalogVersion); actionType(code); $catalogVersion
+                             ; tv_plan_req_serviceability_check ; tv_plan_check_installation      ; CHECKLIST
+
+INSERT_UPDATE TmaCompatibilityPolicy; code[unique = true]           ; conditions(code, $catalogVersion); actions(code, $catalogVersion)   ; conditionsEvaluatorType(code); $catalogVersion
+                                    ; tv_plan_requires_installation ; is_acq_and_Tv_plan               ; tv_plan_req_serviceability_check ; OR
+
+#################################################################################################
+# Policy5 (Journey Checklist for Appointment selection)
+#A customer needs to perform a Appointment check if he purchases a Product Offering specified by the tv Product Specification
+#################################################################################################
+INSERT_UPDATE TmaPsPolicyStatement; code[unique = true]; min; max; productSpecification(id, $catalogVersion); $catalogVersion
+                                  ; tv_spec_ps         ; 1  ;    ; tv
+
+INSERT_UPDATE TmaAtomicPolicyCondition; code[unique = true]; statement(code, $catalogVersion); $catalogVersion
+                                      ; has_tv_spec        ; tv_spec_ps
+
+INSERT_UPDATE TmaCompositePolicyCondition; code[unique = true]   ; children(code, $catalogVersion); conditionsEvaluatorType(code); $catalogVersion
+                                         ; has_tv_specific_plans ; has_tv_spec                    ; OR                           ;
+
+INSERT_UPDATE TmaProcessTypesPolicyStatement; code[unique = true]   ; processes(code); $catalogVersion
+                                            ; acquisition_statement ; ACQUISITION
+
+INSERT_UPDATE TmaAtomicPolicyCondition; code[unique = true] ; statement(code, $catalogVersion); $catalogVersion
+                                      ; is_acquisition_flow ; acquisition_statement
+
+INSERT_UPDATE TmaCompositePolicyCondition; code[unique = true]; children(code, $catalogVersion)            ; conditionsEvaluatorType(code); $catalogVersion
+                                         ; is_acq_and_Tv_plan ; is_acquisition_flow, has_tv_specific_plans ; AND                          ;
+
+INSERT_UPDATE TmaPsChecklistPolicyStatement; code[unique = true]        ; type(code)  ; productSpecifications(id, $catalogVersion); $catalogVersion
+                                           ; tv_plans_check_appointment ; APPOINTMENT ; tv                                        ;
+
+INSERT_UPDATE TmaPolicyAction; code[unique = true]           ; statement(code, $catalogVersion); actionType(code); $catalogVersion
+                             ; tv_plan_req_appointment_check ; tv_plans_check_appointment      ; CHECKLIST
+
+INSERT_UPDATE TmaCompatibilityPolicy; code[unique = true]           ; conditions(code, $catalogVersion); actions(code, $catalogVersion); conditionsEvaluatorType(code); $catalogVersion
+                                    ; tv_plans_requires_appointment ; is_acq_and_Tv_plan               ; tv_plan_req_appointment_check ; OR

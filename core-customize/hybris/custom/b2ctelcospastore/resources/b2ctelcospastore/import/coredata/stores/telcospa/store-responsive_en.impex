@@ -1,0 +1,14 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+#
+# Import the telco BaseStore
+#
+
+# Language
+$lang = en
+
+# Create Base Store
+UPDATE BaseStore; uid[unique = true]; name[lang = $lang]
+                ; telcospa          ; "Telco Store"

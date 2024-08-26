@@ -1,0 +1,37 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+#******************************This file is generated - please do not edit it. It will be regenerated after every build.********************************#
+# ImpEx for Importing Classification Categories into utilities Store
+
+# Macros / Replacement Parameter definitions
+$productCatalog = utilitiesSpaProductCatalog
+$productCatalogName = Utilities Spa Product Catalog
+$classCatalogVersion = catalogversion(catalog(id[default = 'utilitiesSpaClassification']), version[default = '1.0'])[unique = true, default = 'utilitiesSpaClassification:1.0']
+$classSystemVersion = systemVersion(catalog(id[default = 'utilitiesSpaClassification']), version[default = '1.0'])[unique = true]
+
+# Language
+$lang = en
+
+$systemName = utilitiesSpaClassification;
+$systemVersion = 1.0;
+
+# Insert Classifications
+INSERT_UPDATE ClassificationClass; $classCatalogVersion; code[unique = true]             ; name[lang = $lang]
+                                 ;                     ; electricitydeviceclassification ; Electricity Devices
+                                 ;                     ; serviceplanclassification       ; Service Plans
+                                 ;                     ; compatibilityclassification     ; Compatibility Features
+
+
+# Insert Classification Attributes
+INSERT_UPDATE ClassificationAttribute; code[unique = true]; name[lang = $lang]; $classSystemVersion
+                                     ; color              ; Color
+                                     ; weight             ; Weight
+                                     ; height             ; Height
+                                     ; width              ; Width
+                                     ; lifespan           ; Lifespan
+                                     ; power              ; Power
+                                     ; voltage            ; Voltage
+                                     ; material           ; Material
+                                     ; viewangle          ; Viewing Angle

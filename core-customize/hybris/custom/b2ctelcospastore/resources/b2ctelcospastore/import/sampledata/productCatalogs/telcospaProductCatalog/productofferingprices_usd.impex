@@ -1,0 +1,566 @@
+$productCatalog = telcospaProductCatalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = '$productCatalog:Staged']
+$currency = currency(isocode)[default = USD]
+$priceEvent = priceEvent(code)[default='paynow']
+$priceEventRcUc = priceEvent(code)[default='monthly']
+$lang = en
+$processTypes = processTypes(code)
+$subscriptionTerms = subscriptionTerms(id)[unique = true]
+$priority = priority[default=0]
+$appliedToPops = appliedToPops(id, $catalogVersion)[unique=true]
+$popAlteration = popAlteration(id, $catalogVersion)[unique=true]
+
+################################################
+###            One time charges              ###
+################################################
+
+INSERT_UPDATE TmaOneTimeProdOfferPriceCharge; id[unique = true]           ; $catalogVersion; value  ; $priceEvent    ; $currency; description[lang = $lang]
+                                            ; OTC_0_61_USD                ;                ; 0.61   ;                ;          ; Pay one time charges of 0.61$.
+                                            ; OTC_3_11_USD                ;                ; 3.11   ;                ;          ; Pay one time charges of 3.11$.
+                                            ; OTC_4_USD                   ;                ; 4      ;                ;          ; Pay one time charges of 4$.
+                                            ; OTC_4_USD_global_discount   ;                ; 4      ;                ;          ; Discount worth 4$.
+                                            ; OTC_5_81_USD                ;                ; 5.81   ;                ;          ; Pay one time charges of 5.81$
+                                            ; OTC_6_37_USD                ;                ; 6.37   ;                ;          ; Pay one time charges of 6.37$
+                                            ; OTC_6_65_USD                ;                ; 6.65   ;                ;          ; Pay one time charges of 6.65$
+                                            ; OTC_6_76_USD                ;                ; 6.76   ;                ;          ; Pay one time charges of 6.76$
+                                            ; OTC_8_2_USD                 ;                ; 8.2    ;                ;          ; Pay one time charges of 8.2$
+                                            ; OTC_8_89_USD                ;                ; 8.89   ;                ;          ; Pay one time charges of 8.89$
+                                            ; OTC_9_14_USD                ;                ; 9.14   ;                ;          ; Pay one time charges of 9.14$
+                                            ; OTC_9_25_USD                ;                ; 9.25   ;                ;          ; Pay one time charges of 9.25$
+                                            ; OTC_9_72_USD                ;                ; 9.72   ;                ;          ; Pay one time charges of 9.72$
+                                            ; OTC_9_84_USD                ;                ; 9.84   ;                ;          ; Pay one time charges of 9.84$
+                                            ; OTC_10_USD                  ;                ; 10     ;                ;          ; Pay one time charges of 10$
+                                            ; OTC_10_35_USD               ;                ; 10.35  ;                ;          ; Pay one time charges of 10.35$
+                                            ; OTC_10_43_USD               ;                ; 10.43  ;                ;          ; Pay one time charges of 10.43$
+                                            ; OTC_10_75_USD               ;                ; 10.75  ;                ;          ; Pay one time charges of 10.75$
+                                            ; OTC_11_USD                  ;                ; 11     ;                ;          ; Pay one time charges of 11$
+                                            ; OTC_11_94_USD               ;                ; 11.94  ;                ;          ; Pay one time charges of 11.94$
+                                            ; OTC_11_95_USD               ;                ; 11.95  ;                ;          ; Pay one time charges of 11.95$
+                                            ; OTC_12_USD                  ;                ; 12     ;                ;          ; Pay one time charges of 12$
+                                            ; OTC_12_66_USD               ;                ; 12.66  ;                ;          ; Pay one time charges of 12.66$.
+                                            ; OTC_13_USD                  ;                ; 13     ;                ;          ; Pay one time charges of 13$.
+                                            ; OTC_13_91_USD               ;                ; 13.91  ;                ;          ; Pay one time charges of 13.91$.
+                                            ; OTC_14_USD                  ;                ; 14     ;                ;          ; Pay one time charges of 14$.
+                                            ; OTC_14_9_USD                ;                ; 14.9   ;                ;          ; Pay one time charges of 14.9$.
+                                            ; OTC_15_USD                  ;                ; 15     ;                ;          ; Pay one time charges of 15$.
+                                            ; OTC_15_USD_OC               ;                ; 15     ; oncancellation ;          ; Pay 15$ on cancellation.
+                                            ; OTC_15_USD_OFB              ;                ; 15     ; onfirstbill    ;          ; Pay 15$ on first bill.
+                                            ; OTC_25_USD_OC               ;                ; 25     ; oncancellation ;          ; Pay 25$ on cancellation.
+                                            ; OTC_16_USD                  ;                ; 16     ;                ;          ; Pay one time charges of 16$.
+                                            ; OTC_16_41_USD               ;                ; 16.41  ;                ;          ; Pay one time charges of 16.41$.
+                                            ; OTC_16_66_USD               ;                ; 16.66  ;                ;          ; Pay one time charges of 16.66$.
+                                            ; OTC_17_USD                  ;                ; 17     ;                ;          ; Pay one time charges of 17$.
+                                            ; OTC_17_23_USD               ;                ; 17.23  ;                ;          ; Pay one time charges of 17.23$.
+                                            ; OTC_18_62_USD               ;                ; 18.62  ;                ;          ; Pay one time charges of 18.62$.
+                                            ; OTC_19_USD                  ;                ; 19     ;                ;          ; Pay one time charges of 19$.
+                                            ; OTC_19_01_USD               ;                ; 19.01  ;                ;          ; Pay one time charges of 19.01$.
+                                            ; OTC_19_04_USD               ;                ; 19.04  ;                ;          ; Pay one time charges of 19.04$.
+                                            ; OTC_19_64_USD               ;                ; 19.64  ;                ;          ; Pay one time charges of 19.64$.
+                                            ; OTC_20_USD                  ;                ; 20     ;                ;          ; Pay one time charges of 20$.
+                                            ; OTC_21_USD                  ;                ; 21     ;                ;          ; Pay one time charges of 21$.
+                                            ; OTC_21_58_USD               ;                ; 21.58  ;                ;          ; Pay one time charges of 21.58$.
+                                            ; OTC_22_USD                  ;                ; 22     ;                ;          ; Pay one time charges of 22$.
+                                            ; OTC_22_26_USD               ;                ; 22.26  ;                ;          ; Pay one time charges of 22.26$.
+                                            ; OTC_21_38_USD               ;                ; 21.38  ;                ;          ; Pay one time charges of 21.38$.
+                                            ; OTC_22_85_USD               ;                ; 22.85  ;                ;          ; Pay one time charges of 22.85$.
+                                            ; OTC_23_USD                  ;                ; 23     ;                ;          ; Pay one time charges of 23$.
+                                            ; OTC_24_USD                  ;                ; 25     ;                ;          ; Pay one time charges of 25$.
+                                            ; OTC_24_55_USD               ;                ; 24.55  ;                ;          ; Pay one time charges of 24.55$.
+                                            ; OTC_24_92_USD               ;                ; 24.92  ;                ;          ; Pay one time charges of 24.92$.
+                                            ; OTC_25_USD                  ;                ; 25     ;                ;          ; Pay one time charges of 25$.
+                                            ; OTC_25_92_USD               ;                ; 25.92  ;                ;          ; Pay one time charges of 25.92$.
+                                            ; OTC_24_94_USD               ;                ; 25.94  ;                ;          ; Pay one time charges of 25.94$.
+                                            ; OTC_25_95_USD               ;                ; 25.95  ;                ;          ; Pay one time charges of 25.95$.
+                                            ; OTC_26_USD                  ;                ; 26     ;                ;          ; Pay one time charges of 26$.
+                                            ; OTC_27_79_USD               ;                ; 27.79  ;                ;          ; Pay one time charges of 27.79$.
+                                            ; OTC_27_USD                  ;                ; 27     ;                ;          ; Pay one time charges of 27$.
+                                            ; OTC_28_USD                  ;                ; 28     ;                ;          ; Pay one time charges of 28$.
+                                            ; OTC_28_52_USD               ;                ; 28.52  ;                ;          ; Pay one time charges of 28.52$.
+                                            ; OTC_29_USD                  ;                ; 29     ;                ;          ; Pay one time charges of 29$.
+                                            ; OTC_29_96_USD               ;                ; 29.96  ;                ;          ; Pay one time charges of 29.96$.
+                                            ; OTC_30_USD                  ;                ; 30     ;                ;          ; Pay one time charges of 30$.
+                                            ; OTC_31_USD                  ;                ; 31     ;                ;          ; Pay one time charges of 31$.
+                                            ; OTC_32_USD                  ;                ; 32     ;                ;          ; Pay one time charges of 32$.
+                                            ; OTC_32_13_USD               ;                ; 32.13  ;                ;          ; Pay one time charges of 32.13$.
+                                            ; OTC_32_65_USD               ;                ; 32.65  ;                ;          ; Pay one time charges of 32.65$.
+                                            ; OTC_33_USD                  ;                ; 33     ;                ;          ; Pay one time charges of 33$.
+                                            ; OTC_33_11_USD               ;                ; 33.11  ;                ;          ; Pay one time charges of 33.11$.
+                                            ; OTC_33_67_USD               ;                ; 33.67  ;                ;          ; Pay one time charges of 33.67$.
+                                            ; OTC_34_USD                  ;                ; 34     ;                ;          ; Pay one time charges of 34$.
+                                            ; OTC_34_95_USD               ;                ; 34.95  ;                ;          ; Pay one time charges of 34.95$.
+                                            ; OTC_35_USD                  ;                ; 35     ;                ;          ; Pay one time charges of 35$.
+                                            ; OTC_35_USD_OC               ;                ; 35     ; oncancellation ;          ; Pay 35$ on cancellation.
+                                            ; OTC_35_5_USD                ;                ; 35.5   ;                ;          ; Pay one time charges of 35.5$.
+                                            ; OTC_35_95_USD               ;                ; 35.95  ;                ;          ; Pay one time charges of 35.95$.
+                                            ; OTC_36_USD                  ;                ; 36     ;                ;          ; Pay one time charges of 36$.
+                                            ; OTC_37_USD                  ;                ; 37     ;                ;          ; Pay one time charges of 37$.
+                                            ; OTC_38_USD                  ;                ; 38     ;                ;          ; Pay one time charges of 38$.
+                                            ; OTC_38_95_USD               ;                ; 38.95  ;                ;          ; Pay one time charges of 38.95$.
+                                            ; OTC_39_USD                  ;                ; 39     ;                ;          ; Pay one time charges of 39$.
+                                            ; OTC_40_USD                  ;                ; 40     ;                ;          ; Pay one time charges of 40$.
+                                            ; OTC_40_USD_OC               ;                ; 60     ; oncancellation ;          ; Pay 60$ on cancellation.
+                                            ; OTC_40_28_USD               ;                ; 40.28  ;                ;          ; Pay one time charges of 40.28$.
+                                            ; OTC_40_95_USD               ;                ; 40.95  ;                ;          ; Pay one time charges of 40.95$.
+                                            ; OTC_41_USD                  ;                ; 41     ;                ;          ; Pay one time charges of 41$.
+                                            ; OTC_42_USD                  ;                ; 42     ;                ;          ; Pay one time charges of 42$.
+                                            ; OTC_43_USD                  ;                ; 43     ;                ;          ; Pay one time charges of 43$.
+                                            ; OTC_44_USD                  ;                ; 44     ;                ;          ; Pay one time charges of 44$.
+                                            ; OTC_45_USD                  ;                ; 45     ;                ;          ; Pay one time charges of 45$.
+                                            ; OTC_45_12_USD               ;                ; 45.12  ;                ;          ; Pay one time charges of 45.12$.
+                                            ; OTC_45_71_USD               ;                ; 45.71  ;                ;          ; Pay one time charges of 45.71$.
+                                            ; OTC_45_78_USD               ;                ; 45.78  ;                ;          ; Pay one time charges of 45.78$.
+                                            ; OTC_46_USD                  ;                ; 46     ;                ;          ; Pay one time charges of 46$.
+                                            ; OTC_47_USD                  ;                ; 47     ;                ;          ; Pay one time charges of 47$.
+                                            ; OTC_48_USD                  ;                ; 48     ;                ;          ; Pay one time charges of 48$.
+                                            ; OTC_49_USD                  ;                ; 49     ;                ;          ; Pay one time charges of 49$.
+                                            ; OTC_49_9_USD                ;                ; 49.9   ;                ;          ; Pay one time charges of 49.9$.
+                                            ; OTC_50_USD                  ;                ; 50     ;                ;          ; Pay one time charges of 50$.
+                                            ; OTC_68_9_USD                ;                ; 68.9   ;                ;          ; Pay one time charges of 68.9$.
+                                            ; OTC_86_16_USD               ;                ; 86.16  ;                ;          ; Pay one time charges of 86.16$.
+                                            ; OTC_89_76_USD               ;                ; 89.76  ;                ;          ; Pay one time charges of 89.76$.
+                                            ; OTC_96_USD                  ;                ; 96     ;                ;          ; Pay one time charges of 96$.
+                                            ; OTC_98_44_USD               ;                ; 98.44  ;                ;          ; Pay one time charges of 98.44$.
+                                            ; OTC_100_USD                 ;                ; 100    ;                ;          ; Pay one time charges of 100$.
+                                            ; OTC_104_USD                 ;                ; 104    ;                ;          ; Pay one time charges of 104$.
+                                            ; OTC_107_USD                 ;                ; 107    ;                ;          ; Pay one time charges of 107$.
+                                            ; OTC_108_USD                 ;                ; 108    ;                ;          ; Pay one time charges of 108$.
+                                            ; OTC_109_USD                 ;                ; 109    ;                ;          ; Pay one time charges of 109$.
+                                            ; OTC_111_USD                 ;                ; 111    ;                ;          ; Pay one time charges of 111$.
+                                            ; OTC_112_USD                 ;                ; 112    ;                ;          ; Pay one time charges of 112$.
+                                            ; OTC_112_USD_global_discount ;                ; 112    ;                ;          ; Pay one time charges of 112$.
+                                            ; OTC_116_USD                 ;                ; 116    ;                ;          ; Pay one time charges of 116$.
+                                            ; OTC_117_25_USD              ;                ; 117.25 ;                ;          ; Pay one time charges of 117.25$.
+                                            ; OTC_119_USD                 ;                ; 119    ;                ;          ; Pay one time charges of 119$.
+                                            ; OTC_120_78_USD              ;                ; 120.78 ;                ;          ; Pay one time charges of 120.78$.
+                                            ; OTC_121_USD                 ;                ; 121    ;                ;          ; Pay one time charges of 121$.
+                                            ; OTC_122_USD                 ;                ; 122    ;                ;          ; Pay one time charges of 122$.
+                                            ; OTC_122_9_USD               ;                ; 122.9  ;                ;          ; Pay one time charges of 122.9$.
+                                            ; OTC_122_22_USD              ;                ; 122.22 ;                ;          ; Pay one time charges of 122.22$.
+                                            ; OTC_122_68_USD              ;                ; 122.68 ;                ;          ; Pay one time charges of 122.68$.
+                                            ; OTC_122_89_USD              ;                ; 122.89 ;                ;          ; Pay one time charges of 122.89$.
+                                            ; OTC_123_USD                 ;                ; 123    ;                ;          ; Pay one time charges of 123$.
+                                            ; OTC_127_37_USD              ;                ; 127.37 ;                ;          ; Pay one time charges of 127.37$.
+                                            ; OTC_136_USD                 ;                ; 136    ;                ;          ; Pay one time charges of 136$.
+                                            ; OTC_136_98_USD              ;                ; 136.98 ;                ;          ; Pay one time charges of 136.98$.
+                                            ; OTC_137_USD                 ;                ; 137    ;                ;          ; Pay one time charges of 137$.
+                                            ; OTC_139_USD                 ;                ; 139    ;                ;          ; Pay one time charges of 139$.
+                                            ; OTC_143_USD                 ;                ; 143    ;                ;          ; Pay one time charges of 143$.
+                                            ; OTC_144_USD                 ;                ; 144    ;                ;          ; Pay one time charges of 144$.
+                                            ; OTC_145_USD                 ;                ; 145    ;                ;          ; Pay one time charges of 145$.
+                                            ; OTC_147_USD                 ;                ; 147    ;                ;          ; Pay one time charges of 147$.
+                                            ; OTC_148_USD                 ;                ; 148    ;                ;          ; Pay one time charges of 148$.
+                                            ; OTC_149_USD                 ;                ; 149    ;                ;          ; Pay one time charges of 149$.
+                                            ; OTC_154_USD                 ;                ; 154    ;                ;          ; Pay one time charges of 154$.
+                                            ; OTC_155_USD                 ;                ; 155    ;                ;          ; Pay one time charges of 155$.
+                                            ; OTC_156_USD                 ;                ; 156    ;                ;          ; Pay one time charges of 156$.
+                                            ; OTC_157_USD                 ;                ; 157    ;                ;          ; Pay one time charges of 157$.
+                                            ; OTC_158_USD                 ;                ; 158    ;                ;          ; Pay one time charges of 158$.
+                                            ; OTC_159_USD                 ;                ; 159    ;                ;          ; Pay one time charges of 159$.
+                                            ; OTC_160_USD                 ;                ; 160    ;                ;          ; Pay one time charges of 160$.
+                                            ; OTC_165_USD                 ;                ; 165    ;                ;          ; Pay one time charges of 165$.
+                                            ; OTC_166_USD                 ;                ; 166    ;                ;          ; Pay one time charges of 166$.
+                                            ; OTC_171_USD                 ;                ; 171    ;                ;          ; Pay one time charges of 171$.
+                                            ; OTC_177_USD                 ;                ; 177    ;                ;          ; Pay one time charges of 177$.
+                                            ; OTC_178_USD                 ;                ; 178    ;                ;          ; Pay one time charges of 178$.
+                                            ; OTC_179_USD                 ;                ; 179    ;                ;          ; Pay one time charges of 179$.
+                                            ; OTC_179_49_USD              ;                ; 179.49 ;                ;          ; Pay one time charges of 179.49$.
+                                            ; OTC_180_USD                 ;                ; 180    ;                ;          ; Pay one time charges of 180$.
+                                            ; OTC_181_USD                 ;                ; 181    ;                ;          ; Pay one time charges of 181$.
+                                            ; OTC_182_USD                 ;                ; 182    ;                ;          ; Pay one time charges of 182$.
+                                            ; OTC_183_USD                 ;                ; 183    ;                ;          ; Pay one time charges of 183$.
+                                            ; OTC_184_USD                 ;                ; 184    ;                ;          ; Pay one time charges of 184$.
+                                            ; OTC_185_USD                 ;                ; 185    ;                ;          ; Pay one time charges of 185$.
+                                            ; OTC_186_USD                 ;                ; 186    ;                ;          ; Pay one time charges of 186$.
+                                            ; OTC_187_USD                 ;                ; 187    ;                ;          ; Pay one time charges of 187$.
+                                            ; OTC_188_USD                 ;                ; 188    ;                ;          ; Pay one time charges of 188$.
+                                            ; OTC_189_USD                 ;                ; 189    ;                ;          ; Pay one time charges of 189$.
+                                            ; OTC_190_USD                 ;                ; 190    ;                ;          ; Pay one time charges of 190$.
+                                            ; OTC_191_USD                 ;                ; 191    ;                ;          ; Pay one time charges of 191$.
+                                            ; OTC_192_USD                 ;                ; 192    ;                ;          ; Pay one time charges of 192$.
+                                            ; OTC_193_USD                 ;                ; 193    ;                ;          ; Pay one time charges of 193$.
+                                            ; OTC_198_USD                 ;                ; 198    ;                ;          ; Pay one time charges of 198$.
+                                            ; OTC_199_USD                 ;                ; 199    ;                ;          ; Pay one time charges of 199$.
+                                            ; OTC_200_USD                 ;                ; 200    ;                ;          ; Pay one time charges of 200$.
+                                            ; OTC_202_USD                 ;                ; 202    ;                ;          ; Pay one time charges of 202$.
+                                            ; OTC_211_USD                 ;                ; 211    ;                ;          ; Pay one time charges of 211$.
+                                            ; OTC_212_USD                 ;                ; 212    ;                ;          ; Pay one time charges of 212$.
+                                            ; OTC_213_USD                 ;                ; 213    ;                ;          ; Pay one time charges of 213$.
+                                            ; OTC_214_USD                 ;                ; 214    ;                ;          ; Pay one time charges of 214$.
+                                            ; OTC_216_USD                 ;                ; 216    ;                ;          ; Pay one time charges of 216$.
+                                            ; OTC_217_USD                 ;                ; 217    ;                ;          ; Pay one time charges of 217$.
+                                            ; OTC_218_USD                 ;                ; 218    ;                ;          ; Pay one time charges of 218$.
+                                            ; OTC_221_USD                 ;                ; 221    ;                ;          ; Pay one time charges of 221$.
+                                            ; OTC_222_USD                 ;                ; 222    ;                ;          ; Pay one time charges of 222$.
+                                            ; OTC_231_USD                 ;                ; 231    ;                ;          ; Pay one time charges of 231$.
+                                            ; OTC_233_USD                 ;                ; 233    ;                ;          ; Pay one time charges of 233$.
+                                            ; OTC_239_USD                 ;                ; 239    ;                ;          ; Pay one time charges of 239$.
+                                            ; OTC_243_USD                 ;                ; 243    ;                ;          ; Pay one time charges of 243$.
+                                            ; OTC_248_USD                 ;                ; 248    ;                ;          ; Pay one time charges of 248$.
+                                            ; OTC_263_34_USD              ;                ; 263.34 ;                ;          ; Pay one time charges of 263.34$.
+                                            ; OTC_274_89_USD              ;                ; 274.89 ;                ;          ; Pay one time charges of 274.89$.
+                                            ; OTC_280_USD                 ;                ; 280    ;                ;          ; Pay one time charges of 280$.
+                                            ; OTC_299_USD                 ;                ; 299    ;                ;          ; Pay one time charges of 299$.
+                                            ; OTC_300_USD                 ;                ; 300    ;                ;          ; Pay one time charges of 300$.
+                                            ; OTC_300_67_USD              ;                ; 300.67 ;                ;          ; Pay one time charges of 300.67$.
+                                            ; OTC_322_USD                 ;                ; 322    ;                ;          ; Pay one time charges of 322$.
+                                            ; OTC_331_USD                 ;                ; 331    ;                ;          ; Pay one time charges of 331$.
+                                            ; OTC_332_USD                 ;                ; 332    ;                ;          ; Pay one time charges of 332$.
+                                            ; OTC_333_USD                 ;                ; 333    ;                ;          ; Pay one time charges of 333$.
+                                            ; OTC_341_USD                 ;                ; 341    ;                ;          ; Pay one time charges of 341$.
+                                            ; OTC_342_USD                 ;                ; 342    ;                ;          ; Pay one time charges of 342$.
+                                            ; OTC_342_31_USD              ;                ; 342.31 ;                ;          ; Pay one time charges of 342.31$.
+                                            ; OTC_343_USD                 ;                ; 343    ;                ;          ; Pay one time charges of 343$.
+                                            ; OTC_345_USD                 ;                ; 345    ;                ;          ; Pay one time charges of 345$.
+                                            ; OTC_345_44_USD              ;                ; 345.44 ;                ;          ; Pay one time charges of 345.44$.
+                                            ; OTC_352_62_USD              ;                ; 352.62 ;                ;          ; Pay one time charges of 352.62$.
+                                            ; OTC_399_USD                 ;                ; 399    ;                ;          ; Pay one time charges of 399$.
+                                            ; OTC_402_16_USD              ;                ; 402.16 ;                ;          ; Pay one time charges of 402.16$.
+                                            ; OTC_433_USD                 ;                ; 433    ;                ;          ; Pay one time charges of 433$.
+                                            ; OTC_449_USD                 ;                ; 449    ;                ;          ; Pay one time charges of 449$.
+                                            ; OTC_456_USD                 ;                ; 456    ;                ;          ; Pay one time charges of 456$.
+                                            ; OTC_491_23_USD              ;                ; 491.23 ;                ;          ; Pay one time charges of 491.23$.
+                                            ; OTC_505_78_USD              ;                ; 505.78 ;                ;          ; Pay one time charges of 505.78$.
+                                            ; OTC_527_04_USD              ;                ; 527.04 ;                ;          ; Pay one time charges of 527.04$.
+                                            ; OTC_549_USD                 ;                ; 549    ;                ;          ; Pay one time charges of 549$.
+                                            ; OTC_579_USD                 ;                ; 579    ;                ;          ; Pay one time charges of 579$.
+                                            ; OTC_599_USD                 ;                ; 599    ;                ;          ; Pay one time charges of 599$.
+                                            ; OTC_649_USD                 ;                ; 649    ;                ;          ; Pay one time charges of 649$.
+                                            ; OTC_699_USD                 ;                ; 699    ;                ;          ; Pay one time charges of 699$.
+                                            ; OTC_709_USD                 ;                ; 709    ;                ;          ; Pay one time charges of 709$.
+                                            ; OTC_724_99_USD              ;                ; 724.99 ;                ;          ; Pay one time charges of 724.99$.
+                                            ; OTC_749_USD                 ;                ; 749    ;                ;          ; Pay one time charges of 749$.
+                                            ; OTC_770_59_USD              ;                ; 770.59 ;                ;          ; Pay one time charges of 770.59$.
+                                            ; OTC_789_USD                 ;                ; 789    ;                ;          ; Pay one time charges of 789$.
+                                            ; OTC_799_USD                 ;                ; 799    ;                ;          ; Pay one time charges of 799$.
+                                            ; OTC_809_USD                 ;                ; 809    ;                ;          ; Pay one time charges of 809$.
+                                            ; OTC_849_USD                 ;                ; 849    ;                ;          ; Pay one time charges of 849$.
+                                            ; OTC_949_USD                 ;                ; 949    ;                ;          ; Pay one time charges of 949$.
+                                            ; OTC_999_USD                 ;                ; 999    ;                ;          ; Pay one time charges of 999$.
+                                            ; OTC_1149_USD                ;                ; 1149   ;                ;          ; Pay one time charges of 1149$.
+                                            ; OTC_64_USD                  ;                ; 64.1   ;                ;          ; Pay one time charges of 64.1$.
+                                            ; OTC_427_USD                 ;                ; 427.5  ;                ;          ; Pay one time charges of 427.5$.
+                                            ; OTC_489_USD                 ;                ; 489    ;                ;          ; Pay one time charges of 489$.
+                                            ; OTC_489_USD_global_discount ;                ; 489    ;                ;          ; Pay one time charges of 489$.
+                                            ; OTC_0_USD                   ;                ; 0      ;                ;          ; Pay one time charges of 0$.
+
+INSERT_UPDATE TmaOneTimeProdOfferPriceCharge; id[unique = true]; $catalogVersion; value   ; $priceEvent; $currency; description[lang = $lang]
+                                            ; OTC_59_99_USD    ;                ; 59.99   ;            ;          ; Pay one time charges of 59.99$.
+                                            ; OTC_69_99_USD    ;                ; 69.99   ;            ;          ; Pay one time charges of 69.99$.
+                                            ; OTC_899_99_USD   ;                ; 899.99  ;            ;          ; Pay one time charges of 899.99$.
+                                            ; OTC_1099_99_USD  ;                ; 1099.99 ;            ;          ; Pay one time charges of 1099.99$.
+                                            ; OTC_1199_99_USD  ;                ; 1199.99 ;            ;          ; Pay one time charges of 1199.99$.
+                                            ; OTC_1299_99_USD  ;                ; 1299.99 ;            ;          ; Pay one time charges of 1299.99$.
+                                            ; OTC_1499_99_USD  ;                ; 1499.99 ;            ;          ; Pay one time charges of 1499.99$.
+
+################################################
+###              Recurring charges           ###
+################################################
+
+INSERT_UPDATE TmaRecurringProdOfferPriceCharge; id[unique = true]                 ; $catalogVersion; value; $currency; $priceEventRcUc; cycleStart; cycleEnd; description[lang = $lang]
+                                              ; RC_0_USD_start_1_end_1            ;                ; 0    ;          ;                ; 1         ; 1       ; Pay 0$ for a month.
+                                              ; RC_2_USD_start_1                  ;                ; 2    ;          ;                ; 1         ;         ; Pay 2$ every month.
+                                              ; RC_3_USD_start_1                  ;                ; 3    ;          ;                ; 1         ;         ; Pay 3$ every month.
+                                              ; RC_5_USD_start_1                  ;                ; 5    ;          ;                ; 1         ;         ; Pay 5$ every month.
+                                              ; RC_8_USD_start_1                  ;                ; 8    ;          ;                ; 1         ;         ; Pay 8$ every month.
+                                              ; RC_9_USD_start_1                  ;                ; 9    ;          ;                ; 1         ;         ; Pay 9$ every month.
+                                              ; RC_10_USD_start_1                 ;                ; 10   ;          ;                ; 1         ;         ; Pay 10$ every month.
+                                              ; RC_10_USD_start_1_end_3           ;                ; 10   ;          ;                ; 1         ; 3       ; Pay 10$ every month for the first 3 months.
+                                              ; RC_15_USD_start_1                 ;                ; 15   ;          ;                ; 1         ;         ; Pay 15$ every month.
+                                              ; RC_15_USD_start_1_global_discount ;                ; 15   ;          ;                ; 1         ;         ; Enjoy discount worth 15$ every month.
+                                              ; RC_15_USD_start_3                 ;                ; 15   ;          ;                ; 3         ;         ; 3rd month onwards pay 15$ every month.
+                                              ; RC_16_USD_start_3                 ;                ; 16   ;          ;                ; 3         ;         ; 3rd month onwards pay 16$ every month.
+                                              ; RC_17_USD_start_3                 ;                ; 17   ;          ;                ; 3         ;         ; 3rd month onwards pay 17$ every month.
+                                              ; RC_18_USD_start_3                 ;                ; 18   ;          ;                ; 3         ;         ; 3rd month onwards pay 18$ every month.
+                                              ; RC_19_USD_start_1_end_3           ;                ; 19   ;          ;                ; 1         ; 3       ; Pay 19$ every month for the first 3 months.
+                                              ; RC_20_USD_start_1                 ;                ; 20   ;          ;                ; 1         ;         ; Pay 20$ every month.
+                                              ; RC_20_USD_start_1_global_discount ;                ; 20   ;          ;                ; 1         ;         ; Enjoy discount worth 20$ every month.
+                                              ; RC_20_USD_start_1_end_3           ;                ; 20   ;          ;                ; 1         ; 3       ; Pay 20$ every month for the first 3 months.
+                                              ; RC_20_USD_start_4                 ;                ; 20   ;          ;                ; 4         ;         ; 4th month onwards pay 20$ every month.
+                                              ; RC_25_USD_start_1                 ;                ; 25   ;          ;                ; 1         ;         ; Pay 25$ every month.
+                                              ; RC_25_USD_start_3                 ;                ; 25   ;          ;                ; 3         ;         ; 3rd month onwards pay 25$ every month.
+                                              ; RC_26_USD_start_3                 ;                ; 26   ;          ;                ; 3         ;         ; 3rd month onwards pay 26$ every month.
+                                              ; RC_27_USD_start_3                 ;                ; 27   ;          ;                ; 3         ;         ; 3rd month onwards pay 27$ every month.
+                                              ; RC_28_USD_start_1                 ;                ; 28   ;          ;                ; 1         ;         ; Pay 25$ every month.
+                                              ; RC_28_USD_start_3                 ;                ; 28   ;          ;                ; 3         ;         ; 3rd month onwards pay 28$ every month.
+                                              ; RC_29_USD_start_1_end_3           ;                ; 29   ;          ;                ; 1         ; 3       ; Pay 29$ every month for the first 3 months.
+                                              ; RC_29_USD_start_2                 ;                ; 29   ;          ;                ; 2         ;         ; 2nd month onwards pay 29$ every month.
+                                              ; RC_29_USD_start_4                 ;                ; 29   ;          ;                ; 4         ;         ; 4th month onwards pay 29$ every month.
+                                              ; RC_30_USD_start_1                 ;                ; 30   ;          ;                ; 1         ;         ; Pay 30$ every month.
+                                              ; RC_30_USD_start_4                 ;                ; 30   ;          ;                ; 4         ;         ; 4th month onwards pay 30$ every month.
+                                              ; RC_35_USD_start_1                 ;                ; 35   ;          ;                ; 1         ;         ; Pay 35$ every month.
+                                              ; RC_35_USD_start_3                 ;                ; 35   ;          ;                ; 3         ;         ; 3rd month onwards pay 35$ every month.
+                                              ; RC_36_USD_start_3                 ;                ; 36   ;          ;                ; 3         ;         ; 3rd month onwards pay 36$ every month.
+                                              ; RC_37_USD_start_3                 ;                ; 37   ;          ;                ; 3         ;         ; 3rd month onwards pay 37$ every month.
+                                              ; RC_38_USD_start_1                 ;                ; 38   ;          ;                ; 1         ;         ; Pay 38$ every month.
+                                              ; RC_38_USD_start_3                 ;                ; 38   ;          ;                ; 3         ;         ; 3rd month onwards pay 38$ every month.
+                                              ; RC_40_USD_start_1                 ;                ; 40   ;          ;                ; 1         ;         ; Pay 40$ every month.
+                                              ; RC_40_USD_start_1_end_3           ;                ; 40   ;          ;                ; 1         ; 3       ; Pay 40$ every month for the first 3 months.
+                                              ; RC_10_USD_start_1_end_8           ;                ; 10   ;          ;                ; 1         ; 8       ; Pay 10$ every month for the first 3 months.
+                                              ; RC_10_USD_start_8_end_16          ;                ; 10   ;          ;                ; 8         ; 16      ; Pay 104 every month from 8th month to 16th month.
+                                              ; RC_5_USD_start_16_end_24          ;                ; 5    ;          ;                ; 16        ; 24      ; Pay 5$ every month from 16th month to 24th month.
+                                              ; RC_40_USD_start_4                 ;                ; 45   ;          ;                ; 4         ;         ; 4th month onwards pay 30$ every month.
+                                              ; RC_45_USD_start_1                 ;                ; 45   ;          ;                ; 1         ;         ; Pay 45$ every month.
+                                              ; RC_45_USD_start_1_global_discount ;                ; 45   ;          ;                ; 1         ;         ; Enjoy discount worth 45$ every month.
+                                              ; RC_45_USD_start_1_end_3           ;                ; 45   ;          ;                ; 1         ; 3       ; Pay 19$ every month for the first 3 months.
+                                              ; RC_45_USD_start_4                 ;                ; 45   ;          ;                ; 4         ;         ; 4th month onwards pay 45$ every month.
+                                              ; RC_45_USD_start_4_end_6           ;                ; 45   ;          ;                ; 4         ; 6       ; Pay 45$ every month from 4th to 6th month.
+                                              ; RC_48_USD_start_1                 ;                ; 48   ;          ;                ; 1         ;         ; Pay 48$ every month.
+                                              ; RC_50_USD_start_1                 ;                ; 50   ;          ;                ; 1         ;         ; Pay 50$ every month.
+                                              ; RC_55_USD_start_1                 ;                ; 55   ;          ;                ; 1         ;         ; Pay 55$ every month.
+                                              ; RC_58_USD_start_1                 ;                ; 58   ;          ;                ; 1         ;         ; Pay 58$ every month.
+                                              ; RC_60_USD_start_4_end_6           ;                ; 60   ;          ;                ; 4         ; 6       ; Pay 60$ every month from 4th to 6th month.
+                                              ; RC_60_USD_start_7                 ;                ; 60   ;          ;                ; 7         ;         ; 7th month onwards pay 60$ every month.
+                                              ; RC_85_USD_start_7                 ;                ; 85   ;          ;                ; 7         ;         ; Pay 85$ every month.
+                                              ; RC_95_USD_start_1_end_18          ;                ; 85   ;          ;                ; 1         ; 18      ; Pay 85$ every month for the first 18 months.
+
+
+INSERT_UPDATE TmaRecurringProdOfferPriceCharge; id[unique = true]                 ; $catalogVersion; value; $currency; $priceEventRcUc; cycleStart; cycleEnd; description[lang = $lang]
+                                              ; RC_3_99_USD_start_1_end_6         ;                ; 3.99 ;          ;                ; 1         ; 6       ; Pay 3.99$ every month for first 6 months.
+                                              ; RC_6_99_USD                       ;                ; 6.99 ;          ;                ; 1         ;         ; Pay 6.99$ every month.
+                                              ; RC_6_99_USD_start_7               ;                ; 6.99 ;          ;                ; 7         ;         ; 7th month onwards Pay 6.99$ every month.
+                                              ; RC_8_99_USD                       ;                ; 8.99 ;          ;                ; 1         ;         ; Pay 8.99$ every month.
+                                              ; RC_9_99_USD                       ;                ; 9.99 ;          ;                ; 1         ;         ; Pay 9.99$ every month.
+                                              ; RC_12_USD_start_1                 ;                ; 12.0 ;          ;                ; 1         ;         ; Pay 12$ every month.
+                                              ; RC_12_USD_start_1_global_discount ;                ; 12.0 ;          ;                ; 1         ;         ; Enjoy discount worth 12$ every month.
+                                              ; RC_12_USD_start_1_end_8           ;                ; 12.0 ;          ;                ; 1         ; 8       ; Pay 12$ every month for the first 8 months.
+                                              ; RC_12_USD_start_8_end_16          ;                ; 12.0 ;          ;                ; 8         ; 16      ; Pay 12$ every month from 8th to 16th month.
+                                              ; RC_6_USD_start_16_end_24          ;                ; 6.0  ;          ;                ; 16        ; 24      ; Pay 6$ every month from 16th to 24th month.
+
+################################################
+###              Usage charges               ###
+################################################
+
+INSERT_UPDATE TmaUsageProdOfferPriceCharge; id[unique = true]                                    ; value; tierStart; tierEnd; usageUnit(id)           ; $catalogVersion; $currency; $priceEventRcUc; description[lang = $lang]
+                                          ; UC_0_05_tierStart_101_end_200_USD                    ; 0.05 ; 101      ; 200    ; phone_minutes           ;                ;          ;                ; Pay 0.05$/minute for 101st to 200th minutes.
+                                          ; UC_0_07_tierStart_201_end_300_USD                    ; 0.07 ; 201      ; 300    ; phone_minutes           ;                ;          ;                ; Pay 0.07$/minute for 201st to 300th minutes.
+                                          ; UC_0_09_tierStart_301_USD                            ; 0.09 ; 301      ;        ; phone_minutes           ;                ;          ;                ; Pay 0.09$/minute for 301st minutes onwards.
+                                          ; UC_0_09_tierStart_1_minutes_USD                      ; 0.09 ; 1        ;        ; phone_minutes           ;                ;          ;                ; Pay 0.09$/minute.
+                                          ; UC_0_07_tierStart_1_minutes_USD                      ; 0.07 ; 1        ;        ; phone_minutes           ;                ;          ;                ; Pay 0.07$/minute.
+                                          ; UC_0_08_tierStart_1_minutes_USD                      ; 0.08 ; 1        ;        ; phone_minutes           ;                ;          ;                ; Pay 0.08$/minute.
+                                          ; UC_0_155_tierStart_1_minutes_USD                     ; 1.55 ; 1        ;        ; international_minutes   ;                ;          ;                ; Pay 1.55$/minute for international calling service.
+                                          ; UC_0_155_tierStart_1_minutes_USD_global_discount     ; 1.55 ; 1        ;        ; international_minutes   ;                ;          ;                ; Discount worth 1.55$/minute for intrenational calling service.
+                                          ; UC_0_09_tierStart_1_sms_USD                          ; 0.09 ; 1        ;        ; sms                     ;                ;          ;                ; Pay 0.09$/text message.
+                                          ; UC_0_09_tierStart_1_data_USD                         ; 0.09 ; 1        ;        ; mb                      ;                ;          ;                ; Pay 0.09/mb.
+
+                                          ; UC_3_documentaries_on_demand_USD                     ; 3    ; 1        ;        ; documentaries_on_demand ;                ;          ;                ; Pay 3$ for every documentary on demand.
+                                          ; UC_4_movies_on_demand_USD                            ; 4    ; 1        ;        ; movies_on_demand        ;                ;          ;                ; Pay 4$ for every movie on demand.
+                                          ; UC_5_blockbusters_on_demand_USD                      ; 5    ; 1        ;        ; blockbusters_on_demand  ;                ;          ;                ; Pay 5$ for every blockbuster on demand.
+
+                                          ; UC_2_documentaries_on_demand_USD                     ; 2    ; 1        ;        ; documentaries_on_demand ;                ;          ;                ; Pay 2$ for every documentary on demand.
+                                          ; UC_3_movies_on_demand_USD                            ; 3    ; 1        ;        ; movies_on_demand        ;                ;          ;                ; Pay 3$ for every movie on demand.
+                                          ; UC_4_blockbusters_on_demand_USD                      ; 4    ; 1        ;        ; blockbusters_on_demand  ;                ;          ;                ; Pay 4$ for every blockbuster on demand.
+
+                                          ; UC_1_20_documentaries_on_demand_USD                  ; 1.2  ; 1        ;        ; documentaries_on_demand ;                ;          ;                ; Pay 1.2$ for every documentary on demand.
+                                          ; UC_1_50_movies_on_demand_USD                         ; 1.5  ; 1        ;        ; movies_on_demand        ;                ;          ;                ; Pay 1.5$ for every movie on demand.
+                                          ; UC_2_50_blockbusters_on_demand_USD                   ; 2.5  ; 1        ;        ; blockbusters_on_demand  ;                ;          ;                ; Pay 2.5$ for every blockbuster on demand.
+
+                                          ; UC_0_30_movies_on_demand_USD                         ; 0.3  ; 1        ;        ; movies_on_demand        ;                ;          ;                ; Pay 0.3$ for every movie on demand.
+                                          ; UC_1_blockbusters_on_demand_USD                      ; 1    ; 1        ;        ; blockbusters_on_demand  ;                ;          ;                ; Pay 1$ for every blockbuster on demand.
+
+                                          ; UC_3_tierStart_1_end_5_documentaries_on_demand_USD   ; 3    ; 1        ; 5      ; documentaries_on_demand ;                ;          ;                ; Pay 3$ for first 5 documentaries on demand.
+                                          ; UC_4_tierStart_1_end_5__movies_on_demand_USD         ; 4    ; 1        ; 5      ; movies_on_demand        ;                ;          ;                ; Pay 4$ for first 5 movies on demand.
+                                          ; UC_5_tierStart_1_end_5__blockbusters_on_demand_USD   ; 5    ; 1        ; 5      ; blockbusters_on_demand  ;                ;          ;                ; Pay 5$ for first 5 blockbusters on demand.
+
+                                          ; UC_1_5_tierStart_1_end_5_documentaries_on_demand_USD ; 1.5  ; 1        ; 5      ; documentaries_on_demand ;                ;          ;                ; Pay 1.5$ for first 5 documentaries on demand.
+                                          ; UC_2_tierStart_1_end_5__movies_on_demand_USD         ; 2    ; 1        ; 5      ; movies_on_demand        ;                ;          ;                ; Pay 2$ for first 5 movies on demand.
+                                          ; UC_3_tierStart_1_end_5__blockbusters_on_demand_USD   ; 3    ; 1        ; 5      ; blockbusters_on_demand  ;                ;          ;                ; Pay 3$ for first 5 blockbusters on demand.
+
+                                          ; UC_0_05_tierStart_1_USD                              ; 0.05 ; 1        ;        ; phone_minutes           ;                ;          ;                ; Pay 0.05$/minute.
+                                          ; UC_0_3_tierStart_1_data_USD                          ; 0.3  ; 1        ;        ; mb                      ;                ;          ;                ; Pay 0.3$/mb.
+                                          ; UC_0_08_tierStart_01_end_100_USD                     ; 0.08 ; 1        ; 100    ; phone_minutes           ;                ;          ;                ; Pay 0.08$/minute for first 100 minute.
+                                          ; UC_0_06_tierStart_101_end_200_USD                    ; 0.06 ; 101      ; 200    ; phone_minutes           ;                ;          ;                ; Pay 0.06$/minute for 101st to 200th minutes.
+                                          ; UC_0_04_tierStart_201_end_300_USD                    ; 0.04 ; 201      ; 300    ; phone_minutes           ;                ;          ;                ; Pay 0.04$/minute for 201st to 300th minutes.
+                                          ; UC_0_02_tierStart_301_USD                            ; 0.03 ; 301      ;        ; phone_minutes           ;                ;          ;                ; Pay 0.03$/minute for 301st minutes onwards.
+                                          ; UC_0_7_tierStart_1_end_512_data_USD                  ; 0.7  ; 1        ; 512    ; mb                      ;                ;          ;                ; Pay 0.7$/mb for first 512 mb.
+                                          ; UC_0_5_tierStart_513_end_1024_data_USD               ; 0.5  ; 513      ; 1024   ; mb                      ;                ;          ;                ; Pay 0.5$/mb for 513mb to 1024mb.
+                                          ; UC_0_3_tierStart_1025_data_USD                       ; 0.3  ; 1025     ;        ; mb                      ;                ;          ;                ; Pay 0.3$/mb for 1025mb onwards.
+
+INSERT_UPDATE TmaUsageProdOfferPriceCharge; id[unique = true]            ; value; tierStart; tierEnd; usageUnit(id); $catalogVersion; $currency; $priceEventRcUc; description[lang = $lang]
+                                          ; UC_0_03_tierStart_1_sms_USD  ; 0.3  ; 1        ;        ; sms          ;                ;          ;                ; Pay 0.3$/text message.
+                                          ; UC_0_23_tierStart_1_sms_USD  ; 0.23 ; 1        ;        ; sms          ;                ;          ;                ; Pay 0.23$/text message.
+                                          ; UC_0_25_tierStart_1_sms_USD  ; 0.25 ; 1        ;        ; sms          ;                ;          ;                ; Pay 0.25$/text message.
+                                          ; UC_0_03_tierStart_1_data_USD ; 0.2  ; 1        ;        ; mb           ;                ;          ;                ; Pay 0.2$/mb.
+                                          ; UC_0_4_tierStart_1_data_USD  ; 0.4  ; 1        ;        ; mb           ;                ;          ;                ; Pay 0.4$/mb.
+                                          ; UC_0_25_tierStart_1_data_USD ; 0.25 ; 1        ;        ; mb           ;                ;          ;                ; Pay 0.25$/mb.
+                                          ; UC_0_23_tierStart_1_data_USD ; 0.23 ; 1        ;        ; mb           ;                ;          ;                ; Pay 0.23$/mb.
+
+INSERT_UPDATE TmaTierUsageChargeCompositePop; id[unique = true]          ; usageChargeType(code)   ; children(id, $catalogVersion)                                                                                                                                                                                                                                ; $catalogVersion; name[lang = $lang]; description[lang = $lang]
+                                            ; tv_S_USD_usage_pop         ; each_respective_tier    ; UC_3_documentaries_on_demand_USD, UC_4_movies_on_demand_USD, UC_5_blockbusters_on_demand_USD                                                                                                                                                                 ;                ; Content Charges   ; Pay 3$ for every documentary on demand, 4$ for every movie on demand and 5$ for every blockbuster on demand.
+                                            ; tv_M_USD_usage_pop         ; each_respective_tier    ; UC_3_tierStart_1_end_5_documentaries_on_demand_USD,UC_4_tierStart_1_end_5__movies_on_demand_USD, UC_5_tierStart_1_end_5__blockbusters_on_demand_USD, UC_2_documentaries_on_demand_USD, UC_3_movies_on_demand_USD, UC_4_blockbusters_on_demand_USD            ;                ; Content Charges   ; Pay 3$ for first 5 documentaries on demand and 2$ for every documentary on demand. Pay 4$ for first 5 movies on demand and 3$ for every movie on demand. Pay 5$ for first 5 blockbusters on demand and 4$ for every blockbuster on demand.
+                                            ; tv_L_USD_usage_pop         ; highest_applicable_tier ; UC_1_5_tierStart_1_end_5_documentaries_on_demand_USD, UC_2_tierStart_1_end_5__movies_on_demand_USD, UC_3_tierStart_1_end_5__blockbusters_on_demand_USD,UC_1_20_documentaries_on_demand_USD, UC_1_50_movies_on_demand_USD, UC_2_50_blockbusters_on_demand_USD ;                ; Content Charges   ; Pay 1$ for first 5 documentaries on demand and 1.2$ for every documentary on demand. Pay 2$ for first 5 movies on demand and 1.5$ for every movie on demand. Pay 3$ for first 5 blockbusters on demand and 2.5$ for every blockbuster on demand.
+
+                                            ; tv_basic_USD_usage_pop     ; each_respective_tier    ; UC_3_documentaries_on_demand_USD, UC_4_movies_on_demand_USD, UC_5_blockbusters_on_demand_USD                                                                                                                                                                 ;                ; Content Charges   ; Pay 3$ for every documentary on demand, 4$ for every movie on demand and 5$ for every blockbuster on demand.
+                                            ; tv_premium_USD_usage_pop   ; each_respective_tier    ; UC_3_tierStart_1_end_5_documentaries_on_demand_USD,UC_4_tierStart_1_end_5__movies_on_demand_USD, UC_5_tierStart_1_end_5__blockbusters_on_demand_USD, UC_2_documentaries_on_demand_USD, UC_3_movies_on_demand_USD, UC_4_blockbusters_on_demand_USD            ;                ; Content Charges   ; Pay 3$ for first 5 documentaries on demand and 2$ for every documentary on demand. Pay 4$ for first 5 movies on demand and 3$ for every movie on demand. Pay 5$ for first 5 blockbusters on demand and 4$ for every blockbuster on demand.
+                                            ; tv_unlimited_USD_usage_pop ; highest_applicable_tier ; UC_1_5_tierStart_1_end_5_documentaries_on_demand_USD, UC_2_tierStart_1_end_5__movies_on_demand_USD, UC_3_tierStart_1_end_5__blockbusters_on_demand_USD                                                                                                       ;                ; Content Charges   ; Pay 1.5$ for first 5 documentaries on demand, 2$ for first 5 movies on demand and 3$ for first 5 blockbusters on demand.
+                                            ; tv_100_USD_usage_pop       ; highest_applicable_tier ; UC_3_documentaries_on_demand_USD, UC_4_movies_on_demand_USD, UC_4_blockbusters_on_demand_USD                                                                                                                                                                 ;                ; Content Charges   ; Pay 3$ for every documentary on demand, 4$ for every movie on demand and 4$ for every blockbuster on demand.
+                                            ; tv_200_USD_usage_pop       ; highest_applicable_tier ; UC_3_tierStart_1_end_5_documentaries_on_demand_USD, UC_4_tierStart_1_end_5__movies_on_demand_USD, UC_5_tierStart_1_end_5__blockbusters_on_demand_USD                                                                                                         ;                ; Content Charges   ; Pay 3$ for first 5 documentaries on demand, 4$ for first 5 movies on demand and 5$ for first 5 blockbusters on demand.
+
+                                            ; BASIC_TV_USD_usage_pop     ; each_respective_tier    ; UC_3_documentaries_on_demand_USD, UC_4_movies_on_demand_USD, UC_5_blockbusters_on_demand_USD                                                                                                                                                                 ;                ; Content Charges   ; Pay 3$ for every documentary on demand, 4$ for every movie on demand and 5$ for every blockbuster on demand.
+                                            ; BIG_TV_USD_usage_pop       ; each_respective_tier    ; UC_2_documentaries_on_demand_USD, UC_3_movies_on_demand_USD, UC_4_blockbusters_on_demand_USD                                                                                                                                                                 ;                ; Content Charges   ; Pay 2$ for every documentary on demand, 3$ for every movie on demand and 4$ for every blockbuster on demand.
+                                            ; PREMIUM_TV_USD_usage_pop   ; highest_applicable_tier ; UC_1_20_documentaries_on_demand_USD, UC_1_50_movies_on_demand_USD, UC_2_50_blockbusters_on_demand_USD                                                                                                                                                        ;                ; Content Charges   ; Pay 1.2$ for every documentary on demand, 1.5$ for every movie on demand and 2.5$ for every blockbuster on demand.
+                                            ; DELUXE_TV_USD_usage_pop    ; each_respective_tier    ; UC_0_30_movies_on_demand_USD, UC_1_blockbusters_on_demand_USD                                                                                                                                                                                                ;                ; Content Charges   ; Pay 0.3$ for every movie on demand and 1$ for every blockbuster on demand.
+
+INSERT_UPDATE TmaTierUsageChargeCompositePop; id[unique = true]          ; usageChargeType(code); children(id, $catalogVersion); $catalogVersion; name[lang = $lang]              ; description[lang = $lang]
+                                            ; fiber_internet_USD_uc_pop  ; each_respective_tier ; UC_0_4_tierStart_1_data_USD  ;                ; Fiber Internet Content Charges  ; Pay 0.4$/mb for Fiber Internet.
+                                            ; copper_internet_USD_uc_pop ; each_respective_tier ; UC_0_4_tierStart_1_data_USD  ;                ; Copper Internet Content Charges ; Pay 0.4$/mb for Copper Internet.
+                                            ; 5g_internet_USD_uc_pop     ; each_respective_tier ; UC_0_4_tierStart_1_data_USD  ;                ; 5G Internet Content Charges     ; Pay 0.4$/mb for 5G Internet.
+
+INSERT_UPDATE TmaTierUsageChargeCompositePop; id[unique = true]                                                       ; usageChargeType(code); children(id, $catalogVersion)                                                              ; $catalogVersion; name[lang = $lang]                                           ; description[lang = $lang]
+                                            ; gsm_small_USD_uc_pop                                                    ; each_respective_tier ; UC_0_09_tierStart_1_minutes_USD, UC_0_03_tierStart_1_sms_USD, UC_0_03_tierStart_1_data_USD ;                ; GSM Small Content Charges                                    ; Pay 0.09$/minute, 0.3$/text message and 0.2$/mb.
+                                            ; gsm_small_USD_uc_pop_renewal                                            ; each_respective_tier ; UC_0_08_tierStart_1_minutes_USD, UC_0_25_tierStart_1_sms_USD, UC_0_25_tierStart_1_data_USD ;                ; GSM Small Content Renewal Charges                            ; Pay 0.08$/minute, 0.25$/text message and 0.25$/mb.
+                                            ; gsm_small_USD_uc_pop_renewal_upg                                        ; each_respective_tier ; UC_0_07_tierStart_1_minutes_USD, UC_0_23_tierStart_1_sms_USD, UC_0_23_tierStart_1_data_USD ;                ; GSM Small Content Renewal Charges                            ; Pay 0.07$/minute, 0.23$/text message and 0.23$/mb.
+                                            ; gsm_medium_USD_uc_pop                                                   ; each_respective_tier ; UC_0_03_tierStart_1_sms_USD, UC_0_03_tierStart_1_data_USD                                  ;                ; GSM Medium Content Charges                                   ; Pay 0.3$/text message and 0.2$/mb.
+                                            ; gsm_large_USD_uc_pop                                                    ; each_respective_tier ; UC_0_03_tierStart_1_sms_USD, UC_0_03_tierStart_1_data_USD                                  ;                ; GSM Large Content Charges                                    ; Pay 0.3$/text message and 0.2$/mb.
+                                            ; gsm_large_USD_uc_pop_upg                                                ; each_respective_tier ; UC_0_09_tierStart_1_minutes_USD, UC_0_25_tierStart_1_sms_USD, UC_0_25_tierStart_1_data_USD ;                ; GSM Large Content Upgrade Charges                            ; Pay 0.09$/minute, 0.25$/text message and 0.25$/mb.
+                                            ; additional_roaming_data_USD_uc_pop                                      ; each_respective_tier ; UC_0_09_tierStart_1_data_USD, UC_0_03_tierStart_1_data_USD                                 ;                ; Additional Roaming Data Content Charges                      ; Enjoy additional roaming at the rate of 0.09/mb and 0.2$/mb.
+                                            ; unlimited_national_and_limited_international_USD_uc_pop                 ; each_respective_tier ; UC_0_155_tierStart_1_minutes_USD                                                           ;                ; Unlimited National and International Calling Content Charges ; Enjoy unlimited national calling service and International calling service at 1.55$/minute.
+                                            ; unlimited_national_and_limited_international_USD_uc_pop_global_discount ; each_respective_tier ; UC_0_155_tierStart_1_minutes_USD_global_discount                                           ;                ; Unlimited National and International Calling Content Charges ; Enjoy unlimited national calling service and International calling service with discount worth 1.55$/minute.
+
+################################################
+###              Discount alterations        ###
+################################################
+
+INSERT_UPDATE TmaDiscountProdOfferPriceAlteration; id[unique = true]              ; value; cycleStart; cycleEnd; $currency; $priceEvent; $catalogVersion; isPercentage[default = false]; description[lang = $lang]
+                                                 ; 5g_router_otc_checkout_USD_dsc ; 50   ;           ;         ;          ; paynow     ;                ;                              ; Enjoy discount worth 50$ on checkout.
+                                                 ; fiber_internet_rc_USD_dsc_1    ; 10   ; 1         ;         ;          ; monthly    ;                ; true                         ; Enjoy 10% discount every month on Fiber Internet.
+                                                 ; fiber_internet_rc_USD_dsc_2    ; 20   ; 1         ;         ;          ; monthly    ;                ; true                         ; Enjoy 20% discount every month on Fiber Internet.
+                                                 ; fiber_internet_rc_USD_dsc_3    ; 30   ; 1         ;         ;          ; monthly    ;                ; true                         ; Enjoy 30% discount every month on Fiber Internet.
+                                                 ; fiber_internet_rc_USD_dsc_4    ; 25   ; 1         ;         ;          ; monthly    ;                ; true                         ; Enjoy 25% discount every month on Fiber Internet.
+                                                 ; fiber_internet_rc_USD_dsc_5    ; 15   ; 1         ;         ;          ; monthly    ;                ; true                         ; Enjoy 15% discount every month on Fiber Internet.
+                                                 ; tv_news_rc_USD_dsc             ; 10   ; 1         ;         ;          ; monthly    ;                ; true                         ; Enjoy 10% discount every month on TV News.
+                                                 ; DELUXE_TV_USD_promo_dsc        ; 20   ;           ;         ;          ;            ;                ; true                         ; Enjoy Promotional discount worth 20$ on Deluxe TV.
+
+INSERT_UPDATE TmaDiscountProdOfferPriceAlteration; id[unique = true]      ; value; cycleStart; cycleEnd; $currency; $priceEvent; $catalogVersion; isPercentage[default = false]; description[lang = $lang]
+                                                 ; discount_fixed_pop_3_5 ; 3.5  ; 1         ;         ;          ; monthly    ;                ;                              ; Enjoy discount worth 3.5$ every month.
+                                                 ; discount_fixed_pop_4_5 ; 4.5  ; 1         ;         ;          ; monthly    ;                ;                              ; Enjoy discount worth 4.5$ every month.
+                                                 ; discount_pop_10        ; 10   ; 1         ;         ;          ; monthly    ;                ; true                         ; Enjoy 10% discount every month
+                                                 ; discount_pop_15        ; 15   ; 1         ;         ;          ; monthly    ;                ; true                         ; Enjoy 15% discount every month
+                                                 ; discount_fixed_pop_1_7 ; 1.7  ;           ;         ;          ; paynow     ;                ;                              ; Enjoy discount worth 1.7$ on checkout.
+                                                 ; discount_pop_25        ; 25   ;           ;         ;          ; paynow     ;                ; true                         ; Enjoy 25% discount on checkout.
+                                                 ; discount_pop_30        ; 30   ; 1         ;         ;          ; monthly    ;                ; true                         ; Enjoy 30% discount every month
+                                                 ; discount_pop_47        ; 47   ;           ;         ;          ; paynow     ;                ; true                         ; Enjoy 47% discount on checkout.
+
+################################################
+###              Composite prices            ###
+################################################
+
+INSERT_UPDATE TmaCompositeProdOfferPrice; id[unique = true]                                            ; $catalogVersion; children(id, $catalogVersion)                                                                                                                                   ; name[lang = $lang]                                                ; description[lang = $lang]
+                                        ; tv_unlimited_USD_pop                                         ;                ; OTC_4_USD, RC_40_USD_start_4, tv_unlimited_USD_usage_pop                                                                                                        ; TV Unlimited Service                                              ; Pay one time charge of 4$ and 45$ from 4th month onwards. Enjoy First 5 documentaries in 1.5$, first 5 movies in 2$ and first 5 blockbusters in 3$.
+                                        ; tv_100_USD_pop                                               ;                ; RC_15_USD_start_1,  tv_100_USD_usage_pop                                                                                                                        ; TV 100 Service                                                    ; Pay 15$ every month with documentaries on demand in 3$, movies on demand in 4$ and blockbusters on demand in 4$.
+                                        ; tv_200_USD_pop                                               ;                ; RC_30_USD_start_1,  tv_200_USD_usage_pop                                                                                                                        ; TV 200 Service                                                    ; Pay 30$ every month with with First 5 documentaries on demand in 3$, first 5 movies on demandin 4$ and first 5 blockbusters on demand in 5$.
+
+                                        ; additional_roaming_data_USD_pop                              ;                ; OTC_20_USD, RC_5_USD_start_1                                                                                                                                    ; Additonal Roaming Data Service                                    ; Pay one time charge of 20$ and 5$ every month for additional national data roaming.
+                                        ; unlimited_national_calling_USD_pop                           ;                ; RC_15_USD_start_1                                                                                                                                               ; Unlimited National Calling Service                                ; Pay only 15$/month and enjoy unlimited national calling service.
+                                        ; unlimited_national_and_limited_international_USD_pop         ;                ; unlimited_national_and_limited_international_USD_uc_pop_global_discount, RC_20_USD_start_1_global_discount                                                      ; Unlimited National And Limited International Calling Service      ; Pay only 15$/month with 1.55$/minute for Unlimited National And Limited International Calling Service.
+                                        ; copper_internet_USD_pop                                      ;                ; OTC_4_USD, RC_35_USD_start_1, OTC_15_USD_OC, copper_internet_USD_uc_pop                                                                                         ; Copper Home Internet Price                                        ; Pay one time charge of 4$ and 35$/month for Copper Internet with 0.4$/mb. Pay 15$ on cancellation.
+                                        ; fiber_internet_USD_pop_acq                                   ;                ; RC_40_USD_start_1_end_3, RC_40_USD_start_4, OTC_40_USD_OC, fiber_internet_USD_uc_pop                                                                            ; Fiber Home Internet Price                                         ; Pay 40$/month for the first three months and 45$/month for next period for Fiber Home Internet with 0.4$/mb. Pay 60$ on cancellation.
+                                        ; fiber_internet_USD_pop_ret_1                                 ;                ; RC_40_USD_start_1_end_3, RC_40_USD_start_4, fiber_internet_rc_USD_dsc_1, OTC_40_USD_OC, fiber_internet_USD_uc_pop                                               ; Fiber Home Renewal Price                                          ; Pay 40$/month for the first three months and 45$/month for next period for Fiber Home Internet with 0.4$/mb at 10% discount every month. Pay 60$ on cancellation.
+                                        ; fiber_internet_USD_pop_ret_2                                 ;                ; RC_40_USD_start_1_end_3, RC_40_USD_start_4, fiber_internet_rc_USD_dsc_2, OTC_40_USD_OC, fiber_internet_USD_uc_pop                                               ; Fiber Home Renewal Price                                          ; Pay 40$/month for the first three months and 45$/month for next period for Fiber Home Internet with 0.4$/mb at 20% discount every month. Pay 60$ on cancellation.
+                                        ; fiber_internet_USD_pop_ret_3                                 ;                ; RC_40_USD_start_1_end_3, RC_40_USD_start_4, fiber_internet_rc_USD_dsc_3, OTC_40_USD_OC, fiber_internet_USD_uc_pop                                               ; Fiber Home Renewal Price                                          ; Pay 40$/month for the first three months and 45$/month for next period for Fiber Home Internet with 0.4$/mb at 30% discount every month. Pay 60$ on cancellation.
+                                        ; fiber_internet_USD_pop_ret_4                                 ;                ; RC_40_USD_start_1_end_3, RC_40_USD_start_4, fiber_internet_rc_USD_dsc_4, OTC_40_USD_OC, fiber_internet_USD_uc_pop                                               ; Fiber Home Renewal Price                                          ; Pay 40$/month for the first three months and 45$/month for next period for Fiber Home Internet with 0.4$/mb at 25% discount every month. Pay 60$ on cancellation.
+                                        ; fiber_internet_USD_pop_renew_1                               ;                ; RC_40_USD_start_1_end_3, RC_40_USD_start_4, fiber_internet_rc_USD_dsc_1, OTC_40_USD_OC, fiber_internet_USD_uc_pop                                               ; Fiber Home Renewal Price                                          ; Pay 40$/month for the first three months and 45$/month for next period for Fiber Home Internet with 0.4$/mb at 10% discount every month. Pay 60$ on cancellation.
+                                        ; fiber_internet_USD_pop_renew_2                               ;                ; RC_40_USD_start_1_end_3, RC_40_USD_start_4, fiber_internet_rc_USD_dsc_2, OTC_40_USD_OC, fiber_internet_USD_uc_pop                                               ; Fiber Home Renewal Price                                          ; Pay 40$/month for the first three months and 45$/month for next period for Fiber Home Internet with 0.4$/mb at 20% discount every month. Pay 60$ on cancellation.
+                                        ; fiber_internet_USD_pop_renew_3                               ;                ; RC_40_USD_start_1_end_3, RC_40_USD_start_4, fiber_internet_rc_USD_dsc_3, OTC_40_USD_OC, fiber_internet_USD_uc_pop                                               ; Fiber Home Renewal Price                                          ; Pay 40$/month for the first three months and 45$/month for next period for Fiber Home Internet with 0.4$/mb at 30% discount every month. Pay 60$ on cancellation.
+                                        ; fiber_internet_USD_pop_renew_4                               ;                ; RC_40_USD_start_1_end_3, RC_40_USD_start_4, fiber_internet_rc_USD_dsc_4, OTC_40_USD_OC, fiber_internet_USD_uc_pop                                               ; Fiber Home Renewal Price                                          ; Pay 40$/month for the first three months and 45$/month for next period for Fiber Home Internet with 0.4$/mb at 25% discount every month. Pay 60$ on cancellation.
+                                        ; 5g_internet_USD_pop                                          ;                ; OTC_4_USD_global_discount, RC_45_USD_start_1_global_discount, OTC_35_USD_OC, 5g_internet_USD_uc_pop                                                             ; 5G Home Internet Price                                            ; Pay 45$/month for 5g Home Internet with 0.4$/mb with 4$ discount on checkout. Pay 35$ on cancellation.
+
+                                        ; mobileplans_override_gsmlarge_1_pop                          ;                ; RC_19_USD_start_1_end_3, gsm_large_USD_uc_pop_upg, OTC_14_USD, RC_29_USD_start_4                                                                                ; Mobile Plan GSM Large Upgrade Price                               ; Pay 19$/month for first 3 months and 29$/month for next period. Pay one time charge of 14$. With 0.09$/minute, 0.25$/text message and 0.25$/mb.
+                                        ; mobileplans_override_gsmsmall_1_pop                          ;                ; RC_8_USD_start_1, gsm_small_USD_uc_pop_renewal_upg                                                                                                              ; Mobile Plan GSM Large Upgrade Price                               ; Pay 8$/month with 0.07$/minute, 0.23$/text message and 0.23$/mb.
+
+                                        ; mobileaddons_override_5gpow_1_pop                            ;                ; RC_8_99_USD                                                                                                                                                     ; Mobile Addon 5G POW! Upgrade Price                                ; Pay 8.99$/month for Mobile Addon 5G POW.
+                                        ; mobileaddons_override_esim_1_pop                             ;                ; OTC_19_USD                                                                                                                                                      ; Mobile Addon eSim Upgrade Price                                   ; Pay 19$ and get upgraded to eSim.
+
+                                        ; mobiledevice_override_samsunggalaxyS22phantomblack256g_1_pop ;                ; OTC_949_USD                                                                                                                                                     ; Mobile Device Samsung Galaxy S22 Phantom Black 256g Upgrade Price ; Pay 949$ and get upgraded to Samsung galaxy S22 (256 GB) in Phantom Black color.
+
+                                        ; homeDeal_override_ret_int500_1_pop                           ;                ; RC_10_USD_start_1_end_3, RC_18_USD_start_3                                                                                                                      ; Home Internet Basic Service Retention Price                       ; Pay 10$/month for the first three months and 18$/month for next period.
+                                        ; homeDeal_override_ret_int500_3_pop                           ;                ; RC_10_USD_start_1_end_3, RC_16_USD_start_3                                                                                                                      ; Home Internet Basic Service Retention Promo Price                 ; Pay 10$/month for the first three months and 16$/month for next period.
+
+                                        ; homeDeal_override_ret_int1000_1_pop                          ;                ; RC_10_USD_start_1_end_3, RC_28_USD_start_3                                                                                                                      ; Home Internet Premium Service Retention Price                     ; Pay 10$/month for the first three months and 28$/month for next period.
+                                        ; homeDeal_override_ret_int1000_3_pop                          ;                ; RC_10_USD_start_1_end_3, RC_26_USD_start_3                                                                                                                      ; Home Internet Premium Service Retention Promo Price               ; Pay 10$/month for the first three months and 26$/month for next period.
+
+                                        ; homeDeal_override_ret_tv300_1_pop                            ;                ; RC_10_USD_start_1_end_3, RC_28_USD_start_3                                                                                                                      ; TV Basic Service Retention Price                                  ; Pay 10$/month for the first three months and 28$/month for next period.
+                                        ; homeDeal_override_ret_tv300_3_pop                            ;                ; RC_10_USD_start_1_end_3, RC_26_USD_start_3                                                                                                                      ; TV Basic Service Retention Promo Price                            ; Pay 10$/month for the first three months and 26$/month for next period.
+
+                                        ; homeDeal_override_ret_tv400_1_pop                            ;                ; RC_10_USD_start_1_end_3, RC_38_USD_start_3                                                                                                                      ; TV Premium Service Retention Price                                ; Pay 10$/month for the first three months and 38$/month for next period.
+                                        ; homeDeal_override_ret_tv400_3_pop                            ;                ; RC_10_USD_start_1_end_3, RC_36_USD_start_3                                                                                                                      ; TV Premium Service Retention Promo Price                          ; Pay 10$/month for the first three months and 36$/month for next period.
+
+                                        ; homeDeal_override_upg_int500_1_pop                           ;                ; RC_10_USD_start_1_end_3, RC_17_USD_start_3                                                                                                                      ; Home Internet Basic Service Upgrade Price                         ; Pay 10$/month for the first three months and 17$/month for next period.
+                                        ; homeDeal_override_upg_int500_3_pop                           ;                ; RC_10_USD_start_1_end_3, RC_15_USD_start_3                                                                                                                      ; Home Internet Basic Service Upgrade Promo Price                   ; Pay 10$/month for the first three months and 15$/month for next period.
+
+                                        ; homeDeal_override_upg_int1000_1_pop                          ;                ; RC_10_USD_start_1_end_3, RC_27_USD_start_3                                                                                                                      ; Home Internet Premium Service Upgrade Price                       ; Pay 10$/month for the first three months and 27$/month for next period.
+                                        ; homeDeal_override_upg_int1000_3_pop                          ;                ; RC_10_USD_start_1_end_3, RC_25_USD_start_3                                                                                                                      ; Home Internet Premium Service Upgrade Promo Price                 ; Pay 10$/month for the first three months and 25$/month for next period.
+
+                                        ; homeDeal_override_upg_tv300_1_pop                            ;                ; RC_10_USD_start_1_end_3, RC_27_USD_start_3                                                                                                                      ; TV Basic Service Upgrade Price                                    ; Pay 10$/month for the first three months and 27$/month for next period.
+                                        ; homeDeal_override_upg_tv300_3_pop                            ;                ; RC_10_USD_start_1_end_3, RC_25_USD_start_3                                                                                                                      ; TV Basic Service Upgrade Promo Price                              ; Pay 10$/month for the first three months and 25$/month for next period.
+
+                                        ; homeDeal_override_upg_tv400_1_pop                            ;                ; RC_10_USD_start_1_end_3, RC_37_USD_start_3                                                                                                                      ; TV Premium Service Upgrade Price                                  ; Pay 10$/month for the first three months and 37$/month for next period.
+                                        ; homeDeal_override_upg_tv400_3_pop                            ;                ; RC_10_USD_start_1_end_3, RC_35_USD_start_3                                                                                                                      ; TV Premium Service Upgrade Promo Price                            ; Pay 10$/month for the first three months and 35$/month for next period.
+
+                                        ; homeDeal_override_acq_5g_router_pop                          ;                ; OTC_50_USD,5g_router_otc_checkout_USD_dsc                                                                                                                       ; Home Deal 5G Router price                                         ; Pay one time charge of 50$ and 50$ discount on checkout.
+
+                                        ; homeDeal_override_mibox5g_1_pop                              ;                ; OTC_100_USD                                                                                                                                                     ; Home Deal MiBox 5G Upgrade Price                                  ; Pay 100$ and get upgraded to Home Deal MiBox 5G.
+
+                                        ; broadband_override_fiberinternet_1_pop                       ;                ; RC_30_USD_start_1, fiber_internet_USD_uc_pop                                                                                                                    ; Fiber Home Internet Price                                         ; Pay 30$/month for Fiber Home Internet with 0.4$/mb.
+                                        ; broadband_override_copperinternet_1_pop                      ;                ; RC_25_USD_start_1, copper_internet_USD_uc_pop                                                                                                                   ; Fiber Home Internet Price                                         ; Pay 25$/month for Copper Internet with 0.4$/mb.
+                                        ; broadband_override_5ginternet_1_pop                          ;                ; RC_35_USD_start_1, 5g_internet_USD_uc_pop                                                                                                                       ; Fiber Home Internet Price                                         ; Pay 30$/month for 5G Internet with 0.4$/mb.
+
+                                        ; tvplans_override_tv100_1_pop                                 ;                ; RC_10_USD_start_1, tv_100_USD_usage_pop                                                                                                                         ; Fiber Home Internet Price                                         ; Pay 10$/month with documentaries on demand in 3$, movies on demand in 4$ and blockbusters on demand in 4$.
+                                        ; tvplans_override_tv200_1_pop                                 ;                ; RC_25_USD_start_1, tv_200_USD_usage_pop                                                                                                                         ; Fiber Home Internet Price                                         ; Pay 25$/month with First 5 documentaries on demand in 3$, first 5 movies on demandin 4$ and first 5 blockbusters on demand in 5$.
+                                        ; tvplans_override_tvunlimited_1_pop                           ;                ; RC_35_USD_start_1, tv_unlimited_USD_usage_pop                                                                                                                   ; Fiber Home Internet Price                                         ; Pay 35$/month with First 5 documentaries on demand in 1.5$, first 5 movies on demand in 2$ and first 5 blockbusters on demand in 3$.
+
+                                        ; homedeal_usd_pop_24months                                    ;                ; RC_12_USD_start_1_end_8, RC_12_USD_start_8_end_16, RC_6_USD_start_16_end_24, gsm_medium_USD_uc_pop, OTC_30_USD, fiber_internet_USD_uc_pop, tv_200_USD_usage_pop ; Home Comfort Deal Price                                           ; Pay 30$ once and then 12$/month for first 16 months and 6$/month for next 8 months. With 0.3$/text message and 0.4$/mb. Enjoy First 5 documentaries in 3$, first 5 movies in 4$ and first 5 blockbusters in 5$.
+                                        ; homedeal_usd_pop                                             ;                ; RC_12_USD_start_1, gsm_medium_USD_uc_pop, OTC_30_USD, fiber_internet_USD_uc_pop, tv_200_USD_usage_pop                                                           ; Home Comfort Deal Price                                           ; Pay 30$ once and then 12$/month with 0.3$/text message and 0.4$/mb. Enjoy First 5 documentaries in 3$, first 5 movies in 4$ and first 5 blockbusters in 5$.
+                                        ; homedeal_usd_ret_pop                                         ;                ; RC_12_USD_start_1, gsm_medium_USD_uc_pop, fiber_internet_USD_uc_pop, tv_200_USD_usage_pop                                                                       ; Home Comfort Deal Price                                           ; Pay 12$/month with 0.3$/text message and 0.4$/mb. Enjoy First 5 documentaries in 3$, first 5 movies in 4$ and first 5 blockbusters in 5$.
+
+                                        ; winterdeal_usd_pop_24months                                  ;                ; 5g_internet_USD_uc_pop, gsm_small_USD_uc_pop, OTC_25_USD, RC_10_USD_start_1                                                                                     ; Winter Mobile Deal Price                                          ; Pay 25$ once and then 10$/month with 0.09$/minute, 0.3$/text message and 0.4$/mb.
+                                        ; winterdeal_usd_pop                                           ;                ; 5g_internet_USD_uc_pop, gsm_small_USD_uc_pop, OTC_25_USD, RC_10_USD_start_1                                                                                     ; Winter Mobile Deal Price                                          ; Pay 25$ once and then 10$/month with 0.09$/minute, 0.3$/text message and 0.4$/mb.
+                                        ; winterdeal_usd_ret_pop                                       ;                ; 5g_internet_USD_uc_pop, gsm_small_USD_uc_pop, RC_10_USD_start_1                                                                                                 ; Winter Mobile Deal Price                                          ; Pay 10$/month with 0.09$/minute, 0.3$/text message and 0.4$/mb.
+
+                                        ; homedealbundle_usd_pop_24months                              ;                ; RC_35_USD_start_1, tv_unlimited_USD_usage_pop, OTC_4_USD, 5g_internet_USD_uc_pop                                                                                ; Home Deal Bundle Price                                            ; Pay 4$ once and then 35$/month. Enjoy First 5 documentaries in 1.5$, first 5 movies in 2$ and first 5 blockbusters in 3$.
+                                        ; homedealbundle_usd_pop                                       ;                ; RC_35_USD_start_1, tv_unlimited_USD_usage_pop, OTC_4_USD, 5g_internet_USD_uc_pop                                                                                ; Home Deal Bundle Price                                            ; Pay 4$ once and then 35$/month. Enjoy First 5 documentaries in 1.5$, first 5 movies in 2$ and first 5 blockbusters in 3$.
+                                        ; homedealbundle_usd_ret_pop                                   ;                ; RC_35_USD_start_1, tv_unlimited_USD_usage_pop, 5g_internet_USD_uc_pop                                                                                           ; Home Deal Bundle Price                                            ; Pay 35$/month. Enjoy First 5 documentaries in 1.5$, first 5 movies in 2$ and first 5 blockbusters in 3$.
+
+
+
+INSERT_UPDATE TmaCompositeProdOfferPrice; id[unique = true]             ; $catalogVersion; children(id, $catalogVersion)                                                   ; name[lang = $lang]              ; description[lang = $lang]
+                                        ; 4gpow_USD_pop_ret             ;                ; RC_3_99_USD_start_1_end_6, RC_6_99_USD_start_7                                  ; 4GPOW Retention Price           ; Pay 3.99$/month for the first 6 months and 6.99/$ for the next period.
+                                        ; gsm_small_USD_pop             ;                ; RC_10_USD_start_1, gsm_small_USD_uc_pop                                         ; GSM Small Price                 ; Pay 10$ every month with 0.09$/minute, 0.3$/text message and 0.2$/mb.
+                                        ; gsm_small_USD_pop_renewal     ;                ; RC_9_USD_start_1, gsm_small_USD_uc_pop_renewal                                  ; GSM Small Renewal Price         ; Pay 9$ every month with 0.08$/minute, 0.25$/text message and 0.25$/mb.
+                                        ; gsm_small_USD_pop_renewal_upg ;                ; RC_9_USD_start_1, gsm_small_USD_uc_pop_renewal_upg                              ; GSM Small Renewal Upgrade Price ; Pay 9$ every month with 0.07$/minute, 0.23$/text message and 0.23$/mb.
+                                        ; gsm_medium_USD_pop            ;                ; RC_12_USD_start_1_global_discount, gsm_medium_USD_uc_pop, OTC_25_USD_OC         ; GSM Medium Price                ; Pay 0.3$/text message and 0.2$/mb. Enjoy discount worth 12$ every month. Pay 25$ on cancellation.
+                                        ; gsm_large_USD_pop             ;                ; RC_20_USD_start_1_end_3, gsm_large_USD_uc_pop, OTC_15_USD_OC, RC_30_USD_start_4 ; GSM Large Price                 ; Pay 20$ every month for the first 3 months and 30$/month for the next period. Pay 0.3$/text message and 0.2$/mb. Pay 15$ on cancellation.
+
+#Composite prices for gsm plans for the process type MNP
+INSERT_UPDATE TmaTierUsageChargeCompositePop; id[unique = true]         ; usageChargeType(code); children(id, $catalogVersion)                                                                                                 ; $catalogVersion; name[lang = $lang]        ; description[lang = $lang]
+                                            ; gsm_small_USD_uc_mnp_pop  ; each_respective_tier ; UC_0_09_tierStart_1_minutes_USD, UC_0_23_tierStart_1_sms_USD, UC_0_03_tierStart_1_data_USD                                    ;                ; GSM Small Content Charges ; Pay 0.09$/minute, 0.23$/text message and 0.2$/mb.
+                                            ; gsm_medium_USD_uc_mnp_pop ; each_respective_tier ; UC_0_08_tierStart_1_minutes_USD, UC_0_25_tierStart_1_sms_USD, UC_0_25_tierStart_1_data_USD                                    ;                ; GSM Small Content Charges ; Pay 0.08$/minute, 0.25$/text message and 0.25$/mb.
+                                            ; gsm_large_USD_uc_manp_pop ; each_respective_tier ; UC_0_08_tierStart_01_end_100_USD, UC_0_06_tierStart_101_end_200_USD, UC_0_03_tierStart_1_sms_USD, UC_0_4_tierStart_1_data_USD ;                ; GSM Small Content Charges ; Pay 0.08$/minute for first 100 minute and 0.06$/minute for next 100 minute. Pay 0.3$/text message and 0.4$/mb.
+
+INSERT_UPDATE TmaCompositeProdOfferPrice; id[unique = true]      ; $catalogVersion; children(id, $catalogVersion)                                                        ; name[lang = $lang]                             ; description[lang = $lang]
+                                        ; gsm_small_USD_MNP_pop  ;                ; RC_10_USD_start_1, gsm_small_USD_uc_mnp_pop                                          ; GSM Small Price for Mobile Number Portability  ; Pay only 10$ every month with 0.09$/minute, 0.23$/text message and 0.2$/mb.
+                                        ; gsm_medium_USD_MNP_pop ;                ; RC_12_USD_start_1_global_discount, gsm_medium_USD_uc_mnp_pop, OTC_15_USD_OC          ; GSM Medium Price for Mobile Number Portability ; Pay only 12$ every month with 0.08$/minute, 0.25$/text message and 0.25$/mb. Pay 15$ on cancellation.
+                                        ; gsm_large_USD_MNP_pop  ;                ; RC_20_USD_start_1_end_3, gsm_large_USD_uc_manp_pop, OTC_15_USD_OC, RC_30_USD_start_4 ; GSM Large Price for Mobile Number Portability  ; Pay only 20$ for first 3 months and 30$/month for next period. Pay 15$ on cancellation.
+
+################################################
+###                Discount                  ###
+################################################
+INSERT_UPDATE Discount; code[unique = true]; global[default = false]; value; currency(isocode);
+                      ; discount_fixed_3_5 ;                        ; 0    ; USD              ;
+                      ; discount_fixed_4_5 ;                        ; 0    ; USD              ;
+                      ; discount_10        ;                        ; 0    ; USD              ;
+                      ; discount_15        ;                        ; 0    ; USD              ;
+                      ; discount_fixed_1_7 ;                        ; 0    ; USD              ;
+                      ; discount_25        ;                        ; 0    ; USD              ;
+                      ; discount_30        ;                        ; 0    ; USD              ;
+                      ; discount_47        ;                        ; 0    ; USD              ;
+
+INSERT_UPDATE DiscountRow; code[unique = true]; product(code, $catalogVersion); $processTypes[unique = true]; $subscriptionTerms; $catalogVersion; currency(isocode)[default = USD, unique = true]; $priority; $popAlteration         ; $appliedToPops                                   ; discount(code)
+                         ; discount_row1_7    ;                               ; ACQUISITION                 ; monthly_24        ;                ;                                                ;          ; discount_fixed_pop_1_7 ; OTC_4_USD_global_discount                        ; discount_fixed_1_7
+                         ; discount_row3_5    ;                               ; ACQUISITION                 ; monthly_24        ;                ;                                                ;          ; discount_fixed_pop_3_5 ; RC_45_USD_start_1_global_discount                ; discount_fixed_3_5
+                         ; discount_row4_5    ;                               ; ACQUISITION                 ; monthly_24        ;                ;                                                ;          ; discount_fixed_pop_4_5 ; RC_20_USD_start_1_global_discount                ; discount_fixed_4_5
+                         ; discount_row10     ;                               ; ACQUISITION                 ; monthly_24        ;                ;                                                ;          ; discount_pop_10        ; RC_15_USD_start_1_global_discount                ; discount_10
+                         ; discount_row15     ;                               ; ACQUISITION                 ; monthly_24        ;                ;                                                ;          ; discount_pop_15        ; UC_0_155_tierStart_1_minutes_USD_global_discount ; discount_15
+                         ; discount_row25     ;                               ; ACQUISITION                 ; monthly_24        ;                ;                                                ;          ; discount_pop_25        ; OTC_489_USD_global_discount                      ; discount_25
+                         ; discount_row30     ;                               ; ACQUISITION                 ; monthly_24        ;                ;                                                ;          ; discount_pop_30        ; RC_12_USD_start_1_global_discount                ; discount_30
+                         ; discount_row47     ;                               ; ACQUISITION                 ; monthly_24        ;                ;                                                ;          ; discount_pop_47        ; OTC_112_USD_global_discount                      ; discount_47
+

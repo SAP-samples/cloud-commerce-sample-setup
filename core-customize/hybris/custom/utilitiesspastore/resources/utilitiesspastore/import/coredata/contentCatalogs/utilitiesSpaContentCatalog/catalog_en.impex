@@ -1,0 +1,14 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+#
+# Import the utilities Content Catalog
+#
+
+# Language
+$lang = en
+
+# Create Content Catalog
+UPDATE ContentCatalog; id[unique = true]          ; name[lang = $lang]
+                     ; utilitiesSpaContentCatalog ; "Utilities SPA Content Catalog"

@@ -1,0 +1,29 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for B2B Telco SPA Store
+# English localisations
+
+$lang = en
+
+$productCatalog = b2btelcospaProductCatalog
+$catalogVersion = catalogversion(catalog(id[default=$productCatalog]), version[default='Staged'])[unique=true, default=$productCatalog:Staged]
+$storeImage = storeImage(qualifier, $catalogVersion)
+
+$standardHours = b2btelcospa-us-standard-hours
+
+UPDATE SpecialOpeningDay; openingSchedule(code)[unique = true]; date[unique = true, dateformat = dd.MM.yyyy]; name[lang = $lang]; message[lang = $lang]
+
+UPDATE StoreLocatorFeature; code[unique = true]    ; name[lang = $lang]
+                          ; wheelchair             ; "Wheelchair Access"
+                          ; creche                 ; "Creche"
+                          ; sundayWorkshops        ; "Sunday Workshops"
+                          ; buyOnlinePickupInStore ; "Buy Online Pick Up In Store"
+
+UPDATE PointOfService; name[unique = true]                            ; displayName                                    ;
+                     ; Hybris B2B Telco SPA - Chicago Premium Outlets ; Hybris B2B Telco SPA - Chicago Premium Outlets ;
+                     ; Hybris B2B Telco SPA - Chrysler Building       ; Hybris B2B Telco SPA - Chrysler Building       ;
+                     ; Hybris B2B Telco SPA - San Francisco Center    ; Hybris B2B Telco SPA - San Francisco Center    ;
+                     ; Hybris B2B Telco SPA - Seattle Premium Outlets ; Hybris B2B Telco SPA - Seattle Premium Outlets ;
+                     ; Hybris B2B Telco SPA - Riverwalk Marketplace   ; Hybris B2B Telco SPA - Riverwalk Marketplace   ;

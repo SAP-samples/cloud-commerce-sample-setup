@@ -1,0 +1,241 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# Impex for Importing Product Media into Telco Store
+$productCatalog = telcospaProductCatalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+$thumbnail = thumbnail(code, $catalogVersion)
+$picture = picture(code, $catalogVersion)
+$thumbnails = thumbnails(code, $catalogVersion)
+$detail = detail(code, $catalogVersion)
+$normal = normal(code, $catalogVersion)
+$others = others(code, $catalogVersion)
+$medias = medias(code, $catalogVersion)
+$galleryImages = galleryImages(qualifier, $catalogVersion)
+$siteResource = jar:de.hybris.platform.b2ctelcospastore.constants.B2ctelcospastoreConstants&/b2ctelcospastore/import/sampledata/productCatalogs/$productCatalog
+
+# ImPex for Importing TV-Channel Product Media
+
+# Macros / Replacement Parameter definitions
+
+INSERT_UPDATE Media; mediaFormat(qualifier); code[unique = true]              ; @media[translator = de.hybris.platform.impex.jalo.media.MediaDataTranslator]; mime[default = 'image/jpg']; $catalogVersion; folder(qualifier)[forceWrite = true]
+# copper_internet
+                   ; 1200Wx1200H           ; /1200Wx1200H/copper_internet.jpg ; $siteResource/images/1200Wx1200H/copper_internet.jpg                        ;                            ;                ; images
+                   ; 300Wx300H             ; /515Wx515H/copper_internet.jpg   ; $siteResource/images/515Wx515H/copper_internet.jpg                          ;                            ;                ; images
+                   ; 300Wx300H             ; /300Wx300H/copper_internet.jpg   ; $siteResource/images/300Wx300H/copper_internet.jpg                          ;                            ;                ; images
+                   ; 96Wx96H               ; /96Wx96H/copper_internet.jpg     ; $siteResource/images/96Wx96H/copper_internet.jpg                            ;                            ;                ; images
+                   ; 65Wx65H               ; /65Wx65H/copper_internet.jpg     ; $siteResource/images/65Wx65H/copper_internet.jpg                            ;                            ;                ; images
+                   ; 30Wx30H               ; /30Wx30H/copper_internet.jpg     ; $siteResource/images/30Wx30H/copper_internet.jpg                            ;                            ;                ; images
+# fiber_internet
+                   ; 1200Wx1200H           ; /1200Wx1200H/fiber_internet.jpg  ; $siteResource/images/1200Wx1200H/fiber_internet.jpg                         ;                            ;                ; images
+                   ; 300Wx300H             ; /515Wx515H/fiber_internet.jpg    ; $siteResource/images/515Wx515H/fiber_internet.jpg                           ;                            ;                ; images
+                   ; 300Wx300H             ; /300Wx300H/fiber_internet.jpg    ; $siteResource/images/300Wx300H/fiber_internet.jpg                           ;                            ;                ; images
+                   ; 96Wx96H               ; /96Wx96H/fiber_internet.jpg      ; $siteResource/images/96Wx96H/fiber_internet.jpg                             ;                            ;                ; images
+                   ; 65Wx65H               ; /65Wx65H/fiber_internet.jpg      ; $siteResource/images/65Wx65H/fiber_internet.jpg                             ;                            ;                ; images
+                   ; 30Wx30H               ; /30Wx30H/fiber_internet.jpg      ; $siteResource/images/30Wx30H/fiber_internet.jpg                             ;                            ;                ; images
+# 5g_internet
+                   ; 1200Wx1200H           ; /1200Wx1200H/5g_internet.jpg     ; $siteResource/images/1200Wx1200H/5g_internet.jpg                            ;                            ;                ; images
+                   ; 300Wx300H             ; /515Wx515H/5g_internet.jpg       ; $siteResource/images/515Wx515H/5g_internet.jpg                              ;                            ;                ; images
+                   ; 300Wx300H             ; /300Wx300H/5g_internet.jpg       ; $siteResource/images/300Wx300H/5g_internet.jpg                              ;                            ;                ; images
+                   ; 96Wx96H               ; /96Wx96H/5g_internet.jpg         ; $siteResource/images/96Wx96H/5g_internet.jpg                                ;                            ;                ; images
+                   ; 65Wx65H               ; /65Wx65H/5g_internet.jpg         ; $siteResource/images/65Wx65H/5g_internet.jpg                                ;                            ;                ; images
+                   ; 30Wx30H               ; /30Wx30H/5g_internet.jpg         ; $siteResource/images/30Wx30H/5g_internet.jpg                                ;                            ;                ; images
+
+
+INSERT_UPDATE MediaContainer; qualifier[unique = true]; $medias; $catalogVersion
+                            ; fiber_internet          ; /1200Wx1200H/fiber_internet.jpg,/515Wx515H/fiber_internet.jpg,/300Wx300H/fiber_internet.jpg,/96Wx96H/fiber_internet.jpg,/65Wx65H/fiber_internet.jpg,/30Wx30H/fiber_internet.jpg
+                            ; 5g_internet             ; /1200Wx1200H/5g_internet.jpg,/515Wx515H/5g_internet.jpg,/300Wx300H/5g_internet.jpg,/96Wx96H/5g_internet.jpg,/65Wx65H/5g_internet.jpg,/30Wx30H/5g_internet.jpg
+                            ; copper_internet         ; /1200Wx1200H/copper_internet.jpg,/515Wx515H/copper_internet.jpg,/300Wx300H/copper_internet.jpg,/96Wx96H/copper_internet.jpg,/65Wx65H/copper_internet.jpg,/30Wx30H/copper_internet.jpg
+
+INSERT_UPDATE TmaSimpleProductOffering; code[unique = true]; $picture                       ; $thumbnail                   ; $detail                          ; $normal                        ; $thumbnails                  ; $others                                                                                                                                              ; $galleryImages  ; $catalogVersion
+                                      ; copper_internet    ; /300Wx300H/copper_internet.jpg ; /96Wx96H/copper_internet.jpg ; /1200Wx1200H/copper_internet.jpg ; /300Wx300H/copper_internet.jpg ; /96Wx96H/copper_internet.jpg ; /515Wx515H/copper_internet.jpg,/300Wx300H/copper_internet.jpg,/96Wx96H/copper_internet.jpg,/65Wx65H/copper_internet.jpg,/30Wx30H/copper_internet.jpg ; copper_internet ;
+                                      ; fiber_internet     ; /300Wx300H/fiber_internet.jpg  ; /96Wx96H/fiber_internet.jpg  ; /1200Wx1200H/fiber_internet.jpg  ; /300Wx300H/fiber_internet.jpg  ; /96Wx96H/fiber_internet.jpg  ; /515Wx515H/fiber_internet.jpg,/300Wx300H/fiber_internet.jpg,/96Wx96H/fiber_internet.jpg,/65Wx65H/fiber_internet.jpg,/30Wx30H/fiber_internet.jpg      ; fiber_internet  ;
+                                      ; 5g_internet        ; /300Wx300H/5g_internet.jpg     ; /96Wx96H/5g_internet.jpg     ; /1200Wx1200H/5g_internet.jpg     ; /300Wx300H/5g_internet.jpg     ; /96Wx96H/5g_internet.jpg     ; /515Wx515H/5g_internet.jpg,/300Wx300H/5g_internet.jpg,/96Wx96H/5g_internet.jpg,/65Wx65H/5g_internet.jpg,/30Wx30H/5g_internet.jpg                     ; 5g_internet     ;
+
+INSERT_UPDATE Media; mediaFormat(qualifier); code[unique = true]      ; @media[translator = de.hybris.platform.impex.jalo.media.MediaDataTranslator]; mime[default = 'image/png']; $catalogVersion; folder(qualifier)[forceWrite = true]
+                   ; 30Wx30H               ; /40Wx40H/Iphone_13.png   ; $siteResource/images/40Wx40H/Iphone_13.png                                  ;                            ;                ; images
+                   ; 96Wx96H               ; /90Wx90H/Iphone_13.png   ; $siteResource/images/90Wx90H/Iphone_13.png                                  ;                            ;                ; images
+                   ; 300Wx300H             ; /500Wx500H/Iphone_13.png ; $siteResource/images/500Wx500H/Iphone_13.png                                ;                            ;                ; images
+
+INSERT_UPDATE Media; mediaFormat(qualifier); code[unique = true]              ; @media[translator = de.hybris.platform.impex.jalo.media.MediaDataTranslator]; mime[default = 'image/png']; $catalogVersion; folder(qualifier)[forceWrite = true]
+                   ; 30Wx30H               ; /40Wx40H/Iphone_13_Pro_Max.png   ; $siteResource/images/40Wx40H/Iphone_13_Pro_Max.png                          ;                            ;                ; images
+                   ; 96Wx96H               ; /90Wx90H/Iphone_13_Pro_Max.png   ; $siteResource/images/90Wx90H/Iphone_13_Pro_Max.png                          ;                            ;                ; images
+                   ; 300Wx300H             ; /500Wx500H/Iphone_13_Pro_Max.png ; $siteResource/images/500Wx500H/Iphone_13_Pro_Max.png                        ;                            ;                ; images
+
+INSERT_UPDATE Media; mediaFormat(qualifier); code[unique = true]        ; @media[translator = de.hybris.platform.impex.jalo.media.MediaDataTranslator]; mime[default = 'image/png']; $catalogVersion; folder(qualifier)[forceWrite = true]
+                   ; 30Wx30H               ; /40Wx40H/Samsung_S21.png   ; $siteResource/images/40Wx40H/Samsung_S21.png                                ;                            ;                ; images
+                   ; 96Wx96H               ; /90Wx90H/Samsung_S21.png   ; $siteResource/images/90Wx90H/Samsung_S21.png                                ;                            ;                ; images
+                   ; 300Wx300H             ; /500Wx500H/Samsung_S21.png ; $siteResource/images/500Wx500H/Samsung_S21.png                              ;                            ;                ; images
+
+INSERT_UPDATE Media; mediaFormat(qualifier); code[unique = true]        ; @media[translator = de.hybris.platform.impex.jalo.media.MediaDataTranslator]; mime[default = 'image/png']; $catalogVersion; folder(qualifier)[forceWrite = true]
+                   ; 30Wx30H               ; /40Wx40H/Samsung_S22.png   ; $siteResource/images/40Wx40H/Samsung_S22.png                                ;                            ;                ; images
+                   ; 96Wx96H               ; /90Wx90H/Samsung_S22.png   ; $siteResource/images/90Wx90H/Samsung_S22.png                                ;                            ;                ; images
+                   ; 300Wx300H             ; /500Wx500H/Samsung_S22.png ; $siteResource/images/500Wx500H/Samsung_S22.png                              ;                            ;                ; images
+
+INSERT_UPDATE Media; mediaFormat(qualifier); code[unique = true]     ; @media[translator = de.hybris.platform.impex.jalo.media.MediaDataTranslator]; mime[default = 'image/png']; $catalogVersion; folder(qualifier)[forceWrite = true]
+                   ; 30Wx30H               ; /40Wx40H/Router_X.png   ; $siteResource/images/40Wx40H/Router_X.png                                   ;                            ;                ; images
+                   ; 96Wx96H               ; /90Wx90H/Router_X.png   ; $siteResource/images/90Wx90H/Router_X.png                                   ;                            ;                ; images
+                   ; 300Wx300H             ; /500Wx500H/Router_X.png ; $siteResource/images/500Wx500H/Router_X.png                                 ;                            ;                ; images
+
+INSERT_UPDATE Media; mediaFormat(qualifier); code[unique = true]      ; @media[translator = de.hybris.platform.impex.jalo.media.MediaDataTranslator]; mime[default = 'image/png']; $catalogVersion; folder(qualifier)[forceWrite = true]
+                   ; 30Wx30H               ; /40Wx40H/Router_X1.png   ; $siteResource/images/40Wx40H/Router_X1.png                                  ;                            ;                ; images
+                   ; 96Wx96H               ; /90Wx90H/Router_X1.png   ; $siteResource/images/90Wx90H/Router_X1.png                                  ;                            ;                ; images
+                   ; 300Wx300H             ; /500Wx500H/Router_X1.png ; $siteResource/images/500Wx500H/Router_X1.png                                ;                            ;                ; images
+
+INSERT_UPDATE Media; mediaFormat(qualifier); code[unique = true]  ; @media[translator = de.hybris.platform.impex.jalo.media.MediaDataTranslator]; mime[default = 'image/png']; $catalogVersion; folder(qualifier)[forceWrite = true]
+                   ; 30Wx30H               ; /40Wx40H/Mibox.png   ; $siteResource/images/40Wx40H/Mibox.png                                      ;                            ;                ; images
+                   ; 96Wx96H               ; /90Wx90H/Mibox.png   ; $siteResource/images/90Wx90H/Mibox.png                                      ;                            ;                ; images
+                   ; 300Wx300H             ; /500Wx500H/Mibox.png ; $siteResource/images/500Wx500H/Mibox.png                                    ;                            ;                ; images
+
+INSERT_UPDATE MediaContainer; qualifier[unique = true]    ; $medias; $catalogVersion
+                            ; iPhone_13-Container         ; /40Wx40H/Iphone_13.png,/90Wx90H/Iphone_13.png,/500Wx500H/Iphone_13.png
+                            ; iPhone_13_Pro_Max-Container ; /40Wx40H/Iphone_13_Pro_Max.png,/90Wx90H/Iphone_13_Pro_Max.png,/500Wx500H/Iphone_13_Pro_Max.png
+                            ; samsung_S21-Container       ; /40Wx40H/Samsung_S21.png,/90Wx90H/Samsung_S21.png,/500Wx500H/Samsung_S21.png
+                            ; samsung_S22-Container       ; /40Wx40H/Samsung_S22.png,/90Wx90H/Samsung_S22.png,/500Wx500H/Samsung_S22.png
+
+                            ; router_x-Container          ; /40Wx40H/Router_X.png,/90Wx90H/Router_X.png,/500Wx500H/Router_X.png
+                            ; router_x1-Container         ; /40Wx40H/Router_X1.png,/90Wx90H/Router_X1.png,/500Wx500H/Router_X1.png
+
+                            ; mibox-Container             ; /40Wx40H/Mibox.png,/90Wx90H/Mibox.png,/500Wx500H/Mibox.png
+
+                            ; 4gpow-Container             ; /1001Wx1001H/4GPOW.png
+                            ; 5gpow-Container             ; /1001Wx1001H/5GPOW.png
+
+                            ; migsm_basic-Container       ; /1001Wx1001H/migsm_basic_plan.png
+                            ; migsm_university-Container  ; /1001Wx1001H/migsm_university_plan.png
+                            ; migsm_unlimited-Container   ; /1001Wx1001H/migsm_unlimited_plan.png
+
+
+UPDATE TmaSimpleProductOffering; code[unique = true]; $picture                         ; $thumbnail                     ; $galleryImages; $catalogVersion
+                               ; iPhone_13          ; /500Wx500H/Iphone_13.png         ; /90Wx90H/Iphone_13.png         ; iPhone_13-Container
+                               ; iPhone_13_Pro_Max  ; /500Wx500H/Iphone_13_Pro_Max.png ; /90Wx90H/Iphone_13_Pro_Max.png ; iPhone_13_Pro_Max-Container
+                               ; samsung_galaxy_S21 ; /500Wx500H/Samsung_S21.png       ; /90Wx90H/Samsung_S21.png       ; samsung_S21-Container
+                               ; samsung_galaxy_S22 ; /500Wx500H/Samsung_S22.png       ; /90Wx90H/Samsung_S22.png       ; samsung_S22-Container
+
+                               ; router_x           ; /500Wx500H/Router_X.png          ; /90Wx90H/Router_X.png          ; router_x-Container
+                               ; router_x1          ; /500Wx500H/Router_X1.png         ; /90Wx90H/Router_X1.png         ; router_x1-Container
+
+                               ; mibox_4g           ; /500Wx500H/Mibox.png             ; /90Wx90H/Mibox.png             ; mibox-Container
+                               ; mibox_5g           ; /500Wx500H/Mibox.png             ; /90Wx90H/Mibox.png             ; mibox-Container
+
+UPDATE TmaPoVariant; code[unique = true]                   ; $picture                         ; $thumbnail                     ; $galleryImages; $catalogVersion
+                   ; iPhone_13_green_128g                  ; /500Wx500H/Iphone_13.png         ; /90Wx90H/Iphone_13.png         ; iPhone_13-Container
+                   ; iPhone_13_green_256g                  ; /500Wx500H/Iphone_13.png         ; /90Wx90H/Iphone_13.png         ; iPhone_13-Container
+                   ; iPhone_13_midnight_128g               ; /500Wx500H/Iphone_13.png         ; /90Wx90H/Iphone_13.png         ; iPhone_13-Container
+                   ; iPhone_13_midnight_256g               ; /500Wx500H/Iphone_13.png         ; /90Wx90H/Iphone_13.png         ; iPhone_13-Container
+                   ; iPhone_13_white_128g                  ; /500Wx500H/Iphone_13.png         ; /90Wx90H/Iphone_13.png         ; iPhone_13-Container
+                   ; iPhone_13_white_256g                  ; /500Wx500H/Iphone_13.png         ; /90Wx90H/Iphone_13.png         ; iPhone_13-Container
+                   ; iPhone_13_blue_128g                   ; /500Wx500H/Iphone_13.png         ; /90Wx90H/Iphone_13.png         ; iPhone_13-Container
+                   ; iPhone_13_blue_256g                   ; /500Wx500H/Iphone_13.png         ; /90Wx90H/Iphone_13.png         ; iPhone_13-Container
+                   ; iPhone_13_pink_128g                   ; /500Wx500H/Iphone_13.png         ; /90Wx90H/Iphone_13.png         ; iPhone_13-Container
+                   ; iPhone_13_pink_256g                   ; /500Wx500H/Iphone_13.png         ; /90Wx90H/Iphone_13.png         ; iPhone_13-Container
+                   ; iPhone_13_red_128g                    ; /500Wx500H/Iphone_13.png         ; /90Wx90H/Iphone_13.png         ; iPhone_13-Container
+                   ; iPhone_13_red_256g                    ; /500Wx500H/Iphone_13.png         ; /90Wx90H/Iphone_13.png         ; iPhone_13-Container
+
+                   ; iPhone_13_Pro_Max_silver_128g         ; /500Wx500H/Iphone_13_Pro_Max.png ; /90Wx90H/Iphone_13_Pro_Max.png ; iPhone_13_Pro_Max-Container
+                   ; iPhone_13_Pro_Max_silver_256g         ; /500Wx500H/Iphone_13_Pro_Max.png ; /90Wx90H/Iphone_13_Pro_Max.png ; iPhone_13_Pro_Max-Container
+                   ; iPhone_13_Pro_Max_silver_512g         ; /500Wx500H/Iphone_13_Pro_Max.png ; /90Wx90H/Iphone_13_Pro_Max.png ; iPhone_13_Pro_Max-Container
+                   ; iPhone_13_Pro_Max_silver_1024g        ; /500Wx500H/Iphone_13_Pro_Max.png ; /90Wx90H/Iphone_13_Pro_Max.png ; iPhone_13_Pro_Max-Container
+                   ; iPhone_13_Pro_Max_graphite_128g       ; /500Wx500H/Iphone_13_Pro_Max.png ; /90Wx90H/Iphone_13_Pro_Max.png ; iPhone_13_Pro_Max-Container
+                   ; iPhone_13_Pro_Max_graphite_256g       ; /500Wx500H/Iphone_13_Pro_Max.png ; /90Wx90H/Iphone_13_Pro_Max.png ; iPhone_13_Pro_Max-Container
+                   ; iPhone_13_Pro_Max_graphite_512g       ; /500Wx500H/Iphone_13_Pro_Max.png ; /90Wx90H/Iphone_13_Pro_Max.png ; iPhone_13_Pro_Max-Container
+                   ; iPhone_13_Pro_Max_graphite_1024g      ; /500Wx500H/Iphone_13_Pro_Max.png ; /90Wx90H/Iphone_13_Pro_Max.png ; iPhone_13_Pro_Max-Container
+                   ; iPhone_13_Pro_Max_alpinegreen_128g    ; /500Wx500H/Iphone_13_Pro_Max.png ; /90Wx90H/Iphone_13_Pro_Max.png ; iPhone_13_Pro_Max-Container
+                   ; iPhone_13_Pro_Max_alpinegreen_256g    ; /500Wx500H/Iphone_13_Pro_Max.png ; /90Wx90H/Iphone_13_Pro_Max.png ; iPhone_13_Pro_Max-Container
+                   ; iPhone_13_Pro_Max_alpinegreen_512g    ; /500Wx500H/Iphone_13_Pro_Max.png ; /90Wx90H/Iphone_13_Pro_Max.png ; iPhone_13_Pro_Max-Container
+                   ; iPhone_13_Pro_Max_alpinegreen_1024g   ; /500Wx500H/Iphone_13_Pro_Max.png ; /90Wx90H/Iphone_13_Pro_Max.png ; iPhone_13_Pro_Max-Container
+                   ; iPhone_13_Pro_Max_gold_128g           ; /500Wx500H/Iphone_13_Pro_Max.png ; /90Wx90H/Iphone_13_Pro_Max.png ; iPhone_13_Pro_Max-Container
+                   ; iPhone_13_Pro_Max_gold_256g           ; /500Wx500H/Iphone_13_Pro_Max.png ; /90Wx90H/Iphone_13_Pro_Max.png ; iPhone_13_Pro_Max-Container
+                   ; iPhone_13_Pro_Max_gold_512g           ; /500Wx500H/Iphone_13_Pro_Max.png ; /90Wx90H/Iphone_13_Pro_Max.png ; iPhone_13_Pro_Max-Container
+                   ; iPhone_13_Pro_Max_gold_1024g          ; /500Wx500H/Iphone_13_Pro_Max.png ; /90Wx90H/Iphone_13_Pro_Max.png ; iPhone_13_Pro_Max-Container
+                   ; iPhone_13_Pro_Max_sierrablue_128g     ; /500Wx500H/Iphone_13_Pro_Max.png ; /90Wx90H/Iphone_13_Pro_Max.png ; iPhone_13_Pro_Max-Container
+                   ; iPhone_13_Pro_Max_sierrablue_256g     ; /500Wx500H/Iphone_13_Pro_Max.png ; /90Wx90H/Iphone_13_Pro_Max.png ; iPhone_13_Pro_Max-Container
+                   ; iPhone_13_Pro_Max_sierrablue_512g     ; /500Wx500H/Iphone_13_Pro_Max.png ; /90Wx90H/Iphone_13_Pro_Max.png ; iPhone_13_Pro_Max-Container
+                   ; iPhone_13_Pro_Max_sierrablue_1024g    ; /500Wx500H/Iphone_13_Pro_Max.png ; /90Wx90H/Iphone_13_Pro_Max.png ; iPhone_13_Pro_Max-Container
+
+                   ; samsung_galaxy_S21_phantomgray_128g   ; /500Wx500H/Samsung_S21.png       ; /90Wx90H/Samsung_S21.png       ; samsung_S21-Container
+                   ; samsung_galaxy_S21_phantomgray_256g   ; /500Wx500H/Samsung_S21.png       ; /90Wx90H/Samsung_S21.png       ; samsung_S21-Container
+                   ; samsung_galaxy_S21_phantomviolet_128g ; /500Wx500H/Samsung_S21.png       ; /90Wx90H/Samsung_S21.png       ; samsung_S21-Container
+                   ; samsung_galaxy_S21_phantomviolet_256g ; /500Wx500H/Samsung_S21.png       ; /90Wx90H/Samsung_S21.png       ; samsung_S21-Container
+                   ; samsung_galaxy_S21_phantompink_128g   ; /500Wx500H/Samsung_S21.png       ; /90Wx90H/Samsung_S21.png       ; samsung_S21-Container
+                   ; samsung_galaxy_S21_phantompink_256g   ; /500Wx500H/Samsung_S21.png       ; /90Wx90H/Samsung_S21.png       ; samsung_S21-Container
+                   ; samsung_galaxy_S21_phantomwhite_128g  ; /500Wx500H/Samsung_S21.png       ; /90Wx90H/Samsung_S21.png       ; samsung_S21-Container
+                   ; samsung_galaxy_S21_phantomwhite_256g  ; /500Wx500H/Samsung_S21.png       ; /90Wx90H/Samsung_S21.png       ; samsung_S21-Container
+
+                   ; samsung_galaxy_S22_phantomblack_128g  ; /500Wx500H/Samsung_S22.png       ; /90Wx90H/Samsung_S22.png       ; samsung_S22-Container
+                   ; samsung_galaxy_S22_phantomblack_256g  ; /500Wx500H/Samsung_S22.png       ; /90Wx90H/Samsung_S22.png       ; samsung_S22-Container
+                   ; samsung_galaxy_S22_green_128g         ; /500Wx500H/Samsung_S22.png       ; /90Wx90H/Samsung_S22.png       ; samsung_S22-Container
+                   ; samsung_galaxy_S22_green_256g         ; /500Wx500H/Samsung_S22.png       ; /90Wx90H/Samsung_S22.png       ; samsung_S22-Container
+                   ; samsung_galaxy_S22_pinkgold_128g      ; /500Wx500H/Samsung_S22.png       ; /90Wx90H/Samsung_S22.png       ; samsung_S22-Container
+                   ; samsung_galaxy_S22_pinkgold_256g      ; /500Wx500H/Samsung_S22.png       ; /90Wx90H/Samsung_S22.png       ; samsung_S22-Container
+                   ; samsung_galaxy_S22_phantomwhite_128g  ; /500Wx500H/Samsung_S22.png       ; /90Wx90H/Samsung_S22.png       ; samsung_S22-Container
+                   ; samsung_galaxy_S22_phantomwhite_256g  ; /500Wx500H/Samsung_S22.png       ; /90Wx90H/Samsung_S22.png       ; samsung_S22-Container
+
+
+INSERT_UPDATE Media; mediaFormat(qualifier); code[unique = true]                    ; @media[translator = de.hybris.platform.impex.jalo.media.MediaDataTranslator]; mime[default = 'image/png']; $catalogVersion; folder(qualifier)[forceWrite = true]
+                   ; 300Wx300H             ; /1001Wx1001H/4GPOW.png                 ; $siteResource/images/1001Wx1001H/4GPOW.png                                  ;                            ;                ; images
+                   ; 300Wx300H             ; /1001Wx1001H/5GPOW.png                 ; $siteResource/images/1001Wx1001H/5GPOW.png                                  ;                            ;                ; images
+
+                   ; 300Wx300H             ; /1001Wx1001H/migsm_basic_plan.png      ; $siteResource/images/1001Wx1001H/migsm_basic_plan.png                       ;                            ;                ; images
+                   ; 300Wx300H             ; /1001Wx1001H/migsm_university_plan.png ; $siteResource/images/1001Wx1001H/migsm_university_plan.png                  ;                            ;                ; images
+                   ; 300Wx300H             ; /1001Wx1001H/migsm_unlimited_plan.png  ; $siteResource/images/1001Wx1001H/migsm_unlimited_plan.png                   ;                            ;                ; images
+
+INSERT_UPDATE TmaSimpleProductOffering; code[unique = true]; $picture                               ; $thumbnail                             ; $detail                                ; $normal                                ; $thumbnails                            ; $others; $galleryImages             ; $catalogVersion
+                                      ; 4gpow              ; /1001Wx1001H/4GPOW.png                 ; /1001Wx1001H/4GPOW.png                 ; /1001Wx1001H/4GPOW.png                 ; /1001Wx1001H/4GPOW.png                 ; /1001Wx1001H/4GPOW.png                 ;        ; 4gpow-Container            ;
+                                      ; 5gpow              ; /1001Wx1001H/5GPOW.png                 ; /1001Wx1001H/5GPOW.png                 ; /1001Wx1001H/5GPOW.png                 ; /1001Wx1001H/5GPOW.png                 ; /1001Wx1001H/5GPOW.png                 ;        ; 5gpow-Container            ;
+
+                                      ; gsm_small          ; /1001Wx1001H/migsm_basic_plan.png      ; /1001Wx1001H/migsm_basic_plan.png      ; /1001Wx1001H/migsm_basic_plan.png      ; /1001Wx1001H/migsm_basic_plan.png      ; /1001Wx1001H/migsm_basic_plan.png      ;        ; migsm_basic-Container      ;
+                                      ; gsm_medium         ; /1001Wx1001H/migsm_university_plan.png ; /1001Wx1001H/migsm_university_plan.png ; /1001Wx1001H/migsm_university_plan.png ; /1001Wx1001H/migsm_university_plan.png ; /1001Wx1001H/migsm_university_plan.png ;        ; migsm_university-Container ;
+                                      ; gsm_large          ; /1001Wx1001H/migsm_unlimited_plan.png  ; /1001Wx1001H/migsm_unlimited_plan.png  ; /1001Wx1001H/migsm_unlimited_plan.png  ; /1001Wx1001H/migsm_unlimited_plan.png  ; /1001Wx1001H/migsm_unlimited_plan.png  ;        ; migsm_unlimited-Container  ;
+
+INSERT_UPDATE MediaContainer; qualifier[unique = true]                           ; $medias; $catalogVersion
+                            ; modem_4G_container                                 ; /500Wx500H/Modem_4G_500x500.png
+                            ; modem_5G_container                                 ; /500Wx500H/Modem_5G_500x500.png
+
+                            ; tv_100_container                                   ; /500Wx500H/TV100_500x500.png
+                            ; tv_200_container                                   ; /500Wx500H/TV200_500x500.png
+                            ; tv_unlimited_container                             ; /500Wx500H/TV_Unlimited_500x500.png
+
+                            ; unlimitedNationalCalling_container                 ; /500Wx500H/Domestic_Calls.png
+                            ; unlimitedNationalAndLimitedInternational_container ; /500Wx500H/International_and_Domestic_calls.png
+
+                            ; installation_service_container                     ; /500Wx500H/Installation_services_500x500.png
+                            ; smartphone_warranty_container                      ; /500Wx500H/Phone_warranty_500x500.png
+                            ; mobile_hotspot_container                           ; /500Wx500H/Hotspot_500x500.png
+                            ; additional_roaming_data_container                  ; /500Wx500H/Roaming_500x500.png
+                            ; esim_container                                     ; /500Wx500H/eSIM_500x500.png
+
+INSERT_UPDATE Media; mediaFormat(qualifier); code[unique = true]                             ; @media[translator = de.hybris.platform.impex.jalo.media.MediaDataTranslator]; mime[default = 'image/png']; $catalogVersion; folder(qualifier)[forceWrite = true]
+                   ; 300Wx300H             ; /500Wx500H/Modem_4G_500x500.png                 ; $siteResource/images/500Wx500H/Modem_4G_500x500.png                         ;                            ;                ; images
+                   ; 300Wx300H             ; /500Wx500H/Modem_5G_500x500.png                 ; $siteResource/images/500Wx500H/Modem_5G_500x500.png                         ;                            ;                ; images
+
+                   ; 300Wx300H             ; /500Wx500H/TV100_500x500.png                    ; $siteResource/images/500Wx500H/TV100_500x500.png                            ;                            ;                ; images
+                   ; 300Wx300H             ; /500Wx500H/TV200_500x500.png                    ; $siteResource/images/500Wx500H/TV200_500x500.png                            ;                            ;                ; images
+                   ; 300Wx300H             ; /500Wx500H/TV_Unlimited_500x500.png             ; $siteResource/images/500Wx500H/TV_Unlimited_500x500.png                     ;                            ;                ; images
+
+                   ; 300Wx300H             ; /500Wx500H/Domestic_Calls.png                   ; $siteResource/images/500Wx500H/Domestic_Calls.png                           ;                            ;                ; images
+                   ; 300Wx300H             ; /500Wx500H/International_and_Domestic_calls.png ; $siteResource/images/500Wx500H/International_and_Domestic_calls.png         ;                            ;                ; images
+
+                   ; 300Wx300H             ; /500Wx500H/Installation_services_500x500.png    ; $siteResource/images/500Wx500H/Installation_services_500x500.png            ;                            ;                ; images
+                   ; 300Wx300H             ; /500Wx500H/Phone_warranty_500x500.png           ; $siteResource/images/500Wx500H/Phone_warranty_500x500.png                   ;                            ;                ; images
+                   ; 300Wx300H             ; /500Wx500H/Hotspot_500x500.png                  ; $siteResource/images/500Wx500H/Hotspot_500x500.png                          ;                            ;                ; images
+                   ; 300Wx300H             ; /500Wx500H/Roaming_500x500.png                  ; $siteResource/images/500Wx500H/Roaming_500x500.png                          ;                            ;                ; images
+                   ; 300Wx300H             ; /500Wx500H/eSIM_500x500.png                     ; $siteResource/images/500Wx500H/eSIM_500x500.png                             ;                            ;                ; images
+
+INSERT_UPDATE TmaSimpleProductOffering; code[unique = true]                      ; $picture                                        ; $thumbnail                                      ; $detail                                         ; $normal                                         ; $thumbnails                                     ; $others; $galleryImages                                     ; $catalogVersion
+                                      ; modem_4G                                 ; /500Wx500H/Modem_4G_500x500.png                 ; /500Wx500H/Modem_4G_500x500.png                 ; /500Wx500H/Modem_4G_500x500.png                 ; /500Wx500H/Modem_4G_500x500.png                 ; /500Wx500H/Modem_4G_500x500.png                 ;        ; modem_4G_container                                 ;
+                                      ; modem_5G                                 ; /500Wx500H/Modem_5G_500x500.png                 ; /500Wx500H/Modem_5G_500x500.png                 ; /500Wx500H/Modem_5G_500x500.png                 ; /500Wx500H/Modem_5G_500x500.png                 ; /500Wx500H/Modem_5G_500x500.png                 ;        ; modem_5G_container                                 ;
+
+                                      ; tv_100                                   ; /500Wx500H/TV100_500x500.png                    ; /500Wx500H/TV100_500x500.png                    ; /500Wx500H/TV100_500x500.png                    ; /500Wx500H/TV100_500x500.png                    ; /500Wx500H/TV100_500x500.png                    ;        ; tv_100_container                                   ;
+                                      ; tv_200                                   ; /500Wx500H/TV200_500x500.png                    ; /500Wx500H/TV200_500x500.png                    ; /500Wx500H/TV200_500x500.png                    ; /500Wx500H/TV200_500x500.png                    ; /500Wx500H/TV200_500x500.png                    ;        ; tv_200_container                                   ;
+                                      ; tv_unlimited                             ; /500Wx500H/TV_Unlimited_500x500.png             ; /500Wx500H/TV_Unlimited_500x500.png             ; /500Wx500H/TV_Unlimited_500x500.png             ; /500Wx500H/TV_Unlimited_500x500.png             ; /500Wx500H/TV_Unlimited_500x500.png             ;        ; tv_unlimited_container                             ;
+
+                                      ; unlimitedNationalCalling                 ; /500Wx500H/Domestic_Calls.png                   ; /500Wx500H/Domestic_Calls.png                   ; /500Wx500H/Domestic_Calls.png                   ; /500Wx500H/Domestic_Calls.png                   ; /500Wx500H/Domestic_Calls.png                   ;        ; unlimitedNationalCalling_container                 ;
+                                      ; unlimitedNationalAndLimitedInternational ; /500Wx500H/International_and_Domestic_calls.png ; /500Wx500H/International_and_Domestic_calls.png ; /500Wx500H/International_and_Domestic_calls.png ; /500Wx500H/International_and_Domestic_calls.png ; /500Wx500H/International_and_Domestic_calls.png ;        ; unlimitedNationalAndLimitedInternational_container ;
+
+                                      ; installation_service                     ; /500Wx500H/Installation_services_500x500.png    ; /500Wx500H/Installation_services_500x500.png    ; /500Wx500H/Installation_services_500x500.png    ; /500Wx500H/Installation_services_500x500.png    ; /500Wx500H/Installation_services_500x500.png    ;        ; installation_service_container                     ;
+                                      ; smartphone_warranty                      ; /500Wx500H/Phone_warranty_500x500.png           ; /500Wx500H/Phone_warranty_500x500.png           ; /500Wx500H/Phone_warranty_500x500.png           ; /500Wx500H/Phone_warranty_500x500.png           ; /500Wx500H/Phone_warranty_500x500.png           ;        ; smartphone_warranty_container                      ;
+                                      ; mobile_hotspot                           ; /500Wx500H/Hotspot_500x500.png                  ; /500Wx500H/Hotspot_500x500.png                  ; /500Wx500H/Hotspot_500x500.png                  ; /500Wx500H/Hotspot_500x500.png                  ; /500Wx500H/Hotspot_500x500.png                  ;        ; mobile_hotspot_container                           ;
+                                      ; additional_roaming_data                  ; /500Wx500H/Roaming_500x500.png                  ; /500Wx500H/Roaming_500x500.png                  ; /500Wx500H/Roaming_500x500.png                  ; /500Wx500H/Roaming_500x500.png                  ; /500Wx500H/Roaming_500x500.png                  ;        ; additional_roaming_data_container                  ;
+                                      ; eSim                                     ; /500Wx500H/eSIM_500x500.png                     ; /500Wx500H/Roaming_500x500.png                  ; /500Wx500H/eSIM_500x500.png                     ; /500Wx500H/eSIM_500x500.png                     ; /500Wx500H/eSIM_500x500.png                     ;        ; esim_container                                     ;

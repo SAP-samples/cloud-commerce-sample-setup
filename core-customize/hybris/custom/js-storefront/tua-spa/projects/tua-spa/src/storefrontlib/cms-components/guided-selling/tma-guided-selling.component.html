@@ -1,0 +1,42 @@
+<ng-container *ngIf="compact">
+  <div>
+    <ng-container class="row">
+      <cx-guided-selling-current-selection
+      [subscriptionDetail]="subscriptionDetail"
+      [tmfProducts]="tmfProducts"
+      [isSubscription]="isSubscription"
+    ></cx-guided-selling-current-selection>
+    </ng-container>
+    <ng-container>
+    <cx-guided-selling-steps
+      [bpoCode]="bpoCode"
+      [isSubscription]="isSubscription"
+      [compact]="compact"
+    ></cx-guided-selling-steps>
+
+    <cx-guided-selling-product-list
+      [tmfProducts]="tmfProducts"
+    ></cx-guided-selling-product-list>
+    </ng-container>
+  </div>
+</ng-container>
+
+<ng-container class="row" *ngIf="!compact">
+  <cx-guided-selling-steps
+    class="col-2"
+    [bpoCode]="bpoCode"
+    [isSubscription]="isSubscription"
+  ></cx-guided-selling-steps>
+
+  <cx-guided-selling-product-list
+    class="col-7"
+    [tmfProducts]="tmfProducts"
+  ></cx-guided-selling-product-list>
+
+  <cx-guided-selling-current-selection
+    class="col-4"
+    [subscriptionDetail]="subscriptionDetail"
+    [tmfProducts]="tmfProducts"
+    [isSubscription]="isSubscription"
+  ></cx-guided-selling-current-selection>
+</ng-container>

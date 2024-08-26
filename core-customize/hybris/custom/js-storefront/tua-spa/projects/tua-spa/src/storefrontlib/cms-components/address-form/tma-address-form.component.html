@@ -1,0 +1,176 @@
+<ng-container *ngIf="!hasError">
+
+    <div class="mb-3 font-weight-bolder">
+        <span>
+            {{ 'addressInputs.addressForm.label' | cxTranslate }}
+        </span>
+    </div>
+    <div class="d-flex flex-wrap justify-content-between row" [formGroup]="installationAddress">
+        <!-- Street Name -->
+        <div class="form-group col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+            <label>
+                <span class="card-label font-weight-bolder px-0 col-md-4 required">
+                    {{ 'addressInputs.streetName.label' | cxTranslate }}</span>
+                <input
+                class="form-control"
+                type="text"
+                required
+                placeholder="{{
+                'addressInputs.streetName.placeholder' | cxTranslate
+                    }}"
+                formControlName="streetName"
+                />
+                <cx-form-errors
+                class="form-message--danger"
+                [control]="installationAddress.get('streetName')"
+                ></cx-form-errors>
+            </label>
+        </div>
+
+        <!-- House/Building Number -->
+        <div class="form-group col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+            <label>
+                <span
+                class="card-label font-weight-bolder px-0 col-md-4 required">
+                    {{ 'addressInputs.buildingNumber.label' | cxTranslate }}
+                </span>
+                <input
+                class="form-control"
+                type="text"
+                required
+                placeholder="{{
+                'addressInputs.buildingNumber.placeholder' | cxTranslate
+                    }}"
+                formControlName="buildingNumber"
+                />
+                <cx-form-errors
+                class="form-message--danger"
+                [control]="installationAddress.get('buildingNumber')"
+                ></cx-form-errors>
+            </label>
+        </div>
+
+        <!-- Apartment/Unit/Suite -->
+        <div class="form-group col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+            <label>
+                <span class="card-label font-weight-bolder px-0 col-md-4">
+                    {{ 'addressInputs.apartmentNumber.label' | cxTranslate }}
+                    &nbsp;({{ 'common.optional' | cxTranslate }})
+                </span>
+                <input
+                class="form-control"
+                type="text"
+                placeholder="{{
+                'addressInputs.apartmentNumber.placeholder' | cxTranslate }}"
+                formControlName="apartmentNumber"
+                />
+                <cx-form-errors
+                class="form-message--danger"
+                [control]="installationAddress.get('apartmentNumber')"
+                ></cx-form-errors>
+            </label>
+        </div>
+
+        <!-- Country -->
+        <ng-container *ngIf="countries$ | async as countries">
+            <ng-container *ngIf="countries.length !== 0">
+                 <div class="form-group col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6" formGroupName="country">
+                    <label>
+                        <span class="card-label font-weight-bolder required px-0 col-md-4">
+                            {{ 'addressInputs.country.label' | cxTranslate }}
+                        </span>
+                        <ng-select class="country-select"
+                                    formControlName="isocode"
+                                    [searchable]="true"
+                                    [clearable]="false"
+                                    [items]="countries"
+                                    bindLabel="name"
+                                    bindValue="isocode"
+                                    placeholder="{{ 'addressInputs.country.placeholder' | cxTranslate }}"
+                                    required
+                                    (change)="onCountrySelected($event)"
+                        >
+                        </ng-select>
+                        <cx-form-errors
+                        class="form-message--danger"
+                        [control]="installationAddress.get('country').get('isocode')"
+                        ></cx-form-errors>
+                    </label>
+                </div>
+            </ng-container>
+        </ng-container>
+
+        <!-- City -->
+        <div class="form-group col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+            <label>
+                <span class="card-label font-weight-bolder px-0 col-md-4 required">
+                    {{ 'addressInputs.city.label' | cxTranslate }}
+                </span>
+                <input
+                class="form-control"
+                type="text"
+                required
+                placeholder="{{
+                'addressInputs.city.placeholder' | cxTranslate
+                    }}"
+                formControlName="city"
+                />
+                <cx-form-errors
+                class="form-message--danger"
+                [control]="installationAddress.get('city')"
+                ></cx-form-errors>
+            </label>
+        </div>
+
+        <!-- Regions -->
+        <ng-container *ngIf="regions$ | async as regions">
+            <ng-container *ngIf="regions.length !== 0">
+                <div class="form-group col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6" formGroupName="region">
+                    <label>
+                        <span class="card-label font-weight-bolder required px-0 col-md-4">
+                            {{ 'addressInputs.state.label' | cxTranslate }}
+                        </span>
+                        <ng-select class="region-select"
+                                    formControlName="isocode"
+                                    [searchable]="true"
+                                    [clearable]="false"
+                                    [items]="regions"
+                                    bindLabel="name"
+                                    bindValue="isocode"
+                                    placeholder="{{ 'addressInputs.state.placeholder' | cxTranslate }}"
+                                    (change)="onRegionSelected($event)"
+                        >
+                        </ng-select>
+                        <cx-form-errors
+                        class="form-message--danger"
+                        [control]="installationAddress.get('region').get('isocode')"
+                        ></cx-form-errors>
+                    </label>
+                </div>  
+            </ng-container>
+        </ng-container>
+
+        <!-- Postal Code -->
+        <div class="form-group col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+            <label>
+                <span class="card-label font-weight-bolder px-0 col-md-4 required">
+                    {{ 'addressInputs.postalCode.label' | cxTranslate }}
+                </span>
+                <input
+                class="form-control"
+                type="text"
+                required
+                placeholder="{{
+                'addressInputs.postalCode.placeholder' | cxTranslate
+                    }}"
+                formControlName="postalCode"
+                />
+                <cx-form-errors
+                class="form-message--danger"
+                [control]="installationAddress.get('postalCode')"
+                ></cx-form-errors>
+            </label>
+        </div>
+        <ng-container *ngIf="installationAddressSelect(installationAddress)"></ng-container>
+    </div>
+</ng-container>

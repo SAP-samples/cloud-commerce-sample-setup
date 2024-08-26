@@ -1,0 +1,12 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# Impex for Billing Plans - en
+
+# Macros / Replacement Parameter definitions
+$lang = en
+
+UPDATE BillingPlan; id[unique = true]; name[lang = $lang]
+                  ; MonthlyPlan      ; Monthly Plan
+                  ; AnnuallyPlan     ; Annually Plan

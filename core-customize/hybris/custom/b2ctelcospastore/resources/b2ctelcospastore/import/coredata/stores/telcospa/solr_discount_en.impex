@@ -1,0 +1,38 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2022 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+#
+# ENGLISH LOCALIZATION
+#
+
+$lang = en
+$solrIndexedType = telcospaDiscountType
+
+###################
+# used in headers #
+###################
+$hIndexType = solrIndexedType(identifier)[unique = true, default = telcospaDiscountType]
+$hName = name[unique = true]
+$hDisplayName = displayName[lang = en]
+
+UPDATE SolrIndexedProperty; $hIndexType; $hName                   ; $hDisplayName
+                          ;            ; code                     ; "Code"
+                          ;            ; channel                  ; "Channel"
+                          ;            ; currency                 ; "Currency"
+                          ;            ; userpricegroup           ; "User Price Group"
+                          ;            ; user                     ; "User"
+                          ;            ; requiredProductOfferings ; "Required Product Offerings"
+                          ;            ; requiredProductClasses   ; "Required Product Classes"
+                          ;            ; affectedProductOffering  ; "Affected product offering"
+                          ;            ; appliedToPops            ; "Applied to Product Offering Prices"
+                          ;            ; region                   ; "Region"
+                          ;            ; process                  ; "Process"
+                          ;            ; popAlteration            ; "Product Offering Price Alteration"
+                          ;            ; termLimits               ; "Term Limits"
+                          ;            ; pricePriority            ; "Price Priority"
+
+UPDATE SolrSort; indexedType(identifier)[unique = true]; code[unique = true]; name[lang = $lang]
+               ; $solrIndexedType                      ; code-asc           ; "Code (ascending)"
+               ; $solrIndexedType                      ; code-desc          ; "Code (descending)"
+               ; $solrIndexedType                      ; pricePriority-desc ; "Price Priority (highest first)"

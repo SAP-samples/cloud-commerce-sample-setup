@@ -1,0 +1,14 @@
+<ng-container *ngIf="product$ | async as product">
+    <div class="container" *ngIf="product.isBundle">
+        <div class="row border-bottom py-3" *ngFor="let child of product.children">
+            <ng-container *ngIf="getChildProductDetails(child.code) | async as childDetails">
+                <div class="col-1 cx-image-container">
+                    <cx-media 
+                        [container]="childDetails.images?.PRIMARY">
+                    </cx-media>
+                </div>
+                <div class="cx-bold d-flex justify-content-center align-items-center" aria-hidden="true">{{ childDetails.name }}</div>
+            </ng-container>
+        </div>
+    </div>
+</ng-container>

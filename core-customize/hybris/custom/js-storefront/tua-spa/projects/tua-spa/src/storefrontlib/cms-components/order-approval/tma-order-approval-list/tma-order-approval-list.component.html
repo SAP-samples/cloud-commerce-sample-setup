@@ -1,0 +1,71 @@
+<ng-container *ngIf="paginatedProductOrder$ | async as productOrders">
+  <ng-container *ngIf="productOrders.orders.length > 0; else noOrder">
+
+    <!-- Select Form and Pagination Top -->
+    <div class="cx-order-approval-sort top row">
+      <div class="cx-order-approval-pagination">
+        <cx-pagination
+          [pagination]="getPagination(productOrders.totalCount)"
+          (viewPageEvent)="pageChange($event)"
+        ></cx-pagination>
+      </div>
+    </div>
+
+    <!-- TABLE -->
+    <table role="table" id="order-approval-table" class="table-width">
+      <caption class="cx-visually-hidden">
+        {{
+          'orderApprovalList.orderApprovalList' | cxTranslate
+        }}
+      </caption>
+      <!-- TABLE HEADERS -->
+      <thead class="row order-approval-table-headers-container">
+        <th class="col text-align-center">
+          <strong>{{ 'orderApprovalList.orderCode' | cxTranslate }}</strong>
+        </th>
+        <th class="col text-align-center">
+          <strong>{{ 'orderApprovalList.placedBy' | cxTranslate }}</strong>
+        </th>
+        <th class="col text-align-center">
+          <strong>{{ 'orderApprovalList.date' | cxTranslate }}</strong>
+        </th>
+        <th class="col text-align-center">
+          <strong>{{ 'orderApprovalList.status' | cxTranslate }}</strong>
+        </th>
+        <th class="col"></th>
+        <th class="col"></th>
+      </thead>
+
+      <!-- TABLE ROWS -->
+      <tbody>
+        <ng-container *ngFor="let productOrder of productOrders.orders">
+          <hr>
+          <cx-order-approval-list-item
+            [productOrder]="productOrder">
+          </cx-order-approval-list-item>
+        </ng-container>
+      </tbody>
+    </table>
+
+    <!-- Select Form and Pagination Bottom -->
+    <div class="cx-order-approval-sort bottom row">
+      <div class="cx-order-approval-pagination">
+        <cx-pagination
+          [pagination]="getPagination(productOrders.totalCount)"
+          (viewPageEvent)="pageChange($event)"
+        ></cx-pagination>
+      </div>
+    </div>
+
+  </ng-container>
+
+  <!-- NO ORDER CONTAINER -->
+  <ng-template #noOrder>
+    <div class="cx-order-approval-no-order row">
+      <div class="col-sm-12 col-md-6 col-lg-4">
+        <div>{{ 'orderApprovalList.emptyList' | cxTranslate }}</div>
+      </div>
+    </div>
+  </ng-template>
+
+</ng-container>

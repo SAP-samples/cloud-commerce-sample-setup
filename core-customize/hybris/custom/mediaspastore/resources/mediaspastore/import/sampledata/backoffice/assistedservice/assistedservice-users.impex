@@ -1,0 +1,79 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+#
+# Grant assisted service role to use
+#
+$storeUid = mediaspa
+$siteUid = mediaspa
+$lang = en
+
+INSERT_UPDATE CustomerList; uid[unique = true]; locname[lang = $lang]
+                          ; instoreCustomers  ; "Current In-Store Customers"
+
+INSERT_UPDATE PointOfService; name[unique = true]; type(code); basestore(uid)[default = $storeUid];
+                            ; Chicago            ; STORE     ;
+                            ; SanFrancisco       ; STORE
+
+INSERT_UPDATE StoreEmployeeGroup; UID[unique = true]         ; locname[lang = en]                  ; store(name)  ; groups[ignorenull = false, default = ]
+                                ; chicagostoreemployees      ; Chicago Store Employee Group        ; Chicago      ;
+                                ; sanfranciscostoreemployees ; San Francisco  Store Employee Group ; SanFrancisco ;
+
+INSERT_UPDATE Employee; name                                 ; uid[unique = true]                ; groups[ignorenull = false, default = ]
+                      ; Chicago Customer Support Agent       ; customer.support@chicago.com      ;
+                      ; San Francisco Customer Support Agent ; customer.support@sanfrancisco.com ;
+
+INSERT_UPDATE UserGroup; UID[unique = true]; locname[lang = en]                 ; groups[ignorenull = false, default = ]
+                       ; POS_CHICAGO       ; Chicago Store Customer Group       ;
+                       ; POS_SANFRANCISCO  ; San francisco Store Customer Group ;
+
+INSERT_UPDATE Customer; uid[unique = true]             ; name                ; customerId                     ; defaultShipmentAddress(owner(Customer.uid), streetname, postalcode, duplicate); groups[ignorenull = false, default = ]
+                      ; pritika.customer@hybris.com    ; pritika Customer    ; pritika.customer@hybris.com    ; pritika.customer@hybris.com:115th Street & King Drive:60628:FALSE             ;
+                      ; kirti.customer@hybris.com      ; kirti Customer      ; kirti.customer@hybris.com      ; kirti.customer@hybris.com:119th Street:66061:FALSE                            ;
+                      ; isha.customer@hybris.com       ; isha Customer       ; isha.customer@hybris.com       ; isha.customer@hybris.com:1500 East:60610:FALSE                                ;
+                      ; nishi.customer@hybris.com      ; nishi Customer      ; nishi.customer@hybris.com      ; nishi.customer@hybris.com:1600 East:60601:FALSE                               ;
+                      ; surabhi.customer@hybris.com    ; surabhi Customer    ; surabhi.customer@hybris.com    ; surabhi.customer@hybris.com:1700 East:60637:FALSE                             ;
+                      ; kritika.customer@hybris.com    ; kritika Customer    ; kritika.customer@hybris.com    ; kritika.customer@hybris.com:1800 East:60622:FALSE                             ;
+                      ; dipti.customer@hybris.com      ; dipti Customer      ; dipti.customer@hybris.com      ; dipti.customer@hybris.com:1832 East:60632:FALSE                               ;
+                      ; pradeepthi.customer@hybris.com ; pradeepthi Customer ; pradeepthi.customer@hybris.com ; pradeepthi.customer@hybris.com:1900 East:60602:FALSE                          ;
+                      ; rewati.customer@hybris.com     ; rewati Customer     ; rewati.customer@hybris.com     ; rewati.customer@hybris.com:Birchwood Ct:94134:FALSE                           ;
+                      ; diptiman.customer@hybris.com   ; diptiman Customer   ; diptiman.customer@hybris.com   ; diptiman.customer@hybris.com:Blairwood Ln:92867:FALSE                         ;
+                      ; daniel.customer@hybris.com     ; daniel Customer     ; daniel.customer@hybris.com     ; daniel.customer@hybris.com:Bradford St:94110:FALSE                            ;
+
+INSERT_UPDATE PrincipalGroupRelation; source(uid)[unique = true]        ; target(uid)[unique = true]
+                                    ; chicagostoreemployees             ; asagentgroup
+                                    ; sanfranciscostoreemployees        ; asagentgroup
+                                    ; customer.support@chicago.com      ; chicagostoreemployees
+                                    ; customer.support@sanfrancisco.com ; sanfranciscostoreemployees
+                                    ; asagent                           ; sanfranciscostoreemployees
+                                    ; asagent                           ; chicagostoreemployees
+                                    ; POS_CHICAGO                       ; customergroup
+                                    ; POS_SANFRANCISCO                  ; customergroup
+                                    ; pritika.customer@hybris.com       ; POS_CHICAGO
+                                    ; kirti.customer@hybris.com         ; POS_CHICAGO
+                                    ; isha.customer@hybris.com          ; POS_CHICAGO
+                                    ; nishi.customer@hybris.com         ; POS_CHICAGO
+                                    ; surabhi.customer@hybris.com       ; POS_CHICAGO
+                                    ; kritika.customer@hybris.com       ; POS_CHICAGO
+                                    ; dipti.customer@hybris.com         ; POS_CHICAGO
+                                    ; pradeepthi.customer@hybris.com    ; POS_CHICAGO
+                                    ; rewati.customer@hybris.com        ; POS_SANFRANCISCO
+                                    ; diptiman.customer@hybris.com      ; POS_SANFRANCISCO
+                                    ; daniel.customer@hybris.com        ; POS_SANFRANCISCO
+
+INSERT_UPDATE Address; owner(Customer.uid)[unique = true]; streetname[unique = true] ; streetnumber[unique = true]; postalcode[unique = true]; duplicate[unique = true]; town; country(isocode); billingAddress; contactAddress; shippingAddress; unloadingAddress; firstname  ; lastname ; email                          ; gender(code); middlename; phone1        ; title(code); url; company     ; fax; department
+                     ; pritika.customer@hybris.com       ; 115th Street & King Drive ;                            ; 60628                    ; FALSE                   ;     ; IL              ; TRUE          ; FALSE         ; TRUE           ; TRUE            ; pritika    ; Customer ; pritika.customer@hybris.com    ; FEMALE      ;           ; 090 0987 653  ;            ;    ; hybris GmbH ;    ;
+                     ; kirti.customer@hybris.com         ; 119th Street              ;                            ; 66061                    ; FALSE                   ;     ; IL              ; TRUE          ; FALSE         ; TRUE           ; TRUE            ; kirti      ; Customer ; kirti.customer@hybris.com      ; FEMALE      ;           ; 090 77777 666 ;            ;    ; hybris GmbH ;    ;
+                     ; isha.customer@hybris.com          ; 1500 East                 ;                            ; 60610                    ; FALSE                   ;     ; IL              ; TRUE          ; FALSE         ; TRUE           ; TRUE            ; isha       ; Customer ; isha.customer@hybris.com       ; FEMALE      ;           ; 090 12345 678 ;            ;    ; hybris GmbH ;    ;
+                     ; nishi.customer@hybris.com         ; 1600 East                 ;                            ; 60601                    ; FALSE                   ;     ; IL              ; TRUE          ; FALSE         ; TRUE           ; TRUE            ; nishi      ; Customer ; nishi.customer@hybris.com      ; FEMALE      ;           ; 090 12345 678 ;            ;    ; hybris GmbH ;    ;
+                     ; surabhi.customer@hybris.com       ; 1700 East                 ;                            ; 60637                    ; FALSE                   ;     ; IL              ; TRUE          ; FALSE         ; TRUE           ; TRUE            ; surabhi    ; Customer ; surabhi.customer@hybris.com    ; FEMALE      ;           ; 090 01233 547 ;            ;    ; hybris GmbH ;    ;
+                     ; kritika.customer@hybris.com       ; 1800 East                 ;                            ; 60622                    ; FALSE                   ;     ; IL              ; TRUE          ; FALSE         ; TRUE           ; TRUE            ; kritika    ; Customer ; kritika.customer@hybris.com    ; FEMALE      ;           ; 090 12345 678 ;            ;    ; hybris GmbH ;    ;
+                     ; dipti.customer@hybris.com         ; 1832 East                 ;                            ; 60632                    ; FALSE                   ;     ; IL              ; TRUE          ; FALSE         ; TRUE           ; TRUE            ; dipti      ; Customer ; dipti.customer@hybris.com      ; FEMALE      ;           ; 090 12345 678 ;            ;    ; hybris GmbH ;    ;
+                     ; pradeepthi.customer@hybris.com    ; 1900 East                 ;                            ; 60602                    ; FALSE                   ;     ; IL              ; TRUE          ; FALSE         ; TRUE           ; TRUE            ; pradeepthi ; Customer ; pradeepthi.customer@hybris.com ; FEMALE      ;           ; 090 12345 977 ;            ;    ; hybris GmbH ;    ;
+                     ; rewati.customer@hybris.com        ; Birchwood Ct              ;                            ; 94134                    ; FALSE                   ;     ; US              ; TRUE          ; FALSE         ; TRUE           ; TRUE            ; rewati     ; Customer ; rewati.customer@hybris.com     ; FEMALE      ;           ; 090 12345 678 ;            ;    ; hybris GmbH ;    ;
+                     ; diptiman.customer@hybris.com      ; Blairwood Ln              ;                            ; 92867                    ; FALSE                   ;     ; US              ; TRUE          ; FALSE         ; TRUE           ; TRUE            ; diptiman   ; Customer ; diptiman.customer@hybris.com   ; MALE        ;           ; 090 05253 547 ;            ;    ; hybris GmbH ;    ;
+                     ; daniel.customer@hybris.com        ; Bradford St               ;                            ; 94110                    ; FALSE                   ;     ; US              ; TRUE          ; FALSE         ; TRUE           ; TRUE            ; daniel     ; Customer ; daniel.customer@hybris.com     ; MALE        ;           ; 090 12645 689 ;            ;    ; hybris GmbH ;    ;
+
+INSERT_UPDATE CustomerList; uid[unique = true]; implementationType; priority; members(uid)[mode = append]                                            ;
+                          ; instoreCustomers  ; "IN_STORE"        ; 3       ; asagent,customer.support@chicago.com,customer.support@sanfrancisco.com ;

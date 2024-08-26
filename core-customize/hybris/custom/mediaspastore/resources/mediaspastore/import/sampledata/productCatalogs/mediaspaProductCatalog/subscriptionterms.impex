@@ -1,0 +1,25 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+INSERT_UPDATE SubscriptionTerm; id[unique = true]             ; termOfServiceFrequency(code); termOfServiceNumber(code); termOfServiceRenewal(code); billingPlan(id); cancellable
+                              ; 6_months_non_renewing_cancel  ; monthly                     ; 6                        ; non_renewing              ; MonthlyPlan    ; true
+                              ; 6_months_auto_renewing_cancel ; monthly                     ; 6                        ; auto_renewing             ; MonthlyPlan    ; true
+                              ; 1_year_auto_renewing_cancel   ; annually                    ; 1                        ; auto_renewing             ; MonthlyPlan    ; true
+
+INSERT_UPDATE SubscriptionTerm; id[unique = true]; termOfServiceFrequency(code); termOfServiceNumber(code); termOfServiceRenewal(code); billingPlan(id); cancellable
+                              ; none             ; none                        ;                          ; auto_renewing             ; MonthlyPlan    ; true
+                              ; monthly_1        ; monthly                     ; 1                        ; auto_renewing             ; MonthlyPlan    ; false
+                              ; monthly_12       ; monthly                     ; 12                       ; auto_renewing             ; MonthlyPlan    ; false
+                              ; monthly_18       ; monthly                     ; 18                       ; auto_renewing             ; MonthlyPlan    ; false
+                              ; monthly_24       ; monthly                     ; 24                       ; auto_renewing             ; MonthlyPlan    ; false
+                              ; monthly_36       ; monthly                     ; 36                       ; auto_renewing             ; MonthlyPlan    ; false
+                              ; annually_1       ; annually                    ; 1                        ; auto_renewing             ; MonthlyPlan    ; false
+                              ; annually_2       ; annually                    ; 2                        ; auto_renewing             ; MonthlyPlan    ; false
+                              ; annually_3       ; annually                    ; 3                        ; auto_renewing             ; MonthlyPlan    ; false
+                              ; annually_24      ; monthly                     ; 24                       ; auto_renewing             ; AnnuallyPlan   ; false
+
+INSERT_UPDATE TmaNormalizedTermOfServiceFrequency; code[unique = true]; source(code); target(code); normalizationFactor
+                                                 ; 1                  ; monthly     ; quarterly   ; 3
+                                                 ; 2                  ; monthly     ; annually    ; 12
+                                                 ; 3                  ; monthly     ; none        ; 0

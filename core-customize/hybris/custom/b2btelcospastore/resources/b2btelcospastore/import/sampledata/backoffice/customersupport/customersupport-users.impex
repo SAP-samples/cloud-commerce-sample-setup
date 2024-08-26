@@ -1,0 +1,20 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+#
+# Creating Employees
+#
+
+INSERT_UPDATE Employee; UID[unique = true]           ; name                           ; groups(uid)                       ; description
+                      ; CustomerSupportAdministrator ; Customer Support Administrator ; customersupportadministratorgroup ; This generic Customer Support Administrator User is assigned and has access to the Backoffice Administrator, Customer Support Manager and Customer Support Agent Group views - to provide administrative support to these later users.
+                      ; CustomerSupportManager       ; Customer Support Manager       ; customersupportmanagergroup       ; This generic Customer Support Manager User is assigned and has access to the Backoffice Customer Support Manager and Customer Support Agent Group views and ASM - to provide restricted Backoffice and ASM customer sales and service manager support.
+                      ; CustomerSupportAgent         ; Customer Support Agent         ; customersupportagentgroup         ; This generic Customer Support Agent is assigned and has access to the Backoffice Customer Support Agent Group views and ASM - to provide restricted Backoffice and ASM customer sales and service manager support.
+                      ; customer.support.1@sap.com   ; Customer Support 1             ; customersupportagentgroup         ; This generic Customer Support Agent is assigned and has access to the Backoffice Customer Support Agent Group views and ASM - to provide restricted Backoffice and ASM customer sales and service manager support.
+                      ; customer.support.2@sap.com   ; Customer Support 2             ; customersupportagentgroup         ; This generic Customer Support Agent is assigned and has access to the Backoffice Customer Support Agent Group views and ASM - to provide restricted Backoffice and ASM customer sales and service manager support.
+                      ; customer.support.3@sap.com   ; Customer Support 3             ; customersupportagentgroup         ; This generic Customer Support Agent is assigned and has access to the Backoffice Customer Support Agent Group views and ASM - to provide restricted Backoffice and ASM customer sales and service manager support.
+                      ; customer.support.4@sap.com   ; Customer Support 4             ; customersupportagentgroup         ; This generic Customer Support Agent is assigned and has access to the Backoffice Customer Support Agent Group views and ASM - to provide restricted Backoffice and ASM customer sales and service manager support.
+                      ; customer.support.5@sap.com   ; Customer Support 5             ; customersupportagentgroup         ; This generic Customer Support Agent is assigned and has access to the Backoffice Customer Support Agent Group views and ASM - to provide restricted Backoffice and ASM customer sales and service manager support.
+                      ; customer.support.6@sap.com   ; Customer Support 6             ; customersupportagentgroup         ; This generic Customer Support Agent is assigned and has access to the Backoffice Customer Support Agent Group views and ASM - to provide restricted Backoffice and ASM customer sales and service manager support.
+                      ; customer.support.7@sap.com   ; Customer Support 7             ; customersupportagentgroup         ; This generic Customer Support Agent is assigned and has access to the Backoffice Customer Support Agent Group views and ASM - to provide restricted Backoffice and ASM customer sales and service manager support.
+                      ; customer.support.8@sap.com   ; Customer Support 8             ; customersupportagentgroup         ; This generic Customer Support Agent is assigned and has access to the Backoffice Customer Support Agent Group views and ASM - to provide restricted Backoffice and ASM customer sales and service manager support.

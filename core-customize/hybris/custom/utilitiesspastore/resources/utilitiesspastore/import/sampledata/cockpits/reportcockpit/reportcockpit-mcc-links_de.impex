@@ -1,0 +1,13 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# Import links for the Multi Channel Cockpit
+#
+# German Localization
+#
+
+$lang = de
+
+INSERT_UPDATE StaticLink; code[unique = true]; area(code); sortorder; readPrincipals(uid)                                         ; title[lang = $lang]; description[lang = $lang]; url                                                        ; extensionName ; parentLink(code);
+                        ; jirafe             ; platform  ; 2        ; admin,analyticsmanager,admingroup,analyticsperspectivegroup ; Jirafe             ; Jirafe Reports Ansehen   ; {reportcockpit}/index.zul?persp=cockpit.perspective.jirafe ; reportcockpit ; reportCockpit   ;

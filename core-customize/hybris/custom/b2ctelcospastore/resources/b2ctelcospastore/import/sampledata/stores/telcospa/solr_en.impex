@@ -1,0 +1,27 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+$hIndexType = solrIndexedType(identifier)[unique = true, default = telcospaPriceType]
+$hName = name[unique = true]
+$hDisplayName = displayName[lang = en]
+
+UPDATE SolrIndexedProperty; $hIndexType; $hName               ; $hDisplayName
+                          ;            ; color                ; "Color"
+                          ;            ; colorcompatibility   ; "Other Available Colors"
+                          ;            ; gps                  ; "GPS"
+                          ;            ; camera               ; "Camera"
+                          ;            ; keyboard             ; "KeyBoard"
+                          ;            ; formfactor           ; "Form Factor"
+                          ;            ; touchscreen          ; "Touch Screen"
+                          ;            ; featurecompatibility ; "Feature Compatibility"
+                          ;            ; vendorcompatibility  ; "Vendor Compatibility"
+                          ;            ; mobileplatform       ; "Operating System"
+                          ;            ; bands                ; "Bands"
+                          ;            ; smsquantity          ; "Sms"
+                          ;            ; voice                ; "Minutes"
+                          ;            ; datavolume           ; "Data volume"
+                          ;            ; dataspeed            ; "Data speed"
+                          ;            ; sdchannels           ; "SD Channels"
+                          ;            ; hdchannels           ; "HD Channels"
+

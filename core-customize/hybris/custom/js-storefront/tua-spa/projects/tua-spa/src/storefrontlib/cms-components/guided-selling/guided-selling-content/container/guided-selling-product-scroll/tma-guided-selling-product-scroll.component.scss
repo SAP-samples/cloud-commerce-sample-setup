@@ -1,0 +1,33 @@
+@import "@spartacus/styles/scss/mixins";
+
+.cx-product-search-list {
+  display: block;
+  border-width: 0 0 1px 0;
+  border-style: solid;
+  border-color: var(--cx-color-light);
+  margin: 0 0 25px 0;
+
+  &:last-of-type {
+    border: none;
+  }
+}
+
+.cx-double-btn-container {
+  display: grid;
+  grid-gap: 5%;
+  grid-template-columns: 1fr 1fr;
+}
+
+.cx-single-btn-container {
+  display: grid;
+  width: 50%;
+  margin: auto;
+}
+
+.grid-btn-padding {
+  padding-top: 25px;
+}
+
+.align-btn {
+  margin-top: 0 !important;
+}

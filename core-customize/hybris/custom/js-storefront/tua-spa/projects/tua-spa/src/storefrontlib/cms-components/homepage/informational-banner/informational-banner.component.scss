@@ -1,0 +1,13 @@
+.cx-bold {
+  font-weight: var(--cx-font-weight-bold);
+}
+
+.informational-banner-container {
+  cx-media {
+    ::ng-deep {
+      img {
+        border-radius: 8px;
+      }
+    }
+  }
+}

@@ -1,0 +1,70 @@
+<div class="cx-summary-heading">
+  {{ 'orderCost.orderSummary' | cxTranslate }}
+</div>
+
+<div class="cx-summary-partials" *ngIf="cart.entries">
+  <div class="cx-summary-row">
+    <div class="col-6 cx-summary-label">
+      {{ 'orderCost.subtotal' | cxTranslate }}
+    </div>
+    <div class="col-6 cx-summary-amount">
+      {{ cartPriceService.getFormattedPrice(cartPriceService.calculateCartPriceWithDiscountAndTax(cart))}}
+    </div>
+  </div>
+  <div class="cx-summary-row">
+    <div class="col-6 cx-summary-label">
+      {{
+        (cart.deliveryCost?.formattedValue
+          ? 'orderCost.shipping'
+          : 'orderCost.estimatedShipping'
+        ) | cxTranslate
+      }}
+    </div>
+    <div class="col-6 cx-summary-amount">
+      {{
+        cart.deliveryCost?.formattedValue
+          ? cart.deliveryCost.formattedValue
+          : 'TBD'
+      }}
+    </div>
+  </div>
+  <div class="cx-summary-row" *ngIf="cart.net">
+    <div class="col-6 cx-summary-label">
+      {{ 'orderCost.salesTax' | cxTranslate }}
+    </div>
+    <div class="col-6 cx-summary-amount">
+      {{ cart.totalTax?.formattedValue }}
+    </div>
+  </div>
+  <div class="cx-summary-row cx-summary-total">
+    <div class="col-6 cx-summary-label">
+      {{ 'orderCost.amountDueToday' | cxTranslate }}
+    </div>
+    <div class="col-6 cx-summary-amount">
+      {{ cartPriceService.getFormattedPrice(cartPriceService.calculateCartPriceWithDiscountAndTax(cart)) }}
+    </div>
+  </div>
+  <div class="cx-summary-row" *ngIf="getTotalRecurringChargePrice()">
+    <div class="col-6 cx-summary-label">
+      {{ 'orderCost.totalRecurringCharge' | cxTranslate }}
+    </div>
+    <div class="col-6 cx-summary-amount">
+      {{ getTotalRecurringChargePrice() }} {{ 'productList.perMonth' | cxTranslate }}
+    </div>
+  </div>
+  <div class="cx-summary-row" *ngIf="cart.totalDiscounts?.value > 0">
+    {{ 'orderCost.discount' | cxTranslate }}
+    {{ cart.totalDiscounts?.formattedValue }}
+  </div>
+  <div class="cx-summary-row" *ngIf="!cart.net">
+    {{ 'orderCost.grossTax' | cxTranslate }}
+    {{ cart.totalTax?.formattedValue }}.
+  </div>
+</div>
+
+<ng-container *cxFeatureLevel="'1.3'">
+  <cx-applied-coupons
+    [vouchers]="cart.appliedVouchers"
+    [isReadOnly]="true"
+  ></cx-applied-coupons>
+</ng-container>

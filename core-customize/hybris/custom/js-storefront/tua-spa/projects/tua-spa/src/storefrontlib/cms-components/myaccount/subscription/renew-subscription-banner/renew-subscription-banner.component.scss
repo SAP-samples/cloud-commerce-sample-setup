@@ -1,0 +1,178 @@
+@import "@spartacus/styles/scss/mixins";
+
+@mixin font($size, $weight, $color) {
+  font-size: $size;
+  font-weight: $weight;
+  color: $color;
+}
+
+.banner-container{
+  background-repeat: no-repeat !important;
+  background-size: 100% !important;
+  margin: 10px 0px;
+  position: relative;
+
+
+  @include media-breakpoint-down(xl) {
+    height: 400px;
+
+    .head-font {
+      @include font(2.8rem, 900, #ffffff);
+    }
+
+    .sec-font {
+      @include font(1.8rem, 600, #ffffff);
+    }
+
+    .margin-leftTop {
+      position: absolute;
+      top: 75%;
+      left: 60%;
+    }
+
+    .dropdownPosition {
+      margin-top: 12%;
+      margin-left: 0%;
+
+      ng-select {
+        height: 40px;
+        width: 400px;
+      }
+    }
+  }
+
+  @include media-breakpoint-down(lg) {
+    height: 350px;
+
+    .head-font {
+      @include font(2.8rem, 900, #ffffff);
+    }
+
+    .sec-font {
+      @include font(1.8rem, 600, #ffffff);
+    }
+
+    .margin-leftTop {
+      position: absolute;
+      top: 80%;
+      left: 66%;
+    }
+
+    .dropdownPosition {
+      margin-top: 12%;
+      margin-left: 0%;
+    }
+  }
+
+  @include media-breakpoint-down(md) {
+    height: 250px;
+
+    .head-font {
+      @include font(2.8rem, 900, #ffffff);
+    }
+
+    .sec-font {
+      @include font(1.8rem, 600, #ffffff);
+    }
+
+    .margin-leftTop {
+      position: absolute;
+      top: 75%;
+      left: 59%;
+    }
+
+    .dropdownPosition {
+      margin-top: 14%;
+      margin-left: 0%;
+    }
+  }
+
+  @include media-breakpoint-down(sm) {
+    height: 230px;
+
+    .head-font {
+      @include font(2.2rem, 900, #ffffff);
+    }
+
+    .sec-font {
+      @include font(1.5rem, 600, #ffffff);
+    }
+
+    .margin-leftTop {
+      position: absolute;
+      top: 65%;
+      left: 49%;
+    }
+
+    .dropdownPosition {
+      margin-top: 15%;
+      margin-left: 0;
+
+      ng-select {
+        width: 150px;
+      }
+    }
+  }
+
+  @include media-breakpoint-down(xs) {
+    height: 150px;
+
+    .head-font {
+      @include font(1rem, 900, #ffffff);
+    }
+
+    .sec-font {
+      @include font(0.89rem, 600, #ffffff);
+    }
+
+    .margin-leftTop {
+      position: absolute;
+      top: 62%;
+      left: 49%;
+    }
+
+    .dropdownPosition {
+      margin-top: 12%;
+      margin-left: 0%;
+    }
+  }
+
+  @media (max-width: 376px) {
+    height: 115px;
+
+    .head-font {
+      @include font(1rem, 900, #ffffff);
+    }
+
+    .sec-font {
+      @include font(0.89rem, 600, #ffffff);
+    }
+
+    .margin-leftTop {
+      position: absolute;
+      top: 50%;
+      left: 52%;
+    }
+
+    .dropdownPosition {
+      margin-top: 13%;
+      margin-left: -3%;
+    }
+  }
+}
+
+.border-2 {
+  border: 2px solid black;
+}
+
+.priceFont {
+  min-height: 50px;
+  max-height: 150px;
+  overflow: auto;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.full-width{
+  width: 100%;
+}

@@ -1,0 +1,45 @@
+<div class="row d-flex justify-content-center">
+  <div class="col-10">
+    <!-- CLOSE ICON -->
+    <cx-icon (click)="triggerCloseDetails()" class="row col-12 d-flex justify-content-end pointer-cursor" type="CLOSE">
+    </cx-icon>
+
+    <!-- DETAILS TABLE -->
+    <div class="container">
+
+      <!-- TABLE HEADERS -->
+      <div class="row order-details-headers-container">
+        <div class="col-6 align-left">
+          <strong class="text-uppercase">{{ 'cartItems.description' | cxTranslate }}</strong>
+        </div>
+        <div class="col align-center">
+          <strong class="text-uppercase">{{ 'cartItems.quantity' | cxTranslate }}</strong>
+        </div>
+        <div class="col align-center">
+          <strong class="text-uppercase">{{ 'cartItems.price.payOnCheckoutPrice' | cxTranslate }}</strong>
+        </div>
+      </div>
+
+      <hr>
+
+      <!-- TABLE ROWS -->
+      <ng-container *ngFor="let orderItem of productOrder.orderItem">
+
+        <cx-order-details-row
+          [orderItem]="orderItem"
+          class="row">
+        </cx-order-details-row>
+
+        <hr>
+
+      </ng-container>
+
+      <!-- SUMMARY -->
+      <div>
+        <cx-order-details-summary
+          [productOrder]="productOrder">
+        </cx-order-details-summary>
+      </div>
+    </div>
+  </div>
+</div>

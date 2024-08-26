@@ -1,0 +1,7 @@
+.*
+sonar-project.properties
+.pipeline/
+node_modules
+azure-pipelines.yml
+mock_services
+projects

@@ -1,0 +1,16 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+$contentCatalog = telcospaContentCatalog
+$contentCV = catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]), CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+
+# CMS Image Components
+INSERT_UPDATE CMSImageComponent; $contentCV[unique = true]; uid[unique = true]           ; name
+                               ;                          ; EmailBannerSaleNowOnImage    ; Email Banner Sale Now On Image
+                               ;                          ; EmailBannerFreeDeliveryImage ; Email Banner Free Delivery Image
+
+# Content Slots
+UPDATE ContentSlot; $contentCV[unique = true]; uid[unique = true]; cmsComponents(uid, $contentCV)
+                  ;                          ; EmailTopSlot      ; EmailBannerFreeDeliveryImage
+                  ;                          ; EmailBottomSlot   ; EmailBannerSaleNowOnImage

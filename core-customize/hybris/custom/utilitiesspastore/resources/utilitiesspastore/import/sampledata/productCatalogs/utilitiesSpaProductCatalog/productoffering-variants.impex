@@ -1,0 +1,23 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for importing Product Offering Variants into Utilities Store
+
+$productCatalog = utilitiesSpaProductCatalog
+$productCatalogName = Utilities Spa Product Catalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+$onlineCatalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Online'])[unique = true, default = $productCatalog:Online]
+$supercategories = supercategories(code, $catalogVersion)
+$basePo = tmaBasePo(code, $catalogVersion)
+$approved = approvalstatus(code)[default = 'approved']
+$channels = distributionChannels(code)
+$allowedPrincipals = allowedPrincipals(uid)[default = 'customergroup']
+
+$prices = @Europe1prices[translator = de.hybris.platform.b2ctelcoservices.dataimport.batch.price.TmaPriceRowTranslator]
+$europe1pricefactory_ptg = Europe1PriceFactory_PTG(code)[default = us-sales-tax-full]
+$unit = unit(code)[default = pieces]
+
+$thumbnail = thumbnail(code, $catalogVersion)
+$picture = picture(code, $catalogVersion)
+$galleryImages = galleryImages(qualifier, $catalogVersion)

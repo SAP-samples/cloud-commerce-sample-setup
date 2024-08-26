@@ -1,0 +1,271 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Importing sample compatibility policies
+
+$productCatalog = telcospaProductCatalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+$lang = en
+
+##################################################
+# Source Rules (Drools engine rules)
+#################################################
+INSERT_UPDATE PqQualificationSourceRule; code[unique = true]                  ; priority; maxAllowedRuns; status(code)[unique = true, default = UNPUBLISHED]; ruleGroup(code); conditions                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      ; actions
+                                       ; morethan_one_mobile_plan_quad_play   ; 200     ; 1             ;                                                   ;                ; "[{""definitionId"":""pqPoCondition"",""parameters"":{""product_offering"":{""uuid"":""c2705aea-64cd-4c06-ae4f-72f9e8b16c70"",""type"":""ItemType(TmaProductOffering)"",""value"":""quadPlay::telcospaProductCatalog""}},""children"":[]},{""definitionId"":""pqNumberOfPosFromGroup"",""parameters"":{""po_count"":{""uuid"":""0fdb92f8-40f1-456f-a430-651368d849ac"",""type"":""java.lang.Integer"",""value"":1},""product_offering_group"":{""uuid"":""b22d123f-6931-41ef-af3d-412ba7c7d908"",""type"":""ItemType(TmaProductOfferingGroup)"",""value"":""mobile_plans::telcospaProductCatalog""},""operator"":{""uuid"":""44fd9007-441b-4b1d-9688-3ba4847c70ea"",""type"":""Enum(de.hybris.platform.ruledefinitions.AmountOperator)"",""value"":""GREATER_THAN""}},""children"":[]}]"                                                                                                                                                                                                                                                                                                                                                                                                                               ; "[{""definitionId"":""pqErrorMessage"",""parameters"":{""error_message"":{""uuid"":""20cbb7e5-82cb-490c-9dff-5567ed13583d"",""type"":""java.lang.String"",""value"":""You can't have more than one mobile plan as part of your Quad Play bundle.""}}}]"                                                                                                                                                                                                                                                                                                                                              ;
+                                       ; morethan_one_internet_plan_quad_play ; 200     ; 1             ;                                                   ;                ; "[{""definitionId"":""pqPoCondition"",""parameters"":{""product_offering"":{""uuid"":""c2705aea-64cd-4c06-ae4f-72f9e8b16c70"",""type"":""ItemType(TmaProductOffering)"",""value"":""quadPlay::telcospaProductCatalog""}},""children"":[]},{""definitionId"":""pqNumberOfPosFromGroup"",""parameters"":{""po_count"":{""uuid"":""0fdb92f8-40f1-456f-a430-651368d849ac"",""type"":""java.lang.Integer"",""value"":1},""product_offering_group"":{""uuid"":""b22d123f-6931-41ef-af3d-412ba7c7d908"",""type"":""ItemType(TmaProductOfferingGroup)"",""value"":""internet_plans::telcospaProductCatalog""},""operator"":{""uuid"":""44fd9007-441b-4b1d-9688-3ba4847c70ea"",""type"":""Enum(de.hybris.platform.ruledefinitions.AmountOperator)"",""value"":""GREATER_THAN""}},""children"":[]}]"                                                                                                                                                                                                                                                                                                                                                                                                                             ; "[{""definitionId"":""pqErrorMessage"",""parameters"":{""error_message"":{""uuid"":""20cbb7e5-82cb-490c-9dff-5567ed13583d"",""type"":""java.lang.String"",""value"":""You can't have more than one internet plan as part of your Quad Play bundle.""}}}]"                                                                                                                                                              ;
+                                       ; morethan_one_tv_plan_quad_play       ; 200     ; 1             ;                                                   ;                ; "[{""definitionId"":""pqPoCondition"",""parameters"":{""product_offering"":{""uuid"":""c2705aea-64cd-4c06-ae4f-72f9e8b16c70"",""type"":""ItemType(TmaProductOffering)"",""value"":""quadPlay::telcospaProductCatalog""}},""children"":[]},{""definitionId"":""pqNumberOfPosFromGroup"",""parameters"":{""po_count"":{""uuid"":""0fdb92f8-40f1-456f-a430-651368d849ac"",""type"":""java.lang.Integer"",""value"":1},""product_offering_group"":{""uuid"":""b22d123f-6931-41ef-af3d-412ba7c7d908"",""type"":""ItemType(TmaProductOfferingGroup)"",""value"":""tv_plans::telcospaProductCatalog""},""operator"":{""uuid"":""44fd9007-441b-4b1d-9688-3ba4847c70ea"",""type"":""Enum(de.hybris.platform.ruledefinitions.AmountOperator)"",""value"":""GREATER_THAN""}},""children"":[]}]"                                                                                                                                                                                                                                                                                                                                                                                                                                   ; "[{""definitionId"":""pqErrorMessage"",""parameters"":{""error_message"":{""uuid"":""20cbb7e5-82cb-490c-9dff-5567ed13583d"",""type"":""java.lang.String"",""value"":""You can't have more than one TV plan as part of your Quad Play bundle.""}}}]"                                                                                                                                                                    ;
+                                       ; morethan_one_landline_plan_quad_play ; 200     ; 1             ;                                                   ;                ; "[{""definitionId"":""pqPoCondition"",""parameters"":{""product_offering"":{""uuid"":""c2705aea-64cd-4c06-ae4f-72f9e8b16c70"",""type"":""ItemType(TmaProductOffering)"",""value"":""quadPlay::telcospaProductCatalog""}},""children"":[]},{""definitionId"":""pqNumberOfPosFromGroup"",""parameters"":{""po_count"":{""uuid"":""0fdb92f8-40f1-456f-a430-651368d849ac"",""type"":""java.lang.Integer"",""value"":1},""product_offering_group"":{""uuid"":""b22d123f-6931-41ef-af3d-412ba7c7d908"",""type"":""ItemType(TmaProductOfferingGroup)"",""value"":""landline_plans::telcospaProductCatalog""},""operator"":{""uuid"":""44fd9007-441b-4b1d-9688-3ba4847c70ea"",""type"":""Enum(de.hybris.platform.ruledefinitions.AmountOperator)"",""value"":""GREATER_THAN""}},""children"":[]}]"                                                                                                                                                                                                                                                                                                                                                                                                                             ; "[{""definitionId"":""pqErrorMessage"",""parameters"":{""error_message"":{""uuid"":""20cbb7e5-82cb-490c-9dff-5567ed13583d"",""type"":""java.lang.String"",""value"":""You can't have more than one landline plan as part of your Quad Play bundle.""}}}]"                                                                                                                                                                   ;
+                                       ; lessthan_one_mobile_plan_quad_play   ; 200     ; 1             ;                                                   ;                ; "[{""definitionId"":""pqPoCondition"",""parameters"":{""product_offering"":{""uuid"":""c2705aea-64cd-4c06-ae4f-72f9e8b16c70"",""type"":""ItemType(TmaProductOffering)"",""value"":""quadPlay::telcospaProductCatalog""}},""children"":[]},{""definitionId"":""pqNoPosFromGroup"",""parameters"":{""product_offering_group"":{""uuid"":""8a3af71f-1a0a-4da2-9683-9c4699d154e3"",""type"":""ItemType(TmaProductOfferingGroup)"",""value"":""mobile_plans::telcospaProductCatalog""}},""children"":[]}]"                                                                                                                                                                                                                                                                                                                                                                                                                               ; "[{""definitionId"":""pqErrorMessage"",""parameters"":{""error_message"":{""uuid"":""20cbb7e5-82cb-490c-9dff-5567ed13583d"",""type"":""java.lang.String"",""value"":""You need to have one mobile plan as part of your Quad Play bundle.""}}}]"                                                                                                                                                                ;
+                                       ; lessthan_one_internet_plan_quad_play ; 200     ; 1             ;                                                   ;                ; "[{""definitionId"":""pqPoCondition"",""parameters"":{""product_offering"":{""uuid"":""c2705aea-64cd-4c06-ae4f-72f9e8b16c70"",""type"":""ItemType(TmaProductOffering)"",""value"":""quadPlay::telcospaProductCatalog""}},""children"":[]},{""definitionId"":""pqNoPosFromGroup"",""parameters"":{""product_offering_group"":{""uuid"":""5839f2f5-ca48-40d5-88e2-9a7aee475f26"",""type"":""ItemType(TmaProductOfferingGroup)"",""value"":""internet_plans::telcospaProductCatalog""}},""children"":[]}]"                                                                                                                                                                                                                                                                                                                                                                                                                             ; "[{""definitionId"":""pqErrorMessage"",""parameters"":{""error_message"":{""uuid"":""20cbb7e5-82cb-490c-9dff-5567ed13583d"",""type"":""java.lang.String"",""value"":""You need to have one internet plan as part of your Quad Play bundle.""}}}]"                                                                                                                                                              ;
+                                       ; lessthan_one_tv_plan_quad_play       ; 200     ; 1             ;                                                   ;                ; "[{""definitionId"":""pqPoCondition"",""parameters"":{""product_offering"":{""uuid"":""c2705aea-64cd-4c06-ae4f-72f9e8b16c70"",""type"":""ItemType(TmaProductOffering)"",""value"":""quadPlay::telcospaProductCatalog""}},""children"":[]},{""definitionId"":""pqNoPosFromGroup"",""parameters"":{""product_offering_group"":{""uuid"":""5839f2f5-ca48-40d5-88e2-9a7aee475f26"",""type"":""ItemType(TmaProductOfferingGroup)"",""value"":""tv_plans::telcospaProductCatalog""}},""children"":[]}]"                                                                                                                                                                                                                                                                                                                                                                                                                                   ; "[{""definitionId"":""pqErrorMessage"",""parameters"":{""error_message"":{""uuid"":""20cbb7e5-82cb-490c-9dff-5567ed13583d"",""type"":""java.lang.String"",""value"":""You need to have one TV plan as part of your Quad Play bundle.""}}}]"                                                                                                                                                                    ;
+                                       ; lessthan_one_landline_plan_quad_play ; 200     ; 1             ;                                                   ;                ; "[{""definitionId"":""pqPoCondition"",""parameters"":{""product_offering"":{""uuid"":""c2705aea-64cd-4c06-ae4f-72f9e8b16c70"",""type"":""ItemType(TmaProductOffering)"",""value"":""quadPlay::telcospaProductCatalog""}},""children"":[]},{""definitionId"":""pqNoPosFromGroup"",""parameters"":{""product_offering_group"":{""uuid"":""5839f2f5-ca48-40d5-88e2-9a7aee475f26"",""type"":""ItemType(TmaProductOfferingGroup)"",""value"":""landline_plans::telcospaProductCatalog""}},""children"":[]}]"                                                                                                                                                                                                                                                                                                                                                                                                                             ; "[{""definitionId"":""pqErrorMessage"",""parameters"":{""error_message"":{""uuid"":""20cbb7e5-82cb-490c-9dff-5567ed13583d"",""type"":""java.lang.String"",""value"":""You need to have one landline plan as part of your Quad Play bundle.""}}}]"                                                                                                                                                                   ;
+                                       ; tv_unlimited_requires_5g_internet    ; 200     ; 1             ;                                                   ;                ; "[{""definitionId"":""pqPoCondition"",""parameters"":{""product_offering"":{""uuid"":""2bb6565d-e223-4e2c-902a-5c31f6dfd74f"",""type"":""ItemType(TmaProductOffering)"",""value"":""tv_unlimited::telcospaProductCatalog""}},""children"":[]},{""definitionId"":""pqNumberOfPs"",""parameters"":{""ps_count"":{""uuid"":""9f824791-8b48-4b52-9b32-66ef6fa764c6"",""type"":""java.lang.Integer"",""value"":1},""product_specification"":{""uuid"":""edbdac35-efc6-4a5b-a0cc-96273c3d496e"",""type"":""ItemType(TmaProductSpecification)"",""value"":""5g_internet::telcospaProductCatalog""},""operator"":{""uuid"":""a0912572-1edb-47f5-9fa5-0594c2614313"",""type"":""Enum(de.hybris.platform.ruledefinitions.AmountOperator)"",""value"":""LESS_THAN""}},""children"":[]}]"                                                                                                                                                                                                                                                                                                                                                                                                                                          ; "[{""definitionId"":""pqMessageGivenPoHasNoProductWithGivenPs"",""parameters"":{""given_PO"":{""uuid"":""c9167127-dc33-4de9-bff1-dd3e02aeafa3"",""type"":""ItemType(TmaProductOffering)"",""value"":""tv_unlimited::telcospaProductCatalog""},""required_PS"":{""uuid"":""fd452997-a83c-4ac2-9a85-1eccc1e815d7"",""type"":""ItemType(TmaProductSpecification)"",""value"":""5g_internet::telcospaProductCatalog""}}}]" ;
+                                       ; mobile_addon_requires_mobile_device  ; 200     ; 1             ;                                                   ;                ; [{"definitionId":"pqPoCondition","parameters":{"product_offering":{"uuid":"a28099c9-e9ca-41e4-83eb-fa511b691378","type":"ItemType(TmaProductOffering)","value":"quadPlay::telcospaProductCatalog"}},"children":[]},{"definitionId":"pqNumberOfPosFromGroup","parameters":{"po_count":{"uuid":"f005a1d5-4761-4f48-a2ee-3cd25fd632d5","type":"java.lang.Integer","value":1},"product_offering_group":{"uuid":"e0e41676-d302-4c21-84be-478864ca8182","type":"ItemType(TmaProductOfferingGroup)","value":"mobile_devices::telcospaProductCatalog"},"operator":{"uuid":"e1d47850-9f50-41c5-ae63-d4f41f487cbc","type":"Enum(de.hybris.platform.ruledefinitions.AmountOperator)","value":"LESS_THAN"}},"children":[]},{"definitionId":"pqNumberOfPosFromGroup","parameters":{"po_count":{"uuid":"f329967e-1cad-4c3c-93a1-62ca9f12d0ea","type":"java.lang.Integer","value":1},"product_offering_group":{"uuid":"996d0eb7-2414-42d8-9ba5-40dc565560b0","type":"ItemType(TmaProductOfferingGroup)","value":"mobile_addons::telcospaProductCatalog"},"operator":{"uuid":"129cc124-f37f-4bb7-91af-431a8becdd17","type":"Enum(de.hybris.platform.ruledefinitions.AmountOperator)","value":"GREATER_THAN_OR_EQUAL"}},"children":[]}] ; "[{""definitionId"":""pqErrorMessage"",""parameters"":{""error_message"":{""uuid"":""3ab4c7b5-a9d7-4ede-a794-083363ece65c"",""type"":""java.lang.String"",""value"":""Mobile addon needs atleast one Mobile Device""}}}]"
+
+UPDATE PqQualificationSourceRule; code[unique = true]                  ; name[lang = $lang]                                                                  ; description[lang = $lang]
+                                ; morethan_one_mobile_plan_quad_play   ; Compatibility - Quad Play - more than one mobile plan                               ; Compatibility - Quad Play - more than one mobile plan in the quad play BPO
+                                ; morethan_one_internet_plan_quad_play ; Compatibility - Quad Play - more than one internet plan                             ; Compatibility - Quad Play - more than one internet plan in the quad play BPO
+                                ; morethan_one_tv_plan_quad_play       ; Compatibility - Quad Play - more than one TV plan                                   ; Compatibility - Quad Play - more than one TV plan in the quad play BPO
+                                ; morethan_one_landline_plan_quad_play ; Compatibility - Quad Play - more than one landline plan                             ; Compatibility - Quad Play - more than one landline plan in the quad play BPO
+                                ; lessthan_one_mobile_plan_quad_play   ; Compatibility - Quad Play - less than one mobile plan                               ; Compatibility - Quad Play - less than one mobile plan in the quad play BPO
+                                ; lessthan_one_internet_plan_quad_play ; Compatibility - Quad Play - less than one internet plan                             ; Compatibility - Quad Play - less than one internet plan in the quad play BPO
+                                ; lessthan_one_tv_plan_quad_play       ; Compatibility - Quad Play - less than one TV plan                                   ; Compatibility - Quad Play - less than one TV plan in the quad play BPO
+                                ; lessthan_one_landline_plan_quad_play ; Compatibility - Quad Play - less than one landline plan                             ; Compatibility - Quad Play - less than one landline plan in the quad play BPO
+                                ; tv_unlimited_requires_5g_internet    ; Compatibility - TV Unlimited Requires 5G Internet                                   ; Compatibility - TV Unlimited Requires 5G Internet
+                                ; mobile_addon_requires_mobile_device  ; Compatibility - Product Offerings from Mobile Addon Category requires Mobile Device ; Compatibility - Product Offerings from Mobile Addon Category requires Mobile Device
+
+##################################################
+# Policy3 (General cardinality rules):
+# A customer can select exactly one gsm plan during quadPlay selection.  #
+#################################################
+INSERT_UPDATE TmaPoGroupPolicyStatement; code[unique = true]; min; max; productOfferingGroup(code, $catalogVersion); $catalogVersion
+                                       ; mobile_plans       ; 0  ; 1  ; quad_mobile                                ;
+
+INSERT_UPDATE TmaPolicyAction; code[unique = true]; statement(code, $catalogVersion); actionType(code); $catalogVersion
+                             ; mobile_plans       ; mobile_plans                    ; SELECT
+
+INSERT_UPDATE TmaCompatibilityPolicy; code[unique = true]; conditions(code, $catalogVersion); actions(code, $catalogVersion); conditionsEvaluatorType(code); onlineFrom[dateformat = dd.MM.yyyy]; onlineTo[dateformat = dd.MM.yyyy]; $catalogVersion
+                                    ; mobile_plans       ;                                  ; mobile_plans                  ; AND                          ; 03.05.2019                         ; 07.05.2099                       ;
+
+##################################################
+# Policy3 (General cardinality rules):
+# A customer can select exactly one internet plan.  #
+#################################################
+INSERT_UPDATE TmaPoGroupPolicyStatement; code[unique = true]; min; max; productOfferingGroup(code, $catalogVersion); $catalogVersion
+                                       ; mobile_internet    ; 0  ; 1  ; quad_mobile                                ;
+
+INSERT_UPDATE TmaPolicyAction; code[unique = true]; statement(code, $catalogVersion); actionType(code); $catalogVersion
+                             ; mobile_internet    ; mobile_internet                 ; SELECT
+
+INSERT_UPDATE TmaCompatibilityPolicy; code[unique = true]; conditions(code, $catalogVersion); actions(code, $catalogVersion); conditionsEvaluatorType(code); onlineFrom[dateformat = dd.MM.yyyy]; onlineTo[dateformat = dd.MM.yyyy]; $catalogVersion
+                                    ; mobile_internet    ;                                  ; mobile_internet               ; AND                          ; 03.05.2019                         ; 07.05.2099                       ;
+
+##################################################
+# Policy3 (General cardinality rules):
+# A customer can select exactly one tv plan.  #
+#################################################
+INSERT_UPDATE TmaPoGroupPolicyStatement; code[unique = true]; min; max; productOfferingGroup(code, $catalogVersion); $catalogVersion
+                                       ; tv_plans           ; 0  ; 1  ; quad_home                                  ;
+
+INSERT_UPDATE TmaPolicyAction; code[unique = true]; statement(code, $catalogVersion); actionType(code); $catalogVersion
+                             ; tv_plans           ; tv_plans                        ; SELECT          ;
+
+INSERT_UPDATE TmaCompatibilityPolicy; code[unique = true]; conditions(code, $catalogVersion); actions(code, $catalogVersion); conditionsEvaluatorType(code); onlineFrom[dateformat = dd.MM.yyyy]; onlineTo[dateformat = dd.MM.yyyy]; $catalogVersion
+                                    ; tv_plans           ;                                  ; tv_plans                      ; AND                          ; 03.05.2019                         ; 07.05.2099                       ;
+
+##################################################
+# Policy3 (General cardinality rules):
+# A customer can select optional landline plan, but can select maximum one.  #
+#################################################
+INSERT_UPDATE TmaPoGroupPolicyStatement; code[unique = true]; min; max; productOfferingGroup(code, $catalogVersion); $catalogVersion
+                                       ; landline_plans     ; 0  ; 1  ; landline_plans                             ;
+
+INSERT_UPDATE TmaPolicyAction; code[unique = true]; statement(code, $catalogVersion); actionType(code); $catalogVersion
+                             ; landline_plans     ; landline_plans                  ; SELECT          ;
+
+INSERT_UPDATE TmaCompatibilityPolicy; code[unique = true]; conditions(code, $catalogVersion); actions(code, $catalogVersion); conditionsEvaluatorType(code); onlineFrom[dateformat = dd.MM.yyyy]; onlineTo[dateformat = dd.MM.yyyy]; $catalogVersion
+                                    ; landline_plans     ;                                  ; landline_plans                ; AND                          ; 03.05.2019                         ; 07.05.2099                       ;
+
+
+##################################################
+# Policy3 (General cardinality rules):
+# A customer can select optional gsm addons.  #
+#################################################
+INSERT_UPDATE TmaPoGroupPolicyStatement; code[unique = true]; min; max; productOfferingGroup(code, $catalogVersion); $catalogVersion
+                                       ; mobile_addons      ; 0  ;    ; mobile_addons                              ;
+
+INSERT_UPDATE TmaPolicyAction; code[unique = true]; statement(code, $catalogVersion); actionType(code); $catalogVersion
+                             ; mobile_addons      ; mobile_addons                   ; SELECT          ;
+
+INSERT_UPDATE TmaCompatibilityPolicy; code[unique = true]; conditions(code, $catalogVersion); actions(code, $catalogVersion); conditionsEvaluatorType(code); onlineFrom[dateformat = dd.MM.yyyy]; onlineTo[dateformat = dd.MM.yyyy]; $catalogVersion
+                                    ; mobile_addons      ;                                  ; mobile_addons                 ; AND                          ; 03.05.2019                         ; 07.05.2099                       ;
+
+
+##################################################
+# Policy3 (General cardinality rules):
+# A customer can select optional mobile devices.  #
+#################################################
+INSERT_UPDATE TmaPoGroupPolicyStatement; code[unique = true]; min; max; productOfferingGroup(code, $catalogVersion); $catalogVersion
+                                       ; mobile_devices     ; 0  ;    ; mobile_devices                             ;
+
+INSERT_UPDATE TmaPolicyAction; code[unique = true]; statement(code, $catalogVersion); actionType(code); $catalogVersion
+                             ; mobile_devices     ; mobile_devices                  ; SELECT          ;
+
+INSERT_UPDATE TmaCompatibilityPolicy; code[unique = true]; conditions(code, $catalogVersion); actions(code, $catalogVersion); conditionsEvaluatorType(code); onlineFrom[dateformat = dd.MM.yyyy]; onlineTo[dateformat = dd.MM.yyyy]; $catalogVersion
+                                    ; mobile_devices     ;                                  ; mobile_devices                ; AND                          ; 03.05.2019                         ; 07.05.2099                       ;
+
+########################################################################################################
+# Policy10 (Disabled rule expired policy):
+# A customer is not allowed to buy eSIM addon with GSM Small.                   #
+########################################################################################################
+INSERT_UPDATE TmaPoPolicyStatement; code[unique = true]; min; max; productOffering(code, $catalogVersion); $catalogVersion
+                                  ; eSim               ; 1  ;    ; eSim                                  ;
+                                  ; gsm_small          ; 0  ; 0  ; gsm_small                             ;
+
+INSERT_UPDATE TmaAtomicPolicyCondition; code[unique = true]; statement(code, $catalogVersion); $catalogVersion
+                                      ; eSim               ; eSim                            ;
+
+INSERT_UPDATE TmaPolicyAction; code[unique = true]; statement(code, $catalogVersion); actionType(code); $catalogVersion
+                             ; gsm_small          ; gsm_small                       ; SELECT          ;
+
+INSERT_UPDATE TmaCompatibilityPolicy; code[unique = true]; conditionsEvaluatorType(code); conditions(code, $catalogVersion); actions(code, $catalogVersion); onlineFrom[dateformat = dd.MM.yyyy]; onlineTo[dateformat = dd.MM.yyyy]; $catalogVersion
+                                    ; eSim_disabled_rule ; AND                          ; eSim                             ; gsm_small                     ; 01.01.2018                         ; 01.06.2099                       ;
+
+########################################################################################################
+# Eligibility Policy1 (retention policy):
+# A customer is eligible for RETENTION flow.    #
+########################################################################################################
+INSERT_UPDATE TmaProcessTypesPolicyStatement; code[unique = true] ; processes(code); $catalogVersion
+                                            ; retention_statement ; RETENTION
+
+INSERT_UPDATE TmaPolicyAction; code[unique = true]; statement(code, $catalogVersion); actionType(code); $catalogVersion
+                             ; allow_retention    ; retention_statement             ; ALLOW
+
+INSERT_UPDATE TmaCompatibilityPolicy; code[unique = true]          ; conditionsEvaluatorType(code); conditions(code, $catalogVersion); actions(code, $catalogVersion); onlineFrom[dateformat = dd.MM.yyyy]; onlineTo[dateformat = dd.MM.yyyy]; $catalogVersion
+                                    ; retention_eligibility_policy ; AND                          ;                                  ; allow_retention               ;
+
+###################################################################################################
+# Eligibility Policy2 (general acquisition, device only and switch supplier policy):              #
+# A customer is eligible for ACQUISITION DEVICE_ONLY and SWITCH_SERVICE_PROVIDER flows in all conditions  #
+###################################################################################################
+INSERT_UPDATE TmaProcessTypesPolicyStatement; code[unique = true]                                       ; processes(code)                                 ; $catalogVersion
+                                            ; acq_and_device_only_and_switch_service_provider_statement ; ACQUISITION,DEVICE_ONLY,SWITCH_SERVICE_PROVIDER ;
+
+INSERT_UPDATE TmaPolicyAction; code[unique = true]                                   ; statement(code, $catalogVersion)                          ; actionType(code); $catalogVersion
+                             ; allow_acq_and_device_only_and_switch_service_provider ; acq_and_device_only_and_switch_service_provider_statement ; ALLOW           ;
+
+INSERT_UPDATE TmaCompatibilityPolicy; code[unique = true]                                         ; conditionsEvaluatorType(code); conditions(code, $catalogVersion); actions(code, $catalogVersion)                        ; onlineFrom[dateformat = dd.MM.yyyy]; onlineTo[dateformat = dd.MM.yyyy]; $catalogVersion
+                                    ; acq_and_device_only_and_switch_service_provider_eligibility ; AND                          ;                                  ; allow_acq_and_device_only_and_switch_service_provider ;
+
+####################################################################################
+# Eligibility Policy3 (tariff change policy):
+# A customer is eligible for TARIFF_CHANGE flow.    #
+####################################################################################
+INSERT_UPDATE TmaProcessTypesPolicyStatement; code[unique = true]     ; processes(code); $catalogVersion
+                                            ; tariff_change_statement ; TARIFF_CHANGE  ;
+
+INSERT_UPDATE TmaPolicyAction; code[unique = true] ; statement(code, $catalogVersion); actionType(code); $catalogVersion
+                             ; allow_tariff_change ; tariff_change_statement         ; ALLOW           ;
+
+########################################################################################################
+# Policy10 (Disabled rule expired policy):
+# A customer is not allowed to buy TV Unlimited Plan without 5G Internet.                   #
+########################################################################################################
+INSERT_UPDATE TmaPoPolicyStatement; code[unique = true]; min; max; productOffering(code, $catalogVersion); $catalogVersion
+                                  ; tv_unlimited       ; 1  ;    ; tv_unlimited                          ;
+                                  ; 5g_internet        ; 0  ; 1  ; 5g_internet                           ;
+
+INSERT_UPDATE TmaAtomicPolicyCondition; code[unique = true]; statement(code, $catalogVersion); $catalogVersion
+                                      ; tv_unlimited       ; tv_unlimited                    ;
+
+INSERT_UPDATE TmaPolicyAction; code[unique = true]; statement(code, $catalogVersion); actionType(code); $catalogVersion
+                             ; 5g_internet        ; 5g_internet                     ; SELECT          ;
+
+INSERT_UPDATE TmaCompatibilityPolicy; code[unique = true]   ; conditionsEvaluatorType(code); conditions(code, $catalogVersion); actions(code, $catalogVersion); $catalogVersion
+                                    ; tv_unlimited_disabled ; AND                          ; tv_unlimited                     ; 5g_internet                   ;
+
+
+########################################################################################################
+# Eligibility Policy1 (retention policy):
+# A customer is eligible for RETENTION flow when the remaining contract term is less than 3 months.     #
+########################################################################################################
+INSERT_UPDATE TmaRemainingCommittedPeriodPolicyStatement; code[unique = true]; days; $catalogVersion
+                                                        ; 3month_statement   ; 90  ;
+
+INSERT_UPDATE TmaAtomicPolicyCondition; code[unique = true]          ; statement(code, $catalogVersion); $catalogVersion
+                                      ; remainingPeriodConditions_90 ; 3month_statement                ;
+
+INSERT_UPDATE TmaCompatibilityPolicy; code[unique = true]                ; conditionsEvaluatorType(code); conditions(code, $catalogVersion); actions(code, $catalogVersion); onlineFrom[dateformat = dd.MM.yyyy]; onlineTo[dateformat = dd.MM.yyyy]; $catalogVersion
+                                    ; 3month_remainingPeriod_eligibility ; AND                          ; remainingPeriodConditions_90     ; allow_retention               ;
+
+
+########################################################################################################
+# Eligibility Policy (Termination policy):
+# A customer is eligible for Termination flow when the remaining contract term is less than 10 days.    #
+########################################################################################################
+
+INSERT_UPDATE TmaProcessTypesPolicyStatement; code[unique = true]               ; processes(code); $catalogVersion
+                                            ; termination_processtype_statement ; TERMINATION
+
+
+INSERT_UPDATE TmaRemainingCommittedPeriodPolicyStatement; code[unique = true]                    ; days; $catalogVersion
+                                                        ; termination_remaining_period_statement ; 10  ;
+
+INSERT_UPDATE TmaAtomicPolicyCondition; code[unique = true]                    ; statement(code, $catalogVersion); $catalogVersion
+                                      ; termination_remaining_period_condition ; termination_remaining_period_statement
+
+INSERT_UPDATE TmaPolicyAction; code[unique = true]; statement(code, $catalogVersion)  ; actionType(code); $catalogVersion
+                             ; allow_termination  ; termination_processtype_statement ; ALLOW
+
+INSERT_UPDATE TmaCompatibilityPolicy; code[unique = true]            ; conditionsEvaluatorType(code); conditions(code, $catalogVersion)      ; actions(code, $catalogVersion); onlineFrom[dateformat = dd.MM.yyyy]; onlineTo[dateformat = dd.MM.yyyy]; $catalogVersion
+                                    ; termination_eligibility_policy ; AND                          ; termination_remaining_period_condition ; allow_termination             ;
+
+########################################################################################################
+# Eligibility Policy (renewal policy):
+# A customer is eligible for RENEWAL flow when the remaining contract term is less than 3 months.     #
+########################################################################################################
+INSERT_UPDATE TmaProcessTypesPolicyStatement; code[unique = true]; processes(code); $catalogVersion
+                                            ; renewal_statement  ; RENEWAL        ;
+
+INSERT_UPDATE TmaRemainingCommittedPeriodPolicyStatement; code[unique = true]                ; days; $catalogVersion
+                                                        ; renewal_remaining_period_statement ; 90  ;
+
+INSERT_UPDATE TmaAtomicPolicyCondition; code[unique = true]                ; statement(code, $catalogVersion)   ; $catalogVersion
+                                      ; renewal_remaining_period_condition ; renewal_remaining_period_statement ;
+
+INSERT_UPDATE TmaPolicyAction; code[unique = true]; statement(code, $catalogVersion); actionType(code); $catalogVersion
+                             ; allow_renewal      ; renewal_statement               ; ALLOW           ;
+
+INSERT_UPDATE TmaCompatibilityPolicy; code[unique = true]        ; conditionsEvaluatorType(code); conditions(code, $catalogVersion)  ; actions(code, $catalogVersion); onlineFrom[dateformat = dd.MM.yyyy]; onlineTo[dateformat = dd.MM.yyyy]; $catalogVersion
+                                    ; renewal_eligibility_policy ; AND                          ; renewal_remaining_period_condition ; allow_renewal                 ;
+
+
+
+# Publish created Qualification rules
+#% impex.enableCodeExecution(true);
+#% impex.enableExternalSyntaxParsing(true);
+#% ruleService = de.hybris.platform.core.Registry.getApplicationContext().getBean("ruleService");
+#% ruleMaintenanceService = de.hybris.platform.core.Registry.getApplicationContext().getBean("ruleMaintenanceService");
+#% quadPlayMoreOneMobilePlanRule = ruleService.getRuleForCode("morethan_one_mobile_plan_quad_play");
+#% quadPlayMoreOneInternetPlanRule = ruleService.getRuleForCode("morethan_one_internet_plan_quad_play");
+#% quadPlayMoreOneTvPlanRule = ruleService.getRuleForCode("morethan_one_tv_plan_quad_play");
+#% quadPlayMoreOneLandlinePlanRule = ruleService.getRuleForCode("morethan_one_landline_plan_quad_play");
+#% quadPlayLessOneMobilePlanRule = ruleService.getRuleForCode("lessthan_one_mobile_plan_quad_play");
+#% quadPlayLessOneInternetPlanRule = ruleService.getRuleForCode("lessthan_one_internet_plan_quad_play");
+#% quadPlayLessOneTvPlanRule = ruleService.getRuleForCode("lessthan_one_tv_plan_quad_play");
+#% quadPlayLessOneLandlinePlanRule = ruleService.getRuleForCode("lessthan_one_landline_plan_quad_play");
+#% mobileAddonRequiresMobileDevice = ruleService.getRuleForCode("mobile_addon_requires_mobile_device");
+#% tvUnlimitedRequires5gInternet = ruleService.getRuleForCode("tv_unlimited_requires_5g_internet");
+#% rules = new ArrayList();
+#% rules.add(quadPlayMoreOneMobilePlanRule);
+#% rules.add(quadPlayMoreOneInternetPlanRule);
+#% rules.add(quadPlayMoreOneTvPlanRule);
+#% rules.add(quadPlayMoreOneLandlinePlanRule);
+#% rules.add(quadPlayLessOneMobilePlanRule);
+#% rules.add(quadPlayLessOneInternetPlanRule);
+#% rules.add(quadPlayLessOneTvPlanRule);
+#% rules.add(quadPlayLessOneLandlinePlanRule);
+#% rules.add(mobileAddonRequiresMobileDevice);
+#% rules.add(tvUnlimitedRequires5gInternet);
+#% ruleMaintenanceService.compileAndPublishRulesWithBlocking(rules, "qualification-module", false)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   ;

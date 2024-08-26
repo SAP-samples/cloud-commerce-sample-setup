@@ -1,0 +1,21 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# Impex for defining Product Offering relations to Product Specification
+
+# Macros / Replacement Parameter definitions
+$productCatalog = utilitiesSpaProductCatalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = '$productCatalog:Staged']
+
+# Product Price Classes
+INSERT_UPDATE TmaProductPriceClass; id[unique = true];
+                                  ; low
+                                  ; medium
+                                  ; high
+
+INSERT_UPDATE TmaSimpleProductOffering; code[unique = true]         ; productPriceClass(id); $catalogVersion
+                                      ; electric_plan_basic         ; low                  ;
+                                      ; electric_plan_plus          ; medium               ;
+                                      ; electric_plan_best          ; medium               ;
+                                      ; electric_plan_total_comfort ; high                 ;

@@ -1,0 +1,46 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Importing Product Classifications into Utilities Store
+
+#% impex.setLocale(Locale.ENGLISH);
+
+# Macros / Replacement Parameter definitions
+$productCatalog = utilitiesSpaProductCatalog
+$productCatalogName = Utilities Spa Product Catalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+$clAttrModifiers = system = 'utilitiesSpaClassification', version = '1.0', translator = de.hybris.platform.catalog.jalo.classification.impex.ClassificationAttributeTranslator, lang = en
+$systemName = utilitiesSpaClassification;
+$systemVersion = 1.0;
+
+# ImpEx for Importing Product Classifications
+
+$catVer = catalogVersion(version[default = 'Staged'], catalog(id[default = $productCatalog]));
+$clSysVer = catalogVersion(version[default = '$systemVersion'], catalog(id[default = '$systemName']));
+# -------------------------------------;
+# utilities classified products;
+# 1. assign class to category so that all ;
+#    contained products are automatically classified as such;
+INSERT_UPDATE Category; $catVer[virtual = true, unique = true]; code[unique = true]                                          ; supercategories(code, $clSysVer)[mode = append];
+                      ; electricitydevices                    ; electricitydeviceclassification, compatibilityclassification ;
+                      ; electricityplans                      ; serviceplanclassification
+
+$feature2 = @color[$clAttrModifiers];
+$feature3 = @weight[$clAttrModifiers];
+$feature4 = @height[$clAttrModifiers];
+$feature5 = @width[$clAttrModifiers];
+$feature6 = @lifespan[$clAttrModifiers];
+$feature7 = @power[$clAttrModifiers];
+$feature8 = @voltage[$clAttrModifiers];
+$feature9 = @material[$clAttrModifiers];
+$feature10 = @viewangle[$clAttrModifiers];
+
+
+# Insert Product Classifications
+
+# Devices
+INSERT_UPDATE TmaSimpleProductOffering; code[unique = true]        ; $feature2; $feature3; $feature4; $feature5; $feature6; $feature7; $feature8; $feature9; $feature10; $catalogVersion; unit(code)[default = pieces]
+                                      ; lightbulb_energy_efficient ; White    ; 30       ; 10       ; 5        ; 30000    ; 40       ; 60       ; Glass    ; 360       ;                ;
+                                      ; lightbulb_led              ; Yellow   ; 54       ; 12       ; 6        ; 50000    ; 60       ; 100      ; Glass    ; 360       ;                ;
+                                      ; lightbulb_led_multipack    ; Silver   ; 18       ; 14       ; 4        ; 42000    ; 40       ; 85       ; Glass    ; 360       ;                ;

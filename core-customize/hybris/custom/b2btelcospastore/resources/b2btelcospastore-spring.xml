@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd">
+
+  <context:annotation-config/>
+
+  <alias name="defaultB2bTelcoSpaStoreSystemSetup" alias="b2bTelcoSpaStoreSystemSetup"/>
+  <bean id="defaultB2bTelcoSpaStoreSystemSetup"
+        class="de.hybris.platform.b2btelcospastore.setup.B2bTelcoSpaStoreSystemSetup"
+        parent="abstractCoreSystemSetup">
+    <constructor-arg name="coreDataImportService" ref="coreDataImportService"/>
+    <constructor-arg name="sampleDataImportService" ref="defaultB2bTelcoSpaSampleDataImportService"/>
+    <constructor-arg name="configurationService" ref="configurationService"/>
+  </bean>
+
+  <alias name="defaultB2bTelcoSpaSampleDataImportService" alias="b2bTelcoSpaSampleDataImportService"/>
+  <bean id="defaultB2bTelcoSpaSampleDataImportService"
+        class="de.hybris.platform.b2btelcospastore.setup.B2bTelcoSpaSampleDataImportService"
+        parent="defaultSampleDataImportService">
+    <constructor-arg name="typeService" ref="typeService"/>
+    <constructor-arg name="modelService" ref="modelService"/>
+  </bean>
+
+  <alias name="defaultB2bTelcoSpaOrderNotificationContext" alias="b2bTelcoSpaOrderNotificationContext"/>
+  <bean id="defaultB2bTelcoSpaOrderNotificationContext"
+        class="de.hybris.platform.b2btelcospastore.process.email.context.OrderNotificationEmailContext"
+        parent="abstractEmailContext" scope="prototype">
+    <constructor-arg name="orderConverter" ref="orderConverter"/>
+  </bean>
+
+</beans>

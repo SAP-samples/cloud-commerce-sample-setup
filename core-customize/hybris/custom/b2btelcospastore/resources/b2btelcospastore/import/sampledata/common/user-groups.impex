@@ -1,0 +1,185 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+$lang = en
+
+INSERT_UPDATE Employee; UID[unique = true]; groups(uid)[mode = append]; sessionLanguage(isocode); name
+                      ; sbgadmin          ; sbgadmingroup             ; $lang                   ; SBG Admin
+
+INSERT_UPDATE UserGroup; UID[unique = true]; groups(uid)[mode = append]       ; locname[lang = en]
+                       ; basesbgadmingroup ; employeegroup                    ; Base SBG Admin Group
+                       ; sbgadmingroup     ; employeegroup, basesbgadmingroup ; SBG Admin Group
+
+INSERT_UPDATE User; UID[unique = true]; name      ; groups(uid)   ;
+                  ; sbgadmin          ; SBG Admin ; sbgadmingroup ;
+
+INSERT_UPDATE OAuthClientDetails; clientId[unique = true]; resourceIds; scope    ; authorizedGrantTypes                                            ; authorities         ; clientSecret; registeredRedirectUri
+                                ; sbg_admin              ; hybris     ; basic    ; authorization_code, refresh_token, password, client_credentials ; ROLE_SBGADMINGROUP  ; secret      ; https://localhost:9002/authorizationserver/oauth2_callback         ;
+                                ; spa_client             ; hybris     ; basic    ; password, client_credentials                                    ; ROLE_CLIENT         ; secret      ;                                                                    ;
+                                ; trusted_client         ; hybris     ; extended ; authorization_code, refresh_token, password, client_credentials ; ROLE_TRUSTED_CLIENT ; secret      ;                                                                    ;
+                                ; client-side            ; hybris     ; basic    ; implicit, client_credentials                                    ; ROLE_CLIENT         ; secret      ; http://localhost:9001/authorizationserver/oauth2_implicit_callback ;
+                                ; mobile_android         ; hybris     ; basic    ; authorization_code, refresh_token, password, client_credentials ; ROLE_CLIENT         ; secret      ; http://localhost:9001/authorizationserver/oauth2_callback          ;
+
+
+INSERT_UPDATE Employee; uid[unique = true]; name
+                      ; acctmgrftc        ; Alistair Thompson
+                      ; acctmgrbv         ; Elke Vogel
+                      ; acctmgrtp         ; Sergio Vega
+
+INSERT_UPDATE B2BCreditLimit; code[unique = true]      ; alertRateType(code, itemtype(code)); alertThreshold; amount; currency(isocode); dateRange(code, itemtype(code)); datePeriod[dateformat = dd.MM.yyyy hh:mm:ss];
+                            ; Monthly40KAlert10Percent ; PERCENTAGE:B2BRateType             ; 10            ; 40000 ; USD              ; MONTH:B2BPeriodRange           ;                                             ;
+                            ; Monthly30KAlert3K        ; CURRENCY:B2BRateType               ; 3000          ; 30000 ; USD              ; MONTH:B2BPeriodRange           ;                                             ;
+                            ; Monthly15KAlert3K        ; CURRENCY:B2BRateType               ; 3000          ; 15000 ; USD              ; MONTH:B2BPeriodRange           ;                                             ;
+
+INSERT_UPDATE B2BUnit; uid[unique = true]               ; name                              ; locName[lang = $lang]             ; groups(uid)  ; reportingOrganization(uid); Addresses(&addId)     ; &B2BUnitID                       ; accountManager(uid); creditLimit(code)        ; approvalProcessCode; description
+                     ; festitribe_cruises               ; FestiTribe Cruises                ; FestiTribe Cruises                ;              ; festitribe_cruises        ; festitribe_cruisesID1 ; festitribe_cruises               ; acctmgrftc         ; Monthly40KAlert10Percent ; approval           ; FestiTribe Cruises provides a festival experience on cruise ships, while sailing from an island to another. The experience on the boat is full inclusive: from unlimited food, drinks & entertainment, to high speed internet for nomads!
+                     ; bioveg                           ; BioVeg                            ; Bio Veg                           ;              ; bioveg                    ; biovegID1             ; bioveg                           ; acctmgrbv          ; Monthly30KAlert3K        ; approval           ; Organic growth of bio vegetable, providing high automation agriculture services.
+                     ; totalprotect                     ; Total Protect                     ; Total Protect                     ;              ; totalprotect              ; totalprotectID1       ; totalprotect                     ; acctmgrtp          ; Monthly15KAlert3K        ; approval           ; TotalProtect provides having highly reliable and fast security services - knowing that every moment matters!
+                     ; totalprotect_coordination_center ; Total Protect Coordination Center ; Total Protect Coordination Center ; totalprotect ; totalprotect              ; totalprotectID1       ; totalprotect_coordination_center ; acctmgrtp          ; Monthly15KAlert3K        ; approval           ; Coordination Center for TotalProtect.
+                     ; totalprotect_operations_center   ; Total Protect Operations Center   ; Total Protect Operations Center   ; totalprotect ; totalprotect              ; totalprotectID1       ; totalprotect_operations_center   ; acctmgrtp          ; Monthly15KAlert3K        ; approval           ; Operations Center for TotalProtect.
+                     ; totalprotect_HR                  ; Total Protect HR                  ; Total Protect HR                  ; totalprotect ; totalprotect              ; totalprotectID1       ; totalprotect_HR                  ; acctmgrtp          ; Monthly15KAlert3K        ; approval           ; HR Department for TotalProtect.
+
+INSERT_UPDATE Address; streetname[unique = true]; postalcode[unique = true]; town          ; country(isocode); billingAddress; contactAddress; shippingAddress; unloadingAddress; firstname; lastname ; email                        ; title(code); &addId                ; owner(&B2BUnitID)[unique = true];
+                     ; 999 South Wacker Drive   ; 60606                    ; Chicago       ; US              ; TRUE          ; TRUE          ; TRUE           ; TRUE            ; Akiro    ; Nakamura ; akiro.nakamura@rustic-hw.com ; mr         ; festitribe_cruisesID1 ; festitribe_cruises              ;
+                     ; 3000 Lombard Street      ; 94123                    ; San Francisco ; US              ; TRUE          ; TRUE          ; TRUE           ; TRUE            ; Anil     ; Gupta    ; anil.gupta@rustic-hw.com     ; mr         ; biovegID1             ; bioveg                          ;
+                     ; 700 E 50th Street        ; 10022                    ; New York      ; US              ; TRUE          ; TRUE          ; TRUE           ; TRUE            ; Mingmei  ; Wang     ; mingmei.wang@rustic-hw.com   ; ms         ; totalprotectID1       ; totalprotect                    ;
+
+INSERT_UPDATE UserGroup; uid[unique = true]                ; name                                 ; groups(uid)      ;
+                       ; b2bcustomergroup_requiresapproval ; B2B Customer Group Requires Approval ; b2bcustomergroup ;
+
+INSERT_UPDATE B2BUserGroup; uid[unique = true]                         ; name                                       ; unit(uid)          ; permissions(code, unit(uid))
+                          ; festitribe_cruises_owner                   ; FestiTribe Cruises Owner                   ; festitribe_cruises ; festitribe_cruises_0K_USD_ORDER:festitribe_cruises
+                          ; festitribe_cruises_admin                   ; FestiTribe Cruises Admin                   ; festitribe_cruises ; festitribe_cruises_20K_USD_ORDER:festitribe_cruises
+                          ; festitribe_cruises_partner                 ; FestiTribe Cruises Partner                 ; festitribe_cruises ; festitribe_cruises_0K_USD_ORDER:festitribe_cruises
+                          ; festitribe_cruises_travel_agent            ; FestiTribe Cruises Travel Agent            ; festitribe_cruises ; festitribe_cruises_0K_USD_ORDER:festitribe_cruises
+                          ; bioveg_owner                               ; BioVeg Owner                               ; bioveg             ; bioveg_0K_USD_ORDER:bioveg
+                          ; bioveg_admin                               ; BioVeg Admin                               ; bioveg             ; bioveg_20K_USD_ORDER:bioveg
+                          ; bioveg_operator                            ; BioVeg Operator                            ; bioveg             ; bioveg_20K_USD_ORDER:bioveg
+                          ; totalprotect_owner                         ; TotalProtect Owner                         ; totalprotect       ; totalprotect_20K_USD_ORDER:totalprotect
+                          ; totalprotect_partner                       ; TotalProtect Partner                       ; totalprotect       ; totalprotect_0K_USD_ORDER:totalprotect
+                          ; totalprotect_admin                         ; TotalProtect Admin                         ; totalprotect       ; totalprotect_0K_USD_ORDER:totalprotect
+                          ; totalprotect_security_coordination_manager ; TotalProtect Security Coordination Manager ; totalprotect       ; totalprotect_0K_USD_ORDER:totalprotect
+                          ; totalprotect_purchase_approver             ; TotalProtect Purchase Approver             ; totalprotect       ; totalprotect_0K_USD_ORDER:totalprotect
+                          ; totalprotect_security_agent                ; TotalProtect Security Agent                ; totalprotect       ; totalprotect_0K_USD_ORDER:totalprotect
+                          ; totalprotect_account_manager               ; TotalProtect Account Manager               ; totalprotect       ; totalprotect_0K_USD_ORDER:totalprotect
+                          ; totalprotect_recruiter                     ; TotalProtect Recriuter                     ; totalprotect       ; totalprotect_0K_USD_ORDER:totalprotect
+
+UPDATE Employee; uid[unique = true]; groups(uid)[mode = append]
+               ; acctmgrftc        ; festitribe_cruises_admin
+               ; acctmgrbv         ; bioveg_admin
+               ; acctmgrtp         ; totalprotect_owner
+
+INSERT_UPDATE B2BCustomer; description     ; uid[unique = true]             ; customerID                      ; originalUid                    ; email                          ; name            ; title(code); groups(uid)                                                                                                                                                            ; sessionCurrency(isocode)[default = 'USD']
+                         ; admin           ; jerry@festitribe.com           ; jerry@festitribe.com            ; jerry@festitribe.com           ; jerry@festitribe.com           ; Jerry Ativus    ; mr         ; b2badmingroup, festitribe_cruises                                                                                                                                      ;
+                         ; owner           ; ash@festitribe.com             ; ash@festitribe.com              ; ash@festitribe.com             ; ash@festitribe.com             ; Ash Wolf        ; mr         ; b2bcustomergroup, festitribe_cruises, festitribe_cruises_owner, festitribe_cruises_travel_agent                                                                        ;
+                         ; approver        ; lista@festitribe.com           ; lista@festitribe.com            ; lista@festitribe.com           ; lista@festitribe.com           ; Lista Bauer     ; ms         ; b2bcustomergroup, festitribe_cruises, festitribe_cruises_admin, b2bapprovergroup                                                                                       ;
+                         ; partner         ; nick@festitribe.com            ; nick@festitribe.com             ; nick@festitribe.com            ; nick@festitribe.com            ; Nick Schmidt    ; mr         ; b2bcustomergroup, festitribe_cruises, festitribe_cruises_partner, festitribe_cruises_travel_agent                                                                      ;
+                         ; b2b customer    ; amanda.white@festitribe.com    ; amanda.white@festitribe.com     ; amanda.white@festitribe.com    ; amanda.white@festitribe.com    ; Amanda White    ; mrs        ; festitribe_cruises, b2bcustomergroup                                                                                                                                   ;
+                         ; b2b customer    ; jeremy.young@festitribe.com    ; jeremy.young@festitribe.com     ; jeremy.young@festitribe.com    ; jeremy.young@festitribe.com    ; Jeremy Young    ; mr         ; festitribe_cruises, b2bcustomergroup_requiresapproval, b2bcustomergroup                                                                                                                  ;
+                         ; b2b approver    ; alvin.berry@festitribe.com     ; alvin.berry@festitribe.com      ; alvin.berry@festitribe.com     ; alvin.berry@festitribe.com     ; Alvin Berry     ; mr         ; festitribe_cruises, b2bapprovergroup                                                                                                                                   ;
+
+                         ; admin           ; monica@bioveg.com              ; monica@bioveg.com               ; monica@bioveg.com              ; monica@bioveg.com              ; Monica James    ; ms         ; b2badmingroup, bioveg                                                                                                                                                  ;
+                         ; owner           ; meg@bioveg.com                 ; meg@bioveg.com                  ; meg@bioveg.com                 ; meg@bioveg.com                 ; Meg Bell        ; ms         ; b2bcustomergroup, bioveg, bioveg_owner, b2bapprovergroup                                                                                                               ;
+                         ; approver        ; dan@bioveg.com                 ; dan@bioveg.com                  ; dan@bioveg.com                 ; dan@bioveg.com                 ; Dan Torres      ; mr         ; b2bcustomergroup, bioveg, bioveg_admin, bioveg_operator                                                                                                                ;
+                         ; b2b customer    ; pearl.black@bioveg.com         ; pearl.black@bioveg.com          ; pearl.black@bioveg.com         ; pearl.black@bioveg.com         ; Pearl Black     ; mrs        ; bioveg, b2bcustomergroup                                                                                                                                               ;
+                         ; b2b customer    ; anthony.collins@bioveg.com     ; anthony.collins@bioveg.com      ; anthony.collins@bioveg.com     ; anthony.collins@bioveg.com     ; Anthony Collins ; mr         ; bioveg, b2bcustomergroup_requiresapproval, b2bcustomergroup                                                                                                                              ;
+                         ; b2b approver    ; eleanor.bond@bioveg.com        ; eleanor.bond@bioveg.com         ; eleanor.bond@bioveg.com        ; eleanor.bond@bioveg.com        ; Eleanor Bond    ; mrs        ; bioveg, b2bapprovergroup                                                                                                                                               ;
+
+                         ; admin           ; lisa.richards@totalprotect.com ; lisa.richards@totalprotect.com  ; lisa.richards@totalprotect.com ; lisa.richards@totalprotect.com ; Lisa Richards   ; ms         ; totalprotect, b2badmingroup                                                                                                                                            ;
+                         ; b2b customer    ; elmer.reid@totalprotect.com    ; elmer.reid@totalprotect.com     ; elmer.reid@totalprotect.com    ; elmer.reid@totalprotect.com    ; Elmer Reid      ; mr         ; totalprotect, b2bcustomergroup                                                                                                                                         ;
+                         ; b2b customer    ; simon.peters@totalprotect.com  ; simon.peters@totalprotect.com   ; simon.peters@totalprotect.com  ; simon.peters@totalprotect.com  ; Simon Peters    ; mr         ; totalprotect, b2bcustomergroup_requiresapproval, b2bcustomergroup                                                                                                      ;
+                         ; b2b approver    ; ross.carter@totalprotect.com   ; ross.carter@totalprotect.com    ; ross.carter@totalprotect.com   ; ross.carter@totalprotect.com   ; Ross Carter     ; mr         ; totalprotect, b2bapprovergroup                                                                                                                                         ;
+
+                         ; owner           ; rocky@totalprotect.com         ; rocky@totalprotect.com          ; rocky@totalprotect.com         ; rocky@totalprotect.com         ; Rocky Silva     ; mr         ; b2bcustomergroup, totalprotect_coordination_center, totalprotect_owner, totalprotect_admin                                                                             ;
+                         ; partner         ; joachim@totalprotect.com       ; joachim@totalprotect.com        ; joachim@totalprotect.com       ; joachim@totalprotect.com       ; Joachim Rivers  ; mr         ; b2bcustomergroup, totalprotect_coordination_center, totalprotect_partner, totalprotect_security_coordination_manager, totalprotect_purchase_approver, b2bapprovergroup ;
+                         ; b2b customer    ; polly.barber@totalprotect.com  ; polly.barber@totalprotect.com   ; polly.barber@totalprotect.com  ; polly.barber@totalprotect.com  ; Polly Barber    ; mrs        ; totalprotect_coordination_center, b2bcustomergroup                                                                                                                     ;
+                         ; b2b customer    ; wendy.porter@totalprotect.com  ; wendy.porter@totalprotect.com   ; wendy.porter@totalprotect.com  ; wendy.porter@totalprotect.com  ; Wendy Porter    ; ms         ; totalprotect_coordination_center, b2bcustomergroup_requiresapproval ,b2bcustomergroup                                                                                  ;
+                         ; b2b approver    ; ford.banks@totalprotect.com    ; ford.banks@totalprotect.com     ; ford.banks@totalprotect.com    ; ford.banks@totalprotect.com    ; Ford Banks      ; mr         ; totalprotect_coordination_center, b2bapprovergroup                                                                                                                     ;
+
+                         ; partner         ; pablo@totalprotect.com         ; pablo@totalprotect.com          ; pablo@totalprotect.com         ; pablo@totalprotect.com         ; Pablo Wang      ; mr         ; b2bcustomergroup, totalprotect_operations_center, totalprotect_partner, totalprotect_security_agent                                                                    ;
+                         ; security agent  ; john.martin@totalprotect.com   ; john.martin@totalprotect.com    ; john.martin@totalprotect.com   ; john.martin@totalprotect.com   ; John Martin     ; mr         ; b2bcustomergroup, totalprotect_operations_center, totalprotect_security_agent                                                                                          ;
+                         ; b2b customer    ; keith.connor@totalprotect.com  ; keith.connor@totalprotect.com   ; keith.connor@totalprotect.com  ; keith.connor@totalprotect.com  ; Keith Connor    ; mr         ; totalprotect_operations_center, b2bcustomergroup                                                                                                                       ;
+                         ; b2b customer    ; angela.valdez@totalprotect.com ; angela.valdez@totalprotect.com  ; angela.valdez@totalprotect.com ; angela.valdez@totalprotect.com ; Angela Valdez   ; ms         ; totalprotect_operations_center, b2bcustomergroup_requiresapproval ,b2bcustomergroup                                                                                    ;
+                         ; b2b approver    ; mark.mann@totalprotect.com     ; mark.mann@totalprotect.com      ; mark.mann@totalprotect.com     ; mark.mann@totalprotect.com     ; Mark Mann       ; mr         ; totalprotect_operations_center, b2bapprovergroup                                                                                                                       ;
+
+                         ; account manager ; maria.sims@totalprotect.com    ; maria.sims@totalprotect.com     ; maria.sims@totalprotect.com    ; maria.sims@totalprotect.com    ; Maria Sims      ; ms         ; b2bcustomergroup, totalprotect_HR, totalprotect_account_manager                                                                                                        ;
+                         ; recruiter       ; laura.ken@totalprotect.com     ; laura.ken@totalprotect.com      ; laura.ken@totalprotect.com     ; laura.ken@totalprotect.com     ; Laura Ken       ; ms         ; b2bcustomergroup, totalprotect_HR, totalprotect_recruiter                                                                                                              ;
+                         ; b2b customer    ; arnold.mason@totalprotect.com  ; arnold.mason@totalprotect.com    ; arnold.mason@totalprotect.com  ; arnold.mason@totalprotect.com  ; Arnold Mason    ; mr         ; totalprotect_HR, b2bcustomergroup                                                                                                                                      ;
+                         ; b2b customer    ; phil.cook@totalprotect.com     ; phil.cook@totalprotect.com      ; phil.cook@totalprotect.com     ; phil.cook@totalprotect.com     ; Phil Cook       ; mr         ; totalprotect_HR, b2bcustomergroup_requiresapproval ,b2bcustomergroup                                                                                                   ;
+                         ; b2b approver    ; harper.parks@totalprotect.com  ; harper.parks@totalprotect.com   ; harper.parks@totalprotect.com  ; harper.parks@totalprotect.com  ; Harper Parks    ; mrs        ; totalprotect_HR, b2bapprovergroup                                                                                                                                      ;
+
+INSERT_UPDATE B2BBudget; code[unique = true]; Unit(uid)          ; budget; currency(isocode)[allownull = true]; dateRange[dateformat = dd.MM.yyyy hh:mm:ss, allownull = true]; name[lang = $lang];
+                       ; Monthly_50K_USD    ; festitribe_cruises ; 50000 ; USD                                ; 01.01.2021 00:00:00,12.31.2032 12:59:59                      ; Monthly 50K USD   ;
+                       ; Monthly_20K_USD    ; bioveg             ; 20000 ; USD                                ; 01.01.2021 00:00:00,12.31.2032 12:59:59                      ; Monthly 20K USD   ;
+                       ; Monthly_4K_USD     ; totalprotect       ; 4000  ; USD                                ; 01.01.2021 00:00:00,12.31.2032 12:59:59                      ; Monthly 4K USD    ;
+
+INSERT_UPDATE B2BCostCenter; code[unique = true]       ; name[lang = $lang]; Unit(uid)          ; budgets(code)   ; currency(isocode)[default = 'USD']
+                           ; festitribe_cruises_Global ; Rustic Global     ; festitribe_cruises ; Monthly_50K_USD ;
+                           ; bioveg_Retail             ; Retail            ; bioveg             ; Monthly_20K_USD ;
+                           ; totalprotect_Retail       ; Custom Retail     ; totalprotect       ; Monthly_4K_USD  ;
+
+INSERT_UPDATE B2BOrderThresholdPermission; code[unique = true]              ; Unit(uid)          ; threshold; currency(isocode)[default = 'USD'];
+                                         ; festitribe_cruises_0K_USD_ORDER  ; festitribe_cruises ; 0        ;
+                                         ; festitribe_cruises_1K_USD_ORDER  ; festitribe_cruises ; 1000     ;
+                                         ; festitribe_cruises_2K_USD_ORDER  ; festitribe_cruises ; 2000     ;
+                                         ; festitribe_cruises_4K_USD_ORDER  ; festitribe_cruises ; 4000     ;
+                                         ; festitribe_cruises_5K_USD_ORDER  ; festitribe_cruises ; 5000     ;
+                                         ; festitribe_cruises_7K_USD_ORDER  ; festitribe_cruises ; 7000     ;
+                                         ; festitribe_cruises_15K_USD_ORDER ; festitribe_cruises ; 15000    ;
+                                         ; festitribe_cruises_20K_USD_ORDER ; festitribe_cruises ; 20000    ;
+
+                                         ; bioveg_0K_USD_ORDER              ; bioveg             ; 0        ;
+                                         ; bioveg_1K_USD_ORDER              ; bioveg             ; 1000     ;
+                                         ; bioveg_2K_USD_ORDER              ; bioveg             ; 2000     ;
+                                         ; bioveg_4K_USD_ORDER              ; bioveg             ; 4000     ;
+                                         ; bioveg_5K_USD_ORDER              ; bioveg             ; 5000     ;
+                                         ; bioveg_7K_USD_ORDER              ; bioveg             ; 7000     ;
+                                         ; bioveg_15K_USD_ORDER             ; bioveg             ; 15000    ;
+                                         ; bioveg_20K_USD_ORDER             ; bioveg             ; 20000    ;
+
+                                         ; totalprotect_0K_USD_ORDER        ; totalprotect       ; 0        ;
+                                         ; totalprotect_1K_USD_ORDER        ; totalprotect       ; 1000     ;
+                                         ; totalprotect_2K_USD_ORDER        ; totalprotect       ; 2000     ;
+                                         ; totalprotect_4K_USD_ORDER        ; totalprotect       ; 4000     ;
+                                         ; totalprotect_5K_USD_ORDER        ; totalprotect       ; 5000     ;
+                                         ; totalprotect_7K_USD_ORDER        ; totalprotect       ; 7000     ;
+                                         ; totalprotect_15K_USD_ORDER       ; totalprotect       ; 15000    ;
+                                         ; totalprotect_20K_USD_ORDER       ; totalprotect       ; 20000    ;
+
+INSERT_UPDATE B2BOrderThresholdTimespanPermission; code[unique = true]                   ; Unit(uid)          ; threshold ; currency(isocode); range(code, itemtype(code));
+                                                 ; festitribe_cruises_3K_USD_MONTH       ; festitribe_cruises ; 3000      ; USD              ; MONTH:B2BPeriodRange       ;
+                                                 ; festitribe_cruises_10K_USD_MONTH      ; festitribe_cruises ; 10000     ; USD              ; MONTH:B2BPeriodRange       ;
+                                                 ; festitribe_cruises_15K_USD_MONTH      ; festitribe_cruises ; 15000     ; USD              ; MONTH:B2BPeriodRange       ;
+                                                 ; festitribe_cruises_20K_USD_MONTH      ; festitribe_cruises ; 20000     ; USD              ; MONTH:B2BPeriodRange       ;
+                                                 ; festitribe_cruises_25K_USD_MONTH      ; festitribe_cruises ; 25000     ; USD              ; MONTH:B2BPeriodRange       ;
+                                                 ; festitribe_cruises_Unlimited_Timespan ; festitribe_cruises ; 999999999 ; USD              ; MONTH:B2BPeriodRange       ;
+
+                                                 ; bioveg_3K_USD_MONTH                   ; bioveg             ; 3000      ; USD              ; MONTH:B2BPeriodRange       ;
+                                                 ; bioveg_10K_USD_MONTH                  ; bioveg             ; 10000     ; USD              ; MONTH:B2BPeriodRange       ;
+                                                 ; bioveg_15K_USD_MONTH                  ; bioveg             ; 15000     ; USD              ; MONTH:B2BPeriodRange       ;
+                                                 ; bioveg_20K_USD_MONTH                  ; bioveg             ; 20000     ; USD              ; MONTH:B2BPeriodRange       ;
+                                                 ; bioveg_25K_USD_MONTH                  ; bioveg             ; 25000     ; USD              ; MONTH:B2BPeriodRange       ;
+                                                 ; bioveg_Unlimited_Timespan             ; bioveg             ; 999999999 ; USD              ; MONTH:B2BPeriodRange       ;
+
+                                                 ; totalprotect_3K_USD_MONTH             ; totalprotect       ; 3000      ; USD              ; MONTH:B2BPeriodRange       ;
+                                                 ; totalprotect_10K_USD_MONTH            ; totalprotect       ; 10000     ; USD              ; MONTH:B2BPeriodRange       ;
+                                                 ; totalprotect_15K_USD_MONTH            ; totalprotect       ; 15000     ; USD              ; MONTH:B2BPeriodRange       ;
+                                                 ; totalprotect_20K_USD_MONTH            ; totalprotect       ; 20000     ; USD              ; MONTH:B2BPeriodRange       ;
+                                                 ; totalprotect_25K_USD_MONTH            ; totalprotect       ; 25000     ; USD              ; MONTH:B2BPeriodRange       ;
+                                                 ; totalprotect_Unlimited_Timespan       ; totalprotect       ; 999999999 ; USD              ; MONTH:B2BPeriodRange       ;
+
+INSERT_UPDATE B2BBudgetExceededPermission; code[unique = true]                ; Unit(uid)          ;
+                                         ; festitribe_cruises_Budget_Exceeded ; festitribe_cruises ;
+                                         ; bioveg_Budget_Exceeded             ; bioveg             ;
+                                         ; totalprotect_Budget_Exceeded       ; totalprotect       ;
+
+UPDATE B2BUnit; uid[unique = true] ; approvers(uid)           ;
+              ; festitribe_cruises ; lista@festitribe.com     ;
+              ; bioveg             ; meg@bioveg.com           ;
+              ; totalprotect       ; joachim@totalprotect.com ;
+
+UPDATE B2BCustomer; originalUid[unique = true]; uid[unique = true]       ; permissions(code, Unit(uid))                                                                                                                                       ;
+                  ; lista@festitribe.com      ; lista@festitribe.com     ; festitribe_cruises_20K_USD_ORDER:festitribe_cruises,festitribe_cruises_Unlimited_Timespan:festitribe_cruises,festitribe_cruises_Budget_Exceeded:festitribe_cruises ;
+                  ; meg@bioveg.com            ; meg@bioveg.com           ; bioveg_10K_USD_MONTH:bioveg,bioveg_Unlimited_Timespan:bioveg,bioveg_Budget_Exceeded:bioveg                                                                         ;
+                  ; joachim@totalprotect.com  ; joachim@totalprotect.com ; totalprotect_4K_USD_ORDER:totalprotect                                                                                                                             ;

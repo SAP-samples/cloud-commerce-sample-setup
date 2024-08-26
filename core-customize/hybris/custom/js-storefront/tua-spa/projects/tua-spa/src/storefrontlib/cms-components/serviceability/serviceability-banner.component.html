@@ -1,0 +1,25 @@
+<div class="container px-0">
+  <ng-container *ngIf="component.data$ | async as data">
+    <ng-container *ngIf="mediaService.getMedia(data.media) as urlMedia">
+      <div
+        class="row mx-auto banner-container hidden-sm"
+        [ngStyle]="{ background: 'url(' + urlMedia.src + ')' }"
+      >
+        <div
+          class="row mx-auto d-flex justify-content-start align-middle w-100"
+        >
+          <div class="col-8 col-sm-6 col-md-5 margin-leftTop">
+            <button #elements
+              type="button"
+              class="btn btn-primary btn-block text-uppercase"
+              [attr.aria-label]= "'serviceability.checkAvailabilityAccessible' | cxTranslate"
+              (click)="checkServiceability(data)"
+            >
+              {{ data.buttonText }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+</div>

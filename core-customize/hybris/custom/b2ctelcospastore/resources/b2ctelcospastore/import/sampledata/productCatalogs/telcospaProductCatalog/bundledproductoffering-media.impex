@@ -1,0 +1,48 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2024 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# Impex for setting medias on Bundled Product Offerings
+$productCatalog = telcospaProductCatalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+$thumbnail = thumbnail(code, $catalogVersion)
+$picture = picture(code, $catalogVersion)
+$thumbnails = thumbnails(code, $catalogVersion)
+$detail = detail(code, $catalogVersion)
+$normal = normal(code, $catalogVersion)
+$others = others(code, $catalogVersion)
+$medias = medias(code, $catalogVersion)
+$galleryImages = galleryImages(qualifier, $catalogVersion)
+$siteResource = jar:de.hybris.platform.b2ctelcospastore.constants.B2ctelcospastoreConstants&/b2ctelcospastore/import/sampledata/productCatalogs/$productCatalog
+
+#Sample data for FixedPriceBPO media to show thumbnail image
+INSERT_UPDATE Media; mediaFormat(qualifier); code[unique = true]                ; @media[translator = de.hybris.platform.impex.jalo.media.MediaDataTranslator]; mime[default = 'image/jpg']; $catalogVersion; folder(qualifier)[forceWrite = true]
+                   ; 30Wx30H               ; /30Wx30H/home_comfort_deal.png     ; $siteResource/images/30Wx30H/home_comfort_deal.png                          ;                            ;                ; images
+                   ; 40Wx40H               ; /40Wx40H/home_comfort_deal.png     ; $siteResource/images/40Wx40H/home_comfort_deal.png                          ;                            ;                ; images
+                   ; 65Wx65H               ; /65Wx65H/home_comfort_deal.png     ; $siteResource/images/65Wx65H/home_comfort_deal.png                          ;                            ;                ; images
+                   ; 90Wx90H               ; /90Wx90H/home_comfort_deal.png     ; $siteResource/images/90Wx90H/home_comfort_deal.png                          ;                            ;                ; images
+                   ; 96Wx96H               ; /96Wx96H/home_comfort_deal.png     ; $siteResource/images/96Wx96H/home_comfort_deal.png                          ;                            ;                ; images
+                   ; 300Wx300H             ; /300Wx300H/home_comfort_deal.png   ; $siteResource/images/300Wx300H/home_comfort_deal.png                        ;                            ;                ; images
+                   ; 500Wx500H             ; /500Wx500H/home_comfort_deal.png   ; $siteResource/images/500Wx500H/home_comfort_deal.png                        ;                            ;                ; images
+                   ; 515Wx515H             ; /515Wx515H/home_comfort_deal.png   ; $siteResource/images/515Wx515H/home_comfort_deal.png                        ;                            ;                ; images
+                   ; 1001Wx1001H           ; /1001Wx1001H/home_comfort_deal.png ; $siteResource/images/1001Wx1001H/home_comfort_deal.png                      ;                            ;                ; images
+                   ; 1200Wx1200H           ; /1200Wx1200H/home_comfort_deal.png ; $siteResource/images/1200Wx1200H/home_comfort_deal.png                      ;                            ;                ; images
+                   ; 30Wx30H               ; /30Wx30H/winter_deal.png           ; $siteResource/images/30Wx30H/winter_deal.png                                ;                            ;                ; images
+                   ; 40Wx40H               ; /40Wx40H/winter_deal.png           ; $siteResource/images/40Wx40H/winter_deal.png                                ;                            ;                ; images
+                   ; 65Wx65H               ; /65Wx65H/winter_deal.png           ; $siteResource/images/65Wx65H/winter_deal.png                                ;                            ;                ; images
+                   ; 90Wx90H               ; /90Wx90H/winter_deal.png           ; $siteResource/images/90Wx90H/winter_deal.png                                ;                            ;                ; images
+                   ; 96Wx96H               ; /96Wx96H/winter_deal.png           ; $siteResource/images/96Wx96H/winter_deal.png                                ;                            ;                ; images
+                   ; 300Wx300H             ; /300Wx300H/winter_deal.png         ; $siteResource/images/300Wx300H/winter_deal.png                              ;                            ;                ; images
+                   ; 500Wx500H             ; /500Wx500H/winter_deal.png         ; $siteResource/images/500Wx500H/winter_deal.png                              ;                            ;                ; images
+                   ; 515Wx515H             ; /515Wx515H/winter_deal.png         ; $siteResource/images/515Wx515H/winter_deal.png                              ;                            ;                ; images
+                   ; 1001Wx1001H           ; /1001Wx1001H/winter_deal.png       ; $siteResource/images/1001Wx1001H/winter_deal.png                            ;                            ;                ; images
+                   ; 1200Wx1200H           ; /1200Wx1200H/winter_deal.png       ; $siteResource/images/1200Wx1200H/winter_deal.png                            ;                            ;                ; images
+
+INSERT_UPDATE MediaContainer; qualifier[unique = true]; $medias                                                                                                                                                                                                                                                                                                                             ; $catalogVersion
+                            ; home_comfort_deal       ; /30Wx30H/home_comfort_deal.png,/40Wx40H/home_comfort_deal.png,/65Wx65H/home_comfort_deal.png,/90Wx90H/home_comfort_deal.png,/96Wx96H/home_comfort_deal.png,/300Wx300H/home_comfort_deal.png,/500Wx500H/home_comfort_deal.png,/515Wx515H/home_comfort_deal.png,/1001Wx1001H/home_comfort_deal.png,/1200Wx1200H/home_comfort_deal.png ;
+                            ; winter_deal             ; /30Wx30H/winter_deal.png,/40Wx40H/winter_deal.png,/65Wx65H/winter_deal.png,/90Wx90H/winter_deal.png,/96Wx96H/winter_deal.png,/300Wx300H/winter_deal.png,/500Wx500H/winter_deal.png,/515Wx515H/winter_deal.png,/1001Wx1001H/winter_deal.png,/1200Wx1200H/winter_deal.png                                                             ;
+
+INSERT_UPDATE TmaFixedBundledProductOffering; code[unique = true]; $picture                         ; $thumbnail                     ; $detail                             ; $normal                          ; $thumbnails                    ; $others                                                                                                                                                        ; $galleryImages    ; $catalogVersion
+                                            ; homeComfortDeal    ; /300Wx300H/home_comfort_deal.png ; /96Wx96H/home_comfort_deal.png ; /1200Wx1200H/home_comfort_deal.png  ; /300Wx300H/home_comfort_deal.png ; /96Wx96H/home_comfort_deal.png ; /515Wx515H/home_comfort_deal.png,/300Wx300H/home_comfort_deal.png,/96Wx96H/home_comfort_deal.png,/65Wx65H/home_comfort_deal.png,/30Wx30H/home_comfort_deal.png ; home_comfort_deal ;
+                                            ; winterDeal         ; /300Wx300H/winter_deal.png       ; /96Wx96H/winter_deal.png       ; /1200Wx1200H/winter_deal.png        ; /300Wx300H/winter_deal.png       ; /96Wx96H/winter_deal.png       ; /515Wx515H/winter_deal.png,/300Wx300H/winter_deal.png,/96Wx96H/winter_deal.png,/65Wx65H/winter_deal.png,/30Wx30H/winter_deal.png                               ; winter_deal       ;
+                                            ; homeDealBundle     ; /300Wx300H/home_comfort_deal.png ; /96Wx96H/home_comfort_deal.png ; /1200Wx1200H/home_comfort_deal.png ; /300Wx300H/home_comfort_deal.png ; /96Wx96H/home_comfort_deal.png ; /515Wx515H/home_comfort_deal.png,/300Wx300H/home_comfort_deal.png,/96Wx96H/home_comfort_deal.png,/65Wx65H/home_comfort_deal.png,/30Wx30H/home_comfort_deal.png ; home_comfort_deal ;

@@ -1,0 +1,7 @@
+cx-guided-selling-steps {
+  @extend %pdpTabs !optional;
+
+  .active {
+    background-color: var(--cx-color-inverse);
+  }
+}

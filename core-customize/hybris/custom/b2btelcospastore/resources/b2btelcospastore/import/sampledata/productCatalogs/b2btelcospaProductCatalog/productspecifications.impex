@@ -1,0 +1,423 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Product Specifications
+
+$productCatalog = b2btelcospaProductCatalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+$defaultApprovalStatus = approvalstatus(code)[default = 'approved']
+
+##########################################
+# Customer Facing Service Specifications #
+##########################################
+
+INSERT_UPDATE TmaExternalIdentifier; billingSystemExtId[unique = true]; billingSystemId[unique = true]; resourceType
+                                   ; satellite_service_spec           ; sap-sb                        ; ServiceSpecification
+                                   ; backup_service_spec              ; sap-sb                        ; ServiceSpecification
+                                   ; satellite_voice_service_spec     ; sap-sb                        ; ServiceSpecification
+                                   ; data_servicespec                 ; sap-sb                        ; ServiceSpecification
+                                   ; voice_servicespec                ; sap-sb                        ; ServiceSpecification
+                                   ; video_streaming_servicespec      ; sap-sb                        ; ServiceSpecification
+                                   ; internet_service_spec            ; sap-sb                        ; ServiceSpecification
+
+
+INSERT_UPDATE TmaCustomerFacingServiceSpec; id[unique = true]            ; $catalogVersion; $defaultApprovalStatus; externalIds(billingSystemId, billingSystemExtId)[unique = true]
+                                          ; satellite_service_spec       ;                ;                       ; sap-sb:satellite_service_spec
+                                          ; backup_service_spec          ;                ;                       ; sap-sb:backup_service_spec
+                                          ; satellite_voice_service_spec ;                ;                       ; sap-sb:satellite_voice_service_spec
+                                          ; data_svc                     ;                ;                       ; sap-sb:data_servicespec
+                                          ; voice_svc                    ;                ;                       ; sap-sb:voice_servicespec
+                                          ; video_streaming_svc          ;                ;                       ; sap-sb:video_streaming_servicespec
+                                          ; internet_svc                 ;                ;                       ; sap-sb:internet_service_spec
+
+
+
+#########################################
+# Service Specification Characteristics #
+#########################################
+
+INSERT_UPDATE TmaServiceSpecCharacteristic; id[unique = true]       ; serviceSpecifications(id, $catalogVersion); $catalogVersion
+                                          ; mir_download_speed      ; satellite_service_spec                    ;
+                                          ; mir_upload_speed        ; satellite_service_spec                    ;
+                                          ; cir_download_speed      ; satellite_service_spec                    ;
+                                          ; cir_upload_speed        ; satellite_service_spec                    ;
+                                          ; eirp                    ; satellite_service_spec                    ;
+
+                                          ; imsi                    ; backup_service_spec                       ;
+                                          ; terminal_support        ; backup_service_spec                       ;
+
+                                          ; number_type             ; satellite_voice_service_spec              ;
+                                          ; national_number         ; satellite_voice_service_spec              ;
+                                          ; country_number          ; satellite_voice_service_spec              ;
+                                          ; phone_number            ; satellite_voice_service_spec              ;
+                                          ; data_volume             ; data_svc                                  ;
+                                          ; data_volume_premium     ; data_svc                                  ;
+                                          ; minutes                 ; voice_svc                                 ;
+                                          ; sms                     ; voice_svc                                 ;
+                                          ; mms                     ; voice_svc                                 ;
+                                          ; video_streaming_type    ; video_streaming_svc                       ;
+
+                                          ; internet_download_speed ; internet_svc                              ;
+                                          ; internet_upload_speed   ; internet_svc                              ;
+
+
+###############################################
+# Service Specification Characteristic Values #
+###############################################
+
+INSERT_UPDATE TmaServiceSpecCharacteristicValue; id[unique = true]            ; value          ; unitOfMeasure(id); serviceSpecCharacteristic(id, $catalogVersion); $catalogVersion
+                                               ; mir_download_10240           ; 10240          ; kbps             ; mir_download_speed                            ;
+                                               ; mir_download_2048            ; 2048           ; kbps             ; mir_download_speed                            ;
+                                               ; mir_download_1024            ; 1024           ; kbps             ; mir_download_speed                            ;
+                                               ; mir_download_492             ; 492            ; kbps             ; mir_download_speed                            ;
+
+                                               ; mir_upload_10240             ; 10240          ; kbps             ; mir_upload_speed                              ;
+                                               ; mir_upload_2048              ; 2048           ; kbps             ; mir_upload_speed                              ;
+                                               ; mir_upload_1024              ; 1024           ; kbps             ; mir_upload_speed                              ;
+                                               ; mir_upload_492               ; 492            ; kbps             ; mir_upload_speed                              ;
+                                               ; mir_upload_256               ; 256            ; kbps             ; mir_upload_speed                              ;
+
+                                               ; cir_download_10240           ; 10240          ; kbps             ; cir_download_speed                            ;
+                                               ; cir_download_4096            ; 4096           ; kbps             ; cir_download_speed                            ;
+                                               ; cir_download_1024            ; 1024           ; kbps             ; cir_download_speed                            ;
+                                               ; cir_download_512             ; 512            ; kbps             ; cir_download_speed                            ;
+                                               ; cir_download_256             ; 256            ; kbps             ; cir_download_speed                            ;
+                                               ; cir_download_128             ; 128            ; kbps             ; cir_download_speed                            ;
+                                               ; cir_download_0               ; 0              ; kbps             ; cir_download_speed                            ;
+
+                                               ; cir_upload_10240             ; 10240          ; kbps             ; cir_upload_speed                              ;
+                                               ; cir_upload_4096              ; 4096           ; kbps             ; cir_upload_speed                              ;
+                                               ; cir_upload_1024              ; 1024           ; kbps             ; cir_upload_speed                              ;
+                                               ; cir_upload_512               ; 512            ; kbps             ; cir_upload_speed                              ;
+                                               ; cir_upload_256               ; 256            ; kbps             ; cir_upload_speed                              ;
+                                               ; cir_upload_128               ; 128            ; kbps             ; cir_upload_speed                              ;
+                                               ; cir_upload_0                 ; 0              ; kbps             ; cir_upload_speed                              ;
+
+                                               ; up_to_52_5                   ; up_to_52_5     ; no_unit          ; eirp                                          ;
+                                               ; 52_51_to_55_5                ; 52_51_to_55_5  ; no_unit          ; eirp                                          ;
+                                               ; 55_51_to_58                  ; 55_51_to_58    ; no_unit          ; eirp                                          ;
+                                               ; 58_01_and_over               ; 58_01_and_over ; no_unit          ; eirp                                          ;
+
+                                               ; sim_card                     ; SIM Card       ; no_unit          ; terminal_support                              ;
+                                               ; e_sim                        ; eSim           ; no_unit          ; terminal_support                              ;
+
+                                               ; data_volume_premium_50G      ; 50             ; gb               ; data_volume_premium                           ;
+                                               ; data_volume_premium_1000G    ; 1000           ; gb               ; data_volume_premium                           ;
+
+                                               ; data_volume_5G               ; 5              ; gb               ; data_volume                                   ;
+                                               ; data_volume_10G              ; 10             ; gb               ; data_volume                                   ;
+                                               ; data_volume_20G              ; 20             ; gb               ; data_volume                                   ;
+
+                                               ; minutes_1000                 ; 1000           ; minutes          ; minutes                                       ;
+                                               ; minutes_5000                 ; 5000           ; minutes          ; minutes                                       ;
+                                               ; minutes_10000                ; 10000          ; minutes          ; minutes                                       ;
+
+                                               ; sms_1000                     ; 1000           ; sms              ; sms                                           ;
+                                               ; sms_5000                     ; 5000           ; sms              ; sms                                           ;
+                                               ; sms_10000                    ; 10000          ; sms              ; sms                                           ;
+
+                                               ; video_streaming_type_hd      ; HD             ; no_unit          ; video_streaming_type                          ;
+                                               ; video_streaming_type_sd      ; SD             ; no_unit          ; video_streaming_type                          ;
+                                               ; video_streaming_type_4k      ; 4K             ; no_unit          ; video_streaming_type                          ;
+
+                                               ; mms_10000                    ; 10000          ; mms              ; mms                                            ;
+                                               ; mms_5000                     ; 5000           ; mms              ; mms                                            ;
+
+                                               ; download_speed_1tbps         ; 1              ; tbps             ; internet_download_speed                       ;
+                                               ; download_speed_1gbps         ; 1              ; gbps             ; internet_download_speed                       ;
+                                               ; download_speed_10_50_100gbps ; 10/50/100      ; gbps             ; internet_download_speed                       ;
+                                               ; download_speed_10mbps        ; 10             ; mbps             ; internet_download_speed                       ;
+                                               ; download_speed_100mbps       ; 100            ; mbps             ; internet_download_speed                       ;
+
+                                               ; upload_speed_1tbps           ; 1              ; tbps             ; internet_upload_speed                         ;
+                                               ; upload_speed_1gbps           ; 1              ; gbps             ; internet_upload_speed                         ;
+                                               ; upload_speed_10_50_100gbps   ; 10/50/100      ; gbps             ; internet_upload_speed                         ;
+                                               ; upload_speed_10mbps          ; 10             ; mbps             ; internet_upload_speed                         ;
+                                               ; upload_speed_100mbps         ; 100            ; mbps             ; internet_upload_speed                         ;
+
+##########################
+# Product Specifications #
+##########################
+
+# Product Category
+INSERT_UPDATE TmaProductCategory; code[unique = true];
+                                ; plan
+                                ; terminal
+
+
+# Product Line
+INSERT_UPDATE TmaProductLine; code[unique = true];
+                            ; satellite_service
+                            ; gsm_service
+                            ; addons_service
+                            ; internet_service
+
+INSERT_UPDATE TmaAtomicProductSpecification; id[unique = true]         ; productSpecificationTypes(code)   ; onlineDate[dateformat = dd.MM.yyyy]; offlineDate[dateformat = dd.MM.yyyy]; brand; approvalStatus(code)[default = 'approved']; cfsSpecs(id, $catalogVersion); productUsageSpecification(id, $catalogVersion); $catalogVersion
+                                           ; satellite_speed_ps        ; satellite_service, plan           ; 24.03.2021                         ; 23.03.2031                          ;      ;                                           ; satellite_service_spec       ;                                               ;
+                                           ; terminal_ps               ; satellite_service, terminal       ; 24.03.2021                         ; 23.03.2031                          ;      ;                                           ;                              ;                                               ;
+                                           ; backup_ps                 ; satellite_service                 ; 24.03.2021                         ; 23.03.2031                          ;      ;                                           ; backup_service_spec          ;                                               ;
+                                           ; satellite_voice_ps        ; satellite_service, plan           ; 24.03.2021                         ; 23.03.2031                          ;      ;                                           ; satellite_voice_service_spec ;                                               ;
+                                           ; satellite_connectivity_ps ; satellite_service, plan           ; 24.03.2021                         ; 23.03.2031                          ;      ;                                           ;                              ;                                               ;
+                                           ; gsm_ps                    ; gsm_service, addons_service, plan ; 24.03.2021                         ; 23.03.2031                          ;      ;                                           ;                              ;                                               ;
+                                           ; internet_ps               ; internet_service, plan            ; 24.03.2021                         ; 23.03.2031                          ;      ;                                           ; internet_svc                 ;                                               ;
+
+
+#########################################
+# Product Specification Characteristics #
+#########################################
+
+INSERT_UPDATE TmaProductSpecCharacteristic; id[unique = true]       ; productSpecifications(id, $catalogVersion)                 ; serviceSpecCharacteristics(id, $catalogVersion); configurable[default = false]; $catalogVersion
+# Configurable PSCs
+                                          ; imsi                    ; backup_ps                                                  ; imsi                                           ; true
+
+                                          ; number_type             ; satellite_voice_ps                                         ; number_type                                    ; true
+                                          ; national_number         ; satellite_voice_ps                                         ; national_number                                ; true
+                                          ; country_number          ; satellite_voice_ps                                         ; country_number                                 ; true
+                                          ; phone_number            ; satellite_voice_ps                                         ; phone_number                                   ; true
+
+                                          ; start_date              ; satellite_connectivity_ps                                  ;                                                ; true
+                                          ; market_sector           ; satellite_connectivity_ps                                  ;                                                ; true
+                                          ; private_name            ; satellite_connectivity_ps                                  ;                                                ; true
+                                          ; ip_address              ; satellite_connectivity_ps                                  ;                                                ; true
+                                          ; nat_inside_ip           ; satellite_connectivity_ps                                  ;                                                ; true
+                                          ; terminal_tpk            ; satellite_connectivity_ps                                  ;                                                ; true
+
+
+                                          ; dhcp                    ; satellite_connectivity_ps                                  ;                                                ; true
+                                          ; connected_via           ; satellite_connectivity_ps                                  ;                                                ; true
+                                          ; coverage                ; satellite_connectivity_ps                                  ;                                                ; true
+
+                                          ; country_variant         ; gsm_ps                                                     ;                                                ; true
+
+# Static PSCs
+                                          ; mir_download_speed      ; satellite_speed_ps                                         ; mir_download_speed                             ;
+                                          ; mir_upload_speed        ; satellite_speed_ps                                         ; mir_upload_speed                               ;
+                                          ; cir_download_speed      ; satellite_speed_ps                                         ; cir_download_speed                             ;
+                                          ; cir_upload_speed        ; satellite_speed_ps                                         ; cir_upload_speed                               ;
+                                          ; terminal_group          ; satellite_speed_ps, terminal_ps, satellite_connectivity_ps ; eirp                                           ;
+                                          ; sla                     ; satellite_speed_ps                                         ;                                                ;
+                                          ; bandwidth_expected      ; satellite_speed_ps                                         ;                                                ;
+
+                                          ; installation_type       ; terminal_ps                                                ;                                                ;
+                                          ; connection_band         ; terminal_ps                                                ;                                                ;
+                                          ; terminal_type           ; terminal_ps                                                ;                                                ;
+
+                                          ; terminal_support        ; backup_ps                                                  ; terminal_support                               ;
+
+                                          ; sector                  ; satellite_connectivity_ps                                  ;                                                ;
+                                          ; subtype                 ; satellite_connectivity_ps                                  ;                                                ;
+                                          ; application_supported   ; satellite_connectivity_ps                                  ;                                                ;
+                                          ; frequency               ; satellite_connectivity_ps                                  ;                                                ;
+                                          ; satellite               ; satellite_connectivity_ps                                  ;                                                ;
+                                          ; security_compliance     ; satellite_connectivity_ps                                  ;                                                ;
+                                          ; max_sla_available       ; satellite_connectivity_ps                                  ;                                                ;
+                                          ; hub_platform_technology ; satellite_connectivity_ps                                  ;                                                ;
+                                          ; ground_station_location ; satellite_connectivity_ps                                  ;                                                ;
+                                          ; lead_time               ; satellite_connectivity_ps                                  ;                                                ;
+                                          ; op_security             ; satellite_connectivity_ps                                  ;                                                ;
+                                          ; orbit                   ; satellite_connectivity_ps                                  ;                                                ;
+                                          ; frequency_char          ; satellite_connectivity_ps                                  ;                                                ;
+                                          ; frequency_band          ; satellite_connectivity_ps                                  ;                                                ;
+                                          ; satellite_constellation ; satellite_connectivity_ps                                  ;                                                ;
+                                          ; public_ip_supported     ; satellite_connectivity_ps                                  ;                                                ;
+                                          ; traffic_prioritisation  ; satellite_connectivity_ps                                  ;                                                ;
+                                          ; overage_vol             ; satellite_connectivity_ps                                  ;                                                ;
+
+# PSC specific to gsm PS
+                                          ; sms                      ; gsm_ps                                                     ; sms                                            ;
+                                          ; voice                    ; gsm_ps                                                     ; minutes                                        ;
+                                          ; data_volume              ; gsm_ps                                                     ; data_volume                                    ;
+                                          ; data_volume_premium      ; gsm_ps                                                     ; data_volume_premium                            ;
+                                          ; video_streaming_type     ; gsm_ps                                                     ; video_streaming_type                           ;
+                                          ; no_of_lines              ; gsm_ps                                                     ;                                                ;
+
+# PSC specific to addons PS
+                                          ; mms                      ; gsm_ps                                                     ; mms                                            ;
+
+#PSC specific to internet PS                                          
+                                          ; internet_download_speed  ; internet_ps                                                ; internet_download_speed                        ;
+                                          ; internet_upload_speed    ; internet_ps                                                ; internet_upload_speed                          ;
+
+
+###############################################
+# Product Specification Characteristic Values #
+###############################################
+
+INSERT_UPDATE TmaProductSpecCharacteristicValue; id[unique = true]                  ; value                     ; unitOfMeasure(id); productSpecCharacteristic(id, $catalogVersion); valueType(code); $catalogVersion
+# Configurable PSCs
+                                               ; imsi                               ; ##                        ;                  ; imsi                                          ; STRING         ;
+                                               ; number_type                        ; ##                        ;                  ; number_type                                   ; STRING         ;
+                                               ; national_number                    ; ##                        ;                  ; national_number                               ; STRING         ;
+                                               ; country_number                     ; ##                        ;                  ; country_number                                ; STRING         ;
+                                               ; phone_number                       ; ##                        ;                  ; phone_number                                  ; STRING         ;
+                                               ; start_date                         ; ##                        ;                  ; start_date                                    ; DATE_TIME      ;
+                                               ; market_sector                      ; ##                        ;                  ; market_sector                                 ; STRING         ;
+                                               ; private_name                       ; ##                        ;                  ; private_name                                  ; STRING         ;
+                                               ; ip_address                         ; ##                        ;                  ; ip_address                                    ; STRING         ;
+                                               ; nat_inside_ip                      ; ##                        ;                  ; nat_inside_ip                                 ; STRING         ;
+                                               ; terminal_tpk                       ; ##                        ;                  ; terminal_tpk                                  ; STRING         ;
+
+
+                                               ; dhcp_true                          ; true                      ; no_unit          ; dhcp                                          ; BOOLEAN        ;
+                                               ; dhcp_false                         ; false                     ; no_unit          ; dhcp                                          ; BOOLEAN        ;
+
+
+                                               ; connected_via_emea                 ; EMEA                      ; no_unit          ; connected_via                                 ; STRING         ;
+                                               ; connected_via_latm                 ; LATM                      ; no_unit          ; connected_via                                 ; STRING         ;
+                                               ; connected_via_apac                 ; APAC                      ; no_unit          ; connected_via                                 ; STRING         ;
+                                               ; connected_via_nafta                ; NAFTA                     ; no_unit          ; connected_via                                 ; STRING         ;
+
+                                               ; coverage_emea                      ; EMEA                      ; no_unit          ; coverage                                      ; STRING         ;
+                                               ; coverage_latm                      ; LATM                      ; no_unit          ; coverage                                      ; STRING         ;
+                                               ; coverage_apac                      ; APAC                      ; no_unit          ; coverage                                      ; STRING         ;
+                                               ; coverage_nafta                     ; NAFTA                     ; no_unit          ; coverage                                      ; STRING         ;
+
+                                               ; country_colombia                   ; Colombia                   ; no_unit         ; country_variant                               ; STRING         ;
+                                               ; country_dominican_republic         ; Dominican Republic         ; no_unit         ; country_variant                               ; STRING         ;
+                                               ; country_philippines                ; Philippines                ; no_unit         ; country_variant                               ; STRING         ;
+                                               ; country_costa_rica                 ; Costa Rica                 ; no_unit         ; country_variant                               ; STRING         ;
+                                               ; country_jamaica                    ; Jamaica                    ; no_unit         ; country_variant                               ; STRING         ;
+                                               ; country_cuba                       ; Cuba                       ; no_unit         ; country_variant                               ; STRING         ;
+# Static PSCs
+                                               ; mir_download_10240                 ; 10240                     ; kbps             ; mir_download_speed                            ; NUMERIC        ;
+                                               ; mir_download_2048                  ; 2048                      ; kbps             ; mir_download_speed                            ; NUMERIC        ;
+                                               ; mir_download_1024                  ; 1024                      ; kbps             ; mir_download_speed                            ; NUMERIC        ;
+                                               ; mir_download_492                   ; 492                       ; kbps             ; mir_download_speed                            ; NUMERIC        ;
+
+                                               ; mir_upload_10240                   ; 10240                     ; kbps             ; mir_upload_speed                              ; NUMERIC        ;
+                                               ; mir_upload_2048                    ; 2048                      ; kbps             ; mir_upload_speed                              ; NUMERIC        ;
+                                               ; mir_upload_1024                    ; 1024                      ; kbps             ; mir_upload_speed                              ; NUMERIC        ;
+                                               ; mir_upload_492                     ; 492                       ; kbps             ; mir_upload_speed                              ; NUMERIC        ;
+                                               ; mir_upload_256                     ; 256                       ; kbps             ; mir_upload_speed                              ; NUMERIC        ;
+
+                                               ; cir_download_10240                 ; 10240                     ; kbps             ; cir_download_speed                            ; NUMERIC        ;
+                                               ; cir_download_4096                  ; 4096                      ; kbps             ; cir_download_speed                            ; NUMERIC        ;
+                                               ; cir_download_1024                  ; 1024                      ; kbps             ; cir_download_speed                            ; NUMERIC        ;
+                                               ; cir_download_512                   ; 512                       ; kbps             ; cir_download_speed                            ; NUMERIC        ;
+                                               ; cir_download_256                   ; 256                       ; kbps             ; cir_download_speed                            ; NUMERIC        ;
+                                               ; cir_download_128                   ; 128                       ; kbps             ; cir_download_speed                            ; NUMERIC        ;
+                                               ; cir_download_0                     ; 0                         ; kbps             ; cir_download_speed                            ; NUMERIC        ;
+
+                                               ; cir_upload_10240                   ; 10240                     ; kbps             ; cir_upload_speed                              ; NUMERIC        ;
+                                               ; cir_upload_4096                    ; 4096                      ; kbps             ; cir_upload_speed                              ; NUMERIC        ;
+                                               ; cir_upload_1024                    ; 1024                      ; kbps             ; cir_upload_speed                              ; NUMERIC        ;
+                                               ; cir_upload_512                     ; 512                       ; kbps             ; cir_upload_speed                              ; NUMERIC        ;
+                                               ; cir_upload_256                     ; 256                       ; kbps             ; cir_upload_speed                              ; NUMERIC        ;
+                                               ; cir_upload_128                     ; 128                       ; kbps             ; cir_upload_speed                              ; NUMERIC        ;
+                                               ; cir_upload_0                       ; 0                         ; kbps             ; cir_upload_speed                              ; NUMERIC        ;
+
+                                               ; terminal_group_1                   ; Group 1                   ; eirp             ; terminal_group                                ; STRING         ;
+                                               ; terminal_group_2                   ; Group 2                   ; eirp             ; terminal_group                                ; STRING         ;
+                                               ; terminal_group_3                   ; Group 3                   ; eirp             ; terminal_group                                ; STRING         ;
+                                               ; terminal_group_4                   ; Group 4                   ; eirp             ; terminal_group                                ; STRING         ;
+
+                                               ; sla_95                             ; 95                        ; percent          ; sla                                           ; NUMERIC        ;
+                                               ; sla_95_5                           ; 95.5                      ; percent          ; sla                                           ; NUMERIC        ;
+
+                                               ; bandwidth_expected_guaranteed      ; Guaranteed Bandwidth      ; no_unit          ; bandwidth_expected                            ; STRING         ;
+                                               ; bandwidth_expected_best_effort     ; Best Effort               ; no_unit          ; bandwidth_expected                            ; STRING         ;
+
+                                               ; installation_self                  ; Self Installation         ; no_unit          ; installation_type                             ; STRING         ;
+                                               ; installation_professional          ; Professional Installation ; no_unit          ; installation_type                             ; STRING         ;
+
+                                               ; standard_ka_band                   ; Standard KA Band          ; no_unit          ; connection_band                               ; STRING         ;
+                                               ; wide_ka_band                       ; Wide KA Band              ; no_unit          ; connection_band                               ; STRING         ;
+
+                                               ; fixed                              ; Fixed                     ; no_unit          ; terminal_type                                 ; STRING         ;
+                                               ; portable                           ; Portable                  ; no_unit          ; terminal_type                                 ; STRING         ;
+
+                                               ; sim_card                           ; SIM Card                  ; no_unit          ; terminal_support                              ; STRING         ;
+                                               ; e_sim                              ; eSim                      ; no_unit          ; terminal_support                              ; STRING         ;
+
+                                               ; sector_land                        ; land                      ; no_unit          ; sector                                        ; STRING         ;
+                                               ; sector_sea                         ; sea                       ; no_unit          ; sector                                        ; STRING         ;
+                                               ; sector_air                         ; air                       ; no_unit          ; sector                                        ; STRING         ;
+
+                                               ; subtype_fixed                      ; fixed                     ; no_unit          ; subtype                                       ; STRING         ;
+                                               ; subtype_onThePause                 ; on_the_pause              ; no_unit          ; subtype                                       ; STRING         ;
+                                               ; subtype_transportable              ; transportable             ; no_unit          ; subtype                                       ; STRING         ;
+
+                                               ; app_internet                       ; internet                  ; no_unit          ; application_supported                         ; STRING         ;
+                                               ; app_private_network                ; private_network           ; no_unit          ; application_supported                         ; STRING         ;
+                                               ; app_voice                          ; voice                     ; no_unit          ; application_supported                         ; STRING         ;
+                                               ; app_email_file_transfer            ; email_file_transfer       ; no_unit          ; application_supported                         ; STRING         ;
+                                               ; app_video_conferencing             ; video_conferencing        ; no_unit          ; application_supported                         ; STRING         ;
+                                               ; app_video_streaming                ; video_streaming           ; no_unit          ; application_supported                         ; STRING         ;
+
+                                               ; frequency_ka_band                  ; Ka-band                   ; no_unit          ; frequency                                     ; STRING         ;
+
+                                               ; satellite_l1                       ; L1                        ; no_unit          ; satellite                                     ; STRING         ;
+
+                                               ; security_compliance_us             ; US MAC Level III          ; no_unit          ; security_compliance                           ; STRING         ;
+
+                                               ; max_sla_available_0_995            ; 0.995                     ; percent          ; max_sla_available                             ; NUMERIC        ;
+
+                                               ; hub_platform_technology_i_direct   ; iDirect                   ; no_unit          ; hub_platform_technology                       ; STRING         ;
+
+                                               ; ground_station_location_luxembourg ; Luxembourg                ; no_unit          ; ground_station_location                       ; STRING         ;
+
+                                               ; lead_time_1                        ; 1                         ; hours            ; lead_time                                     ; NUMERIC        ;
+
+                                               ; op_security_macx                   ; MACX                      ; no_unit          ; op_security                                   ; STRING         ;
+
+                                               ; orbit_geo                          ; GEO                       ; no_unit          ; orbit                                         ; STRING         ;
+
+                                               ; frequency_char_ka                  ; Ka                        ; no_unit          ; frequency_char                                ; STRING         ;
+
+                                               ; frequency_band_fss                 ; FSS                       ; no_unit          ; frequency_band                                ; STRING         ;
+
+                                               ; satellite_constellation_leopold_l1 ; Leopold L1                ; no_unit          ; satellite_constellation                       ; STRING         ;
+
+                                               ; public_ip_supported_true           ; true                      ; no_unit          ; public_ip_supported                           ; BOOLEAN        ;
+
+                                               ; traffic_prioritisation_dscp        ; DSCP                      ; no_unit          ; traffic_prioritisation                        ; STRING         ;
+
+                                               ; overage_vol_unlimited              ; Unlimited                 ; no_unit          ; overage_vol                                   ; STRING         ;
+# GSM related PSCVs
+                                               ; data_volume_premium_50G            ; 50                        ; gb               ; data_volume_premium                           ; STRING         ;
+                                               ; data_volume_premium_100G           ; 100                       ; gb               ; data_volume_premium                           ; STRING         ;
+                                               ; data_volume_premium_1000G          ; Unlimited                 ; gb               ; data_volume_premium                           ; STRING         ;
+
+                                               ; data_volume_5G                     ; 5                         ; gb               ; data_volume                                   ; STRING         ;
+                                               ; data_volume_10G                    ; 10                        ; gb               ; data_volume                                   ; STRING         ;
+                                               ; data_volume_20G                    ; Unlimited                 ; gb               ; data_volume                                   ; STRING         ;
+
+                                               ; minutes_1000                       ; 1000                      ; minutes          ; voice                                         ; STRING         ;
+                                               ; minutes_5000                       ; 5000                      ; minutes          ; voice                                         ; STRING         ;
+                                               ; minutes_10000                      ; Unlimited                 ; minutes          ; voice                                         ; STRING         ;
+
+                                               ; sms_1000                           ; 1000                      ; sms              ; sms                                           ; STRING         ;
+                                               ; sms_5000                           ; 5000                      ; sms              ; sms                                           ; STRING         ;
+                                               ; sms_10000                          ; Unlimited                 ; sms              ; sms                                           ; STRING         ;
+
+                                               ; video_streaming_type_hd            ; HD                        ; no_unit          ; video_streaming_type                          ; STRING         ;
+                                               ; video_streaming_type_sd            ; SD                        ; no_unit          ; video_streaming_type                          ; STRING         ;
+                                               ; video_streaming_type_4k            ; 4K                        ; no_unit          ; video_streaming_type                          ; STRING         ;
+                                       
+                                               ; mms_5000                           ; 5000                      ; mms              ; mms                                           ; STRING         ;
+                                               ; mms_10000                          ; 10000                     ; mms              ; mms                                           ; STRING         ;
+
+                                               ; no_of_lines_1                      ; 1                         ; line             ; no_of_lines                                   ; NUMERIC        ;
+                                               ; no_of_lines_2                      ; 2                         ; line             ; no_of_lines                                   ; NUMERIC        ;
+                                               ; no_of_lines_3                      ; 3                         ; line             ; no_of_lines                                   ; NUMERIC        ;
+                                               ; no_of_lines_4                      ; 4                         ; line             ; no_of_lines                                   ; NUMERIC        ;
+                                               ; no_of_lines_5                      ; 5                         ; line             ; no_of_lines                                   ; NUMERIC        ;
+                                               ; no_of_lines_6                      ; 6                         ; line             ; no_of_lines                                   ; NUMERIC        ;
+                                               ; no_of_lines_25                     ; 25                        ; line             ; no_of_lines                                   ; NUMERIC        ;
+                                               ; no_of_lines_50                     ; 50                        ; line             ; no_of_lines                                   ; NUMERIC        ;
+                                               ; no_of_lines_100                    ; 100                       ; line             ; no_of_lines                                   ; NUMERIC        ;
+                                               ; no_of_lines_200                    ; 200                       ; line             ; no_of_lines                                   ; NUMERIC        ;
+                                               ; no_of_lines_500                    ; 500                       ; line             ; no_of_lines                                   ; NUMERIC        ;
+                                               ; no_of_lines_1000                   ; 1000                      ; line             ; no_of_lines                                   ; NUMERIC        ;
+
+#Inernet Related PSCv
+                                               ; download_speed_1gbps                ; 1                        ; gbps             ; internet_download_speed                       ; NUMERIC        ;
+                                               ; download_speed_10_50_100gbps        ; 10/50/100                ; gbps             ; internet_download_speed                       ; NUMERIC        ;
+                                               ; download_speed_10mbps               ; 10                       ; mbps             ; internet_download_speed                       ; NUMERIC        ;
+                                               ; download_speed_100mbps              ; 100                      ; mbps             ; internet_download_speed                       ; NUMERIC        ;
+
+                                               ; upload_speed_1gbps                  ; 1                        ; gbps             ; internet_upload_speed                         ; NUMERIC        ;
+                                               ; upload_speed_10_50_100gbps          ; 10/50/100                ; gbps             ; internet_upload_speed                         ; NUMERIC        ;
+                                               ; upload_speed_10mbps                 ; 10                       ; mbps             ; internet_upload_speed                         ; NUMERIC        ;
+                                               ; upload_speed_100mbps                ; 100                      ; mbps             ; internet_upload_speed                         ; NUMERIC        ;

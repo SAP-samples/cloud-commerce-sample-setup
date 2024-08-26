@@ -1,0 +1,125 @@
+apply plugin: 'installer-platform-plugin'
+apply plugin: 'installer-addon2-plugin'
+
+def pl = platform {
+  localProperties {
+    property 'kernel.events.cluster.jgroups.channel', 'disable'
+    property 'datahub.publication.saveImpex', ''
+    property 'commerceservices.default.desktop.ui.experience', 'responsive'
+    property 'kernel.autoInitMode', 'update'
+    property 'installed.tenants', ''
+    property 'storefrontContextRoot', 'telcospa'
+  }
+  afterSetup {
+    ensureAdminPasswordSet()
+  }
+
+  extensions {
+    extName 'acceleratorcms'
+    extName 'adaptivesearchbackoffice'
+    extName 'adaptivesearchsolr'
+    extName 'addonsupport'
+    extName 'b2ctelcoaddon'
+    extName 'b2ctelcobackoffice'
+    extName 'b2ctelcofulfillmentprocess'
+    extName 'b2ctelcocms'
+    extName 'b2ctelcospastore'
+    extName 'utilitiesspastore'
+    extName 'mediaspastore'
+    extName 'b2ctelcotmfwebservices'
+    extName 'b2ctelcowebservices'
+
+    extName 'b2ctelcocommercewebservicescommons'
+    extName 'b2ctelcoocc'
+    extName 'b2ctelcoserviceabilityclient'	
+    extName 'commerceservicesbackoffice'
+    extName 'solrfacetsearchbackoffice'
+    extName 'solrserver'
+    extName 'subscriptionbackoffice'
+    extName 'yacceleratorcore'
+    extName 'commercewebservices'
+
+    extName 'cmsbackoffice'
+    extName 'cmswebservices'
+    extName 'previewwebservices'
+    extName 'smarteditwebservices'
+    extName 'cmssmarteditwebservices'
+    extName 'permissionswebservices'
+    extName 'cmssmartedit'
+    extName 'cmsocc'
+	  extName 'acceleratorocc'
+    extName 'customersupportbackoffice'
+
+    extName 'personalizationwebservices'
+    extName 'previewpersonalizationweb'
+    extName 'personalizationcmsweb'
+    extName 'personalizationsmartedit'
+    extName 'personalizationservicesbackoffice'
+    extName 'personalizationcmsbackoffice'
+    extName 'personalizationservices'
+    extName 'personalizationfacades'
+
+    extName 'acceleratorservices'
+    extName 'assistedservicefacades'
+
+    extName 'rulebuilderbackoffice'
+    extName 'couponbackoffice'
+    extName 'droolsruleengineservices'
+    extName 'couponfacades'
+    extName 'couponservices'
+    extName 'b2ctelcoserviceabilityclient'
+    extName 'billingaccountservices'
+    extName 'billingaccounttmfwebservices'
+    extName 'agreementservices'
+		extName 'agreementtmfwebservices'
+    extName 'subscribedproductservices'
+    extName 'subscribedproducttmfwebservices'
+  }
+}
+
+task setup () {
+  doLast {
+
+    pl.setup()
+
+    copy {
+      from "${installerHome}/recipes/b2c_telco_spa/logback.xml"
+      into "${suiteHome}/hybris/bin/platform/tomcat/lib"
+    }
+    copy {
+      from "${installerHome}/recipes/b2c_telco_spa/sbg_properties"
+      into "${suiteHome}/hybris/bin/platform/tomcat/lib"
+      exclude "**/*.txt"
+    }
+  }
+}
+
+task buildSystem(dependsOn: setup) {
+  doLast {
+    pl.build()
+  }
+}
+
+task initialize (dependsOn: buildSystem) {
+  doLast {
+    pl.initialize()
+  }
+}
+
+task start () {
+  doLast {
+    pl.start()
+  }
+}
+
+task startInBackground () {
+  doLast {
+    pl.startInBackground()
+  }
+}
+
+task stopInBackground {
+  doLast {
+    pl.stopInBackground()
+  }
+}

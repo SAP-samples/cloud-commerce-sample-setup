@@ -1,0 +1,95 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Product Specifications
+
+$productCatalog = mediaspaProductCatalog
+$catalogVersion = catalogversion(catalog(id[default=$productCatalog]), version[default='Staged'])[unique=true, default=$productCatalog:Staged]
+$defaultApprovalStatus = approvalstatus(code)[default='approved']
+
+############################
+# Customer Facing Services #
+############################
+INSERT_UPDATE TmaExternalIdentifier; billingSystemExtId[unique = true]; billingSystemId[unique = true]; resourceType
+                                   ; data_servicespec                 ; amdocs                        ; ServiceSpecification
+                                   ; voice_servicespec                ; amdocs                        ; ServiceSpecification
+                                   ; fttx_data_servicespec            ; amdocs                        ; ServiceSpecification
+
+INSERT_UPDATE TmaCustomerFacingServiceSpec; id[unique = true]; $catalogVersion; $defaultApprovalStatus; externalIds(billingSystemId, billingSystemExtId)[unique = true]
+                                          ; data_svc         ;                ;                       ; amdocs:data_servicespec
+                                          ; voice_svc        ;                ;                       ; amdocs:voice_servicespec
+                                          ; fttx_data_svc    ;                ;                       ; amdocs:fttx_data_servicespec
+
+INSERT_UPDATE TmaServiceSpecCharacteristic; id[unique = true]; serviceSpecifications(id, $catalogVersion); $catalogVersion
+                                          ; data_volume      ; data_svc
+                                          ; data_speed       ; data_svc
+                                          ; minutes          ; voice_svc
+                                          ; sms              ; voice_svc
+                                          ; minutes/sms      ; voice_svc
+                                          ; upload_speed     ; fttx_data_svc
+                                          ; download_speed   ; fttx_data_svc
+
+INSERT_UPDATE TmaServiceSpecCharacteristicValue; id[unique = true] ; serviceSpecCharacteristic(id, $catalogVersion); value; unitOfMeasure(id); $catalogVersion
+                                               ; 5_gb_data_volume  ; data_volume                                   ; 5    ; gb
+                                               ; 10_gb_data_volume ; data_volume                                   ; 10   ; gb
+                                               ; 20_gb_data_volume ; data_volume                                   ; 20   ; gb
+                                               ; 50_10_data_speed  ; data_speed                                    ; 50/10
+                                               ; 20_10_data_speed  ; data_speed                                    ; 20/10
+
+                                               ; up_100            ; upload_speed                                  ; 100  ; mbps
+                                               ; up_200            ; upload_speed                                  ; 200  ; mbps
+                                               ; up_1000           ; upload_speed                                  ; 1000 ; mbps
+                                               ; down_100          ; download_speed                                ; 100  ; mbps
+                                               ; down_200          ; download_speed                                ; 200  ; mbps
+                                               ; down_1000         ; download_speed                                ; 1000 ; mbps
+
+                                               ; unlimited_minutes ; minutes                                       ; 5000 ; phone_minutes
+                                               ; unlimited_sms     ; sms                                           ; 5000 ; sms
+                                               ; unlimited_units   ; minutes/sms                                   ; 5000 ; unit
+                                               ; 2000_units        ; minutes/sms                                   ; 2000 ; unit
+
+##########################
+# Product Specifications #
+##########################
+INSERT_UPDATE TmaProductSpecCharacteristic; id[unique = true]; $catalogVersion; configurable[default = false]
+                                          ; freeview_channels
+                                          ; you_view_plus
+                                          ; premium_channels
+                                          ; tv_everywhere
+                                          ; data_volume
+
+INSERT_UPDATE TmaProductSpecCharacteristicValue; id[unique = true]              ; value     ; unitOfMeasure(id) ; productSpecCharacteristic(id, $catalogVersion); $catalogVersion;
+# values for freeview_channels
+                                               ; 10_freeview_channels           ; 10        ; freeview_channels ; freeview_channels
+                                               ; 20_freeview_channels           ; 20        ; freeview_channels ; freeview_channels
+                                               ; 100_freeview_channels          ; 100       ; freeview_channels ; freeview_channels
+
+# values for you_view_plus access
+                                               ; unlimited_you_view_plus_access ; unlimited ; GBCloudStorage    ; you_view_plus
+
+# values for premium_channels
+                                               ; 40_premium_channels            ; 40        ; premium_channels  ; premium_channels
+                                               ; 80_premium_channels            ; 80        ; premium_channels  ; premium_channels
+                                               ; 100_premium_channels           ; 100       ; premium_channels  ; premium_channels
+
+# values for tv_everywhere
+                                               ; 3_tv_everywhere                ; 3         ; devices           ; tv_everywhere
+                                               ; 5_tv_everywhere                ; 5         ; devices           ; tv_everywhere
+                                               ; 7_tv_everywhere                ; 7         ; devices           ; tv_everywhere
+# values for tv_pack_smart
+                                               ; 1000_mb                        ; 1000      ; mb                ; data_volume
+
+# Product Category
+INSERT_UPDATE TmaProductCategory; code[unique = true];
+                                ; service_plan
+                                ; data_addon
+
+# Product Line
+INSERT_UPDATE TmaProductLine; code[unique = true];
+                            ; tv
+
+INSERT_UPDATE TmaAtomicProductSpecification; id[unique = true]     ; productSpecificationTypes(code); onlineDate[dateformat = dd.MM.yyyy]; offlineDate[dateformat = dd.MM.yyyy]; productSpecCharacteristics(id, $catalogVersion)                ; cfsSpecs(id, $catalogVersion); $catalogVersion; $defaultApprovalStatus; productUsageSpecification(id, $catalogVersion)
+                                           ; tv_starter_plan       ; tv, service_plan               ; 01.06.2018                         ; 22.06.2040                          ; freeview_channels,you_view_plus                                ;                              ;                ;                       ; media_tv_spec
+                                           ; tv_entertainment_plan ; tv, service_plan               ; 01.06.2018                         ; 22.06.2040                          ; freeview_channels,you_view_plus,premium_channels               ;                              ;                ;                       ; media_tv_spec
+                                           ; tv_premium_plan       ; tv, service_plan               ; 01.06.2018                         ; 22.06.2040                          ; freeview_channels,you_view_plus,premium_channels,tv_everywhere ;                              ;                ;                       ; media_tv_spec

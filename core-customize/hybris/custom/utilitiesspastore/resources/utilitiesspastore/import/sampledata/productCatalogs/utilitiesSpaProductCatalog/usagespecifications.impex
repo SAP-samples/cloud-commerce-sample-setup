@@ -1,0 +1,44 @@
+#
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+#
+
+# -----------------------------------------------------------------------
+# ImpEx for Importing UsageSpecifications into B2C Telco Store
+
+# Macros / Replacement Parameter definitions
+$productCatalog = utilitiesSpaProductCatalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+$defaultApprovalStatus = approvalstatus(code)[default = 'approved']
+$valueType = valueType(code)
+
+INSERT_UPDATE TmaUsageCharacteristicCategory; id[unique = true]
+                                            ; WHERE
+                                            ; WHO
+                                            ; WHEN
+                                            ; WHAT
+
+INSERT_UPDATE TmaUsageSpecCharacteristicValue; id[unique = true] ; $valueType; value; valueFrom; valueTo; default[default = false]; $catalogVersion; allowedValues
+                                             ; creationTime      ; DATE_TIME ;      ;          ;        ;                         ;                ;
+                                             ; duration          ; NUMERIC   ;      ;          ;        ;                         ;                ;
+                                             ; volume            ; NUMERIC   ;      ;          ;        ;                         ;                ;
+                                             ; unitOfMeasure     ; ENUM      ;      ;          ;        ;                         ;                ;
+                                             ; serviceIdentifier ; STRING    ;      ;          ;        ;                         ;                ;
+                                             ; locationName      ; STRING    ;      ;          ;        ;                         ;                ;
+                                             ; consumer_id       ; STRING    ;      ;          ;        ;                         ;                ;
+                                             ; subscriberId      ; STRING    ;      ;          ;        ;                         ;                ;
+
+
+INSERT_UPDATE TmaUsageSpecCharacteristic; id[unique = true] ; mandatory[default = false]; category(id); $catalogVersion; usageSpecCharacteristicValues(id, $catalogVersion)
+                                        ; creationTime      ;                           ; WHEN        ;                ; creationTime
+                                        ; volume            ; true                      ; WHAT        ;                ; volume
+                                        ; duration          ; true                      ; WHEN        ;                ; volume
+                                        ; unitOfMeasure     ; true                      ; WHAT        ;                ; unitOfMeasure
+                                        ; serviceIdentifier ; true                      ; WHAT        ;                ; serviceIdentifier
+                                        ; locationName      ;                           ; WHERE       ;                ; locationName
+                                        ; consumer_id       ; true                      ; WHO         ;                ; consumer_id
+                                        ; subscriberId      ; false                     ; WHO         ;                ; subscriberId
+
+INSERT_UPDATE TmaAtomicProductUsageSpec; id[unique = true]    ; $defaultApprovalStatus; $catalogVersion; usageSpecCharacteristics(id, $catalogVersion)
+                                       ; udr_electricity_spec ;                       ;                ; creationTime,volume,consumer_id,locationName,unitOfMeasure,serviceIdentifier
+                                       ; udr_gas_spec         ;                       ;                ; creationTime,volume,consumer_id,locationName,unitOfMeasure,serviceIdentifier
+                                       ; homewarranty_spec    ;                       ;                ; creationTime,duration,subscriberId,locationName

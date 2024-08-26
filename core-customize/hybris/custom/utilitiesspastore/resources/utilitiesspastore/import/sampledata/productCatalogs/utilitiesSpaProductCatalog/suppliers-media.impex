@@ -1,0 +1,21 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Importing Supplier Media into Utilities Store
+
+# Macros / Replacement Parameter definitions
+$productCatalog = utilitiesSpaProductCatalog
+$productCatalogName = Utilities Spa Product Catalog
+$catalogVersion = catalogversion(catalog(id[default=$productCatalog]), version[default='Staged'])[unique=true, default=$productCatalog:Staged]
+$superCategories = superCategories(code, $catalogVersion)
+$thumbnail = thumbnail(code, $catalogVersion)
+$siteResource = jar:de.hybris.platform.utilitiesspastore.constants.UtilitiesspastoreConstants&/utilitiesspastore/import/sampledata/productCatalogs/$productCatalog
+
+
+INSERT_UPDATE Media; code[unique = true]; realfilename; @media[translator = de.hybris.platform.impex.jalo.media.MediaDataTranslator]; mime[default = 'image/jpeg']; $catalogVersion
+#;/thumbs/SUP1.jpg;SUP1.jpg;$siteResource/images/thumbs/SUP1.jpg
+
+
+UPDATE Category; code[unique = true]; $thumbnail; allowedPrincipals(uid)[default = 'customergroup']; $catalogVersion
+# ;brand_1;/thumbs/SUP1.jpg

@@ -1,0 +1,13 @@
+{{usageCharge.taxIncludedAmount.value}}&nbsp;{{ 'common.currencies.currency' | cxTranslate : {context: usageCharge.taxIncludedAmount.currencyIso} }}
+/{{usageCharge.unitOfMeasure | lowercase}}
+<span *ngIf="usageCharge.tierStart">
+    <ng-container *ngIf="usageCharge.tierStart !=='1' || usageCharge.tierEnd">
+        <ng-container *ngIf="usageCharge.tierStart && usageCharge.tierEnd">
+        {{'productDetails.price.common.for' | cxTranslate}}
+        {{usageCharge.tierStart}}&nbsp;{{'productDetails.price.common.to' | cxTranslate}}&nbsp;{{usageCharge.tierEnd}}&nbsp;{{usageCharge.unitOfMeasure | lowercase}}
+        </ng-container>
+        <ng-container *ngIf="usageCharge.tierStart && !usageCharge.tierEnd">
+            {{'productDetails.price.common.onwards' | cxTranslate}}
+        </ng-container>
+    </ng-container>
+</span>

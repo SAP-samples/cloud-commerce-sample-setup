@@ -1,0 +1,21 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# Create Warehouses for Media SPA Store
+#
+#% impex.setLocale( Locale.ENGLISH );
+
+$storeUid = mediaspa
+
+INSERT_UPDATE BaseStore2WarehouseRel; source(uid)[unique = true]; target(code)[unique = true]
+                                    ; $storeUid                 ; warehouse_mediaspa
+
+INSERT_UPDATE PointOfService; name[unique = true]; displayName         ; warehouses(code)   ; address(&addrID)   ; latitude  ; longitude   ; geocodeTimestamp[dateformat = dd.MM.yyyy]; type(code)[default = WAREHOUSE]
+                            ; warehouse_mediaspa ; Warehouse Media SPA ; warehouse_mediaspa ; warehouse_mediaspa ; 43,070542 ; 141,3533259 ; 11.12.2025
+
+INSERT_UPDATE Address; &addrID            ; streetnumber[unique = true]; streetname; town    ; country(isocode); postalcode[unique = true]; phone1          ; owner(PointOfService.name)[unique = true]
+                     ; warehouse_mediaspa ; 1-1-22 Kita 7 Jonishi      ;           ; Sapporo ; US              ; 060-0807                 ; +81 11 737 8222 ; warehouse_mediaspa
+
+INSERT_UPDATE BaseStore; uid[unique = true]; defaultDeliveryOrigin(name)
+                       ; $storeUid         ; warehouse_mediaspa

@@ -1,0 +1,45 @@
+@import '@spartacus/styles/scss/mixins';
+
+.cx-bottom-fixed {
+  position: relative;
+
+  @include media-breakpoint-down(md) {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 1001;
+  }
+}
+
+.warning {
+  color: var(--cx-color-warning);
+  font-size: $font-size-base * 1.15;
+}
+
+.qualification-container {
+  background-color: var(--cx-color-sky-lightest);
+  border: 1px solid var(--cx-color-sky-lighter);
+  padding: 10px 25px;
+  padding-left: 35px;
+}
+
+.info-icon {
+  font-size: 20px;
+  color: var(--cx-color-sky);
+  position: absolute;
+  left: -25px;
+}
+
+.subscription-details {
+
+  line-height: var(--cx-line-height, 1.2);
+  .subscription-name {
+    font-weight: var(--cx-font-weight-normal);
+  }
+  .subscription-id {
+    color: var(--cx-color-secondary);
+    font-size: var(--cx-font-size, 0.75rem);
+    font-weight: var(--cx-font-weight-normal);
+  }
+}

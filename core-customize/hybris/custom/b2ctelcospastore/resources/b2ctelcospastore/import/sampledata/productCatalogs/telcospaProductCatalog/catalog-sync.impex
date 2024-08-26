@@ -1,0 +1,30 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+#
+# Update the Product Catalog Sync Job
+#
+
+$productCatalog = telcospaProductCatalog
+
+UPDATE CatalogVersionSyncJob; code[unique = true]                 ; roottypes(code)[mode = append]    ;
+                            ; sync $productCatalog:Staged->Online ; TmaProductSpecification           ;
+                            ; sync $productCatalog:Staged->Online ; TmaProductSpecCharacteristic      ;
+                            ; sync $productCatalog:Staged->Online ; TmaProductSpecCharacteristicValue ;
+                            ; sync $productCatalog:Staged->Online ; TmaProductSpecCharValueUse        ;
+                            ; sync $productCatalog:Staged->Online ; TmaProductOfferingGroup           ;
+                            ; sync $productCatalog:Staged->Online ; TmaCompatibilityPolicy            ;
+                            ; sync $productCatalog:Staged->Online ; TmaBpoPreConfig                   ;
+
+# Enable synchronization of refered conditions and actions when synchronizing a compatibility policy
+INSERT_UPDATE SyncAttributeDescriptorConfig; syncjob(code)[forceWrite = true][unique = true]; attributeDescriptor(enclosingType(code), qualifier)[unique = true]; copyByValue
+                                           ; sync $productCatalog\:Staged->Online           ; TmaCompatibilityPolicy:conditions                                 ; true
+                                           ; sync $productCatalog\:Staged->Online           ; TmaCompatibilityPolicy:actions                                    ; true
+                                           ; sync $productCatalog\:Staged->Online           ; TmaPolicyCondition:statement                                      ; true
+                                           ; sync $productCatalog\:Staged->Online           ; TmaCompositePolicyCondition:children                              ; true
+                                           ; sync $productCatalog\:Staged->Online           ; TmaPolicyAction:statement                                         ; true
+                                           ; sync $productCatalog\:Staged->Online           ; TmaProductOffering:productSpecCharacteristicValues                ; true
+                                           ; sync $productCatalog\:Staged->Online           ; TmaProductOffering:productSpecification                           ; true
+                                           ; sync $productCatalog\:Staged->Online           ; TmaProductSpecification:productSpecCharacteristics                ; true
+                                           ; sync $productCatalog\:Staged->Online           ; TmaProductSpecCharacteristic:productSpecCharacteristicValues      ; true

@@ -1,0 +1,30 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+#
+# Import the Product Catalog and Classification Catalog
+#
+
+# Language
+$lang = en
+$productCatalog = telcospaProductCatalog
+
+# Update Catalog
+UPDATE Catalog; id[unique = true]; name[lang = $lang]
+              ; $productCatalog  ; "Telco SPA Product Catalog"
+
+#
+# Import the Product Catalog and Classification Catalog
+#
+# ENGLISH LOCALIZATION
+#
+UPDATE BillingFrequency; code[unique = true]; nameInCart[lang = $lang]; nameInOrder[lang = $lang]; description[lang = $lang]
+                       ; monthly            ; Monthly                 ;                          ; Monthly
+                       ; quarterly          ; Quarterly               ;                          ; Quarterly
+                       ; yearly             ; Annually                ;                          ; Yearly
+
+UPDATE BillingEvent; code[unique = true]; nameInCart[lang = $lang]; nameInOrder[lang = $lang]; description[lang = $lang]
+                   ; paynow             ; Pay On Checkout         ; Paid On Order            ; Pay Now
+                   ; onfirstbill        ; On First Bill           ;                          ; On First Bill
+                   ; oncancellation     ; On Cancellation         ;                          ; Charged when subscription is cancelled

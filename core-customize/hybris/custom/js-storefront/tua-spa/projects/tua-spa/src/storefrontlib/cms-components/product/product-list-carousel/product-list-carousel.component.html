@@ -1,0 +1,73 @@
+<ng-container *ngIf="displayCarousel$ | async">
+  <cx-carousel *ngIf="items$ | async as items" class="mb-3"
+             role="region"
+             [items]="items"
+             [template]="carouselItem"
+             itemWidth="300px"
+>
+</cx-carousel>
+
+<ng-template #carouselItem let-item="item">
+  <div class="product-list-item-carousel">
+    <div class="inner-container">
+      <div class="font-bold">{{
+        'productList.title_' + this.division
+          | cxTranslate
+          : {productName: item.name, consumption: consumption}
+        }}</div>
+      <ng-container *ngIf="{ currency: currency$ | async, baseSiteId: baseSiteId$ | async } as siteData">
+        <ng-container *ngIf="productService.get(item.code) | async as product">
+          <ng-container *ngIf="tmaChecklistActionService.getChecklistActionForProductCode(siteData.baseSiteId, item.code) | async">
+            <div class="price">
+              <span>{{ getAverageCostPerMonth(product, siteData.currency) }} </span><span>{{ 'productList.perMonth' | cxTranslate }}</span>
+              <div class="bonus" *ngIf="averagePerMonthWithOutDiscount.value !== averagePerMonth.value">
+                <div class="bonus-inner">{{calculateBonus(averagePerMonthWithOutDiscount.value, averagePerMonth.value, siteData.currency)}} {{ 'productList.bonus' | cxTranslate }}</div>
+              </div>
+            </div>
+            <ng-container *ngIf="item.productSpecDescription?.length">
+              <div class="product-spec-description" *ngFor="let spec of item.productSpecDescription">
+                <cx-icon class="product-spec-description-icon" [type]="iconTypes.SUCCESS"></cx-icon>
+                {{spec}}
+              </div>
+            </ng-container>
+            <div class="price-row">
+              <div class="pb-1 pt-1 price-title">
+                <div>{{ 'productList.priceDetails' | cxTranslate }}</div>
+              </div>
+              <div class="d-flex pb-1" *ngIf="getUsageChargePerUnit(product, siteData.currency)">
+                <div>{{ 'productList.UsageCharge' | cxTranslate }}</div>
+                <div>{{getUsageChargePerUnit(product, siteData.currency)}}</div>
+              </div>
+              <div class="d-flex pb-1">
+                <div>{{ 'productList.AnnualCharge' | cxTranslate }}</div>
+                <div>{{getAverageCostPerYearWithOutDiscounts(siteData.currency)}}
+                  <span *ngIf="averagePerMonthWithOutDiscount.value !== averagePerMonth.value">{{ 'productList.withoutBonus' | cxTranslate }}</span>
+                </div>
+              </div>
+              <div class="d-flex">
+                <div>{{ 'productList.BaseCharge' | cxTranslate }}</div>
+                <div>{{getBaseChargePerMonth(product, siteData.currency)}} {{ 'productList.perMonth' | cxTranslate }}</div>
+              </div>
+            </div>
+            <a
+              *ngIf="pageMeta$ | async as pageMeta"
+              [routerLink]="{ cxRoute: getProductDetailsPath(pageMeta), params: {code: item.code}} | cxUrl"
+              class="view-more"
+              >{{ 'productList.viewMore' | cxTranslate }}
+              <cx-icon class="cx-icon" [type]="iconTypes.LINK_OUT"></cx-icon>
+            </a>
+            <cx-add-to-cart
+              [product]="product"
+              [productCode]="product.code"
+              [isPlpCarouselPage]="true"
+            ></cx-add-to-cart>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+
+    </div>
+
+  </div>
+</ng-template>
+</ng-container>
+<router-outlet></router-outlet>

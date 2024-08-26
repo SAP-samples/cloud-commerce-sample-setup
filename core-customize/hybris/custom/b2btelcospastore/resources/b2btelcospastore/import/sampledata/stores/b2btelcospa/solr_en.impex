@@ -1,0 +1,63 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+#
+# ENGLISH LOCALIZATION
+#
+
+$lang = en
+$solrIndexedType = b2btelcospaPriceType
+
+###################
+# used in headers #
+###################
+$hIndexType = solrIndexedType(identifier)[unique = true, default = b2btelcospaPriceType]
+$hName = name[unique = true]
+$hCode = code[unique = true]
+$hDisplayName = displayName[lang = en]
+$hLang = language(isocode)[unique = true, default = en]
+UPDATE SolrIndexedProperty; $hIndexType; $hName                  ; $hDisplayName
+# facets
+                          ;            ; mobileplatform          ; "Operating System"
+                          ;            ; touchscreen             ; "Touch Screen"
+                          ;            ; displaysize             ; "Display Size"
+                          ;            ; processor               ; "Processor"
+                          ;            ; cameratype              ; "Camera Type"
+                          ;            ; brand                   ; "Brand"
+                          ;            ; color                   ; "Color"
+                          ;            ; form_factor             ; "Form Factor"
+                          ;            ; smsquantity             ; "SMS"
+                          ;            ; voice                   ; "Voice"
+                          ;            ; datavolume              ; "Data"
+                          ;            ; video_type              ; "Video Streaming Type"
+                          ;            ; no_of_lines             ; "Number of lines"
+                          ;            ; mms                     ; "MMS"
+                          ;            ; datavolumepremium       ; "Premium Data"
+                          ;            ; internet_download_speed ; "Download Speed"
+                          ;            ; internet_upload_speed   ; "Upload Speed"
+                          ;            ; mir_download_speed      ; "MIR Download Speed"
+                          ;            ; mir_upload_speed        ; "MIR Upload Speed"
+                          ;            ; cir_download_speed      ; "CIR Download Speed"
+                          ;            ; cir_upload_speed        ; "CIR Upload Speed"
+                          ;            ; terminal_group          ; "Terminal Group"
+                          ;            ; sla                     ; "SLA"
+                          ;            ; bandwith_expected       ; "Expected Bandwith"
+                          ;            ; installation_type       ; "Installation Type"
+                          ;            ; connection_band         ; "Connection Band"
+                          ;            ; terminal_support        ; "Terminal Support"
+                          ;            ; overage_vol             ; "Overage Volume"
+                          ;            ; public_ip_supported     ; "Public IP Supported"
+                          ;            ; frequency_band          ; "Frequency Band"
+                          ;            ; frequency_char          ; "Frequency Characteristic"
+                          ;            ; orbit                   ; "Orbit"
+                          ;            ; ground_station_location ; "Ground Station Location"
+                          ;            ; max_sla_available       ; "Maximum SLA Available"
+                          ;            ; satellite               ; "Satellite"
+                          ;            ; frequency               ; "Frequency"
+                          ;            ; terminal_type           ; "Terminal Type"
+                          ;            ; subtype                 ; "Subtype"
+                          ;            ; sector                  ; "Sector"
+                          ;            ; cable                   ; "Cable"
+                          ;            ; connectivity_technology ; "Connectivity Technology"
+                          ;            ; storage                 ; "Storage"

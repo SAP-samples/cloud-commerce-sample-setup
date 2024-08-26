@@ -1,0 +1,11 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Importing Promotions
+#% impex.setLocale( Locale.GERMAN );
+
+INSERT PromotionPriceRow; &id          ; Currency(isocode); price;
+                        ; threshold_30 ; USD              ; 30   ;
+                        ; discount_5   ; USD              ; 5    ;
+                        ; tv_M_price   ; USD              ; 0    ;

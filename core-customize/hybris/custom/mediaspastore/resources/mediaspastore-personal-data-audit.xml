@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+ Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+
+<audit-report-config name="PersonalDataReport">
+  <given-root-type>User</given-root-type>
+  <types>
+    <type code="User" displayName="Media User" mode="append">
+      <atomic-attributes>
+        <atomic-attribute qualifier="customerID" displayName="Customer ID"/>
+      </atomic-attributes>
+      <virtual-attributes>
+        <virtual-attribute expression="principal" type="TmaSubscriptionAccess" many="true"
+                           displayName="Subscription Accesses"/>
+      </virtual-attributes>
+      <relation-attributes>
+        <relation-attribute relation="Principal2TmaIdentificationRelation" displayName="Principal2TmaIdentificationRelation"
+                            many="true"
+                            type="TmaIdentification"/>
+      </relation-attributes>
+    </type>
+
+    <type code="TmaSubscriptionAccess">
+      <atomic-attributes>
+        <atomic-attribute qualifier="id" displayName="Id"/>
+        <atomic-attribute qualifier="accessType" displayName="Access Type"/>
+      </atomic-attributes>
+      <reference-attributes>
+        <reference-attribute qualifier="subscriptionBase" type="TmaSubscriptionBase" displayName="Name"/>
+      </reference-attributes>
+    </type>
+
+    <type code="TmaSubscriptionBase">
+      <atomic-attributes>
+        <atomic-attribute qualifier="subscriberIdentity" displayName="Subscriber Identity"/>
+        <atomic-attribute qualifier="billingSystemId" displayName="Billing System Id"/>
+      </atomic-attributes>
+      <reference-attributes>
+        <reference-attribute qualifier="billingAccount" type="TmaBillingAccount" displayName="Name"/>
+      </reference-attributes>
+    </type>
+
+    <type code="TmaBillingAccount">
+      <atomic-attributes>
+        <atomic-attribute qualifier="billingAccountId" displayName="Billing Account Id"/>
+        <atomic-attribute qualifier="billingSystemId" displayName="Billing System Id"/>
+      </atomic-attributes>
+    </type>
+    <type code="TmaIdentification">
+      <atomic-attributes>
+        <atomic-attribute qualifier="identificationNumber" displayName="Identification Number"/>
+        <atomic-attribute qualifier="identificationType" displayName="Identification Type"/>
+      </atomic-attributes>
+    </type>
+  </types>
+</audit-report-config>

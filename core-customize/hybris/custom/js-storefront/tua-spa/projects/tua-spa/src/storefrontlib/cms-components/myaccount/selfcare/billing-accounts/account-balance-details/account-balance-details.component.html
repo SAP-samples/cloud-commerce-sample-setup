@@ -1,0 +1,59 @@
+<cx-selfcare-card
+  *ngIf="getAccountBalance$ | async as accountBalance"
+  i18nRoot="{{ domainType }}"
+  [showHint]="true"
+>
+  <section main class="details">
+    <div class="property">
+      <label>{{
+        'selfcare.billingAccounts.details.accountBalance.details.type'
+          | cxTranslate
+      }}</label>
+      <span class="value">
+        {{ accountBalance.balanceType }}
+      </span>
+    </div>
+
+    <div class="property">
+      <label>{{
+        'selfcare.billingAccounts.details.accountBalance.details.amount'
+          | cxTranslate
+      }}</label>
+      <span class="value">
+        {{ accountBalance.amount.value }}
+        {{
+          'common.currencies.currency'
+            | cxTranslate: { context: accountBalance.amount.unit }
+        }}
+      </span>
+    </div>
+
+    <div class="property full-width">
+      <label>{{
+        'selfcare.billingAccounts.details.accountBalance.details.validPeriod'
+          | cxTranslate
+      }}</label>
+      <span class="value">
+        {{
+          'selfcare.billingAccounts.details.accountBalance.details.startDate'
+            | cxTranslate
+        }}: {{ accountBalance.validFor.startDateTime | cxDate }}
+      </span>
+      <span class="value">
+        {{
+          'selfcare.billingAccounts.details.accountBalance.details.endDate'
+            | cxTranslate
+        }}: {{ accountBalance.validFor.endDateTime | cxDate}}
+      </span>
+    </div>
+  </section>
+</cx-selfcare-card>
+
+<ng-template #emptyList>
+  <p class="is-empty">
+    {{
+      'selfcare.billingAccounts.details.accountBalance.details.emptyList'
+        | cxTranslate
+    }}
+  </p>
+</ng-template>

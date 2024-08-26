@@ -1,0 +1,25 @@
+# ImpEx for Importing sample checklist policies
+
+$productCatalog = mediaspaProductCatalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+$lang = en
+
+#################################################################################################
+# Policy1
+# A customer needs to have an installation address for any Product Offering specified by the "tv_entertainment_plan" when he wants to relocate
+#################################################################################################
+INSERT_UPDATE TmaProcessTypesPolicyStatement; code[unique = true]  ; processes(code); $catalogVersion
+                                            ; relocation_statement ; RELOCATION
+
+INSERT_UPDATE TmaAtomicPolicyCondition; code[unique = true]; statement(code, $catalogVersion); $catalogVersion
+                                      ; wants_to_relocate  ; relocation_statement
+
+INSERT_UPDATE TmaPsChecklistPolicyStatement; code[unique = true]           ; type(code)           ; productSpecifications(id, $catalogVersion); $catalogVersion
+                                           ; requires_installation_address ; INSTALLATION_ADDRESS ; tv_entertainment_plan                     ;
+
+INSERT_UPDATE TmaPolicyAction; code[unique = true]                 ; statement(code, $catalogVersion); actionType(code); $catalogVersion
+                             ; relocation_req_installation_address ; requires_installation_address   ; CHECKLIST
+
+INSERT_UPDATE TmaCompatibilityPolicy; code[unique = true]                     ; conditions(code, $catalogVersion); actions(code, $catalogVersion)      ; conditionsEvaluatorType(code); $catalogVersion
+                                    ; relocation_require_installation_address ; wants_to_relocate                ; relocation_req_installation_address ; OR
+

@@ -1,0 +1,29 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Utilities Stores
+# English localisations
+
+$lang = en
+
+$productCatalog = utilitiesSpaProductCatalog
+$catalogVersion = catalogversion(catalog(id[default=$productCatalog]), version[default='Staged'])[unique=true, default=$productCatalog:Staged]
+$storeImage = storeImage(qualifier, $catalogVersion)
+
+$standardHours = utilitiesspa-us-standard-hours
+
+UPDATE SpecialOpeningDay; openingSchedule(code)[unique = true]; date[unique = true, dateformat = dd.MM.yyyy]; name[lang = $lang]; message[lang = $lang]
+
+UPDATE StoreLocatorFeature; code[unique = true]    ; name[lang = $lang]
+                          ; wheelchair             ; "Wheelchair Access"
+                          ; creche                 ; "Creche"
+                          ; sundayWorkshops        ; "Sunday Workshops"
+                          ; buyOnlinePickupInStore ; "Buy Online Pick Up In Store"
+
+UPDATE PointOfService; name[unique = true]                        ; displayName                                ;
+                     ; Hybris Utilities Spa - Chicago Premium Outlets ; Hybris Utilities Spa - Chicago Premium Outlets ;
+                     ; Hybris Utilities Spa - Chrysler Building       ; Hybris Utilities Spa - Chrysler Building       ;
+                     ; Hybris Utilities Spa - San Francisco Center    ; Hybris Utilities Spa - San Francisco Center    ;
+                     ; Hybris Utilities Spa - Seattle Premium Outlets ; Hybris Utilities Spa - Seattle Premium Outlets ;
+                     ; Hybris Utilities Spa - Riverwalk Marketplace   ; Hybris Utilities Spa - Riverwalk Marketplace   ;

@@ -1,0 +1,29 @@
+<ng-container *ngIf="product$ | async as product">
+  <div class="container" [innerHTML]="product?.description"></div>
+  <br/>
+  <div class="container" *ngIf="priceService.getHighestPriorityPriceForSPO(product) as highestPriorityPrice">
+    <div *ngIf="priceService.getAllPriceList(highestPriorityPrice) as priceList">
+
+      <!-- Contract duration -->
+      <div class="row col-12" *ngIf="priceService.getContractTerm(highestPriorityPrice) as contractTerm">
+        <div *ngIf="contractTerm && isContractTermDisplayNeeded(priceList)">
+          <div class="cx-bold">
+            {{'productDetails.price.contractDuration' | cxTranslate}}:
+            <ng-container *ngIf="contractTerm?.name; else multipleContractTerms">
+              <div class="d-inline-block cx-normal">
+                {{contractTerm.name}}
+              </div>
+            </ng-container>
+            <ng-template #multipleContractTerms>
+              <div class="d-inline-block cx-normal">
+                {{'productDetails.price.multipleContractTerms' | cxTranslate}}
+              </div>
+            </ng-template>
+
+          </div>
+          <br/>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

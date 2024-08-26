@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="ee1bcaed-a871-42fe-95d4-47c2785655c8" activeEnvironment="Default" name="TmuMockService" resourceRoot="" soapui-version="5.6.0" abortOnError="false" runType="SEQUENTIAL" defaultScriptLanguage="Groovy" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:restMockService id="da255308-98d5-476a-a3bc-91ae4bae2247" port="9003" path="/premise/v1" host="DESKTOP-KE3RARP" name="apiMockService" docroot=""><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.panels.mock.WsdlMockServiceDesktopPanel$LogListModel@maxSize">100</con:setting></con:settings><con:properties/><con:onRequestScript>mockRequest.httpResponse.addHeader( "Access-Control-Allow-Origin", "*")
+mockRequest.httpResponse.addHeader( "Access-Control-Allow-Headers", "*")</con:onRequestScript><con:restMockAction name="premiselookup" method="POST" resourcePath="/premiselookup" id="23ca4296-d2db-42fe-aeda-2156f68b2c30"><con:settings/><con:defaultResponse xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">Fail</con:defaultResponse><con:dispatchStyle>SCRIPT</con:dispatchStyle><con:dispatchPath>//Initializing the installation address
+class Street {
+	String name;
+	String number;
+	String suite;
+}
+
+class Town {
+	String code;
+	String country;
+	String name;
+	String regionCode;
+}
+
+class PremiseAddress {
+	Street street;
+	Town town;
+}
+
+class InstallationAddress {
+	PremiseAddress premiseAddress;
+	String serialNumber;
+	String division;
+}
+
+//Populating the installation address
+Street street1 = new Street ();
+street1.name = 'Pinot';
+street1.number = '666';
+street1.suite = '';
+Street street2 = new Street ();
+street2.name = 'Pinot';
+street2.number = '666';
+street2.suite = '1A';
+Street street3 = new Street ();
+street3.name = 'Pinot';
+street3.number = '666';
+street3.suite = '1B';
+Street street4 = new Street ();
+street4.name = 'Murgasse';
+street4.number = '15';
+street4.suite = '';
+Street street5 = new Street ();
+street5.name = 'Murgasse';
+street5.number = '15';
+street5.suite = '21';
+Street street6 = new Street ();
+street6.name = 'Murgasse';
+street6.number = '15';
+street6.suite = '22';
+Street street7 = new Street ();
+street7.name = 'Sierra';
+street7.number = '34';
+street7.suite = '';
+Street street8 = new Street ();
+street8.name = 'Sierra';
+street8.number = '34';
+street8.suite = '104';
+Street street9 = new Street ();
+street9.name = 'Sierra';
+street9.number = '34';
+street9.suite = '105';
+Street street10 = new Street ();
+street10.name = 'Marktgasse';
+street10.number = '35';
+street10.suite = '';
+Street street11 = new Street ();
+street11.name = 'Marktgasse';
+street11.number = '35';
+street11.suite = '1';
+Street street12 = new Street ();
+street12.name = 'Marktgasse';
+street12.number = '35';
+street12.suite = '2';
+
+Town town1 = new Town ();
+town1.code = '80808';
+town1.country = 'DE';
+town1.name = 'Walldorf';
+town1.regionCode = '';
+Town town2 = new Town ();
+town2.code = '8010';
+town2.country = 'AT';
+town2.name = 'Graz';
+town2.regionCode = '';
+Town town3 = new Town ();
+town3.code = '93631';
+town3.country = 'US';
+town3.name = 'Kingsburg';
+town3.regionCode = 'US-CA';
+Town town4 = new Town ();
+town4.code = '3011';
+town4.country = 'CH';
+town4.name = 'Bern';
+town4.regionCode = '';
+
+PremiseAddress premiseAddress1 = new PremiseAddress ();
+premiseAddress1.street = street1;
+premiseAddress1.town = town1;
+PremiseAddress premiseAddress2 = new PremiseAddress ();
+premiseAddress2.street = street2;
+premiseAddress2.town = town1;
+PremiseAddress premiseAddress3 = new PremiseAddress ();
+premiseAddress3.street = street3;
+premiseAddress3.town = town1;
+PremiseAddress premiseAddress4 = new PremiseAddress ();
+premiseAddress4.street = street4;
+premiseAddress4.town = town2;
+PremiseAddress premiseAddress5 = new PremiseAddress ();
+premiseAddress5.street = street5;
+premiseAddress5.town = town2;
+PremiseAddress premiseAddress6 = new PremiseAddress ();
+premiseAddress6.street = street6;
+premiseAddress6.town = town2;
+PremiseAddress premiseAddress7 = new PremiseAddress ();
+premiseAddress7.street = street7;
+premiseAddress7.town = town3;
+PremiseAddress premiseAddress8 = new PremiseAddress ();
+premiseAddress8.street = street8;
+premiseAddress8.town = town3;
+PremiseAddress premiseAddress9 = new PremiseAddress ();
+premiseAddress9.street = street9;
+premiseAddress9.town = town3;
+PremiseAddress premiseAddress10 = new PremiseAddress ();
+premiseAddress10.street = street10;
+premiseAddress10.town = town4;
+PremiseAddress premiseAddress11 = new PremiseAddress ();
+premiseAddress11.street = street11;
+premiseAddress11.town = town4;
+PremiseAddress premiseAddress12 = new PremiseAddress ();
+premiseAddress12.street = street12;
+premiseAddress12.town = town4;
+
+InstallationAddress installationAddress1 = new InstallationAddress ();
+installationAddress1.premiseAddress = premiseAddress1;
+installationAddress1.serialNumber = 'UWU111';
+installationAddress1.division = 'electricity';
+InstallationAddress installationAddress2 = new InstallationAddress ();
+installationAddress2.premiseAddress = premiseAddress1;
+installationAddress2.serialNumber = 'UWU111';
+installationAddress2.division = 'gas';
+InstallationAddress installationAddress3 = new InstallationAddress ();
+installationAddress3.premiseAddress = premiseAddress2;
+installationAddress3.serialNumber = 'UWU111';
+installationAddress3.division = 'electricity';
+InstallationAddress installationAddress4 = new InstallationAddress ();
+installationAddress4.premiseAddress = premiseAddress2;
+installationAddress4.serialNumber = 'UWU111';
+installationAddress4.division = 'gas';
+InstallationAddress installationAddress5 = new InstallationAddress ();
+installationAddress5.premiseAddress = premiseAddress3;
+installationAddress5.serialNumber = 'UWU111';
+installationAddress5.division = 'electricity';
+InstallationAddress installationAddress6 = new InstallationAddress ();
+installationAddress6.premiseAddress = premiseAddress3;
+installationAddress6.serialNumber = 'UWU111';
+installationAddress6.division = 'gas';
+InstallationAddress installationAddress7 = new InstallationAddress ();
+installationAddress7.premiseAddress = premiseAddress4;
+installationAddress7.serialNumber = 'PQR1234';
+installationAddress7.division = 'electricity';
+InstallationAddress installationAddress8 = new InstallationAddress ();
+installationAddress8.premiseAddress = premiseAddress4;
+installationAddress8.serialNumber = 'PQR1234';
+installationAddress8.division = 'gas';
+InstallationAddress installationAddress9 = new InstallationAddress ();
+installationAddress9.premiseAddress = premiseAddress5;
+installationAddress9.serialNumber = 'PQR1234';
+installationAddress9.division = 'electricity';
+InstallationAddress installationAddress10 = new InstallationAddress ();
+installationAddress10.premiseAddress = premiseAddress5;
+installationAddress10.serialNumber = 'PQR1234';
+installationAddress10.division = 'gas';
+InstallationAddress installationAddress11 = new InstallationAddress ();
+installationAddress11.premiseAddress = premiseAddress6;
+installationAddress11.serialNumber = 'PQR1234';
+installationAddress11.division = 'electricity';
+InstallationAddress installationAddress12 = new InstallationAddress ();
+installationAddress12.premiseAddress = premiseAddress6;
+installationAddress12.serialNumber = 'PQR1234';
+installationAddress12.division = 'gas';
+InstallationAddress installationAddress13 = new InstallationAddress ();
+installationAddress13.premiseAddress = premiseAddress7;
+installationAddress13.serialNumber = 'MKL357';
+installationAddress13.division = 'electricity';
+InstallationAddress installationAddress14 = new InstallationAddress ();
+installationAddress14.premiseAddress = premiseAddress7;
+installationAddress14.serialNumber = 'MKL357';
+installationAddress14.division = 'gas';
+InstallationAddress installationAddress15 = new InstallationAddress ();
+installationAddress15.premiseAddress = premiseAddress8;
+installationAddress15.serialNumber = 'MKL357';
+installationAddress15.division = 'electricity';
+InstallationAddress installationAddress16 = new InstallationAddress ();
+installationAddress16.premiseAddress = premiseAddress8;
+installationAddress16.serialNumber = 'MKL357';
+installationAddress16.division = 'gas';
+InstallationAddress installationAddress17 = new InstallationAddress ();
+installationAddress17.premiseAddress = premiseAddress9;
+installationAddress17.serialNumber = 'MKL357';
+installationAddress17.division = 'electricity';
+InstallationAddress installationAddress18 = new InstallationAddress ();
+installationAddress18.premiseAddress = premiseAddress9;
+installationAddress18.serialNumber = 'MKL357';
+installationAddress18.division = 'gas';
+InstallationAddress installationAddress19 = new InstallationAddress ();
+installationAddress19.premiseAddress = premiseAddress10;
+installationAddress19.serialNumber = '102847';
+installationAddress19.division = 'electricity';
+InstallationAddress installationAddress20 = new InstallationAddress ();
+installationAddress20.premiseAddress = premiseAddress10;
+installationAddress20.serialNumber = '102847';
+installationAddress20.division = 'gas';
+InstallationAddress installationAddress21 = new InstallationAddress ();
+installationAddress21.premiseAddress = premiseAddress11;
+installationAddress21.serialNumber = '102847';
+installationAddress21.division = 'electricity';
+InstallationAddress installationAddress22 = new InstallationAddress ();
+installationAddress22.premiseAddress = premiseAddress11;
+installationAddress22.serialNumber = '102847';
+installationAddress22.division = 'gas';
+InstallationAddress installationAddress23 = new InstallationAddress ();
+installationAddress23.premiseAddress = premiseAddress12;
+installationAddress23.serialNumber = '102847';
+installationAddress23.division = 'electricity';
+InstallationAddress installationAddress24 = new InstallationAddress ();
+installationAddress24.premiseAddress = premiseAddress12;
+installationAddress24.serialNumber = '102847';
+installationAddress24.division = 'gas';
+
+//Define a list of installation addresses
+def installationAddressList = [
+	installationAddress1,
+	installationAddress2,
+	installationAddress3,
+	installationAddress4,
+	installationAddress5,
+	installationAddress6,
+	installationAddress7,
+	installationAddress8,
+	installationAddress9,
+	installationAddress10,
+	installationAddress11,
+	installationAddress12,
+	installationAddress13,
+	installationAddress14,
+	installationAddress15,
+	installationAddress16,
+	installationAddress17,
+	installationAddress18,
+	installationAddress19,
+	installationAddress20,
+	installationAddress21,
+	installationAddress22,
+	installationAddress23,
+	installationAddress24
+]
+
+/*
+ * Get the request body and convert it to a LazyMap
+ */
+def requestBody = new groovy.json.JsonSlurper().parseText(mockRequest.getRequestContent())
+log.info "Request body: " + requestBody;
+
+//Initialize a installation address Map
+def installationAddressMap = [:];
+def check = false;
+for (installationAddress in installationAddressList) {
+	//Convert the installation address object into a map
+	installationAddressMap = 
+		[
+			premiseAddress:
+			[
+				streetDetail: 
+				[
+					name: installationAddress.premiseAddress.street.name,
+					number: installationAddress.premiseAddress.street.number,
+					suite: installationAddress.premiseAddress.street.suite
+				],
+				townDetail: 
+				[
+					code: installationAddress.premiseAddress.town.code,
+					country: installationAddress.premiseAddress.town.country,
+					name: installationAddress.premiseAddress.town.name,
+					regionCode: installationAddress.premiseAddress.town.regionCode
+				]
+			],
+			serialNumber: installationAddress.serialNumber,
+			division: installationAddress.division
+		];
+	//Check if the current installation address is the same with the request one
+	if (installationAddressMap == requestBody) {
+		check = true;
+	}
+}
+
+//Return the correct response if the address was found or not
+if (check) {
+	log.info "Installation address: " + installationAddressMap;
+	return "Success";
+}else{
+	log.info "Installation address NOT found!";
+	return "Fail";
+}</con:dispatchPath><con:response name="Success" id="4f2d589a-f604-46b0-9832-af95007e1dca" httpResponseStatus="200" mediaType="application/json"><con:settings/><con:responseContent>{
+    "status": "SUCCESS",
+    "technicalResources": [
+        {
+            "id": "72990",
+            "type": "METER"
+        },
+        {
+            "id": "0.0.2.4.1.1.12.0.0.0.0.0.0.0.0.3.72.0",
+            "type": "READING_TYPE"
+        },
+        {
+            "id": "electricity",
+            "type": "DIVISION"
+        }
+    ]
+}</con:responseContent></con:response><con:response name="Fail" id="09df7b78-a0f4-437d-b926-b9dce1d8b5ff" httpResponseStatus="200" mediaType="application/json"><con:settings/><con:responseContent>"error": {
+    "status": "FAILED",
+    "message": "Premise details could not be validated – please contact 1800-222-2222 for assistance."
+}</con:responseContent></con:response></con:restMockAction><con:restMockAction name="CORS" method="OPTIONS" resourcePath="/" id="2cd547cd-d98c-4025-abdb-66190f2dd9cc"><con:settings/><con:defaultResponse xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:dispatchPath/><con:response name="Response" id="9f06e796-8a81-426b-a898-f61b2d10bb21" httpResponseStatus="200" mediaType="application/json"><con:settings/><con:responseContent/><con:header><con:name>Access-Control-Allow-Methods</con:name><con:value>GET, POST, OPTIONS, HEAD, PUT, PATCH, DELETE</con:value></con:header></con:response></con:restMockAction></con:restMockService><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/><con:sensitiveInformation/></con:soapui-project>

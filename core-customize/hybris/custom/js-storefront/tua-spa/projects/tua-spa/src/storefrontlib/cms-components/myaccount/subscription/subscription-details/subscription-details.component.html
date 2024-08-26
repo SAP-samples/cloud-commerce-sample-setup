@@ -1,0 +1,78 @@
+<ng-container>
+  <div class="row mx-auto px-0 w-100">
+    <ng-container
+      *ngIf="subscriptionDetail$ | async as subscriptionDetail; else loading"
+    >
+      <ng-container *ngIf="subscriptionDetail.tmfProduct.isBundle && activeSubscribedProduct">
+        <button
+          class="btn btn-primary btn-action getMore-btn"
+          (click)="updateSubscriptionDetail(subscriptionDetail)"
+        >
+          {{ 'subscriptions.getMore' | cxTranslate }}
+        </button>
+      </ng-container>
+      <ng-container
+        *ngIf="
+          hasRoleOwner(subscriptionDetail.tmfProduct.relatedParty) as isOwner
+        "
+      >
+        <ng-container
+          *ngIf="
+            getProductOrder(
+              subscriptionDetail.tmfProducts[0].productOrderItem[0]
+                .productOrderId
+            ) | async as order
+          "
+        >
+          <div class="row mx-auto w-100 px-0 my-2">
+            <ng-container
+              *ngFor="let product of subscriptionDetail.tmfProducts"
+            >
+              <div class="col-md-6 px-2 py-2">
+                <cx-tmf-product
+                  class="w-100"
+                  [tmfProduct]="product"
+                  [subscriptionId]="subscriptionDetail.tmfProduct.id"
+                  [order]="order"
+                >
+                </cx-tmf-product>
+                <ng-container *ngIf="isSubscriptionEligibleFor(product,processType.TERMINATION, subscriptionDetail.tmfProduct.id)"></ng-container>
+              </div>
+            </ng-container>
+          </div>
+        </ng-container>
+      </ng-container>
+      <ng-container
+        *ngIf="
+          !hasRoleOwner(
+            subscriptionDetail.tmfProduct.relatedParty
+          ) as isOwner
+        "
+      >
+        <div class="row mx-auto w-100 px-0 my-2">
+          <ng-container *ngFor="let product of subscriptionDetail.tmfProducts">
+            <div class="col-6 px-2 py-2">
+              <cx-tmf-product
+                class="w-100"
+                [tmfProduct]="product"
+                [subscriptionId]="subscriptionDetail.tmfProduct.id"
+              >
+              </cx-tmf-product>
+              <ng-container *ngIf="isSubscriptionEligibleFor(product,processType.TERMINATION, subscriptionDetail.tmfProduct.id)"></ng-container>
+            </div>
+          </ng-container>
+        </div>
+      </ng-container>
+      <div class="ml-2" *ngIf="isEligibleForTermination$ | async as isEligibleForTermination"
+          placement="top" ngbTooltip="{{'subscriptions.noPenaltiesApplicable' | cxTranslate}}">
+        <cx-termination-button [product]="tmfProduct"></cx-termination-button>
+      </div>
+    </ng-container>
+    <ng-template #loading>
+      <div class="cx-spinner">
+        <cx-spinner></cx-spinner>
+      </div>
+    </ng-template>
+  </div>
+</ng-container>
+

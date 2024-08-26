@@ -1,0 +1,59 @@
+@import "@spartacus/styles/scss/mixins";
+
+.step-menu {
+  margin-top: 35%;
+
+  @include media-breakpoint-down(md) {
+    font-size: 0.85rem;
+  }
+}
+
+.stepwizard {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid var(--cx-color-light);
+  padding-top: 1.5rem;
+  font-weight: 600;
+
+  &.step {
+    position: relative;
+    cursor: pointer;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    background-color: transparent;
+    width: 100%;
+
+    p {
+      text-align: center;
+    }
+
+    span {
+      position: absolute;
+      right: 6%;
+      top: 36%;
+
+      @include media-breakpoint-down(xs) {
+        right: -5px;
+        top: 38%;
+      }
+    }
+  }
+}
+
+.step-active {
+  background-color: var(--cx-color-medium) !important;
+
+  span {
+    color: var(--cx-color-primary);
+  }
+}
+
+@include media-breakpoint-down(xs) {
+  .step-menu {
+    margin-top: 0;
+  }
+  .cx-page-section {
+    padding-top: 0;
+  }
+}

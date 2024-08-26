@@ -1,0 +1,85 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+$productCatalog = mediaspaProductCatalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+
+##################################################
+# Policy1 (General cardinality rules):
+# A customer can select only one tv plan.
+#################################################
+INSERT_UPDATE TmaPoGroupPolicyStatement; code[unique = true]; min; max; productOfferingGroup(code, $catalogVersion); $catalogVersion
+                                       ; tv_show_plans      ; 0  ; 1  ; tricast_tv_show_plans
+                                       ; tv_channel_plans   ; 0  ; 1  ; tricast_channels_plans_group
+
+INSERT_UPDATE TmaPolicyAction; code[unique = true]; statement(code, $catalogVersion); actionType(code); $catalogVersion
+                             ; tv_show_plans      ; tv_show_plans                   ; SELECT
+                             ; tv_channel_plans   ; tv_channel_plans                ; SELECT
+
+INSERT_UPDATE TmaCompatibilityPolicy; code[unique = true]; conditions(code, $catalogVersion); actions(code, $catalogVersion); conditionsEvaluatorType(code); onlineFrom[dateformat = dd.MM.yyyy]; onlineTo[dateformat = dd.MM.yyyy]; $catalogVersion
+                                    ; tv_show_plans      ;                                  ; tv_show_plans                 ; AND                          ; 25.04.2021                         ; 25.08.2021                       ;
+                                    ; tv_channel_plans   ;                                  ; tv_channel_plans              ; AND                          ; 25.04.2021                         ; 25.08.2021                       ;
+
+#############################################################################################
+# Policy2 (Disable rule):
+# A customer cannot select allOnDemand if he bought tvPremium
+#############################################################################################
+INSERT_UPDATE TmaPoPolicyStatement; code[unique = true]; min; max; productOffering(code, $catalogVersion); $catalogVersion
+                                  ; allOnDemand        ; 0  ; 0  ; allOnDemand
+                                  ; tvPremium          ; 1  ; 1  ; tvPremium
+
+INSERT_UPDATE TmaAtomicPolicyCondition; code[unique = true]; statement(code, $catalogVersion); $catalogVersion
+                                      ; tvPremium          ; tvPremium
+
+INSERT_UPDATE TmaPolicyAction; code[unique = true]; statement(code, $catalogVersion); actionType(code); $catalogVersion
+                             ; allOnDemand        ; allOnDemand                     ; SELECT
+
+INSERT_UPDATE TmaCompatibilityPolicy; code[unique = true] ; conditionsEvaluatorType(code); conditions(code, $catalogVersion); actions(code, $catalogVersion); $catalogVersion
+                                    ; allOnDemand_disable ; OR                           ; tvPremium                        ; allOnDemand
+
+
+########################################################
+# Policy3 (Required component):
+# A customer cannot select tv addons when without selecting a tv plan #
+########################################################
+INSERT_UPDATE TmaPoGroupPolicyStatement; code[unique = true]       ; min; max; productOfferingGroup(code, $catalogVersion); $catalogVersion
+                                       ; tv_addons_require_tv_plan ; 1  ;    ; tricast_addons
+
+INSERT_UPDATE TmaAtomicPolicyCondition; code[unique = true]; statement(code, $catalogVersion); $catalogVersion
+                                      ; tv_addon_selected  ; tv_addons_require_tv_plan
+
+INSERT_UPDATE TmaPoGroupPolicyStatement; code[unique = true]; min; max; productOfferingGroup(code, $catalogVersion); $catalogVersion
+                                       ; tv_plan_required   ; 1  ;    ; tricast_tv_show_plans                      ;
+
+INSERT_UPDATE TmaPolicyAction; code[unique = true]; statement(code, $catalogVersion); actionType(code); $catalogVersion
+                             ; requireTvPlan      ; tv_plan_required                ; SELECT
+
+INSERT_UPDATE TmaCompatibilityPolicy; code[unique = true]             ; conditions(code, $catalogVersion); actions(code, $catalogVersion); conditionsEvaluatorType(code); $catalogVersion
+                                    ; tv_addons_require_tv_planPolicy ; tv_addon_selected                ; requireTvPlan                 ; AND
+
+########################################################################################################
+# Policy4 (Channel cardinality):
+# A customer is allowed to buy max 4 YTV Channels                                                         #
+########################################################################################################
+INSERT_UPDATE TmaPoPolicyStatement; code[unique = true]; min; max; productOffering(code, $catalogVersion); $catalogVersion
+                                  ; YTV                ; 0  ; 4  ; YTV
+
+INSERT_UPDATE TmaPolicyAction; code[unique = true]; statement(code, $catalogVersion); actionType(code); $catalogVersion
+                             ; YTV_cardinality    ; YTV                             ; SELECT
+
+INSERT_UPDATE TmaCompatibilityPolicy; code[unique = true]; conditionsEvaluatorType(code); conditions(code, $catalogVersion); actions(code, $catalogVersion); onlineFrom[dateformat = dd.MM.yyyy]; onlineTo[dateformat = dd.MM.yyyy]; $catalogVersion
+                                    ; YTV_cardinality    ; AND                          ;                                  ; YTV_cardinality               ; 25.04.2021                         ; 25.08.2021
+
+###################################################################################################
+# Eligibility Policy1 (general acquisition, device only and switch supplier policy):              #
+# A customer is eligible for ACQUISITION DEVICE_ONLY and SWITCH_SERVICE_PROVIDER flows in all conditions  #
+###################################################################################################
+INSERT_UPDATE TmaProcessTypesPolicyStatement; code[unique = true]                                       ; processes(code); $catalogVersion
+                                            ; acq_and_device_only_and_switch_service_provider_statement ; ACQUISITION,DEVICE_ONLY,SWITCH_SERVICE_PROVIDER
+
+INSERT_UPDATE TmaPolicyAction; code[unique = true]                                   ; statement(code, $catalogVersion)                          ; actionType(code); $catalogVersion
+                             ; allow_acq_and_device_only_and_switch_service_provider ; acq_and_device_only_and_switch_service_provider_statement ; ALLOW
+
+INSERT_UPDATE TmaCompatibilityPolicy; code[unique = true]                                         ; conditionsEvaluatorType(code); conditions(code, $catalogVersion); actions(code, $catalogVersion)                        ; onlineFrom[dateformat = dd.MM.yyyy]; onlineTo[dateformat = dd.MM.yyyy]; $catalogVersion
+                                    ; acq_and_device_only_and_switch_service_provider_eligibility ; AND                          ;                                  ; allow_acq_and_device_only_and_switch_service_provider ; 25.04.2021                         ; 25.08.2099

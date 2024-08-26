@@ -1,0 +1,48 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+#
+# Create the Responsive utilitiesspa BaseStore
+#
+
+$productCatalog = utilitiesSpaProductCatalog
+$classificationCatalog = utilitiesSpaClassification
+$currencies = USD
+$net = false
+$storeUid = utilitiesspa
+$checkoutFlowGroup = defaultCheckoutGroup
+
+$defaultCurrency = USD
+$languages = en
+$defaultLanguage = en
+$unitedKingdom = GB, GG, IM, JE
+$europeNotUK = AD, AL, AT, BA, BE, BG, BY, CH, CY, CZ, DE, DK, EE, ES, FI, FO, FR, GI, GL, GR, HR, HU, IE, IS, IT, LI, LT, LU, LV, MC, MD, ME, MK, MT, NL, NO, PL, PT, RO, RS, RU, SE, SI, SK, SM, TR, UA, VA
+$asianCountries = CN, JP, VN, HK, KP, KR
+$deliveryCountries = $unitedKingdom, $europeNotUK, $asianCountries, US, CA
+$orderProcessCode = order-process
+$pickupInStoreMode = BUY_AND_COLLECT
+$customerAllowedToIgnoreSuggestions = true
+$paymentProvider = Mockup
+$taxGroup = us-taxes
+$expressCheckoutEnabled = true
+
+INSERT_UPDATE PromotionGroup; Identifier[unique = true];
+                            ; utilitiesspaPromoGrp     ;
+
+# Base Store
+INSERT_UPDATE BaseStore; uid[unique = true]; catalogs(id)                           ; currencies(isocode); net  ; taxGroup(code); storelocatorDistanceUnit(code); defaultCurrency(isocode); languages(isocode); defaultLanguage(isocode); deliveryCountries(isocode); submitOrderProcessCode; pickupInStoreMode(code); customerAllowedToIgnoreSuggestions  ; paymentProvider  ; expressCheckoutEnabled  ; maxRadiusForPoSSearch; checkoutFlowGroup    ;
+                       ; $storeUid         ; $productCatalog,$classificationCatalog ; $currencies        ; $net ; $taxGroup     ; km                            ; $defaultCurrency        ; $languages        ; $defaultLanguage        ; $deliveryCountries        ; $orderProcessCode     ; $pickupInStoreMode     ; $customerAllowedToIgnoreSuggestions ; $paymentProvider ; $expressCheckoutEnabled ; 300                  ; defaultCheckoutGroup ;
+
+INSERT_UPDATE BaseStore2DeliveryModeRel; source(uid)[unique = true]; target(code)[unique = true]
+                                       ; utilitiesspa              ; premium-net
+                                       ; utilitiesspa              ; standard-net
+                                       ; utilitiesspa              ; premium-gross
+                                       ; utilitiesspa              ; standard-gross
+                                       ; utilitiesspa              ; pickup
+                                       ; utilitiesspa              ; free-standard-shipping
+                                       ; utilitiesspa              ; subscription-only
+
+# Base Store - Update the checkout flow for responsive
+INSERT_UPDATE BaseStore; uid[unique = true]; checkoutFlowGroup  ;
+                       ; $storeUid         ; $checkoutFlowGroup ;

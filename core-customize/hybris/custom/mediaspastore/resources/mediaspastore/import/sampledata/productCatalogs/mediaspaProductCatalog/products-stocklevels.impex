@@ -1,0 +1,178 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Importing Products stock levels into Media SPA Store
+
+# Macros / Replacement Parameter definitions
+$productCatalog = mediaspaProductCatalog
+$productCatalogName = Media SPA Product Catalog
+$catalogVersion = catalogversion(catalog(id[default=$productCatalog]), version[default='Staged'])[unique=true, default=$productCatalog:Staged]
+$vendor = mediaspa
+
+INSERT_UPDATE Vendor; code[unique = true]
+                    ; $vendor
+
+##########################
+### Importing Hardware ###
+##########################
+# ImpEx for Importing Media SPA Products Stock Levels and Warehouses
+INSERT_UPDATE StockLevel; productCode[unique = true]; available[default = 10]; warehouse(code)[unique = true, default = warehouse_mediaspa]; inStockStatus(code)[default = notSpecified]; maxPreOrder[default = 0]; maxStockLevelHistoryCount[default = -1]; overSelling[default = 0]; preOrder[default = 0]; reserved[default = 0]
+# hardware devices for the subscriptions
+                        ; phone_landlinephone
+                        ; standardRouter
+                        ; fibreRouter
+                        ; standardDecoder
+                        ; decoderPlus
+                        ; fibreRouterUnlimited
+# merchandise
+                        ; pants_bp
+                        ; t-shirt_bp
+                        ; hoodie
+                        ; cap
+                        ; shoes_man
+                        ; shoes_woman_bp
+                        ; handbag
+                        ; armagdedon_book
+
+###########################################
+### Importing Bundled Product Offerings ###
+###########################################
+INSERT_UPDATE StockLevel; productCode[unique = true]; available[default = 10]; warehouse(code)[unique = true, default = 'warehouse_mediaspa']; inStockStatus(code)[default = forceInStock]; maxPreOrder[default = 0]; maxStockLevelHistoryCount[default = -1]; overSelling[default = 0]; preOrder[default = 0]; reserved[default = 0]
+                        ; underworld
+                        ; underworld_s1
+                        ; underworld_s2
+                        ; tricast_shows_pack
+                        ; tricast_broadband_deal
+                        ; tricast_channels_pack
+
+
+##############################
+### Importing Plans ###
+##############################
+# Attention: default stockStatus is here forceInStock
+INSERT_UPDATE StockLevel; productCode[unique = true]; available[default = 10]; warehouse(code)[unique = true, default = warehouse_mediaspa]; inStockStatus(code)[default = notSpecified]; maxPreOrder[default = 0]; maxStockLevelHistoryCount[default = -1]; overSelling[default = 0]; preOrder[default = 0]; reserved[default = 0]
+# plans
+                        ; phoneUnlimitedWeekend
+                        ; phoneUnlimitedWeekendEvening
+                        ; standardBroadband
+                        ; fibreBroadbandLimited
+                        ; fibreBroadbandUnlimited
+                        ; superFibreUnlimited
+                        ; tvStarter
+                        ; tvEntertainment
+                        ; tvPremium
+                        ; sport
+                        ; TCO
+                        ; foreignLanguagePackage
+                        ; allOnDemand
+# TV channels
+                        ; YTV
+                        ; CubeChannel
+                        ; ANVNetworks
+                        ; ChannelS
+                        ; KTV
+                        ; TRIChannel
+                        ; TCOChannel
+                        ; VIVOChannel
+                        ; LightningChannel
+                        ; SportChannel
+# movies
+                        ; the-last-journey
+                        ; a-doctor-on-board
+                        ; a-perfect-circle
+                        ; about-a-girl
+                        ; battle-of-wills
+                        ; call-the-nanny
+                        ; covered-noise
+                        ; croaking
+                        ; emmas-chaos-effect
+                        ; hockey-league
+                        ; hunters
+                        ; infinite-space
+                        ; underworld_movie
+# tv shows
+                        ; joy
+                        ; the-boss
+                        ; underworld
+                        ; venom
+                        ; underworld_s1_e1
+                        ; underworld_s1_e2
+                        ; underworld_s1_e3
+                        ; underworld_s1_e4
+                        ; underworld_s2_e1
+                        ; underworld_s2_e2
+                        ; underworld_s2_e3
+                        ; underworld_s2_e4
+
+INSERT_UPDATE TmaSimpleProductOffering; code[unique = true]          ; stockLevels(productCode, warehouse(code)); vendors(code)[default = $vendor]; $catalogVersion
+                                      ; phone_landlinephone          ; phone_landlinephone:warehouse_mediaspa
+                                      ; standardRouter               ; standardRouter:warehouse_mediaspa
+                                      ; fibreRouter                  ; fibreRouter:warehouse_mediaspa
+                                      ; standardDecoder              ; standardDecoder:warehouse_mediaspa
+                                      ; decoderPlus                  ; decoderPlus:warehouse_mediaspa
+                                      ; fibreRouterUnlimited         ; fibreRouterUnlimited:warehouse_mediaspa
+# plans	# plans:warehouse_mediaspa
+                                      ; phoneUnlimitedWeekend        ; phoneUnlimitedWeekend:warehouse_mediaspa
+                                      ; phoneUnlimitedWeekendEvening ; phoneUnlimitedWeekendEvening:warehouse_mediaspa
+                                      ; standardBroadband            ; standardBroadband:warehouse_mediaspa
+                                      ; fibreBroadbandLimited        ; fibreBroadbandLimited:warehouse_mediaspa
+                                      ; fibreBroadbandUnlimited      ; fibreBroadbandUnlimited:warehouse_mediaspa
+                                      ; superFibreUnlimited          ; superFibreUnlimited:warehouse_mediaspa
+                                      ; tvStarter                    ; tvStarter:warehouse_mediaspa
+                                      ; tvEntertainment              ; tvEntertainment:warehouse_mediaspa
+                                      ; tvPremium                    ; tvPremium:warehouse_mediaspa
+                                      ; sport                        ; sport:warehouse_mediaspa
+                                      ; TCO                          ; TCO:warehouse_mediaspa
+                                      ; foreignLanguagePackage       ; foreignLanguagePackage:warehouse_mediaspa
+                                      ; allOnDemand                  ; allOnDemand:warehouse_mediaspa
+# merchandise	# merchandise:warehouse_mediaspa
+                                      ; pants_bp                     ; pants_bp:warehouse_mediaspa
+                                      ; t-shirt_bp                   ; t-shirt_bp:warehouse_mediaspa
+                                      ; hoodie                       ; hoodie:warehouse_mediaspa
+                                      ; cap                          ; cap:warehouse_mediaspa
+                                      ; shoes_man                    ; shoes_man:warehouse_mediaspa
+                                      ; shoes_woman_bp               ; shoes_woman_bp:warehouse_mediaspa
+                                      ; handbag                      ; handbag:warehouse_mediaspa
+                                      ; armagdedon_book              ; armagdedon_book:warehouse_mediaspa
+# TV shows	# TV shows:warehouse_mediaspa
+                                      ; joy                          ; joy:warehouse_mediaspa
+                                      ; the-boss                     ; the-boss:warehouse_mediaspa
+                                      ; venom                        ; venom:warehouse_mediaspa
+# TV channels	# TV channels:warehouse_mediaspa
+                                      ; YTV                          ; YTV:warehouse_mediaspa
+                                      ; CubeChannel                  ; CubeChannel:warehouse_mediaspa
+                                      ; ANVNetworks                  ; ANVNetworks:warehouse_mediaspa
+                                      ; ChannelS                     ; ChannelS:warehouse_mediaspa
+                                      ; KTV                          ; KTV:warehouse_mediaspa
+                                      ; TRIChannel                   ; TRIChannel:warehouse_mediaspa
+                                      ; TCOChannel                   ; TCOChannel:warehouse_mediaspa
+                                      ; VIVOChannel                  ; VIVOChannel:warehouse_mediaspa
+                                      ; LightningChannel             ; LightningChannel:warehouse_mediaspa
+                                      ; SportChannel                 ; SportChannel:warehouse_mediaspa
+# movies	# movies:warehouse_mediaspa
+                                      ; the-last-journey             ; the-last-journey:warehouse_mediaspa
+                                      ; a-doctor-on-board            ; a-doctor-on-board:warehouse_mediaspa
+                                      ; a-perfect-circle             ; a-perfect-circle:warehouse_mediaspa
+                                      ; about-a-girl                 ; about-a-girl:warehouse_mediaspa
+                                      ; battle-of-wills              ; battle-of-wills:warehouse_mediaspa
+                                      ; call-the-nanny               ; call-the-nanny:warehouse_mediaspa
+                                      ; covered-noise                ; covered-noise:warehouse_mediaspa
+                                      ; croaking                     ; croaking:warehouse_mediaspa
+                                      ; emmas-chaos-effect           ; emmas-chaos-effect:warehouse_mediaspa
+                                      ; hockey-league                ; hockey-league:warehouse_mediaspa
+                                      ; hunters                      ; hunters:warehouse_mediaspa
+                                      ; infinite-space               ; infinite-space:warehouse_mediaspa
+                                      ; underworld_movie             ; underworld_movie:warehouse_mediaspa
+# tv shows
+                                      ; underworld_s1_e1             ; underworld_s1_e1:warehouse_mediaspa
+                                      ; underworld_s1_e2             ; underworld_s1_e2:warehouse_mediaspa
+                                      ; underworld_s1_e3             ; underworld_s1_e3:warehouse_mediaspa
+                                      ; underworld_s1_e4             ; underworld_s1_e4:warehouse_mediaspa
+                                      ; underworld_s2_e1             ; underworld_s2_e1:warehouse_mediaspa
+                                      ; underworld_s2_e2             ; underworld_s2_e2:warehouse_mediaspa
+                                      ; underworld_s2_e3             ; underworld_s2_e3:warehouse_mediaspa
+                                      ; underworld_s2_e4             ; underworld_s2_e4:warehouse_mediaspa
+
+INSERT_UPDATE TmaBundledProductOffering; code[unique = true]; stockLevels(productCode, warehouse(code)); vendors(code)[default = $vendor]; $catalogVersion
+                                       ; underworld         ; underworld:warehouse_mediaspa

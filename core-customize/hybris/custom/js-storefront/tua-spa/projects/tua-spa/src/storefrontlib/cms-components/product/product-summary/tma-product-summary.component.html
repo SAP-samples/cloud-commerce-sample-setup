@@ -1,0 +1,31 @@
+<ng-container *ngIf="page$ |async as page else loading">
+  <ng-container *ngIf="product$ | async as product">
+    <ng-container *ngIf="currency$ | async as currency">
+      <ng-template
+        [cxOutlet]="outlets.PRICE"
+        [cxOutletContext]="{ product: product }"
+      >
+        <ng-container
+          *ngIf="!productService.isProductSpecificationForAverageCost(product?.productSpecification?.id) ||
+              priceService.getUsageUnits(product).length > 1">
+          <div *ngIf="this.priceService.getHighestPriorityPriceForSPO(product) as highestPriorityPrice">
+            <cx-price-display [price]="highestPriorityPrice" [discounts]="priceService.getDiscountPricesForSPO(product)"></cx-price-display>
+          </div>
+        </ng-container>
+      </ng-template>
+
+      <ng-template
+        [cxOutlet]="outlets.SUMMARY"
+        [cxOutletContext]="{ product: product }"
+      >
+        <p [innerHTML]="product?.summary" class="summary"></p>
+      </ng-template>
+    </ng-container>
+  </ng-container>
+</ng-container>
+
+<ng-template #loading>
+  <div class="cx-spinner">
+    <cx-spinner></cx-spinner>
+  </div>
+</ng-template>

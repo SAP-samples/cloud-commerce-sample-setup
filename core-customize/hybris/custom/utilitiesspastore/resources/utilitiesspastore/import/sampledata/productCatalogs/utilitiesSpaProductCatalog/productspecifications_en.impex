@@ -1,0 +1,73 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Product Specifications
+
+$productCatalog = utilitiesSpaProductCatalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+
+$lang = en
+
+############################
+# Customer Facing Services #
+############################
+INSERT_UPDATE TmaCustomerFacingServiceSpec; id[unique = true]; name[lang = $lang]        ; description[lang = $lang]; $catalogVersion
+                                          ; electricity_svc  ; Electricity Power Service ; Electricity Power Service Specification
+                                          ; gas_svc          ; Gas Service               ; Gas Service Specification
+
+INSERT_UPDATE TmaServiceSpecCharacteristic; id[unique = true] ; name[lang = $lang]; description[lang = $lang]; $catalogVersion
+                                          ; electricity_power ; Electricity Power ; Electricity Power
+                                          ; gas_volume        ; Gas Volume        ; Available Gas Volume
+
+################################
+# Product Spec Characteristics #
+################################
+UPDATE TmaProductSpecCharacteristic; id[unique = true]              ; $catalogVersion; name[lang = $lang]             ; description[lang = $lang]
+                                   ; electricity_power              ;                ; Power                          ; Power value
+                                   ; gas_volume                     ;                ; Gas volume                     ; Included Gas volume
+                                   ; home_warranty_period           ;                ; Home Warranty Period           ; Period for which home warranty is available
+                                   ; home_warranty_amount           ;                ; Home Warranty Amount           ; Amount of money guaranteed by by the home warranty
+                                   ; energy_type                    ;                ; Energy Type                    ; Type of the energy
+                                   ; meter_type                     ;                ; Meter Type                     ; Type of the meter
+                                   ; technical_id                   ;                ; Technical Id                   ; The technical id
+                                   ; average_consumption_estimation ;                ; Average Consumption Estimation ; Average consumption
+                                   ; previous_service_provider      ;                ; previous_service_provider      ; Previous Service Provider
+
+INSERT_UPDATE TmaProductSpecCharacteristicValue ; id[unique = true]              ; $catalogVersion ; description[lang = $lang]
+                                                ; 50_kwh                         ;                 ; Electricy power of 50 kwh
+                                                ; 100_kwh                        ;                 ; Electricy power of 100 kwh
+                                                ; 200_kwh                        ;                 ; Electricy power of 200 kwh
+                                                ; 300_kwh                        ;                 ; Electricy power of 300 kwh
+                                                ; 400_kwh                        ;                 ; Electricy power of 400 kwh
+                                                ; 50_cubic_meters                ;                 ; Includes 50 cubic meters
+                                                ; 100_cubic_meters               ;                 ; Includes 100 cubic meters
+                                                ; 200_cubic_meters               ;                 ; Includes 200 cubic meters
+                                                ; 300_cubic_meters               ;                 ; Includes 300 cubic meters
+                                                ; 400_cubic_meters               ;                 ; Includes 400 cubic meters
+                                                ; 10_years                       ;                 ; Includes 10 years of home warranty
+                                                ; 30_years                       ;                 ; Includes 30 years of home warranty
+                                                ; 120_years                      ;                 ; Includes 120 years of home warranty
+                                                ; 10000_USD                      ;                 ; Includes 100000 USD guaranteed amount
+                                                ; 500000_USD                     ;                 ; Includes 500000 USD guaranteed amount
+                                                ; 3000000_USD                    ;                 ; Includes 3000000 USD guaranteed amount
+# internet PSCVs
+                                                ; 100_100_data_speed             ;                 ; Download/Upload @100mbps
+                                                ; 500_500_data_speed             ;                 ; Download/Upload @500mbps
+                                                ; 1000_1000_data_speed           ;                 ; Download/Upload @1gbps
+# energy type PSCVs
+                                                ; green                          ;                 ; Green
+                                                ; mixed                          ;                 ; Mixed
+                                                ; normal_meter_type              ;                 ; Normal meter type
+                                                ; smart_meter_type               ;                 ; Smart meter type
+                                                ; technical_id                   ;                 ; Technical Id
+                                                ; average_consumption_estimation ;                 ; Average Consumption Estimation
+                                                ; previous_service_provider      ;                 ; Previous Service Provider
+
+# Product Specification
+INSERT_UPDATE TmaAtomicProductSpecification; id[unique = true]; name[lang = $lang]; description[lang = $lang]; $catalogVersion
+                                           ; electricity      ; Electricity       ; electricity
+                                           ; gas              ; Gas               ; Gas
+                                           ; homewarranty     ; Home Warranty     ; Home Warranty
+                                           ; internet         ; Internet          ; Internet
+                                           ; landline         ; Landline          ; Landline

@@ -1,0 +1,23 @@
+<ng-container *ngIf="qualificationErrorMessages?.length && showQualificationErrorMessages">
+  <div class="guided-selling-error">
+    <div class="d-flex">
+      <cx-icon [type]="iconTypes.ERROR"></cx-icon>
+      <h2>{{ 'guidedSelling.errorLabel' | cxTranslate }}</h2>
+    </div>
+    <ul *ngIf="qualificationErrorMessages as errorMessage">
+      <li *ngFor="let message of errorMessage">
+        {{ message.label }}
+      </li>
+    </ul>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="!qualificationErrorMessages?.length && qualificationSuccessMessage">
+  <div class="guided-selling-success">
+    <div class="d-flex">
+      <cx-icon [type]="iconTypes.SUCCESS"></cx-icon>
+      <h2>{{ 'guidedSelling.successLabel' | cxTranslate }}</h2>
+    </div>
+    <p>{{ 'guidedSelling.configurationSuccessMessage' | cxTranslate }}</p>
+  </div>
+</ng-container>

@@ -1,0 +1,18 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+#
+# Import Sample CS Cockpit User
+#
+
+$defaultPassword = 1234
+
+INSERT_UPDATE UserGroup; UID[unique = true]   ; groups(uid)[mode = append]; locname[lang = en]
+                       ; customerservicegroup ; employeegroup             ; "Customer Service Group"
+
+INSERT_UPDATE UserGroup; UID[unique = true]; groups(uid)[mode = append]        ; locname[lang = en]
+                       ; csagentgroup      ; cockpitgroup,customerservicegroup ; "Customer Service Agent Group"
+
+INSERT_UPDATE Employee; UID[unique = true]; password[default = $defaultPassword]; description                                                                        ; name                     ; groups(uid)  ; sessionLanguage(isocode); sessionCurrency(isocode)
+                      ; csagent           ;                                     ; "Customer service agent. Can edit order and customer data. Can read product data." ; "Customer Service Agent" ; csagentgroup ; en                      ; EUR

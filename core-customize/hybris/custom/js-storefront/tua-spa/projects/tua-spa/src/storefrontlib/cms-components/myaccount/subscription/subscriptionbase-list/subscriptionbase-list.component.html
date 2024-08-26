@@ -1,0 +1,110 @@
+<div class="container">
+  <div class="card w-100 border-0">
+    <div class="card-header bg-white py-3">
+      <div class="row mx-auto">
+        <h2 class="font-weight-bold fontSize text-uppercase cx-subscriptions-list-page-header px-3">
+          {{ 'subscriptions.headingSubscription' | cxTranslate }}
+      </h2>
+      </div>
+    </div>
+
+    <div class="card-body px-0 order-0">
+      <div class="row mx-auto">
+        <ng-container *ngIf="subscriptions$ | async as subscriptions; else noSubscriptions">
+          <ng-container *ngIf="subscriptions.length <= 0">
+            <div class="row mx-auto">
+              <span class="font-weight-bold px-3">
+                {{ 'subscriptions.noSubscription' | cxTranslate }}
+              </span>
+            </div>
+          </ng-container>
+          <ng-container *ngFor="let subscription of subscriptions">
+            <ng-container
+              *ngIf="
+                getSubscriptionDetails(
+                  subscription.subscriberIdentity
+                ) as subscriptionDetails$
+              "
+            >
+              <ng-container
+                *ngIf="subscriptionDetails$ | async as subscriptionDetail"
+              >
+                <div class="col-12 col-sm-4 my-2">
+                  <div class="card w-100 text-center">
+                    <div
+                      class="card-header py-3 clickable"
+                      *ngIf="
+                        getSubscriptionLength(
+                          subscriptionDetail.subscriptionBase
+                        )
+                      "
+                    >
+                      <a
+                        class="header-text-colour"
+                        [routerLink]="
+                          {
+                            cxRoute: 'subscriptionDetail',
+                            params: { code: subscription.subscriberIdentity }
+                          } | cxUrl
+                        "
+                      >
+                        {{ subscription.subscriberIdentity }}
+                      </a>
+                    </div>
+                    <div
+                      class="card-header py-3 clickable"
+                      *ngIf="
+                        !getSubscriptionLength(
+                          subscriptionDetail.subscriptionBase
+                        )
+                      "
+                    >
+                      <span class="labelHeading">
+                        {{ subscription.subscriberIdentity }}
+                      </span>
+                    </div>
+                    <div class="card-body">
+                      <div class="row mx-auto mb-2">
+                        <div class="col">
+                          {{ 'subscriptions.subscribedServices' | cxTranslate }}
+                          {{
+                            getSubscriptionLength(
+                              subscriptionDetail.subscriptionBase
+                            )
+                          }}
+                        </div>
+                      </div>
+                      <button
+                        [disabled]="
+                          !getSubscriptionLength(
+                            subscriptionDetail.subscriptionBase
+                          )
+                        "
+                        class="btn btn-sm btn-primary"
+                        [routerLink]="
+                          {
+                            cxRoute: 'usageConsumption',
+                            params: { code: subscription.subscriberIdentity }
+                          } | cxUrl
+                        "
+                      >
+                        {{ 'subscriptions.usageDetailsBtn' | cxTranslate }}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+        <ng-template #noSubscriptions>
+          <div class="row mx-auto">
+            <span class="font-weight-bold px-3">
+              {{ 'subscriptions.noSubscription' | cxTranslate }}
+            </span>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>

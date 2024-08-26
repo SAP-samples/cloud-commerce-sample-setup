@@ -1,0 +1,51 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+#
+# Import CMS content for the Responsive telcospa site
+#
+
+$contentCatalog = telcospaContentCatalog
+$contentCV = catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]), CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+
+# Language
+$lang = en
+
+# Functional Content Pages
+INSERT_UPDATE ContentPage; $contentCV[unique = true]; uid[unique = true]          ; name               ; masterTemplate(uid, $contentCV)  ; label; defaultPage[default = 'true']; approvalStatus(code)[default = 'approved']; homepage[default = 'false']
+                         ;                          ; guidedselling-select-device ; Select Device Page ; BundleSelectionAddOnPageTemplate ; guidedselling-select-device
+
+# Content Pages
+UPDATE ContentPage; $contentCV[unique = true]; uid[unique = true]                   ; title[lang = $lang]
+                  ;                          ; add-edit-address                     ; "Add/Edit Address"
+                  ;                          ; address-book                         ; "Address Book"
+                  ;                          ; cartPage                             ; "Your Shopping Cart"
+                  ;                          ; checkout-login                       ; "Proceed to Checkout"
+                  ;                          ; faq                                  ; "Frequently Asked Questions"
+                  ;                          ; homepage                             ; "Homepage"
+                  ;                          ; login                                ; "Login"
+                  ;                          ; guidedSellingPage                    ; "Configured Guided Selling"
+                  ;                          ; multiStepCheckoutSummaryPage         ; "Checkout"
+                  ;                          ; notFound                             ; "Not Found"
+                  ;                          ; order                                ; "Order Details"
+                  ;                          ; orderConfirmationPage                ; "Order Confirmation"
+                  ;                          ; orders                               ; "Order History"
+                  ;                          ; payment-details                      ; "Payment Details"
+                  ;                          ; payment-details-manage-subscriptions ; "Payment Details Manage Subscriptions"
+                  ;                          ; profile                              ; "Profile"
+                  ;                          ; searchEmpty                          ; "No Results"
+                  ;                          ; storefinderPage                      ; "StoreFinder"
+                  ;                          ; termsAndConditions                   ; "Terms and Conditions"
+                  ;                          ; update-email                         ; "Update Email"
+                  ;                          ; update-profile                       ; "Update Profile"
+                  ;                          ; updatePassword                       ; "Update Forgotten Password"
+                  ;                          ; bundleselection-plan                 ; "Service Plan Selection"
+                  ;                          ; bundleselection-extra                ; "Service Add Ons Selection"
+                  ;                          ; guidedselling-select-device          ; "Product Selection"
+                  ;                          ; privacyPolicy                        ; "Privacy Policy"
+                  ;                          ; termsOfService                       ; "Terms of Service"
+
+
+INSERT_UPDATE FooterNavigationComponent; $contentCV[unique = true]; uid[unique = true]        ; notice[lang = $lang]
+                                       ;                          ; FooterNavigationComponent ; "© 2019 hybris software"

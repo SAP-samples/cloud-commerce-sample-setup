@@ -1,0 +1,23 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+$storeUid = telcospa
+$defaultCurrency = USD
+$defaultLanguage = en
+$googleHost = setthethirdpartyhost
+$googleUserName = setgoogleusername
+$googlePassword = setgooglepassword
+
+
+INSERT_UPDATE ExportDataCronJob; code[unique = true]        ; job(code)[forceWrite = true]; baseStore(uid); cmsSite(uid); language(isocode); currency(isocode); user(uid) ; thirdPartyHost; thirdPartyUsername; thirdPartyPassword; dataGenerationPipeline[forceWrite = true]; sessionLanguage(isocode)
+                               ; googleLocationsB2cTelcoSpa ; exportDataJobPerformable    ; $storeUid     ; $storeUid   ; $defaultLanguage ; $defaultCurrency ; anonymous ; $googleHost   ; $googleUserName   ; $googlePassword   ; exportGooglePosPipeline                  ; $defaultLanguage
+                               ; googleProductsB2cTelcoSpa  ; exportDataJobPerformable    ; $storeUid     ; $storeUid   ; $defaultLanguage ; $defaultCurrency ; anonymous ; $googleHost   ; $googleUserName   ; $googlePassword   ; exportGoogleProductPipeline              ; $defaultLanguage
+
+INSERT_UPDATE CronJob; code[unique = true]                 ; job(code)[forceWrite = true]           ; baseStore(uid); cmsSite(uid); sessionLanguage(isocode); sessionCurrency(isocode); sessionUser(uid);
+                     ; uploadExportsB2cTelcoSpa            ; uploadDataJobPerformable               ; $siteUid      ; $siteUid    ; $defaultLanguage        ; $defaultCurrency        ; anonymous       ;
+                     ; removeEligibilityContextB2cTelcoSpa ; removeEligibilityContextJobPerformable ; $siteUid      ; $siteUid    ; $defaultLanguage        ; $defaultCurrency        ; anonymous       ;
+
+INSERT_UPDATE ServicelayerJob; code[unique = true]                    ; springId
+                             ; removeEligibilityContextJobPerformable ; removeEligibilityContextJob
+

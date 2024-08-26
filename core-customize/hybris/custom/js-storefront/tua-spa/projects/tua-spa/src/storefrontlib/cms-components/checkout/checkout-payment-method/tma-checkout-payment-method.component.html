@@ -1,0 +1,95 @@
+<div class="cx-payment">
+  <!-- TITLE -->
+  <h2 class="cx-checkout-title d-none d-lg-block d-xl-block">
+    {{ 'paymentForm.payment' | cxTranslate }}
+  </h2>
+
+  <ng-container *ngIf="!newPaymentFormManuallyOpened">
+    <p class="cx-checkout-text">
+      {{ 'paymentForm.choosePaymentMethod' | cxTranslate }}
+    </p>
+  </ng-container>
+
+  <div class="cx-payment-option-box">
+    <ng-container *cxFeature="DIRECT_DEBIT_FEATURE">
+      <ng-container *ngIf="!newPaymentFormManuallyOpened">
+        <div class="cx-checkout-body">
+          <div class="cx-radio-container">
+            <div class="form-check text-lg-left">
+              <input name="paymentMethod" class="form-check-input text-center" (click)="selectDirectDebit()" type="radio"
+                      [attr.checked]="(selectedMethod$ | async)?.cardType?.code === DIRECT_DEBIT ? 'checked' : null"/>
+              <!-- Image -->
+              <div class="cx-card-img-container cx-card-box">
+                <i class="fas fa-money-bill-alt"></i>
+                <span class="font-label cx-card-span">{{ 'paymentForm.debit' | cxTranslate }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="cx-separator"></div>
+      </ng-container>
+    </ng-container>
+    <ng-container *ngIf="cards$ | async as cards">
+      <ng-container *ngIf="!(isUpdating$ | async); else loading">
+        <div role="status" [attr.aria-label]="'common.loaded' | cxTranslate"></div>
+        <ng-container
+          *ngIf="cards?.length && !newPaymentFormManuallyOpened; then hasExistingPaymentMethods">
+        </ng-container>
+      </ng-container>
+      <ng-template #hasExistingPaymentMethods>
+        <div class="cx-card-container cx-checkout-body">
+          <div class="cx-separator"
+                *ngFor="let card of cards; let i = index">
+            <div class="form-check text-lg-left">
+              <input name="paymentMethod" class="form-check-input text-center" type="radio"
+                      (click)="selectPaymentMethod(card.paymentMethod)"
+                      [attr.checked]="card.paymentMethod.id === (selectedMethod$ | async)?.id ? 'checked' : null"/>
+              <cx-card [border]="true" [fitToContainer]="true" [content]="card.content" [index]="i"
+                        (sendCard)="selectPaymentMethod(card.paymentMethod)">
+              </cx-card>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+      <ng-container *ngIf="newPaymentFormManuallyOpened">
+        <cx-payment-form
+          (setPaymentDetails)="setPaymentDetails($event)" (closeForm)="hideNewPaymentForm()" (goBack)="back()"
+          [paymentMethodsCount]="cards?.length || 0" [setAsDefaultField]="!isGuestCheckout && !!cards?.length"
+          [loading]="isUpdating$ | async" [paymentDetails]="paymentDetails">
+        </cx-payment-form>
+      </ng-container>
+    </ng-container>
+    <ng-container *ngIf="!newPaymentFormManuallyOpened">
+      <div class="cx-card-container">
+        <a class="cx-add-payment clickable font-label pr-0" (click)="showNewPaymentForm()">
+          + {{ 'paymentForm.addNewCard' | cxTranslate }}
+        </a>
+      </div>
+    </ng-container>
+    <div class="cx-separator"></div>
+    <ng-container *ngIf="(selectedMethod$ | async)?.cardType?.code === DIRECT_DEBIT && !newPaymentFormManuallyOpened">
+      <cx-billing-form></cx-billing-form>
+    </ng-container>
+  </div>
+  <ng-container *ngIf="!newPaymentFormManuallyOpened">
+    <div class="row cx-checkout-btns">
+      <div class="col-md-12 col-lg-6">
+        <button class="btn btn-block btn-secondary" (click)="back()">
+          {{ backBtnText | cxTranslate }}
+        </button>
+      </div>
+      <div class="col-md-12 col-lg-6">
+        <button
+          class="btn btn-block btn-primary" [disabled]="!(selectedMethod$ | async)?.id" (click)="next()"
+        >
+          {{ 'common.continue' | cxTranslate }}
+        </button>
+      </div>
+    </div>
+  </ng-container>
+  <ng-template #loading>
+    <div class="cx-spinner">
+      <cx-spinner></cx-spinner>
+    </div>
+  </ng-template>
+</div>

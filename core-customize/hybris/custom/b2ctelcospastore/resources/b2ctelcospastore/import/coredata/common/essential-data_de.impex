@@ -1,0 +1,82 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+#
+# Import essential data for the Accelerator
+#
+
+# Language
+$lang = de
+
+# Languages
+UPDATE Language; isocode[unique = true]; name[lang = $lang]
+               ; de                    ; "Deutsch"
+               ; en                    ; "Englisch"
+
+# Currencies
+UPDATE Currency; isocode[unique = true]; name[lang = $lang]
+               ; EUR                   ; "Euro"
+               ; USD                   ; "US Dollar"
+
+# Credit / Debit Cards
+UPDATE CreditCardType; code[unique = true] ; name[lang = $lang]
+                     ; amex                ; "American Express"
+                     ; diners              ; "Diner's Club"
+                     ; maestro             ; "Maestro"
+                     ; master              ; "Mastercard"
+                     ; mastercard_eurocard ; "Mastercard/Eurocard"
+                     ; switch              ; "Switch"
+                     ; visa                ; "Visa"
+
+# DistanceUnits for Storelocator 
+UPDATE DistanceUnit; code[unique = true]; name[lang = $lang]
+                   ; km                 ; "km"
+                   ; miles              ; "miles"
+
+# MediaFormats
+UPDATE MediaFormat; qualifier[unique = true]; name[lang = $lang];
+                  ; 1200Wx1200H             ; "1200Wx1200H"
+                  ; 300Wx300H               ; "300Wx300H"
+                  ; 500Wx500H               ; "500Wx500H"
+                  ; 30Wx30H                 ; "30Wx30H"
+                  ; 365Wx246H               ; "365Wx246H"
+                  ; 515Wx515H               ; "515Wx515H"
+                  ; 65Wx65H                 ; "65Wx65H"
+                  ; 96Wx96H                 ; "96Wx96H"
+
+# Product Tax Groups
+UPDATE ProductTaxGroup; code[unique = true]; name[lang = $lang]
+                      ; ca-sales-tax-full  ; "Kanadische Mehrwertsteuer"
+                      ; eu-vat-full        ; "voller Steuersatz"
+                      ; eu-vat-half        ; "halber Steuersatz"
+                      ; jp-vat-full        ; "Steuersatz"
+                      ; us-sales-tax-full  ; "US-Mehrwertsteuer"
+
+# User Tax Groups
+UPDATE UserTaxGroup; code[unique = true]; name[lang = $lang]
+                   ; ca-taxes           ; "Kanadische Steuern"
+                   ; de-taxes           ; "DE Steuern"
+                   ; jp-taxes           ; "JP Steuern"
+                   ; uk-taxes           ; "UK Steuern"
+                   ; us-taxes           ; "US-Steuern"
+
+# Tax
+UPDATE Tax; code[unique = true]; name[lang = $lang]
+          ; ca-sales-tax-full  ; "Mehrwertsteuer"
+          ; de-vat-full        ; "DE MwSt voll"
+          ; de-vat-half        ; "DE MwSt halb"
+          ; jp-vat-full        ; "Konsumsteuer"
+          ; uk-vat-full        ; "UK MwSt voll"
+          ; uk-vat-half        ; "UK MwSt halb"
+          ; us-sales-tax-full  ; "Mehrwertsteuer"
+
+# Consginment statuses
+UPDATE ConsignmentStatus; code[unique = true]; name[lang = $lang]
+                        ; CANCELLED          ; "Storniert"
+                        ; PICKPACK           ; "Pickpack"
+                        ; PICKUP_COMPLETE    ; "Abholung abgeschlossen"
+                        ; READY              ; "Bereit"
+                        ; READY_FOR_PICKUP   ; "Abholbereit"
+                        ; SHIPPED            ; "Geliefert"
+                        ; WAITING            ; "Wartet"

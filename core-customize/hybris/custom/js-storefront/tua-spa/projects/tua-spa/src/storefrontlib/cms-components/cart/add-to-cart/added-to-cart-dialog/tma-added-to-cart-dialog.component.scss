@@ -1,0 +1,28 @@
+.right-arrow {
+    display: inline-block;
+    color: #000000;
+    font-size: 1rem;
+    line-height: 30px;
+    margin-bottom: 5px;
+    padding-left: 10px;
+    position: relative;
+    width: auto;
+    background-color: #A8F83F;
+  }
+  .right-arrow:after {
+    content: '';
+    border-style: solid;
+    height: 0;
+    position: absolute;
+    width: 0px;
+    border-color: transparent #A8F83F;
+    right: -15px;
+    border-width: 15px 0 15px 15px;
+  }
+
+.flash-warn{
+  background-color: #f9c731;
+  border-color: rgba(176, 136, 0, 0.2);
+  border-radius: 5px;
+  padding: 0px 5px;
+}

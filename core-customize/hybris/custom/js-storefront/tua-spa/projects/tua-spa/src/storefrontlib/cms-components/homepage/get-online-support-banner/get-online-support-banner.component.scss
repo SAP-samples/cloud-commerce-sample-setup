@@ -1,0 +1,21 @@
+.cx-bold {
+  font-weight: var(--cx-font-weight-bold);
+}
+
+.banner {
+  &-container {
+    height: 350px;
+    background-position: center center !important;
+    background-size: cover !important;
+    position: relative;
+    color: var(--cx-color-inverse);
+    &-headline {
+      font-size: 48px;
+      width: 400px;
+      text-align: center;
+    }
+    &-content {
+      font-size: 20px;
+    }
+  }
+}

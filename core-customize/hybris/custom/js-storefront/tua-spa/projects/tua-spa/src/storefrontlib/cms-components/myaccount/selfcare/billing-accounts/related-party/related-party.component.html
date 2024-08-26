@@ -1,0 +1,29 @@
+<cx-selfcare-card
+  *ngIf="model$ | async as model"
+  i18nRoot="{{ domainType }}"
+  [showHint]="true"
+>
+  <section main class="cardSection">
+    <ng-container *ngIf="model.relatedParty as relatedParties; else emptyList">
+      <div class="sectionItem" *ngFor="let relatedParty of relatedParties">
+        <span class="value">
+          {{ relatedParty.name }}
+        </span>
+        <span class="value">
+          {{ relatedParty.id }}
+        </span>
+        <span class="roleValue">
+          {{ relatedParty.role }}
+        </span>
+      </div>
+    </ng-container>
+  </section>
+</cx-selfcare-card>
+
+<ng-template #emptyList>
+  <p class="is-empty">
+    {{
+      'selfcare.billingAccounts.details.relatedParty.emptyList' | cxTranslate
+    }}
+  </p>
+</ng-template>

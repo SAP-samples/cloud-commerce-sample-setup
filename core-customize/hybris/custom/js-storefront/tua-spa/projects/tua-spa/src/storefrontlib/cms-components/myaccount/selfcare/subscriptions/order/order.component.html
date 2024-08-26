@@ -1,0 +1,25 @@
+<cx-selfcare-card
+  *ngIf="model$ | async as model"
+  i18nRoot="{{ domainType }}"
+  [showHint]="true"
+>
+  <section main class="cardSection">
+    <ng-container *ngIf="model.productOrderItem as orders; else emptyList">
+      <div class="sectionDetails" *ngFor="let order of orders">
+        <label>{{ order.productOrderId }}</label>
+        <span class="value">
+          <a class="link" [routerLink]="
+              { cxRoute: 'SubscriptionsOrder', params: model } | cxUrl
+            ">
+          </a>
+        </span>
+      </div>
+    </ng-container>
+  </section>
+</cx-selfcare-card>
+
+<ng-template #emptyList>
+  <p class="is-empty">
+    {{ 'selfcare.subscriptions.details.order.emptyList' | cxTranslate }}
+  </p>
+</ng-template>

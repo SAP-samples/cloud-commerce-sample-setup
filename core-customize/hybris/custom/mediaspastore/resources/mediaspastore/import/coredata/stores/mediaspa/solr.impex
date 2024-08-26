@@ -1,0 +1,299 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+#
+# Import the Solr configuration for the media spa store
+#
+
+################################################################################################################################
+# As of 1810 this solr considers eligibility
+# You can still find the old solr.impex under solr_woeligibility.impex, however you will need to adjust
+################################################################################################################################
+
+#######################
+# used as import data #
+#######################
+$productCatalog = mediaspaProductCatalog
+$catalogVersions = catalogVersions(catalog(id), version);
+
+$solrIndexedType = mediaspaPriceType
+
+$prefix = mediaspa
+
+$facetSearchCfg = mediaspaIndex
+$searchCfg = mediaspaSearchConfig
+$indexCfg = mediaspaIndexerConfig
+
+$indexBaseSite = mediaspa
+$indexLanguages = en
+$indexCurrencies = USD
+
+###################
+# used in headers #
+###################
+$hIndexType = solrIndexedType(identifier)[unique = true, default = mediaspaPriceType]
+$hIndexTypes = solrIndexedTypes(identifier)
+$hId = identifier[unique = true]
+$hName = name[unique = true]
+$hCode = code[unique = true]
+$hType = type(code)
+$hJob = job(code)[forceWrite=true]
+$hSortable = sortableType(code)
+$hDefaultSortOrder = defaultSortOrder;
+$hMulti = multiValue[default = false]
+$hProvider = fieldValueProvider
+$hProviderParam = valueProviderParameter
+$hParams = solrIndexerQueryParameters(name)
+$hPage = pageSize[unique = true]
+$hDescription = description[unique = true]
+$hLangFallback = enabledLanguageFallbackMechanism
+$hCurrency = currency[default = false];
+$hLocalized = localized[default = false];
+$hSpellcheck = useForSpellchecking[default = false];
+$hAutoComplete = useForAutocomplete[default = false];
+
+$hSearchCfg = solrSearchConfig(description)
+$hServerCfg = solrServerConfig(name)
+$hIndexCfg = solrIndexConfig(name)
+$hFacetSearchCfg = facetSearchConfig(name)
+
+###################
+### data import ###
+###################
+
+
+################################################################################################################################
+#
+# DEFINE INDEXED TYPE
+#
+################################################################################################################################
+# - type
+# - properties
+# - facet search config
+################################################################################################################################
+
+
+################################################################################################################################
+# Indexed type
+################################################################################################################################
+INSERT_UPDATE SolrIndexedType; $hId             ; $hType   ; variant; defaultFieldValueProvider    ; sorts(&sortRefID)
+                             ; $solrIndexedType ; PriceRow ; false  ; modelAttributesValueResolver ; sortRef1,sortRef2,sortRef3,sortRef4, sortRef9
+
+################################################################################################################################
+# Non-facet properties
+################################################################################################################################
+$productType = getProduct() instanceof T(de.hybris.platform.b2ctelcoservices.model.TmaSimpleProductOfferingModel)
+$spoEl = $productType ? getProduct().getCode() : getAffectedProductOffering().getCode();
+$currency = currency.isocode;
+$userPriceGroup = ug == null ? '' : ug;
+$user = user == null ? '' : user.getUid();
+$bpoEl = $productType ? '' : getProduct().getCode();
+INSERT_UPDATE SolrIndexedProperty; $hIndexType; $hName         ; $hType ; $hSortable; $hMulti; $hProvider               ; $hProviderParam ;
+                                 ;            ; itemtype       ; string ;           ;        ;                          ;                 ;
+                                 ;            ; priceCode      ; string ;           ;        ; tmaPriceCodeResolver     ;                 ;
+# # code = spo code not price code - used across lots of populators :(
+                                 ;            ; code           ; string ;           ;        ; springELValueProvider    ; $spoEl          ;
+                                 ;            ; spo            ; string ;           ;        ; springELValueProvider    ; $spoEl          ;
+                                 ;            ; bpo            ; string ;           ;        ; springELValueProvider    ; $bpoEl          ;
+                                 ;            ; terms          ; string ;           ; true   ; tmaPriceTermCodeResolver ;                 ;
+                                 ;            ; channel        ; string ;           ; true   ; tmaPriceChannelResolver  ;                 ;
+                                 ;            ; process        ; string ;           ; true   ; tmaPriceProcessResolver  ;                 ;
+                                 ;            ; userpricegroup ; string ;           ;        ; springELValueProvider    ; $userPriceGroup ;
+                                 ;            ; currency       ; string ;           ;        ; springELValueProvider    ; $currency       ;
+                                 ;            ; user           ; string ;           ;        ; springELValueProvider    ; $user           ;
+################################################################################################################################
+# Non-facet properties - used for searching - include some boosting factors.
+################################################################################################################################
+# The following are retrieved from the product.
+################################################################################################################################
+$prodNameEl = $productType ? getProduct().getName(#lang) : getAffectedProductOffering().getName(#lang)
+$prodDescEl = $productType ? getProduct().getDescription(#lang) : getAffectedProductOffering().getDescription(#lang)
+$prodSummaryEl = $productType ? getProduct().getSummary(#lang) : getAffectedProductOffering().getSummary(#lang)
+$prodEanEl = $productType ? getProduct().getEan() : getAffectedProductOffering().getEan()
+$prodIndividualEl = $productType ? getProduct().getSoldIndividually() : getAffectedProductOffering().getSoldIndividually()
+INSERT_UPDATE SolrIndexedProperty; $hIndexType; $hName              ; $hType  ; $hProvider               ; $hProviderParam   ; $hSortable   ; $hCurrency; $hLocalized; $hMulti; $hSpellcheck; $hAutoComplete; ftsPhraseQuery[default = false]; ftsPhraseQueryBoost; ftsQuery[default = false]; ftsQueryBoost; ftsFuzzyQuery[default = false]; ftsFuzzyQueryBoost; ftsWildcardQuery[default = false]; ftsWildcardQueryType(code)[default = POSTFIX]; ftsWildcardQueryBoost; ftsWildcardQueryMinTermLength
+                                 ;            ; name                ; text    ; springELValueProvider    ; $prodNameEl       ; sortabletext ;           ; true       ;        ; true        ; true          ; true                           ; 100                ; true                     ; 50           ; true                          ; 25                ;                                  ;                                              ;                      ;
+                                 ;            ; description         ; text    ; springELValueProvider    ; $prodDescEl       ; sortabletext ;           ; true       ;        ; true        ; true          ; true                           ; 100                ; true                     ; 50           ; true                          ; 25                ;                                  ;                                              ;                      ;
+                                 ;            ; summary             ; text    ; springELValueProvider    ; $prodSummaryEl    ;              ;           ; true       ;        ;             ;               ;                                ;                    ;                          ;              ;                               ;                   ;                                  ;                                              ;                      ;
+                                 ;            ; ean                 ; string  ; springELValueProvider    ; $prodEanEl        ;              ;           ;            ;        ; true        ; true          ;                                ;                    ; true                     ; 100          ;                               ;                   ; true                             ;                                              ; 50                   ; 3
+                                 ;            ; keywords            ; text    ; sppKeywordsResolver      ;                   ;              ;           ; true       ;        ; true        ; true          ; true                           ; 40                 ; true                     ; 20           ; true                          ; 10                ;                                  ;                                              ;                      ;
+                                 ;            ; soldIndividually    ; boolean ; springELValueProvider    ; $prodIndividualEl ;              ;           ;            ;        ;             ;
+
+                                 ;            ; img-515Wx515H       ; string  ; sppImage515ValueProvider ;                   ;              ;           ;            ;        ;             ;
+                                 ;            ; img-300Wx300H       ; string  ; sppImage300ValueProvider ;                   ;              ;           ;            ;        ;             ;
+                                 ;            ; img-96Wx96H         ; string  ; sppImage96ValueProvider  ;                   ;              ;           ;            ;        ;             ;
+                                 ;            ; img-65Wx65H         ; string  ; sppImage65ValueProvider  ;                   ;              ;           ;            ;        ;             ;
+                                 ;            ; img-30Wx30H         ; string  ; sppImage30ValueProvider  ;                   ;              ;           ;            ;        ;             ;
+
+                                 ;            ; reviewAvgRating     ; double  ; sppReviewAvgProvider     ;                   ;              ;           ; true       ;        ;             ;
+                                 ;            ; numberOfReviews     ; int     ; sppReviewCntProvider     ;                   ;              ;           ; true       ;        ;             ;
+
+                                 ;            ; inStockFlag         ; boolean ; sppStockFlagProvider     ;                   ;              ;           ;            ;        ;             ;
+                                 ;            ; stockLevelStatus    ; string  ; sppStockStatusProvider   ;                   ;              ;           ;            ;        ;             ;
+                                 ;            ; pickupAvailableFlag ; boolean ; sppPickupFlagProvider    ;                   ;              ;           ;            ;        ;             ;
+                                 ;            ; url                 ; string  ; sppUrlProvider           ;                   ;              ;           ; true       ;        ;             ;
+
+INSERT_UPDATE SolrIndexedProperty; $hIndexType; $hName     ; $hType ; $hProvider               ; $hProviderParams; $hSortable; $hCurrency; $hLocalized; $hMulti; $hSpellcheck; $hAutoComplete; facet[default = false]; facetType(code); facetSort(code); priority; facetDisplayNameProvider; customFacetSortProvider; rangeSets(name)
+                                 ;            ; termLimits ; string ; tmaPriceTermNameResolver ;                 ;           ; true      ; true       ; true   ;             ;               ;                       ; MultiSelectOr  ; Alpha          ; 1000    ;                         ;                        ; ;
+
+################################################################################################################################
+# PRICE INFORMATION
+################################################################################################################################
+# Various Prices Information Indexed -> All values are taken from the current indexed price (be it a price or a price override).
+################################################################################################################################
+
+INSERT_UPDATE SolrIndexedProperty; $hIndexType; $hName        ; $hType; $hProvider                 ; $hProviderParam; $hSortable; $hCurrency; $hLocalized; $hMulti; $hSpellcheck; $hAutoComplete; facet[default = false]; facetType(code); facetSort(code); priority; facetDisplayNameProvider; customFacetSortProvider; rangeSets(name)
+                                 ;            ; pricePriority ; int   ; pricePriorityValueResolver ; paynow         ;           ;           ;            ;        ;             ;               ; false                 ;
+
+# Category fields
+INSERT_UPDATE SolrIndexedProperty; $hIndexType; $hName       ; $hType; $hProvider              ; $hProviderParam; $hSortable; $hCurrency; $hLocalized; $hMulti; $hSpellcheck; $hAutoComplete; categoryField[default = true]; ftsPhraseQuery[default = false]; ftsPhraseQueryBoost; ftsQuery[default = false]; ftsQueryBoost; ftsFuzzyQuery[default = false]; ftsFuzzyQueryBoost
+                                 ;            ; categoryName ; text  ; sppCategoryNameProvider ;                ;           ;           ; true       ; true   ; true        ; true          ; true                         ; true                           ; 40                 ; true                     ; 20           ; true                          ; 10
+                                 ;            ; brandName    ; text  ; sppBrandNameProvider    ;                ;           ;           ; true       ; true   ; false       ; false         ; true                         ;                                ;                    ;                          ;              ;                               ;
+
+# Category facets
+INSERT_UPDATE SolrIndexedProperty; $hIndexType; $hName                ; $hType  ; $hProvider                        ; $hProviderParam; $hLocalized; multiValue[default = true]; facet[default = true]; facetType(code); facetSort(code); priority; categoryField[default = true]; facetDisplayNameProvider         ; visible[default = false]
+                                 ;            ; allCategories         ; string  ; sppAllCategoryProvider            ;                ;            ;                           ;                      ; Refine         ; Alpha          ; -9999   ;                              ;                                  ; true
+                                 ;            ; categoryPath          ; string  ; sppCategoryPathProvider           ;                ;            ;                           ;                      ; Refine         ; Alpha          ; -9999   ;
+                                 ;            ; category              ; string  ; sppCategoryCodeProvider           ;                ;            ;                           ;                      ; Refine         ; Alpha          ; 6000    ;                              ; categoryFacetDisplayNameProvider ; true
+                                 ;            ; brand                 ; string  ; sppBrandCodeProvider              ;                ;            ;                           ;                      ; Refine         ; Alpha          ; 5000    ;                              ; categoryFacetDisplayNameProvider ; true
+                                 ;            ; productOfferingGroups ; string  ; sppPoGroupProvider                ;                ;            ;                           ;                      ; MultiSelectOr  ; Alpha          ; 6000    ; false
+                                 ;            ; hasParentBpos         ; string  ; sppBpoParentProvider              ;                ;            ; false                     ;                      ; Refine         ; Alpha          ; 7000    ; false
+                                 ;            ; pscvDescription       ; string  ; sppPscvDescProvider               ;                ; true       ; true                      ;                      ; MultiSelectOr  ; Alpha          ; 7000    ; false
+                                 ;            ; parentBundledPo       ; string  ; sppParentBundlePoProvider         ;                ;            ;                           ;                      ; MultiSelectOr  ; Alpha          ; 6000    ; false
+                                 ;            ; isBundled             ; boolean ; sppIsBundledProvider              ;                ; false      ; false                     ;                      ;                ;                ; 7000    ; false
+                                 ;            ; productSpecification  ; string  ; sppProductSpecProvider            ;                ; false      ; false                     ;                      ;                ;                ; 7000    ; false
+                                 ;            ; approvalStatus        ; string  ; sppApprovalStatusProvider         ;                ; false      ; false                     ;                      ;                ;                ; 7000    ; false
+                                 ;            ; productOfferingPrice  ; string  ; productOfferingPriceValueResolver ;                ;            ;                           ;                      ;                ; Alpha          ; 6000    ; false
+
+################################################################################################################################
+# Solr FacetSearch Config
+################################################################################################################################
+# - searchConfig  - mediaspaSearchConfig
+# - indexConfig   - Default
+# - serverConfig  - Default
+################################################################################################################################
+INSERT_UPDATE SolrSearchConfig; &Item      ; $hPage; $hDescription; $hDefaultSortOrder; legacyMode; restrictFieldsInResponse;
+                              ; $searchCfg ; 20    ; $searchCfg   ; score,pk          ; false     ; true                    ;
+
+INSERT_UPDATE SolrIndexerQuery; $hIndexType      ; $hId                ; $hType ; query                                                                                                                                                                                                                                                                                                     ; user(uid) ; $hParams; injectCurrentDate[default = true]; injectCurrentTime[default = true]; injectLastIndexTime[default = true]
+                              ; $solrIndexedType ; $prefix-fullQuery   ; full   ; "select {pr:pk} from {PriceRow as pr} WHERE {pr.catalogVersion} IN({{SELECT {cv.PK} FROM {catalogversion as cv} Where {cv.catalog} IN ({{SELECT {c.PK} FROM {catalog as c} where {c.id} ='$productCatalog'}})}}) AND {pr.product} NOT IN ({{SELECT {po.pk} FROM {TmaOperationalProductOffering as po}}})" ; anonymous ;         ;                                  ;                                  ; false ;
+                              ; $solrIndexedType ; $prefix-updateQuery ; update ; "
+
+SELECT DISTINCT prtbl.pk FROM (
+    {{
+        SELECT {pr:pk} from {SubscriptionPricePlan as pr}
+            WHERE
+                 ({pr.affectedProductOffering} IS NOT NULL AND {pr.affectedProductOffering} IN (
+                        {{
+                        SELECT DISTINCT tbl.pk FROM (
+                        {{
+                            SELECT DISTINCT {p:PK} AS pk, {p:code} AS code
+                            FROM {TmaProductOffering AS p LEFT JOIN CustomerReview AS cr ON {cr:product}={p:PK} }
+                            WHERE {p:varianttype} IS NULL AND ({p:modifiedtime} >= ?lastIndexTime OR {cr:modifiedtime} >= ?lastIndexTime)
+                            AND {p:catalog} IN ({{SELECT {c:PK} FROM {catalog as c} where {c:id} = '$productCatalog'}})
+                        }}
+                        UNION
+                        {{
+                            SELECT {p:PK}  AS pk, {p:code} AS code FROM {TmaProductOffering AS p} WHERE {p:code} IN (
+                                {{
+                                    SELECT DISTINCT {sl:productCode} FROM {StockLevel AS sl} WHERE {sl:modifiedtime} >= ?lastIndexTime
+                                }}
+                            )
+                        }}
+                        ) tbl
+                        }}
+                    )
+                 )
+    }}
+    UNION
+    {{
+        SELECT {pr:pk} from {PriceRow as pr}
+            WHERE
+                ({pr.product} IN (
+                        {{
+                        SELECT DISTINCT tbl.pk FROM (
+                        {{
+                            SELECT DISTINCT {p:PK} AS pk, {p:code} AS code
+                            FROM {TmaProductOffering AS p LEFT JOIN CustomerReview AS cr ON {cr:product}={p:PK} }
+                            WHERE {p:varianttype} IS NULL AND ({p:modifiedtime} >= ?lastIndexTime OR {cr:modifiedtime} >= ?lastIndexTime)
+                            AND {p:catalog} IN ({{SELECT {c:PK} FROM {catalog as c} where {c:id} = '$productCatalog'}})
+                        }}
+                        UNION
+                        {{
+                            SELECT {p:PK}  AS pk, {p:code} AS code FROM {TmaProductOffering AS p} WHERE {p:code} IN (
+                                {{
+                                    SELECT DISTINCT {sl:productCode} FROM {StockLevel AS sl} WHERE {sl:modifiedtime} >= ?lastIndexTime
+                                }}
+                            )
+                        }}
+                        ) tbl
+                        }}
+                    )
+                     AND {pr.product} NOT IN ({{SELECT {po.pk} FROM {TmaOperationalProductOffering as po}}})
+                 )
+    }}
+) prtbl
+
+"                                                                                                                                                                                                                                                                                                         ; anonymous ;         ;                                  ;                                  ;       ;
+
+INSERT_UPDATE SolrFacetSearchConfig; $hName          ; $hSearchCfg; $hIndexCfg; $hServerCfg; indexNamePrefix; $hIndexTypes     ; $catalogVersions       ; description          ; $hLangFallback; languages(isocode); currencies(isocode);
+                                   ; $facetSearchCfg ; $searchCfg ; Default   ; Default    ; $prefix        ; $solrIndexedType ; $productCatalog:Online ; media spa Solr index ; true          ; $indexLanguages   ; $indexCurrencies   ;
+
+INSERT_UPDATE BaseSite; uid[unique = true]; solrFacetSearchConfiguration(name)
+                      ; $indexBaseSite    ; $facetSearchCfg
+
+################################################################################################################################
+# CronJob
+# - job      - solrIndexerJob
+# - trigger  -
+################################################################################################################################
+INSERT_UPDATE SolrIndexerCronJob; $hCode                       ; $hJob          ; singleExecutable; sessionLanguage(isocode); active; $hFacetSearchCfg; indexerOperation(code)
+                                ; full-mediaspaIndex-cronJob   ; solrIndexerJob ; false           ; en                      ; true  ; $facetSearchCfg ; full
+                                ; update-mediaspaIndex-cronJob ; solrIndexerJob ; false           ; en                      ; true  ; $facetSearchCfg ; update
+
+################################################################################################################################
+# SEARCH QUERY
+################################################################################################################################
+# - template
+# - sorts
+# - diaply facets
+################################################################################################################################
+# Search query template
+INSERT_UPDATE SolrSearchQueryTemplate; name[unique = true]; indexedType(identifier)[unique = true]; ftsQueryBuilder
+                                     ; DEFAULT            ; $solrIndexedType                      ; defaultFreeTextQueryBuilder
+
+################################################################################################################################
+# Define the available sorts
+################################################################################################################################
+INSERT_UPDATE SolrSort; indexedType(identifier)[unique = true]; &sortRefID; code[unique = true]; useBoost
+                      ; $solrIndexedType                      ; sortRef1  ; relevance          ; true
+                      ; $solrIndexedType                      ; sortRef2  ; topRated           ; false
+                      ; $solrIndexedType                      ; sortRef3  ; name-asc           ; false
+                      ; $solrIndexedType                      ; sortRef4  ; name-desc          ; false
+                      ; $solrIndexedType                      ; sortRef9  ; pricePriority-desc ; true
+
+# Define the sort fields
+INSERT_UPDATE SolrSortField; sort(indexedType(identifier), code)[unique = true]; fieldName[unique = true]; ascending[unique = true]
+                           ; $solrIndexedType:relevance                        ; inStockFlag             ; false
+                           ; $solrIndexedType:relevance                        ; score                   ; false
+                           ; $solrIndexedType:topRated                         ; inStockFlag             ; false
+                           ; $solrIndexedType:topRated                         ; reviewAvgRating         ; false
+                           ; $solrIndexedType:name-asc                         ; name                    ; true
+                           ; $solrIndexedType:name-desc                        ; name                    ; false
+                           ; $solrIndexedType:pricePriority-desc               ; pricePriority           ; false
+
+
+################################################################################################################################
+#
+################################################################################################################################
+INSERT_UPDATE SolrSearchQueryProperty; indexedProperty(name, solrIndexedType(identifier))[unique = true]; searchQueryTemplate(name, indexedType(identifier))[unique = true][default = DEFAULT:$solrIndexedType]; facet; ftsPhraseQuery[default = false]; ftsPhraseQueryBoost; ftsQuery[default = false]; ftsQueryBoost; ftsFuzzyQuery[default = false]; ftsFuzzyQueryBoost; ftsWildcardQuery[default = false]; ftsWildcardQueryType(code)[default = POSTFIX]; ftsWildcardQueryBoost; ftsWildcardQueryMinTermLength; includeInResponse[default = true]
+                                     ; code:$solrIndexedType                                            ;                                                                                                      ;      ; TRUE                           ; 90                 ;                          ;              ; TRUE                          ;                   ;                                  ; POSTFIX                                      ; 45                   ; 3                            ;
+                                     ; name:$solrIndexedType                                            ;                                                                                                      ;      ; TRUE                           ; 100                ; TRUE                     ; 50           ; TRUE                          ; 25                ;                                  ;                                              ;                      ;
+                                     ; description:$solrIndexedType                                     ;                                                                                                      ;      ; TRUE                           ; 50                 ; TRUE                     ; 25           ; TRUE                          ; 10                ;                                  ;                                              ;                      ;
+                                     ; summary:$solrIndexedType                                         ;                                                                                                      ;      ;                                ;                    ;                          ;              ;                               ;                   ;                                  ;                                              ;                      ;
+                                     ; ean:$solrIndexedType                                             ;                                                                                                      ;      ; TRUE                           ; 100                ;                          ;              ; TRUE                          ;                   ;                                  ; POSTFIX                                      ; 50                   ; 3                            ;
+                                     ; keywords:$solrIndexedType                                        ;                                                                                                      ;      ; TRUE                           ; 40                 ; TRUE                     ; 20           ; TRUE                          ; 10                ;                                  ;                                              ;                      ;
+
+INSERT_UPDATE SolrSearchQueryProperty; indexedProperty(name, solrIndexedType(identifier))[unique = true]; facet[default = true]; facetType(code); searchQueryTemplate(name, indexedType(identifier))[unique = true][default = DEFAULT:$solrIndexedType]; includeInResponse[default = true]; facetDisplayNameProvider         ; facetSortProvider; facetTopValuesProvider
+                                     ; category:$solrIndexedType                                        ;                      ; Refine         ;                                                                                                      ;                                  ; categoryFacetDisplayNameProvider ;                  ;

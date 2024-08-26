@@ -1,0 +1,42 @@
+#
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+#
+
+# -----------------------------------------------------------------------
+# ImpEx for Importing UsageSpecifications into B2C Telco Store
+
+# Macros / Replacement Parameter definitions
+$productCatalog = utilitiesSpaProductCatalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+$onlineCatalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Online'])[unique = true, default = $productCatalog:Online]
+$lang = en
+
+INSERT_UPDATE TmaUsageCharacteristicCategory; id[unique = true]; name[lang = $lang];
+                                            ; WHERE            ; Where             ;
+                                            ; WHO              ; Who               ;
+                                            ; WHEN             ; When              ;
+                                            ; WHAT             ; What              ;
+
+INSERT_UPDATE TmaUsageSpecCharacteristicValue; id[unique = true]      ; name[lang = $lang]; $catalogVersion
+                                             ; creationTime      ; creationTime
+                                             ; duration          ; duration
+                                             ; unitOfMeasure     ; unitOfMeasure
+                                             ; serviceIdentifier ; serviceIdentifier
+                                             ; locationName      ; locationName
+                                             ; consumer_id       ; consumer_id
+                                             ; subscriberId     ; subscriberId
+
+
+INSERT_UPDATE TmaUsageSpecCharacteristic; id[unique = true] ; name[lang = $lang]; description[lang = $lang]; $catalogVersion
+                                        ; creationTime      ; creationTime      ; The time when the event has been generated
+                                        ; duration          ; duration          ; Duration of the event
+                                        ; unitOfMeasure     ; unitOfMeasure     ; Unit of the duration
+                                        ; serviceIdentifier ; serviceIdentifier ; Identifier of the service, relevant to corelate the usage detail record to the specific service
+                                        ; locationName      ; locationName      ; Descriptive location name of where the service is provided
+                                        ; consumer_id       ; consumerId        ; Identifier of the utilities consumer
+                                        ; subscriberId      ; subscriberId      ; Identifier of the subscribed customer
+
+INSERT_UPDATE TmaAtomicProductUsageSpec; id[unique = true]    ; name[lang = $lang]   ; $catalogVersion
+                                       ; udr_electricity_spec ; udr_electricity_spec ;
+                                       ; udr_gas_spec         ; udr_gas_spec         ;
+                                       ; homewarranty_spec    ; homewarranty_spec    ;

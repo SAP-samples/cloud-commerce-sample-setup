@@ -1,0 +1,21 @@
+@import './layout/index';
+
+// The $page-template-blacklist can be used to prevent template CSS
+// being generated.
+$page-template-blacklist: () !default;
+
+// whitelisted page template selectors are processed
+// unless (some) they are blacklisted using `$page-template-blacklist`
+$page-template-whitelist: LandingPage2Template, ContentPage1Template,
+CategoryPageTemplate, ProductListPageTemplate, ProductGridPageTemplate,
+SearchResultsListPageTemplate, ProductDetailsPageTemplate, CartPageTemplate,
+LoginPageTemplate, MultiStepCheckoutSummaryPageTemplate, ErrorPageTemplate,
+CheckoutLoginPageTemplate, AccountPageTemplate, GuidedSellingPageTemplate !default;
+
+@each $selector in $page-template-whitelist {
+  cx-page-layout.#{$selector} {
+    @if (index($page-template-blacklist, $selector) == null) {
+      @extend %#{$selector} !optional;
+    }
+  }
+}

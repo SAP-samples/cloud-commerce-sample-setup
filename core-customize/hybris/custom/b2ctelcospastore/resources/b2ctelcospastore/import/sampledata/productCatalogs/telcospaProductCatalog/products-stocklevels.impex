@@ -1,0 +1,208 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Importing Products stock levels into Telco Store
+
+$productCatalog = telcospaProductCatalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+$vendor = telcospa
+
+##############################
+### Importing ServicePlans ###
+##############################
+# Attention: default stockStatus is here forceInStock and so different to the products imported before
+INSERT_UPDATE StockLevel; productCode[unique = true]; available[default = 10]; warehouse(code)[unique = true, default = 'warehouse_telcospa']; inStockStatus(code)[default = forceInStock]; maxPreOrder[default = 0]; maxStockLevelHistoryCount[default = -1]; overSelling[default = 0]; preOrder[default = 0]; reserved[default = 0]
+                        ; copper_internet
+                        ; fiber_internet
+                        ; 5g_internet
+                        ; 5g_router
+
+#################################
+### Variant Product Offerings ###
+#################################
+# ImpEx for Importing Telco Products Stock Levels and Warehouses
+
+INSERT_UPDATE StockLevel; productCode[unique = true]            ; available[default = 10]; warehouse(code)[unique = true, default = 'warehouse_telcospa']; inStockStatus(code)[default = notSpecified]; maxPreOrder[default = 0]; maxStockLevelHistoryCount[default = -1]; overSelling[default = 0]; preOrder[default = 0]; reserved[default = 0]
+# Variants
+
+                        ; iPhone_13_green_128g                  ;
+                        ; iPhone_13_green_256g                  ;
+                        ; iPhone_13_midnight_128g               ;
+                        ; iPhone_13_midnight_256g               ;
+                        ; iPhone_13_white_128g                  ;
+                        ; iPhone_13_white_256g                  ;
+                        ; iPhone_13_blue_128g                   ;
+                        ; iPhone_13_blue_256g                   ;
+                        ; iPhone_13_pink_128g                   ;
+                        ; iPhone_13_pink_256g                   ;
+                        ; iPhone_13_red_128g                    ;
+                        ; iPhone_13_red_256g                    ;
+
+                        ; iPhone_13_Pro_Max_silver_128g         ;
+                        ; iPhone_13_Pro_Max_silver_256g         ;
+                        ; iPhone_13_Pro_Max_silver_512g         ;
+                        ; iPhone_13_Pro_Max_silver_1024g        ;
+                        ; iPhone_13_Pro_Max_graphite_128g       ;
+                        ; iPhone_13_Pro_Max_graphite_256g       ;
+                        ; iPhone_13_Pro_Max_graphite_512g       ;
+                        ; iPhone_13_Pro_Max_graphite_1024g      ;
+                        ; iPhone_13_Pro_Max_alpinegreen_128g    ;
+                        ; iPhone_13_Pro_Max_alpinegreen_256g    ;
+                        ; iPhone_13_Pro_Max_alpinegreen_512g    ;
+                        ; iPhone_13_Pro_Max_alpinegreen_1024g   ;
+                        ; iPhone_13_Pro_Max_gold_128g           ;
+                        ; iPhone_13_Pro_Max_gold_256g           ;
+                        ; iPhone_13_Pro_Max_gold_512g           ;
+                        ; iPhone_13_Pro_Max_gold_1024g          ;
+                        ; iPhone_13_Pro_Max_sierrablue_128g     ;
+                        ; iPhone_13_Pro_Max_sierrablue_256g     ;
+                        ; iPhone_13_Pro_Max_sierrablue_512g     ;
+                        ; iPhone_13_Pro_Max_sierrablue_1024g    ;
+
+                        ; samsung_galaxy_S21_phantomgray_128g   ;
+                        ; samsung_galaxy_S21_phantomgray_256g   ;
+                        ; samsung_galaxy_S21_phantomviolet_128g ;
+                        ; samsung_galaxy_S21_phantomviolet_256g ;
+                        ; samsung_galaxy_S21_phantompink_128g   ;
+                        ; samsung_galaxy_S21_phantompink_256g   ;
+                        ; samsung_galaxy_S21_phantomwhite_128g  ;
+                        ; samsung_galaxy_S21_phantomwhite_256g  ;
+
+                        ; samsung_galaxy_S22_phantomblack_128g  ;
+                        ; samsung_galaxy_S22_phantomblack_256g  ;
+                        ; samsung_galaxy_S22_green_128g         ;
+                        ; samsung_galaxy_S22_green_256g         ;
+                        ; samsung_galaxy_S22_pinkgold_128g      ;
+                        ; samsung_galaxy_S22_pinkgold_256g      ;
+                        ; samsung_galaxy_S22_phantomwhite_128g  ;
+                        ; samsung_galaxy_S22_phantomwhite_256g  ;
+# routers
+                        ; router_x                              ;
+                        ; router_x1                             ;
+# media boxes
+                        ; mibox_4g                              ;
+                        ; mibox_5g                              ;
+
+INSERT_UPDATE TmaSimpleProductOffering; code[unique = true]                   ; stockLevels(productCode, warehouse(code[default = 'warehouse_telcospa'])); vendors(code)[default = $vendor]; $catalogVersion
+# Variants
+
+                                      ; iPhone_13_green_128g                  ; iPhone_13_green_128g
+                                      ; iPhone_13_green_256g                  ; iPhone_13_green_256g
+                                      ; iPhone_13_midnight_128g               ; iPhone_13_midnight_128g
+                                      ; iPhone_13_midnight_256g               ; iPhone_13_midnight_256g
+                                      ; iPhone_13_white_128g                  ; iPhone_13_white_128g
+                                      ; iPhone_13_white_256g                  ; iPhone_13_white_256g
+                                      ; iPhone_13_blue_128g                   ; iPhone_13_blue_128g
+                                      ; iPhone_13_blue_256g                   ; iPhone_13_blue_256g
+                                      ; iPhone_13_pink_128g                   ; iPhone_13_pink_128g
+                                      ; iPhone_13_pink_256g                   ; iPhone_13_pink_256g
+                                      ; iPhone_13_red_128g                    ; iPhone_13_red_128g
+                                      ; iPhone_13_red_256g                    ; iPhone_13_red_256g
+
+                                      ; iPhone_13_Pro_Max_silver_128g         ; iPhone_13_Pro_Max_silver_128g
+                                      ; iPhone_13_Pro_Max_silver_256g         ; iPhone_13_Pro_Max_silver_256g
+                                      ; iPhone_13_Pro_Max_silver_512g         ; iPhone_13_Pro_Max_silver_512g
+                                      ; iPhone_13_Pro_Max_silver_1024g        ; iPhone_13_Pro_Max_silver_1024g
+                                      ; iPhone_13_Pro_Max_graphite_128g       ; iPhone_13_Pro_Max_graphite_128g
+                                      ; iPhone_13_Pro_Max_graphite_256g       ; iPhone_13_Pro_Max_graphite_256g
+                                      ; iPhone_13_Pro_Max_graphite_512g       ; iPhone_13_Pro_Max_graphite_512g
+                                      ; iPhone_13_Pro_Max_graphite_1024g      ; iPhone_13_Pro_Max_graphite_1024g
+                                      ; iPhone_13_Pro_Max_alpinegreen_128g    ; iPhone_13_Pro_Max_alpinegreen_128g
+                                      ; iPhone_13_Pro_Max_alpinegreen_256g    ; iPhone_13_Pro_Max_alpinegreen_256g
+                                      ; iPhone_13_Pro_Max_alpinegreen_512g    ; iPhone_13_Pro_Max_alpinegreen_512g
+                                      ; iPhone_13_Pro_Max_alpinegreen_1024g   ; iPhone_13_Pro_Max_alpinegreen_1024g
+                                      ; iPhone_13_Pro_Max_gold_128g           ; iPhone_13_Pro_Max_gold_128g
+                                      ; iPhone_13_Pro_Max_gold_256g           ; iPhone_13_Pro_Max_gold_256g
+                                      ; iPhone_13_Pro_Max_gold_512g           ; iPhone_13_Pro_Max_gold_512g
+                                      ; iPhone_13_Pro_Max_gold_1024g          ; iPhone_13_Pro_Max_gold_1024g
+                                      ; iPhone_13_Pro_Max_sierrablue_128g     ; iPhone_13_Pro_Max_sierrablue_128g
+                                      ; iPhone_13_Pro_Max_sierrablue_256g     ; iPhone_13_Pro_Max_sierrablue_256g
+                                      ; iPhone_13_Pro_Max_sierrablue_512g     ; iPhone_13_Pro_Max_sierrablue_512g
+                                      ; iPhone_13_Pro_Max_sierrablue_1024g    ; iPhone_13_Pro_Max_sierrablue_1024g
+
+                                      ; samsung_galaxy_S21_phantomgray_128g   ; samsung_galaxy_S21_phantomgray_128g
+                                      ; samsung_galaxy_S21_phantomgray_256g   ; samsung_galaxy_S21_phantomgray_256g
+                                      ; samsung_galaxy_S21_phantomviolet_128g ; samsung_galaxy_S21_phantomviolet_128g
+                                      ; samsung_galaxy_S21_phantomviolet_256g ; samsung_galaxy_S21_phantomviolet_256g
+                                      ; samsung_galaxy_S21_phantompink_128g   ; samsung_galaxy_S21_phantompink_128g
+                                      ; samsung_galaxy_S21_phantompink_256g   ; samsung_galaxy_S21_phantompink_256g
+                                      ; samsung_galaxy_S21_phantomwhite_128g  ; samsung_galaxy_S21_phantomwhite_128g
+                                      ; samsung_galaxy_S21_phantomwhite_256g  ; samsung_galaxy_S21_phantomwhite_256g
+
+                                      ; samsung_galaxy_S22_phantomblack_128g  ; samsung_galaxy_S22_phantomblack_128g
+                                      ; samsung_galaxy_S22_phantomblack_256g  ; samsung_galaxy_S22_phantomblack_256g
+                                      ; samsung_galaxy_S22_green_128g         ; samsung_galaxy_S22_green_128g
+                                      ; samsung_galaxy_S22_green_256g         ; samsung_galaxy_S22_green_256g
+                                      ; samsung_galaxy_S22_pinkgold_128g      ; samsung_galaxy_S22_pinkgold_128g
+                                      ; samsung_galaxy_S22_pinkgold_256g      ; samsung_galaxy_S22_pinkgold_256g
+                                      ; samsung_galaxy_S22_phantomwhite_128g  ; samsung_galaxy_S22_phantomwhite_128g
+                                      ; samsung_galaxy_S22_phantomwhite_256g  ; samsung_galaxy_S22_phantomwhite_256g
+# routers
+                                      ; router_x                              ; router_x
+                                      ; router_x1                             ; router_x1
+# media boxes
+                                      ; mibox_4g                              ; mibox_4g
+                                      ; mibox_5g                              ; mibox_5g
+
+INSERT_UPDATE StockLevel; productCode[unique = true]; available[default = 10]; warehouse(code)[unique = true, default = 'warehouse_telcospa']; inStockStatus(code)[default = forceInStock]; maxPreOrder[default = 0]; maxStockLevelHistoryCount[default = -1]; overSelling[default = 0]; preOrder[default = 0]; reserved[default = 0]
+                        ; mobileDeal
+                        ; quadPlay
+                        ; homeComfortDeal
+                        ; homeDeal
+                        ; winterDeal
+                        ; internetDeal
+                        ; tvDeal
+                        ; allInOneDeal
+                        ; homeDealBundle
+
+INSERT_UPDATE StockLevel; productCode[unique = true]; available[default = 10]; warehouse(code)[unique = true, default = 'warehouse_telcospa']; inStockStatus(code)[default = notSpecified]; maxPreOrder[default = 0]; maxStockLevelHistoryCount[default = -1]; overSelling[default = 0]; preOrder[default = 0]; reserved[default = 0]
+                        ; modem_4G                  ;                        ;                                                               ;                                            ;                         ;                                        ;                         ;                      ;
+                        ; modem_5G                  ;                        ;                                                               ;                                            ;                         ;                                        ;                         ;                      ;
+
+INSERT_UPDATE StockLevel; productCode[unique = true]               ; available[default = 10]; warehouse(code)[unique = true, default = 'warehouse_telcospa']; inStockStatus(code)[default = forceInStock]; maxPreOrder[default = 0]; maxStockLevelHistoryCount[default = -1]; overSelling[default = 0]; preOrder[default = 0]; reserved[default = 0]
+#tv plans
+                        ; tv_100                                   ;                        ;                                                               ;                                            ;                         ;                                        ;                         ;                      ;
+                        ; tv_200                                   ;                        ;                                                               ;                                            ;                         ;                                        ;                         ;                      ;
+                        ; tv_unlimited                             ;                        ;                                                               ;                                            ;                         ;                                        ;                         ;                      ;
+#addons
+                        ; installation_service                     ;                        ;                                                               ;                                            ;                         ;                                        ;                         ;                      ;
+                        ; unlimitedNationalCalling                 ;                        ;                                                               ;                                            ;                         ;                                        ;                         ;                      ;
+                        ; unlimitedNationalAndLimitedInternational ;                        ;                                                               ;                                            ;                         ;                                        ;                         ;                      ;
+                        ; smartphone_warranty                      ;                        ;                                                               ;                                            ;                         ;                                        ;                         ;                      ;
+                        ; mobile_hotspot                           ;                        ;                                                               ;                                            ;                         ;                                        ;                         ;                      ;
+                        ; additional_roaming_data                  ;                        ;                                                               ;                                            ;                         ;                                        ;                         ;                      ;
+                        ; eSim                                     ;                        ;                                                               ;                                            ;                         ;                                        ;                         ;                      ;
+
+INSERT_UPDATE TmaSimpleProductOffering; code[unique = true]                      ; stockLevels(productCode, warehouse(code[default = 'warehouse_telcospa'])); vendors(code)[default = $vendor]; $catalogVersion
+                                      ; modem_4G                                 ; modem_4G                                                                 ;                                 ;
+                                      ; modem_5G                                 ; modem_5G                                                                 ;                                 ;
+                                      ; tv_100                                   ; tv_100                                                                   ;                                 ;
+                                      ; tv_200                                   ; tv_200                                                                   ;                                 ;
+                                      ; tv_unlimited                             ; tv_unlimited                                                             ;                                 ;
+                                      ; unlimitedNationalCalling                 ; unlimitedNationalCalling                                                 ;                                 ;
+                                      ; unlimitedNationalAndLimitedInternational ; unlimitedNationalAndLimitedInternational                                 ;                                 ;
+                                      ; installation_service                     ; installation_service                                                     ;                                 ;
+                                      ; smartphone_warranty                      ; smartphone_warranty                                                      ;                                 ;
+                                      ; mobile_hotspot                           ; mobile_hotspot                                                           ;                                 ;
+                                      ; additional_roaming_data                  ; additional_roaming_data                                                  ;                                 ;
+                                      ; eSim                                     ; eSim                                                                     ;                                 ;
+
+INSERT_UPDATE StockLevel; productCode[unique = true]; available[default = 10]; warehouse(code)[unique = true, default = 'warehouse_telcospa']; inStockStatus(code)[default = forceInStock]; maxPreOrder[default = 0]; maxStockLevelHistoryCount[default = -1]; overSelling[default = 0]; preOrder[default = 0]; reserved[default = 0]
+# internet
+                        ; 4gpow                     ;
+                        ; 5gpow                     ;
+# gsm plans
+                        ; gsm_small                 ;
+                        ; gsm_medium                ;
+                        ; gsm_large                 ;
+
+INSERT_UPDATE TmaSimpleProductOffering; code[unique = true]; stockLevels(productCode, warehouse(code[default = 'warehouse_telcospa'])); vendors(code)[default = $vendor]; $catalogVersion
+# internet
+                                      ; 4gpow              ; 4gpow
+                                      ; 5gpow              ; 5gpow
+# gsm plans
+                                      ; gsm_small          ; gsm_small
+                                      ; gsm_medium         ; gsm_medium
+                                      ; gsm_large          ; gsm_large
+

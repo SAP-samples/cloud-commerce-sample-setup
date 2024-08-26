@@ -1,0 +1,72 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+$productCatalog = telcospaProductCatalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+
+INSERT_UPDATE OAuthClientDetails; clientId[unique = true]; resourceIds; scope    ; authorizedGrantTypes                                         ; authorities         ; clientSecret; registeredRedirectUri
+                                ; trusted_client         ; hybris     ; extended ; authorization_code,refresh_token,password,client_credentials ; ROLE_TRUSTED_CLIENT ; secret      ; ;
+                                ; spa_client             ; hybris     ; basic    ; password,client_credentials                                  ; ROLE_CLIENT         ; secret      ; ;
+
+
+INSERT_UPDATE TuaAgreementAuthorization; id[unique = true]    ; date[dateformat = dd.MM.yyyy]; signatureRepresentation; state;
+                                       ; auth_etta_berg       ; 01.01.2020                   ; Etta Berg              ; approved
+                                       ; auth_david_brown     ; 01.01.2020                   ; David Brown            ; approved
+                                       ; auth_emma_smith      ; 01.01.2020                   ; Emma Smith             ; approved
+                                       ; auth_joseph_williams ; 01.01.2020                   ; Joseph Williams        ; approved
+                                       ; auth_ronnie_ray      ; 01.01.2020                   ; Ronnie Ray             ; approved
+                                       ; auth_mark_johnson    ; 01.01.2020                   ; Mark Johnson           ; approved
+
+INSERT_UPDATE TuaAgreementItem; id[unique = true]                ; name[lang = en]                            ; tmaProductOfferings(code, $catalogVersion)
+                              ; GSM_Large_Standalone_BaItem      ; GSM Large Standalone Agreement Item        ; gsm_large
+                              ; GSM_Small_BaItem                 ; GSM Small Agreement Item                   ; gsm_small
+                              ; GSM_Small_BaItem_David_Brown     ; GSM Small David Brown - Agreement Item     ; gsm_small
+                              ; Internet_Standalone_BaItem       ; Internet Standalone Agreement Item         ; fiber_internet
+                              ; HomeDeal_Etta_Berg_BaItem        ; Home Deal Etta Berg - Agreement Item       ; homeDeal
+                              ; MobileDeal_Etta_Berg_BaItem      ; Mobile Deal Etta Berg - Agreement Item     ; mobileDeal
+                              ; GSM_Medium_Emma_Smith_BaItem     ; GSM Medium Emma Smith - Agreement Item     ; gsm_medium
+                              ; GSM_Small_Joseph_Williams_BaItem ; GSM Small Joseph Williams - Agreement Item ; gsm_small
+                              ; HomeDeal_Joseph_Williams_BaItem  ; HomeDeal Joseph Williams Agreement Item    ; homeDeal
+                              ; GSM_Small_Ronnie_Ray_BaItem      ; GSM Small Ronnie Ray Agreement Item        ; gsm_small
+
+
+INSERT_UPDATE TuaParty; id[unique = true]          ; name[lang = en] ; partyRoles(id)  ; principals(uid)
+                      ; mark.johnson@hybris.com    ; Mark Johnson    ; mark.johnson    ; mark.johnson@hybris.com
+                      ; emma.smith@hybris.com      ; Emma Smith      ; emma.smith      ; emma.smith@hybris.com
+                      ; ronnie.ray@hybris.com      ; Ronnie Ray      ; ronnie.ray      ; ronnie.ray@hybris.com
+                      ; joseph.williams@hybris.com ; Joseph Williams ; joseph.williams ; joseph.williams@hybris.com
+                      ; tim.james@hybris.com       ; Tim James       ; tim.james       ; tim.james@hybris.com
+                      ; etta.berg@hybris.com       ; Etta Berg       ; etta.berg       ; etta.berg@hybris.com
+                      ; david.brown@hybris.com     ; David Brown     ; david.brown     ; david.brown@hybris.com
+
+INSERT_UPDATE TuaPartyRole; id[unique = true]; role     ; party(id)
+                          ; mark.johnson     ; customer ; mark.johnson@hybris.com
+                          ; emma.smith       ; customer ; emma.smith@hybris.com
+                          ; ronnie.ray       ; customer ; ronnie.ray@hybris.com
+                          ; joseph.williams  ; customer ; joseph.williams@hybris.com
+                          ; tim.james        ; customer ; tim.james@hybris.com
+                          ; etta.berg        ; customer ; etta.berg@hybris.com
+                          ; david.brown      ; customer ; david.brown@hybris.com
+
+
+INSERT_UPDATE Customer; originalUid[unique = true] ; uid[unique = true]         ; customerID                 ; name            ; groups(uid)   ; Europe1PriceFactory_UPG(code)
+                      ; mark.johnson@hybris.com    ; mark.johnson@hybris.com    ; mark.johnson@hybris.com    ; Mark Johnson    ; customergroup ;
+                      ; emma.smith@hybris.com      ; emma.smith@hybris.com      ; emma.smith@hybris.com      ; Emma Smith      ; customergroup ;
+                      ; ronnie.ray@hybris.com      ; ronnie.ray@hybris.com      ; ronnie.ray@hybris.com      ; Ronnie Ray      ; customergroup ;
+                      ; joseph.williams@hybris.com ; joseph.williams@hybris.com ; joseph.williams@hybris.com ; Joseph Williams ; customergroup ;
+                      ; tim.james@hybris.com       ; tim.james@hybris.com       ; tim.james@hybris.com       ; Tim James       ; customergroup ;
+                      ; etta.berg@hybris.com       ; etta.berg@hybris.com       ; etta.berg@hybris.com       ; Etta Berg       ; customergroup ;
+                      ; david.brown@hybris.com     ; david.brown@hybris.com     ; david.brown@hybris.com     ; David Brown     ; customergroup ;
+
+
+INSERT_UPDATE TuaAgreement; id[unique = true]                      ; name[lang = en]                        ; agreementItems(id)               ; status(code); agreementType(code); agreementStartDateTime[dateformat = dd.MM.yyyy]; agreementEndDateTime[dateformat = dd.MM.yyyy]; documentNumber; statementOfIntent           ; agreementAuthorizations(id); partyRoles(id)
+                          ; gsm_contract_12_6_2021                 ; gsm_contract_12_6_2021                 ; GSM_Small_BaItem                 ; APPROVED    ; COMMERCIAL         ; 01.01.2020                                     ; 01.01.2022                                   ; 14            ; Agreement on minimum prices ;                            ;
+                          ; gsm_contract_12_6_2021_David_Brown     ; gsm_contract_12_6_2021_David_Brown     ; GSM_Small_BaItem_David_Brown     ; APPROVED    ; COMMERCIAL         ; 01.01.2020                                     ; 01.01.2022                                   ; 15            ; Agreement on minimum prices ; auth_david_brown           ; david.brown
+                          ; gsm_contract_emma_smith                ; gsm_contract_emma_smith                ; GSM_Medium_Emma_Smith_BaItem     ; APPROVED    ; COMMERCIAL         ; 12.09.2021                                     ; 12.09.2022                                   ; 16            ; Agreement on minimum prices ; auth_emma_smith            ; emma.smith
+                          ; gsm_contract_joseph_williams           ; gsm_contract_joseph_williams           ; GSM_Small_Joseph_Williams_BaItem ; APPROVED    ; COMMERCIAL         ; 01.01.2020                                     ; 01.01.2022                                   ; 17            ; Agreement on minimum prices ; auth_joseph_williams       ; joseph.williams
+                          ; internet_standalone_contract_etta_berg ; internet_standalone_contract_etta_berg ; Internet_Standalone_BaItem       ; APPROVED    ; COMMERCIAL         ; 12.08.2021                                     ; 12.08.2022                                   ; 18            ; Agreement on minimum prices ; auth_etta_berg             ; etta.berg
+                          ; mobileDeal_contract_etta_berg          ; mobileDeal_contract_etta_berg          ; MobileDeal_Etta_Berg_BaItem      ; APPROVED    ; COMMERCIAL         ; 14.06.2022                                     ; 13.06.2025                                   ; 22            ; Agreement on minimum prices ; auth_etta_berg             ; etta.berg
+                          ; homeDeal_contract_etta_berg            ; homeDeal_contract_etta_berg            ; HomeDeal_Etta_Berg_BaItem        ; APPROVED    ; COMMERCIAL         ; 14.06.2022                                     ; 13.06.2025                                   ; 23            ; Agreement on minimum prices ; auth_etta_berg             ; etta.berg
+                          ; gsm_contract_ronnie_ray                ; gsm_contract_ronnie_ray                ; GSM_Small_Ronnie_Ray_BaItem      ; APPROVED    ; COMMERCIAL         ; 01.01.2020                                     ; 01.01.2022                                   ; 19            ; Agreement on minimum prices ; auth_ronnie_ray            ; ronnie.ray
+                          ; gsm_contract_mark_johnson              ; gsm_contract_mark_johnson              ; GSM_Large_Standalone_BaItem      ; APPROVED    ; COMMERCIAL         ; 13.10.2022                                     ; 13.10.2025                                   ; 10            ; Agreement on minimum prices ; auth_mark_johnson          ; mark.johnson

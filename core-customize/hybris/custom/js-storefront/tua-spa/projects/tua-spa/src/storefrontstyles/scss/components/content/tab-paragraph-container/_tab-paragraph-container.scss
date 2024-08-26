@@ -1,0 +1,21 @@
+%cx-tab-paragraph-container {
+  > div > button {
+    height: auto;
+    white-space: normal;
+
+    @include media-breakpoint-down(sm) {
+      padding-inline-end: 8%;
+      &.active{
+        &:after{
+          width: 113%;
+        }
+      }
+      &:hover{
+        &:after{
+          width: 113%;
+        }
+      }
+    }
+    
+  }
+}

@@ -1,0 +1,418 @@
+@import "@spartacus/styles/scss/mixins";
+
+.SelfcarePageTemplate {
+
+  cx-page-slot.BodyContent {
+    max-width: var(--cx-page-width-max);
+    padding-inline-end: 1.5rem;
+    padding-bottom: 3rem;
+    padding-inline-start: 1.5rem;
+    margin: auto;
+  }
+
+  .cx-selfcare-list,
+  .cx-billing-accounts-list,
+  .cx-billing-agreements-list,
+  .cx-customer-bills-list,
+  .main {
+    --list-bg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' version='1.1' viewBox='0 0 44.21 69.76'%3E%3Cpolyline fill='none' stroke='%238E949F' stroke-width='10' points='5,5 35,35 5,65 '/%3E%3C/svg%3E%0A");
+    --list-bg-pos: calc(100% - 26px) 50%;
+  }
+
+  cx-selfcare-banner {
+    flex: 0 0 calc(32% - 10px);
+    box-sizing: border-box;
+    margin: 40px 9px 0px 9px;
+
+    cx-generic-link,
+    a {
+      height: 100%;
+    }
+
+    a {
+      display: grid;
+      grid-template-columns: 60px 1fr;
+      grid-template-rows: min-content 1fr;
+      gap: 3% 30px;
+      grid-template-areas: "media ." "media .";
+
+      padding: 25px 25px 25px 30px;
+      border-radius: 9px;
+
+      border: solid 2px var(--cx-color-light);
+      &:hover {
+        text-decoration: none;
+        border-color: var(--cx-color-background);
+        background: var(--cx-color-background);
+      }
+
+      cx-media {
+        grid-area: media;
+        img {
+          filter: var(--cx-img-filter);
+          width: 50px;
+          height: 50px;
+        }
+      }
+
+      p {
+        color: var(--cx-color-text);
+        &.headline {
+          font-weight: bold;
+        }
+      }
+    }
+  }
+
+  cx-table.vertical table {
+    border-top: 1px solid var(--cx-color-light);
+    border-bottom: 1px solid var(--cx-color-light);
+  }
+
+  cx-table table td {
+    padding: 0 !important;
+  }
+
+  cx-table thead {
+    pointer-events: none;
+  }
+
+  cx-table thead th {
+    padding-inline-start: 22px;
+  }
+
+  cx-table tr {
+    cursor: pointer;
+  }
+
+  cx-table tr td.id {
+    background-position: calc(100% - 0px) 50% !important;
+  }
+
+  cx-table.vertical tr:hover:not(.is-current) {
+    background-color: var(--cx-color-background);
+  }
+
+  cx-table .status a {
+    text-decoration: none;
+  }
+
+  cx-table .paymentStatus a {
+    text-decoration: none;
+  }
+
+  cx-table .state a {
+    text-decoration: none;
+  }
+
+  cx-table cx-selfcare-cell a {
+    text-decoration: none !important;
+    color: var(--cx-color-text) !important;
+    padding-inline-end: 20px;
+
+    span.text {
+      text-transform: lowercase;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    span.text::first-letter{
+      text-transform: uppercase;
+    }
+  }
+
+  @include media-breakpoint-down(sm) {
+    cx-table {
+      tr {
+        td.name cx-selfcare-toggle-link-cell a {
+          padding-inline-start: 0px;
+        }
+      }
+
+      cx-selfcare-cell a {
+        padding-inline-start: 0px;
+      }
+    }
+  }
+
+  cx-table .status span.is-active {
+    color: var(--cx-color-success);
+    text-transform: uppercase;
+  }
+
+  cx-table .paymentStatus span.is-active {
+    color: var(--cx-color-success);
+    text-transform: uppercase;
+  }
+
+  cx-table .state span.is-active {
+    color: var(--cx-color-success);
+  }
+
+  cx-table td a {
+    padding-inline-start: 20px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: 70px;
+    text-decoration: underline;
+    color: var(--cx-color-primary);
+  }
+
+  cx-table.vertical tr td:last-child {
+    background-image: var(--list-bg);
+    background-position: var(--list-bg-pos);
+    background-repeat: no-repeat;
+    background-size: 12px;
+  }
+
+  .cx-billing-accounts-list,
+  .cx-customer-bills-list {
+    min-height: 1060px;
+  }
+
+  cx-table.vertical tr.is-current {
+    outline: solid 3px var(--cx-color-primary);
+    outline-offset: -3px;
+    background: var(--cx-color-background-focus);
+  }
+
+  cx-selfcare-table .content-wrapper {
+    display: contents;
+  }
+
+  cx-table cx-selfcare-toggle-link-cell button.tree-item-toggle {
+    margin-inline-start: -20px;
+    border: none;
+    background-color: initial;
+  }
+
+  cx-selfcare-toggle-link-cell {
+    padding-inline-start: calc((var(--cx-depth-level) + 1) * 20px);
+  }
+
+  cx-split-view cx-view {
+    margin-top: 25px;
+  }
+
+  cx-view {
+    &:not([position="0"]) {
+      display: flex;
+    }
+  }
+
+  cx-split-view:not([active-view="1"]) cx-view[position="0"] {
+    padding-inline-end: var(--cx-split-gutter);
+    border-inline-end: solid 0 var(--cx-color-light);
+    border-inline-end-width: calc(min(var(--cx-active-view) - 1, 1) * 1px);
+  }
+
+  cx-split-view:not([active-view="1"]) .cx-selfcare-list table {
+    th,
+    td {
+      &.id {
+        opacity: 0;
+        width: 0.1%;
+      }
+      // let's make status column smaller
+      &.status {
+        width: 120px;
+      }
+    }
+  }
+
+  cx-split-view:not([active-view="1"]) .cx-billing-accounts-list table {
+    th,
+    td {
+      &.id {
+        opacity: 0;
+        width: 0.1%;
+      }
+      // let's make status column smaller
+      &.status {
+        width: 120px;
+      }
+    }
+  }
+
+  .card .main {
+    position: relative;
+    min-height: 660px;
+    background: var(--cx-color-background);
+  }
+
+  cx-account-balance .card .main,
+  cx-bill-structure .card .main,
+  cx-billing-contact .card .main,
+  cx-credit-limit .card .main,
+  cx-payment-plan .card .main,
+  cx-related-party .card .main {
+    min-height: 905px;
+  }
+
+  cx-selfcare-card section {
+    display: flex;
+    margin: 40px;
+    background-color: var(--cx-color-inverse);
+    border: 1px solid var(--cx-color-light);
+  }
+
+  cx-selfcare-card .details {
+    padding-top: 30px;
+    padding-inline-start: 30px;
+    padding-inline-end: 10px;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  label {
+    max-width: 100%;
+    padding-inline-end: 20px;
+    padding-bottom: 10px;
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  cx-selfcare-card .property {
+    flex: 50%;
+    margin-bottom: 30px;
+    word-break: break-word;
+    padding-right: 20px;
+  }
+
+  cx-selfcare-card .value {
+    font-size: 16px;
+    display: block;
+    padding-inline-end: 20px;
+  }
+
+  .main .link-list {
+    display: flex;
+    flex-direction: column;
+    a {
+      padding: 25px 30px;
+      justify-content: flex-start;
+      min-height: 74px;
+
+      &:not(:last-child) {
+        border-bottom: solid 1px var(--cx-color-light);
+      }
+      background-image: var(--list-bg);
+      background-repeat: no-repeat;
+      background-size: 12px;
+      background-position: var(--list-bg-pos);
+
+      &:hover:not(.is-current) {
+        background-color: var(--cx-color-background);
+      }
+      // highlight current items
+      &.is-current {
+        outline: solid 3px var(--cx-color-primary);
+        outline-offset: -3px;
+        background-color: var(--cx-color-background-focus);
+      }
+    }
+  }
+
+  .cardSection {
+    flex-direction: column;
+  }
+
+  .activeLink {
+    display: flex;
+    width: 100%;
+  }
+
+  .agreement {
+    width: 100%;
+  }
+
+  .sectionDetails {
+    width: 100%;
+    display: flex;
+    cursor: pointer;
+    &:hover {
+      background-color: var(--cx-color-background);
+    }
+    &:not(:last-child) {
+      border-bottom: solid 1px var(--cx-color-light);
+    }
+  }
+
+  .sectionItem {
+    width: 100%;
+    display: flex;
+  }
+
+  .cardItems {
+    height: 60px;
+    &:not(:last-child) {
+      border-bottom: solid 1px var(--cx-color-light);
+    }
+  }
+
+  .cardItems .sectionValue {
+    position: relative;
+    a {
+      display: flex;
+      padding: 18px;
+    }
+  }
+
+  .cardDetails {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    &:hover {
+      background-color: var(--cx-color-background);
+    }
+    &:not(:last-child) {
+      border-bottom: solid 1px var(--cx-color-light);
+    }
+  }
+
+  .sectionDetails label {
+    flex: 1;
+    cursor: pointer;
+    color: black;
+    padding: 18px;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  .sectionDetails .value {
+    flex: 1;
+    padding: 18px;
+    text-align: right;
+  }
+
+  .sectionDetails .sectionValue,
+  .sectionItem .sectionValue {
+    flex: 1;
+    a {
+      display: flex;
+      padding: 18px;
+    }
+  }
+
+  .sectionItem .value {
+    flex: 1;
+    padding: 18px;
+  }
+
+  .sectionItem .roleValue {
+    color: #ff0000;
+    padding: 18px;
+    flex: 1;
+  }
+
+  .is-empty {
+    position: relative;
+    top: 11px;
+    left: 12px;
+  }
+}

@@ -1,0 +1,50 @@
+<div class="container px-0">
+  <ng-container *ngIf="component.data$ | async as data">
+    <ng-container
+      *ngIf="getAddressFromState() | async as queryServiceQualification; else noAddress"
+    >
+      <ng-container *ngIf="queryServiceQualification?.address[0] as installationAddress;  else noAddress">
+      <div class="row mx-auto d-flex justify-content-center w-100">
+        <div class="col-8">
+          <div class="row mx-auto d-flex justify-content-center">
+            <span class="headerText">
+              {{ 'serviceability.belowOfferingsAvailable' | cxTranslate }}
+            </span>
+          </div>
+          <div class="row mx-auto d-flex justify-content-center mt-2">
+            <span class="address">
+              {{ installationAddress.streetName }},&nbsp;
+              <span *ngIf="installationAddress.streetNr">{{ installationAddress.streetNr }},&nbsp;</span>
+              {{ installationAddress.city }},&nbsp;
+              {{ installationAddress.country }},&nbsp;
+              {{ installationAddress.postcode }}
+            </span>
+          </div>
+          <div class="row mx-auto d-flex justify-content-center mt-2">
+            <button
+              type="button" #element
+              class="btn btn-primary btn-sm text-uppercase"
+              (click)="displayAddressForm()"
+            >
+              {{ 'serviceability.changeAddress' | cxTranslate }}
+            </button>
+          </div>
+        </div>
+      </div>
+      </ng-container>
+    </ng-container>
+    <ng-template #noAddress>
+      <div class="row mx-auto d-flex justify-content-center w-100">
+        <div class="col-8 col-sm-6 col-md-5 margin-leftTop">
+          <button
+            type="button"
+            class="btn btn-primary btn-block text-uppercase"
+            (click)="displayAddressForm()"
+          >
+            {{ 'serviceability.checkOfferings' | cxTranslate }}
+          </button>
+        </div>
+      </div>
+    </ng-template>
+  </ng-container>
+</div>

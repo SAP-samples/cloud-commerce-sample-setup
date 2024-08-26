@@ -1,0 +1,75 @@
+@import "@spartacus/styles/scss/mixins";
+
+.cx-product-image-container {
+  display: block;
+  text-align: center;
+}
+
+.cx-product-image {
+  width: 100%;
+}
+
+.cx-product-name {
+  @include type('5');
+  text-align: left;
+  display: block;
+  margin: 0 0 3px 0;
+  color: var(--cx-color-dark);
+  text-decoration: none;
+
+  &:hover {
+    color: var(--cx-color-primary);
+  }
+
+  @include media-breakpoint-down(md) {
+    font-size: 0.96rem;
+  }
+}
+
+.cx-product-price {
+  @include type('3');
+  text-align: left;
+  margin: 15px 0 0 0;
+  display: flex;
+  flex-direction: column;
+
+  div {
+    font-weight: 400;
+    font-size: 0.85rem;
+
+    @include media-breakpoint-down(md) {
+      font-size: 0.7rem;
+    }
+  }
+
+  &.old {
+    color: var(--cx-color-secondary);
+    text-decoration: line-through;
+  }
+
+  &.new {
+    margin: 0 0 0 5px;
+    color: var(--cx-color-primary);
+  }
+
+  @include media-breakpoint-down(md) {
+    font-size: 1.1rem;
+  }
+}
+
+.cx-variant-style-icons {
+  display: block;
+  margin-top: 1rem;
+}
+
+.cx-selected-product {
+  position: absolute;
+  right: 0;
+  top: -5px;
+  z-index: 1000;
+
+  span {
+    color: orange;
+    font-size: 30px;
+  }
+}

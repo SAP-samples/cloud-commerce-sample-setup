@@ -1,0 +1,18 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# Impex for SBG Subscription Terms - en
+
+# Macros / Replacement Parameter definitions
+$lang = en
+
+
+# Impex for B2B Telco Subscription Terms - en
+
+UPDATE SubscriptionTerm; id[unique = true]; name[lang = $lang]
+                       ; none             ; No contract
+                       ; monthly_1        ; 1 Month - monthly billing
+                       ; monthly_12       ; 12 Months - monthly billing
+                       ; monthly_24       ; 24 Months - monthly billing
+                       ; monthly_36       ; 36 Months - monthly billing

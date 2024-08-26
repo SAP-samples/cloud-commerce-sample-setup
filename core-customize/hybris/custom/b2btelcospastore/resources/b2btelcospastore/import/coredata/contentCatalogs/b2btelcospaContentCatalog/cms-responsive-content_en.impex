@@ -1,0 +1,73 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+#
+# Import CMS content for the B2B Telco SPA site
+#
+
+$contentCatalog = b2btelcospaContentCatalog
+$contentCV = catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]), CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+
+# Language
+$lang = en
+
+
+# Content Pages
+
+UPDATE ContentPage; $contentCV[unique = true]; uid[unique = true]                   ; title[lang = $lang]
+                  ;                          ; account                              ; "My Account"
+                  ;                          ; add-edit-address                     ; "Add/Edit Address"
+                  ;                          ; address-book                         ; "Address Book"
+                  ;                          ; cartPage                             ; "Your Shopping Cart"
+                  ;                          ; checkout-login                       ; "Proceed to Checkout"
+                  ;                          ; faq                                  ; "Frequently Asked Questions"
+                  ;                          ; homepage                             ; "Homepage"
+                  ;                          ; importCSVSavedCartPage               ; "Import Saved Cart"
+                  ;                          ; login                                ; "Login"
+                  ;                          ; guidedSellingPage                    ; "Configured Guided Selling"
+                  ;                          ; multiStepCheckoutSummaryPage         ; "Checkout"
+                  ;                          ; my-quotes                            ; "Quotes"
+                  ;                          ; my-replenishment-cancel-confirmation ; "Replenishment Cancel Confirmation"
+                  ;                          ; my-replenishment-details             ; "Replenishment Order Details"
+                  ;                          ; my-replenishment-orders              ; "Replenishment Orders"
+                  ;                          ; notFound                             ; "Not Found"
+                  ;                          ; order                                ; "Order Details"
+                  ;                          ; order-approval-dashboard             ; "Order Approval Dashboard Page"
+                  ;                          ; order-approval-details               ; "Order Approval Details Page"
+                  ;                          ; orderConfirmationPage                ; "Order Confirmation"
+                  ;                          ; orderExpired                         ; "Order Expired Page"
+                  ;                          ; orders                               ; "Order History"
+                  ;                          ; payment-details                      ; "Payment Details"
+                  ;                          ; profile                              ; "Profile"
+                  ;                          ; quickOrderPage                       ; "Quick Order"
+                  ;                          ; quote-detail                         ; "My Quote Details"
+                  ;                          ; quoteEditPage                        ; "Quote Edit"
+                  ;                          ; replenishmentConfirmationPage        ; "Replenishment Confirmation"
+                  ;                          ; saved-carts                          ; "Saved Carts"
+                  ;                          ; savedCartDetailsPage                 ; "Saved Cart Details"
+                  ;                          ; search                               ; "Search Results List Page"
+                  ;                          ; searchAdvancedEmpty                  ; "Order Forms"
+                  ;                          ; searchEmpty                          ; "No Results"
+                  ;                          ; searchGrid                           ; "Search Results Grid Page"
+                  ;                          ; storefinderPage                      ; "StoreFinder"
+                  ;                          ; termsAndConditions                   ; "Terms and Conditions"
+                  ;                          ; update-email                         ; "Update Email"
+                  ;                          ; update-profile                       ; "Update Profile"
+                  ;                          ; updatePassword                       ; "Update Forgotten Password"
+                  ;                          ; satellite                            ; "Satellite Services"
+                  ;                          ; specialOffers                        ; "Special Offers"
+
+
+# Category Pages
+
+UPDATE CategoryPage; $contentCV[unique = true]; uid[unique = true]; title[lang = $lang]
+                   ;                          ; category          ; "Default Category Page"
+                   ;                          ; productGrid       ; "Product Grid"
+                   ;                          ; productList       ; "Product List"
+
+
+# Product Pages
+
+UPDATE ProductPage; $contentCV[unique = true]; uid[unique = true]; title[lang = $lang]
+                  ;                          ; productDetails    ; "Product Details"
+

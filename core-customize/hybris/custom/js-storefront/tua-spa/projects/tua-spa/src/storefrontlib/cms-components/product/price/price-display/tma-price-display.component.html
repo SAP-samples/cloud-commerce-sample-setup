@@ -1,0 +1,43 @@
+<div class="row mx-auto ht-250">
+  <ul [ngClass]="{'listNone': list.length === 1 && !list[0].bundledPop}" [attr.aria-label]="'productDetails.price.common.newItemPrice' | cxTranslate">
+    <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: list }"></ng-container>
+  </ul>
+  <ng-template #recursiveListTmpl let-list="list">
+    <li *ngFor="let item of getSortedList(list)" aria-disabled="true">
+      <span [ngClass]="{'discountedPriceColor': item.chargeType === 'discount'}" *ngIf="!item.isBundle">
+        <span *ngIf="item.chargeType === 'oneTime'">
+          <cx-one-time-charge [oneTimeCharge]="item"></cx-one-time-charge>
+          <ng-container *ngTemplateOutlet="discountPopRelationship; context:{ pop: item }"></ng-container>
+        </span>
+        <span *ngIf="item.chargeType === 'recurring'">
+          <cx-recurring-charge [recurringCharge]="item"></cx-recurring-charge>
+          <ng-container *ngTemplateOutlet="discountPopRelationship; context:{ pop: item }"></ng-container>
+        </span>
+        <span *ngIf="item.chargeType === 'usage'">
+          <cx-usage-charge [usageCharge]="item"></cx-usage-charge>
+          <ng-container *ngTemplateOutlet="discountPopRelationship; context:{ pop: item }"></ng-container>
+        </span>
+        <span *ngIf="item.chargeType === 'discount'">
+          <cx-alteration-details [alteration]="item"></cx-alteration-details>
+        </span>
+      </span>
+      <span *ngIf="item.isBundle">{{ item.name }}
+        <span *ngIf="item.usageType">({{'productDetails.price.usageCharge.usageTypes.usageType' | cxTranslate: {context: item.usageType}  }})</span>
+      </span>
+      <ul *ngIf="item.bundledPop && item.bundledPop.length > 0">
+        <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: item.bundledPop }">
+        </ng-container>
+      </ul>
+    </li>
+  </ng-template>
+</div>
+
+<ng-template #discountPopRelationship let-pop=pop>
+  <ng-container *ngIf="checkForDiscountPopRelationship()">
+    <ng-container *ngFor="let item of getApplicableDiscountsForChild(pop)">
+      <li>
+        <cx-alteration-details [ngClass]="{'discountedPriceColor': item.chargeType === 'discount'}" [alteration]="item"></cx-alteration-details>
+      </li>
+    </ng-container>
+  </ng-container>
+</ng-template>

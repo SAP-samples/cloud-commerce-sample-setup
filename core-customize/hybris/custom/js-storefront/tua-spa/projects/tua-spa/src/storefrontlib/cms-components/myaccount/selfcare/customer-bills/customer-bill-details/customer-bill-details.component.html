@@ -1,0 +1,82 @@
+<cx-selfcare-card
+  *ngIf="model$ | async as model"
+  i18nRoot="{{ domainType }}"
+  [showHint]="true"
+  subtitle="{{ 'selfcare.customerBills.subtitle' | cxTranslate }}"
+>
+  <section main class="details">
+    <div class="property">
+      <label>{{ 'selfcare.customerBills.number' | cxTranslate }}</label>
+      <span class="value">
+        {{ model.billNo }}
+      </span>
+    </div>
+    <div class="property">
+      <label>{{ 'selfcare.customerBills.id' | cxTranslate }}</label>
+      <span class="value">
+        {{ model.id }}
+      </span>
+    </div>
+    <div class="property">
+      <label>{{ 'selfcare.customerBills.category' | cxTranslate }}</label>
+      <span class="value">
+        {{ model.category }}
+      </span>
+    </div>
+    <div class="property">
+      <label>{{ 'selfcare.customerBills.state' | cxTranslate }}</label>
+      <span class="value">
+        {{ model.state }}
+      </span>
+    </div>
+    <div class="property">
+      <label>{{ 'selfcare.customerBills.paymentDueDate' | cxTranslate }}</label>
+      <span class="value">
+        {{ model.paymentDueDate }}
+      </span>
+    </div>
+    <div class="property">
+      <label>{{ 'selfcare.customerBills.nextBillDate' | cxTranslate }}</label>
+      <span class="value">
+        {{ model.nextBillDate }}
+      </span>
+    </div>
+    <div class="property">
+      <label>{{ 'selfcare.customerBills.amountDue' | cxTranslate }}</label>
+      <ng-container *ngIf="model.amountDue && model.amountDue.value">
+        <span class="value">
+        {{ model.amountDue.value }}
+                {{
+                'common.currencies.currency'
+                        | cxTranslate: { context: model.amountDue.unit }
+                }}
+        </span>
+      </ng-container>
+    </div>
+  </section>
+
+  <section main class="link-list">
+    <ng-container *ngIf="model.id">
+      <a class="link" [routerLink]="
+          { cxRoute: 'CustomerBillsBillDocuments', params: model } | cxUrl
+        " routerLinkActive="is-current">
+        {{ 'selfcare.customerBills.details.billDocument.title' | cxTranslate }}
+      </a>
+      <a class="link" [routerLink]="
+          { cxRoute: 'CustomerBillsAccount', params: model } | cxUrl
+        " routerLinkActive="is-current">
+        {{ 'selfcare.customerBills.details.account.title' | cxTranslate }}
+      </a>
+      <a
+        class="link"
+        [routerLink]="{ cxRoute: 'CustomerBillsRelatedParty', params: model } | cxUrl"
+        routerLinkActive="is-current"
+      >
+        {{
+        'selfcare.customerBills.details.relatedParty.title' | cxTranslate
+        }}
+      </a>
+    </ng-container>
+  </section>
+
+</cx-selfcare-card>

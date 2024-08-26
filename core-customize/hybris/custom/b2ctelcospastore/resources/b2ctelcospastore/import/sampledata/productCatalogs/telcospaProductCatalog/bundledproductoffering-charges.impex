@@ -1,0 +1,131 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Importing Prices for Telco products
+
+$productCatalog = telcospaProductCatalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[default = '$productCatalog:Staged']
+$defaultBillingEvent = billingEvent(code)[default = 'paynow']
+$currency = currency(isocode)[default = USD]
+$unit = unit(code)[default = pieces]
+$product = product(code, $catalogVersion)[unique = true]
+$processTypes = processTypes(code)[unique = true]
+$distributionChannels = distributionChannels(code)
+$subscriptionTerms = subscriptionTerms(id)[unique = true]
+$oneTimeChargeEntries = oneTimeChargeEntries(id, $catalogVersion)
+$recurringChargeEntries = recurringChargeEntries(id, $catalogVersion)
+$prices = @Europe1prices[translator = de.hybris.platform.b2ctelcoservices.dataimport.batch.price.TmaPriceRowTranslator]
+$europe1pricefactory_ptg = Europe1PriceFactory_PTG(code)[default = us-sales-tax-full]
+$lang = en
+
+
+###########################################################
+### BUNDLED PRODUCT OFFERING CHARGES OF PRICE OVERRIDES ###
+##########################################################
+
+#################################################################################
+### subsidising iPhone X (one-time-charges) when bought with a CLASS of plans ###
+#################################################################################
+INSERT_UPDATE OneTimeChargeEntry; id[unique = true]     ; subscriptionPricePlanOneTime(name[lang = $lang], $catalogVersion); price; $defaultBillingEvent; $catalogVersion[unique = true]
+                                ; otce_iPhoneX_acq_mid  ; pp_mobileDeal_override_iPhonex_mid_acq                           ; 809
+                                ; otce_iPhoneX_acq_high ; pp_mobileDeal_override_iPhonex_high_acq                          ; 789
+
+#####################################################################
+### subsidising iPhone (one-time-charges) when bought with unlimitedStarterPlan ###
+#####################################################################
+INSERT_UPDATE OneTimeChargeEntry; id[unique = true]                            ; subscriptionPricePlanOneTime(name[lang = $lang], $catalogVersion); price; $catalogVersion[unique = true]; $defaultBillingEvent
+                                ; otce_Apple_iPhone_6_acq                      ; pp_mobileDeal_override_iPhone6_unlimitedStarterPlan_acq          ; 549
+                                ; otce_Apple_iPhone_6_unlimitedStarterPlan_ret ; pp_mobileDeal_override_iPhone6_unlimitedStarterPlan_ret          ; 449
+                                ; otce_Apple_iPhone_6_unlimitedPremiumPlan_ret ; pp_mobileDeal_override_iPhone6_unlimitedPremiumPlan_ret          ; 449
+                                ; otce_Apple_iPhone_6_mnp                      ; pp_mobileDeal_override_iPhone6_unlimitedStarterPlan_mnp          ; 399
+
+                                ; otce_Apple_iPhone_8_acq                      ; pp_mobileDeal_override_iPhone8_unlimitedStarterPlan_acq          ; 749
+                                ; otce_Apple_iPhone_8_ret                      ; pp_mobileDeal_override_iPhone8_unlimitedStarterPlan_ret          ; 709
+                                ; otce_Apple_iPhone_8_mnp                      ; pp_mobileDeal_override_iPhone8_unlimitedStarterPlan_mnp          ; 599
+
+                                ; otce_Apple_iPhone_x_acq                      ; pp_mobileDeal_override_iPhonex_unlimitedStarterPlan_acq          ; 849
+                                ; otce_Apple_iPhone_x_ret                      ; pp_mobileDeal_override_iPhonex_unlimitedStarterPlan_ret          ; 809
+                                ; otce_Apple_iPhone_x_mnp                      ; pp_mobileDeal_override_iPhonex_unlimitedStarterPlan_mnp          ; 799
+
+##############################################
+### creating charges for home-deal M offers ###
+##############################################
+INSERT_UPDATE RecurringChargeEntry; id[unique = true]                      ; subscriptionPricePlanRecurring(name[lang = $lang], $catalogVersion); price; cycleStart; cycleEnd; $catalogVersion[unique = true]
+# retention charges # internet overrides # recurring charges
+                                  ; rce_homeDeal_override_ret_int500_1_03  ; pp_homeDeal_override_ret_int500_1                                  ; 10   ; 0         ; 3
+                                  ; rce_homeDeal_override_ret_int500_1_3x  ; pp_homeDeal_override_ret_int500_1                                  ; 18   ; 3         ;
+                                  ; rce_homeDeal_override_ret_int500_2_03  ; pp_homeDeal_override_ret_int500_2                                  ; 10   ; 0         ; 3
+                                  ; rce_homeDeal_override_ret_int500_2_3x  ; pp_homeDeal_override_ret_int500_2                                  ; 18   ; 3         ;
+                                  ; rce_homeDeal_override_ret_int500_3_03  ; pp_homeDeal_override_ret_int500_3                                  ; 10   ; 0         ; 3
+                                  ; rce_homeDeal_override_ret_int500_3_3x  ; pp_homeDeal_override_ret_int500_3                                  ; 16   ; 3         ;
+                                  ; rce_homeDeal_override_ret_int500_4_03  ; pp_homeDeal_override_ret_int500_4                                  ; 10   ; 0         ; 3
+                                  ; rce_homeDeal_override_ret_int500_4_3x  ; pp_homeDeal_override_ret_int500_4                                  ; 16   ; 3         ;
+                                  ; rce_homeDeal_override_ret_int1000_1_03 ; pp_homeDeal_override_ret_int1000_1                                 ; 10   ; 0         ; 3
+                                  ; rce_homeDeal_override_ret_int1000_1_3x ; pp_homeDeal_override_ret_int1000_1                                 ; 28   ; 3         ;
+                                  ; rce_homeDeal_override_ret_int1000_2_03 ; pp_homeDeal_override_ret_int1000_2                                 ; 10   ; 0         ; 3
+                                  ; rce_homeDeal_override_ret_int1000_2_3x ; pp_homeDeal_override_ret_int1000_2                                 ; 28   ; 3         ;
+                                  ; rce_homeDeal_override_ret_int1000_3_03 ; pp_homeDeal_override_ret_int1000_3                                 ; 10   ; 0         ; 3
+                                  ; rce_homeDeal_override_ret_int1000_3_3x ; pp_homeDeal_override_ret_int1000_3                                 ; 26   ; 3         ;
+                                  ; rce_homeDeal_override_ret_int1000_4_03 ; pp_homeDeal_override_ret_int1000_4                                 ; 10   ; 0         ; 3
+                                  ; rce_homeDeal_override_ret_int1000_4_3x ; pp_homeDeal_override_ret_int1000_4                                 ; 26   ; 3         ;
+
+# acquisition charges # tv overrides # recurring charges
+                                  ; rce_homeDeal_override_acq_tv300_1_03   ; pp_homeDeal_override_acq_tv300_1                                   ; 10   ; 0         ; 3
+                                  ; rce_homeDeal_override_acq_tv300_1_3x   ; pp_homeDeal_override_acq_tv300_1                                   ; 24   ; 3         ;
+                                  ; rce_homeDeal_override_acq_tv300_2_03   ; pp_homeDeal_override_acq_tv300_2                                   ; 10   ; 0         ; 3
+                                  ; rce_homeDeal_override_acq_tv300_2_3x   ; pp_homeDeal_override_acq_tv300_2                                   ; 24   ; 3         ;
+
+# retention charges # tv overrides # recurring charges
+                                  ; rce_homeDeal_override_ret_tv300_1_03   ; pp_homeDeal_override_ret_tv300_1                                   ; 10   ; 0         ; 3
+                                  ; rce_homeDeal_override_ret_tv300_1_3x   ; pp_homeDeal_override_ret_tv300_1                                   ; 28   ; 3         ;
+                                  ; rce_homeDeal_override_ret_tv300_2_03   ; pp_homeDeal_override_ret_tv300_2                                   ; 10   ; 0         ; 3
+                                  ; rce_homeDeal_override_ret_tv300_2_3x   ; pp_homeDeal_override_ret_tv300_2                                   ; 28   ; 3         ;
+                                  ; rce_homeDeal_override_ret_tv300_3_03   ; pp_homeDeal_override_ret_tv300_3                                   ; 10   ; 0         ; 3
+                                  ; rce_homeDeal_override_ret_tv300_3_3x   ; pp_homeDeal_override_ret_tv300_3                                   ; 26   ; 3         ;
+                                  ; rce_homeDeal_override_ret_tv300_4_03   ; pp_homeDeal_override_ret_tv300_4                                   ; 10   ; 0         ; 3
+                                  ; rce_homeDeal_override_ret_tv300_4_3x   ; pp_homeDeal_override_ret_tv300_4                                   ; 26   ; 3         ;
+                                  ; rce_homeDeal_override_ret_tv400_1_03   ; pp_homeDeal_override_ret_tv400_1                                   ; 10   ; 0         ; 3
+                                  ; rce_homeDeal_override_ret_tv400_1_3x   ; pp_homeDeal_override_ret_tv400_1                                   ; 38   ; 3         ;
+                                  ; rce_homeDeal_override_ret_tv400_2_03   ; pp_homeDeal_override_ret_tv400_2                                   ; 10   ; 0         ; 3
+                                  ; rce_homeDeal_override_ret_tv400_2_3x   ; pp_homeDeal_override_ret_tv400_2                                   ; 38   ; 3         ;
+                                  ; rce_homeDeal_override_ret_tv400_3_03   ; pp_homeDeal_override_ret_tv400_3                                   ; 10   ; 0         ; 3
+                                  ; rce_homeDeal_override_ret_tv400_3_3x   ; pp_homeDeal_override_ret_tv400_3                                   ; 36   ; 3         ;
+                                  ; rce_homeDeal_override_ret_tv400_4_03   ; pp_homeDeal_override_ret_tv400_4                                   ; 10   ; 0         ; 3
+                                  ; rce_homeDeal_override_ret_tv400_4_3x   ; pp_homeDeal_override_ret_tv400_4                                   ; 36   ; 3         ;
+
+# upgrade charges # internet overrides # recurring charges
+                                  ; rce_homeDeal_override_upg_int500_1_03  ; pp_homeDeal_override_upg_int500_1                                  ; 10   ; 0         ; 3
+                                  ; rce_homeDeal_override_upg_int500_1_3x  ; pp_homeDeal_override_upg_int500_1                                  ; 17   ; 3         ;
+                                  ; rce_homeDeal_override_upg_int500_2_03  ; pp_homeDeal_override_upg_int500_2                                  ; 10   ; 0         ; 3
+                                  ; rce_homeDeal_override_upg_int500_2_3x  ; pp_homeDeal_override_upg_int500_2                                  ; 17   ; 3         ;
+                                  ; rce_homeDeal_override_upg_int500_3_03  ; pp_homeDeal_override_upg_int500_3                                  ; 10   ; 0         ; 3
+                                  ; rce_homeDeal_override_upg_int500_3_3x  ; pp_homeDeal_override_upg_int500_3                                  ; 15   ; 3         ;
+                                  ; rce_homeDeal_override_upg_int500_4_03  ; pp_homeDeal_override_upg_int500_4                                  ; 10   ; 0         ; 3
+                                  ; rce_homeDeal_override_upg_int500_4_3x  ; pp_homeDeal_override_upg_int500_4                                  ; 15   ; 3         ;
+                                  ; rce_homeDeal_override_upg_int1000_1_03 ; pp_homeDeal_override_upg_int1000_1                                 ; 10   ; 0         ; 3
+                                  ; rce_homeDeal_override_upg_int1000_1_3x ; pp_homeDeal_override_upg_int1000_1                                 ; 27   ; 3         ;
+                                  ; rce_homeDeal_override_upg_int1000_2_03 ; pp_homeDeal_override_upg_int1000_2                                 ; 10   ; 0         ; 3
+                                  ; rce_homeDeal_override_upg_int1000_2_3x ; pp_homeDeal_override_upg_int1000_2                                 ; 27   ; 3         ;
+                                  ; rce_homeDeal_override_upg_int1000_3_03 ; pp_homeDeal_override_upg_int1000_3                                 ; 10   ; 0         ; 3
+                                  ; rce_homeDeal_override_upg_int1000_3_3x ; pp_homeDeal_override_upg_int1000_3                                 ; 25   ; 3         ;
+                                  ; rce_homeDeal_override_upg_int1000_4_03 ; pp_homeDeal_override_upg_int1000_4                                 ; 10   ; 0         ; 3
+                                  ; rce_homeDeal_override_upg_int1000_4_3x ; pp_homeDeal_override_upg_int1000_4                                 ; 25   ; 3         ;
+
+# upgrade charges # tv overrides # recurring charges
+                                  ; rce_homeDeal_override_upg_tv300_1_03   ; pp_homeDeal_override_upg_tv300_1                                   ; 10   ; 0         ; 3
+                                  ; rce_homeDeal_override_upg_tv300_1_3x   ; pp_homeDeal_override_upg_tv300_1                                   ; 27   ; 3         ;
+                                  ; rce_homeDeal_override_upg_tv300_2_03   ; pp_homeDeal_override_upg_tv300_2                                   ; 10   ; 0         ; 3
+                                  ; rce_homeDeal_override_upg_tv300_2_3x   ; pp_homeDeal_override_upg_tv300_2                                   ; 27   ; 3         ;
+                                  ; rce_homeDeal_override_upg_tv300_3_03   ; pp_homeDeal_override_upg_tv300_3                                   ; 10   ; 0         ; 3
+                                  ; rce_homeDeal_override_upg_tv300_3_3x   ; pp_homeDeal_override_upg_tv300_3                                   ; 25   ; 3         ;
+                                  ; rce_homeDeal_override_upg_tv300_4_03   ; pp_homeDeal_override_upg_tv300_4                                   ; 10   ; 0         ; 3
+                                  ; rce_homeDeal_override_upg_tv300_4_3x   ; pp_homeDeal_override_upg_tv300_4                                   ; 25   ; 3         ;
+                                  ; rce_homeDeal_override_upg_tv400_1_03   ; pp_homeDeal_override_upg_tv400_1                                   ; 10   ; 0         ; 3
+                                  ; rce_homeDeal_override_upg_tv400_1_3x   ; pp_homeDeal_override_upg_tv400_1                                   ; 37   ; 3         ;
+                                  ; rce_homeDeal_override_upg_tv400_2_03   ; pp_homeDeal_override_upg_tv400_2                                   ; 10   ; 0         ; 3
+                                  ; rce_homeDeal_override_upg_tv400_2_3x   ; pp_homeDeal_override_upg_tv400_2                                   ; 37   ; 3         ;
+                                  ; rce_homeDeal_override_upg_tv400_3_03   ; pp_homeDeal_override_upg_tv400_3                                   ; 10   ; 0         ; 3
+                                  ; rce_homeDeal_override_upg_tv400_3_3x   ; pp_homeDeal_override_upg_tv400_3                                   ; 35   ; 3         ;
+                                  ; rce_homeDeal_override_upg_tv400_4_03   ; pp_homeDeal_override_upg_tv400_4                                   ; 10   ; 0         ; 3
+                                  ; rce_homeDeal_override_upg_tv400_4_3x   ; pp_homeDeal_override_upg_tv400_4                                   ; 35   ; 3         ;

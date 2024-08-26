@@ -1,0 +1,36 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Importing Prices for Telco products
+$productCatalog = telcospaProductCatalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[default = '$productCatalog:Staged']
+$currency = currency(isocode)[default = USD]
+$unit = unit(code)[default = pieces]
+$product = product(code, $catalogVersion)[unique = true]
+$processTypes = processTypes(code)[unique = true]
+$distributionChannels = distributionChannels(code)
+$subscriptionTerms = subscriptionTerms(id)[unique = true]
+$regions = regions(isocode)
+$price = price[default = 0.0]
+$priority = priority[default = 50]
+
+################################################
+### BUNDLED PRODUCT OFFERING PRICE OVERRIDES ###
+################################################
+
+INSERT_UPDATE PriceRow; code[unique = true]                      ; $product ; affectedProductOffering(code, $catalogVersion); requiredProductClasses(id)[unique = true]; requiredProductOfferings(code, $catalogVersion)[unique = true]; $processTypes             ; $subscriptionTerms     ; $distributionChannels; $currency; $unit; $catalogVersion; $regions; productOfferingPrice(id, $catalogVersion); $priority; $price;
+                      ; pr-internetDeal-override-fiber_internet  ; quadPlay ; fiber_internet                                ;                                          ;                                                               ; ACQUISITION,TARIFF_CHANGE ; monthly_12, monthly_24 ;                      ;          ;      ;                ;         ; broadband_override_fiberinternet_1_pop   ; 350      ;
+                      ; pr-internetDeal-override-copper_internet ; quadPlay ; copper_internet                               ;                                          ;                                                               ; ACQUISITION,TARIFF_CHANGE ; monthly_12, monthly_24 ;                      ;          ;      ;                ;         ; broadband_override_copperinternet_1_pop  ; 350      ;
+                      ; pr-internetDeal-override-5g_internet     ; quadPlay ; 5g_internet                                   ;                                          ;                                                               ; ACQUISITION,TARIFF_CHANGE ; monthly_12, monthly_24 ;                      ;          ;      ;                ;         ; broadband_override_5ginternet_1_pop      ; 350      ;
+                      ; pr-tvDeal-override-tv_100                ; quadPlay ; tv_100                                        ;                                          ;                                                               ; ACQUISITION,TARIFF_CHANGE ; monthly_12, monthly_24 ;                      ;          ;      ;                ;         ; tvplans_override_tv100_1_pop             ; 350      ;
+                      ; pr-tvDeal-override-tv_200                ; quadPlay ; tv_200                                        ;                                          ;                                                               ; ACQUISITION,TARIFF_CHANGE ; monthly_12, monthly_24 ;                      ;          ;      ;                ;         ; tvplans_override_tv200_1_pop             ; 350      ;
+                      ; pr-tvDeal-override-tv_unlimited          ; quadPlay ; tv_unlimited                                  ;                                          ;                                                               ; ACQUISITION,TARIFF_CHANGE ; monthly_12, monthly_24 ;                      ;          ;      ;                ;         ; tvplans_override_tvunlimited_1_pop       ; 350      ;
+
+INSERT_UPDATE PriceRow; code[unique = true]                                         ; $product   ; affectedProductOffering(code, $catalogVersion); requiredProductClasses(id)[unique = true]; requiredProductOfferings(code, $catalogVersion)[unique = true]; $processTypes      ; $subscriptionTerms     ; $distributionChannels; $currency; $unit; $catalogVersion; $regions; productOfferingPrice(id, $catalogVersion)                    ; $priority; $price;
+                      ; pr-mobileDeal-override-gsm_large                            ; quadPlay   ; gsm_large                                     ;                                          ;                                                               ; TARIFF_CHANGE      ; monthly_12, monthly_24 ;                      ;          ;      ;                ;         ; mobileplans_override_gsmlarge_1_pop                          ; 350      ;
+                      ; pr-mobileDeal-override-5gpow                                ; quadPlay   ; 5gpow                                         ;                                          ;                                                               ; TARIFF_CHANGE      ; monthly_12, monthly_24 ;                      ;          ;      ;                ;         ; mobileaddons_override_5gpow_1_pop                            ; 350      ;
+                      ; pr-mobileDeal-override-eSim                                 ; quadPlay   ; eSim                                          ;                                          ;                                                               ; TARIFF_CHANGE      ; monthly_12, monthly_24 ;                      ;          ;      ;                ;         ; mobileaddons_override_esim_1_pop                             ; 350      ;
+                      ; pr-mobileDeal-override-samsung_galaxy_S22_phantomblack_256g ; quadPlay   ; samsung_galaxy_S22_phantomblack_256g          ;                                          ;                                                               ; TARIFF_CHANGE      ; monthly_12, monthly_24 ;                      ;          ;      ;                ;         ; mobiledevice_override_samsunggalaxyS22phantomblack256g_1_pop ; 350      ;
+                      ; pr-homeDeal-override-mibox_5g                               ; quadPlay   ; mibox_5g                                      ;                                          ;                                                               ; TARIFF_CHANGE      ; monthly_12, monthly_24 ;                      ;          ;      ;                ;         ; homeDeal_override_mibox5g_1_pop                              ; 350      ;
+                      ; pr-mobileDeal-override-gsm_small                            ; mobileDeal ; gsm_small                                     ;                                          ;                                                               ; RETENTION, RENEWAL ; monthly_12, monthly_24 ;                      ;          ;      ;                ;         ; mobileplans_override_gsmsmall_1_pop                          ; 350      ;

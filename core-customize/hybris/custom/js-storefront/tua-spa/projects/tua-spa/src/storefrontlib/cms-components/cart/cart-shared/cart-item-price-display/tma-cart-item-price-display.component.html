@@ -1,0 +1,48 @@
+<div class="row mx-auto ht-250">
+  <ul [ngClass]="{'listNone': list.length === 1 && !list[0].cartPrice}">
+    <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{list: list, isFirst: true}"></ng-container>
+  </ul>
+  <ng-template #recursiveListTmpl let-list="list" let-isFirst="isFirst">
+    <li *ngFor="let item of getSortedList(list)">
+      <span *ngIf="item.cartPrice">{{ item.name }}
+        <span *ngIf="item.usageChargeType">
+          ({{'productDetails.price.usageCharge.usageTypes.usageType' | cxTranslate : {context: item.usageChargeType} }})
+        </span>
+        <ng-container *ngIf="isFirst">
+          <ng-container *ngIf="getContractTerm(subscriptionTerm) as contractTerm">
+            <span>- {{contractTerm}}</span>
+          </ng-container>
+        </ng-container>
+      </span>
+      <span *ngIf="!item.cartPrice">
+        <span *ngIf="item.chargeType === 'oneTime'">
+          <cx-cart-item-one-time-charge [oneTimeCharge]="item"></cx-cart-item-one-time-charge>
+        </span>
+        <span *ngIf="item.chargeType === 'recurring'">
+          <cx-cart-item-recurring-charge [recurringCharge]="item"></cx-cart-item-recurring-charge>
+        </span>
+        <span *ngIf="item.chargeType === 'usage'">
+          <cx-cart-item-usage-charge [usageCharge]="item"></cx-cart-item-usage-charge>
+        </span>
+        <ng-container *ngIf="isFirst && (item.chargeType === 'recurring' || item.chargeType === 'usage')">
+          <ng-container *ngIf="getContractTerm(subscriptionTerm) as contractTerm">
+            <span>- {{contractTerm}}</span>
+          </ng-container>
+        </ng-container>
+      </span>
+      <ul *ngIf="item.cartPrice && item.cartPrice.length > 0">
+        <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{list: item.cartPrice, isFirst: false}"></ng-container>
+        <ng-container *ngIf="item.priceAlteration">
+          <li>
+            <cx-cart-item-alteration-details [alterations]="item.priceAlteration"></cx-cart-item-alteration-details>
+          </li>
+        </ng-container>
+        <ng-container *ngFor="let alteration of item.cartPrice">
+          <li *ngIf="alteration.priceAlteration">
+            <cx-cart-item-alteration-details [alterations]="alteration.priceAlteration"></cx-cart-item-alteration-details>
+          </li>
+        </ng-container>
+      </ul>
+    </li>
+  </ng-template>
+</div>

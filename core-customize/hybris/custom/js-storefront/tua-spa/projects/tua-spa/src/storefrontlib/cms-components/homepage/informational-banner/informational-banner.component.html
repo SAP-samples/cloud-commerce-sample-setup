@@ -1,0 +1,22 @@
+<ng-container *ngIf="data$ | async as data">
+    <div class="row d-flex justify-content-center align-items-center mb-5 mt-5">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3" *ngFor="let banner of data">
+            <div>
+                <div class="informational-banner-container">
+                    <cx-media [container]="banner.media"></cx-media>
+                </div>
+                <p class="cx-bold mt-4">{{banner.headline}}</p>
+                <p>{{banner.content}}</p>
+                <div class="pl-5">
+                    <button
+                            [routerLink]="{ cxRoute: 'learnMore'} | cxUrl"
+                            class="btn btn-secondary mt-2 align-self-end border-0"
+                            [attr.aria-label]="'common.learnMore' | cxTranslate"
+                    >
+                        {{ ('common.learnMore' | cxTranslate) }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>

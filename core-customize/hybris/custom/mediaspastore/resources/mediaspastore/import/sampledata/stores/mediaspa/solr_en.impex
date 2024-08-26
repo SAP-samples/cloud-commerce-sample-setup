@@ -1,0 +1,27 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+$facetSearchConfigName = mediaspaIndex
+$solrIndexedType = mediaspaPriceType
+$lang = en
+
+INSERT_UPDATE SolrIndexedProperty; solrIndexedType(identifier)[unique = true]; name[unique = true]; displayName[lang = $lang]
+                                 ; $solrIndexedType                          ; genre              ; "Genres"
+                                 ; $solrIndexedType                          ; actors             ; "Actors"
+                                 ; $solrIndexedType                          ; producers          ; "Producers"
+                                 ; $solrIndexedType                          ; directors          ; "Directors"
+                                 ; $solrIndexedType                          ; freeviewchannels   ; "Free View Channels"
+                                 ; $solrIndexedType                          ; youviewplus        ; "You View Channels"
+                                 ; $solrIndexedType                          ; premiumchannels    ; "Premium Channels"
+                                 ; $solrIndexedType                          ; tveverywhere       ; "TV Everywhere"
+
+INSERT_UPDATE SolrSynonymConfig; facetSearchConfig(name)[unique = true]; language(isocode)[unique = true, default = $lang]; synonymFrom[unique = true]; synonymTo
+                               ; $facetSearchConfigName                ;                                                  ; "Movie,TV Show"           ;
+                               ; $facetSearchConfigName                ;                                                  ; "tvshow"                  ; "TV Show"
+
+INSERT_UPDATE SolrURIRedirect; url[unique = true]    ; &redirectRefID
+                             ; "/p/underworld_movie" ; redirectRefID-underworld_movie
+
+INSERT_UPDATE SolrFacetSearchKeywordRedirect; facetSearchConfig(name)[unique = true]; language(isocode)[unique = true, default = $lang]; keyword[unique = true]; matchType(code)[unique = true]; ignoreCase[default = true]; redirect(&redirectRefID)
+                                            ; $facetSearchConfigName                ;                                                  ; "underworld"          ; CONTAINS                      ;                           ; redirectRefID-underworld_movie

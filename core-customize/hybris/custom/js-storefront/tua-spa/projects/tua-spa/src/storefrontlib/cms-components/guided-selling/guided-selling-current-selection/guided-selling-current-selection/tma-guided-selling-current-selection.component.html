@@ -1,0 +1,133 @@
+<ng-container *ngIf="currentCart$ | async as currentCart">
+  <section class="cx-page-section">
+    <div>
+      <span class="activeGroup d-flex">
+        <button *ngIf="!isSubscription"
+          type="button"
+          attr.aria-label="{{ 'guidedSelling.clearSelection' | cxTranslate }}"
+          (click)="clearCurrentSelection()"
+        >
+          <span
+            class="material-icons icon-align icon-cursor"
+          >highlight_off</span
+          >
+        </button>
+        <button class="collapseCursor icon-cursor w-100" type="button"
+            *ngIf="!isCurrentSelectionCollapsed() !== true; else expand"
+            attr.aria-label="{{ 'guidedSelling.collapseSelection' | cxTranslate }}"
+            (click)="collapseCurrentSelection()">
+          <span class="d-flex justify-content-between">
+            <div>
+              <ng-container *ngIf="!isSubscription; else hasSubscription">
+                <span>{{ parentBpo?.name }}&nbsp;</span>
+                <span>{{ 'guidedSelling.currentSelection.newContract' | cxTranslate }}</span>
+              </ng-container>
+              <ng-template #hasSubscription>
+                <span>{{ 'guidedSelling.addingTo' | cxTranslate }}&nbsp;</span>
+                <span>{{ parentBpo?.name }}&nbsp;</span>
+                <span>({{ subscriptionDetail.id }})</span>
+              </ng-template>
+            </div>
+            <span class="material-icons icon-align icon-position">keyboard_arrow_up</span>
+          </span>
+        </button>
+
+        <ng-template #expand>
+          <button class="expandCursor icon-cursor w-100"
+                type="button"
+                attr.aria-label="{{ 'guidedSelling.expandSelection' | cxTranslate }}"
+                (click)="expandCurrentSelection()">
+            <span class="d-flex justify-content-between">
+              <div>
+                <ng-container *ngIf="!isSubscription; else hasSubscription">
+                  <span>{{ parentBpo?.name }}&nbsp;</span>
+                  <span>{{ 'guidedSelling.currentSelection.newContract' | cxTranslate }}</span>
+                </ng-container>
+                <ng-template #hasSubscription>
+                  <span>{{ 'guidedSelling.addingTo' | cxTranslate }}&nbsp;</span>
+                  <span>{{ parentBpo?.name }}&nbsp;</span>
+                  <span>({{ subscriptionDetail.id }})</span>
+                </ng-template>
+              </div>
+              <span class="material-icons icon-align icon-position">keyboard_arrow_down</span>
+            </span>
+          </button>
+        </ng-template>
+      </span>
+      <cx-guided-selling-messages *ngIf="this.currentSelections.length"
+        [qualificationErrorMessages]="qualificationErrorMessages"
+        [showQualificationErrorMessages]="showQualificationErrorMessages"
+        [qualificationSuccessMessage]="qualificationSuccessMessage"
+      ></cx-guided-selling-messages>
+      <div class="px-2" [@slideInOut]="isCurrentSelectionCollapsed()">
+        <div *ngFor="let tmfProduct of tmfProducts">
+          <ng-container *ngIf="!isPartOfCurrentSelection(tmfProduct)">
+            <div class="row product">
+              <div class="col-12">{{ tmfProduct.name || tmfProduct.productOffering.id }}</div>
+              <span class="row cx-smaller text-warning">{{ 'guidedSelling.subscriptionMessage' | cxTranslate }}</span>
+            </div>
+          </ng-container>
+        </div>
+        <div *ngFor="let product of currentSelections">
+          <div class="row product">
+            <div class="col-12">{{ product.name || product.code }}</div>
+            <span *ngIf="getSubscribedProduct(product.code)" class="cx-smaller">{{ 'guidedSelling.subscribedProduct' | cxTranslate }}{{ getSubscribedProduct(product.code) }}</span>
+              <span class="small-text">
+                <cx-price-display [price]="product.productOfferingPrice[0]"></cx-price-display>
+              </span>
+            <button *ngIf="!getSubscribedProduct(product.code)"  class="border-0 bg-transparent"
+                    type="button"
+                    attr.aria-label="{{ 'cartItems.removeItemSelection' | cxTranslate }}"
+                    (click)="removeProductFromCurrentSelection(product)"
+            >
+          <span
+            class="material-icons pointer-cursor"
+          >highlight_off</span
+          >
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="summary"
+      [ngClass]="{
+        'horizontal-line':
+          currentSelections.length !== 0 && isCurrentSelectionCollapsed()
+      }"
+    >
+      <div class="row productTotal">
+        <div class="col-4">{{ 'cartItems.total' | cxTranslate }}</div>
+        <div class="col-3 price">
+          <span
+            class="small-text"
+            *ngIf="
+              currentSelectionTotal !==
+              constants.GUIDED_SELLING.CURRENT_SELECTION.DASH
+            "
+            >{{
+              'guidedSelling.currentSelection.startingFrom' | cxTranslate
+            }}</span
+          >
+          {{ currentSelectionTotal }}
+        </div>
+      </div>
+    </div>
+
+    <button
+      #addToCartButton
+      class="btn btn-primary btn-block cx-bottom-fixed"
+      (click)="addBpoToCart(currentCart)"
+      [disabled]="currentSelections?.length === 0"
+    >
+      {{ 'addToCart.addToCart' | cxTranslate }}
+        <ngx-spinner
+          [fullScreen]="false"
+          type="ball-clip-rotate-multiple"
+          size="small"
+        >
+        </ngx-spinner>
+    </button>
+
+  </section>
+</ng-container>

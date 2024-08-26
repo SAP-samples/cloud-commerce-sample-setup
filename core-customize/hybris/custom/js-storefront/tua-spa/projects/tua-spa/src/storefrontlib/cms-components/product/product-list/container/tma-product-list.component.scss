@@ -1,0 +1,59 @@
+.font-small {
+    font-size: var(--cx-font-size, 0.85rem);
+  }
+ 
+  .accordion {
+    > button {
+      background-color: var(--cx-color-inverse);
+      border: 1px var(--cx-color-inverse) solid;
+      font-size: var(--cx-font-size, 1.188rem);
+      font-weight: var(--cx-font-weight-bold);
+      padding-top: 10px;
+      padding-inline-end: 0;
+      padding-bottom: 0;
+      padding-inline-start: 0;
+      width: 100%;
+      text-align: start;
+      height: 63px;
+      position: relative;
+      > span.accordion-icon {
+        &:before {
+          content: '+';
+          margin: 0px 15px;
+          font-size: var(--cx-font-size, 2.063rem);
+          bottom: 5px;
+          position: absolute;
+          inset-inline-end: 0;
+          color: var(--cx-color-secondary);
+        }
+      }
+      &:after {
+        margin-top: 15px;
+        margin-inline-end: auto;
+        margin-bottom: auto;
+        margin-inline-start: -4%;
+      }
+      &.active {
+        color: var(--cx-color-primary-accent);
+        border-bottom: 2px var(--cx-color-primary-accent) solid;
+        > span.accordion-icon {
+          &:before {
+            bottom: 8px;
+            content: '–';
+          }
+        }
+      }
+      &.active:after,
+      &:hover:after {
+        width: 104%;
+      }
+    }
+  
+    + div {
+      margin-top: 15px;
+      flex: 1;
+      &:not(.active) {
+        display: none !important;
+      }
+    }
+  }

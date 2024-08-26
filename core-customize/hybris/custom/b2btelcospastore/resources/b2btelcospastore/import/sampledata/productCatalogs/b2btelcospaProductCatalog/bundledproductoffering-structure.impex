@@ -1,0 +1,43 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# Macros / Replacement Parameter definitions
+$productCatalog = b2btelcospaProductCatalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+$approved = approvalstatus(code)[default = 'approved']
+
+# Macros / Replacement Parameter definitions
+$solrIndexedTypeIdentifier = b2btelcospaProductType
+$solrIndexedType = indexedType(identifier[default = $solrIndexedTypeIdentifier])
+
+INSERT_UPDATE TmaBundledProductOffering; code[unique = true]         ; soldIndividually[default = false]; unit(code)[default = pieces]; $approved; $catalogVersion
+                                       ; satellite_connectivity_deal ; true
+
+
+
+INSERT_UPDATE TmaSimpleProductOffering; code[unique = true]       ; parents(code, $catalogVersion); $approved; $catalogVersion
+                                      ; connectivity_service_plan ; satellite_connectivity_deal
+# Speed plans
+                                      ; basic_speed_plan          ; satellite_connectivity_deal
+                                      ; std_speed_plan            ; satellite_connectivity_deal
+                                      ; premium_speed_plan        ; satellite_connectivity_deal
+                                      ; ha_speed_plan             ; satellite_connectivity_deal
+                                      ; high_speed_plan           ; satellite_connectivity_deal
+                                      ; sf_speed_plan             ; satellite_connectivity_deal
+# Terminals
+                                      ; connect_50                ; satellite_connectivity_deal
+                                      ; connect_100               ; satellite_connectivity_deal
+                                      ; connect_x                 ; satellite_connectivity_deal
+                                      ; mobility_connect_100      ; satellite_connectivity_deal
+                                      ; mobility_connect_x        ; satellite_connectivity_deal
+# Addons
+                                      ; bgan_backup_addon         ; satellite_connectivity_deal
+                                      ; gx_voice_addon            ; satellite_connectivity_deal
+
+
+INSERT_UPDATE TmaProductOfferingGroup; code[unique = true]                ; name                  ; parentBundleProductOffering(code, $catalogVersion); childProductOfferings(code, $catalogVersion); $catalogVersion;
+                                     ; satellite_connectivity_services    ; Connectivity services ; satellite_connectivity_deal                       ; connectivity_service_plan
+                                     ; satellite_connectivity_speed_plans ; Speed plans           ; satellite_connectivity_deal                       ; basic_speed_plan, std_speed_plan, premium_speed_plan, ha_speed_plan, high_speed_plan, sf_speed_plan
+                                     ; satellite_terminals                ; Terminals             ; satellite_connectivity_deal                       ; connect_50, connect_100, connect_x, mobility_connect_100, mobility_connect_x
+                                     ; satellite_connectivity_addons      ; Addons                ; satellite_connectivity_deal                       ; bgan_backup_addon, gx_voice_addon

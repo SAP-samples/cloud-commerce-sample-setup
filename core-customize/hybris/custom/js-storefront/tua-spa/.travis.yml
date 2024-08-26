@@ -1,0 +1,15 @@
+language: node_js
+node_js:
+  - '14.18.3'
+
+env:
+  global:
+   - NODE_OPTIONS=--max-old-space-size=4096
+
+install:
+  - yarn install
+
+script:
+  - yarn ng build tua-spa
+  - yarn run ng lint tua-spa
+  - yarn run test tua-spa --watch=false

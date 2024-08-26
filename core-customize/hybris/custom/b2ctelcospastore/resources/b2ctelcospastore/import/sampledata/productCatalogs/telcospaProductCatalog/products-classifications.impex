@@ -1,0 +1,141 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Importing Product Classifications into Telco Store
+
+#% impex.setLocale(Locale.ENGLISH);
+
+# Macros / Replacement Parameter definitions
+$productCatalog = telcospaProductCatalog
+$systemName = telcospaClassification;
+$systemVersion = 1.0;
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+$clAttrModifiers = system = $systemName, version = '1.0', translator = de.hybris.platform.catalog.jalo.classification.impex.ClassificationAttributeTranslator, lang = en
+
+
+# ImpEx for Importing Product Classifications
+
+$catVer = catalogVersion(version[default = 'Staged'], catalog(id[default = $productCatalog]));
+$clSysVer = catalogVersion(version[default = '$systemVersion'], catalog(id[default = '$systemName']));
+# -------------------------------------;
+# telco classified products;
+# 1. assign class to category so that all ;
+#    contained products are automatically classified as such;
+UPDATE Category; $catVer[virtual = true, unique = true]; code[unique = true]                                    ; supercategories(code, $clSysVer)[mode = append];
+               ; devices                               ; mobilephoneclassification, compatibilityclassification ;
+               ; accessories                           ; accessoryclassification, compatibilityclassification   ;
+               ; plans                                 ; serviceplanclassification
+               ; modems                                ; modemsclassification, compatibilityclassification      ;
+               ; router                                ; accessoryclassification                                ;
+
+$feature2 = @mobileplatform[$clAttrModifiers];
+$feature3 = @storage[$clAttrModifiers];
+$feature4 = @camera[$clAttrModifiers];
+$feature5 = @gps[$clAttrModifiers];
+$feature6 = @keyboard[$clAttrModifiers];
+$feature7 = @formfactor[$clAttrModifiers];
+$feature8 = @displayresolution[$clAttrModifiers];
+$feature9 = @displaysize[$clAttrModifiers];
+$feature10 = @touchscreen[$clAttrModifiers];
+$feature11 = @color[$clAttrModifiers];
+$feature12 = @depth[$clAttrModifiers];
+$feature13 = @weight[$clAttrModifiers];
+$feature14 = @height[$clAttrModifiers];
+$feature15 = @width[$clAttrModifiers];
+$feature16 = @bands[$clAttrModifiers];
+# Accessory
+$feature17 = @vendorcompatibility[$clAttrModifiers];
+$feature22 = @simcard[$clAttrModifiers];
+
+$feature18 = @cameraresolution[$clAttrModifiers];
+$feature19 = @ram_memory[$clAttrModifiers];
+$feature20 = @wifitype[$clAttrModifiers];
+$feature21 = @networksupport[$clAttrModifiers];
+$feature23 = @videoformat[$clAttrModifiers];
+$feature24 = @operatingsystem[$clAttrModifiers];
+$feature25 = @model[$clAttrModifiers];
+$feature26 = @cpu[$clAttrModifiers];
+
+#Modem
+$maxspeed = @maxspeed[$clAttrModifiers];
+#TV Packages
+$package = @package[$clAttrModifiers];
+$channelsincluded = @channelsincluded[$clAttrModifiers];
+# Insert Product Classifications
+
+INSERT_UPDATE TmaSimpleProductOffering; code[unique = true]                   ; $feature2        ; $feature3; $feature4    ; $feature5 ; $feature6      ; $feature7; $feature8; $feature9; $feature10       ; $feature11     ; $feature12; $feature13; $feature14; $feature15; $feature16; $feature18; $feature19; $feature20   ; $feature21; $feature23; $feature24 ; $feature25  ; $feature26; $catalogVersion; unit(code)[default = pieces]
+# Phones
+                                      ; iPhone_13                             ; platform_ios     ; 128      ; camera_true  ; gps_true  ; keyboard_false ;          ;          ; 6.1      ; touchscreen_true ; Green          ;           ;           ;           ;           ;           ; 12        ; 4         ; wifi802_11ax ; 4g,5g     ;
+                                      ; iPhone_13_Pro_Max                     ; platform_ios     ; 128      ; camera_true  ; gps_true  ; keyboard_false ;          ;          ; 6.7      ; touchscreen_true ; Silver         ;           ;           ;           ;           ;           ; 12        ; 6         ;              ; 4g,5g     ;
+                                      ; samsung_galaxy_S21                    ; platform_android ; 128      ; camera_true  ; gps_true  ; keyboard_false ;          ;          ; 6.2      ; touchscreen_true ; Phantom Gray   ;           ;           ;           ;           ;           ; 64        ; 8         ;              ; 4g,5g     ;
+                                      ; samsung_galaxy_S22                    ; platform_android ; 128      ; camera_true  ; gps_true  ; keyboard_false ;          ;          ; 6.1      ; touchscreen_true ; Phantom Black  ;           ;           ;           ;           ;           ; 50        ; 8         ; wifi6        ; 4g,5g     ;
+# Media Boxes
+                                      ; mibox_4g                              ; platform_android ;          ; camera_false ; gps_false ; keyboard_false ;          ;          ;          ;                  ; Black          ;           ;           ;           ;           ;           ;           ; 3         ;              ; 4g        ; hd        ; android8_1 ; mibox_4glk1 ; quad_core ;
+                                      ; mibox_5g                              ; platform_android ;          ; camera_false ; gps_false ; keyboard_false ;          ;          ;          ;                  ; Black          ;           ;           ;           ;           ;           ;           ; 4         ;              ; 5g        ; 4k_uhd    ; android8_1 ; mibox_5glk1 ; quad_core ;
+
+# variants
+                                      ; iPhone_13_green_128g                  ; platform_ios     ;          ; camera_true  ; gps_true  ; keyboard_false ;          ;          ; 6.1      ; touchscreen_true ; Green          ;           ;           ;           ;           ;           ; 21        ; 4         ; wifi802_11ax ; 4g,5g     ;
+                                      ; iPhone_13_green_256g                  ; platform_ios     ;          ; camera_true  ; gps_true  ; keyboard_false ;          ;          ; 6.1      ; touchscreen_true ; Green          ;           ;           ;           ;           ;           ; 12        ; 4         ; wifi802_11ax ; 4g,5g     ;
+                                      ; iPhone_13_midnight_128g               ; platform_ios     ;          ; camera_true  ; gps_true  ; keyboard_false ;          ;          ; 6.1      ; touchscreen_true ; Midnight       ;           ;           ;           ;           ;           ; 12        ; 4         ; wifi802_11ax ; 4g,5g     ;
+                                      ; iPhone_13_midnight_256g               ; platform_ios     ;          ; camera_true  ; gps_true  ; keyboard_false ;          ;          ; 6.1      ; touchscreen_true ; Midnight       ;           ;           ;           ;           ;           ; 12        ; 4         ; wifi802_11ax ; 4g,5g     ;
+                                      ; iPhone_13_white_128g                  ; platform_ios     ;          ; camera_true  ; gps_true  ; keyboard_false ;          ;          ; 6.1      ; touchscreen_true ; White          ;           ;           ;           ;           ;           ; 12        ; 4         ; wifi802_11ax ; 4g,5g     ;
+                                      ; iPhone_13_white_256g                  ; platform_ios     ;          ; camera_true  ; gps_true  ; keyboard_false ;          ;          ; 6.1      ; touchscreen_true ; White          ;           ;           ;           ;           ;           ; 12        ; 4         ; wifi802_11ax ; 4g,5g     ;
+                                      ; iPhone_13_blue_128g                   ; platform_ios     ;          ; camera_true  ; gps_true  ; keyboard_false ;          ;          ; 6.1      ; touchscreen_true ; Blue           ;           ;           ;           ;           ;           ; 12        ; 4         ; wifi802_11ax ; 4g,5g     ;
+                                      ; iPhone_13_blue_256g                   ; platform_ios     ;          ; camera_true  ; gps_true  ; keyboard_false ;          ;          ; 6.1      ; touchscreen_true ; Blue           ;           ;           ;           ;           ;           ; 12        ; 4         ; wifi802_11ax ; 4g,5g     ;
+                                      ; iPhone_13_pink_128g                   ; platform_ios     ;          ; camera_true  ; gps_true  ; keyboard_false ;          ;          ; 6.1      ; touchscreen_true ; Pink           ;           ;           ;           ;           ;           ; 12        ; 4         ; wifi802_11ax ; 4g,5g     ;
+                                      ; iPhone_13_pink_256g                   ; platform_ios     ;          ; camera_true  ; gps_true  ; keyboard_false ;          ;          ; 6.1      ; touchscreen_true ; Pink           ;           ;           ;           ;           ;           ; 12        ; 4         ; wifi802_11ax ; 4g,5g     ;
+                                      ; iPhone_13_red_128g                    ; platform_ios     ;          ; camera_true  ; gps_true  ; keyboard_false ;          ;          ; 6.1      ; touchscreen_true ; Red            ;           ;           ;           ;           ;           ; 12        ; 4         ; wifi802_11ax ; 4g,5g     ;
+                                      ; iPhone_13_red_256g                    ; platform_ios     ;          ; camera_true  ; gps_true  ; keyboard_false ;          ;          ; 6.1      ; touchscreen_true ; Red            ;           ;           ;           ;           ;           ; 12        ; 4         ; wifi802_11ax ; 4g,5g     ;
+
+                                      ; iPhone_13_Pro_Max_silver_128g         ; platform_ios     ;          ; camera_true  ; gps_true  ; keyboard_false ;          ;          ; 6.7      ; touchscreen_true ; Silver         ;           ;           ;           ;           ;           ; 12        ; 6         ;              ; 4g,5g     ;
+                                      ; iPhone_13_Pro_Max_silver_256g         ; platform_ios     ;          ; camera_true  ; gps_true  ; keyboard_false ;          ;          ; 6.7      ; touchscreen_true ; Silver         ;           ;           ;           ;           ;           ; 12        ; 6         ;              ; 4g,5g     ;
+                                      ; iPhone_13_Pro_Max_silver_512g         ; platform_ios     ;          ; camera_true  ; gps_true  ; keyboard_false ;          ;          ; 6.7      ; touchscreen_true ; Silver         ;           ;           ;           ;           ;           ; 12        ; 6         ;              ; 4g,5g     ;
+                                      ; iPhone_13_Pro_Max_silver_1024g        ; platform_ios     ;          ; camera_true  ; gps_true  ; keyboard_false ;          ;          ; 6.7      ; touchscreen_true ; Silver         ;           ;           ;           ;           ;           ; 12        ; 6         ;              ; 4g,5g     ;
+                                      ; iPhone_13_Pro_Max_graphite_128g       ; platform_ios     ;          ; camera_true  ; gps_true  ; keyboard_false ;          ;          ; 6.7      ; touchscreen_true ; Graphite       ;           ;           ;           ;           ;           ; 12        ; 6         ;              ; 4g,5g     ;
+                                      ; iPhone_13_Pro_Max_graphite_256g       ; platform_ios     ;          ; camera_true  ; gps_true  ; keyboard_false ;          ;          ; 6.7      ; touchscreen_true ; Graphite       ;           ;           ;           ;           ;           ; 12        ; 6         ;              ; 4g,5g     ;
+                                      ; iPhone_13_Pro_Max_graphite_512g       ; platform_ios     ;          ; camera_true  ; gps_true  ; keyboard_false ;          ;          ; 6.7      ; touchscreen_true ; Graphite       ;           ;           ;           ;           ;           ; 12        ; 6         ;              ; 4g,5g     ;
+                                      ; iPhone_13_Pro_Max_graphite_1024g      ; platform_ios     ;          ; camera_true  ; gps_true  ; keyboard_false ;          ;          ; 6.7      ; touchscreen_true ; Graphite       ;           ;           ;           ;           ;           ; 12        ; 6         ;              ; 4g,5g     ;
+                                      ; iPhone_13_Pro_Max_alpinegreen_128g    ; platform_ios     ;          ; camera_true  ; gps_true  ; keyboard_false ;          ;          ; 6.7      ; touchscreen_true ; Alpine Green   ;           ;           ;           ;           ;           ; 12        ; 6         ;              ; 4g,5g     ;
+                                      ; iPhone_13_Pro_Max_alpinegreen_256g    ; platform_ios     ;          ; camera_true  ; gps_true  ; keyboard_false ;          ;          ; 6.7      ; touchscreen_true ; Alpine Green   ;           ;           ;           ;           ;           ; 12        ; 6         ;              ; 4g,5g     ;
+                                      ; iPhone_13_Pro_Max_alpinegreen_512g    ; platform_ios     ;          ; camera_true  ; gps_true  ; keyboard_false ;          ;          ; 6.7      ; touchscreen_true ; Alpine Green   ;           ;           ;           ;           ;           ; 12        ; 6         ;              ; 4g,5g     ;
+                                      ; iPhone_13_Pro_Max_alpinegreen_1024g   ; platform_ios     ;          ; camera_true  ; gps_true  ; keyboard_false ;          ;          ; 6.7      ; touchscreen_true ; Alpine Green   ;           ;           ;           ;           ;           ; 12        ; 6         ;              ; 4g,5g     ;
+                                      ; iPhone_13_Pro_Max_gold_128g           ; platform_ios     ;          ; camera_true  ; gps_true  ; keyboard_false ;          ;          ; 6.7      ; touchscreen_true ; Gold           ;           ;           ;           ;           ;           ; 12        ; 6         ;              ; 4g,5g     ;
+                                      ; iPhone_13_Pro_Max_gold_256g           ; platform_ios     ;          ; camera_true  ; gps_true  ; keyboard_false ;          ;          ; 6.7      ; touchscreen_true ; Gold           ;           ;           ;           ;           ;           ; 12        ; 6         ;              ; 4g,5g     ;
+                                      ; iPhone_13_Pro_Max_gold_512g           ; platform_ios     ;          ; camera_true  ; gps_true  ; keyboard_false ;          ;          ; 6.7      ; touchscreen_true ; Gold           ;           ;           ;           ;           ;           ; 12        ; 6         ;              ; 4g,5g     ;
+                                      ; iPhone_13_Pro_Max_gold_1024g          ; platform_ios     ;          ; camera_true  ; gps_true  ; keyboard_false ;          ;          ; 6.7      ; touchscreen_true ; Gold           ;           ;           ;           ;           ;           ; 12        ; 6         ;              ; 4g,5g     ;
+                                      ; iPhone_13_Pro_Max_sierrablue_128g     ; platform_ios     ;          ; camera_true  ; gps_true  ; keyboard_false ;          ;          ; 6.7      ; touchscreen_true ; Sierra Blue    ;           ;           ;           ;           ;           ; 12        ; 6         ;              ; 4g,5g     ;
+                                      ; iPhone_13_Pro_Max_sierrablue_256g     ; platform_ios     ;          ; camera_true  ; gps_true  ; keyboard_false ;          ;          ; 6.7      ; touchscreen_true ; Sierra Blue    ;           ;           ;           ;           ;           ; 12        ; 6         ;              ; 4g,5g     ;
+                                      ; iPhone_13_Pro_Max_sierrablue_512g     ; platform_ios     ;          ; camera_true  ; gps_true  ; keyboard_false ;          ;          ; 6.7      ; touchscreen_true ; Sierra Blue    ;           ;           ;           ;           ;           ; 12        ; 6         ;              ; 4g,5g     ;
+                                      ; iPhone_13_Pro_Max_sierrablue_1024g    ; platform_ios     ;          ; camera_true  ; gps_true  ; keyboard_false ;          ;          ; 6.7      ; touchscreen_true ; Sierra Blue    ;           ;           ;           ;           ;           ; 12        ; 6         ;              ; 4g,5g     ;
+
+                                      ; samsung_galaxy_S21_phantomgray_128g   ; platform_android ;          ; camera_true  ; gps_true  ; keyboard_false ;          ;          ; 6.2      ; touchscreen_true ; Phantom Gray   ;           ;           ;           ;           ;           ; 64        ; 8         ;              ; 4g,5g     ;
+                                      ; samsung_galaxy_S21_phantomgray_256g   ; platform_android ;          ; camera_true  ; gps_true  ; keyboard_false ;          ;          ; 6.2      ; touchscreen_true ; Phantom Gray   ;           ;           ;           ;           ;           ; 64        ; 8         ;              ; 4g,5g     ;
+                                      ; samsung_galaxy_S21_phantomviolet_128g ; platform_android ;          ; camera_true  ; gps_true  ; keyboard_false ;          ;          ; 6.2      ; touchscreen_true ; Phantom Violet ;           ;           ;           ;           ;           ; 64        ; 8         ;              ; 4g,5g     ;
+                                      ; samsung_galaxy_S21_phantomviolet_256g ; platform_android ;          ; camera_true  ; gps_true  ; keyboard_false ;          ;          ; 6.2      ; touchscreen_true ; Phantom Violet ;           ;           ;           ;           ;           ; 64        ; 8         ;              ; 4g,5g     ;
+                                      ; samsung_galaxy_S21_phantompink_128g   ; platform_android ;          ; camera_true  ; gps_true  ; keyboard_false ;          ;          ; 6.2      ; touchscreen_true ; Phantom Pink   ;           ;           ;           ;           ;           ; 64        ; 8         ;              ; 4g,5g     ;
+                                      ; samsung_galaxy_S21_phantompink_256g   ; platform_android ;          ; camera_true  ; gps_true  ; keyboard_false ;          ;          ; 6.2      ; touchscreen_true ; Phantom Pink   ;           ;           ;           ;           ;           ; 64        ; 8         ;              ; 4g,5g     ;
+                                      ; samsung_galaxy_S21_phantomwhite_128g  ; platform_android ;          ; camera_true  ; gps_true  ; keyboard_false ;          ;          ; 6.2      ; touchscreen_true ; Phantom White  ;           ;           ;           ;           ;           ; 64        ; 8         ;              ; 4g,5g     ;
+                                      ; samsung_galaxy_S21_phantomwhite_256g  ; platform_android ;          ; camera_true  ; gps_true  ; keyboard_false ;          ;          ; 6.2      ; touchscreen_true ; Phantom White  ;           ;           ;           ;           ;           ; 64        ; 8         ;              ; 4g,5g     ;
+
+                                      ; samsung_galaxy_S22_phantomblack_128g  ; platform_android ;          ; camera_true  ; gps_true  ; keyboard_false ;          ;          ; 6.1      ; touchscreen_true ; Phantom Black  ;           ;           ;           ;           ;           ; 50        ; 8         ; wifi6        ; 4g,5g     ;
+                                      ; samsung_galaxy_S22_phantomblack_256g  ; platform_android ;          ; camera_true  ; gps_true  ; keyboard_false ;          ;          ; 6.1      ; touchscreen_true ; Phantom Black  ;           ;           ;           ;           ;           ; 50        ; 8         ; wifi6        ; 4g,5g     ;
+                                      ; samsung_galaxy_S22_green_128g         ; platform_android ;          ; camera_true  ; gps_true  ; keyboard_false ;          ;          ; 6.1      ; touchscreen_true ; Green          ;           ;           ;           ;           ;           ; 50        ; 8         ; wifi6        ; 4g,5g     ;
+                                      ; samsung_galaxy_S22_green_256g         ; platform_android ;          ; camera_true  ; gps_true  ; keyboard_false ;          ;          ; 6.1      ; touchscreen_true ; Green          ;           ;           ;           ;           ;           ; 50        ; 8         ; wifi6        ; 4g,5g     ;
+                                      ; samsung_galaxy_S22_pinkgold_128g      ; platform_android ;          ; camera_true  ; gps_true  ; keyboard_false ;          ;          ; 6.1      ; touchscreen_true ; Pink Gold      ;           ;           ;           ;           ;           ; 50        ; 8         ; wifi6        ; 4g,5g     ;
+                                      ; samsung_galaxy_S22_pinkgold_256g      ; platform_android ;          ; camera_true  ; gps_true  ; keyboard_false ;          ;          ; 6.1      ; touchscreen_true ; Pink Gold      ;           ;           ;           ;           ;           ; 50        ; 8         ; wifi6        ; 4g,5g     ;
+                                      ; samsung_galaxy_S22_phantomwhite_128g  ; platform_android ;          ; camera_true  ; gps_true  ; keyboard_false ;          ;          ; 6.1      ; touchscreen_true ; Phantom White  ;           ;           ;           ;           ;           ; 50        ; 8         ; wifi6        ; 4g,5g     ;
+                                      ; samsung_galaxy_S22_phantomwhite_256g  ; platform_android ;          ; camera_true  ; gps_true  ; keyboard_false ;          ;          ; 6.1      ; touchscreen_true ; Phantom White  ;           ;           ;           ;           ;           ; 50        ; 8         ; wifi6        ; 4g,5g     ;
+
+
+
+# Routers
+INSERT_UPDATE TmaSimpleProductOffering; code[unique = true]; $feature22; $catalogVersion
+                                      ; router_x           ; simcard_true
+                                      ; router_x1          ; simcard_false
+
+# Modems
+INSERT_UPDATE TmaSimpleProductOffering; code[unique = true]; $maxspeed; $feature21; $catalogVersion
+                                      ; modem_4G           ; 680      ;           ;
+                                      ; modem_5G           ; 680      ; 5g        ;
+

@@ -1,0 +1,211 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for SOLR Configuration
+
+# Macros / Replacement Parameter definitions
+
+################################################################################################################################
+# As of 1810 this solr considers eligibility - as a consequence all prices are now indexed (instead of the offerings)
+# You can still find the old solr.impex under solr_woeligibility.impex, however you will need to adjust the spring beans.
+#
+# Note:
+# as classification is defined as sample data some SolrIndexedProperties are defined under this file (solr.impex under sample
+# data)however the main definition can be found under solr.impex under core data.
+################################################################################################################################
+
+#######################
+# used as import data #
+#######################
+$productCatalog = b2btelcospaProductCatalog
+$catalogVersions = catalogVersions(catalog(id), version);
+
+$solrIndexedType = b2btelcospaPriceType
+$prefix = b2btelcospa
+
+$searchCfg = b2btelcospaSearchConfig
+$indexCfg = b2btelcospaIndexerConfig
+
+$indexBaseSite = b2btelcospa
+$indexLanguages = en
+$indexCurrencies = USD
+
+###################
+# used in headers #
+###################
+$hIndexType = solrIndexedType(identifier)[unique = true, default = b2btelcospaPriceType]
+$hIndexTypes = solrIndexedTypes(identifier)
+$hId = identifier[unique = true]
+$hName = name[unique = true]
+$hCode = code[unique = true]
+$hType = type(code)
+$hJob = job(code)[forceWrite=true]
+$hSortable = sortableType(code)
+$hDefaultSortOrder = defaultSortOrder;
+$hMulti = multiValue[default = false]
+$hProvider = fieldValueProvider
+$hProviderParam = valueProviderParameter
+$hParams = solrIndexerQueryParameters(name)
+$hPage = pageSize[unique = true]
+$hDescription = description[unique = true]
+$hLangFallback = enabledLanguageFallbackMechanism
+$hCurrency = currency[default = false];
+$hLocalized = localized[default = false];
+$hSpellcheck = useForSpellchecking[default = false];
+$hAutoComplete = useForAutocomplete[default = false];
+
+$hSearchCfg = solrSearchConfig(description)
+$hServerCfg = solrServerConfig(name)
+$hIndexCfg = solrIndexConfig(name)
+
+$classficationCatalog = b2btelcospaClassification
+$classSystemVersion = systemVersion(catalog(id[default = '$classficationCatalog']), version[default = '1.0'])
+$classCatalogVersion = catalogVersion(catalog(id[default = '$classficationCatalog']), version[default = '1.0'])
+$classAttribute = classificationAttribute(code, $classSystemVersion)
+$classClass = classificationClass(code, $classCatalogVersion)
+$classAttributeAssignment = classAttributeAssignment($classClass, $classAttribute, $classSystemVersion)
+
+INSERT_UPDATE SolrIndexedProperty; $hIndexType; $hName                ; $hType ; $hProvider          ; $hProviderParam       ; $hSortable; $hCurrency; $hLocalized; $hMulti; facet[default = true]; facetType(code); facetSort(code)[default = Alpha]; priority[default = 1000]; visible[default = true]
+                                 ;            ; region                ; string ; priceRegionResolver ;                       ;           ;           ;            ; true   ;                      ; MultiSelectOr  ;                                 ;                         ; false ;
+                                 ;            ; productclasses        ; string ; sppPscvResolver     ; productClasses        ;           ;           ; true       ; true   ;                      ; MultiSelectOr  ;                                 ;                         ;       ;
+                                 ;            ; compatibilitygroups   ; string ; sppPscvResolver     ; compatibilityGroups   ;           ;           ; true       ; true   ;                      ; MultiSelectOr  ;                                 ;                         ;       ;
+                                 ;            ; sectors               ; string ; sppPscvResolver     ; sectors               ;           ;           ; true       ; true   ;                      ; MultiSelectOr  ;                                 ;                         ;       ;
+                                 ;            ; subtypes              ; string ; sppPscvResolver     ; subtypes              ;           ;           ; true       ; true   ;                      ; MultiSelectOr  ;                                 ;                         ;       ;
+                                 ;            ; applicationssupported ; string ; sppPscvResolver     ; applicationsSupported ;           ;           ; true       ; true   ;                      ; MultiSelectOr  ;                                 ;                         ;       ;
+
+# Indexed property for services
+INSERT_UPDATE SolrIndexedProperty; $hIndexType; $hName                  ; $hType ; $hProvider                             ; $hProviderParam         ; $hSortable; $hCurrency; $hLocalized; $hMulti; facet[default = true]; facetType(code); facetSort(code)[default = Alpha]; priority[default = 1000];visible[default = true]
+#gsm_plans_addons
+                                 ;            ; smsquantity             ; string ; sppPscvResolver                        ; sms                     ;           ;           ; true       ; true   ;                      ; MultiSelectOr  ;                                 ;                         ;       ;
+                                 ;            ; voice                   ; string ; sppPscvResolver                        ; voice                   ;           ;           ; true       ; true   ;                      ; MultiSelectOr  ;                                 ;                         ;       ;
+                                 ;            ; datavolume              ; string ; sppPscvResolver                        ; data_volume             ;           ;           ; true       ; true   ;                      ; MultiSelectOr  ;                                 ;                         ;       ;
+                                 ;            ; datavolumepremium       ; string ; sppPscvResolver                        ; data_volume_premium     ;           ;           ; true       ; true   ;                      ; MultiSelectOr  ;                                 ;                         ;       ;
+                                 ;            ; video_type              ; string ; sppPscvResolver                        ; video_streaming_type    ;           ;           ; true       ; true   ;                      ; MultiSelectOr  ;                                 ;                         ;       ;
+                                 ;            ; mms                     ; string ; sppPscvResolver                        ; mms                     ;           ;           ; true       ; true   ;                      ; MultiSelectOr  ;                                 ;                         ;       ;
+                                 ;            ; no_of_lines             ; string ; sppPscvResolver                        ; no_of_lines             ;           ;           ; true       ; true   ;                      ; MultiSelectOr  ;                                 ;                         ;       ;
+#internet
+                                 ;            ; internet_download_speed ; string ; sppPscvResolver                        ; internet_download_speed ;           ;           ; true       ; true   ;                      ; MultiSelectOr  ;                                 ;                         ;       ;
+                                 ;            ; internet_upload_speed   ; string ; sppPscvResolver                        ; internet_upload_speed   ;           ;           ; true       ; true   ;                      ; MultiSelectOr  ;                                 ;                         ;       ;
+#satellite_speed
+                                 ;            ; mir_download_speed      ; string ; sppPscvResolver                        ; mir_download_speed      ;           ;           ; true       ; true   ;                      ; MultiSelectOr  ;                                 ;                         ;       ;
+                                 ;            ; mir_upload_speed        ; string ; sppPscvResolver                        ; mir_upload_speed        ;           ;           ; true       ; true   ;                      ; MultiSelectOr  ;                                 ;                         ;       ;
+                                 ;            ; cir_download_speed      ; string ; sppPscvResolver                        ; cir_download_speed      ;           ;           ; true       ; true   ;                      ; MultiSelectOr  ;                                 ;                         ;       ;
+                                 ;            ; cir_upload_speed        ; string ; sppPscvResolver                        ; cir_upload_speed        ;           ;           ; true       ; true   ;                      ; MultiSelectOr  ;                                 ;                         ;       ;
+                                 ;            ; terminal_group          ; string ; sppPscvResolver                        ; terminal_group          ;           ;           ; true       ; true   ;                      ; MultiSelectOr  ;                                 ;                         ;       ;
+                                 ;            ; sla                     ; string ; sppPscvResolver                        ; sla                     ;           ;           ; true       ; true   ;                      ; MultiSelectOr  ;                                 ;                         ;       ;
+                                 ;            ; bandwith_expected       ; string ; sppPscvResolver                        ; bandwith_expected       ;           ;           ; true       ; true   ;                      ; MultiSelectOr  ;                                 ;                         ;       ;
+#terminal 
+                                 ;            ; installation_type       ; string ; sppPscvResolver                        ; installation_type       ;           ;           ; true       ; true   ;                      ; MultiSelectOr  ;                                 ;                         ;       ;
+                                 ;            ; connection_band         ; string ; sppPscvResolver                        ; connection_band         ;           ;           ; true       ; true   ;                      ; MultiSelectOr  ;                                 ;                         ;       ;
+                                 ;            ; terminal_type           ; string ; sppPscvResolver                        ; terminal_type           ;           ;           ; true       ; true   ;                      ; MultiSelectOr  ;                                 ;                         ;       ;
+                                 ;            ; terminal_support        ; string ; sppPscvResolver                        ; terminal_support        ;           ;           ; true       ; true   ;                      ; MultiSelectOr  ;                                 ;                         ;       ;
+#satellite_connectivity
+                                 ;            ; overage_vol             ; string ; sppPscvResolver                        ; overage_vol             ;           ;           ; true       ; true   ;                      ; MultiSelectOr  ;                                 ;                         ;       ;
+                                 ;            ; public_ip_supported     ; string ; sppPscvResolver                        ; public_ip_supported     ;           ;           ; true       ; true   ;                      ; MultiSelectOr  ;                                 ;                         ;       ;
+                                 ;            ; frequency_band          ; string ; sppPscvResolver                        ; frequency_band          ;           ;           ; true       ; true   ;                      ; MultiSelectOr  ;                                 ;                         ;       ;
+                                 ;            ; frequency_char          ; string ; sppPscvResolver                        ; frequency_char          ;           ;           ; true       ; true   ;                      ; MultiSelectOr  ;                                 ;                         ;       ;
+                                 ;            ; orbit                   ; string ; sppPscvResolver                        ; orbit                   ;           ;           ; true       ; true   ;                      ; MultiSelectOr  ;                                 ;                         ;       ;
+                                 ;            ; ground_station_location ; string ; sppPscvResolver                        ; ground_station_location ;           ;           ; true       ; true   ;                      ; Refine         ;                                 ;                         ;       ;
+                                 ;            ; max_sla_available       ; string ; sppPscvResolver                        ; max_sla_available       ;           ;           ; true       ; true   ;                      ; MultiSelectOr  ;                                 ;                         ;       ;
+                                 ;            ; satellite               ; string ; sppPscvResolver                        ; satellite               ;           ;           ; true       ; true   ;                      ; MultiSelectOr  ;                                 ;                         ;       ;
+                                 ;            ; frequency               ; string ; sppPscvResolver                        ; frequency               ;           ;           ; true       ; true   ;                      ; MultiSelectOr  ;                                 ;                         ;       ;
+                                 ;            ; subtype                 ; string ; sppPscvResolver                        ; subtype                 ;           ;           ; true       ; true   ;                      ; MultiSelectOr  ;                                 ;                         ;       ;
+                                 ;            ; sector                  ; string ; sppPscvResolver                        ; sector                  ;           ;           ; true       ; true   ;                      ; MultiSelectOr  ;                                 ;                         ;       ;
+
+#Indexed property for mobile phones & accessories
+INSERT_UPDATE SolrIndexedProperty; $hIndexType; $hName                  ; $hType ; $hProvider                ; $hProviderParam; $classAttributeAssignment                               ; $hSortable; $hCurrency; $hLocalized; $hMulti; facet[default = true]; facetType(code); facetSort(code)[default = Alpha]; priority[default = 1000];
+#phones
+                                 ;            ; mobileplatform          ; string ; sppClassificationProvider ;                ; mobilephoneclassification:::mobileplatform::::          ;           ;           ; true       ;        ;                      ; MultiSelectOr  ;                                 ;                         ;
+                                 ;            ; touchscreen             ; string ; sppClassificationProvider ;                ; mobilephoneclassification:::touchscreen::::             ;           ;           ; true       ;        ;                      ; Refine         ;                                 ;                         ;
+                                 ;            ; displaysize             ; string ; sppClassificationProvider ;                ; mobilephoneclassification:::displaysize::::             ;           ;           ;            ;        ;                      ; MultiSelectOr  ;                                 ;                         ;
+                                 ;            ; processor               ; string ; sppClassificationProvider ;                ; mobilephoneclassification:::processor::::               ;           ;           ; true       ;        ;                      ; MultiSelectOr  ;                                 ;                         ;
+                                 ;            ; cameratype              ; string ; sppClassificationProvider ;                ; mobilephoneclassification:::cameratype::::              ;           ;           ; true       ;        ;                      ; MultiSelectOr  ;                                 ;                         ;
+                                 ;            ; storage                 ; string ; sppClassificationProvider ;                ; mobilephoneclassification:::storage::::                 ;           ;           ; true       ;        ;                      ; MultiSelectOr  ;                                 ;                         ;
+#accessories
+                                 ;            ; brand                   ; string ; sppClassificationProvider ;                ; accessoriesclassification:::brand::::                   ;           ;           ; true       ;        ;                      ; MultiSelectOr  ;                                 ;                         ;
+                                 ;            ; color                   ; string ; sppClassificationProvider ;                ; accessoriesclassification:::color::::                   ;           ;           ; true       ;        ;                      ; MultiSelectOr  ;                                 ;                         ;
+                                 ;            ; form_factor             ; string ; sppClassificationProvider ;                ; accessoriesclassification:::form_factor::::             ;           ;           ; true       ;        ;                      ; MultiSelectOr  ;                                 ;                         ;
+                                 ;            ; cable                   ; string ; sppClassificationProvider ;                ; accessoriesclassification:::cable::::                   ;           ;           ; true       ;        ;                      ; MultiSelectOr  ;                                 ;                         ;
+                                 ;            ; connectivity_technology ; string ; sppClassificationProvider ;                ; accessoriesclassification:::connectivity_technology:::: ;           ;           ; true       ;        ;                      ; MultiSelectOr  ;                                 ;                         ;
+
+INSERT_UPDATE SolrIndexedProperty; $hIndexType; $hName            ; $hType ; $hProvider                                         ; $hProviderParam; $hSortable; $hCurrency; $hLocalized; $hMulti; facet[default = true]; facetType(code); facetSort(code)[default = Alpha]; priority[default = 1000]; visible[default = true]
+                                 ;            ; cfsSpecs          ; string ; customerFacingServiceSpecResolver                  ;                ;           ;           ;            ; true   ;                      ; MultiSelectOr  ;                                 ;                         ; false ;
+                                 ;            ; allowedPrincipals ; string ; productOfferingAllowedPrincipalsFieldValueProvider ;                ;           ;           ;            ; true   ;                      ; MultiSelectOr  ;                                 ;                         ; false ;
+
+################################################################################################################################
+#
+################################################################################################################################
+INSERT_UPDATE SolrSearchQueryProperty; indexedProperty(name, solrIndexedType(identifier))[unique = true]; searchQueryTemplate(name, indexedType(identifier))[unique = true][default = DEFAULT:$solrIndexedType]; facet; ftsPhraseQuery[default = false]; ftsPhraseQueryBoost; ftsQuery[default = false]; ftsQueryBoost; ftsFuzzyQuery[default = false]; ftsFuzzyQueryBoost; ftsWildcardQuery[default = false]; ftsWildcardQueryType(code)[default = POSTFIX]; ftsWildcardQueryBoost; ftsWildcardQueryMinTermLength; includeInResponse[default = true]
+                                     ; itemtype:$solrIndexedType                                        ;                                                                                                      ;      ;                                ;                    ;                          ;              ;                               ;                   ;                                  ;                                              ;                      ;
+                                     ; code:$solrIndexedType                                            ;                                                                                                      ;      ; TRUE                           ; 90                 ;                          ;              ; TRUE                          ;                   ;                                  ; POSTFIX                                      ; 45                   ; 3                            ;
+                                     ; name:$solrIndexedType                                            ;                                                                                                      ;      ; TRUE                           ; 100                ; TRUE                     ; 50           ; TRUE                          ; 25                ;                                  ;                                              ;                      ;
+                                     ; description:$solrIndexedType                                     ;                                                                                                      ;      ; TRUE                           ; 50                 ; TRUE                     ; 25           ; TRUE                          ; 10                ;                                  ;                                              ;                      ;
+                                     ; summary:$solrIndexedType                                         ;                                                                                                      ;      ;                                ;                    ;                          ;              ;                               ;                   ;                                  ;                                              ;                      ;
+                                     ; manufacturerName:$solrIndexedType                                ;                                                                                                      ;      ; TRUE                           ; 80                 ; TRUE                     ; 40           ; TRUE                          ; 20                ;                                  ;                                              ;                      ;
+                                     ; manufacturerAID:$solrIndexedType                                 ;                                                                                                      ;      ;                                ;                    ;                          ;              ;                               ;                   ;                                  ;                                              ;                      ;
+                                     ; ean:$solrIndexedType                                             ;                                                                                                      ;      ; TRUE                           ; 100                ;                          ;              ; TRUE                          ;                   ;                                  ; POSTFIX                                      ; 50                   ; 3                            ;
+                                     ; keywords:$solrIndexedType                                        ;                                                                                                      ;      ; TRUE                           ; 40                 ; TRUE                     ; 20           ; TRUE                          ; 10                ;                                  ;                                              ;                      ;
+
+################################################################################################################################
+# facets used for services
+################################################################################################################################
+INSERT_UPDATE SolrSearchQueryProperty; indexedProperty(name, solrIndexedType(identifier))[unique = true]; facet[default = true]; facetType(code); priority[default = 1000]; facetDisplayNameProvider; facetSortProvider; facetTopValuesProvider; includeInResponse[default = true]; searchQueryTemplate(name, indexedType(identifier))[unique = true][default = DEFAULT:$solrIndexedType]
+#gsm_plans_addons
+                                     ; smsquantity:$solrIndexedType                                     ;                      ; MultiSelectOr  ;                         ;                         ;                  ;                       ;                                  ;
+                                     ; voice:$solrIndexedType                                           ;                      ; MultiSelectOr  ;                         ;                         ;                  ;                       ;                                  ;
+                                     ; datavolume:$solrIndexedType                                      ;                      ; MultiSelectOr  ;                         ;                         ;                  ;                       ;                                  ;
+                                     ; datavolumepremium:$solrIndexedType                               ;                      ; MultiSelectOr  ;                         ;                         ;                  ;                       ;                                  ;
+                                     ; video_type:$solrIndexedType                                      ;                      ; MultiSelectOr  ;                         ;                         ;                  ;                       ;                                  ;
+                                     ; mms:$solrIndexedType                                             ;                      ; MultiSelectOr  ;                         ;                         ;                  ;                       ;                                  ;
+                                     ; no_of_lines:$solrIndexedType                                     ;                      ; Refine         ;                         ;                         ;                  ;                       ;                                  ;
+#internet
+                                     ; internet_download_speed:$solrIndexedType                         ;                      ; MultiSelectOr  ;                         ;                         ;                  ;                       ;                                  ;
+                                     ; internet_upload_speed:$solrIndexedType                           ;                      ; MultiSelectOr  ;                         ;                         ;                  ;                       ;                                  ;
+#satellite_speed
+                                     ; mir_download_speed:$solrIndexedType                              ;                      ; MultiSelectOr  ;                         ;                         ;                  ;                       ;                                  ;
+                                     ; mir_upload_speed:$solrIndexedType                                ;                      ; MultiSelectOr  ;                         ;                         ;                  ;                       ;                                  ;
+                                     ; cir_download_speed:$solrIndexedType                              ;                      ; MultiSelectOr  ;                         ;                         ;                  ;                       ;                                  ;
+                                     ; cir_upload_speed:$solrIndexedType                                ;                      ; MultiSelectOr  ;                         ;                         ;                  ;                       ;                                  ;
+                                     ; terminal_group:$solrIndexedType                                  ;                      ; MultiSelectOr  ;                         ;                         ;                  ;                       ;                                  ;
+                                     ; sla:$solrIndexedType                                             ;                      ; MultiSelectOr  ;                         ;                         ;                  ;                       ;                                  ;
+                                     ; bandwith_expected:$solrIndexedType                               ;                      ; MultiSelectOr  ;                         ;                         ;                  ;                       ;                                  ;
+#terminal
+                                     ; installation_type:$solrIndexedType                               ;                      ; MultiSelectOr  ;                         ;                         ;                  ;                       ;                                  ;
+                                     ; connection_band:$solrIndexedType                                 ;                      ; MultiSelectOr  ;                         ;                         ;                  ;                       ;                                  ;
+                                     ; terminal_type:$solrIndexedType                                   ;                      ; MultiSelectOr  ;                         ;                         ;                  ;                       ;                                  ;
+                                     ; terminal_support:$solrIndexedType                                ;                      ; MultiSelectOr  ;                         ;                         ;                  ;                       ;                                  ;
+#satellite_connectivity                                     
+                                     ; overage_vol:$solrIndexedType                                     ;                      ; MultiSelectOr  ;                         ;                         ;                  ;                       ;                                  ;
+                                     ; public_ip_supported:$solrIndexedType                             ;                      ; MultiSelectOr  ;                         ;                         ;                  ;                       ;                                  ;
+                                     ; frequency_band:$solrIndexedType                                  ;                      ; MultiSelectOr  ;                         ;                         ;                  ;                       ;                                  ;
+                                     ; frequency_char:$solrIndexedType                                  ;                      ; MultiSelectOr  ;                         ;                         ;                  ;                       ;                                  ;
+                                     ; orbit:$solrIndexedType                                           ;                      ; MultiSelectOr  ;                         ;                         ;                  ;                       ;                                  ;
+                                     ; ground_station_location:$solrIndexedType                         ;                      ; Refine         ;                         ;                         ;                  ;                       ;                                  ;
+                                     ; max_sla_available:$solrIndexedType                               ;                      ; MultiSelectOr  ;                         ;                         ;                  ;                       ;                                  ;
+                                     ; satellite:$solrIndexedType                                       ;                      ; MultiSelectOr  ;                         ;                         ;                  ;                       ;                                  ;
+                                     ; frequency:$solrIndexedType                                       ;                      ; MultiSelectOr  ;                         ;                         ;                  ;                       ;                                  ;
+                                     ; subtype:$solrIndexedType                                         ;                      ; MultiSelectOr  ;                         ;                         ;                  ;                       ;                                  ;
+                                     ; sector:$solrIndexedType                                          ;                      ; MultiSelectOr  ;                         ;                         ;                  ;                       ;                                  ;
+#cfs_specs
+                                     ; cfsSpecs:$solrIndexedType                                        ;                      ; MultiSelectOr  ;                         ;                         ;                  ;                       ;                                  ;
+
+################################################################################################################################
+# facets used for phones and accessories
+################################################################################################################################
+INSERT_UPDATE SolrSearchQueryProperty; indexedProperty(name, solrIndexedType(identifier))[unique = true]; facet[default = true]; facetType(code); priority[default = 1000]; facetDisplayNameProvider; facetSortProvider; facetTopValuesProvider; includeInResponse[default = true]; searchQueryTemplate(name, indexedType(identifier))[unique = true][default = DEFAULT:$solrIndexedType]
+                                     ; availableInStores:$solrIndexedType                               ;                      ; MultiSelectOr  ; 5000                    ;                         ;                  ;                       ;                                  ;
+                                     ; mobileplatform:$solrIndexedType                                  ;                      ; MultiSelectOr  ;                         ;                         ;                  ;                       ;                                  ;
+                                     ; touchscreen:$solrIndexedType                                     ;                      ; Refine         ;                         ;                         ;                  ;                       ;                                  ;
+                                     ; displaysize:$solrIndexedType                                     ;                      ; MultiSelectOr  ;                         ;                         ;                  ;                       ;                                  ;
+                                     ; storage:$solrIndexedType                                         ;                      ; MultiSelectOr  ;                         ;                         ;                  ;                       ;                                  ;
+                                     ; cameratype:$solrIndexedType                                      ;                      ; MultiSelectOr  ;                         ;                         ;                  ;                       ;                                  ;
+                                     ; processor:$solrIndexedType                                       ;                      ; MultiSelectOr  ;                         ;                         ;                  ;                       ;                                  ;
+                                     ; brand:$solrIndexedType                                           ;                      ; MultiSelectOr  ;                         ;                         ;                  ;                       ;                                  ;
+                                     ; color:$solrIndexedType                                           ;                      ; MultiSelectOr  ;                         ;                         ;                  ;                       ;                                  ;
+                                     ; form_factor:$solrIndexedType                                     ;                      ; MultiSelectOr  ;                         ;                         ;                  ;                       ;                                  ;
+                                     ; cable:$solrIndexedType                                           ;                      ; MultiSelectOr  ;                         ;                         ;                  ;                       ;                                  ;
+                                     ; connectivity_technology:$solrIndexedType                         ;                      ; MultiSelectOr  ;                         ;                         ;                  ;                       ;                                  ;
+
+INSERT_UPDATE SolrSearchQueryProperty; indexedProperty(name, solrIndexedType(identifier))[unique = true]; facet[default = true]; facetType(code); searchQueryTemplate(name, indexedType(identifier))[unique = true][default = DEFAULT:$solrIndexedType]; includeInResponse[default = true]; facetDisplayNameProvider         ; facetSortProvider; facetTopValuesProvider
+                                     ; category:$solrIndexedType                                        ;                      ; Refine         ;                                                                                                      ;                                  ; categoryFacetDisplayNameProvider ;                  ;

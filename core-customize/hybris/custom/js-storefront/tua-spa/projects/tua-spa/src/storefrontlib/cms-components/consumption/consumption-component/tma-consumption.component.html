@@ -1,0 +1,21 @@
+<ng-container *ngIf="url$ |async as url">
+  <ng-container *ngIf="url?.length === 0">
+    <div class="row cx-consumption d-flex justify-content-center align-items-center">
+      <ng-container *ngIf="data$ | async as consumptionComponent">
+          <div 
+            class="col-lg-6 col-md-12"
+            *ngFor="let poConsumption of consumptionComponent?.searchByConsumptionComponents | keyvalue"
+            >
+            <ng-container>
+              <span>{{ poConsumption.value.productSpecification.name }}</span>
+            </ng-container>
+            <ng-container>
+              <cx-po-search-by-consumption
+                [poConsumption]="poConsumption.value">
+              </cx-po-search-by-consumption>
+            </ng-container>
+          </div>
+      </ng-container>
+    </div>
+  </ng-container>
+</ng-container>

@@ -1,0 +1,31 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Importing Categories into B2B Telco SPA Store
+
+
+# Macros / Replacement Parameter definitions
+$productCatalog = b2btelcospaProductCatalog
+$catalogVersion = catalogversion(catalog(id[default=$productCatalog]), version[default='Staged'])[unique=true, default=$productCatalog:Staged]
+
+# Language
+$lang = en
+
+# Insert Categories
+INSERT_UPDATE Category; code[unique = true]; $catalogVersion; name[lang = $lang]
+                      ; 1                  ;                ; Open Catalogue
+
+                      ; businessTools      ;                ; Business Tools
+                      ; internet           ;                ; Internet
+                      ; satelliteServices  ;                ; Satellite Services
+                      ; wireless           ;                ; Wireless
+                      ; plans              ;                ; Plans
+                      ; terminals          ;                ; Terminals
+                      ; gsmPlans           ;                ; GSM Plans
+                      ; addons             ;                ; Addons
+                      ; phones             ;                ; Phones
+                      ; insurancePlans     ;                ; Insurance Plans
+                      ; accessories        ;                ; Accessories
+                      ; billingOptions     ;                ; Billing Options
+                      ; brands             ;                ; Brands

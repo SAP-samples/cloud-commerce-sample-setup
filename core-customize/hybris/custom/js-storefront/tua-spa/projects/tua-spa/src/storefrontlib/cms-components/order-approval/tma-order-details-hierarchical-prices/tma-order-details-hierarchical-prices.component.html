@@ -1,0 +1,6 @@
+<strong>{{orderItem.productOffering.name}}</strong>
+
+<cx-order-details-hierarchical-price
+  *ngFor="let price of orderItem.itemPrice"
+  [itemPrices]="price.orderPrice">
+</cx-order-details-hierarchical-price>

@@ -1,0 +1,34 @@
+.fontSize {
+  font-size: 1.5rem !important;
+  color: black;
+}
+
+.labelHeading {
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: #ffffff;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.label {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.labelText {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.header-text-colour {
+  color: #fff;
+  text-decoration: none;
+}
+
+.card-header {
+  background-color: var(--cx-color-background-dark);
+}

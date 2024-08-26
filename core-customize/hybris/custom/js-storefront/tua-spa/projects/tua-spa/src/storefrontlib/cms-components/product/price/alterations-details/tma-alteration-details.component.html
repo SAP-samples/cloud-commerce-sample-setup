@@ -1,0 +1,19 @@
+-{{alteration.price.value}}
+<span *ngIf="!alteration.isPercentage">{{ 'common.currencies.currency' | cxTranslate : {context: alteration.price.currencyIso} }}</span>
+<span *ngIf="alteration.isPercentage">%</span>
+{{'productDetails.price.common.off' | cxTranslate}}
+{{
+'productDetails.price.priceTypes.billingEvents.billingEvent'
+  | cxTranslate: { context: alteration.billingEvent }
+}}
+<span *ngIf="alteration.cycle">
+  <ng-container *ngIf="alteration.cycle.cycleStart!==1 || alteration.cycle.cycleEnd">
+    <ng-container *ngIf="alteration.cycle.cycleStart && alteration.cycle.cycleEnd">
+      {{'productDetails.price.common.for' | cxTranslate}}
+      {{alteration.cycle.cycleStart}}&nbsp;{{'productDetails.price.common.to' | cxTranslate}}&nbsp;{{alteration.cycle.cycleEnd}}
+    </ng-container>
+    <ng-container *ngIf="alteration.cycle.cycleStart && !alteration.cycle.cycleEnd">
+      {{'productDetails.price.common.onwards' | cxTranslate}}
+    </ng-container>
+  </ng-container>
+</span>

@@ -1,0 +1,37 @@
+<cx-selfcare-card
+  *ngIf="model$ | async as model"
+  i18nRoot="{{ domainType }}"
+  [showHint]="true"
+  subtitle="{{ 'selfcare.billingAgreements.details.agreementSpecificationDetails.subtitle' | cxTranslate }}"
+>
+  <section main class="details">
+    <ng-container *ngIf="model.agreementSpecification as agreementSpecification; else emptyList">
+      <div class="property">
+        <label>{{ 'selfcare.billingAgreements.name' | cxTranslate }}</label>
+        <span class="value">
+          {{agreementSpecification.name}}
+        </span>
+      </div>
+      <div class="property">
+        <label>{{ 'selfcare.billingAgreements.id' | cxTranslate }}</label>
+        <span class="value">
+          {{agreementSpecification.id}}
+        </span>
+      </div>
+      <div class="property">
+        <label>{{ 'selfcare.billingAgreements.description' | cxTranslate }}</label>
+        <span class="value">
+          {{agreementSpecification.description}}
+        </span>
+      </div>
+    </ng-container>
+  </section>
+</cx-selfcare-card>
+
+<ng-template #emptyList>
+  <p class="is-empty">
+    {{
+      'selfcare.billingAgreements.details.agreementSpecificationDetails.emptyList' | cxTranslate
+    }}
+  </p>
+</ng-template>

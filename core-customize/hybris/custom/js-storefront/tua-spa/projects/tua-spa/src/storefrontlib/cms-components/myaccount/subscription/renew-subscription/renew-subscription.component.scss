@@ -1,0 +1,8 @@
+@import "@spartacus/styles/scss/mixins";
+
+@include media-breakpoint-down(xs) {
+  .btn-text {
+    font-size: 0.6rem;
+    height: 30px;
+  }
+}

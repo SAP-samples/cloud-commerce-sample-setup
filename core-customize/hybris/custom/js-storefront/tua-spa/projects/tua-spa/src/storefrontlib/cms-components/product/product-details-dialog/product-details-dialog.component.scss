@@ -1,0 +1,39 @@
+.cx-bold {
+  font-weight: var(--cx-font-weight-bold);
+}
+
+.cx-normal {
+  font-weight: var(--cx-font-weight-normal);
+}
+.clickable {
+  cursor: pointer;
+}
+
+.header-text {
+  color: #000000 !important;
+  font-size: 1.39rem;
+  font-weight: 800;
+}
+
+.nameText {
+  color: #000000 !important;
+  font-size: 1rem;
+}
+
+.priceText {
+  color: #000000 !important;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+  cx-media.is-missing {
+    min-width: 130px;
+    min-height: 130px;
+    display: block;
+  }
+
+:host ::ng-deep cx-price-display.childCss {
+  ul {
+    padding-left: 20px !important;
+  }
+}

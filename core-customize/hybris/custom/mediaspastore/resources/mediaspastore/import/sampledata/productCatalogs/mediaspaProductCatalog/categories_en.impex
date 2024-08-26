@@ -1,0 +1,38 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+#******************************This file is generated - please do not edit it. It will be regenerated after every build.********************************#
+# ImpEx for Importing Categories into Media SPA Store
+
+# Macros / Replacement Parameter definitions
+$productCatalog = mediaspaProductCatalog
+$productCatalogName = Media SPA Product Catalog
+$catalogVersion = catalogversion(catalog(id[default=$productCatalog]), version[default='Staged'])[unique=true, default=$productCatalog:Staged]
+
+$lang = en
+
+INSERT_UPDATE Category; code[unique = true]; name[lang = $lang]; $catalogVersion
+                      ; 1                  ; Open Catalogue
+                      ; brands             ; Brands
+
+INSERT_UPDATE Category; code[unique = true]    ; name[lang = $lang]; description[lang = $lang]; $catalogVersion
+                      ; addons                 ; Addons            ; Addons
+                      ; video                  ; Video             ; Video
+                      ; merchandise            ; Merchandise       ; Merchandise
+                      ; hardware               ; Hardware          ; Hardware
+                      ; movies                 ; Movies            ; Movies
+                      ; tvchannels             ; TV Channels       ; TV Channels
+                      ; tvshows                ; TV Shows          ; TV Shows
+                      ; tvseason               ; TV Season         ; TV Season
+                      ; tvepisodes             ; TV Episode        ; TV Episode
+                      ; underworldbrand        ; Underworld brand  ; Underworld brand
+                      ; plans                  ; Plans             ; Plans
+                      ; internetplans          ; Internet Plans    ; Internet Plans
+                      ; landlineplans          ; Landline Plans    ; Landline Plans
+                      ; tvplans                ; TV Plans          ; TV Plans
+                      ; tvaddons               ; TV Addons         ; TV Addons
+                      ; trending               ; Trending Now      ; Trending Now
+                      ; news_channels          ; News              ; News
+                      ; entertainment_channels ; Entertainment     ; Entertainment
+                      ; movie_channels         ; Movies            ; Movies
+                      ; lifestyle_channels     ; Lifestyle         ; Lifestyle

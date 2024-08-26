@@ -1,0 +1,197 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Importing Products Store Stock Levels into Telco Store
+
+$vendor = telcospa
+
+
+# Create some Warehouses for the Vendor
+INSERT_UPDATE Warehouse; code[unique = true]; vendor(code)[default = $vendor]; default[default = 'false']
+                       ; Hybris Telco Spa - Chicago Premium Outlets
+                       ; Hybris Telco Spa - Chrysler Building
+                       ; Hybris Telco Spa - San Francisco Center
+                       ; Hybris Telco Spa - Seattle Premium Outlets
+                       ; Hybris Telco Spa - Riverwalk Marketplace
+
+INSERT_UPDATE StockLevel; available; warehouse(code)[default = 'Hybris Telco Spa - Chicago Premium Outlets', unique = true]; inStockStatus(code)[default = 'notSpecified']; overSelling; preOrder; productCode[unique = true]; reserved
+#Devices (iPhones)
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; 2047052                   ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; Apple_iPhone_6            ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; Apple_iPhone_6plus        ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; iPhone_8                  ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; iPhone_x                  ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; samsung_s8                ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; media_box                 ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; 2093587                   ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; 3417125                   ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; 5925500                   ; 0
+#Accessories (Headsets)
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; 3335769                   ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; 3432858                   ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; 3432862                   ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; 3551681                   ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; 3682711                   ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; 3717933                   ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; 3781771                   ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; 3798326                   ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; 3798384                   ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; 3882494                   ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; 3887538                   ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; 3938133                   ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; 3951220                   ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; 4104255                   ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; 4211479                   ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; 5120023                   ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; 5120024                   ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; 6053184                   ; 0
+#TV
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; BASIC_TV                  ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; BIG_TV                    ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; PREMIUM_TV                ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; DELUXE_TV                 ; 0
+
+INSERT_UPDATE StockLevel; available; warehouse(code)[default = 'Hybris Telco Spa - Chrysler Building', unique = true]; inStockStatus(code)[default = 'notSpecified']; overSelling; preOrder; productCode[unique = true]; reserved
+#Devices (iPhones)
+                        ; 10       ;                                                                                 ;                                              ; 0          ; 0       ; 2047052                   ; 0
+                        ; 10       ;                                                                                 ;                                              ; 0          ; 0       ; Apple_iPhone_6            ; 0
+                        ; 10       ;                                                                                 ;                                              ; 0          ; 0       ; Apple_iPhone_6plus        ; 0
+                        ; 10       ;                                                                                 ;                                              ; 0          ; 0       ; iPhone_8                  ; 0
+                        ; 10       ;                                                                                 ;                                              ; 0          ; 0       ; iPhone_x                  ; 0
+                        ; 10       ;                                                                                 ;                                              ; 0          ; 0       ; samsung_s8                ; 0
+                        ; 10       ;                                                                                 ;                                              ; 0          ; 0       ; 2093587                   ; 0
+                        ; 10       ;                                                                                 ;                                              ; 0          ; 0       ; 3417125                   ; 0
+                        ; 10       ;                                                                                 ;                                              ; 0          ; 0       ; 5925500                   ; 0
+#Accessories (Headsets)
+                        ; 10       ;                                                                                 ;                                              ; 0          ; 0       ; 3335769                   ; 0
+                        ; 10       ;                                                                                 ;                                              ; 0          ; 0       ; 3432858                   ; 0
+                        ; 10       ;                                                                                 ;                                              ; 0          ; 0       ; 3432862                   ; 0
+                        ; 10       ;                                                                                 ;                                              ; 0          ; 0       ; 3551681                   ; 0
+                        ; 10       ;                                                                                 ;                                              ; 0          ; 0       ; 3682711                   ; 0
+                        ; 10       ;                                                                                 ;                                              ; 0          ; 0       ; 3717933                   ; 0
+                        ; 10       ;                                                                                 ;                                              ; 0          ; 0       ; 3781771                   ; 0
+                        ; 10       ;                                                                                 ;                                              ; 0          ; 0       ; 3798326                   ; 0
+                        ; 10       ;                                                                                 ;                                              ; 0          ; 0       ; 3798384                   ; 0
+                        ; 10       ;                                                                                 ;                                              ; 0          ; 0       ; 3882494                   ; 0
+                        ; 10       ;                                                                                 ;                                              ; 0          ; 0       ; 3887538                   ; 0
+                        ; 10       ;                                                                                 ;                                              ; 0          ; 0       ; 3938133                   ; 0
+                        ; 10       ;                                                                                 ;                                              ; 0          ; 0       ; 3951220                   ; 0
+                        ; 10       ;                                                                                 ;                                              ; 0          ; 0       ; 4104255                   ; 0
+                        ; 10       ;                                                                                 ;                                              ; 0          ; 0       ; 4211479                   ; 0
+                        ; 10       ;                                                                                 ;                                              ; 0          ; 0       ; 5120023                   ; 0
+                        ; 10       ;                                                                                 ;                                              ; 0          ; 0       ; 5120024                   ; 0
+                        ; 10       ;                                                                                 ;                                              ; 0          ; 0       ; 6053184                   ; 0
+#TV
+                        ; 10       ;                                                                                 ;                                              ; 0          ; 0       ; BASIC_TV                  ; 0
+                        ; 10       ;                                                                                 ;                                              ; 0          ; 0       ; BIG_TV                    ; 0
+                        ; 10       ;                                                                                 ;                                              ; 0          ; 0       ; PREMIUM_TV                ; 0
+                        ; 10       ;                                                                                 ;                                              ; 0          ; 0       ; DELUXE_TV                 ; 0
+
+INSERT_UPDATE StockLevel; available; warehouse(code)[default = 'Hybris Telco Spa - San Francisco Center', unique = true]; inStockStatus(code)[default = 'notSpecified']; overSelling; preOrder; productCode[unique = true]; reserved
+#Devices (iPhones)
+                        ; 10       ;                                                                                    ;                                              ; 0          ; 0       ; 2047052                   ; 0
+                        ; 10       ;                                                                                    ;                                              ; 0          ; 0       ; Apple_iPhone_6            ; 0
+                        ; 10       ;                                                                                    ;                                              ; 0          ; 0       ; Apple_iPhone_6plus        ; 0
+                        ; 10       ;                                                                                    ;                                              ; 0          ; 0       ; iPhone_8                  ; 0
+                        ; 10       ;                                                                                    ;                                              ; 0          ; 0       ; iPhone_x                  ; 0
+                        ; 10       ;                                                                                    ;                                              ; 0          ; 0       ; samsung_s8                ; 0
+                        ; 10       ;                                                                                    ;                                              ; 0          ; 0       ; 2093587                   ; 0
+                        ; 10       ;                                                                                    ;                                              ; 0          ; 0       ; 3417125                   ; 0
+                        ; 10       ;                                                                                    ;                                              ; 0          ; 0       ; 5925500                   ; 0
+#Accessories (Headsets)
+                        ; 10       ;                                                                                    ;                                              ; 0          ; 0       ; 3335769                   ; 0
+                        ; 10       ;                                                                                    ;                                              ; 0          ; 0       ; 3432858                   ; 0
+                        ; 10       ;                                                                                    ;                                              ; 0          ; 0       ; 3432862                   ; 0
+                        ; 10       ;                                                                                    ;                                              ; 0          ; 0       ; 3551681                   ; 0
+                        ; 10       ;                                                                                    ;                                              ; 0          ; 0       ; 3682711                   ; 0
+                        ; 10       ;                                                                                    ;                                              ; 0          ; 0       ; 3717933                   ; 0
+                        ; 10       ;                                                                                    ;                                              ; 0          ; 0       ; 3781771                   ; 0
+                        ; 10       ;                                                                                    ;                                              ; 0          ; 0       ; 3798326                   ; 0
+                        ; 10       ;                                                                                    ;                                              ; 0          ; 0       ; 3798384                   ; 0
+                        ; 10       ;                                                                                    ;                                              ; 0          ; 0       ; 3882494                   ; 0
+                        ; 10       ;                                                                                    ;                                              ; 0          ; 0       ; 3887538                   ; 0
+                        ; 10       ;                                                                                    ;                                              ; 0          ; 0       ; 3938133                   ; 0
+                        ; 10       ;                                                                                    ;                                              ; 0          ; 0       ; 3951220                   ; 0
+                        ; 10       ;                                                                                    ;                                              ; 0          ; 0       ; 4104255                   ; 0
+                        ; 10       ;                                                                                    ;                                              ; 0          ; 0       ; 4211479                   ; 0
+                        ; 10       ;                                                                                    ;                                              ; 0          ; 0       ; 5120023                   ; 0
+                        ; 10       ;                                                                                    ;                                              ; 0          ; 0       ; 5120024                   ; 0
+                        ; 10       ;                                                                                    ;                                              ; 0          ; 0       ; 6053184                   ; 0
+#TV
+                        ; 10       ;                                                                                    ;                                              ; 0          ; 0       ; BASIC_TV                  ; 0
+                        ; 10       ;                                                                                    ;                                              ; 0          ; 0       ; BIG_TV                    ; 0
+                        ; 10       ;                                                                                    ;                                              ; 0          ; 0       ; PREMIUM_TV                ; 0
+                        ; 10       ;                                                                                    ;                                              ; 0          ; 0       ; DELUXE_TV                 ; 0
+
+INSERT_UPDATE StockLevel; available; warehouse(code)[default = 'Hybris Telco Spa - Seattle Premium Outlets', unique = true]; inStockStatus(code)[default = 'notSpecified']; overSelling; preOrder; productCode[unique = true]; reserved
+#Devices (iPhones)
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; 2047052                   ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; Apple_iPhone_6            ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; Apple_iPhone_6plus        ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; iPhone_8                  ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; iPhone_x                  ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; samsung_s8                ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; 2093587                   ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; 3417125                   ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; 5925500                   ; 0
+#Accessories (Headsets)
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; 3335769                   ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; 3432858                   ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; 3432862                   ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; 3551681                   ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; 3682711                   ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; 3717933                   ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; 3781771                   ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; 3798326                   ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; 3798384                   ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; 3882494                   ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; 3887538                   ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; 3938133                   ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; 3951220                   ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; 4104255                   ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; 4211479                   ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; 5120023                   ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; 5120024                   ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; 6053184                   ; 0
+#TV
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; BASIC_TV                  ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; BIG_TV                    ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; PREMIUM_TV                ; 0
+                        ; 10       ;                                                                                       ;                                              ; 0          ; 0       ; DELUXE_TV                 ; 0
+
+INSERT_UPDATE StockLevel; available; warehouse(code)[default = 'Hybris Telco Spa - Riverwalk Marketplace', unique = true]; inStockStatus(code)[default = 'notSpecified']; overSelling; preOrder; productCode[unique = true]; reserved
+#Devices (iPhones)
+                        ; 10       ;                                                                                     ;                                              ; 0          ; 0       ; 2047052                   ; 0
+                        ; 10       ;                                                                                     ;                                              ; 0          ; 0       ; Apple_iPhone_6            ; 0
+                        ; 10       ;                                                                                     ;                                              ; 0          ; 0       ; Apple_iPhone_6plus        ; 0
+                        ; 10       ;                                                                                     ;                                              ; 0          ; 0       ; iPhone_8                  ; 0
+                        ; 10       ;                                                                                     ;                                              ; 0          ; 0       ; iPhone_x                  ; 0
+                        ; 10       ;                                                                                     ;                                              ; 0          ; 0       ; samsung_s8                ; 0
+                        ; 10       ;                                                                                     ;                                              ; 0          ; 0       ; 2093587                   ; 0
+                        ; 10       ;                                                                                     ;                                              ; 0          ; 0       ; 3417125                   ; 0
+                        ; 10       ;                                                                                     ;                                              ; 0          ; 0       ; 5925500                   ; 0
+#Accessories (Headsets)
+                        ; 10       ;                                                                                     ;                                              ; 0          ; 0       ; 3335769                   ; 0
+                        ; 10       ;                                                                                     ;                                              ; 0          ; 0       ; 3432858                   ; 0
+                        ; 10       ;                                                                                     ;                                              ; 0          ; 0       ; 3432862                   ; 0
+                        ; 10       ;                                                                                     ;                                              ; 0          ; 0       ; 3551681                   ; 0
+                        ; 10       ;                                                                                     ;                                              ; 0          ; 0       ; 3682711                   ; 0
+                        ; 10       ;                                                                                     ;                                              ; 0          ; 0       ; 3717933                   ; 0
+                        ; 10       ;                                                                                     ;                                              ; 0          ; 0       ; 3781771                   ; 0
+                        ; 10       ;                                                                                     ;                                              ; 0          ; 0       ; 3798326                   ; 0
+                        ; 10       ;                                                                                     ;                                              ; 0          ; 0       ; 3798384                   ; 0
+                        ; 10       ;                                                                                     ;                                              ; 0          ; 0       ; 3882494                   ; 0
+                        ; 10       ;                                                                                     ;                                              ; 0          ; 0       ; 3887538                   ; 0
+                        ; 10       ;                                                                                     ;                                              ; 0          ; 0       ; 3938133                   ; 0
+                        ; 10       ;                                                                                     ;                                              ; 0          ; 0       ; 3951220                   ; 0
+                        ; 10       ;                                                                                     ;                                              ; 0          ; 0       ; 4104255                   ; 0
+                        ; 10       ;                                                                                     ;                                              ; 0          ; 0       ; 4211479                   ; 0
+                        ; 10       ;                                                                                     ;                                              ; 0          ; 0       ; 5120023                   ; 0
+                        ; 10       ;                                                                                     ;                                              ; 0          ; 0       ; 5120024                   ; 0
+                        ; 10       ;                                                                                     ;                                              ; 0          ; 0       ; 6053184                   ; 0
+#TV
+                        ; 10       ;                                                                                     ;                                              ; 0          ; 0       ; BASIC_TV                  ; 0
+                        ; 10       ;                                                                                     ;                                              ; 0          ; 0       ; BIG_TV                    ; 0
+                        ; 10       ;                                                                                     ;                                              ; 0          ; 0       ; PREMIUM_TV                ; 0
+                        ; 10       ;                                                                                     ;                                              ; 0          ; 0       ; DELUXE_TV                 ; 0

@@ -1,0 +1,27 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Importing SBG Promotions
+#% impex.setLocale( Locale.GERMAN ); 
+
+# Macros / Replacement Parameter definitions
+$productCatalog = utilitiesSpaProductCatalog
+
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = Online])[unique = true, default = $productCatalog:Online]
+
+
+INSERT PromotionPriceRow; &id                           ; Currency(isocode); price;
+                        ; threshold_30                  ; USD              ; 30   ;
+                        ; discount_5                    ; USD              ; 5    ;
+                        ; lightbulb_led_multipack_price ; USD              ; 18   ;
+
+INSERT_UPDATE OrderThresholdDiscountPromotion; code[unique = true]                 ; enabled; PromotionGroup(Identifier); priority; thresholdTotals(&id); discountPrices(&id)
+                                             ; orderThresholdDiscountPromotion30_5 ; true   ; utilitiesspaPromoGrp      ; 2000    ; threshold_30        ; discount_5 ;
+
+INSERT_UPDATE ProductFixedPricePromotion; code[unique = true]   ; enabled; PromotionGroup(Identifier); priority; productFixedUnitPrice(&id)    ; products(code, $catalogVersion); title
+                                        ; fixed_price_promotion ; true   ; utilitiesspaPromoGrp      ; 2000    ; lightbulb_led_multipack_price ; lightbulb_led_multipack        ; Fixed price promotion
+
+INSERT_UPDATE PromotionBillingTimeRestriction; descriptionPattern[unique = true, lang = en]       ; promotion(code)                     ; positive; billingTimes(code)
+                                             ; promotionBillingTimeRestrictionMonthlyPositive     ; orderThresholdDiscountPromotion30_5 ; true    ; monthly
+                                             ; promotionBillingTimeRestrictionOnFirstBillPositive ; fixed_price_promotion               ; true    ; onfirstbill

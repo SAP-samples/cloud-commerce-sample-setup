@@ -1,0 +1,52 @@
+# ---------------------------------------------------------------------------
+# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+# ---------------------------------------------------------------------------
+
+# ImpEx for Promotions for Utilities Store
+#% impex.setLocale( Locale.GERMAN ); 
+
+$defaultPromoGrp = utilitiesspaPromoGrp
+$favCustomers = favoriteCustomers
+$bigSpenders = bigSpenders
+$productCatalog = utilitiesSpaProductCatalog
+$catalogVersion = catalogVersion(CatalogVersion.catalog(Catalog.id[default=$productCatalog]), CatalogVersion.version[default=Online])[default=$productCatalog:Online]
+$regulargroup = regulargroup
+
+#### Order Discount ####
+INSERT PromotionPriceRow; &tresholdId; Currency(isocode); price
+                        ; 1          ; GBP              ; 150
+                        ; 2          ; USD              ; 200
+                        ; 3          ; JPY              ; 15000
+
+INSERT PromotionPriceRow; &priceId; Currency(isocode); price
+                        ; 7       ; GBP              ; 15
+                        ; 8       ; USD              ; 20
+                        ; 9       ; JPY              ; 1500
+
+INSERT_UPDATE OrderThresholdDiscountPromotion; PromotionGroup(Identifier[default = $defaultPromoGrp]); enabled[default = true, unique = true]; code[unique = true]      ; title                                            ; description                                      ; messageFired[lang = en]             ; messageFired[lang = de]                                       ; messageFired[lang = ja]; messageFired[lang = zh]; priority; thresholdTotals(&tresholdId); discountPrices(&priceId)
+                                             ;                                                       ;                                       ; OrderThreshold15Discount ; You saved bunch of bucks for spending quite much ; You saved bunch of bucks for spending quite much ; You saved {3} for spending over {1} ; Sie haben {3} gespart, weil Sie mehr als {1} ausgegeben haben ; {1} 以上の購入で {3} の節約     ; 您的一份订单超过 {1}，节省了 {3}。  ; 500     ; 1,2,3                       ; 7,8,9
+
+INSERT_UPDATE PromotionUserRestriction; positive; promotion(code)[unique = true]; users(uid)
+                                      ; TRUE    ; OrderThreshold15Discount      ; $regulargroup
+
+INSERT PromotionPriceRow; &tresholdId; Currency(isocode); price
+                        ; 4          ; GBP              ; 200
+                        ; 5          ; USD              ; 300
+                        ; 6          ; JPY              ; 20000
+
+
+#### Multi-buy on films ####
+INSERT PromotionPriceRow; &priceId; Currency(isocode); price
+                        ; 1       ; USD              ; 10
+                        ; 2       ; JPY              ; 800
+
+#### Perfect partner on Digital SLR Camera DSLR-A100H and InfoLITHIUM-Akku battery ####
+INSERT PromotionPriceRow; &priceId; Currency(isocode); price
+                        ; 3       ; USD              ; 75
+                        ; 4       ; JPY              ; 7500
+
+#### Product bundle on HDR-CX105E Red ####
+INSERT PromotionPriceRow; &priceId; Currency(isocode); price
+                        ; 5       ; USD              ; 500
+                        ; 6       ; JPY              ; 50000
+

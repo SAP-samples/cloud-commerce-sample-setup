@@ -1,0 +1,20 @@
+<!-- Technical ID form -->
+<div class="row" [formGroup]="technicalDetails">
+  <div class="form-group col-12">
+    <label>
+      <span class="card-label font-weight-bolder required">{{'technicalId.technicalDetails.label' | cxTranslate}}</span>
+      <input
+        class="form-control"
+        type="text"
+        required
+        placeholder="{{'technicalId.technicalDetails.placeholder' | cxTranslate}}"
+        formControlName="technicalId"
+      />
+      <cx-form-errors
+        class="form-message--danger"
+        [control]="technicalDetails.get('technicalId')"
+      ></cx-form-errors>
+    </label>
+  </div>
+  <ng-container *ngIf="technicalIdSelect(technicalDetails)"></ng-container>
+</div>
