@@ -1,3 +1,0 @@
-# some examples:
-# TV => Television
-# GB,gib,gigabyte,gigabytes
