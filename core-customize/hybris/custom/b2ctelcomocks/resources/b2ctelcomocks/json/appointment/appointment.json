@@ -1,0 +1,1263 @@
+[
+  {
+    "id": "ew231313w123",
+    "href": "https://localhost:8080/tmf-api/appointment/v4/appointment/ew231313w123",
+    "category": null,
+    "creationTime": null,
+    "description": null,
+    "externalId": null,
+    "lastUpdate": 1566389473683,
+    "status": null,
+    "validFor": {
+      "endDateTime": 1596714119054,
+      "startDateTime": 1596714119054
+    },
+    "calendarEvent": null,
+    "note": null,
+    "relatedEntity": null,
+    "attachment": null,
+    "contactMedium": null,
+    "relatedParty": null,
+    "relatedPlace": null,
+    "creationDate": null,
+    "@schemaLocation": "https://api-appointment-v4-0-0.mybluemix.net/docs/#/",
+    "@type": "Appointment",
+    "@baseType": "Appointment"
+  },
+  {
+    "id": "3feb3e73cddef280",
+    "href": "https://localhost:8080/tmf-api/appointment/v4/appointment/3feb3e73cddef280",
+    "category": null,
+    "creationTime": null,
+    "description": null,
+    "externalId": null,
+    "lastUpdate": 1566389473683,
+    "status": null,
+    "validFor": {
+      "endDateTime": 1596714119054,
+      "startDateTime": 1596714119054
+    },
+    "calendarEvent": null,
+    "note": null,
+    "relatedEntity": null,
+    "attachment": null,
+    "contactMedium": null,
+    "relatedParty": null,
+    "relatedPlace": {
+      "role": "interventionAddress",
+      "city": "Petrosani",
+      "postcode": "332222",
+      "streetName": "1 dec",
+      "streetType": "straight",
+      "streetNr": "1918",
+      "country": "Romania",
+      "stateOfProvince": "Hunedoara",
+      "geographicAddress": null,
+      "@type": "geographicAddress"
+    },
+    "creationDate": 1566389473683,
+    "@schemaLocation": "https://api-appointment-v4-0-0.mybluemix.net/docs/#/",
+    "@type": "Appointment",
+    "@baseType": "Appointment"
+  },
+  {
+    "id": "3fcc90f14980c188",
+    "href": "https://localhost:9002/b2ctelcomocks/appointment/3fcc90f14980c188",
+    "category": null,
+    "creationTime": 1566378673683,
+    "description": null,
+    "externalId": null,
+    "lastUpdate": 1566378673683,
+    "status": "INITIALIZED",
+    "validFor": {
+      "endDateTime": 1691311319000,
+      "startDateTime": 1596703319000
+    },
+    "calendarEvent": null,
+    "note": null,
+    "relatedEntity": null,
+    "attachment": null,
+    "contactMedium": null,
+    "relatedParty": null,
+    "relatedPlace": {
+      "role": "interventionAddress",
+      "city": "Petrosani",
+      "postcode": "332222",
+      "streetName": "1 dec",
+      "streetType": "straight",
+      "streetNr": "1918",
+      "country": "Romania",
+      "stateOfProvince": "Hunedoara",
+      "geographicAddress": null,
+      "@type": "geographicAddress"
+    },
+    "creationDate": null,
+    "@schemaLocation": "https://api-appointment-v4-0-0.mybluemix.net/docs/#/",
+    "@type": "Appointment",
+    "@baseType": "Appointment"
+  },
+  {
+    "id": "3fedc8697e41abfe",
+    "href": "https://localhost:9002/b2ctelcomocks/appointment/3fedc8697e41abfe",
+    "category": null,
+    "creationTime": 1566378673683,
+    "description": null,
+    "externalId": null,
+    "lastUpdate": 1566378673683,
+    "status": "INITIALIZED",
+    "validFor": {
+      "endDateTime": 1691311319000,
+      "startDateTime": 1596703319000
+    },
+    "calendarEvent": null,
+    "note": null,
+    "relatedEntity": null,
+    "attachment": null,
+    "contactMedium": null,
+    "relatedParty": null,
+    "relatedPlace": {
+      "role": "interventionAddress",
+      "city": "Petrosani",
+      "postcode": "332222",
+      "streetName": "1 dec",
+      "streetType": "straight",
+      "streetNr": "1918",
+      "country": "Romania",
+      "stateOfProvince": "Hunedoara",
+      "geographicAddress": null,
+      "@type": "geographicAddress"
+    },
+    "creationDate": null,
+    "@schemaLocation": "https://api-appointment-v4-0-0.mybluemix.net/docs/#/",
+    "@type": "Appointment",
+    "@baseType": "Appointment"
+  },
+  {
+    "id": "3fd2f5b82cf92318",
+    "href": "https://localhost:9002/b2ctelcomocks/appointment/3fd2f5b82cf92318",
+    "category": null,
+    "creationTime": 1566378673683,
+    "description": null,
+    "externalId": null,
+    "lastUpdate": 1566378673683,
+    "status": "INITIALIZED",
+    "validFor": {
+      "endDateTime": 1691311319000,
+      "startDateTime": 1596703319000
+    },
+    "calendarEvent": null,
+    "note": null,
+    "relatedEntity": null,
+    "attachment": null,
+    "contactMedium": null,
+    "relatedParty": null,
+    "relatedPlace": {
+      "role": "interventionAddress",
+      "city": "Petrosani",
+      "postcode": "332222",
+      "streetName": "1 dec",
+      "streetType": "straight",
+      "streetNr": "1918",
+      "country": "Romania",
+      "stateOfProvince": "Hunedoara",
+      "geographicAddress": null,
+      "@type": "geographicAddress"
+    },
+    "creationDate": null,
+    "@schemaLocation": "https://api-appointment-v4-0-0.mybluemix.net/docs/#/",
+    "@type": "Appointment",
+    "@baseType": "Appointment"
+  },
+  {
+    "id": "3fd4361851afd476",
+    "href": "https://localhost:9002/b2ctelcomocks/appointment/3fd4361851afd476",
+    "category": null,
+    "creationTime": 1566378673683,
+    "description": null,
+    "externalId": null,
+    "lastUpdate": 1566378673683,
+    "status": "INITIALIZED",
+    "validFor": {
+      "endDateTime": 1691311319000,
+      "startDateTime": 1596703319000
+    },
+    "calendarEvent": null,
+    "note": null,
+    "relatedEntity": null,
+    "attachment": null,
+    "contactMedium": null,
+    "relatedParty": null,
+    "relatedPlace": {
+      "role": "interventionAddress",
+      "city": "Petrosani",
+      "postcode": "332222",
+      "streetName": "1 dec",
+      "streetType": "straight",
+      "streetNr": "1918",
+      "country": "Romania",
+      "stateOfProvince": "Hunedoara",
+      "geographicAddress": null,
+      "@type": "geographicAddress"
+    },
+    "creationDate": null,
+    "@schemaLocation": "https://api-appointment-v4-0-0.mybluemix.net/docs/#/",
+    "@type": "Appointment",
+    "@baseType": "Appointment"
+  },
+  {
+    "id": "3fef9db27613f79e",
+    "href": "https://localhost:9002/b2ctelcomocks/appointment/3fef9db27613f79e",
+    "category": null,
+    "creationTime": 1566378673683,
+    "description": null,
+    "externalId": null,
+    "lastUpdate": 1566378673683,
+    "status": "INITIALIZED",
+    "validFor": {
+      "endDateTime": 1691311319000,
+      "startDateTime": 1596703319000
+    },
+    "calendarEvent": null,
+    "note": null,
+    "relatedEntity": null,
+    "attachment": null,
+    "contactMedium": null,
+    "relatedParty": null,
+    "relatedPlace": {
+      "role": "Boss",
+      "city": "Petrosani",
+      "postcode": "332222",
+      "streetName": "1 dec",
+      "streetType": "straight",
+      "streetNr": "1918",
+      "country": "Romania",
+      "stateOfProvince": "Hunedoara",
+      "geographicAddress": null,
+      "@type": "geographicAddress"
+    },
+    "creationDate": null,
+    "@schemaLocation": "https://api-appointment-v4-0-0.mybluemix.net/docs/#/",
+    "@type": "Appointment",
+    "@baseType": "Appointment"
+  },
+  {
+    "id": "3fe5fde09a19f125",
+    "href": "https://localhost:9002/b2ctelcomocks/appointment/3fe5fde09a19f125",
+    "category": null,
+    "creationTime": 1566378673683,
+    "description": null,
+    "externalId": null,
+    "lastUpdate": 1566378673683,
+    "status": "INITIALIZED",
+    "validFor": {
+      "endDateTime": 1691311319000,
+      "startDateTime": 1596703319000
+    },
+    "calendarEvent": null,
+    "note": null,
+    "relatedEntity": null,
+    "attachment": null,
+    "contactMedium": null,
+    "relatedParty": null,
+    "relatedPlace": {
+      "role": "test boss",
+      "city": "Buhusi",
+      "postcode": "332030",
+      "streetName": "Decembrie",
+      "streetType": "straight",
+      "streetNr": "1 Dec 1918",
+      "country": "Romania",
+      "stateOfProvince": "Hunedoara",
+      "geographicAddress": null,
+      "@type": "geographicAddress"
+    },
+    "creationDate": null,
+    "@schemaLocation": "https://api-appointment-v4-0-0.mybluemix.net/docs/#/",
+    "@type": "Appointment",
+    "@baseType": "Appointment"
+  },
+  {
+    "id": "3feac392133ca2d8",
+    "href": "https://localhost:9002/b2ctelcomocks/appointment/3feac392133ca2d8",
+    "category": null,
+    "creationTime": 1566378673683,
+    "description": null,
+    "externalId": null,
+    "lastUpdate": 1566378673683,
+    "status": "INITIALIZED",
+    "validFor": {
+      "endDateTime": 1691311319000,
+      "startDateTime": 1596703319000
+    },
+    "calendarEvent": null,
+    "note": null,
+    "relatedEntity": null,
+    "attachment": null,
+    "contactMedium": null,
+    "relatedParty": null,
+    "relatedPlace": {
+      "role": "test",
+      "city": "Buhusi",
+      "postcode": "332030",
+      "streetName": "Decembrie",
+      "streetType": "straight",
+      "streetNr": "1 Dec 1918",
+      "country": "Romania",
+      "stateOfProvince": "Hunedoara",
+      "geographicAddress": null,
+      "@type": "geographicAddress"
+    },
+    "creationDate": null,
+    "@schemaLocation": "https://api-appointment-v4-0-0.mybluemix.net/docs/#/",
+    "@type": "Appointment",
+    "@baseType": "Appointment"
+  },
+  {
+    "id": "3fdacc28c64bb9f8",
+    "href": "https://localhost:9002/b2ctelcomocks/appointment/3fdacc28c64bb9f8",
+    "category": null,
+    "creationTime": 1566378673683,
+    "description": null,
+    "externalId": null,
+    "lastUpdate": 1566378673683,
+    "status": "INITIALIZED",
+    "validFor": {
+      "endDateTime": 1691311319000,
+      "startDateTime": 1596703319000
+    },
+    "calendarEvent": null,
+    "note": null,
+    "relatedEntity": null,
+    "attachment": null,
+    "contactMedium": null,
+    "relatedParty": null,
+    "relatedPlace": {
+      "role": "test boss",
+      "city": "Buhusi",
+      "postcode": "332030",
+      "streetName": "Decembrie",
+      "streetType": "straight",
+      "streetNr": "1 Dec 1918",
+      "country": "Romania",
+      "stateOfProvince": "Hunedoara",
+      "geographicAddress": null,
+      "@type": "geographicAddress"
+    },
+    "creationDate": null,
+    "@schemaLocation": "https://api-appointment-v4-0-0.mybluemix.net/docs/#/",
+    "@type": "Appointment",
+    "@baseType": "Appointment"
+  },
+  {
+    "id": "3fd9298e7c139394",
+    "href": "https://localhost:9002/b2ctelcomocks/appointment/3fd9298e7c139394",
+    "category": null,
+    "creationTime": 1566378673683,
+    "description": null,
+    "externalId": null,
+    "lastUpdate": 1566378673683,
+    "status": "INITIALIZED",
+    "validFor": {
+      "endDateTime": 1671010400000,
+      "startDateTime": 1671003200000
+    },
+    "calendarEvent": null,
+    "note": null,
+    "relatedEntity": null,
+    "attachment": null,
+    "contactMedium": null,
+    "relatedParty": [
+      {
+        "id": "56",
+        "href": null,
+        "name": "John Doe",
+        "role": "technician",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      },
+      {
+        "id": "etta.berg@hybris.com",
+        "href": null,
+        "name": "etta berg",
+        "role": "CUSTOMER",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      }
+    ],
+    "relatedPlace": {
+      "role": "interventionAddress",
+      "city": "daa",
+      "postcode": "94121",
+      "streetName": "da",
+      "streetType": null,
+      "streetNr": "dada",
+      "country": "AL",
+      "stateOfProvince": null,
+      "geographicAddress": null,
+      "@type": "GeographicAddress"
+    },
+    "creationDate": null,
+    "@schemaLocation": "https://api-appointment-v4-0-0.mybluemix.net/docs/#/",
+    "@type": "Appointment",
+    "@baseType": "Appointment"
+  },
+  {
+    "id": "3fc6274d40786cc4",
+    "href": "https://localhost:9002/b2ctelcomocks/appointment/3fc6274d40786cc4",
+    "category": null,
+    "creationTime": 1566378673683,
+    "description": null,
+    "externalId": null,
+    "lastUpdate": 1566378673683,
+    "status": "INITIALIZED",
+    "validFor": {
+      "endDateTime": 1671091524000,
+      "startDateTime": 1671084324000
+    },
+    "calendarEvent": null,
+    "note": null,
+    "relatedEntity": null,
+    "attachment": null,
+    "contactMedium": null,
+    "relatedParty": [
+      {
+        "id": "56",
+        "href": null,
+        "name": "John Doe",
+        "role": "technician",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      },
+      {
+        "id": "emma.smith@hybris.com",
+        "href": null,
+        "name": "emma.smith",
+        "role": "CUSTOMER",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      }
+    ],
+    "relatedPlace": {
+      "role": "interventionAddress",
+      "city": "petrosani",
+      "postcode": "94121",
+      "streetName": "test3,test",
+      "streetType": null,
+      "streetNr": "32",
+      "country": "RO",
+      "stateOfProvince": null,
+      "geographicAddress": null,
+      "@type": "GeographicAddress"
+    },
+    "creationDate": null,
+    "@schemaLocation": "https://api-appointment-v4-0-0.mybluemix.net/docs/#/",
+    "@type": "Appointment",
+    "@baseType": "Appointment"
+  },
+  {
+    "id": "3fd1b18f0cb116f8",
+    "href": "https://localhost:9002/b2ctelcomocks/appointment/3fd1b18f0cb116f8",
+    "category": null,
+    "creationTime": 1566378673683,
+    "description": null,
+    "externalId": null,
+    "lastUpdate": 1566378673683,
+    "status": "INITIALIZED",
+    "validFor": {
+      "endDateTime": 1671091552000,
+      "startDateTime": 1671084352000
+    },
+    "calendarEvent": null,
+    "note": null,
+    "relatedEntity": null,
+    "attachment": null,
+    "contactMedium": null,
+    "relatedParty": [
+      {
+        "id": "56",
+        "href": null,
+        "name": "John Doe",
+        "role": "technician",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      },
+      {
+        "id": "emma.smith@hybris.com",
+        "href": null,
+        "name": "emma.smith",
+        "role": "CUSTOMER",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      }
+    ],
+    "relatedPlace": {
+      "role": "interventionAddress",
+      "city": "petrosani",
+      "postcode": "94121",
+      "streetName": "test",
+      "streetType": null,
+      "streetNr": "test",
+      "country": "RO",
+      "stateOfProvince": null,
+      "geographicAddress": null,
+      "@type": "GeographicAddress"
+    },
+    "creationDate": null,
+    "@schemaLocation": "https://api-appointment-v4-0-0.mybluemix.net/docs/#/",
+    "@type": "Appointment",
+    "@baseType": "Appointment"
+  },
+  {
+    "id": "3fdb2f0a8f2edc72",
+    "href": "https://localhost:9002/b2ctelcomocks/appointment/3fdb2f0a8f2edc72",
+    "category": null,
+    "creationTime": 1566378673683,
+    "description": null,
+    "externalId": null,
+    "lastUpdate": 1566378673683,
+    "status": "INITIALIZED",
+    "validFor": {
+      "endDateTime": 1675815969000,
+      "startDateTime": 1675808769000
+    },
+    "calendarEvent": null,
+    "note": null,
+    "relatedEntity": null,
+    "attachment": null,
+    "contactMedium": null,
+    "relatedParty": [
+      {
+        "id": "56",
+        "href": null,
+        "name": "John Doe",
+        "role": "technician",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      },
+      {
+        "id": "etta.berg@hybris.com",
+        "href": null,
+        "name": "Etta Berg",
+        "role": "CUSTOMER",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      }
+    ],
+    "relatedPlace": {
+      "role": "interventionAddress",
+      "city": "da",
+      "postcode": "94121",
+      "streetName": "da",
+      "streetType": null,
+      "streetNr": "da",
+      "country": "CA",
+      "stateOfProvince": null,
+      "geographicAddress": null,
+      "@type": "GeographicAddress"
+    },
+    "creationDate": null,
+    "@schemaLocation": "https://api-appointment-v4-0-0.mybluemix.net/docs/#/",
+    "@type": "Appointment",
+    "@baseType": "Appointment"
+  },
+  {
+    "id": "3fef750a1ce874a3",
+    "href": "https://localhost:9002/b2ctelcomocks/appointment/3fef750a1ce874a3",
+    "category": null,
+    "creationTime": 1566378673683,
+    "description": null,
+    "externalId": null,
+    "lastUpdate": 1566378673683,
+    "status": "INITIALIZED",
+    "validFor": {
+      "endDateTime": 1675815969000,
+      "startDateTime": 1675808769000
+    },
+    "calendarEvent": null,
+    "note": null,
+    "relatedEntity": null,
+    "attachment": null,
+    "contactMedium": null,
+    "relatedParty": [
+      {
+        "id": "56",
+        "href": null,
+        "name": "John Doe",
+        "role": "technician",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      },
+      {
+        "id": "etta.berg@hybris.com",
+        "href": null,
+        "name": "Etta Berg",
+        "role": "CUSTOMER",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      }
+    ],
+    "relatedPlace": {
+      "role": "interventionAddress",
+      "city": "da",
+      "postcode": "94121",
+      "streetName": "da",
+      "streetType": null,
+      "streetNr": "da",
+      "country": "CA",
+      "stateOfProvince": null,
+      "geographicAddress": null,
+      "@type": "GeographicAddress"
+    },
+    "creationDate": null,
+    "@schemaLocation": "https://api-appointment-v4-0-0.mybluemix.net/docs/#/",
+    "@type": "Appointment",
+    "@baseType": "Appointment"
+  },
+  {
+    "id": "3fd43736ebd28998",
+    "href": "https://localhost:9002/b2ctelcomocks/appointment/3fd43736ebd28998",
+    "category": null,
+    "creationTime": 1566378673683,
+    "description": null,
+    "externalId": null,
+    "lastUpdate": 1566378673683,
+    "status": "INITIALIZED",
+    "validFor": {
+      "endDateTime": 1675815969000,
+      "startDateTime": 1675808769000
+    },
+    "calendarEvent": null,
+    "note": null,
+    "relatedEntity": null,
+    "attachment": null,
+    "contactMedium": null,
+    "relatedParty": [
+      {
+        "id": "56",
+        "href": null,
+        "name": "John Doe",
+        "role": "technician",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      },
+      {
+        "id": "etta.berg@hybris.com",
+        "href": null,
+        "name": "Etta Berg",
+        "role": "CUSTOMER",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      }
+    ],
+    "relatedPlace": {
+      "role": "interventionAddress",
+      "city": "da",
+      "postcode": "94121",
+      "streetName": "da",
+      "streetType": null,
+      "streetNr": "da",
+      "country": "CA",
+      "stateOfProvince": null,
+      "geographicAddress": null,
+      "@type": "GeographicAddress"
+    },
+    "creationDate": null,
+    "@schemaLocation": "https://api-appointment-v4-0-0.mybluemix.net/docs/#/",
+    "@type": "Appointment",
+    "@baseType": "Appointment"
+  },
+  {
+    "id": "3fe62fb9cf019d99",
+    "href": "https://localhost:9002/b2ctelcomocks/appointment/3fe62fb9cf019d99",
+    "category": null,
+    "creationTime": 1566378673683,
+    "description": null,
+    "externalId": null,
+    "lastUpdate": 1566378673683,
+    "status": "INITIALIZED",
+    "validFor": {
+      "endDateTime": 1675815969000,
+      "startDateTime": 1675808769000
+    },
+    "calendarEvent": null,
+    "note": null,
+    "relatedEntity": null,
+    "attachment": null,
+    "contactMedium": null,
+    "relatedParty": [
+      {
+        "id": "56",
+        "href": null,
+        "name": "John Doe",
+        "role": "technician",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      },
+      {
+        "id": "etta.berg@hybris.com",
+        "href": null,
+        "name": "Etta Berg",
+        "role": "CUSTOMER",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      }
+    ],
+    "relatedPlace": {
+      "role": "interventionAddress",
+      "city": "da",
+      "postcode": "94121",
+      "streetName": "da",
+      "streetType": null,
+      "streetNr": "da",
+      "country": "CA",
+      "stateOfProvince": null,
+      "geographicAddress": null,
+      "@type": "GeographicAddress"
+    },
+    "creationDate": null,
+    "@schemaLocation": "https://api-appointment-v4-0-0.mybluemix.net/docs/#/",
+    "@type": "Appointment",
+    "@baseType": "Appointment"
+  },
+  {
+    "id": "3fb32e262331fb40",
+    "href": "https://localhost:9002/b2ctelcomocks/appointment/3fb32e262331fb40",
+    "category": null,
+    "creationTime": 1566378673683,
+    "description": null,
+    "externalId": null,
+    "lastUpdate": 1566378673683,
+    "status": "INITIALIZED",
+    "validFor": {
+      "endDateTime": 1675815969000,
+      "startDateTime": 1675808769000
+    },
+    "calendarEvent": null,
+    "note": null,
+    "relatedEntity": null,
+    "attachment": null,
+    "contactMedium": null,
+    "relatedParty": [
+      {
+        "id": "56",
+        "href": null,
+        "name": "John Doe",
+        "role": "technician",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      },
+      {
+        "id": "etta.berg@hybris.com",
+        "href": null,
+        "name": "Etta Berg",
+        "role": "CUSTOMER",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      }
+    ],
+    "relatedPlace": {
+      "role": "interventionAddress",
+      "city": "da",
+      "postcode": "94121",
+      "streetName": "da",
+      "streetType": null,
+      "streetNr": "da",
+      "country": "CA",
+      "stateOfProvince": null,
+      "geographicAddress": null,
+      "@type": "GeographicAddress"
+    },
+    "creationDate": null,
+    "@schemaLocation": "https://api-appointment-v4-0-0.mybluemix.net/docs/#/",
+    "@type": "Appointment",
+    "@baseType": "Appointment"
+  },
+  {
+    "id": "3fc6d18b07d6ce98",
+    "href": "https://localhost:9002/b2ctelcomocks/appointment/3fc6d18b07d6ce98",
+    "category": null,
+    "creationTime": 1566378673683,
+    "description": null,
+    "externalId": null,
+    "lastUpdate": 1566378673683,
+    "status": "INITIALIZED",
+    "validFor": {
+      "endDateTime": 1675904425000,
+      "startDateTime": 1675897225000
+    },
+    "calendarEvent": null,
+    "note": null,
+    "relatedEntity": null,
+    "attachment": null,
+    "contactMedium": null,
+    "relatedParty": [
+      {
+        "id": "56",
+        "href": null,
+        "name": "John Doe",
+        "role": "technician",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      },
+      {
+        "id": "etta.berg@hybris.com",
+        "href": null,
+        "name": "Etta Berg",
+        "role": "CUSTOMER",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      }
+    ],
+    "relatedPlace": {
+      "role": "interventionAddress",
+      "city": "dadsa",
+      "postcode": "94121",
+      "streetName": "dad",
+      "streetType": null,
+      "streetNr": "123",
+      "country": "HR",
+      "stateOfProvince": null,
+      "geographicAddress": null,
+      "@type": "GeographicAddress"
+    },
+    "creationDate": null,
+    "@schemaLocation": "https://api-appointment-v4-0-0.mybluemix.net/docs/#/",
+    "@type": "Appointment",
+    "@baseType": "Appointment"
+  },
+  {
+    "id": "3fdc97877479a700",
+    "href": "https://localhost:9002/b2ctelcomocks/appointment/3fdc97877479a700",
+    "category": null,
+    "creationTime": 1566378673683,
+    "description": null,
+    "externalId": null,
+    "lastUpdate": 1566378673683,
+    "status": "INITIALIZED",
+    "validFor": {
+      "endDateTime": 1675904425000,
+      "startDateTime": 1675897225000
+    },
+    "calendarEvent": null,
+    "note": null,
+    "relatedEntity": null,
+    "attachment": null,
+    "contactMedium": null,
+    "relatedParty": [
+      {
+        "id": "56",
+        "href": null,
+        "name": "John Doe",
+        "role": "technician",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      },
+      {
+        "id": "etta.berg@hybris.com",
+        "href": null,
+        "name": "Etta Berg",
+        "role": "CUSTOMER",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      }
+    ],
+    "relatedPlace": {
+      "role": "interventionAddress",
+      "city": "dadsa",
+      "postcode": "94121",
+      "streetName": "dad",
+      "streetType": null,
+      "streetNr": "123",
+      "country": "HR",
+      "stateOfProvince": null,
+      "geographicAddress": null,
+      "@type": "GeographicAddress"
+    },
+    "creationDate": null,
+    "@schemaLocation": "https://api-appointment-v4-0-0.mybluemix.net/docs/#/",
+    "@type": "Appointment",
+    "@baseType": "Appointment"
+  },
+  {
+    "id": "3fec44ffa6044974",
+    "href": "https://localhost:9002/b2ctelcomocks/appointment/3fec44ffa6044974",
+    "category": null,
+    "creationTime": 1566378673683,
+    "description": null,
+    "externalId": null,
+    "lastUpdate": 1566378673683,
+    "status": "INITIALIZED",
+    "validFor": {
+      "endDateTime": 1675904425000,
+      "startDateTime": 1675897225000
+    },
+    "calendarEvent": null,
+    "note": null,
+    "relatedEntity": null,
+    "attachment": null,
+    "contactMedium": null,
+    "relatedParty": [
+      {
+        "id": "56",
+        "href": null,
+        "name": "John Doe",
+        "role": "technician",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      },
+      {
+        "id": "etta.berg@hybris.com",
+        "href": null,
+        "name": "Etta Berg",
+        "role": "CUSTOMER",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      }
+    ],
+    "relatedPlace": {
+      "role": "interventionAddress",
+      "city": "dadsa",
+      "postcode": "94121",
+      "streetName": "dad",
+      "streetType": null,
+      "streetNr": "123",
+      "country": "HR",
+      "stateOfProvince": null,
+      "geographicAddress": null,
+      "@type": "GeographicAddress"
+    },
+    "creationDate": null,
+    "@schemaLocation": "https://api-appointment-v4-0-0.mybluemix.net/docs/#/",
+    "@type": "Appointment",
+    "@baseType": "Appointment"
+  },
+  {
+    "id": "3fdc12117138eefc",
+    "href": "https://localhost:9002/b2ctelcomocks/appointment/3fdc12117138eefc",
+    "category": null,
+    "creationTime": 1566378673683,
+    "description": null,
+    "externalId": null,
+    "lastUpdate": 1566378673683,
+    "status": "INITIALIZED",
+    "validFor": {
+      "endDateTime": 1675904425000,
+      "startDateTime": 1675897225000
+    },
+    "calendarEvent": null,
+    "note": null,
+    "relatedEntity": null,
+    "attachment": null,
+    "contactMedium": null,
+    "relatedParty": [
+      {
+        "id": "56",
+        "href": null,
+        "name": "John Doe",
+        "role": "technician",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      },
+      {
+        "id": "etta.berg@hybris.com",
+        "href": null,
+        "name": "Etta Berg",
+        "role": "CUSTOMER",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      }
+    ],
+    "relatedPlace": {
+      "role": "interventionAddress",
+      "city": "dadsa",
+      "postcode": "94121",
+      "streetName": "dad",
+      "streetType": null,
+      "streetNr": "123",
+      "country": "HR",
+      "stateOfProvince": null,
+      "geographicAddress": null,
+      "@type": "GeographicAddress"
+    },
+    "creationDate": null,
+    "@schemaLocation": "https://api-appointment-v4-0-0.mybluemix.net/docs/#/",
+    "@type": "Appointment",
+    "@baseType": "Appointment"
+  },
+  {
+    "id": "3fe0f5e77449ec17",
+    "href": "https://localhost:9002/b2ctelcomocks/appointment/3fe0f5e77449ec17",
+    "category": null,
+    "creationTime": 1566378673683,
+    "description": null,
+    "externalId": null,
+    "lastUpdate": 1566378673683,
+    "status": "INITIALIZED",
+    "validFor": {
+      "endDateTime": 1675904425000,
+      "startDateTime": 1675897225000
+    },
+    "calendarEvent": null,
+    "note": null,
+    "relatedEntity": null,
+    "attachment": null,
+    "contactMedium": null,
+    "relatedParty": [
+      {
+        "id": "56",
+        "href": null,
+        "name": "John Doe",
+        "role": "technician",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      },
+      {
+        "id": "etta.berg@hybris.com",
+        "href": null,
+        "name": "Etta Berg",
+        "role": "CUSTOMER",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      }
+    ],
+    "relatedPlace": {
+      "role": "interventionAddress",
+      "city": "dadsa",
+      "postcode": "94121",
+      "streetName": "dad",
+      "streetType": null,
+      "streetNr": "123",
+      "country": "HR",
+      "stateOfProvince": null,
+      "geographicAddress": null,
+      "@type": "GeographicAddress"
+    },
+    "creationDate": null,
+    "@schemaLocation": "https://api-appointment-v4-0-0.mybluemix.net/docs/#/",
+    "@type": "Appointment",
+    "@baseType": "Appointment"
+  },
+  {
+    "id": "3fe933085f586cd9",
+    "href": "https://localhost:9002/b2ctelcomocks/appointment/3fe933085f586cd9",
+    "category": null,
+    "creationTime": 1566378673683,
+    "description": null,
+    "externalId": null,
+    "lastUpdate": 1566378673683,
+    "status": "INITIALIZED",
+    "validFor": {
+      "endDateTime": 1675986614000,
+      "startDateTime": 1675986614000
+    },
+    "calendarEvent": null,
+    "note": null,
+    "relatedEntity": null,
+    "attachment": null,
+    "contactMedium": null,
+    "relatedParty": [
+      {
+        "id": "56",
+        "href": null,
+        "name": "John Doe",
+        "role": "technician",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      },
+      {
+        "id": "etta.berg@hybris.com",
+        "href": null,
+        "name": "Etta Berg",
+        "role": "CUSTOMER",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      }
+    ],
+    "relatedPlace": {
+      "role": "interventionAddress",
+      "city": "Cluj",
+      "postcode": "94121",
+      "streetName": "Dec",
+      "streetType": null,
+      "streetNr": "32",
+      "country": "RO",
+      "stateOfProvince": null,
+      "geographicAddress": null,
+      "@type": "GeographicAddress"
+    },
+    "creationDate": null,
+    "@schemaLocation": "https://api-appointment-v4-0-0.mybluemix.net/docs/#/",
+    "@type": "Appointment",
+    "@baseType": "Appointment"
+  },
+  {
+    "id": "3feb68dddce4e7ec",
+    "href": "https://localhost:9002/b2ctelcomocks/appointment/3feb68dddce4e7ec",
+    "category": null,
+    "creationTime": 1566335473000,
+    "description": null,
+    "externalId": null,
+    "lastUpdate": 1566335473000,
+    "status": "INITIALIZED",
+    "validFor": {
+      "endDateTime": 1707472422000,
+      "startDateTime": 1675929222000
+    },
+    "calendarEvent": null,
+    "note": null,
+    "relatedEntity": null,
+    "attachment": null,
+    "contactMedium": null,
+    "relatedParty": [
+      {
+        "id": "56",
+        "href": null,
+        "name": "John Doe",
+        "role": "technician",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      },
+      {
+        "id": "etta.berg@hybris.com",
+        "href": null,
+        "name": "Etta Berg",
+        "role": "CUSTOMER",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      }
+    ],
+    "relatedPlace": {
+      "role": "interventionAddress",
+      "city": "Petrosani",
+      "postcode": "94121",
+      "streetName": "Dec",
+      "streetType": null,
+      "streetNr": "32",
+      "country": "RO",
+      "stateOfProvince": null,
+      "geographicAddress": null,
+      "@type": "GeographicAddress"
+    },
+    "creationDate": null,
+    "@schemaLocation": "https://api-appointment-v4-0-0.mybluemix.net/docs/#/",
+    "@type": "Appointment",
+    "@baseType": "Appointment"
+  },
+  {
+    "id": "3fe2227f417c0da6",
+    "href": "https://localhost:9002/b2ctelcomocks/appointment/3fe2227f417c0da6",
+    "category": null,
+    "creationTime": 1566378673683,
+    "description": null,
+    "externalId": null,
+    "lastUpdate": 1566378673683,
+    "status": "INITIALIZED",
+    "validFor": {
+      "endDateTime": 1707472422000,
+      "startDateTime": 1675929222000
+    },
+    "calendarEvent": null,
+    "note": null,
+    "relatedEntity": null,
+    "attachment": null,
+    "contactMedium": null,
+    "relatedParty": [
+      {
+        "id": "56",
+        "href": null,
+        "name": "John Doe",
+        "role": "technician",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      },
+      {
+        "id": "etta.berg@hybris.com",
+        "href": null,
+        "name": "Etta Berg",
+        "role": "CUSTOMER",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      }
+    ],
+    "relatedPlace": {
+      "role": "interventionAddress",
+      "city": "Orasul Velese",
+      "postcode": "94121",
+      "streetName": "Dec",
+      "streetType": null,
+      "streetNr": "32",
+      "country": "RO",
+      "stateOfProvince": null,
+      "geographicAddress": null,
+      "@type": "GeographicAddress"
+    },
+    "creationDate": null,
+    "@schemaLocation": "https://api-appointment-v4-0-0.mybluemix.net/docs/#/",
+    "@type": "Appointment",
+    "@baseType": "Appointment"
+  }
+]

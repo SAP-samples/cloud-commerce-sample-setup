@@ -1,0 +1,1885 @@
+[
+  {
+    "@baseType": null,
+    "@schemaLocation": null,
+    "@type": "resourceItemReservation",
+    "description": null,
+    "href": "https://hostname:port/ResourcePoolManagement/reservation/3fd2e51764f062be",
+    "id": "3fd2e51764f062be",
+    "reservationState": "COMPLETED",
+    "reservationItem": [
+      {
+        "quantity": 1.0,
+        "subReservationState": "COMPLETED",
+        "resourceCapacity": [
+          {
+            "capacityDemandAmount": 1.0,
+            "@type": null
+          }
+        ],
+        "appliedCapacityAmount": [
+          {
+            "appliedCapacityAmount": 1.0,
+            "@type": null,
+            "@baseType": null,
+            "resource": [
+              {
+                "id": "po1",
+                "href": "https://host:port/partyManagement/individual/56",
+                "name": null,
+                "value": "+91 7145748011",
+                "@baseType": null,
+                "@schemaLocation": null,
+                "@type": null,
+                "@referredType": null
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "relatedParty": [
+      {
+        "id": "56",
+        "href": "https://host:port/partyManagement/individual/56",
+        "name": "John Doe",
+        "role": "technician",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      }
+    ],
+    "productOffering": {
+      "id": "po1",
+      "href": "https://host:port/partyManagement/individual/56",
+      "name": "poName1",
+      "@baseType": null,
+      "@schemaLocation": null,
+      "@type": null,
+      "@referredType": null
+    }
+  },
+  {
+    "@baseType": null,
+    "@schemaLocation": null,
+    "@type": "resourceItemReservation",
+    "description": null,
+    "href": "https://hostname:port/ResourcePoolManagement/reservation/3fcbc824d00c27c0",
+    "id": "3fcbc824d00c27c0",
+    "reservationState": "COMPLETED",
+    "reservationItem": [
+      {
+        "quantity": 1.0,
+        "subReservationState": "COMPLETED",
+        "resourceCapacity": [
+          {
+            "capacityDemandAmount": 1.0,
+            "@type": null
+          }
+        ],
+        "appliedCapacityAmount": [
+          {
+            "appliedCapacityAmount": 1.0,
+            "@type": null,
+            "@baseType": null,
+            "resource": [
+              {
+                "id": "po1",
+                "href": "https://host:port/partyManagement/individual/56",
+                "name": null,
+                "value": "+91 7145748013",
+                "@baseType": null,
+                "@schemaLocation": null,
+                "@type": null,
+                "@referredType": null
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "relatedParty": [
+      {
+        "id": "56",
+        "href": "https://host:port/partyManagement/individual/56",
+        "name": "John Doe",
+        "role": "technician",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      }
+    ],
+    "productOffering": {
+      "id": "po1",
+      "href": "https://host:port/partyManagement/individual/56",
+      "name": "poName1",
+      "@baseType": null,
+      "@schemaLocation": null,
+      "@type": null,
+      "@referredType": null
+    }
+  },
+  {
+    "@baseType": null,
+    "@schemaLocation": null,
+    "@type": "resourceItemReservation",
+    "description": null,
+    "href": "https://hostname:port/ResourcePoolManagement/reservation/3feebccfd1579260",
+    "id": "3feebccfd1579260",
+    "reservationState": "COMPLETED",
+    "reservationItem": [
+      {
+        "quantity": 1.0,
+        "subReservationState": "COMPLETED",
+        "resourceCapacity": [
+          {
+            "capacityDemandAmount": 1.0,
+            "@type": null
+          }
+        ],
+        "appliedCapacityAmount": [
+          {
+            "appliedCapacityAmount": 1.0,
+            "@type": null,
+            "@baseType": null,
+            "resource": [
+              {
+                "id": "po1",
+                "href": "https://host:port/partyManagement/individual/56",
+                "name": null,
+                "value": "+91 7145748012",
+                "@baseType": null,
+                "@schemaLocation": null,
+                "@type": null,
+                "@referredType": null
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "relatedParty": [
+      {
+        "id": "56",
+        "href": "https://host:port/partyManagement/individual/56",
+        "name": "John Doe",
+        "role": "technician",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      }
+    ],
+    "productOffering": {
+      "id": "po1",
+      "href": "https://host:port/partyManagement/individual/56",
+      "name": "poName1",
+      "@baseType": null,
+      "@schemaLocation": null,
+      "@type": null,
+      "@referredType": null
+    }
+  },
+  {
+    "@baseType": null,
+    "@schemaLocation": null,
+    "@type": "resourceItemReservation",
+    "description": null,
+    "href": "https://hostname:port/ResourcePoolManagement/reservation/3fe0d5bd751e024a",
+    "id": "3fe0d5bd751e024a",
+    "reservationState": null,
+    "reservationItem": [
+      {
+        "quantity": 1.0,
+        "subReservationState": null,
+        "resourceCapacity": [
+          {
+            "capacityDemandAmount": 1.0,
+            "@type": "Resource"
+          }
+        ],
+        "appliedCapacityAmount": [
+          {
+            "appliedCapacityAmount": 1.0,
+            "@type": null,
+            "@baseType": null,
+            "resource": [
+              {
+                "id": "id999",
+                "href": "https://host:port/partyManagement/individual/56",
+                "name": null,
+                "value": "+91 7145748012",
+                "@baseType": null,
+                "@schemaLocation": null,
+                "@type": null,
+                "@referredType": "Resource"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "relatedParty": [
+      {
+        "id": "56",
+        "href": "http://hostname:port/partyRole/56",
+        "name": null,
+        "role": "technician",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      }
+    ],
+    "productOffering": {
+      "id": "po1",
+      "href": "http://hostname:port/productOffering/po1",
+      "name": "poName1",
+      "@baseType": null,
+      "@schemaLocation": null,
+      "@type": null,
+      "@referredType": null
+    }
+  },
+  {
+    "@baseType": null,
+    "@schemaLocation": null,
+    "@type": "resourceItemReservation",
+    "description": null,
+    "href": "https://hostname:port/ResourcePoolManagement/reservation/3fd44e90d5759b8e",
+    "id": "3fd44e90d5759b8e",
+    "reservationState": "COMPLETED",
+    "reservationItem": [
+      {
+        "quantity": 1.0,
+        "subReservationState": "COMPLETED",
+        "resourceCapacity": [
+          {
+            "capacityDemandAmount": 1.0,
+            "@type": null
+          }
+        ],
+        "appliedCapacityAmount": [
+          {
+            "appliedCapacityAmount": 1.0,
+            "@type": null,
+            "@baseType": null,
+            "resource": [
+              {
+                "id": "resid99",
+                "href": "https://host:port/partyManagement/individual/56",
+                "name": null,
+                "value": "+91 7145748014",
+                "@baseType": null,
+                "@schemaLocation": null,
+                "@type": null,
+                "@referredType": null
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "relatedParty": [
+      {
+        "id": "56",
+        "href": "https://host:port/partyManagement/individual/56",
+        "name": "John Doe",
+        "role": "technician",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      }
+    ],
+    "productOffering": null
+  },
+  {
+    "@baseType": null,
+    "@schemaLocation": null,
+    "@type": "resourceItemReservation",
+    "description": null,
+    "href": "https://hostname:port/ResourcePoolManagement/reservation/3fe16cae30d60924",
+    "id": "3fe16cae30d60924",
+    "reservationState": "COMPLETED",
+    "reservationItem": [
+      {
+        "quantity": 1.0,
+        "subReservationState": "COMPLETED",
+        "resourceCapacity": [
+          {
+            "capacityDemandAmount": 1.0,
+            "@type": "Resource"
+          }
+        ],
+        "appliedCapacityAmount": [
+          {
+            "appliedCapacityAmount": 1.0,
+            "@type": null,
+            "@baseType": null,
+            "resource": [
+              {
+                "id": "po1",
+                "href": "https://host:port/partyManagement/individual/56",
+                "name": null,
+                "value": "+91 7145748015",
+                "@baseType": null,
+                "@schemaLocation": null,
+                "@type": null,
+                "@referredType": "Resource"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "relatedParty": [
+      {
+        "id": "etta.berg@hybris.com",
+        "href": "https://host:port/partyManagement/individual/56",
+        "name": "John Doe",
+        "role": "technician",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      }
+    ],
+    "productOffering": {
+      "id": "po1",
+      "href": "https://host:port/partyManagement/individual/56",
+      "name": "poName1",
+      "@baseType": null,
+      "@schemaLocation": null,
+      "@type": null,
+      "@referredType": null
+    }
+  },
+  {
+    "@baseType": null,
+    "@schemaLocation": null,
+    "@type": "resourceItemReservation",
+    "description": null,
+    "href": "https://hostname:port/ResourcePoolManagement/reservation/3fd2ba1856247df8",
+    "id": "3fd2ba1856247df8",
+    "reservationState": "COMPLETED",
+    "reservationItem": [
+      {
+        "quantity": 1.0,
+        "subReservationState": "COMPLETED",
+        "resourceCapacity": [
+          {
+            "capacityDemandAmount": 1.0,
+            "@type": "Resource"
+          }
+        ],
+        "appliedCapacityAmount": [
+          {
+            "appliedCapacityAmount": 1.0,
+            "@type": null,
+            "@baseType": null,
+            "resource": [
+              {
+                "id": "3fee130027c67e7e",
+                "href": "http://server:port/resourceInventoryManagement/logicalResource/3fee130027c67e7e",
+                "name": null,
+                "value": "+91 7145748017",
+                "@baseType": null,
+                "@schemaLocation": null,
+                "@type": null,
+                "@referredType": "Resource"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "relatedParty": [
+      {
+        "id": "etta.berg@hybris.com",
+        "href": null,
+        "name": null,
+        "role": "CUSTOMER",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      }
+    ],
+    "productOffering": {
+      "id": "gsm_large",
+      "href": null,
+      "name": "GSM Large",
+      "@baseType": null,
+      "@schemaLocation": null,
+      "@type": null,
+      "@referredType": null
+    }
+  },
+  {
+    "@baseType": null,
+    "@schemaLocation": null,
+    "@type": "resourceItemReservation",
+    "description": null,
+    "href": "https://hostname:port/ResourcePoolManagement/reservation/3feb0326ec58ee8b",
+    "id": "3feb0326ec58ee8b",
+    "reservationState": "COMPLETED",
+    "reservationItem": [
+      {
+        "quantity": 1.0,
+        "subReservationState": "COMPLETED",
+        "resourceCapacity": [
+          {
+            "capacityDemandAmount": 1.0,
+            "@type": "Resource"
+          }
+        ],
+        "appliedCapacityAmount": [
+          {
+            "appliedCapacityAmount": 1.0,
+            "@type": null,
+            "@baseType": null,
+            "resource": [
+              {
+                "id": "3f9d4afd5cb932c0",
+                "href": "http://server:port/resourceInventoryManagement/logicalResource/3f9d4afd5cb932c0",
+                "name": null,
+                "value": "+91 7145748016",
+                "@baseType": null,
+                "@schemaLocation": null,
+                "@type": null,
+                "@referredType": "Resource"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "relatedParty": [
+      {
+        "id": "etta.berg@hybris.com",
+        "href": null,
+        "name": null,
+        "role": "CUSTOMER",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      }
+    ],
+    "productOffering": {
+      "id": "gsm_large",
+      "href": null,
+      "name": "GSM Large",
+      "@baseType": null,
+      "@schemaLocation": null,
+      "@type": null,
+      "@referredType": null
+    }
+  },
+  {
+    "@baseType": null,
+    "@schemaLocation": null,
+    "@type": "resourceItemReservation",
+    "description": null,
+    "href": "https://hostname:port/ResourcePoolManagement/reservation/3fb2da52cf012160",
+    "id": "3fb2da52cf012160",
+    "reservationState": "COMPLETED",
+    "reservationItem": [
+      {
+        "quantity": 1.0,
+        "subReservationState": "COMPLETED",
+        "resourceCapacity": [
+          {
+            "capacityDemandAmount": 1.0,
+            "@type": "Resource"
+          }
+        ],
+        "appliedCapacityAmount": [
+          {
+            "appliedCapacityAmount": 1.0,
+            "@type": null,
+            "@baseType": null,
+            "resource": [
+              {
+                "id": "3fde6955caaedb6c",
+                "href": "http://server:port/resourceInventoryManagement/logicalResource/3fde6955caaedb6c",
+                "name": null,
+                "value": "+91 7159040462",
+                "@baseType": null,
+                "@schemaLocation": null,
+                "@type": null,
+                "@referredType": "Resource"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "relatedParty": [
+      {
+        "id": "etta.berg@hybris.com",
+        "href": null,
+        "name": null,
+        "role": "CUSTOMER",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      }
+    ],
+    "productOffering": {
+      "id": "gsm_large",
+      "href": null,
+      "name": "GSM Large",
+      "@baseType": null,
+      "@schemaLocation": null,
+      "@type": null,
+      "@referredType": null
+    }
+  },
+  {
+    "@baseType": null,
+    "@schemaLocation": null,
+    "@type": "resourceItemReservation",
+    "description": null,
+    "href": "https://hostname:port/ResourcePoolManagement/reservation/3fd2c7fc54996cf2",
+    "id": "3fd2c7fc54996cf2",
+    "reservationState": "COMPLETED",
+    "reservationItem": [
+      {
+        "quantity": 1.0,
+        "subReservationState": "COMPLETED",
+        "resourceCapacity": [
+          {
+            "capacityDemandAmount": 1.0,
+            "@type": "Resource"
+          }
+        ],
+        "appliedCapacityAmount": [
+          {
+            "appliedCapacityAmount": 1.0,
+            "@type": null,
+            "@baseType": null,
+            "resource": [
+              {
+                "id": "3fe20329c34f370e",
+                "href": "http://server:port/resourceInventoryManagement/logicalResource/3fe20329c34f370e",
+                "name": null,
+                "value": "+91 7128729709",
+                "@baseType": null,
+                "@schemaLocation": null,
+                "@type": null,
+                "@referredType": "Resource"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "relatedParty": [
+      {
+        "id": "etta.berg@hybris.com",
+        "href": null,
+        "name": null,
+        "role": "CUSTOMER",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      }
+    ],
+    "productOffering": {
+      "id": "gsm_large",
+      "href": null,
+      "name": "GSM Large",
+      "@baseType": null,
+      "@schemaLocation": null,
+      "@type": null,
+      "@referredType": null
+    }
+  },
+  {
+    "@baseType": null,
+    "@schemaLocation": null,
+    "@type": "resourceItemReservation",
+    "description": null,
+    "href": "https://hostname:port/ResourcePoolManagement/reservation/3fe5a8d8bf8f4011",
+    "id": "3fe5a8d8bf8f4011",
+    "reservationState": "COMPLETED",
+    "reservationItem": [
+      {
+        "quantity": 1.0,
+        "subReservationState": "COMPLETED",
+        "resourceCapacity": [
+          {
+            "capacityDemandAmount": 1.0,
+            "@type": "Resource"
+          }
+        ],
+        "appliedCapacityAmount": [
+          {
+            "appliedCapacityAmount": 1.0,
+            "@type": null,
+            "@baseType": null,
+            "resource": [
+              {
+                "id": "3fedf9896b94ff91",
+                "href": "http://server:port/resourceInventoryManagement/logicalResource/3fedf9896b94ff91",
+                "name": null,
+                "value": "+91 7143175264",
+                "@baseType": null,
+                "@schemaLocation": null,
+                "@type": null,
+                "@referredType": "Resource"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "relatedParty": [
+      {
+        "id": "etta.berg@hybris.com",
+        "href": null,
+        "name": null,
+        "role": "CUSTOMER",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      }
+    ],
+    "productOffering": {
+      "id": "gsm_large",
+      "href": null,
+      "name": "GSM Large",
+      "@baseType": null,
+      "@schemaLocation": null,
+      "@type": null,
+      "@referredType": null
+    }
+  },
+  {
+    "@baseType": null,
+    "@schemaLocation": null,
+    "@type": "resourceItemReservation",
+    "description": null,
+    "href": "https://hostname:port/ResourcePoolManagement/reservation/3fd0ecdbe8e7c6d0",
+    "id": "3fd0ecdbe8e7c6d0",
+    "reservationState": "COMPLETED",
+    "reservationItem": [
+      {
+        "quantity": 1.0,
+        "subReservationState": "COMPLETED",
+        "resourceCapacity": [
+          {
+            "capacityDemandAmount": 1.0,
+            "@type": "Resource"
+          }
+        ],
+        "appliedCapacityAmount": [
+          {
+            "appliedCapacityAmount": 1.0,
+            "@type": null,
+            "@baseType": null,
+            "resource": [
+              {
+                "id": "3fd17a0ac5f27782",
+                "href": "http://server:port/resourceInventoryManagement/logicalResource/3fd17a0ac5f27782",
+                "name": null,
+                "value": "+91 7127860515",
+                "@baseType": null,
+                "@schemaLocation": null,
+                "@type": null,
+                "@referredType": "Resource"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "relatedParty": [
+      {
+        "id": "emma.smith@hybris.com",
+        "href": null,
+        "name": null,
+        "role": "CUSTOMER",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      }
+    ],
+    "productOffering": {
+      "id": "gsm_large",
+      "href": null,
+      "name": "GSM Large",
+      "@baseType": null,
+      "@schemaLocation": null,
+      "@type": null,
+      "@referredType": null
+    }
+  },
+  {
+    "@baseType": null,
+    "@schemaLocation": null,
+    "@type": "resourceItemReservation",
+    "description": null,
+    "href": "https://hostname:port/ResourcePoolManagement/reservation/3fd50c4385b10ac2",
+    "id": "3fd50c4385b10ac2",
+    "reservationState": "COMPLETED",
+    "reservationItem": [
+      {
+        "quantity": 1.0,
+        "subReservationState": "COMPLETED",
+        "resourceCapacity": [
+          {
+            "capacityDemandAmount": 1.0,
+            "@type": "Resource"
+          }
+        ],
+        "appliedCapacityAmount": [
+          {
+            "appliedCapacityAmount": 1.0,
+            "@type": null,
+            "@baseType": null,
+            "resource": [
+              {
+                "id": "3fd661270a7eca9a",
+                "href": "http://server:port/resourceInventoryManagement/logicalResource/3fd661270a7eca9a",
+                "name": null,
+                "value": "+91 7158014842",
+                "@baseType": null,
+                "@schemaLocation": null,
+                "@type": null,
+                "@referredType": "Resource"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "relatedParty": [
+      {
+        "id": "emma.smith@hybris.com",
+        "href": null,
+        "name": null,
+        "role": "CUSTOMER",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      }
+    ],
+    "productOffering": {
+      "id": "gsm_large",
+      "href": null,
+      "name": "GSM Large",
+      "@baseType": null,
+      "@schemaLocation": null,
+      "@type": null,
+      "@referredType": null
+    }
+  },
+  {
+    "@baseType": null,
+    "@schemaLocation": null,
+    "@type": "resourceItemReservation",
+    "description": null,
+    "href": "https://hostname:port/ResourcePoolManagement/reservation/3facf0b3214046d0",
+    "id": "3facf0b3214046d0",
+    "reservationState": "COMPLETED",
+    "reservationItem": [
+      {
+        "quantity": 1.0,
+        "subReservationState": "COMPLETED",
+        "resourceCapacity": [
+          {
+            "capacityDemandAmount": 1.0,
+            "@type": "Resource"
+          }
+        ],
+        "appliedCapacityAmount": [
+          {
+            "appliedCapacityAmount": 1.0,
+            "@type": null,
+            "@baseType": null,
+            "resource": [
+              {
+                "id": "3feb57d6e66752c0",
+                "href": "http://server:port/resourceInventoryManagement/logicalResource/3feb57d6e66752c0",
+                "name": null,
+                "value": "+91 7101560357",
+                "@baseType": null,
+                "@schemaLocation": null,
+                "@type": null,
+                "@referredType": "Resource"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "relatedParty": [
+      {
+        "id": "emma.smith@hybris.com",
+        "href": null,
+        "name": null,
+        "role": "CUSTOMER",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      }
+    ],
+    "productOffering": {
+      "id": "gsm_large",
+      "href": null,
+      "name": "GSM Large",
+      "@baseType": null,
+      "@schemaLocation": null,
+      "@type": null,
+      "@referredType": null
+    }
+  },
+  {
+    "@baseType": null,
+    "@schemaLocation": null,
+    "@type": "resourceItemReservation",
+    "description": null,
+    "href": "https://hostname:port/ResourcePoolManagement/reservation/3fd513a03d75e374",
+    "id": "3fd513a03d75e374",
+    "reservationState": "COMPLETED",
+    "reservationItem": [
+      {
+        "quantity": 1.0,
+        "subReservationState": "COMPLETED",
+        "resourceCapacity": [
+          {
+            "capacityDemandAmount": 1.0,
+            "@type": "Resource"
+          }
+        ],
+        "appliedCapacityAmount": [
+          {
+            "appliedCapacityAmount": 1.0,
+            "@type": null,
+            "@baseType": null,
+            "resource": [
+              {
+                "id": "3fc2a46430f25c14",
+                "href": "http://server:port/resourceInventoryManagement/logicalResource/3fc2a46430f25c14",
+                "name": null,
+                "value": "+91 7144111109",
+                "@baseType": null,
+                "@schemaLocation": null,
+                "@type": null,
+                "@referredType": "Resource"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "relatedParty": [
+      {
+        "id": "emma.smith@hybris.com",
+        "href": null,
+        "name": null,
+        "role": "CUSTOMER",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      }
+    ],
+    "productOffering": {
+      "id": "gsm_large",
+      "href": null,
+      "name": "GSM Large",
+      "@baseType": null,
+      "@schemaLocation": null,
+      "@type": null,
+      "@referredType": null
+    }
+  },
+  {
+    "@baseType": null,
+    "@schemaLocation": null,
+    "@type": "resourceItemReservation",
+    "description": null,
+    "href": "https://hostname:port/ResourcePoolManagement/reservation/3fea2276f40a29f9",
+    "id": "3fea2276f40a29f9",
+    "reservationState": "COMPLETED",
+    "reservationItem": [
+      {
+        "quantity": 1.0,
+        "subReservationState": "COMPLETED",
+        "resourceCapacity": [
+          {
+            "capacityDemandAmount": 1.0,
+            "@type": "Resource"
+          }
+        ],
+        "appliedCapacityAmount": [
+          {
+            "appliedCapacityAmount": 1.0,
+            "@type": null,
+            "@baseType": null,
+            "resource": [
+              {
+                "id": "3fe29117acebff3f",
+                "href": "http://server:port/resourceInventoryManagement/logicalResource/3fe29117acebff3f",
+                "name": null,
+                "value": "+91 7126262921",
+                "@baseType": null,
+                "@schemaLocation": null,
+                "@type": null,
+                "@referredType": "Resource"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "relatedParty": [
+      {
+        "id": "emma.smith@hybris.com",
+        "href": null,
+        "name": null,
+        "role": "CUSTOMER",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      }
+    ],
+    "productOffering": {
+      "id": "gsm_large",
+      "href": null,
+      "name": "GSM Large",
+      "@baseType": null,
+      "@schemaLocation": null,
+      "@type": null,
+      "@referredType": null
+    }
+  },
+  {
+    "@baseType": null,
+    "@schemaLocation": null,
+    "@type": "resourceItemReservation",
+    "description": null,
+    "href": "https://hostname:port/ResourcePoolManagement/reservation/3fde059afd938ff4",
+    "id": "3fde059afd938ff4",
+    "reservationState": "COMPLETED",
+    "reservationItem": [
+      {
+        "quantity": 1.0,
+        "subReservationState": "COMPLETED",
+        "resourceCapacity": [
+          {
+            "capacityDemandAmount": 1.0,
+            "@type": "Resource"
+          }
+        ],
+        "appliedCapacityAmount": [
+          {
+            "appliedCapacityAmount": 1.0,
+            "@type": null,
+            "@baseType": null,
+            "resource": [
+              {
+                "id": "3fe29320c12e7fd4",
+                "href": "http://server:port/resourceInventoryManagement/logicalResource/3fe29320c12e7fd4",
+                "name": null,
+                "value": "+91 7120626139",
+                "@baseType": null,
+                "@schemaLocation": null,
+                "@type": null,
+                "@referredType": "Resource"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "relatedParty": [
+      {
+        "id": "emma.smith@hybris.com",
+        "href": null,
+        "name": null,
+        "role": "CUSTOMER",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      }
+    ],
+    "productOffering": {
+      "id": "gsm_large",
+      "href": null,
+      "name": "GSM Large",
+      "@baseType": null,
+      "@schemaLocation": null,
+      "@type": null,
+      "@referredType": null
+    }
+  },
+  {
+    "@baseType": null,
+    "@schemaLocation": null,
+    "@type": "resourceItemReservation",
+    "description": null,
+    "href": "https://hostname:port/ResourcePoolManagement/reservation/3f909397fd01c800",
+    "id": "3f909397fd01c800",
+    "reservationState": "COMPLETED",
+    "reservationItem": [
+      {
+        "quantity": 1.0,
+        "subReservationState": "COMPLETED",
+        "resourceCapacity": [
+          {
+            "capacityDemandAmount": 1.0,
+            "@type": "Resource"
+          }
+        ],
+        "appliedCapacityAmount": [
+          {
+            "appliedCapacityAmount": 1.0,
+            "@type": null,
+            "@baseType": null,
+            "resource": [
+              {
+                "id": "3fca49c69f26238c",
+                "href": "http://server:port/resourceInventoryManagement/logicalResource/3fca49c69f26238c",
+                "name": null,
+                "value": "+91 7121597103",
+                "@baseType": null,
+                "@schemaLocation": null,
+                "@type": null,
+                "@referredType": "Resource"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "relatedParty": [
+      {
+        "id": "emma.smith@hybris.com",
+        "href": null,
+        "name": null,
+        "role": "CUSTOMER",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      }
+    ],
+    "productOffering": {
+      "id": "gsm_large",
+      "href": null,
+      "name": "GSM Large",
+      "@baseType": null,
+      "@schemaLocation": null,
+      "@type": null,
+      "@referredType": null
+    }
+  },
+  {
+    "@baseType": null,
+    "@schemaLocation": null,
+    "@type": "resourceItemReservation",
+    "description": null,
+    "href": "https://hostname:port/ResourcePoolManagement/reservation/3fd5fd0f86f190e0",
+    "id": "3fd5fd0f86f190e0",
+    "reservationState": "COMPLETED",
+    "reservationItem": [
+      {
+        "quantity": 1.0,
+        "subReservationState": "COMPLETED",
+        "resourceCapacity": [
+          {
+            "capacityDemandAmount": 1.0,
+            "@type": "Resource"
+          }
+        ],
+        "appliedCapacityAmount": [
+          {
+            "appliedCapacityAmount": 1.0,
+            "@type": null,
+            "@baseType": null,
+            "resource": [
+              {
+                "id": "3fbebefd23433fb8",
+                "href": "http://server:port/resourceInventoryManagement/logicalResource/3fbebefd23433fb8",
+                "name": null,
+                "value": "+91 7176188028",
+                "@baseType": null,
+                "@schemaLocation": null,
+                "@type": null,
+                "@referredType": "Resource"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "relatedParty": [
+      {
+        "id": "emma.smith@hybris.com",
+        "href": null,
+        "name": null,
+        "role": "CUSTOMER",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      }
+    ],
+    "productOffering": {
+      "id": "gsm_large",
+      "href": null,
+      "name": "GSM Large",
+      "@baseType": null,
+      "@schemaLocation": null,
+      "@type": null,
+      "@referredType": null
+    }
+  },
+  {
+    "@baseType": null,
+    "@schemaLocation": null,
+    "@type": "resourceItemReservation",
+    "description": null,
+    "href": "https://hostname:port/ResourcePoolManagement/reservation/3fd480773cb65f42",
+    "id": "3fd480773cb65f42",
+    "reservationState": "COMPLETED",
+    "reservationItem": [
+      {
+        "quantity": 1.0,
+        "subReservationState": "COMPLETED",
+        "resourceCapacity": [
+          {
+            "capacityDemandAmount": 1.0,
+            "@type": "Resource"
+          }
+        ],
+        "appliedCapacityAmount": [
+          {
+            "appliedCapacityAmount": 1.0,
+            "@type": null,
+            "@baseType": null,
+            "resource": [
+              {
+                "id": "3fceb4a3770ce8f0",
+                "href": "http://server:port/resourceInventoryManagement/logicalResource/3fceb4a3770ce8f0",
+                "name": null,
+                "value": "+91 7183575517",
+                "@baseType": null,
+                "@schemaLocation": null,
+                "@type": null,
+                "@referredType": "Resource"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "relatedParty": [
+      {
+        "id": "emma.smith@hybris.com",
+        "href": null,
+        "name": null,
+        "role": "CUSTOMER",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      }
+    ],
+    "productOffering": {
+      "id": "gsm_large",
+      "href": null,
+      "name": "GSM Large",
+      "@baseType": null,
+      "@schemaLocation": null,
+      "@type": null,
+      "@referredType": null
+    }
+  },
+  {
+    "@baseType": null,
+    "@schemaLocation": null,
+    "@type": "resourceItemReservation",
+    "description": null,
+    "href": "https://hostname:port/ResourcePoolManagement/reservation/3fdf66a2ebc1f230",
+    "id": "3fdf66a2ebc1f230",
+    "reservationState": "COMPLETED",
+    "reservationItem": [
+      {
+        "quantity": 1.0,
+        "subReservationState": "COMPLETED",
+        "resourceCapacity": [
+          {
+            "capacityDemandAmount": 1.0,
+            "@type": "Resource"
+          }
+        ],
+        "appliedCapacityAmount": [
+          {
+            "appliedCapacityAmount": 1.0,
+            "@type": null,
+            "@baseType": null,
+            "resource": [
+              {
+                "id": "3fdc72ec44e063de",
+                "href": "http://server:port/resourceInventoryManagement/logicalResource/3fdc72ec44e063de",
+                "name": null,
+                "value": "+91 7147084082",
+                "@baseType": null,
+                "@schemaLocation": null,
+                "@type": null,
+                "@referredType": "Resource"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "relatedParty": [
+      {
+        "id": "emma.smith@hybris.com",
+        "href": null,
+        "name": null,
+        "role": "CUSTOMER",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      }
+    ],
+    "productOffering": {
+      "id": "gsm_large",
+      "href": null,
+      "name": "GSM Large",
+      "@baseType": null,
+      "@schemaLocation": null,
+      "@type": null,
+      "@referredType": null
+    }
+  },
+  {
+    "@baseType": null,
+    "@schemaLocation": null,
+    "@type": "resourceItemReservation",
+    "description": null,
+    "href": "https://hostname:port/ResourcePoolManagement/reservation/3f8430530b35fd00",
+    "id": "3f8430530b35fd00",
+    "reservationState": "COMPLETED",
+    "reservationItem": [
+      {
+        "quantity": 1.0,
+        "subReservationState": "COMPLETED",
+        "resourceCapacity": [
+          {
+            "capacityDemandAmount": 1.0,
+            "@type": "Resource"
+          }
+        ],
+        "appliedCapacityAmount": [
+          {
+            "appliedCapacityAmount": 1.0,
+            "@type": null,
+            "@baseType": null,
+            "resource": [
+              {
+                "id": "3fe84b5d892afa78",
+                "href": "https://host:port/partyManagement/individual/56",
+                "name": null,
+                "value": "+91 7142036541",
+                "@baseType": null,
+                "@schemaLocation": null,
+                "@type": null,
+                "@referredType": "Resource"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "relatedParty": [
+      {
+        "id": "emma.smith@hybris.com",
+        "href": null,
+        "name": null,
+        "role": "CUSTOMER",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      }
+    ],
+    "productOffering": {
+      "id": "gsm_large",
+      "href": null,
+      "name": "GSM Large",
+      "@baseType": null,
+      "@schemaLocation": null,
+      "@type": null,
+      "@referredType": null
+    }
+  },
+  {
+    "@baseType": null,
+    "@schemaLocation": null,
+    "@type": "resourceItemReservation",
+    "description": null,
+    "href": "https://hostname:port/ResourcePoolManagement/reservation/3fe3214e8a113a1e",
+    "id": "3fe3214e8a113a1e",
+    "reservationState": "COMPLETED",
+    "reservationItem": [
+      {
+        "quantity": 1.0,
+        "subReservationState": "COMPLETED",
+        "resourceCapacity": [
+          {
+            "capacityDemandAmount": 1.0,
+            "@type": "Resource"
+          }
+        ],
+        "appliedCapacityAmount": [
+          {
+            "appliedCapacityAmount": 1.0,
+            "@type": null,
+            "@baseType": null,
+            "resource": [
+              {
+                "id": "3fec7ac82ada5e2c",
+                "href": "http://server:port/resourceInventoryManagement/logicalResource/3fec7ac82ada5e2c",
+                "name": null,
+                "value": "+91 7113360705",
+                "@baseType": null,
+                "@schemaLocation": null,
+                "@type": null,
+                "@referredType": "Resource"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "relatedParty": [
+      {
+        "id": "emma.smith@hybris.com",
+        "href": null,
+        "name": null,
+        "role": "CUSTOMER",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      }
+    ],
+    "productOffering": {
+      "id": "gsm_large",
+      "href": null,
+      "name": "GSM Large",
+      "@baseType": null,
+      "@schemaLocation": null,
+      "@type": null,
+      "@referredType": null
+    }
+  },
+  {
+    "@baseType": null,
+    "@schemaLocation": null,
+    "@type": "resourceItemReservation",
+    "description": null,
+    "href": "https://hostname:port/ResourcePoolManagement/reservation/3fee2a8e2209eb6e",
+    "id": "3fee2a8e2209eb6e",
+    "reservationState": "COMPLETED",
+    "reservationItem": [
+      {
+        "quantity": 1.0,
+        "subReservationState": "COMPLETED",
+        "resourceCapacity": [
+          {
+            "capacityDemandAmount": 1.0,
+            "@type": "Resource"
+          }
+        ],
+        "appliedCapacityAmount": [
+          {
+            "appliedCapacityAmount": 1.0,
+            "@type": null,
+            "@baseType": null,
+            "resource": [
+              {
+                "id": "3feb077815af1903",
+                "href": "http://server:port/resourceInventoryManagement/logicalResource/3feb077815af1903",
+                "name": null,
+                "value": "+91 7113144021",
+                "@baseType": null,
+                "@schemaLocation": null,
+                "@type": null,
+                "@referredType": "Resource"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "relatedParty": [
+      {
+        "id": "etta.berg@hybris.com",
+        "href": null,
+        "name": null,
+        "role": "CUSTOMER",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      }
+    ],
+    "productOffering": {
+      "id": "gsm_large",
+      "href": null,
+      "name": "GSM Large",
+      "@baseType": null,
+      "@schemaLocation": null,
+      "@type": null,
+      "@referredType": null
+    }
+  },
+  {
+    "@baseType": null,
+    "@schemaLocation": null,
+    "@type": "resourceItemReservation",
+    "description": null,
+    "href": "https://hostname:port/ResourcePoolManagement/reservation/3fe51a2f29eba036",
+    "id": "3fe51a2f29eba036",
+    "reservationState": "COMPLETED",
+    "reservationItem": [
+      {
+        "quantity": 1.0,
+        "subReservationState": "COMPLETED",
+        "resourceCapacity": [
+          {
+            "capacityDemandAmount": 1.0,
+            "@type": "Resource"
+          }
+        ],
+        "appliedCapacityAmount": [
+          {
+            "appliedCapacityAmount": 1.0,
+            "@type": null,
+            "@baseType": null,
+            "resource": [
+              {
+                "id": "3fc4e8e4780707e8",
+                "href": "http://server:port/resourceInventoryManagement/logicalResource/3fc4e8e4780707e8",
+                "name": null,
+                "value": "+91 7159787917",
+                "@baseType": null,
+                "@schemaLocation": null,
+                "@type": null,
+                "@referredType": "Resource"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "relatedParty": [
+      {
+        "id": "etta.berg@hybris.com",
+        "href": null,
+        "name": null,
+        "role": "CUSTOMER",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      }
+    ],
+    "productOffering": {
+      "id": "gsm_large",
+      "href": null,
+      "name": "GSM Large",
+      "@baseType": null,
+      "@schemaLocation": null,
+      "@type": null,
+      "@referredType": null
+    }
+  },
+  {
+    "@baseType": null,
+    "@schemaLocation": null,
+    "@type": "resourceItemReservation",
+    "description": null,
+    "href": "https://hostname:port/ResourcePoolManagement/reservation/3fcbe162f3a1f9e4",
+    "id": "3fcbe162f3a1f9e4",
+    "reservationState": "COMPLETED",
+    "reservationItem": [
+      {
+        "quantity": 1.0,
+        "subReservationState": "COMPLETED",
+        "resourceCapacity": [
+          {
+            "capacityDemandAmount": 1.0,
+            "@type": "Resource"
+          }
+        ],
+        "appliedCapacityAmount": [
+          {
+            "appliedCapacityAmount": 1.0,
+            "@type": null,
+            "@baseType": null,
+            "resource": [
+              {
+                "id": "3fb56c446bdb93e0",
+                "href": "http://server:port/resourceInventoryManagement/logicalResource/3fb56c446bdb93e0",
+                "name": null,
+                "value": "+91 7174353130",
+                "@baseType": null,
+                "@schemaLocation": null,
+                "@type": null,
+                "@referredType": "Resource"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "relatedParty": [
+      {
+        "id": "etta.berg@hybris.com",
+        "href": null,
+        "name": null,
+        "role": "CUSTOMER",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      }
+    ],
+    "productOffering": {
+      "id": "gsm_large",
+      "href": null,
+      "name": "GSM Large",
+      "@baseType": null,
+      "@schemaLocation": null,
+      "@type": null,
+      "@referredType": null
+    }
+  },
+  {
+    "@baseType": null,
+    "@schemaLocation": null,
+    "@type": "resourceItemReservation",
+    "description": null,
+    "href": "https://hostname:port/ResourcePoolManagement/reservation/3fefd9bf32f4943c",
+    "id": "3fefd9bf32f4943c",
+    "reservationState": "COMPLETED",
+    "reservationItem": [
+      {
+        "quantity": 1.0,
+        "subReservationState": "COMPLETED",
+        "resourceCapacity": [
+          {
+            "capacityDemandAmount": 1.0,
+            "@type": "Resource"
+          }
+        ],
+        "appliedCapacityAmount": [
+          {
+            "appliedCapacityAmount": 1.0,
+            "@type": null,
+            "@baseType": null,
+            "resource": [
+              {
+                "id": "test",
+                "href": null,
+                "name": null,
+                "value": "+91 7188220499",
+                "@baseType": null,
+                "@schemaLocation": null,
+                "@type": null,
+                "@referredType": null
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "relatedParty": [
+      {
+        "id": "56",
+        "href": "https://host:port/partyManagement/individual/56",
+        "name": "John Doe",
+        "role": "technician",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      }
+    ],
+    "productOffering": {
+      "id": "po1",
+      "href": "https://host:port/partyManagement/individual/56",
+      "name": "poName1",
+      "@baseType": null,
+      "@schemaLocation": null,
+      "@type": null,
+      "@referredType": null
+    }
+  },
+  {
+    "@baseType": null,
+    "@schemaLocation": null,
+    "@type": "resourceItemReservation",
+    "description": null,
+    "href": "https://hostname:port/ResourcePoolManagement/reservation/3fd9b9b7c7dccfc2",
+    "id": "3fd9b9b7c7dccfc2",
+    "reservationState": "COMPLETED",
+    "reservationItem": [
+      {
+        "quantity": 1.0,
+        "subReservationState": "COMPLETED",
+        "resourceCapacity": [
+          {
+            "capacityDemandAmount": 1.0,
+            "@type": "Resource"
+          }
+        ],
+        "appliedCapacityAmount": [
+          {
+            "appliedCapacityAmount": 1.0,
+            "@type": null,
+            "@baseType": null,
+            "resource": [
+              {
+                "id": "3fe43a26e627441e",
+                "href": "http://server:port/resourceInventoryManagement/logicalResource/3fe43a26e627441e",
+                "name": null,
+                "value": "+91 7107952959",
+                "@baseType": null,
+                "@schemaLocation": null,
+                "@type": null,
+                "@referredType": "Resource"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "relatedParty": [
+      {
+        "id": "david.brown@hybris.com",
+        "href": null,
+        "name": null,
+        "role": "CUSTOMER",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      }
+    ],
+    "productOffering": {
+      "id": "gsm_medium",
+      "href": null,
+      "name": "GSM Medium",
+      "@baseType": null,
+      "@schemaLocation": null,
+      "@type": null,
+      "@referredType": null
+    }
+  },
+  {
+    "@baseType": null,
+    "@schemaLocation": null,
+    "@type": "resourceItemReservation",
+    "description": null,
+    "href": "https://hostname:port/ResourcePoolManagement/reservation/3fe3557888eff8e3",
+    "id": "3fe3557888eff8e3",
+    "reservationState": "COMPLETED",
+    "reservationItem": [
+      {
+        "quantity": 1.0,
+        "subReservationState": "COMPLETED",
+        "resourceCapacity": [
+          {
+            "capacityDemandAmount": 1.0,
+            "@type": "Resource"
+          }
+        ],
+        "appliedCapacityAmount": [
+          {
+            "appliedCapacityAmount": 1.0,
+            "@type": null,
+            "@baseType": null,
+            "resource": [
+              {
+                "id": "3fc4ed6a930aeff8",
+                "href": "http://server:port/resourceInventoryManagement/logicalResource/3fc4ed6a930aeff8",
+                "name": null,
+                "value": "+91 7147022001",
+                "@baseType": null,
+                "@schemaLocation": null,
+                "@type": null,
+                "@referredType": "Resource"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "relatedParty": [
+      {
+        "id": "david.brown@hybris.com",
+        "href": null,
+        "name": null,
+        "role": "CUSTOMER",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      }
+    ],
+    "productOffering": {
+      "id": "gsm_medium",
+      "href": null,
+      "name": "GSM Medium",
+      "@baseType": null,
+      "@schemaLocation": null,
+      "@type": null,
+      "@referredType": null
+    }
+  },
+  {
+    "@baseType": null,
+    "@schemaLocation": null,
+    "@type": "resourceItemReservation",
+    "description": null,
+    "href": "https://hostname:port/ResourcePoolManagement/reservation/3fee2470f42bd4cc",
+    "id": "3fee2470f42bd4cc",
+    "reservationState": "COMPLETED",
+    "reservationItem": [
+      {
+        "quantity": 1.0,
+        "subReservationState": "COMPLETED",
+        "resourceCapacity": [
+          {
+            "capacityDemandAmount": 1.0,
+            "@type": "Resource"
+          }
+        ],
+        "appliedCapacityAmount": [
+          {
+            "appliedCapacityAmount": 1.0,
+            "@type": null,
+            "@baseType": null,
+            "resource": [
+              {
+                "id": "3fe33292c94c7d37",
+                "href": "http://server:port/resourceInventoryManagement/logicalResource/3fe33292c94c7d37",
+                "name": null,
+                "value": "+91 7124605077",
+                "@baseType": null,
+                "@schemaLocation": null,
+                "@type": null,
+                "@referredType": "Resource"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "relatedParty": [
+      {
+        "id": "david.brown@hybris.com",
+        "href": null,
+        "name": null,
+        "role": "CUSTOMER",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      }
+    ],
+    "productOffering": {
+      "id": "gsm_medium",
+      "href": null,
+      "name": "GSM Medium",
+      "@baseType": null,
+      "@schemaLocation": null,
+      "@type": null,
+      "@referredType": null
+    }
+  },
+  {
+    "@baseType": null,
+    "@schemaLocation": null,
+    "@type": "resourceItemReservation",
+    "description": null,
+    "href": "https://hostname:port/ResourcePoolManagement/reservation/3feae6facc6c8532",
+    "id": "3feae6facc6c8532",
+    "reservationState": "COMPLETED",
+    "reservationItem": [
+      {
+        "quantity": 1.0,
+        "subReservationState": "COMPLETED",
+        "resourceCapacity": [
+          {
+            "capacityDemandAmount": 1.0,
+            "@type": "Resource"
+          }
+        ],
+        "appliedCapacityAmount": [
+          {
+            "appliedCapacityAmount": 1.0,
+            "@type": null,
+            "@baseType": null,
+            "resource": [
+              {
+                "id": "3fc20ffbf08fa670",
+                "href": "http://server:port/resourceInventoryManagement/logicalResource/3fc20ffbf08fa670",
+                "name": null,
+                "value": "+91 7156274449",
+                "@baseType": null,
+                "@schemaLocation": null,
+                "@type": null,
+                "@referredType": "Resource"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "relatedParty": [
+      {
+        "id": "david.brown@hybris.com",
+        "href": null,
+        "name": null,
+        "role": "CUSTOMER",
+        "@baseType": null,
+        "@schemaLocation": null,
+        "@type": null,
+        "@referredType": null
+      }
+    ],
+    "productOffering": {
+      "id": "gsm_medium",
+      "href": null,
+      "name": "GSM Medium",
+      "@baseType": null,
+      "@schemaLocation": null,
+      "@type": null,
+      "@referredType": null
+    }
+  }
+]

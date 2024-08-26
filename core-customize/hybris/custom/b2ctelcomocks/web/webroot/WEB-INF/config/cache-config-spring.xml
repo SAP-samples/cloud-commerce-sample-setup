@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:cache="http://www.springframework.org/schema/cache"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:utils="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/cache
+     	http://www.springframework.org/schema/cache/spring-cache.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+	
+	<cache:annotation-driven cache-manager="compositeWsCacheManager" key-generator="wsCacheKeyGenerator"/>
+
+	<alias name="defaultWsCacheManagerList" alias="wsCacheManagerList"/>
+	<utils:list id="defaultWsCacheManagerList">
+		<ref bean="defaultWSCacheManager"/>
+	</utils:list>
+	
+	
+	<alias name="defaultCompositeWSCacheManager" alias="compositeWsCacheManager"/>
+	<bean id="defaultCompositeWSCacheManager" class="org.springframework.cache.support.CompositeCacheManager">
+		<property name="cacheManagers">
+			<ref bean="wsCacheManagerList"/>
+		</property>
+	</bean>
+
+	<!-- Default cache manager for b2ctelcomocks -->
+
+	<alias name="defaultWSCacheManager" alias="wsCacheManager"/>
+	<bean id="defaultWSCacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
+		<property name="cacheManager" ref="wsEhcache"/>
+	</bean>
+
+	<alias name="defaultWSEhcache" alias="wsEhcache"/>
+	<bean id="defaultWSEhcache" class="de.hybris.platform.webservicescommons.cache.TenantAwareEhCacheManagerFactoryBean">
+		<property name="cacheNamePrefix" value="b2ctelcomocks"/>
+		<property name="configLocation" value="${b2ctelcomocks.ehcache.location:/WEB-INF/cache/ehcache.xml}"/>
+	</bean>
+	
+</beans>

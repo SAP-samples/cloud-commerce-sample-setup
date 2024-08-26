@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <alias name="defaultTmaOrderConfirmationEventListener" alias="tmaOrderConfirmationEventListener"/>
+    <bean name="defaultTmaOrderConfirmationEventListener"
+          class="de.hybris.platform.b2ctelcomocks.event.TmaOrderConfirmationEventListener" parent="orderConfirmationEventListener">
+        <constructor-arg name="keyGenerator" ref="tuaProdPriceIdGenerator"/>
+        <constructor-arg name="priceTypesMap" ref="tmaAbstractOrderPriceTypeMapping"/>
+        <constructor-arg name="tuaProductService" ref="tuaProductService"/>
+        <constructor-arg name="termsOfServiceDao" ref="tmaTermsOfServiceDao"/>
+    </bean>
+
+    <alias name="defaultTuaProdPriceIdGenerator" alias="tuaProdPriceIdGenerator"/>
+    <bean id="defaultTuaProdPriceIdGenerator"
+          class="de.hybris.platform.servicelayer.keygenerator.impl.PersistentKeyGenerator">
+        <property name="key" value="${keygen.tuaProductPrice.id.name}"/>
+        <property name="digits" value="${keygen.tuaProductPrice.id.digits}"/>
+        <property name="start" value="${keygen.tuaProductPrice.id.start}"/>
+        <property name="type" value="${keygen.tuaProductPrice.id.type}"/>
+        <property name="template" value="${keygen.tuaProductPrice.id.template}"/>
+    </bean>
+
+    <alias name="tmaAbstractOrderPriceTypeMapping" alias="tmaAbstractOrderPriceTypeMapping"/>
+    <util:map id="tmaAbstractOrderPriceTypeMapping">
+        <entry key="#{T(de.hybris.platform.b2ctelcoservices.model.TmaAbstractOrderOneTimeChargePriceModel)._TYPECODE}"
+               value="ONETIME"/>
+        <entry key="#{T(de.hybris.platform.b2ctelcoservices.model.TmaAbstractOrderRecurringChargePriceModel)._TYPECODE}"
+               value="RECURRING"/>
+        <entry key="#{T(de.hybris.platform.b2ctelcoservices.model.TmaAbstractOrderUsageChargePriceModel)._TYPECODE}"
+               value="USAGE"/>
+    </util:map>
+</beans>

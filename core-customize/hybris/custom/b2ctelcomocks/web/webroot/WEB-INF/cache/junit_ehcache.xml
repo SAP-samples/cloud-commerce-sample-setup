@@ -1,0 +1,44 @@
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="../config/ehcache.xsd" updateCheck="false" monitoring="autodetect"
+         dynamicConfig="true">
+
+	<!--
+	see ehcache-core-*.jar/ehcache-failsafe.xml for description of elements
+	 -->
+
+	<diskStore path="java.io.tmpdir/junit_b2ctelcomocks_cache"/>
+	<defaultCache
+			maxElementsInMemory="100000"
+			eternal="false"
+			timeToIdleSeconds="360"
+			timeToLiveSeconds="360"
+			overflowToDisk="true"
+			diskPersistent="false"
+            maxElementsOnDisk="10"
+			diskExpiryThreadIntervalSeconds="360"
+			memoryStoreEvictionPolicy="FIFO"
+			/>
+
+	<!--fieldSetCache is needed for methods from DefaultFieldSetBuilder-->
+	<cache name="fieldSetCache"
+	       maxElementsInMemory="1000"
+	       eternal="true"
+	       overflowToDisk="true"
+	       diskPersistent="false"
+          maxElementsOnDisk="2000"
+	       memoryStoreEvictionPolicy="LRU"/>
+
+	<!-- sample cache configuration -->
+	<cache name="sampleCache"
+	       maxElementsInMemory="1000"
+	       eternal="false"
+	       overflowToDisk="true"
+	       timeToLiveSeconds="150"
+	       diskPersistent="false"
+           maxElementsOnDisk="2000"
+	       memoryStoreEvictionPolicy="LRU"/>
+
+</ehcache>

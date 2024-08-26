@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~  Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+  -->
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/mvc
+		http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/security
+		http://www.springframework.org/schema/security/spring-security.xsd http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd">
+
+<context:annotation-config />
+	<context:component-scan base-package="de.hybris.platform.b2ctelcomocks,de.hybris.platform.webservicescommons.swagger" scope-resolver="de.hybris.platform.spring.IgnoreTenantScopeMetadataResolver" />
+
+    <bean id="contentNegotiationManager"
+          class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+        <property name="favorPathExtension" value="false" />
+        <property name="defaultContentType" value="application/json" />
+    </bean>
+
+    <bean id="tmaV3JsonHttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+        <property name="prettyPrint" value="true"/>
+        <property name="supportedMediaTypes">
+            <list>
+                <bean class="org.springframework.http.MediaType">
+                    <constructor-arg value="application"/>
+                    <constructor-arg value="json"/>
+                </bean>
+            </list>
+        </property>
+        <property name="objectMapper" ref="objectMapper"/>
+    </bean>
+
+    <bean name="objectMapper" class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean"
+          p:failOnEmptyBeans="false"
+          p:indentOutput="true">
+        <property name="deserializers">
+            <array>
+                <bean class="de.hybris.platform.b2ctelcomocks.deserializers.TmaXssStringDeserializer"/>
+            </array>
+        </property>
+        <property name="dateFormat" ref="tmaDateFormatter"/>
+    </bean>
+
+    <!-- json and xml conversion -->
+    <mvc:annotation-driven content-negotiation-manager="contentNegotiationManager">
+        <mvc:message-converters>
+            <ref bean="tmaV3JsonHttpMessageConverter"/>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+    <!-- This tag allows for mapping the DispatcherServlet to "/" (thus overriding the mapping of the container's default Servlet), while
+        still allowing static resource requests to be handled by the container's default Servlet. It configures a DefaultServletHttpRequestHandler
+        with a URL mapping (given a lowest precedence order) of "/**". This handler will forward all requests to the default Servlet. -->
+    <mvc:default-servlet-handler/>
+
+    <!-- Support for @CacheControl annotation -->
+    <mvc:interceptors>
+        <bean class="de.hybris.platform.webservicescommons.interceptors.CacheControlHandlerInterceptor"/>
+    </mvc:interceptors>
+
+    <!-- Load additional configuration -->
+
+    <bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="prefix" value="/WEB-INF/jsp/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+</beans>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<!-- WARNING: This is the Spring WEB configuration file. If you want to replace items or managers you have to do this from the extensions 
+	core configuration file (b2ctelcomocks/resources/b2ctelcomocks-spring.xml) -->
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/context
+			  http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<context:annotation-config/>
+
+	<import resource="config/cache-config-spring.xml"/>
+	<import resource="${b2ctelcomocks.security.config:config/security-spring.xml}"/>
+	<import resource="config/error-config-spring.xml"/>
+	<import resource="config/field-mapping-spring.xml"/>	
+
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>/WEB-INF/messages/messages</value>
+			</list>
+		</property>
+		<property name="defaultEncoding" value="UTF-8" />
+	</bean>
+	
+	<!-- Spring managed FilterChain for hybris Filter stack -->
+	<bean id="b2ctelcomocksPlatformFilterChain" class="de.hybris.platform.servicelayer.web.PlatformFilterChain">
+		<constructor-arg>
+			<list>
+				<!-- Filter that catches and resolves exceptions thrown from other filters. Can be uncommented if you need such functionality -->
+				<!-- <ref bean="exceptionTranslationFilter" /> -->
+	
+				<ref bean="log4jFilter" />
+				<ref bean="tenantActivationFilter" />
+				<ref bean="corsFilter"/>
+				<!-- This filter creates new jalo session and close it after request is handled. -->
+				<ref bean="restSessionFilter" />
+				<!-- If you want to track user session:
+					- uncomment filter below 
+					- comment or remove restSessionFilter above
+					- comment or remove SessionHindingRequestFilter in web.xml -->
+				<!-- ref bean="sessionFilter" /-->
+
+				<!-- Security -->
+				<ref bean="springSecurityFilterChain" />
+			</list>
+		</constructor-arg>
+	</bean>
+
+	<bean id="restSessionFilter" class="de.hybris.platform.webservicescommons.filter.RestSessionFilter">
+		<property name="sessionService" ref="sessionService" />
+	</bean>
+
+	<!-- Filter that catches and resolves exceptions thrown from other filters. Can be added to filter chain if you need such functionality -->
+	<alias alias="exceptionTranslationFilter" name="defaultExceptionTranslationFilter" />
+	<bean id="defaultExceptionTranslationFilter" class="de.hybris.platform.webservicescommons.filter.ExceptionTranslationFilter">
+		<property name="restHandlerExceptionResolver" ref="restHandlerExceptionResolver" />
+	</bean>
+
+	<!-- Beans needed for sample code -->
+	
+	<bean id="tmaDateFormatter" class="java.text.SimpleDateFormat">
+		<constructor-arg value="${b2ctelcomocks.simpleDateFormat}" />
+	</bean>
+
+	<bean id="tmaStringHttpMessageConverter" class="org.springframework.http.converter.StringHttpMessageConverter"/>
+</beans>

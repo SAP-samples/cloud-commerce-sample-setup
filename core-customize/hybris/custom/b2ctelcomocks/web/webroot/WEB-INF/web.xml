@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<web-app id="b2ctelcomocks" version="3.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" 
+         metadata-complete="true">
+  <absolute-ordering />
+  
+	<display-name>b2ctelcomocks</display-name>
+	
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+	
+
+	<filter>
+   		<filter-name>XSSFilter</filter-name>
+		<filter-class>de.hybris.platform.servicelayer.web.XSSFilter</filter-class>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>XSSFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<filter>
+   	<filter-name>characterEncodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+		<init-param>
+			<param-name>forceEncoding</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	
+	
+	<!-- SessionHidingRequestFilter prevents creating Http session.
+		 If you want to track user session :
+		  - comment or remove SessionHidingRequestFilter
+		  - uncomment sessionFilter in b2ctelcomocks-web-spring.xml
+		  - comment or remove restSessionFilter in b2ctelcomocks-web-spring.xml
+	-->
+	<filter>
+		<filter-name>SessionHidingRequestFilter</filter-name>
+		<filter-class>de.hybris.platform.webservicescommons.filter.SessionHidingFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>SessionHidingRequestFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+<!--
+	Enabling Spring managed Delegating Filter Proxy for hybris Filter Stack.
+-->
+	<filter>
+		<filter-name>b2ctelcomocksPlatformFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>characterEncodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>b2ctelcomocksPlatformFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>	
+
+	<servlet>
+		<servlet-name>springmvc</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>springmvc</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+	
+<!--
+	Enabling a Spring web application context with 'session' and 'request' scope.
+	- The 'contextConfigLocation' param specifies where your configuration files are located.
+	- The HybrisContextLoaderListener extends the usual SpringContextLoaderListener (which loads
+	  the context from specified location) by adding the global application context of
+	  the platform as parent context. 
+	- The RequestContextListener is needed for exposing the 'request' scope to the context.
+	  Furthermore it is needed when overriding the 'jalosession' bean for your web application.
+ -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>WEB-INF/b2ctelcomocks-web-spring.xml</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>contextInitializerClasses</param-name>
+		<param-value>de.hybris.platform.webservicescommons.initializer.HybrisPropertiesWebApplicationContextInitializer</param-value>
+	</context-param>
+
+	<listener>
+		<listener-class>de.hybris.platform.spring.HybrisContextLoaderListener</listener-class>
+	</listener>
+	
+	<listener>
+    	<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+	</listener>
+		
+	<error-page>
+		<location>/unknownError.jsp</location>
+	</error-page>
+	<error-page>
+		<error-code>500</error-code>
+		<location>/unknownError.jsp</location>
+	</error-page>
+	<error-page>
+		<error-code>404</error-code>
+		<location>/error404.jsp</location>
+	</error-page>
+	<error-page>
+		<exception-type>java.lang.Throwable</exception-type>
+		<location>/unknownError.jsp</location>
+	</error-page>
+	<error-page>
+		<exception-type>java.lang.Exception</exception-type>
+		<location>/exception.jsp</location>
+	</error-page>
+	
+</web-app> 

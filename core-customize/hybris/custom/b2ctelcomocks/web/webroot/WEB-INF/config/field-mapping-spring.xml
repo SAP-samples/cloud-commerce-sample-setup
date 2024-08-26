@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/context
+			  http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- Field mapping configuration -->
+	<bean id="dataMapper"
+		class="de.hybris.platform.webservicescommons.mapping.impl.DefaultDataMapper">
+		<property name="fieldSetBuilder" ref="fieldSetBuilder" />
+	</bean>
+
+	<bean id="fieldSetBuilder"
+		class="de.hybris.platform.webservicescommons.mapping.impl.DefaultFieldSetBuilder">
+		<property name="defaultRecurrencyLevel" value="4" />
+		<property name="defaultMaxFieldSetSize" value="50000" />
+		<property name="fieldSetLevelHelper" ref="fieldSetLevelHelper" />
+	</bean>
+
+	<alias alias="fieldSetLevelHelper" name="defaultFieldSetLevelHelper" />
+	<bean id="defaultFieldSetLevelHelper"
+		class="de.hybris.platform.webservicescommons.mapping.impl.DefaultFieldSetLevelHelper">
+	</bean>
+
+	<bean class="de.hybris.platform.webservicescommons.mapping.filters.GeneralFieldFilter">
+		<property name="fieldSelectionStrategy" ref="fieldSelectionStrategy"/>
+	</bean>
+
+	<!-- Default Pagination field / fieldset mapping -->
+
+	<bean id="paginationFieldMapper" parent="fieldMapper">
+		<property name="sourceClass" value="de.hybris.platform.webservicescommons.dto.PaginationWsDTO"/>
+		<property name="destClass"   value="de.hybris.platform.core.servicelayer.data.PaginationData" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="count" value="pageSize"/>
+				<entry key="totalCount" value="totalNumberOfResults"/>
+				<entry key="page" value="currentPage"/>
+				<entry key="totalPages" value="numberOfPages"/>
+			</map>
+		</property>
+	</bean>
+
+	<bean parent="fieldSetLevelMapping" id="paginationWsDTOFieldSetLevelMapping">
+		<property name="dtoClass"
+		          value="de.hybris.platform.webservicescommons.dto.PaginationWsDTO"/>
+		<property name="levelMapping">
+			<map>
+				<entry key="BASIC" value="count,totalCount,page,totalPages,hasNext,hasPrevious"/>
+				<entry key="DEFAULT" value="count,totalCount,page,totalPages,hasNext,hasPrevious"/>
+				<entry key="FULL" value="count,totalCount,page,totalPages,hasNext,hasPrevious"/>
+			</map>
+		</property>
+	</bean>
+
+		<bean parent="fieldSetLevelMapping" id="sortWsDTOFieldSetLevelMapping">
+		<property name="dtoClass"
+		          value="de.hybris.platform.webservicescommons.dto.SortWsDTO"/>
+		<property name="levelMapping">
+			<map>
+				<entry key="BASIC" value="code,asc"/>
+				<entry key="DEFAULT" value="code,asc"/>
+				<entry key="FULL" value="code,asc"/>
+			</map>
+		</property>
+	</bean>
+
+	<bean parent="fieldSetLevelMapping" id="pageWsDTOFieldSetLevelMapping">
+		<property name="dtoClass"
+			value="de.hybris.platform.webservicescommons.dto.SearchPageWsDTO" />
+		<property name="levelMapping">
+			<map>
+				<entry key="BASIC" value="pagination(BASIC),sorts(BASIC),results(BASIC)" />
+				<entry key="DEFAULT"
+					value="pagination(DEFAULT),sorts(DEFAULT),results(DEFAULT)" />
+				<entry key="FULL" value="pagination(FULL),sorts(FULL),results(FULL)" />
+			</map>
+		</property>
+	</bean>
+
+	<alias alias="fieldSetLevelMapping" name="defaultFieldSetLevelMapping"/>
+	<bean name="defaultFieldSetLevelMapping"
+		  class="de.hybris.platform.webservicescommons.mapping.config.FieldSetLevelMapping"
+		  abstract="true"/>
+
+	<alias alias="fieldSetLevelMapping" name="defaultFieldSetLevelMapping"/>
+	<bean name="dtoClass"
+		  class="de.hybris.platform.webservicescommons.mapping.config.FieldSetLevelMapping"
+		  abstract="true"/>
+</beans>

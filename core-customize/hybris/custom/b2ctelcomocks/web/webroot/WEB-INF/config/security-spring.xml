@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/security 
+		http://www.springframework.org/schema/security/spring-security.xsd">
+
+		<!-- Commons security imports -->
+		<import resource="classpath:webservicescommons/commons-security-spring.xml"/>
+
+		<!-- Security configuration for swagger resources -->
+		<!-- configured in classpath:webservicescommons/commons-security-spring.xml since 2211 -->
+
+		<!-- Security configuration for resources -->
+		<http pattern="/**" entry-point-ref="oauthAuthenticationEntryPoint" use-expressions="true" xmlns="http://www.springframework.org/schema/security">
+		
+			<session-management session-authentication-strategy-ref="fixation" />
+
+			<!-- for PRODUCTION make sure that webservicescommons.required.channel=https -->
+			<intercept-url pattern="/sample/users/{id}" access="permitAll"
+						   requires-channel="#{configurationService.configuration.getString('webservicescommons.required.channel', 'https')}" />
+			<intercept-url pattern="/**" access="permitAll" requires-channel="#{configurationService.configuration.getString('webservicescommons.required.channel', 'https')}" />
+
+			<port-mappings>
+				<port-mapping http="#{configurationService.configuration.getProperty('tomcat.http.port')}" https="#{configurationService.configuration.getProperty('tomcat.ssl.port')}" />
+				<port-mapping http="#{configurationService.configuration.getProperty('embeddedserver.http.port')}" https="#{configurationService.configuration.getProperty('embeddedserver.ssl.port')}" />
+			</port-mappings>
+
+			<custom-filter ref="resourceServerFilter" before="PRE_AUTH_FILTER" />
+			<custom-filter ref="hybrisUserFilter" after="LAST" />
+			<access-denied-handler ref="oauthAccessDeniedHandler" />
+			
+			<headers>
+				<content-type-options />
+				<hsts include-subdomains="true" max-age-seconds="16070400" />
+				<xss-protection />
+				<frame-options disabled="true"/>
+			</headers>
+			<csrf disabled="true"/>
+		</http>
+
+		
+	</beans>

@@ -1,0 +1,11 @@
+eclipse.preferences.version=1
+encoding//web/webroot/WEB-INF/messages/messages.properties=UTF-8
+encoding//web/webroot/WEB-INF/messages/messages_de.properties=UTF-8
+encoding//web/webroot/WEB-INF/messages/messages_es.properties=UTF-8
+encoding//web/webroot/WEB-INF/messages/messages_fr.properties=UTF-8
+encoding//web/webroot/WEB-INF/messages/messages_it.properties=UTF-8
+encoding//web/webroot/WEB-INF/messages/messages_ja.properties=UTF-8
+encoding//web/webroot/WEB-INF/messages/messages_ko.properties=UTF-8
+encoding//web/webroot/WEB-INF/messages/messages_pt.properties=UTF-8
+encoding//web/webroot/WEB-INF/messages/messages_ru.properties=UTF-8
+encoding//web/webroot/WEB-INF/messages/messages_zh.properties=UTF-8
