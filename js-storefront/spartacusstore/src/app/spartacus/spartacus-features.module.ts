@@ -16,6 +16,11 @@ import { AsmCustomer360FeatureModule } from './features/asm/asm-customer360-feat
 import { SmartEditFeatureModule } from './features/smartedit/smart-edit-feature.module';
 import { ProductVariantsFeatureModule } from './features/product/product-variants-feature.module';
 import { ProductImageZoomFeatureModule } from './features/product/product-image-zoom-feature.module';
+import { TagManagementFeatureModule } from './features/tracking/tag-management-feature.module';
+import { QualtricsFeatureModule } from './features/qualtrics/qualtrics-feature.module';
+import { CustomerTicketingFeatureModule } from './features/customer-ticketing/customer-ticketing-feature.module';
+import { PickupInStoreFeatureModule } from './features/pickup-in-store/pickup-in-store-feature.module';
+import { ProductConfiguratorFeatureModule } from './features/product-configurator/product-configurator-feature.module';
 
 @NgModule({
   declarations: [],
@@ -82,18 +87,35 @@ import { ProductImageZoomFeatureModule } from './features/product/product-image-
     AsmCustomer360FeatureModule,
     SmartEditFeatureModule,
     ProductVariantsFeatureModule,
-    ProductImageZoomFeatureModule
+    ProductImageZoomFeatureModule,
+    TagManagementFeatureModule,
+    QualtricsFeatureModule,
+    CustomerTicketingFeatureModule,
+    PickupInStoreFeatureModule,
+    ProductConfiguratorFeatureModule
   ],
   providers: [provideFeatureToggles({
+    "showDeliveryOptionsTranslation": true,
+    "formErrorsDescriptiveMessages": true,
+    "showSearchingCustomerByOrderInASM": true,
+    "showStyleChangesInASM": true,
+    "shouldHideAddToCartForUnpurchasableProducts": true,
+    "useExtractedBillingAddressComponent": true,
+    "showBillingAddressInDigitalPayments": true,
     "showDownloadProposalButton": true,
     "showPromotionsInPDP": true,
     "recentSearches": true,
     "pdfInvoicesSortByInvoiceDate": true,
     "storeFrontLibCardParagraphTruncated": true,
+    "useProductCarouselBatchApi": true,
     "productConfiguratorAttributeTypesV2": true,
+    "propagateErrorsToServer": true,
+    "ssrStrictErrorHandlingForHttpAndNgrx": true,
+    "productConfiguratorDeltaRendering": true,
     "a11yRequiredAsterisks": true,
     "a11yQuantityOrderTabbing": true,
     "a11yNavigationUiKeyboardControls": true,
+    "a11yNavMenuExpandStateReadout": true,
     "a11yOrderConfirmationHeadingOrder": true,
     "a11yStarRating": true,
     "a11yViewChangeAssistiveMessage": true,
@@ -120,13 +142,39 @@ import { ProductImageZoomFeatureModule } from './features/product/product-image-
     "a11yFocusableCarouselControls": true,
     "cmsGuardsServiceUseGuardsComposer": true,
     "cartQuickOrderRemoveListeningToFailEvent": true,
+    "a11yKeyboardAccessibleZoom": true,
+    "a11yOrganizationLinkableCells": true,
     "a11yVisibleFocusOverflows": true,
     "a11yTruncatedTextForResponsiveView": true,
+    "a11ySemanticPaginationLabel": true,
+    "a11yPreventCartItemsFormRedundantRecreation": true,
+    "a11yPreventSRFocusOnHiddenElements": true,
     "a11yMyAccountLinkOutline": true,
     "a11yCloseProductImageBtnFocus": true,
+    "a11yNotificationPreferenceFieldset": true,
+    "a11yImproveContrast": true,
     "a11yEmptyWishlistHeading": true,
+    "a11yScreenReaderBloatFix": true,
     "a11yUseButtonsForBtnLinks": true,
-    "a11yFacetsDialogFocusHandling": true
+    "a11yNotificationsOnConsentChange": true,
+    "a11yDisabledCouponAndQuickOrderActionButtonsInsteadOfRequiredFields": true,
+    "a11yFacetsDialogFocusHandling": true,
+    "a11yStoreFinderAlerts": true,
+    "a11yFormErrorMuteIcon": true,
+    "a11yCxMessageFocus": true,
+    "a11yLinkBtnsToTertiaryBtns": true,
+    "a11yRepeatedPageTitleFix": true,
+    "a11yDeliveryModeRadiogroup": true,
+    "a11yNgSelectOptionsCount": true,
+    "a11yRepeatedCancelOrderError": true,
+    "a11yAddedToCartActiveDialog": true,
+    "a11yNgSelectMobileReadout": true,
+    "a11yQuickOrderAriaControls": true,
+    "a11yRemoveStatusLoadedRole": true,
+    "a11yDialogsHeading": true,
+    "occCartNameAndDescriptionInHttpRequestBody": true,
+    "cmsBottomHeaderSlotUsingFlexStyles": true,
+    "useSiteThemeService": true
   })]
 })
 export class SpartacusFeaturesModule { }
