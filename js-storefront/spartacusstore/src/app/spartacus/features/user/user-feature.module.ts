@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CmsConfig, I18nConfig, provideConfig } from "@spartacus/core";
 import { userAccountTranslationChunksConfig, userAccountTranslations } from "@spartacus/user/account/assets";
-import { UserAccountRootModule, USER_ACCOUNT_FEATURE } from "@spartacus/user/account/root";
+import { USER_ACCOUNT_FEATURE, UserAccountRootModule } from "@spartacus/user/account/root";
 import { userProfileTranslationChunksConfig, userProfileTranslations } from "@spartacus/user/profile/assets";
-import { UserProfileRootModule, USER_PROFILE_FEATURE } from "@spartacus/user/profile/root";
+import { USER_PROFILE_FEATURE, UserProfileRootModule } from "@spartacus/user/profile/root";
 
 @NgModule({
   declarations: [],
