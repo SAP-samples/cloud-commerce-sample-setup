@@ -1,0 +1,15 @@
+## messageSource=classpath:/spartacussampledata/messages/email-verificationToken_$lang.properties
+
+<!DOCTYPE html>
+<html>
+    <body>
+        <div>
+            <p>${ctx.messages.getMessage(${ctx.purpose} + '.otpPrompt', ${ctx.baseSite.name})}</p>
+            <p>${ctx.tokenCode}</p>
+            <p>${ctx.messages.getMessage('otpValidity', ${ctx.ttlSeconds})}</p>
+            <p>${ctx.messages.getMessage('otpAttempts', ${ctx.maxAttempts})}</p>
+            <p>${ctx.messages.otpWarning}</p>
+            <p>${ctx.messages.thankYouMessage}</p>
+        </div>
+    </body>
+</html>
