@@ -80,6 +80,11 @@ public class SpaSampleDataImportService extends DefaultAddonSampleDataImportServ
 
 			// 8- import email data
 			importImpexFile(context, importRoot + "/contentCatalogs/" + catalogName + "ContentCatalog/email-content.impex", false);
+
+			// 9- import my account data
+			importImpexFile(context, importRoot + "/contentCatalogs/" + catalogName + "ContentCatalog/myaccount-navigation.impex", false);
+			importImpexFile(context, importRoot + "/contentCatalogs/" + catalogName + "ContentCatalog/myaccount-content.impex", false);
+
 		}
 	}
 
