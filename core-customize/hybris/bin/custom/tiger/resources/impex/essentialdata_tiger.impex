@@ -19,3 +19,6 @@ INSERT_UPDATE OAuthClientDetails;clientId[unique=true]    ;resourceIds       ;sc
 
 INSERT_UPDATE OAuthClientDetails;clientId[unique=true]    ;resourceIds       ;scope        ;authorizedGrantTypes                                            ;authorities             ;clientSecret    ;registeredRedirectUri 
                                 ;trusted_client      ;hybris            ;extended     ;authorization_code,refresh_token,password,client_credentials    ;ROLE_TRUSTED_CLIENT     ;secret;         ;
+
+insert_update PromotionSourceRuleConditionConstraint;active[allownull=true];id[unique=true,allownull=true];message[lang=en];severity(code,itemtype(code));target;type(code);annotation;constraintGroups(id)[mode=append]
+;false;warnIdenticalProductsOrCategoriesInContainers;"The containers used in the conditions of your promotion contain identical products or categories. Such a setup may cause infinite loop issue during the evaluation of promotions. Please consider redesigning your promotion.";WARN:Severity;de.hybris.platform.promotionengineservices.model.PromotionSourceRuleModel;PromotionSourceRule;de.hybris.platform.promotionengineservices.constraints.annotations.NoIdenticalProductsOrCategories;defaultBackofficeValidationGroup
