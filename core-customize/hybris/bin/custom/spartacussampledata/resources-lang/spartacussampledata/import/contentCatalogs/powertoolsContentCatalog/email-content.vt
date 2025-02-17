@@ -1,0 +1,22 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2024 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+#
+# Import the CMS content for the Powertools site emails
+#
+#set($escContentCV=$esc.java('$contentCV[unique=true]'))
+# Email CMS data for stock notification
+\$contentCatalog=powertools-spaContentCatalog
+\$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=\$contentCatalog]),CatalogVersion.version[default=Staged])[default=\$contentCatalog:Staged]
+\$emailResource=jar:de.hybris.platform.spartacussampledata.constants.SpartacussampledataConstants&/spartacussampledata/import/emails
+\$lang=$lang.toLowerCase()
+
+#set( $rows = $query.load('email-content', 'EmailPage') )
+UPDATE EmailPage;$escContentCV;uid[unique=true];fromEmail[lang=\$lang];fromName[lang=\$lang]
+#foreach( $row in $rows )
+;;$row.key;"$row.values.fromEmail";"$row.values.fromName"
+#end
+
+UPDATE RendererTemplate;code[unique=true];templateScript[lang=\$lang,translator=de.hybris.platform.commerceservices.impex.impl.FileLoaderValueTranslator]
+;powertools_Spa_Email_Verification_Token_Body;\$emailResource/email-verificationTokenBody.vm
+;powertools_Spa_Email_Verification_Token_Subject;\$emailResource/email-verificationTokenSubject.vm

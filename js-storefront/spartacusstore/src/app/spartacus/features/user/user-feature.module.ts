@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CmsConfig, I18nConfig, provideConfig } from "@spartacus/core";
-import { userAccountTranslationChunksConfig, userAccountTranslations } from "@spartacus/user/account/assets";
-import { UserAccountRootModule, USER_ACCOUNT_FEATURE } from "@spartacus/user/account/root";
-import { userProfileTranslationChunksConfig, userProfileTranslations } from "@spartacus/user/profile/assets";
-import { UserProfileRootModule, USER_PROFILE_FEATURE } from "@spartacus/user/profile/root";
+import { userAccountTranslationChunksConfig, userAccountTranslationsEn } from "@spartacus/user/account/assets";
+import { USER_ACCOUNT_FEATURE, UserAccountRootModule } from "@spartacus/user/account/root";
+import { userProfileTranslationChunksConfig, userProfileTranslationsEn } from "@spartacus/user/profile/assets";
+import { USER_PROFILE_FEATURE, UserProfileRootModule } from "@spartacus/user/profile/root";
 
 @NgModule({
   declarations: [],
@@ -21,7 +21,7 @@ import { UserProfileRootModule, USER_PROFILE_FEATURE } from "@spartacus/user/pro
   }),
   provideConfig(<I18nConfig>{
     i18n: {
-      resources: userAccountTranslations,
+      resources: { en: userAccountTranslationsEn },
       chunks: userAccountTranslationChunksConfig,
     },
   }),
@@ -35,7 +35,7 @@ import { UserProfileRootModule, USER_PROFILE_FEATURE } from "@spartacus/user/pro
   }),
   provideConfig(<I18nConfig>{
     i18n: {
-      resources: userProfileTranslations,
+      resources: { en: userProfileTranslationsEn },
       chunks: userProfileTranslationChunksConfig,
     },
   })

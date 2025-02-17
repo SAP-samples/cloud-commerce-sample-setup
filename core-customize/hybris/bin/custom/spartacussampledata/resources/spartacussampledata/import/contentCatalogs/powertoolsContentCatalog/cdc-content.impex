@@ -62,7 +62,6 @@ INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];name;masterTe
 # Gigya Login Page
 # ContentSlot
 INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef);;;
-;;BodyContent-gigya-login;Body Content Slot for Gigya Login Page;true;GigyaRaasComponentForLogin;;;
 ;;BottomContent-gigya-login;Bottom Content Slot for Gigya Login Page;true;;;;
 
 # ContentSlotForPage
@@ -161,3 +160,23 @@ INSERT_UPDATE ContentSlotName;name[unique=true];template(uid,$contentCV)[unique=
 ### Add Site Context to the ContentSlotForTemplate
 INSERT_UPDATE ContentSlotForTemplate;$contentCV[unique=true];uid[unique=true];position[unique=true];pageTemplate(uid,$contentCV)[unique=true];contentSlot(uid,$contentCV)[unique=true];allowOverwrite
 ;;SiteContextSlot-GigyaLoginPage;SiteContext;GigyaLoginPageTemplate;SiteContextSlot;true
+
+# Show 'Register Organisation' link when user navigates to cdc-screenset login page
+INSERT_UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true]    ;name                ;url              ;&linkRef            ;target(code)[default='sameWindow'];styleAttributes                                                        ;&componentRef;
+                              ;                       ;GigyaRegisterOrgLink;GigyaRegisterOrgLink;/cdc/register-org;GigyaRegisterOrgLink;                                  ;"width: 250px; height: 50px; display: flex; justify-content: center; color: var(--cx-color-primary); border: 3px solid var(--cx-color-primary); border-radius: 25px; padding: 10px; margin-left: 45%; margin-bottom: 1%;";GigyaRegisterOrgLink;
+
+UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true]    ;linkName[lang=$lang];
+                       ;                       ;GigyaRegisterOrgLink;"Register Organisation";
+
+
+INSERT_UPDATE CMSNavigationNode;uid[unique=true]       ;$contentCV[unique=true];name                       ;parent(uid, $contentCV);links(&linkRef);&nodeRef;
+                               ;GigyaRegisterOrgNavNode;                       ;Gigya Register Organisation;                       ;               ;GigyaRegisterOrgNavNode;
+
+UPDATE CMSNavigationNode;$contentCV[unique=true];uid[unique=true]       ;title[lang=$lang];
+                        ;                       ;GigyaRegisterOrgNavNode;"Register Organisation";
+
+INSERT_UPDATE CMSNavigationEntry;uid[unique=true]            ;$contentCV[unique=true];name                        ;navigationNode(&nodeRef);item(&linkRef);
+                                ;GigyaRegisterOrgNavNodeEntry;                       ;GigyaRegisterOrgNavNodeEntry;GigyaRegisterOrgNavNode ;GigyaRegisterOrgLink;
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true]       ;name                                  ;active;cmsComponents(&componentRef);
+                         ;                       ;BodyContent-gigya-login;Body Content Slot for Gigya Login Page;true  ;GigyaRaasComponentForLogin,GigyaRegisterOrgLink;
