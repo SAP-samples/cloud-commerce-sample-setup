@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CmsConfig, I18nConfig, provideConfig } from "@spartacus/core";
-import { productVariantsTranslationChunksConfig, productVariantsTranslations } from "@spartacus/product/variants/assets";
-import { ProductVariantsRootModule, PRODUCT_VARIANTS_FEATURE } from "@spartacus/product/variants/root";
+import { productVariantsTranslationChunksConfig, productVariantsTranslationsEn } from "@spartacus/product/variants/assets";
+import { PRODUCT_VARIANTS_FEATURE, ProductVariantsRootModule } from "@spartacus/product/variants/root";
 
 @NgModule({
   declarations: [],
@@ -18,7 +18,7 @@ import { ProductVariantsRootModule, PRODUCT_VARIANTS_FEATURE } from "@spartacus/
   }),
   provideConfig(<I18nConfig>{
     i18n: {
-      resources: productVariantsTranslations,
+      resources: { en: productVariantsTranslationsEn },
       chunks: productVariantsTranslationChunksConfig,
     },
   })

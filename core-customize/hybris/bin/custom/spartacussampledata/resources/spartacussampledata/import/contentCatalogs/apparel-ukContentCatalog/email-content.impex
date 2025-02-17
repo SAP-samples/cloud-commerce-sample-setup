@@ -89,3 +89,19 @@ INSERT_UPDATE EmailPage;$contentCV[unique=true];uid[unique=true];name;masterTemp
 INSERT_UPDATE RendererTemplate;code[unique=true];contextClass;rendererType(code)[default='velocity']
 ;apparel-uk_Email_Customer_Customer_Coupon_Subject;$emailPackageName-mycoupons.CouponNotificationEmailContext
 ;apparel-uk_Email_Customer_Customer_Coupon_Body;$emailPackageName-mycoupons.CouponNotificationEmailContext
+
+###### Email CMS data for verification token ######
+$emailVerificationTokenPackageName=de.hybris.platform.acceleratorservices.process.email.context.impl
+
+# Email page Template
+INSERT_UPDATE EmailPageTemplate;$contentCV[unique=true];uid[unique=true];name;active;frontendTemplateName;subject(code);htmlTemplate(code);restrictedPageTypes(code)
+;;VerificationTokenEmailTemplate;Verification Token Email Template;true;verificationTokenEmail;apparel-uk_Spa_Email_Verification_Token_Subject;apparel-uk_Spa_Email_Verification_Token_Body;EmailPage
+
+# Email Pages
+INSERT_UPDATE EmailPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid,$contentCV);defaultPage;approvalStatus(code)[default='approved'];previewImage(code, $contentCV)[default='EmailPageModel_preview']
+;;VerificationTokenEmail;Verification Token Email;VerificationTokenEmailTemplate;true
+
+# Email velocity templates
+INSERT_UPDATE RendererTemplate;code[unique=true];contextClass;rendererType(code)[default='velocity']
+;apparel-uk_Spa_Email_Verification_Token_Subject;$emailVerificationTokenPackageName.VerificationTokenEmailContext
+;apparel-uk_Spa_Email_Verification_Token_Body;$emailVerificationTokenPackageName.VerificationTokenEmailContext

@@ -1,21 +1,28 @@
 import { APP_BASE_HREF } from '@angular/common';
 import {
   NgExpressEngineDecorator,
+  defaultExpressErrorHandlers,
   ngExpressEngine as engine,
 } from '@spartacus/setup/ssr';
 import express from 'express';
+import { readFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import AppServerModule from './src/main.server';
+import AppServerModule from './main.server';
 
-const ngExpressEngine = NgExpressEngineDecorator.get(engine);
+const ngExpressEngine = NgExpressEngineDecorator.get(engine, {
+  ssrFeatureToggles: {
+    avoidCachingErrors: true,
+  },
+});
 
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
   const server = express();
   const serverDistFolder = dirname(fileURLToPath(import.meta.url));
   const browserDistFolder = resolve(serverDistFolder, '../browser');
-  const indexHtml = join(browserDistFolder, 'index.html');
+  const indexHtml = join(serverDistFolder, 'index.server.html');
+  const indexHtmlContent = readFileSync(indexHtml, 'utf-8');
 
   server.set('trust proxy', 'loopback');
 
@@ -44,6 +51,8 @@ export function app(): express.Express {
       providers: [{ provide: APP_BASE_HREF, useValue: req.baseUrl }],
     });
   });
+
+  server.use(defaultExpressErrorHandlers(indexHtmlContent))
 
   return server;
 }

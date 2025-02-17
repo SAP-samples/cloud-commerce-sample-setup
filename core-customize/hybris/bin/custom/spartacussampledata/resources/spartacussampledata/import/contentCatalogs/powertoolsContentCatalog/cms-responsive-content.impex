@@ -10,6 +10,9 @@ $contentCatalog=powertools-spaContentCatalog
 $contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
 $siteResource=jar:de.hybris.platform.spartacussampledata.constants.SpartacussampledataConstants&/spartacussampledata/import/contentCatalogs/powertoolsContentCatalog
 
+# Language
+$lang=en 
+
 ###### Update homepage preview image ######
 INSERT_UPDATE Media;$contentCV[unique=true];code[unique=true];mime;realfilename;@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator][forceWrite=true];folder(qualifier)[default='images'];;
 ;;homepagePreview-spa;image/png;Homepage.png;$siteResource/images/Homepage.png;;;
@@ -338,6 +341,11 @@ INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;c
 INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType;&componentRef
 ;;ClearCartComponent;Clear Cart Component;ClearCartComponent;ClearCartComponent
 
+###### Quote Cart Guard  ######
+
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType;&componentRef
+;;QuoteCartGuardComponent;Quote Cart Guard Component; QuoteCartGuardComponent; QuoteCartGuardComponent
+
 ###### Pages related to checkout ######
 # add some ContentSlotName into MultiStepCheckoutSummaryPageTemplate
 INSERT_UPDATE ContentSlotName;name[unique=true];template(uid,$contentCV)[unique=true][default='MultiStepCheckoutSummaryPageTemplate'];validComponentTypes(code);compTypeGroup(code)
@@ -362,7 +370,7 @@ INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];name;masterTe
 ;;Checkout;Checkout Page;MultiStepCheckoutSummaryPageTemplate;/checkout
 
 INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;cmsComponents(uid, $contentCV)
-;;BodyContentSlot-checkout;Checkout Orchestrator Slot;CheckoutOrchestratorComponent
+;;BodyContentSlot-checkout;Checkout Orchestrator Slot;CheckoutOrchestratorComponent,QuoteCartGuardComponent
 ;;SideContentSlot-checkout;Order Summary Slot;CheckoutOrderSummaryComponent
 
 INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true];contentSlot(uid,$contentCV)[unique=true]
@@ -377,7 +385,7 @@ INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];name;masterTe
 ;;CheckoutPaymentType;Checkout Payment Type Page;MultiStepCheckoutSummaryPageTemplate;/checkout/payment-type
 
 INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;cmsComponents(uid, $contentCV)
-;;BodyContentSlot-checkoutPaymentType;Checkout Payment Type Slot;CheckoutProgressComponent,CheckoutProgressMobileTopComponent,CheckoutPaymentTypeComponent,CheckoutProgressMobileBottomComponent
+;;BodyContentSlot-checkoutPaymentType;Checkout Payment Type Slot;CheckoutProgressComponent,CheckoutProgressMobileTopComponent,CheckoutPaymentTypeComponent,CheckoutProgressMobileBottomComponent,QuoteCartGuardComponent
 ;;SideContentSlot-checkoutPaymentType;Order Summary Slot;CheckoutOrderSummaryComponent
 
 INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true];contentSlot(uid,$contentCV)[unique=true]
@@ -397,7 +405,7 @@ INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];name;masterTe
 ;;CheckoutDeliveryAddress;Checkout Delivery Address Page;MultiStepCheckoutSummaryPageTemplate;/checkout/delivery-address
 
 INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;cmsComponents(uid, $contentCV)
-;;BodyContentSlot-checkoutDeliveryAddress;Checkout Delivery Address Slot;CheckoutProgressComponent,CheckoutProgressMobileTopComponent,CheckoutCostCenterComponent,CheckoutDeliveryAddressComponent,CheckoutProgressMobileBottomComponent
+;;BodyContentSlot-checkoutDeliveryAddress;Checkout Delivery Address Slot;CheckoutProgressComponent,CheckoutProgressMobileTopComponent,CheckoutCostCenterComponent,CheckoutDeliveryAddressComponent,CheckoutProgressMobileBottomComponent,QuoteCartGuardComponent
 ;;SideContentSlot-checkoutDeliveryAddress;Order Summary Slot;CheckoutOrderSummaryComponent
 
 INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true];contentSlot(uid,$contentCV)[unique=true]
@@ -409,7 +417,7 @@ INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];name;masterTe
 ;;CheckoutDeliveryMode;Checkout Delivery Mode Page;MultiStepCheckoutSummaryPageTemplate;/checkout/delivery-mode
 
 INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;cmsComponents(uid, $contentCV)
-;;BodyContentSlot-checkoutDeliveryMode;Checkout Delivery Mode Slot;CheckoutProgressComponent,CheckoutProgressMobileTopComponent,CheckoutDeliveryModeComponent,CheckoutProgressMobileBottomComponent
+;;BodyContentSlot-checkoutDeliveryMode;Checkout Delivery Mode Slot;CheckoutProgressComponent,CheckoutProgressMobileTopComponent,CheckoutDeliveryModeComponent,CheckoutProgressMobileBottomComponent,QuoteCartGuardComponent
 ;;SideContentSlot-checkoutDeliveryMode;Order Summary Slot;CheckoutOrderSummaryComponent
 
 INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true];contentSlot(uid,$contentCV)[unique=true]
@@ -434,12 +442,27 @@ INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];positi
 INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType
 ;;CheckoutPaymentDetailsComponent;CheckoutPaymentDetailsComponent;CheckoutPaymentDetails
 
+## Service details page (/checkout/service-details)
+INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid,$contentCV);label;defaultPage[default='true'];approvalStatus(code)[default='approved'];homepage[default='false']
+;;CheckoutServiceDetails;Checkout Service Details Page;MultiStepCheckoutSummaryPageTemplate;/checkout/service-details
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;cmsComponents(uid, $contentCV)
+;;BodyContentSlot-checkoutServiceDetails;Checkout Service Details Slot;CheckoutProgressComponent,CheckoutProgressMobileTopComponent,CheckoutServiceDetailsComponent,CheckoutProgressMobileBottomComponent
+;;SideContentSlot-checkoutServiceDetails;Order Summary Slot;CheckoutOrderSummaryComponent
+
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true];contentSlot(uid,$contentCV)[unique=true]
+;;BodyContent-checkoutServiceDetails;BodyContent;CheckoutServiceDetails;BodyContentSlot-checkoutServiceDetails
+;;SideContent-checkoutServiceDetails;SideContent;CheckoutServiceDetails;SideContentSlot-checkoutServiceDetails
+
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType
+;;CheckoutServiceDetailsComponent;CheckoutServiceDetailsComponent;CheckoutServiceDetails
+
 ## Review order page (/checkout/review-order)
 INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid,$contentCV);label;defaultPage[default='true'];approvalStatus(code)[default='approved'];homepage[default='false']
 ;;CheckoutReviewOrder;Checkout Review Order Page;MultiStepCheckoutSummaryPageTemplate;/checkout/review-order
 
 INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;cmsComponents(uid, $contentCV)
-;;BodyContentSlot-checkoutReviewOrder;Checkout Review Order Slot;CheckoutProgressComponent,CheckoutProgressMobileTopComponent,CheckoutReviewOrderComponent,ExportOrderEntriesComponent,CheckoutProgressMobileBottomComponent
+;;BodyContentSlot-checkoutReviewOrder;Checkout Review Order Slot;CheckoutProgressComponent,CheckoutProgressMobileTopComponent,CheckoutReviewOrderComponent,ExportOrderEntriesComponent,CheckoutProgressMobileBottomComponent,QuoteCartGuardComponent
 ;;SideContentSlot-checkoutReviewOrder;Checkout Place Order Slot;CheckoutOrderSummaryComponent,CheckoutScheduleReplenishmentOrderComponent,CheckoutPlaceOrderComponent
 
 INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true];contentSlot(uid,$contentCV)[unique=true]
@@ -450,6 +473,80 @@ INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;fle
 ;;CheckoutPlaceOrderComponent;CheckoutPlaceOrderComponent;CheckoutPlaceOrder
 ;;CheckoutReviewOrderComponent;CheckoutReviewOrderComponent;CheckoutReviewOrder
 ;;CheckoutScheduleReplenishmentOrderComponent;CheckoutScheduleReplenishmentOrderComponent;CheckoutScheduleReplenishmentOrder
+
+
+###### Service Order related Pages ######
+ 
+###### Reschedule Service order page Start ######
+ 
+# Functional Content Pages
+INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid,$contentCV);label;defaultPage[default='true'];approvalStatus(code)[default='approved'];homepage[default='false'];title[lang=$lang]
+;;reschedule-service-order;Reschedule Service Order Page;AccountPageTemplate;/my-account/order/rescheduleservice;;;;Reschedule Service Confirmation
+ 
+ 
+# Content Slot for Reschedule Service Order Page
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef);;;
+;;SideContent-reschedule-service-order;Side Content Slot for My Account reschedule-service-order;true;;;;
+;;BodyContent-reschedule-service-order;Body Content Slot for My Account reschedule-service-order;true;RescheduleServiceOrderComponent;;;
+ 
+ 
+# Content Slot for Order Details Page
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef);;;
+;;BodyContent-orderdetail;Body Content Slot for My Account Order Details;true;AccountOrderDetailsOverviewComponent,AccountOrderDetailsActionsComponent,AccountOrderDetailsShippingComponent,AccountOrderDetailsItemsComponent,ExportOrderEntriesComponent,AccountOrderDetailsTotalsComponent,AccountOrderDetailsApprovalDetailsComponent,AccountOrderDetailsReorderComponent,AccountOrderDetailsPDFInvoicesComponent;;;
+ 
+ 
+# Content Slot Page Relation for Reschedule Page
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='reschedule-service-order'];contentSlot(uid,$contentCV)[unique=true];;;
+;;SideContent-reschedule-service-order;SideContent;;SideContent-reschedule-service-order;;;
+;;BodyContent-reschedule-service-order;BodyContent;;BodyContent-reschedule-service-order;;;
+ 
+ 
+# CMS Components for Reschedule Page
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType;actions(uid,$contentCV)[mode=append];&componentRef
+;;RescheduleServiceOrderComponent;Reschedule Service Order Component;RescheduleServiceOrder;;RescheduleServiceOrderComponent
+
+
+# CMS Components for Order Details Page
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType;;&componentRef
+;;AccountOrderDetailsOverviewComponent;Account Order Details Overview Info Component;AccountOrderDetailsOverviewComponent;;AccountOrderDetailsOverviewComponent
+;;AccountOrderDetailsActionsComponent;Account Order Details Actions Component;AccountOrderDetailsActionsComponent;;AccountOrderDetailsActionsComponent
+;;AccountOrderDetailsShippingComponent;Account Order Details Shipping Info Component;AccountOrderDetailsShippingComponent;;AccountOrderDetailsShippingComponent
+;;AccountOrderDetailsItemsComponent;Account Order Details Items Info Component;AccountOrderDetailsItemsComponent;;AccountOrderDetailsItemsComponent
+;;ExportOrderEntriesComponent;Export Order Entries Component;ExportOrderEntriesComponent;;ExportOrderEntriesComponent
+;;AccountOrderDetailsTotalsComponent;Account Order Details Order Totals Component;AccountOrderDetailsTotalsComponent;;AccountOrderDetailsTotalsComponent
+;;AccountOrderDetailsApprovalDetailsComponent;Account Order Details Approval Details Component;AccountOrderDetailsApprovalDetailsComponent;;AccountOrderDetailsApprovalDetailsComponent
+;;AccountOrderDetailsReorderComponent;Account Order Details Reorder Component;AccountOrderDetailsReorderComponent;;AccountOrderDetailsReorderComponent
+;;AccountOrderDetailsPDFInvoicesComponent;Account Order Details PDF Invoices Component;AccountOrderDetailsPDFInvoicesComponent;;AccountOrderDetailsPDFInvoicesComponent
+ 
+ 
+###### Reschedule Service order page End ######
+
+
+###### Cancel Service order page Start ######
+
+# Functional Content Pages
+INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid,$contentCV);label;defaultPage[default='true'];approvalStatus(code)[default='approved'];homepage[default='false'];title[lang=$lang]
+;;cancel-service-order;Cancel Service Order Page;AccountPageTemplate;/my-account/order/cancelservice;;;;Cancel Service Order
+ 
+
+# Content Slot for Cancel Service Order Page
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef);;;
+;;SideContent-cancel-service-order;Side Content Slot for My Account cancel-service-order;true;;;;
+;;BodyContent-cancel-service-order;Body Content Slot for My Account cancel-service-order;true;CancelServiceOrderHeadlineComponent,CancelServiceOrderComponent;;;
+ 
+ 
+# Content Slot Page Relation for Cancel Page
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='cancel-service-order'];contentSlot(uid,$contentCV)[unique=true];;;
+;;SideContent-cancel-service-order;SideContent;;SideContent-cancel-service-order;;;
+;;BodyContent-cancel-service-order;BodyContent;;BodyContent-cancel-service-order;;;
+ 
+ 
+# CMS Components for Cancel Page
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType;actions(uid,$contentCV)[mode=append];&componentRef
+;;CancelServiceOrderHeadlineComponent;Cancel Service Order Headline Component;CancelServiceOrderHeadline;;CancelServiceOrderHeadlineComponent
+;;CancelServiceOrderComponent;Cancel Service Order Component;CancelServiceOrder;;CancelServiceOrderComponent
+ 
+###### Cancel Service order page End ######
 
 
 
@@ -578,8 +675,11 @@ INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;c
 ###### Unit-Level Order Details End ######
 
 ###### Product Details ######
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType;&componentRef
+;;ProductMultiDimensionalSelector;Product Multi-Dimensional Selector Component;ProductMultiDimensionalSelectorComponent;ProductMultiDimensionalSelector
+
 INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;cmsComponents(uid, $contentCV)
-;;ProductSummarySlot;Summary for product details;ProductImagesComponent,ProductIntroComponent,ProductSummaryComponent,FutureStockComponent,VariantSelector,BulkPricingTableComponent,AddToCart,ConfigureProductComponent
+;;ProductSummarySlot;Summary for product details;ProductImagesComponent,ProductIntroComponent,ProductSummaryComponent,FutureStockComponent,ProductMultiDimensionalSelector,BulkPricingTableComponent,AddToCart,ConfigureProductComponent
 
 INSERT_UPDATE ContentSlotForTemplate;$contentCV[unique=true];uid[unique=true];position[unique=true];pageTemplate(uid,$contentCV)[unique=true];contentSlot(uid,$contentCV)[unique=true];allowOverwrite
 ;;Summary-ProductDetails;Summary;ProductDetailsPageTemplate;ProductSummarySlot;true
@@ -843,8 +943,8 @@ INSERT_UPDATE CMSNavigationEntry;uid[unique=true];$contentCV[unique=true];name;n
 ;MyCompanyNavNodeEntry;;MyCompanyNavNodeEntry;MyCompanyNavNode;MyCompanyLink;
 
 # Sort the order
-UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];children(uid,$contentCV)
-;MyAccountNavNode;;PersonalDetailsNavNode,UpdateEmailNavNode,PaymentDetailsNavNode,UpdatePasswordNavNode,OrderHistoryNavNode,UnitLevelOrderNavNode,SavedCartsNavNode,AddressBookNavNode,MyReplenishmentOrdersNavNode,ApprovalDashboardNavNode,MyCompanyNavNode,SupportTicketNavNode,SignOutNavNode
+# UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];children(uid,$contentCV)
+# ;MyAccountNavNode;;PersonalDetailsNavNode,UpdateEmailNavNode,PaymentDetailsNavNode,UpdatePasswordNavNode,OrderHistoryNavNode,UnitLevelOrderNavNode,SavedCartsNavNode,AddressBookNavNode,MyReplenishmentOrdersNavNode,ApprovalDashboardNavNode,MyCompanyNavNode,SupportTicketNavNode,SignOutNavNode
 
 # Add restriction
 INSERT_UPDATE CMSUserGroupRestriction;$contentCV[unique=true];uid[unique=true];name;userGroups(uid);includeSubgroups;components(&linkRef)
@@ -1133,7 +1233,7 @@ INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;fle
 ;;AddToSavedCartsComponent;Add To Saved Carts Component;AddToSavedCartsComponent
 
 INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;cmsComponents(uid, $contentCV)
-;;TopContent-cartPage;Top content for Cart Slot;AddToSavedCartsComponent,CartComponent,ClearCartComponent,ImportExportOrderEntriesComponent
+;;TopContent-cartPage;Top content for Cart Slot;AddToSavedCartsComponent,CartComponent,ClearCartComponent,ImportExportOrderEntriesComponent,QuoteCartGuardComponent
 
 # saved carts (history) page
 INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType
@@ -1164,7 +1264,7 @@ INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];name;masterTe
 INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true];contentSlot(uid,$contentCV)[unique=true]
 ;;BodyContent-support-tickets;BodyContent;support-tickets;BodyContentSlot-support-tickets
 ;;BodyContent-support-ticket-details;BodyContent;support-ticket-details;BodyContentSlot-support-ticket-details
- 
+
 # support tickets page
 INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType
 ;;SupportTicketHistoryComponent;Support Tickets Component;SupportTicketHistoryComponent
@@ -1181,3 +1281,103 @@ INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;fle
 
 INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(uid, $contentCV)
 ;;BodyContentSlot-support-ticket-details;Body Content Slot for support ticket details;true;SupportTicketDetailsComponent,SupportTicketReopenComponent,SupportTicketCloseComponent,SupportTicketUpdateComponent
+
+
+###### Quotes ######
+
+
+# Create additional Navigation Nodes
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;parent(uid, $contentCV);links(&linkRef);&nodeRef
+;QuotesNavNode;;Quotes;MyAccountNavNode;;QuotesNavNode
+
+# my-account dropdown for Quotes
+INSERT_UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];name;url;&linkRef;&componentRef;target(code)[default='sameWindow'];restrictions(uid,$contentCV)
+;;QuotesLink;Quotes Link;/my-account/quotes;QuotesLink;QuotesLink;;loggedInUser
+
+# connect link with node (quotes)
+INSERT_UPDATE CMSNavigationEntry;uid[unique=true];$contentCV[unique=true];name;navigationNode(&nodeRef);item(&linkRef);
+;QuotesNavNodeEntry;;QuotesNavNodeEntry;QuotesNavNode; QuotesLink;
+
+
+
+# quote list page
+
+
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='quote'];contentSlot(uid,$contentCV)[unique=true];;;
+;;BodyContent-quote;BodyContent;;BodyContent-quote;;;
+ 
+INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];masterTemplate(uid,$contentCV);label
+;;quote;AccountPageTemplate;/my-account/quotes 
+ 
+UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];name;title[lang=en]
+;;quote;Quotes Page;"Quotes" 
+
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType
+;;AccountMyQuotesComponent;Body content for Quotes Component;AccountMyQuotesComponent
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;cmsComponents(uid, $contentCV)
+;;BodyContent-quote;Body content for Quotes Slot;AccountMyQuotesComponent
+
+
+# quote details page
+
+
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType
+;;QuoteHeaderOverviewComponent;Quote Header Overview Component;QuoteHeaderOverviewComponent
+;;QuoteLinksComponent; Quote Links Component;QuoteLinksComponent
+;;QuoteItemsComponent;Quote Items Component;QuoteItemsComponent
+;;QuoteCommentsComponent;Quote Comments Component;QuoteCommentsComponent
+;;QuoteSummaryComponent;Quote Summary Component;QuoteSummaryComponent
+
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;cmsComponents(uid, $contentCV)
+;;BodyContent-QuoteDetailsPageTemplate;Body content for Quote Details;QuoteLinksComponent,QuoteHeaderOverviewComponent,QuoteCommentsComponent,QuoteItemsComponent
+;;CenterRightContent-QuoteDetailsPageTemplate;Center right content for Quote Details;QuoteSummaryComponent
+
+INSERT_UPDATE PageTemplate;$contentCV[unique=true];uid[unique=true];name;frontendTemplateName;restrictedPageTypes(code);active[default=true]
+;; QuoteDetailsPageTemplate;Quote Details Template;;ContentPage
+
+INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];masterTemplate(uid,$contentCV);label
+;;quoteDetails;QuoteDetailsPageTemplate;/my-account/quote
+
+UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];name;title[lang=en]
+;;quoteDetails;Quote Details;"Quote Details"
+
+
+INSERT_UPDATE ContentSlotName;name[unique=true];template(uid,$contentCV)[unique=true][default='QuoteDetailsPageTemplate'];validComponentTypes(code);compTypeGroup(code)
+;TopHeaderSlot;;;wide
+;SiteLogo;;;logo
+;HeaderLinks;;;headerlinks
+;SearchBox;;;searchbox
+;MiniCart;;;minicart
+;NavigationBar;;;navigation
+;Footer;;;footer
+;BottomHeaderSlot;;;wide
+;BodyContent;;;;
+;CenterRightContent;;;;
+
+INSERT_UPDATE ContentSlotForTemplate;$contentCV;uid[unique=true];position[unique=true];pageTemplate(uid,$contentCV)[unique=true][default='QuoteDetailsPageTemplate'];contentSlot(uid,$contentCV)[unique=true];allowOverwrite
+;;TopHeaderSlot-QuoteDetailsPageTemplate;TopHeaderSlot;;TopHeaderSlot;true
+;;SiteLogo-QuoteDetailsPageTemplate;SiteLogo;;SiteLogoSlot;true
+;;HeaderLinks-QuoteDetailsPageTemplate;HeaderLinks;;HeaderLinksSlot;true
+;;SearchBox-QuoteDetailsPageTemplate;SearchBox;;SearchBoxSlot;true
+;;MiniCart-QuoteDetailsPageTemplate;MiniCart;;MiniCartSlot;true
+;;NavigationBar-QuoteDetailsPageTemplate;NavigationBar;;NavigationBarSlot;true
+;;Footer-QuoteDetailsPageTemplate;Footer;;FooterSlot;true
+;;BottomHeaderSlot-QuoteDetailsPageTemplate;BottomHeaderSlot;;BottomHeaderSlot;true
+;;BodyContent-QuoteDetailsPageTemplate;BodyContent;;BodyContent-QuoteDetailsPageTemplate;true
+;;CenterRightContent-QuoteDetailsPageTemplate;CenterRightContent;;CenterRightContent-QuoteDetailsPageTemplate;true
+ 
+
+
+# Sort the order
+UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];children(uid,$contentCV)
+;MyAccountNavNode;;PersonalDetailsNavNode,UpdateEmailNavNode,PaymentDetailsNavNode,UpdatePasswordNavNode,OrderHistoryNavNode,UnitLevelOrderNavNode,QuotesNavNode,SavedCartsNavNode,AddressBookNavNode,MyReplenishmentOrdersNavNode,ApprovalDashboardNavNode,MyCompanyNavNode,SupportTicketNavNode,SignOutNavNode
+
+###### High Contrast Themes ######
+# theme switcher component
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType;&componentRef
+;;SiteThemeSwitcherComponent;Site Theme Switcher Component;SiteThemeSwitcherComponent;SiteThemeSwitcherComponent
+
+UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(uid,$contentCV)
+;;SiteContextSlot;Site Context Slot;true;LanguageComponent,CurrencyComponent,SiteThemeSwitcherComponent

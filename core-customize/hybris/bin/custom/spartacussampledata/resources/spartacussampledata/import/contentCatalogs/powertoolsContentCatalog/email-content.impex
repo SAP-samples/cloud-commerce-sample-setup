@@ -29,3 +29,20 @@ UPDATE RendererTemplate;code[unique=true];description[lang=$lang];templateScript
  ;powertools-spa-CMSLinkComponent-template;"CMSLinkComponent Template";$emailResource/email-cmsLinkComponentTemplate.vm
  ;powertools-spa-CMSParagraphComponent-template;"CMSParagraphComponent Template";$emailResource/email-cmsParagraphComponentTemplate.vm
  ;powertools-spa-SimpleBannerComponent-template;"CMSSimpleBannerComponent Template";$emailResource/email-bannerComponentTemplate.vm
+
+
+ ###### Email CMS data for verification token ######
+$emailVerificationTokenPackageName=de.hybris.platform.acceleratorservices.process.email.context.impl
+
+# Email page Template
+INSERT_UPDATE EmailPageTemplate;$contentCV[unique=true];uid[unique=true];name;active;frontendTemplateName;subject(code);htmlTemplate(code);restrictedPageTypes(code)
+;;VerificationTokenEmailTemplate;Verification Token Email Template;true;verificationTokenEmail;powertools_Spa_Email_Verification_Token_Subject;powertools_Spa_Email_Verification_Token_Body;EmailPage
+
+# Email Pages
+INSERT_UPDATE EmailPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid,$contentCV);defaultPage;approvalStatus(code)[default='approved'];previewImage(code, $contentCV)[default='EmailPageModel_preview']
+;;VerificationTokenEmail;Verification Token Email;VerificationTokenEmailTemplate;true
+
+# Email velocity templates
+INSERT_UPDATE RendererTemplate;code[unique=true];contextClass;rendererType(code)[default='velocity']
+;powertools_Spa_Email_Verification_Token_Subject;$emailVerificationTokenPackageName.VerificationTokenEmailContext
+;powertools_Spa_Email_Verification_Token_Body;$emailVerificationTokenPackageName.VerificationTokenEmailContext

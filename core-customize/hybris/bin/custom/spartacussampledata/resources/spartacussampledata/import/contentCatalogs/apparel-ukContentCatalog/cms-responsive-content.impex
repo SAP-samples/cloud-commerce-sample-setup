@@ -1,7 +1,7 @@
 # -----------------------------------------------------------------------
 # [y] hybris Platform
 #
-# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# Copyright (c) 2024 SAP SE or an SAP affiliate company. All rights reserved.
 # The files in this addon are licensed under the Apache Software License, v. 2 
 # except as noted otherwise in the LICENSE file.
 # -----------------------------------------------------------------------
@@ -496,9 +496,9 @@ INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;fle
 
 ## Amend Order Content ##
 INSERT_UPDATE CMSParagraphComponent;$contentCV[unique=true];uid[unique=true];name;content
-;;CancelOrderConfirmationIntro;CancelOrderConfirmationIntro;"<h4>The following items will be included in the cancellation request.</h4>"
-;;ReturnOrderConfirmationIntro;ReturnOrderConfirmationIntro;"<h4>The following items will be included in the return request.</h4>"
-;;AmendOrderConfirmationOutro;AmendOrderConfirmationOutro;"<h4>Please note that it may take a few moments for your order to reflect the request.</h4>";
+;;CancelOrderConfirmationIntro;CancelOrderConfirmationIntro;"<p style=""text-align: center; font-size: 1.125rem;"">The following items will be included in the cancellation request.</p>"
+;;ReturnOrderConfirmationIntro;ReturnOrderConfirmationIntro;"<p style=""text-align: center; font-size: 1.125rem;"">The following items will be included in the return request.</p>"
+;;AmendOrderConfirmationOutro;AmendOrderConfirmationOutro;"<p style=""text-align: center; font-size: 1.125rem;"">Please note that it may take a few moments for your order to reflect the request.</p>";
 
 ## Cancel Order Confirmation Page ##
 INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid,$contentCV);label;defaultPage[default='true'];approvalStatus(code)[default='approved'];homepage[default='false']
@@ -684,3 +684,10 @@ INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;cmsCompo
 ;;BodyContentSlot-address-book;Body Content Slot for Address Book;AccountAddressBookComponent,MyPreferredStoreComponent;
 ;;MiddleContentSlot-StoreFinder;Middle Content Slot for Store Finder;MyPreferredStoreComponent,StoreFinderComponent;
 
+###### High Contrast Themes ######
+# theme switcher component
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType;&componentRef
+;;SiteThemeSwitcherComponent;Site Theme Switcher Component;SiteThemeSwitcherComponent;SiteThemeSwitcherComponent
+
+UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(uid,$contentCV)
+;;SiteContextSlot;Site Context Slot;true;LanguageComponent,CurrencyComponent,SiteThemeSwitcherComponent
