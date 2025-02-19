@@ -25,5 +25,5 @@
       "enabledRepositories": ["spartacus-dev"]
     }
   ],
-  "nodeVersion": "20"
+  "nodeVersion": "22"
 }
