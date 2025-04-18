@@ -1,9 +1,9 @@
 {
-  "commerceSuiteVersion": "2211.37",
+  "commerceSuiteVersion": "2211.38",
   "extensionPacks": [
     {
       "name": "hybris-commerce-integrations",
-      "version": "2211.32"
+      "version": "2211.33"
     }
   ],
   "enableImageProcessingService": true,
