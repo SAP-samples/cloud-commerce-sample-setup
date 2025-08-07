@@ -1,9 +1,15 @@
 {
     "commerceSuiteVersion": "2211.42",
     "enableImageProcessingService": true,
+	"extensionPacks":[
+       {
+          "name": "hybris-fsa-suite",
+          "version": "2302.4"
+       }
+    ],
     "extensions": [
-        "cloudmediaconversion",
-        "mediaconversionbackoffice"
+      "cloudmediaconversion",
+      "mediaconversionbackoffice"
     ],
     "storefrontAddons": [
         {
