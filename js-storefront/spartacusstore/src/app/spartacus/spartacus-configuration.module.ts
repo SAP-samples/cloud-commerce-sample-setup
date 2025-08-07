@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { translationChunksConfig, translationsEn } from "@spartacus/assets";
-import { FeaturesConfig, I18nConfig, OccConfig, provideConfig, SiteContextConfig } from "@spartacus/core";
-import { defaultCmsContentProviders, layoutConfig, mediaConfig } from "@spartacus/storefront";
+import { FeaturesConfig, I18nConfig, OccConfig, provideConfig, provideConfigFactory, SiteContextConfig } from "@spartacus/core";
+import { defaultCmsContentProviders, layoutConfigFactory, mediaConfig } from "@spartacus/storefront";
 
 @NgModule({
   declarations: [],
   imports: [
   ],
-  providers: [provideConfig(layoutConfig), provideConfig(mediaConfig), ...defaultCmsContentProviders, provideConfig(<OccConfig>{
+  providers: [provideConfigFactory(layoutConfigFactory), provideConfig(mediaConfig), ...defaultCmsContentProviders, provideConfig(<OccConfig>{
     backend: {
       occ: {
         //baseUrl: 'OCC_BACKEND_BASE_URL_VALUE', prefix: '/occ/v2/'
@@ -27,7 +27,7 @@ import { defaultCmsContentProviders, layoutConfig, mediaConfig } from "@spartacu
     },
   }), provideConfig(<FeaturesConfig>{
     features: {
-      level: '2211.35'
+      level: '2211.43'
     }
   })]
 })
