@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule,   } from '@angular/platform-browser';
+import { BrowserModule, provideClientHydration, withEventReplay, withNoHttpTransferCache } from '@angular/platform-browser';
 
 import { provideHttpClient, withFetch, withInterceptorsFromDi } from "@angular/common/http";
 import { EffectsModule } from "@ngrx/effects";
@@ -19,7 +19,7 @@ import { SpartacusModule } from './spartacus/spartacus.module';
     EffectsModule.forRoot([]),
     SpartacusModule
   ],
-  providers: [provideHttpClient(withFetch(), withInterceptorsFromDi()),],
+  providers: [provideHttpClient(withFetch(), withInterceptorsFromDi()), provideClientHydration(withEventReplay(), withNoHttpTransferCache())],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
