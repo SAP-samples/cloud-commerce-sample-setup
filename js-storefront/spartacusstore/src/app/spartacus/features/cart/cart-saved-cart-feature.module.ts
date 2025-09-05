@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { savedCartTranslationChunksConfig, savedCartTranslations } from "@spartacus/cart/saved-cart/assets";
+import { savedCartTranslationChunksConfig, savedCartTranslationsEn } from "@spartacus/cart/saved-cart/assets";
 import { CART_SAVED_CART_FEATURE, SavedCartRootModule } from "@spartacus/cart/saved-cart/root";
 import { CmsConfig, I18nConfig, provideConfig } from "@spartacus/core";
 
@@ -18,7 +18,7 @@ import { CmsConfig, I18nConfig, provideConfig } from "@spartacus/core";
   }),
   provideConfig(<I18nConfig>{
     i18n: {
-      resources: savedCartTranslations,
+      resources: { en: savedCartTranslationsEn },
       chunks: savedCartTranslationChunksConfig,
     },
   })

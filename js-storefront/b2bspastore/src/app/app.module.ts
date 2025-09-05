@@ -1,6 +1,7 @@
-import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from '@angular/core';
-import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-browser';
+import { BrowserModule, provideClientHydration, withEventReplay, withNoHttpTransferCache } from '@angular/platform-browser';
+
+import { provideHttpClient, withFetch, withInterceptorsFromDi } from "@angular/common/http";
 import { EffectsModule } from "@ngrx/effects";
 import { StoreModule } from "@ngrx/store";
 import { AppRoutingModule } from "@spartacus/storefront";
@@ -12,15 +13,13 @@ import { SpartacusModule } from './spartacus/spartacus.module';
     AppComponent
   ],
   imports: [
-    BrowserModule.withServerTransition({ appId: 'serverApp' }),
-    HttpClientModule,
-    AppRoutingModule,
+    BrowserModule,
     StoreModule.forRoot({}),
+    AppRoutingModule,
     EffectsModule.forRoot([]),
-    SpartacusModule,
-    BrowserTransferStateModule
+    SpartacusModule
   ],
-  providers: [],
+  providers: [provideHttpClient(withFetch(), withInterceptorsFromDi()), provideClientHydration(withEventReplay(), withNoHttpTransferCache())],
   bootstrap: [AppComponent]
 })
-export class AppModule { constructor() { console.log('Spartacus version 4.3.8'); } }
+export class AppModule { }

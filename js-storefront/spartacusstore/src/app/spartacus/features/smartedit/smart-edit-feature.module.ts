@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CmsConfig, provideConfig } from "@spartacus/core";
-import { SmartEditConfig, SmartEditRootModule, SMART_EDIT_FEATURE } from "@spartacus/smartedit/root";
+import { SMART_EDIT_FEATURE, SmartEditConfig, SmartEditRootModule } from "@spartacus/smartedit/root";
 
 @NgModule({
   declarations: [],
@@ -17,8 +17,8 @@ import { SmartEditConfig, SmartEditRootModule, SMART_EDIT_FEATURE } from "@spart
   }),
   provideConfig(<SmartEditConfig>{
     smartEdit: {
-      storefrontPreviewRoute: 'cx-preview',
-      allowOrigin: 'backoffice.cg79x9wuu9-eccommerc1-p8-public.model-t.myhybris.cloud:443',
+      storefrontPreviewRoute: 'STOREFRONT_PREVIEW_ROUTE_PLACEHOLDER',
+      allowOrigin: 'ALLOWED_ORIGIN_PLACEHOLDER',
     },
   })
   ]

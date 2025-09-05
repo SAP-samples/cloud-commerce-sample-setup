@@ -4,7 +4,9 @@
 
 This sample repository contains the files and folders that are required to set up SAP Commerce Cloud.
 
-> **Note**
+This branch covers a **Commerce Cloud 2211** sample scenario that is based on the [CX recipe](https://help.sap.com/viewer/a74589c3a81a4a95bf51d87258c0ab15/latest/en-US/f09d46cf4a2546b586ed7021655e4715.html) with **Spartacus 6.x**.
+
+> [!NOTE]
 >
 >
 > There are [different branches](https://github.com/SAP-samples/cloud-commerce-sample-setup/branches)
@@ -12,9 +14,7 @@ This sample repository contains the files and folders that are required to set u
 > to choose the right one. You can clone/download this repository, checkout the branch of interest
 > and then follow the instructions in the README to update the example files with your specific details.
 
-This branch covers a **Commerce Cloud 2211** sample scenario that is based on the [CX recipe](https://help.sap.com/viewer/a74589c3a81a4a95bf51d87258c0ab15/latest/en-US/f09d46cf4a2546b586ed7021655e4715.html) with **Spartacus 4.3.x**.
-
-> **Warning**
+> [!CAUTION]
 >
 > **Do not**  use the deprecated `yacceleratorstorefront` template extension and the related addons for any new development.
 > The deprecated `yacceleratorstorefront` and a few addons are included in this repo *purely for showcase purposes*.

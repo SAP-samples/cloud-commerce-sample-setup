@@ -48,10 +48,10 @@ INSERT_UPDATE ContentSlotForTemplate;$contentCV[unique=true];uid[unique=true];po
 
 
 # Functional Content Pages
-INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid,$contentCV);label;defaultPage[default='true'];approvalStatus(code)[default='approved'];homepage[default='false'];
-;;cdc-login;Gigya Login Page;GigyaLoginPageTemplate;/cdc/login
-;;gigya-profile;Gigya profile page;AccountPageTemplate;/my-account/gigya-profile
-;;cdc-checkout-login;Gigya Checkout Login Page;GigyaLoginPageTemplate;/cdc/checkout-login
+INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid,$contentCV);title[lang='en'];label;defaultPage[default='true'];approvalStatus(code)[default='approved'];homepage[default='false'];
+;;cdc-login;Gigya Login Page;GigyaLoginPageTemplate; Login / Register;/cdc/login
+;;gigya-profile;Gigya profile page;AccountPageTemplate;Update Personal Details;/my-account/gigya-profile
+;;cdc-checkout-login;Gigya Checkout Login Page;GigyaLoginPageTemplate;Proceed to Checkout;/cdc/checkout-login
 
 
 

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CmsConfig, I18nConfig, provideConfig } from "@spartacus/core";
-import { organizationTranslationChunksConfig, organizationTranslations } from "@spartacus/organization/administration/assets";
+import { organizationTranslationChunksConfig, organizationTranslationsEn } from "@spartacus/organization/administration/assets";
 import { AdministrationRootModule, ORGANIZATION_ADMINISTRATION_FEATURE } from "@spartacus/organization/administration/root";
 
 @NgModule({
@@ -18,7 +18,7 @@ import { AdministrationRootModule, ORGANIZATION_ADMINISTRATION_FEATURE } from "@
   }),
   provideConfig(<I18nConfig>{
     i18n: {
-      resources: organizationTranslations,
+      resources: { en: organizationTranslationsEn },
       chunks: organizationTranslationChunksConfig,
     },
   })
