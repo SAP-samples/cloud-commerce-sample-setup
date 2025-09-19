@@ -2,7 +2,7 @@
 <!--
  [y] hybris Platform
 
- Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+ Copyright (c) 2024 SAP SE or an SAP affiliate company. All rights reserved.
  The files in this addon are licensed under the Apache Software License, v. 2 
  except as noted otherwise in the LICENSE file.
 -->
@@ -47,12 +47,30 @@
 	<bean id="spaSampleDataImportService" parent="defaultAddonSampleDataImportService" class="de.hybris.platform.spartacussampledata.setup.impl.SpaSampleDataImportService">
 		<property name="modelService" ref="modelService" />
 		<property name="additionalSampleDataImports" ref="additionalSampleDataImports" />
+		<property name="opfSpecificDataImports" ref="opfSpecificDataImports" />
 	</bean>
 	
 	
 	<!--  A map containing key and value pair, where key is the extension name and value is the file which will be imported if the extension is part of the build  -->
 	<util:map id="additionalSampleDataImports" key-type="java.lang.String" value-type="java.lang.String" >
 		<entry key="gigyaservices" value="cdc-content.impex" />
+		<entry key="b2bpunchout" value="punchout-content.impex" />
 	</util:map>
+
+	<!--  A list containing the files which will be imported if the opfservices extension is part of the build  -->
+	<util:list id="opfSpecificDataImports" value-type="java.lang.String" >
+		<value>opf-content.impex</value>
+		<value>opf-order-process.impex</value>
+		<value>opf-return-process.impex</value>
+		<value>sap-omm-opf-order-process.impex</value>
+		<value>sap-omm-opf-return-process.impex</value>
+		<value>sap-oms-opf-order-process.impex</value>
+		<value>sap-oms-opf-return-process.impex</value>
+		<value>opf-store.impex</value>
+		<value>omm-opf-store.impex</value>
+		<value>oms-opf-store.impex</value>
+		<value>opf-site.impex</value>
+	</util:list>
+
 
 </beans>

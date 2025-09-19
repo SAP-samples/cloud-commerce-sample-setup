@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------
-# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# Copyright (c) 2025 SAP SE or an SAP affiliate company. All rights reserved.
 # -----------------------------------------------------------------------
 #
 # Import Two Sample B2B Organizations
@@ -9,3 +9,147 @@
 ###### This file is required to import other user-groups_xx.impex files which are missing from powertools store. ######
 INSERT_UPDATE UserGroup;uid[unique=true];groups(uid);locname[lang=en];
 
+INSERT_UPDATE B2BCustomer;description;uid[unique=true];customerID;originalUid;email;name;title(code);groups(uid);permissionGroups(uid);sessionCurrency(isocode)[default='USD'];site(uid);loginDisabled[default=true]
+                         ;Powertools Standalone Customer 1;telly.becker@rustic-hw.com|powertools-spa-standalone;4ec07c4d-3e32-4151-82b0-bd4b66641821;telly.becker@rustic-hw.com;telly.becker@rustic-hw.com;Telly Becker;mr;Custom Retail, b2bcustomergroup,standardPermissions;;;powertools-spa-standalone;
+                         ;Powertools Standalone Customer 2;carla.levi@rustic-hw.com|powertools-spa-standalone;5d56eb19-4378-4d5c-8c8e-678f86a49063;carla.levi@rustic-hw.com;carla.levi@rustic-hw.com;Carla Levi;mr;Services East,Rustic,b2bcustomergroup,standardPermissions,b2bapprovergroup;;;powertools-spa-standalone;
+
+
+UPDATE B2BCustomer;originalUid[unique=true];uid[unique=true];permissions(code,Unit(uid));
+                  ;carla.levi@rustic-hw.com;carla.levi@rustic-hw.com|powertools-spa-standalone;Rustic_10K_USD_MONTH:Rustic,Rustic_Unlimited_Timespan:Rustic,Rustic_Budget_Exceeded:Rustic;
+
+UPDATE B2BCustomer;uid[unique=true];approvers(uid);
+                  ;telly.becker@rustic-hw.com|powertools-spa-standalone;carla.levi@rustic-hw.com|powertools-spa-standalone;
+
+INSERT_UPDATE SiteEmployeeGroup;uid[unique=true];visibleSite(uid);groups(uid)
+                               ;powertools-spa-standalone-group;powertools-spa-standalone;multisitegroup;
+
+INSERT_UPDATE Employee;uid[unique=true];groups(uid)[mode=append];loginDisabled[default=true]
+"#%beforeEach:
+import de.hybris.platform.core.Registry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import de.hybris.platform.util.Config;
+
+Logger LOG = LoggerFactory.getLogger(""ImpExImportReader"");
+extensionNames = Registry.getCurrentTenant().getTenantSpecificExtensionNames();
+    if(!extensionNames.contains(""customersupportbackoffice"") ||  !extensionNames.contains(""assistedserviceservices""))
+    {
+        LOG.info(""Sample data for assistedserviceservices was skipped because the extensions are not included in the setup"");
+        line.clear();
+    }
+"
+                      ;csa-powertools-spa-standalone;customersupportadministratorgroup,powertools-spa-standalone-group;
+
+INSERT_UPDATE Employee; uid[unique = true]                   ; groups(uid)                                                                 ; loginDisabled[default = true]
+"#%beforeEach:
+import de.hybris.platform.core.Registry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import de.hybris.platform.util.Config;
+
+Logger LOG = LoggerFactory.getLogger(""ImpExImportReader"");
+extensionNames = Registry.getCurrentTenant().getTenantSpecificExtensionNames();
+    if(!extensionNames.contains(""customersupportbackoffice"") ||  !extensionNames.contains(""assistedserviceservices""))
+    {
+        LOG.info(""Sample data for assistedserviceservices was skipped because the extensions are not included in the setup"");
+        line.clear();
+    }
+"
+                      ; asagent-powertools-spa-standalone        ; asagentsalesmanagergroup, customermanagergroup, powertools-spa-standalone-group ;
+                      ; asagentsales-powertools-spa-standalone   ; asagentsalesgroup, powertools-spa-standalone-group                              ;
+                      ; asagentmanager-powertools-spa-standalone ; asagentsalesmanagergroup, powertools-spa-standalone-group                       ;
+
+INSERT_UPDATE Employee; UID[unique = true] ; groups(uid)[mode = append]                                                  ; loginDisabled[default = true]
+"#%beforeEach:
+import de.hybris.platform.core.Registry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import de.hybris.platform.util.Config;
+
+Logger LOG = LoggerFactory.getLogger(""ImpExImportReader"");
+extensionNames = Registry.getCurrentTenant().getTenantSpecificExtensionNames();
+    if(!extensionNames.contains(""customersupportbackoffice"") ||  !extensionNames.contains(""assistedserviceservices""))
+    {
+        LOG.info(""Sample data for assistedserviceservices was skipped because the extensions are not included in the setup"");
+        line.clear();
+    }
+"
+                      ; asagent-all        ; asagentsalesmanagergroup, customermanagergroup, powertools-spa-standalone-group ;
+                      ; asagentsales-all   ; asagentsalesgroup, powertools-spa-standalone-group                              ;
+                      ; asagentmanager-all ; asagentsalesmanagergroup, powertools-spa-standalone-group                       ;
+
+INSERT_UPDATE CustomerList; uid[unique = true]; implementationType; priority; members(uid)[mode = append]                ;
+"#%beforeEach:
+import de.hybris.platform.core.Registry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import de.hybris.platform.util.Config;
+
+Logger LOG = LoggerFactory.getLogger(""ImpExImportReader"");
+extensionNames = Registry.getCurrentTenant().getTenantSpecificExtensionNames();
+    if(!extensionNames.contains(""customersupportbackoffice"") ||  !extensionNames.contains(""assistedserviceservices""))
+    {
+        LOG.info(""Sample data for assistedserviceservices was skipped because the extensions are not included in the setup"");
+        line.clear();
+    }
+"
+                          ; instoreCustomers  ; "IN_STORE"        ; 3       ; asagent-all, asagent-powertools-spa-standalone ;
+                          ; bopisCustomers    ; "BOPIS"           ; 2       ; asagent-all, asagent-powertools-spa-standalone ;
+
+INSERT_UPDATE Employee; UID[unique = true]                                 ; groups(uid)                                                    ; loginDisabled[default = true]
+"#%beforeEach:
+import de.hybris.platform.core.Registry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import de.hybris.platform.util.Config;
+
+Logger LOG = LoggerFactory.getLogger(""ImpExImportReader"");
+extensionNames = Registry.getCurrentTenant().getTenantSpecificExtensionNames();
+    if(!extensionNames.contains(""customersupportbackoffice"") ||  !extensionNames.contains(""assistedserviceservices""))
+    {
+        LOG.info(""Sample data for assistedserviceservices was skipped because the extensions are not included in the setup"");
+        line.clear();
+    }
+"
+                      ; CustomerSupportAdministrator-powertools-spa-standalone ; customersupportadministratorgroup, powertools-spa-standalone-group ;
+                      ; CustomerSupportManager-powertools-spa-standalone       ; customersupportmanagergroup, powertools-spa-standalone-group       ;
+                      ; CustomerSupportAgent-powertools-spa-standalone         ; customersupportagentgroup, powertools-spa-standalone-group         ;
+
+INSERT_UPDATE Employee; UID[unique = true]               ; groups(uid)[mode = append]                                     ; loginDisabled[default = true]
+"#%beforeEach:
+import de.hybris.platform.core.Registry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import de.hybris.platform.util.Config;
+
+Logger LOG = LoggerFactory.getLogger(""ImpExImportReader"");
+extensionNames = Registry.getCurrentTenant().getTenantSpecificExtensionNames();
+    if(!extensionNames.contains(""customersupportbackoffice""))
+    {
+        LOG.info(""Sample data for assistedserviceservices was skipped because the extensions are not included in the setup"");
+        line.clear();
+    }
+"
+                      ; CustomerSupportAdministrator-all ; customersupportadministratorgroup, powertools-spa-standalone-group ;
+                      ; CustomerSupportManager-all       ; customersupportmanagergroup, powertools-spa-standalone-group       ;
+                      ; CustomerSupportAgent-all         ; customersupportagentgroup, powertools-spa-standalone-group         ;
+
+INSERT_UPDATE PrincipalGroupRelation; source(uid)[unique = true]                       ; target(uid)[unique = true]
+"#%beforeEach:
+import de.hybris.platform.core.Registry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import de.hybris.platform.util.Config;
+
+Logger LOG = LoggerFactory.getLogger(""ImpExImportReader"");
+extensionNames = Registry.getCurrentTenant().getTenantSpecificExtensionNames();
+    if(!extensionNames.contains(""customersupportbackoffice"") ||  !extensionNames.contains(""assistedserviceservices""))
+    {
+        LOG.info(""Sample data for assistedserviceservices was skipped because the extensions are not included in the setup"");
+        line.clear();
+    }
+"
+                                    ; asagent-powertools-spa-standalone                    ; nakanostoreemployees
+                                    ; asagent-powertools-spa-standalone                    ; ichikawastoreemployees
+                                    ; telly.becker@rustic-hw.com|powertools-spa-standalone ; POS_NAKANO
+                                    ; carla.levi@rustic-hw.com|powertools-spa-standalone   ; POS_ICHIKAWA

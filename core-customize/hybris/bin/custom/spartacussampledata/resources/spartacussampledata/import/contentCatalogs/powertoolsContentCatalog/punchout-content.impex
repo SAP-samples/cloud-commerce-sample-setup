@@ -1,0 +1,69 @@
+$contentCatalog=powertools-spaContentCatalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Online])[default=$contentCatalog:Online]
+$siteResource=jar:de.hybris.platform.spartacussampledata.constants.SpartacussampledataConstants&/spartacussampledata/import/contentCatalogs/powertoolsContentCatalog
+
+# Components
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType
+;;PunchoutSessionComponent;PunchoutSessionComponent;PunchoutSessionComponent
+;;PunchoutButtonsComponent;PunchoutButtonsComponent;PunchoutButtonsComponent
+;;PunchoutRequisitionComponent;PunchoutRequisitionComponent;PunchoutRequisitionComponent
+;;PunchoutInspectCartComponent;PunchoutInspectCartComponent;PunchoutInspectCartComponent
+;;PunchoutCloseSessionComponent;PunchoutCloseSessionComponent;PunchoutCloseSessionComponent
+;;PunchoutErrorComponent;PunchoutErrorComponent;PunchoutErrorComponent
+;;LoginComponent;LoginComponent;LoginComponent
+
+# Disable onlyOneRestrictionMustApply for components to be hidden
+UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];onlyOneRestrictionMustApply
+;;LoginLink;false
+;;OrdersLink;false
+
+UPDATE NavigationComponent;$contentCV[unique=true];uid[unique=true];onlyOneRestrictionMustApply
+;;MyAccountComponent;false
+
+# Add page template: required for CMS page even inactivated
+INSERT_UPDATE PageTemplate;$contentCV[unique=true];uid[unique=true];name;active[default=true]
+;;PunchoutTemplate;Punchout Template;false
+
+# Add Punchout Content Pages
+INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid,$contentCV);label;defaultPage[default='true'];approvalStatus(code)[default='approved'];homepage[default='false']
+;;PunchoutSessionPage;Punchout Session Page;PunchoutTemplate;/punchout/cxml/session;true;check;false
+;;PunchoutRequisitionPage;Punchout Requisition Page;PunchoutTemplate;/punchout/cxml/requisition;true;check;false
+;;PunchoutInspectCartPage;Punchout Inspect Cart Page;PunchoutTemplate;/punchout/cxml/inspect;true;check;false
+;;PunchoutErrorPage;Punchout Error Page;ContentPage1Template;/punchout/cxml/error;true;check;false
+
+# Add Content Slots
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;cmsComponents(uid,$contentCV)[mode=append]
+;;CenterRightContentSlot-cartPage;Center Right Content Slot for Cart Page;PunchoutButtonsComponent
+;;SiteLinksSlot;Slot contains some links;PunchoutCloseSessionComponent
+;;SiteLoginPunchoutInspectCartSlot;Site Login Punchout Inspect cart;LoginComponent
+;;BodyContentPunchoutInspectCartSlot;Body Content for Punchout Inspect Cart Page;PunchoutInspectCartComponent
+;;BodyContentPunchoutSessionSlot;Body Content for Punchout Session Page;PunchoutSessionComponent
+;;BodyContentPunchoutRequisitionSlot;Body Content for Punchout Requisition Page;PunchoutRequisitionComponent
+;;Section2APunchoutErrorSlot;Section 2A for Punchout Error Page;PunchoutErrorComponent
+;;PreheaderPunchoutEmptySlot;Preheader Punchout Empty Slot
+;;SiteLoginPunchoutEmptySlot;Site Login Punchout Empty Slot
+
+# Add Punchout Pages and ContentSlot relations
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true];contentSlot(uid,$contentCV)[unique=true]
+;;SiteLogin-PunchoutSessionPage;SiteLogin;PunchoutSessionPage;SiteLoginPunchoutEmptySlot
+;;SiteLogin-PunchoutRequisitionPage;SiteLogin;PunchoutRequisitionPage;SiteLoginPunchoutEmptySlot
+;;SiteLogin-PunchoutInspectCartPage;SiteLogin;PunchoutInspectCartPage;SiteLoginPunchoutInspectCartSlot
+;;SiteContext-PunchoutInspectCartPage;SiteContext;PunchoutInspectCartPage;SiteContextSlot
+;;BodyContent-PunchoutInspectCartPage;BodyContent;PunchoutInspectCartPage;BodyContentPunchoutInspectCartSlot
+;;Footer-PunchoutInspectCartPage;Footer;PunchoutInspectCartPage;FooterSlot
+;;BodyContent-PunchoutSessionPage;BodyContent;PunchoutSessionPage;BodyContentPunchoutSessionSlot
+;;BodyContent-PunchoutRequisitionPage;BodyContent;PunchoutRequisitionPage;BodyContentPunchoutRequisitionSlot
+;;Section2A-PunchoutErrorPage;Section2A;PunchoutErrorPage;Section2APunchoutErrorSlot
+;;PreHeader-PunchoutInspectCartPage;PreHeader;PunchoutInspectCartPage;PreheaderPunchoutEmptySlot
+;;PreHeader-PunchoutSessionPage;PreHeader;PunchoutSessionPage;PreheaderPunchoutEmptySlot
+;;PreHeader-PunchoutRequisitionPage;PreHeader;PunchoutRequisitionPage;PreheaderPunchoutEmptySlot
+
+# *** RESTRICTIONS ***
+
+# PunchOut CMS User Group Restrictions, so only punchout users can see PunchOut specific components
+INSERT_UPDATE CMSUserGroupRestriction;$contentCV[unique=true];uid[unique=true];&userGroupRestriction;name;userGroups(uid);includeSubgroups;components(uid, $contentCV)
+;;PunchOutGroupRestriction;PunchOutGroupRestriction;PunchOut Group Restriction;PunchOut Organization;true;PunchoutButtonsComponent,PunchoutRequisitionComponent,PunchoutCloseSessionComponent
+
+# CMS Inverse Restriction: components being hidden for punchout users
+INSERT_UPDATE CMSInverseRestriction;$contentCV[unique=true];uid[unique=true];name;originalRestriction(&userGroupRestriction)[allownull=true];components(uid, $contentCV)
+;;PunchOutGroupInverseRestriction;PunchOutGroupInverseRestriction;PunchOutGroupRestriction;FooterNavigationComponent,OrdersLink,StoreFinderLink,ContactUsLink,HelpLink,MyAccountComponent,CartProceedToCheckoutComponent,CheckoutComponent,SiteLogoComponent,LoginLink,AddToSavedCartsComponent,CartApplyCouponComponent,QuoteRequestComponent,ClearCartComponent

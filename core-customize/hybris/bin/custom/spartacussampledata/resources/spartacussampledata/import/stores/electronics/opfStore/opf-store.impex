@@ -1,0 +1,17 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2024 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# 
+# Enable OPF for the Standalone Spa Electronics BaseStore
+#
+
+$opfOrderProcessCode=opf-order-process
+$opfPaymentProvider=OPF
+$opfReturnProcessCode=opf-return-process
+
+# Standalone Spa Electronics BaseStore
+$standaloneSpaStoreUid=electronics-spa-standalone
+
+
+UPDATE BaseStore;uid[unique=true];submitOrderProcessCode;paymentProvider;createReturnProcessCode
+;$standaloneSpaStoreUid;$opfOrderProcessCode;$opfPaymentProvider;$opfReturnProcessCode

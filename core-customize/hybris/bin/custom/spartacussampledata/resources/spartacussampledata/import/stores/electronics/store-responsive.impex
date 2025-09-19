@@ -1,0 +1,56 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2024 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# 
+# Create the Responsive Electronics BaseStore
+#
+$productCatalog=electronicsProductCatalog
+$classificationCatalog=ElectronicsClassification
+$currencies=JPY,USD
+$net=false
+$defaultCurrency=USD
+$languages=ja,en,de,zh
+$defaultLanguage=en
+$unitedKingdom=GB,GG,IM,JE
+$europeNotUK=AD,AL,AT,BA,BE,BG,BY,CH,CY,CZ,DE,DK,EE,ES,FI,FO,FR,GI,GL,GR,HR,HU,IE,IS,IT,LI,LT,LU,LV,MC,MD,ME,MK,MT,NL,NO,PL,PT,RO,RS,RU,SE,SI,SK,SM,TR,UA,VA
+$asianCountries=CN,JP,VN,HK,KP,KR,TW,MO
+$deliveryCountries=$unitedKingdom,$europeNotUK,$asianCountries,US,CA
+$billingCountries=$unitedKingdom,$europeNotUK,CN,JP,VN,HK,KR,US,CA,TW,MO
+$orderProcessCode=order-process
+$pickupInStoreMode=BUY_AND_COLLECT
+$customerAllowedToIgnoreSuggestions=true
+$paymentProvider=Mockup
+$expressCheckoutEnabled=true
+$returnProcessCode=return-process
+$checkoutFlowGroup=responsiveCheckoutGroup
+$lang=en
+
+# Standalone Spa Electronics BaseStore
+$standaloneSpaStoreUid=electronics-spa-standalone
+
+# Standalone Spa Base Store
+INSERT_UPDATE BaseStore;uid[unique=true];catalogs(id);currencies(isocode);net;taxGroup(code);storelocatorDistanceUnit(code);defaultCurrency(isocode);languages(isocode);defaultLanguage(isocode);deliveryCountries(isocode);billingCountries(isocode);submitOrderProcessCode;pickupInStoreMode(code);customerAllowedToIgnoreSuggestions;paymentProvider;expressCheckoutEnabled;maxRadiusForPoSSearch;checkoutFlowGroup;createReturnProcessCode;
+;$standaloneSpaStoreUid;$productCatalog,$classificationCatalog;$currencies;$net;jp-taxes;km;$defaultCurrency;$languages;$defaultLanguage;$deliveryCountries;$billingCountries;$orderProcessCode;$pickupInStoreMode;$customerAllowedToIgnoreSuggestions;$paymentProvider;$expressCheckoutEnabled;300;$checkoutFlowGroup;$returnProcessCode;
+
+INSERT_UPDATE BaseStore2DeliveryModeRel;source(uid)[unique=true];target(code)[unique=true]
+;$standaloneSpaStoreUid;premium-net
+;$standaloneSpaStoreUid;standard-net
+;$standaloneSpaStoreUid;premium-gross
+;$standaloneSpaStoreUid;standard-gross
+;$standaloneSpaStoreUid;pickup
+;$standaloneSpaStoreUid;free-standard-shipping
+
+UPDATE BaseStore;uid[unique=true];name[lang=$lang]
+;$standaloneSpaStoreUid;"Electronics Spa Store Standalone"
+
+# Adds a default formula
+INSERT_UPDATE AtpFormula;code[unique=true];availability;allocation;cancellation;increase;reserved;shrinkage;wastage;returned
+;Default_Formula;true;true;true;true;true;true;true;true
+
+# Adds a default Sourcing Config
+INSERT_UPDATE SourcingConfig;code[unique=true];distanceWeightFactor;allocationWeightFactor;priorityWeightFactor;scoreWeightFactor
+;Hybris_OMS_Config;50;30;20;0
+
+UPDATE BaseStore;uid[unique=true];sourcingConfig(code);defaultAtpFormula(code)
+;$standaloneSpaStoreUid;Hybris_OMS_Config;Default_Formula
+

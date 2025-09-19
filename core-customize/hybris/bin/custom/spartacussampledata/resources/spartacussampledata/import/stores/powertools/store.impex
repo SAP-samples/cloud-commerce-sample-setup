@@ -1,0 +1,59 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2025 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# 
+# Create the Powertools BaseStore
+#
+
+$productCatalog=powertoolsProductCatalog
+$classificationCatalog=PowertoolsClassification
+$currencies=USD
+$net=true
+$defaultCurrency=USD
+$languages=ja,en,de,zh
+$defaultLanguage=en
+$unitedKingdom=GB,GG,IM,JE
+$europeNotUK=AD,AL,AT,BA,BE,BG,BY,CH,CY,CZ,DE,DK,EE,ES,FI,FO,FR,GI,GL,GR,HR,HU,IE,IS,IT,LI,LT,LU,LV,MC,MD,ME,MK,MT,NL,NO,PL,PT,RO,RS,RU,SE,SI,SK,SM,TR,UA,VA
+$asianCountries=CN,JP,VN,HK,KP,KR,TW,MO
+$deliveryCountries=$unitedKingdom,$europeNotUK,$asianCountries,US,CA
+$billingCountries=$unitedKingdom,$europeNotUK,CN,JP,VN,HK,KR,US,CA,TW,MO
+$orderProcessCode=opf-order-process
+$pickupInStoreMode=DISABLED
+$customerAllowedToIgnoreSuggestions=true
+$paymentProvider=OPF
+$expressCheckoutEnabled=false
+$checkoutGroup=b2bCheckoutGroup
+$returnProcessCode=opf-return-process
+
+# Standalone Powertools BaseStore
+$standaloneStoreUid=powertools-spa-standalone
+
+# Standalone Base Store
+INSERT_UPDATE BaseStore;uid[unique=true];catalogs(id);currencies(isocode);net;taxGroup(code);storelocatorDistanceUnit(code);defaultCurrency(isocode);languages(isocode);defaultLanguage(isocode);deliveryCountries(isocode);billingCountries(isocode);submitOrderProcessCode;paymentProvider;pickupInStoreMode(code);customerAllowedToIgnoreSuggestions;expressCheckoutEnabled;maxRadiusForPoSSearch;checkoutFlowGroup;createReturnProcessCode;
+;$standaloneStoreUid;$productCatalog,$classificationCatalog;$currencies;$net;us-taxes;miles;$defaultCurrency;$languages;$defaultLanguage;$deliveryCountries;$billingCountries;$orderProcessCode;$paymentProvider;$pickupInStoreMode;$customerAllowedToIgnoreSuggestions;$expressCheckoutEnabled;300;$checkoutGroup;$returnProcessCode;
+
+UPDATE BaseStore;uid[unique=true];name[lang=en]
+                ;$standaloneStoreUid;"Spartacus Powertools Store Standalone"
+
+INSERT_UPDATE BaseStore2DeliveryModeRel;source(uid)[unique=true];target(code)[unique=true]
+;$standaloneStoreUid;premium-net
+;$standaloneStoreUid;standard-net
+;$standaloneStoreUid;premium-gross
+;$standaloneStoreUid;standard-gross
+;$standaloneStoreUid;free-standard-shipping
+
+# Set atp formula
+# Adds a default formula
+INSERT_UPDATE AtpFormula;code[unique=true];availability;allocation;cancellation;increase;reserved;shrinkage;wastage;returned
+                        ;Default_Formula;true;true;true;true;true;true;true;true
+
+# Adds a default Sourcing Config
+INSERT_UPDATE SourcingConfig;code[unique=true];distanceWeightFactor;allocationWeightFactor;priorityWeightFactor;scoreWeightFactor
+                            ;Hybris_OMS_Config;50;30;20;0
+
+UPDATE BaseStore;uid[unique=true];sourcingConfig(code);
+                ;$standaloneStoreUid;Hybris_OMS_Config;
+
+UPDATE BaseStore;uid[unique=true];defaultAtpFormula(code);
+                ;$standaloneStoreUid;Default_Formula;
+

@@ -189,3 +189,7 @@ REMOVE ASMDevicesUsedComponent;$contentCV[unique=true];uid[unique=true]
 
 REMOVE ASMFavoriteColorsComponent;$contentCV[unique=true];uid[unique=true]
 ;;ASMFavoriteColorsComponent
+
+UPDATE CMSNavigationNode;$contentCV[unique=true];uid[unique=true];title[lang=de];title[lang=en];title[lang=ja];title[lang=zh]
+;;DigitalCompactsMiddleNavNode;Kompakt;Compact;コンパクト;紧凑型
+;;DigitalSLRMiddleNavNode;SLR;SLR;一眼レフ;单反相机
