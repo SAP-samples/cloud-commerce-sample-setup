@@ -254,9 +254,7 @@
 
 
 <!-- Sample Custom Extensions -->
-  <!--extension name='kiwi' /-->
   <!--extension name= 'spartacussampledata' /-->
-  <!--extension name='tiger'/-->
 
 <!-- For more information where to find those extensions: -->
 <!-- https://launchpad.support.sap.com/#/notes/2817992 -->
