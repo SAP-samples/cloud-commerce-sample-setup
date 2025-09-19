@@ -254,7 +254,7 @@
 
 
 <!-- Sample Custom Extensions -->
-  <extension name= 'spartacussampledata'/>
+  <extension name= 'spartacussampledata' />
 
 <!-- For more information where to find those extensions: -->
 <!-- https://launchpad.support.sap.com/#/notes/2817992 -->
