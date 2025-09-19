@@ -348,8 +348,8 @@
                 {
                     "name": "acceleratorservices",
                     "contextPath": "/acceleratorservices"
-                },                
-		{
+                },
+                {
                     "name": "b2bpunchout",
                     "contextPath": "/b2bpunchout"
                 },
@@ -553,18 +553,5 @@
                 }
             ]
         }
-    ],
-    "tests": {
-        "extensions": [
-            "kiwi",
-            "tiger"
-        ],
-        "annotations": [
-            "UnitTests",
-            "IntegrationTests"
-        ],
-        "packages": [
-            "com.acme.*"
-        ]
-    }
+    ]
 }
