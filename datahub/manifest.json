@@ -1,9 +1,9 @@
 {
-  "dataHubVersion": "2211.43",
+  "dataHubVersion": "2211.45",
   "extensionPacks": [
     {
       "name": "hybris-datahub-integration-suite",
-      "version": "2211.38"
+      "version": "2211.39"
     }
   ],
   "extensions": [
