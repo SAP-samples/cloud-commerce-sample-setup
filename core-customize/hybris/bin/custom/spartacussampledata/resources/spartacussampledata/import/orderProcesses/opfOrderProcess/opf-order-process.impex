@@ -1,0 +1,130 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2024 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+
+INSERT_UPDATE DynamicProcessDefinition; code[unique = true]; active[unique = true]; content
+                                      ; opf-order-process  ; true                 ; "<process xmlns='http://www.hybris.de/xsd/processdefinition' start='opfCheckAuthorization'
+name='opf-order-process' processClass='de.hybris.platform.orderprocessing.model.OrderProcessModel'>
+
+<action id='opfCheckAuthorization' bean='opfCheckAuthorizationAction'>
+    <transition name='OK' to='checkOrder'/>
+    <transition name='WAIT' to='waitForAuthorizationTransactionUpdate'/>
+</action>
+
+<!-- Check Order -->
+<action id='checkOrder' bean='checkOrderAction'>
+    <transition name='OK' to='fraudCheck'/>
+    <transition name='NOK' to='error'/>
+</action>
+
+<!-- Fraud Check -->
+<action id='fraudCheck' bean='fraudCheckOrderInternalAction'>
+    <transition name='OK' to='sendOrderPlacedNotification'/>
+    <transition name='POTENTIAL' to='manualOrderCheckCSA'/>
+    <transition name='FRAUD' to='cancelOrder'/>
+</action>
+
+<!-- Fraud Check : OK -->
+<action id='sendOrderPlacedNotification' bean='sendOrderPlacedNotificationAction'>
+    <transition name='OK' to='geocodeShippingAddress'/>
+</action>
+
+<!-- Fraud Check : FRAUD -->
+<action id='cancelOrder' bean='cancelOrderAction'>
+    <transition name='OK' to='notifyCustomer'/>
+</action>
+
+<action id='notifyCustomer' bean='notifyCustomerAboutFraudAction'>
+<transition name='OK' to='failed'/>
+</action>
+
+<!-- Fraud Check : POTENTIAL -->
+<action id='manualOrderCheckCSA' bean='prepareOrderForManualCheckAction'>
+    <transition name='OK' to='waitForManualOrderCheckCSA'/>
+</action>
+
+<wait id='waitForManualOrderCheckCSA' then='orderManualChecked' prependProcessCode='true'>
+    <event>CSAOrderVerified</event>
+</wait>
+
+<wait id='waitForAuthorizationTransactionUpdate' then='opfCheckAuthorization' prependProcessCode='false'>
+    <event>${process.code}_authorizationTransactionUpdateEvent</event>
+</wait>
+
+<wait id='waitForCaptureTransactionUpdate' then='opfCheckCapture' prependProcessCode='false'>
+    <event>${process.code}_captureTransactionUpdateEvent</event>
+</wait>
+
+<action id='orderManualChecked' bean='orderManualCheckedAction'>
+    <transition name='OK' to='sendOrderPlacedNotification'/>
+    <transition name='NOK' to='cancelOrder'/>
+    <transition name='CANCELLED' to='success'/>
+</action>
+
+<!-- Sourcing and Allocation -->
+<action id='geocodeShippingAddress' bean='geocodeShippingAddressAction'>
+    <transition name='OK' to='sourceOrder'/>
+</action>
+
+<action id='sourceOrder' bean='sourceOrderAction'>
+    <transition name='OK' to='waitForOrderAction'/>
+</action>
+
+<!-- Wait to perform action on Order -->
+<wait id='waitForOrderAction' prependProcessCode='true' then='failed'>
+    <case event='OrderActionEvent'>
+        <choice id='consignmentProcessEnded' then='verifyOrderCompletion'/>
+        <choice id='cancelOrder' then='processOrderCancellation'/>
+        <choice id='cancelled' then='success'/>
+        <choice id='reSource' then='sourceOrder'/>
+        <choice id='putOnHold' then='putOrderOnHold'/>
+    </case>
+</wait>
+
+<!-- Wait for order cancellation to be completed -->
+<action id='processOrderCancellation' bean='processOrderCancellationAction'>
+    <transition name='OK' to='verifyOrderCompletion'/>
+    <transition name='WAIT' to='waitForOrderAction'/>
+    <transition name='SOURCING' to='sourceOrder'/>
+</action>
+
+<action id='verifyOrderCompletion' bean='verifyOrderCompletionAction'>
+    <transition name='OK' to='postTaxes'/>
+    <transition name='WAIT' to='waitForOrderAction'/>
+    <transition name='CANCELLED' to='success'/>
+</action>
+
+<action id='putOrderOnHold' bean='putOrderOnHoldAction'>
+    <transition name='OK' to='waitForOrderAction'/>
+</action>
+
+<!-- Tax and Payment -->
+<action id='postTaxes' bean='postTaxesAction'>
+    <transition name='OK' to='opfTakePayment'/>
+</action>
+
+<action id='opfTakePayment' bean='opfTakePaymentAction'>
+    <transition name='OK' to='completeOrder'/>
+    <transition name='WAIT' to='waitForCaptureTransactionUpdate'/>
+</action>
+
+<!--Check if the payment is already captured-->
+<action id='opfCheckCapture' bean='opfCheckCaptureAction'>
+    <transition name='OK' to='completeOrder'/>
+    <transition name='NOK' to='sendPaymentFailedNotification'/>
+    <transition name='WAIT' to='waitForCaptureTransactionUpdate'/>
+</action>
+
+<action id='completeOrder' bean='completeOrderAction'>
+    <transition name='OK' to='success'/>
+</action>
+
+<action id='sendPaymentFailedNotification' bean='sendPaymentFailedNotificationAction'>
+    <transition name='OK' to='failed'/>
+</action>
+
+<end id='error' state='ERROR'>Order process error.</end>
+<end id='failed' state='FAILED'>Order process failed.</end>
+<end id='success' state='SUCCEEDED'>Order process completed.</end>
+
+</process>"

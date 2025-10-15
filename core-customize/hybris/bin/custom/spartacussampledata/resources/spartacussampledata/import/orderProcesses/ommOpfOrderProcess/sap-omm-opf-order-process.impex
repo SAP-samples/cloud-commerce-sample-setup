@@ -1,0 +1,95 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2024 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+
+
+INSERT_UPDATE DynamicProcessDefinition; code[unique = true]       ; active[unique = true]; content
+                                      ; sap-omm-opf-order-process ; true                 ; "<process xmlns='http://www.hybris.de/xsd/processdefinition' start='opfCheckAuthorization' name='sap-omm-opf-order-process'
+	processClass='de.hybris.platform.orderprocessing.model.OrderProcessModel'>
+
+	<action id='opfCheckAuthorization' bean='opfCheckAuthorizationAction'>
+	    <transition name='OK' to='checkSAPOrder'/>
+	    <transition name='WAIT' to='waitForAuthorizationTransactionUpdate'/>
+    </action>
+
+    <wait id='waitForAuthorizationTransactionUpdate' then='opfCheckAuthorization' prependProcessCode='false'>
+    	<event>${process.code}_authorizationTransactionUpdateEvent</event>
+	</wait>
+
+	<action id='checkSAPOrder' bean='sapOrderexchangeCheckOrderAction'>
+		<transition name='OK' to='checkSAPCustomerReplication' />
+		<transition name='NOK' to='error' />
+	</action>
+
+	<action id='checkSAPCustomerReplication' bean='sapCustomerexchangeCheckOrderAction'>
+		<transition name='NOK' to='waitForERPCustomerReplication' />
+		<transition name='OK' to='sendOrderToErp' />
+	</action>
+
+	<wait id='waitForERPCustomerReplication' then='sendOrderToErp' prependProcessCode='false'>
+		<event>ERPCustomerReplicationEvent_${process.order.user.customerID}_${process.order.code}</event>
+	</wait>
+
+	<action id='sendOrderToErp' bean='sapSendOrderAction'>
+		<transition name='OK' to='waitForSendOrderToErpCompletion' />
+	</action>
+
+	<wait id='waitForSendOrderToErpCompletion' then='setOrderSendStatus' prependProcessCode='false'>
+		<event>ERPOrderSendCompletionEvent_${process.order.code}</event>
+	</wait>
+
+	<action id='setOrderSendStatus' bean='sapOrderexchangeCheckOrderSendStatusAction'>
+		<transition name='OK'  to='waitForERPConfirmation' />
+		<transition name='NOK' to='erpsendingerror' />
+	</action>
+
+	<wait id='waitForERPConfirmation' then='setConfirmationStatus' prependProcessCode='false'>
+		<event>ERPOrderConfirmationEvent_${process.order.code}</event>
+	</wait>
+
+	<action id='setConfirmationStatus' bean='sapOrderexchangeSetConfirmationStatusAction'>
+		<transition name='OK' to='waitForConsignmentCreation' />
+		<transition name='NOK' to='error' />
+	</action>
+
+	<wait id='waitForConsignmentCreation' then='waitForGoodsIssue' prependProcessCode='false'>
+		<event>ConsignmentCreationEvent_${process.order.code}</event>
+	</wait>
+
+	<wait id='waitForGoodsIssue' then='opfTakePayment' prependProcessCode='false'>
+		<event>GoodsIssueEvent_${process.order.code}</event>
+	</wait>
+
+	<action id='opfTakePayment' bean='opfTakePaymentAction'>
+	    <transition name='OK' to='setCompletionStatus'/>
+	    <transition name='WAIT' to='waitForCaptureTransactionUpdate'/>
+	</action>
+
+	<!--Check if the payment is already captured-->
+	<action id='opfCheckCapture' bean='opfCheckCaptureAction'>
+	    <transition name='OK' to='setCompletionStatus'/>
+	    <transition name='NOK' to='failed'/>
+	    <transition name='WAIT' to='waitForCaptureTransactionUpdate'/>
+	</action>
+
+	<wait id='waitForCaptureTransactionUpdate' then='opfCheckCapture' prependProcessCode='false'>
+    	<event>${process.code}_captureTransactionUpdateEvent</event>
+	</wait>
+
+	<action id='setCompletionStatus' bean='sapOrderexchangeSetCompletionStatusAction'>
+		<transition name='OK' to='success' />
+		<transition name='NOK' to='error' />
+	</action>
+
+	<action id='setCancelStatus' bean='sapOrderexchangeSetCancelAction'>
+		<transition name='OK' to='canceled' />
+		<transition name='NOK' to='error' />
+	</action>
+
+	<end id='erpsendingerror' state='ERROR'>Sending to ERP went wrong.</end>
+	<end id='error' state='ERROR'>Order check failed.</end>
+	<end id='failed' state='FAILED'>Order failed.</end>
+	<end id='canceled' state='SUCCEEDED'>Order cancelled.</end>
+	<end id='success' state='SUCCEEDED'>Order placed. Consignment created.</end>
+
+</process>"

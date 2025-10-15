@@ -8,13 +8,13 @@ package de.hybris.platform.spartacussampledata.setup.impl;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Required;
-
 import de.hybris.platform.addonsupport.setup.impl.DefaultAddonSampleDataImportService;
 import de.hybris.platform.catalog.jalo.SyncItemCronJob;
 import de.hybris.platform.catalog.jalo.SyncItemJob;
 import de.hybris.platform.catalog.model.CatalogVersionModel;
 import de.hybris.platform.catalog.model.SyncItemJobModel;
+import de.hybris.platform.commerceservices.setup.data.ImportData;
+import de.hybris.platform.commerceservices.util.ResponsiveUtils;
 import de.hybris.platform.core.initialization.SystemSetupContext;
 import de.hybris.platform.cronjob.enums.CronJobResult;
 import de.hybris.platform.cronjob.enums.CronJobStatus;
@@ -31,12 +31,22 @@ public class SpaSampleDataImportService extends DefaultAddonSampleDataImportServ
 {
 	private static final String SYNC_CONTENT_CATALOG = "electronics->spa";
 	private static final String STORES_URL = "/stores/";
+	private static final String OPF_STORES_URL = "/opfStore/";
+	private static final String OMM_OPF_STORES_URL = "/ommOpfStore/";
+	private static final String OMS_OPF_STORES_URL = "/omsOpfStore/";
 	private static final String BEGIN_IMPORTING_STORE_MSG = "Begin importing store";
 	private static final String PRODUCT_CATALOGS_URL = "/productCatalogs/";
 	private static final String CUSTOMER_COUPON_SERVICES_EXTENSION_NAME = "customercouponservices";
+	private static final String ORDER_PROCESSES_URL = "/orderProcesses";
+	private static final String OPF_ORDER_PROCESS_URL = "/opfOrderProcess/";
+	private static final String OMM_OPF_ORDER_PROCESS_URL = "/ommOpfOrderProcess/";
+	private static final String OMS_OPF_ORDER_PROCESS_URL = "/omsOpfOrderProcess/";
+	private static final String IMPORT_URL = "/import";
+	private static final String IMPORT_SAMPLE_DATA = "importSampleData";
 
 	private ModelService modelService;
 	private Map<String, String> additionalSampleDataImports;
+	private List<String> opfSpecificDataImports;
 
 	@Override
 	protected void importContentCatalog(final SystemSetupContext context, final String importRoot, final String catalogName)
@@ -80,9 +90,22 @@ public class SpaSampleDataImportService extends DefaultAddonSampleDataImportServ
 
 			// 8- import email data
 			importImpexFile(context, importRoot + "/contentCatalogs/" + catalogName + "ContentCatalog/email-content.impex", false);
+
+			// 9- import my account data
+			importImpexFile(context, importRoot + "/contentCatalogs/" + catalogName + "ContentCatalog/myaccount-navigation.impex", false);
+			importImpexFile(context, importRoot + "/contentCatalogs/" + catalogName + "ContentCatalog/myaccount-content.impex", false);
+
 		}
 	}
 
+	@Override
+	protected void importCommonData(final SystemSetupContext context, final String importRoot)
+	{
+		super.importCommonData(context, importRoot);
+
+		// import oAuth clients
+		importImpexFile(context, importRoot + "/common/oauth-clients.impex", false);
+	}
 
 	/**
 	 * This methods imports the additional impex files that are required by various
@@ -108,6 +131,127 @@ public class SpaSampleDataImportService extends DefaultAddonSampleDataImportServ
 		});
 	}
 
+	@Override
+	protected void doImportSampleData(final String extensionName, final SystemSetupContext context,
+			final List<ImportData> importData, final boolean solrReindex, final boolean triggeredByAddon)
+	{
+		super.doImportSampleData(extensionName, context, importData, solrReindex, triggeredByAddon);
+
+		if (Utilities.getExtensionNames().contains("opfservices"))
+		{
+			importOpfSpecificData(extensionName, context, importData, solrReindex, triggeredByAddon);
+		}
+	}
+
+	/**
+	 * This methods imports the OPF-specific impex files required to enable
+	 * the OPF feature. If opfservices extension is loaded in the commerce
+	 * installation, then these impex files are imported <br/>
+	 * To enable the import the following needs to be done: <br/>
+	 * 1. Define an entry in the list opfSpecificDataImports via spring config
+	 * where the value is the OPF-specific impex file name  <br/>
+	 * 2. Add the impex file containing the required data to the corresponding folder. <br/>
+	 *
+	 * @param extensionName
+	 * @param context
+	 * @param importData
+	 * @param solrReindex
+	 * @param triggeredByAddon
+	 */
+	protected void importOpfSpecificData(final String extensionName, final SystemSetupContext context,
+                                        			final List<ImportData> importData, final boolean solrReindex, final boolean triggeredByAddon)
+	{
+		if (getBooleanSystemSetupParameter(context, IMPORT_SAMPLE_DATA))
+		{
+			String importRoot = "/" + extensionName + IMPORT_URL;
+
+			if (triggeredByAddon)
+			{
+				importRoot = importRoot + "/addons/" + context.getExtensionName();
+			}
+
+			importOpfOrderProcess(context, importRoot);
+
+			for (final ImportData importd : importData)
+			{
+				for (final String contentCatalogName : importd.getContentCatalogNames())
+				{
+					importOpfStoreData(context, importRoot, contentCatalogName);
+					importOpfContentData(context, importRoot, contentCatalogName);
+				}
+			}
+		}
+	}
+
+	/**
+	 * This methods determines which OPF-specific impex files to import
+	 * based on the installed extension. <br/>
+	 * If sapcpiorderexchangeoms extension is loaded in the commerce
+	 * installation, then these OMS+OPF impex files are imported. <br/>
+	 * If sapcpiorderexchangeoms extension isn't loaded but sapcpiorderexchange
+	 * extension is loaded, then these OMM+OPF impex files are imported. <br/>
+	 * If no Integration extension is loaded, then OPF impex files are imported.<br/>
+	 *
+	 */
+	protected void importOpfOrderProcess(final SystemSetupContext context,
+										 final String importRoot) {
+		if (Utilities.getExtensionNames().contains("sapcpiorderexchangeoms")) {
+			opfSpecificDataImports.forEach(i -> {
+				importImpexFile(context,
+						importRoot + ORDER_PROCESSES_URL + OMS_OPF_ORDER_PROCESS_URL + i, false);
+			});
+		} else if (Utilities.getExtensionNames().contains("sapcpiorderexchange")) {
+			opfSpecificDataImports.forEach(i -> {
+				importImpexFile(context,
+						importRoot + ORDER_PROCESSES_URL + OMM_OPF_ORDER_PROCESS_URL + i, false);
+			});
+		} else {
+			opfSpecificDataImports.forEach(i -> {
+				importImpexFile(context,
+						importRoot + ORDER_PROCESSES_URL + OPF_ORDER_PROCESS_URL + i, false);
+			});
+		}
+	}
+
+	protected void importOpfStoreData(final SystemSetupContext context, final String importRoot,
+									  final String storeName) {
+		if (Utilities.getExtensionNames().contains("sapcpiorderexchangeoms")) {
+			opfSpecificDataImports.forEach(i -> {
+				importImpexFile(context,
+						importRoot + STORES_URL + storeName + OMS_OPF_STORES_URL + i, false);
+			});
+		} else if (Utilities.getExtensionNames().contains("sapcpiorderexchange")) {
+			opfSpecificDataImports.forEach(i -> {
+				importImpexFile(context,
+						importRoot + STORES_URL + storeName + OMM_OPF_STORES_URL + i, false);
+			});
+		} else {
+			opfSpecificDataImports.forEach(i -> {
+				importImpexFile(context, importRoot + STORES_URL + storeName + OPF_STORES_URL + i,
+						false);
+			});
+		}
+	}
+
+	protected void importOpfContentData(final SystemSetupContext context, final String importRoot, final String catalogName)
+	{
+		opfSpecificDataImports.forEach(i -> {
+			importImpexFile(context,
+					importRoot + "/contentCatalogs/" + catalogName + "ContentCatalog/" + i, false);
+		});
+	}
+
+	@Override
+	protected void importStore(final SystemSetupContext context, final String importRoot, final String storeName)
+	{
+		super.importStore(context, importRoot,storeName);
+
+		if (ResponsiveUtils.isResponsive())
+		{
+			importImpexFile(context, importRoot + STORES_URL + storeName + "/store-responsive.impex", false);
+		}
+	}
+
 
 	@Override
 	protected void importStoreLocations(final SystemSetupContext context, final String importRoot, final String storeName)
@@ -127,6 +271,10 @@ public class SpaSampleDataImportService extends DefaultAddonSampleDataImportServ
 			logInfo(context, "Begin importing warehouses for [" + storeName + "]");
 
 			importImpexFile(context, importRoot + STORES_URL + storeName + "/warehouses.impex", false);
+
+			logInfo(context, "Begin importing searchservices for [" + storeName + "]");
+
+			importImpexFile(context, importRoot + STORES_URL + storeName + "/searchservices.impex", false);
 		}
 
 		// perform product sync job
@@ -186,7 +334,6 @@ public class SpaSampleDataImportService extends DefaultAddonSampleDataImportServ
 		return modelService;
 	}
 
-	@Required
 	public void setModelService(final ModelService modelService)
 	{
 		this.modelService = modelService;
@@ -201,4 +348,15 @@ public class SpaSampleDataImportService extends DefaultAddonSampleDataImportServ
 	public void setAdditionalSampleDataImports(Map<String, String> additionalSampleDataImports) {
 		this.additionalSampleDataImports = additionalSampleDataImports;
 	}
+
+	public List<String> getOpfSpecificDataImports()
+	{
+	return opfSpecificDataImports;
+	}
+	
+	public void setOpfSpecificDataImports(final List<String> opfSpecificDataImports)
+	{	
+	this.opfSpecificDataImports = opfSpecificDataImports;
+	}
+
 }
