@@ -1,0 +1,57 @@
+# -----------------------------------------------------------------------
+# [y] hybris Platform
+#
+# Copyright (c) 2024 SAP SE or an SAP affiliate company. All rights reserved.
+# The files in this addon are licensed under the Apache Software License, v. 2
+# except as noted otherwise in the LICENSE file.
+# -----------------------------------------------------------------------
+#
+$contentCatalog=powertools-spaContentCatalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Online])[default=$contentCatalog:Online]
+$siteResource=jar:de.hybris.platform.spartacussampledata.constants.SpartacussampledataConstants&/spartacussampledata/import/contentCatalogs/powertoolsContentCatalog
+
+# Add OPF CMSFlexComponents
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType
+;;OpfCheckoutPaymentAndReviewComponent;OpfCheckoutPaymentAndReview;OpfB2bCheckoutPaymentAndReview
+;;OpfCheckoutPaymentTypeComponent;OpfCheckoutPaymentType;OpfCheckoutPaymentType
+;;OpfCheckoutDeliveryAddressComponent;OpfCheckoutDeliveryAddress;OpfCheckoutDeliveryAddress
+;;OpfCheckoutReviewComponent;OpfCheckoutReview;OpfCheckoutReview
+
+# Add OPF Explicit T&C CMSFlexComponent as invisible
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType;visible
+;;OpfExplicitTermsAndConditionsComponent;OpfExplicitTermsAndConditionsComponent;OpfExplicitTermsAndConditionsComponent;false
+
+# Add OPF ContentSlots
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;cmsComponents(uid,$contentCV)
+;;BodyContentSlot-checkoutOpfPaymentAndReview;Body Content Slot for Checkout OPF Payment And Review;CheckoutProgressComponent,CheckoutProgressMobileTopComponent,OpfCheckoutPaymentAndReviewComponent,CheckoutProgressMobileBottomComponent,OpfExplicitTermsAndConditionsComponent
+;;CenterRightContentSlot-cartPage;Center Right Content Slot for Cart Page;CartTotalsComponent,CartApplyCouponComponent,CartQuickOrderFormComponent,CartProceedToCheckoutComponent
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;cmsComponents(uid,$contentCV)
+;;BodyContentSlot-checkoutOpfPaymentType;Body Content Slot for OPF Checkout Payment Type;CheckoutProgressComponent,CheckoutProgressMobileTopComponent,OpfCheckoutPaymentTypeComponent,CheckoutProgressMobileBottomComponent
+;;CenterRightContentSlot-cartPage;Center Right Content Slot for Cart Page;CartTotalsComponent,CartApplyCouponComponent,CartQuickOrderFormComponent,CartProceedToCheckoutComponent
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;cmsComponents(uid,$contentCV)
+;;BodyContentSlot-checkoutOpfDeliveryAddress;Body Content Slot for OPF Delivery Address;CheckoutProgressComponent,CheckoutProgressMobileTopComponent,OpfCheckoutDeliveryAddressComponent,CheckoutProgressMobileBottomComponent
+;;CenterRightContentSlot-cartPage;Center Right Content Slot for Cart Page;CartTotalsComponent,CartApplyCouponComponent,CartQuickOrderFormComponent,CartProceedToCheckoutComponent
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;cmsComponents(uid,$contentCV)
+;;BodyContentSlot-checkoutOpfReview;Body Content Slot for OPF Checkout Review;CheckoutProgressComponent,CheckoutProgressMobileTopComponent,OpfCheckoutReviewComponent,CheckoutProgressMobileBottomComponent,OpfExplicitTermsAndConditionsComponent
+;;CenterRightContentSlot-cartPage;Center Right Content Slot for Cart Page;CartTotalsComponent,CartApplyCouponComponent,CartQuickOrderFormComponent,CartProceedToCheckoutComponent
+
+# Add OPF ContentPages
+INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid,$contentCV);label;title[lang=en];defaultPage[default='true'];approvalStatus(code)[default='approved'];homepage[default='false']
+;;OpfCheckoutPaymentAndReview;Opf Checkout Payment And Review;MultiStepCheckoutSummaryPageTemplate;/checkout/opf-payment-and-review;Checkout Payment and Review;true;check;false
+;;OpfCheckoutPaymentType;Opf Checkout Payment Type;MultiStepCheckoutSummaryPageTemplate;/checkout/opf-payment-type;Checkout Payment Type;true;check;false
+;;OpfCheckoutDeliveryAddress;Opf Checkout Delivery Address;MultiStepCheckoutSummaryPageTemplate;/checkout/opf-delivery-address;Checkout Delivery Address;true;check;false
+;;OpfCheckoutReview;Opf Checkout Review;MultiStepCheckoutSummaryPageTemplate;/checkout/opf-review;Checkout Review;true;check;false
+
+# Add OPF Page and ContentSlot relation
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true];contentSlot(uid,$contentCV)[unique=true]
+;;SideContent-CheckoutOpfPaymentAndReview;SideContent;OpfCheckoutPaymentAndReview;SideContentSlot-checkoutPaymentDetails
+;;BodyContent-CheckoutOpfPaymentAndReview;BodyContent;OpfCheckoutPaymentAndReview;BodyContentSlot-checkoutOpfPaymentAndReview
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true];contentSlot(uid,$contentCV)[unique=true]
+;;SideContent-OpfCheckoutPaymentType;SideContent;OpfCheckoutPaymentType;SideContentSlot-checkoutPaymentDetails
+;;BodyContent-OpfCheckoutPaymentType;BodyContent;OpfCheckoutPaymentType;BodyContentSlot-checkoutOpfPaymentType
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true];contentSlot(uid,$contentCV)[unique=true]
+;;SideContent-OpfCheckoutDeliveryAddress;SideContent;OpfCheckoutDeliveryAddress;SideContentSlot-checkoutPaymentDetails
+;;BodyContent-OpfCheckoutDeliveryAddress;BodyContent;OpfCheckoutDeliveryAddress;BodyContentSlot-checkoutOpfDeliveryAddress
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true];contentSlot(uid,$contentCV)[unique=true]
+;;SideContent-OpfCheckoutReview;SideContent;OpfCheckoutReview;SideContentSlot-checkoutPaymentDetails
+;;BodyContent-OpfCheckoutReview;BodyContent;OpfCheckoutReview;BodyContentSlot-checkoutOpfReview

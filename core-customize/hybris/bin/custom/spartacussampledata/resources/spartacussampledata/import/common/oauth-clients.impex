@@ -1,0 +1,15 @@
+# -----------------------------------------------------------------------
+# [y] hybris Platform
+#
+# Copyright (c) 2025 SAP SE or an SAP affiliate company. All rights reserved.
+# The files in this addon are licensed under the Apache Software License, v. 2
+# except as noted otherwise in the LICENSE file.
+# -----------------------------------------------------------------------
+#
+
+# Public oAuth client credential
+INSERT_UPDATE OAuthClientDetails; clientId[unique=true]      ;public ;authorities ;scope ;authorizedGrantTypes             ;registeredRedirectUri                          ;loginPageUri   
+                                ; mobile_android_public      ;true   ;ROLE_CLIENT ;basic ;authorization_code,refresh_token ;http://localhost:4200,http://localhost:4200/cy ;http://localhost:4200/login
+                                ; asm_client                 ;true   ;ROLE_CLIENT ;basic ;authorization_code,refresh_token ;http://localhost:4200,http://localhost:4200/cy ;
+                                ; mobile_android_public_b2b  ;true   ;ROLE_CLIENT ;basic ;authorization_code,refresh_token ;                                               ;
+

@@ -2,11 +2,13 @@ classes
 *.class
 gensrc
 eclipsebin
+dependencies.gradle
 .DS_Store
 .idea/
 rebel.xml
 target
 /bin/
+/build/
 resources/beans.xsd
 resources/items.xsd
 platformhome.properties

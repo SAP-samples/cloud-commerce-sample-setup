@@ -1,0 +1,15 @@
+# -----------------------------------------------------------------------
+# [y] hybris Platform
+#
+# Copyright (c) 2024 SAP SE or an SAP affiliate company. All rights reserved.
+# The files in this addon are licensed under the Apache Software License, v. 2 
+# except as noted otherwise in the LICENSE file.
+# -----------------------------------------------------------------------
+#
+# Enable OPF for the Standalone Spa Electronics BaseSite
+#
+
+$standaloneSpaSiteUid=electronics-spa-standalone
+
+UPDATE CMSSite;uid[unique=true];defaultPromotionGroup(Identifier)
+;$standaloneSpaSiteUid;

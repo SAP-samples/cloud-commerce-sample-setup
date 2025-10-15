@@ -1,0 +1,148 @@
+#
+# Copyright (c) 2025 SAP SE or an SAP affiliate company. All rights reserved.
+#
+
+INSERT_UPDATE DynamicProcessDefinition; code[unique = true]        ; active; content
+                                      ; sap-oms-opf-return-process ; true  ; "<process xmlns='http://www.hybris.de/xsd/processdefinition'
+    start='initialReturnAction' name='sap-oms-opf-return-process'
+    processClass='de.hybris.platform.returns.model.ReturnProcessModel'>
+
+    <action id='initialReturnAction' bean='initialReturnAction'>
+        <transition name='ONLINE' to='waitForConfirmOrCancelReturnAction' />
+        <transition name='INSTORE' to='opfRefundAction' />
+    </action>
+
+    <wait id='waitForConfirmOrCancelReturnAction' prependProcessCode='true'
+        then='failed'>
+        <case event='ConfirmOrCancelRefundEvent'>
+            <choice id='cancelReturn' then='cancelReturnAction' />
+            <choice id='approveReturn' then='approveReturnAction' />
+        </case>
+    </wait>
+
+    <action id='approveReturnAction' bean='approveReturnAction'>
+        <transition name='OK' to='sendReturnOrderToSAP' />
+    </action>
+
+
+    <action id='sendReturnOrderToSAP' bean='sapOrderexchangeSendOmsReturnOrderToBackEndAction'>
+        <transition name='OK' to='waitForNotificationfromBackEnd' />
+        <transition name='NOK' to='sapsendingerror' />
+    </action>
+
+    <wait id='waitForNotificationfromBackEnd'
+        prependProcessCode='false' then='failed' >
+        <case event='ReturnRequestCreationEvent_${process.returnRequest.code}'>
+            <choice id='cancelReturn' then='stillWaitForConfirmationFromBackend'/>
+            <choice id='confirmedReturnFromBackend' then='backEndConfirmationCheckAction'/>
+        </case>
+    </wait>
+
+    <wait id='stillWaitForConfirmationFromBackend' prependProcessCode='false' then='failed'>
+    <case event='ReturnRequestCreationEvent_${process.returnRequest.code}'>
+        <choice id='confirmedReturnFromBackend' then='stillAllBackendsConfirmationCheckAction'/>
+    </case>
+    </wait>
+
+    <action id='stillAllBackendsConfirmationCheckAction' bean='defaultOmsBackendConfimationCheckAction'>
+        <transition name='OK' to='cancelReturnRequestToSAPAction'/>
+        <transition name='NOK' to='waitForNotificationfromBackEnd'/>
+    </action>
+
+    <action id='backEndConfirmationCheckAction' bean='defaultOmsBackendConfimationCheckAction'>
+        <transition name='OK' to='waitForGoodsAction'/>
+        <transition name='NOK' to='waitForNotificationfromBackEnd'/>
+    </action>
+
+    <wait id='waitForGoodsAction' prependProcessCode='false'
+        then='failed'>
+        <case event='ApproveOrCancelGoodsEvent_${process.returnRequest.code}'>
+            <choice id='cancelReturn' then='cancelReturnRequestToSAPAction'/>
+            <choice id='receivedNotificationForGoods' then='goodsReciptStatusCheckAction'/>
+        </case>
+    </wait>
+
+    <action id='goodsReciptStatusCheckAction' bean='defaultGoodsReceiptStatusCheckAction'>
+        <transition name='OK' to='acceptGoodsAction'/>
+        <transition name='NOK' to='waitForGoodsAction'/>
+    </action>
+
+    <action id='acceptGoodsAction' bean='acceptGoodsAction'>
+        <transition name='OK' to='opfRefundAction' />
+    </action>
+
+    <action id='opfRefundAction' bean='opfRefundAction'>
+    <transition name='WAIT' to='waitForRefundTransactionUpdate'/>
+    <transition name='NOK' to='waitForFailCaptureAction'/>
+    <transition name='OK' to='successCaptureAction'/>
+    </action>
+
+    <!--Check if the return request is already refunded-->
+    <action id='opfCheckRefundAction' bean='opfCheckRefundAction'>
+       <transition name='OK' to='successCaptureAction'/>
+       <transition name='NOK' to='waitForFailCaptureAction'/>
+       <transition name='WAIT' to='waitForRefundTransactionUpdate'/>
+    </action>
+
+    <wait id='waitForRefundTransactionUpdate' then='opfCheckRefundAction' prependProcessCode='false'>
+       <event>${process.code}_refund_follow_onTransactionUpdateEvent</event>
+    </wait>
+
+    <wait id='waitForFailCaptureAction' prependProcessCode='true'
+        then='failed'>
+        <case event='FailCaptureActionEvent'>
+            <choice id='bypassCapture' then='taxReverseAction' />
+            <choice id='cancelReturn' then='cancelReturnRequestToSAPAction' />
+        </case>
+    </wait>
+
+    <action id='successCaptureAction' bean='successCaptureAction'>
+        <transition name='OK' to='taxReverseAction' />
+    </action>
+
+    <action id='taxReverseAction' bean='taxReverseAction'>
+        <transition name='OK' to='successTaxReverseAction' />
+        <transition name='NOK' to='waitForFailTaxReverseAction' />
+    </action>
+
+    <wait id='waitForFailTaxReverseAction' then='inventoryUpdateAction'
+        prependProcessCode='true'>
+        <event>FailTaxReverseEvent</event>
+    </wait>
+
+    <action id='successTaxReverseAction' bean='successTaxReverseAction'>
+        <transition name='OK' to='inventoryUpdateAction' />
+    </action>
+
+    <action id='inventoryUpdateAction' bean='omsInventoryUpdateAction'>
+        <transition name='OK' to='completeReturnAction' />
+    </action>
+
+    <action id='completeReturnAction' bean='completeReturnAction'>
+        <transition name='OK' to='success'/>
+    </action>
+
+    <action id='cancelReturnRequestToSAPAction' bean='cancelReturnRequestToSAPAction'>
+        <transition name='OK' to='waitForNotificationFromBackendForCancel' />
+        <transition name='NOK' to='sapsendingerror'/>
+    </action>
+
+    <wait id='waitForNotificationFromBackendForCancel' prependProcessCode='false'
+        then='backendsConfirmationCheckForCancel'>
+        <event>CancelReturnRequestConfirmationEvent_${process.returnRequest.code}</event>
+    </wait>
+
+
+    <action id='backendsConfirmationCheckForCancel' bean='backendsConfirmationCheckActionForCancel'>
+        <transition name='OK' to='cancelReturnAction'/>
+        <transition name='NOK' to='waitForNotificationFromBackendForCancel'/>
+    </action>
+
+    <action id='cancelReturnAction' bean='cancelReturnAction'>
+        <transition name='OK' to='success' />
+    </action>
+
+    <end id='sapsendingerror' state='ERROR'>Sending to ERP went wrong.</end>
+    <end id='failed' state='FAILED'>Return issue detected.</end>
+    <end id='success' state='SUCCEEDED'>Return process ended as expected.</end>
+</process>"

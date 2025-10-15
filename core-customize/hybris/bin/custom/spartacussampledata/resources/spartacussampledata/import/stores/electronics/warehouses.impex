@@ -1,0 +1,80 @@
+# -----------------------------------------------------------------------
+# [y] hybris Platform
+#
+# Copyright (c) 2024 SAP SE or an SAP affiliate company.
+# All rights reserved.
+#
+# This software is the confidential and proprietary information of SAP
+# ("Confidential Information"). You shall not disclose such Confidential
+# Information and shall use it only in accordance with the terms of the
+# license agreement you entered into with SAP.
+# -----------------------------------------------------------------------
+#
+# Create Warehouse and DeliveryMode relations for electronicsstore warehouses
+#
+
+# electronics-spa-standalone Base Store
+$standaloneSpaStoreUid=electronics-spa-standalone
+
+INSERT_UPDATE BaseStore2WarehouseRel;source(uid)[unique=true];target(code)[unique=true]
+;$standaloneSpaStoreUid;warehouse_s
+;$standaloneSpaStoreUid;warehouse_e
+;$standaloneSpaStoreUid;warehouse_w
+;$standaloneSpaStoreUid;warehouse_n
+;$standaloneSpaStoreUid;Nakano
+;$standaloneSpaStoreUid;Shinbashi
+;$standaloneSpaStoreUid;Koto
+;$standaloneSpaStoreUid;Misato
+;$standaloneSpaStoreUid;Matsudo
+;$standaloneSpaStoreUid;Ichikawa
+;$standaloneSpaStoreUid;Choshi
+;$standaloneSpaStoreUid;Chiba
+;$standaloneSpaStoreUid;Yokosuka
+;$standaloneSpaStoreUid;Tokio Cerulean Tower Tokyu Hotel
+;$standaloneSpaStoreUid;Tokio Flexstay Nippori Inn
+;$standaloneSpaStoreUid;Tokio Hotel Metropolitan Tokyo
+;$standaloneSpaStoreUid;Tokio Dormy Inn Tokyo Hatchobori
+;$standaloneSpaStoreUid;Tokio Park Hotel Tokyo
+;$standaloneSpaStoreUid;Yokohama Sakuragicho Washington Hotel
+;$standaloneSpaStoreUid;Yokohama Shin Yokohama Prince Hotel
+;$standaloneSpaStoreUid;Yokohama Comfort Hotel Yokohama Kannai
+;$standaloneSpaStoreUid;Yokohama Hotel New Grand
+;$standaloneSpaStoreUid;Yokohama Hotel JAL City Kannai Yokohama
+;$standaloneSpaStoreUid;Osaka Hilton Osaka Hotel
+;$standaloneSpaStoreUid;Osaka Crowne Plaza Hotel Ana Osaka
+;$standaloneSpaStoreUid;Osaka Ramada Osaka
+;$standaloneSpaStoreUid;Osaka Cross Hotel Osaka
+;$standaloneSpaStoreUid;Osaka Best Western Hotel Fino Osaka Shinsaibashi
+;$standaloneSpaStoreUid;Nagoya Hilton Nagoya Hotel
+;$standaloneSpaStoreUid;Nagoya Marriott Nagoya
+;$standaloneSpaStoreUid;Nagoya Crowne Plaza Ana Grand Court Nagoya
+;$standaloneSpaStoreUid;Nagoya The Westin Nagoya Castle
+;$standaloneSpaStoreUid;Nagoya Royal Park Inn Nagoya
+;$standaloneSpaStoreUid;Sapporo Ana Hotel Sapporo
+;$standaloneSpaStoreUid;Sapporo Best Western Hotel Sapporo Nakajima Koen
+;$standaloneSpaStoreUid;Sapporo Sheraton Sapporo Hotel
+;$standaloneSpaStoreUid;Sapporo Hotel Resol Trinity Sapporo
+;$standaloneSpaStoreUid;Sapporo Hotel Sunroute Sapporo
+;$standaloneSpaStoreUid;Kobe Hotel Monterey Amalie
+;$standaloneSpaStoreUid;Kobe Hotel Monterey Kobe
+;$standaloneSpaStoreUid;Kobe Sannomiya Terminal Hotel
+;$standaloneSpaStoreUid;Kobe Bay Sheraton Hotel and Towers
+;$standaloneSpaStoreUid;Kobe the b
+;$standaloneSpaStoreUid;Fukuoka Hotel Monterey La Soeur Fukuoka
+;$standaloneSpaStoreUid;Fukuoka Hilton Fukuoka Sea Hawk
+;$standaloneSpaStoreUid;Fukuoka Best Western Fukuoka Nakasu Inn
+;$standaloneSpaStoreUid;Fukuoka Canal City Fukuoka Washington Hotel
+;$standaloneSpaStoreUid;Fukuoka Hotel Nikko Fukuoka
+;$standaloneSpaStoreUid;Kawasaki Mets Kawasaki Hotel
+;$standaloneSpaStoreUid;Kawasaki Mets Mizonokuchi Hotel
+;$standaloneSpaStoreUid;Kawasaki Hotel Sunroute Kawasaki
+;$standaloneSpaStoreUid;Kawasaki Pearl Hotel Kawasaki
+;$standaloneSpaStoreUid;Kawasaki Grand Hotel
+;$standaloneSpaStoreUid;external_Nakano_warehouse
+;$standaloneSpaStoreUid;external_Shinbashi_warehouse
+;$standaloneSpaStoreUid;external_Koto_warehouse
+;$standaloneSpaStoreUid;external_Misato_warehouse
+;$standaloneSpaStoreUid;external_Matsudo_warehouse
+
+INSERT_UPDATE BaseStore;uid[unique=true];defaultDeliveryOrigin(name)
+;$standaloneSpaStoreUid;warehouse_e

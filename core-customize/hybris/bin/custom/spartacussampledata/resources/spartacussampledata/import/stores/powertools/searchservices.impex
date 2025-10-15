@@ -1,0 +1,12 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2025 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+#
+# Import the search services configuration for the Powertools store
+#
+$standaloneStoreUid=powertools-spa-standalone
+$snIndexType = powertools-product
+
+
+INSERT_UPDATE BaseStore ; uid[unique=true]      ; productIndexType(id)[default=$snIndexType] ; productSearchStrategy[default=commerceSolrFacetSearchProductSearchStrategy]
+                        ; $standaloneStoreUid   ;                                            ; commerceSearchServicesProductSearchStrategy

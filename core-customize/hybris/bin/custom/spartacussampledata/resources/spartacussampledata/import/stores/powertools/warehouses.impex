@@ -1,0 +1,30 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2025 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+#
+# Create Warehouses for Store
+#
+#% impex.setLocale( Locale.GERMAN );
+
+$standaloneStoreUid=powertools-spa-standalone
+
+INSERT_UPDATE BaseStore2WarehouseRel;source(uid)[unique=true];target(code)[unique=true]
+;$standaloneStoreUid;pw_warehouse_s
+;$standaloneStoreUid;pw_warehouse_e
+;$standaloneStoreUid;pw_warehouse_w
+;$standaloneStoreUid;pw_warehouse_n
+
+INSERT_UPDATE PointOfService;name[unique=true];displayName;warehouses(code);address(&addrID);latitude;longitude;geocodeTimestamp[dateformat=dd.MM.yyyy];type(code)[default=WAREHOUSE]
+;pw_warehouse_s;Warehouse South;pw_warehouse_s;pw_warehouse_s;29,4235547;-98,4853322;11.12.2012
+;pw_warehouse_e;Warehouse East;pw_warehouse_e;pw_warehouse_e;40,6743084;-73,9757279;11.12.2012
+;pw_warehouse_w;Warehouse West;pw_warehouse_w;pw_warehouse_w;33,615817;-117,874503;11.12.2012
+;pw_warehouse_n;Warehouse North;pw_warehouse_n;pw_warehouse_n;47,6184579;-122,202459;11.12.2012
+
+INSERT_UPDATE Address;&addrID;streetnumber[unique=true];streetname;town;country(isocode);postalcode[unique=true];phone1;owner(PointOfService.name)[unique=true]
+;pw_warehouse_s;849 East Commerce Street;;San Antonio;US;78205;;pw_warehouse_s
+;pw_warehouse_e;100 7th Avenue;Brooklyn;New York;US;11215;;pw_warehouse_e
+;pw_warehouse_w;1111 Newport Center Drive;;Newport Beach;US;92660;;pw_warehouse_w
+;pw_warehouse_n;179 Bellevue Square;;Bellevue;US;98004;;pw_warehouse_n
+
+INSERT_UPDATE BaseStore;uid[unique=true];defaultDeliveryOrigin(name)
+;$standaloneStoreUid;pw_warehouse_e
