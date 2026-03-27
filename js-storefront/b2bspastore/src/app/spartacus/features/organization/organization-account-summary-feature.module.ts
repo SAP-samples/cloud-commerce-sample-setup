@@ -1,27 +1,32 @@
 import { NgModule } from '@angular/core';
-import { CmsConfig, I18nConfig, provideConfig } from "@spartacus/core";
-import { accountSummaryTranslationChunksConfig, accountSummaryTranslationsEn } from "@spartacus/organization/account-summary/assets";
-import { AccountSummaryRootModule, ORGANIZATION_ACCOUNT_SUMMARY_FEATURE } from "@spartacus/organization/account-summary/root";
+import { CmsConfig, I18nConfig, provideConfig } from '@spartacus/core';
+import {
+  accountSummaryTranslationChunksConfig,
+  accountSummaryTranslationsEn,
+} from '@spartacus/organization/account-summary/assets';
+import {
+  AccountSummaryRootModule,
+  ORGANIZATION_ACCOUNT_SUMMARY_FEATURE,
+} from '@spartacus/organization/account-summary/root';
 
 @NgModule({
   declarations: [],
-  imports: [
-    AccountSummaryRootModule
-  ],
-  providers: [provideConfig(<CmsConfig>{
-    featureModules: {
-      [ORGANIZATION_ACCOUNT_SUMMARY_FEATURE]: {
-        module: () =>
-          import('@spartacus/organization/account-summary').then((m) => m.AccountSummaryModule),
+  imports: [AccountSummaryRootModule],
+  providers: [
+    provideConfig(<CmsConfig>{
+      featureModules: {
+        [ORGANIZATION_ACCOUNT_SUMMARY_FEATURE]: {
+          module: () =>
+            import('@spartacus/organization/account-summary').then((m) => m.AccountSummaryModule),
+        },
       },
-    }
-  }),
-  provideConfig(<I18nConfig>{
-    i18n: {
-      resources: { en: accountSummaryTranslationsEn },
-      chunks: accountSummaryTranslationChunksConfig,
-    },
-  })
-  ]
+    }),
+    provideConfig(<I18nConfig>{
+      i18n: {
+        resources: { en: accountSummaryTranslationsEn },
+        chunks: accountSummaryTranslationChunksConfig,
+      },
+    }),
+  ],
 })
-export class OrganizationAccountSummaryFeatureModule { }
+export class OrganizationAccountSummaryFeatureModule {}
