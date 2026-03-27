@@ -1,11 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
+import { StorefrontComponent } from '@spartacus/storefront';
 
 @Component({
   selector: 'app-root',
+  imports: [StorefrontComponent],
   templateUrl: './app.component.html',
-  standalone: false,
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
 })
-export class AppComponent {
-  title = 'b2bspastore';
+export class App {
+  protected readonly title = signal('b2bspastore');
 }
