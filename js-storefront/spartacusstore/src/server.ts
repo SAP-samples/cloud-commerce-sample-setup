@@ -8,11 +8,10 @@ import express from 'express';
 import { readFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import AppServerModule from './main.server';
+import bootstrap from './main.server';
 
 const ngExpressEngine = NgExpressEngineDecorator.get(engine, {
   ssrFeatureToggles: {
-    avoidCachingErrors: true,
     limitCacheByMemory: true,
   },
 });
@@ -30,8 +29,8 @@ export function app(): express.Express {
   server.engine(
     'html',
     ngExpressEngine({
-      bootstrap: AppServerModule,
-    })
+      bootstrap,
+    }),
   );
 
   server.set('view engine', 'html');
@@ -39,21 +38,21 @@ export function app(): express.Express {
 
   // Serve static files from /browser
   server.get(
-    '*.*',
+    /.*\..*/,
     express.static(browserDistFolder, {
       maxAge: '1y',
-    })
+    }),
   );
 
   // All regular routes use the Universal engine
-  server.get('*', (req, res) => {
+  server.get(/.*/, (req, res) => {
     res.render(indexHtml, {
       req,
       providers: [{ provide: APP_BASE_HREF, useValue: req.baseUrl }],
     });
   });
 
-  server.use(defaultExpressErrorHandlers(indexHtmlContent))
+  server.use(defaultExpressErrorHandlers(indexHtmlContent));
 
   return server;
 }
