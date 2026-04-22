@@ -8,8 +8,8 @@
 #
 
 # Public oAuth client credential
-INSERT_UPDATE OAuthClientDetails; clientId[unique=true]      ;public ;authorities ;scope ;authorizedGrantTypes             ;registeredRedirectUri                                                   ;loginPageUri   
-                                ; mobile_android_public      ;true   ;ROLE_CLIENT ;basic ;authorization_code,refresh_token ;https://spartacusstore.testben-testben-p1-public.model-t.myhybris.cloud ;http://localhost:4200/login
+INSERT_UPDATE OAuthClientDetails; clientId[unique=true]      ;public ;authorities ;scope ;authorizedGrantTypes             ;registeredRedirectUri                          ;loginPageUri   
+                                ; mobile_android_public      ;true   ;ROLE_CLIENT ;basic ;authorization_code,refresh_token ;http://localhost:4200,http://localhost:4200/cy,https://spartacusstore.testben-testben-p1-public.model-t.myhybris.cloud ;http://localhost:4200/login
                                 ; asm_client                 ;true   ;ROLE_CLIENT ;basic ;authorization_code,refresh_token ;http://localhost:4200,http://localhost:4200/cy ;
                                 ; mobile_android_public_b2b  ;true   ;ROLE_CLIENT ;basic ;authorization_code,refresh_token ;                                               ;
 
