@@ -45,7 +45,7 @@ import {
     }),
     provideConfig(<FeaturesConfig>{
       features: {
-        level: '221121.10',
+        level: '221121.11',
       },
     }),
   ],
