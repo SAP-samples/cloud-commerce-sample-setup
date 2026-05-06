@@ -209,6 +209,13 @@ import { ProductConfiguratorFeatureModule } from './features/product-configurato
       a11yListSemanticsForFacets: true,
       a11yCartItemListHideEmptyOutlets: true,
       a11yReviewsKeyboardControls: true,
+      a11yCartQuickOrderFormEnableSubmitAndAddValidation: true,
+      a11yConsentManagementFocusPreservation: true,
+      a11yVocalizeDropdownItemCount: true,
+      useEnhancedSecurePasswordValidators: true,
+      enableRemoveVoucherEndpoint: true,
+      showRequiredAsterisks: true,
+      enableExpiredRefreshTokenHandlers: true,
     }),
   ],
 })
