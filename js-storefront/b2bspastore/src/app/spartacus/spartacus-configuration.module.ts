@@ -46,7 +46,7 @@ import {
     }),
     provideConfig(<FeaturesConfig>{
       features: {
-        level: '221121.10',
+        level: '221121.17',
       },
     }),
     provideConfig(defaultB2bOccConfig),
