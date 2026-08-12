@@ -1,5 +1,5 @@
 {
-    "dataHubVersion": "2211-jdk21.14",
+    "dataHubVersion": "2211-jdk21.17",
     "extensionPacks": [
         {
             "name": "hybris-datahub-integration-suite",
