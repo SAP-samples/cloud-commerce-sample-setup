@@ -39,6 +39,7 @@
     <extension name='apparelstore' />
     <extension name='electronicsstore' />
     <extension name='wishlist' />
+    <extension name='wishlistfacades' />    
     <extension name='classificationgroupsservices' />
     <extension name='mediaconversionbackoffice' />
     <extension name='patchesbackoffice' />
@@ -68,6 +69,7 @@
     <extension name='chineseaddressbackoffice' />
     <extension name='chineseaddressfacades' />
     <extension name='chineseaddressocc' />
+    <extension name='chineseaddressocctests' />    
     <extension name='chineseaddressservices' />
     <extension name='chinesecommerceorgaddressfacades' />
     <extension name='commercefacades' />
