@@ -13,3 +13,6 @@ INSERT_UPDATE OAuthClientDetails; clientId[unique=true]      ;public ;authoritie
                                 ; asm_client                 ;true   ;ROLE_CLIENT ;basic ;authorization_code,refresh_token ;http://localhost:4200,http://localhost:4200/cy ;
                                 ; mobile_android_public_b2b  ;true   ;ROLE_CLIENT ;basic ;authorization_code,refresh_token ;                                               ;
 
+
+INSERT_UPDATE OAuthClientDetails; clientId[unique=true];public ;authorities ;scope ;authorizedGrantTypes;registeredRedirectUri ;loginPageUri
+ ; mobile_android_public_electronics-spa     ;true   ;ROLE_CLIENT ;basic ;authorization_code,refresh_token ;https://spartacusstore/fltest1-fltest1-p1-public.model-t.myhybris.cloud/electronics-spa/oauth-callback          ;https://spartacusstore/fltest1-fltest1-p1-public.model-t.myhybris.cloud/electronics-spa/login
