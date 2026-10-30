@@ -17,7 +17,7 @@ import { CmsConfig, I18nConfig, provideConfig } from '@spartacus/core';
     provideConfig(<CmsConfig>{
       featureModules: {
         [CART_WISH_LIST_FEATURE]: {
-          module: () => import('@spartacus/cart/wish-list').then((m) => m.WishListModule),
+          module: () => import('@spartacus/cart/wish-list').then((m) => m.WishListWithV2Module),
         },
       },
     }),
