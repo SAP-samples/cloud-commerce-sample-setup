@@ -2,6 +2,11 @@
 @import 'styles-config';
 
 // ORDER IMPORTANT: Spartacus core first
+// Install-script default: compile the santorini-updated theme so its
+// palette/typography override the classic santorini defaults. Imported
+// before @spartacus/styles so its !default variables win. Kept in sync
+// with @spartacus/styles/scss/theme/santorini-updated/_variables.scss.
+@import '@spartacus/styles/scss/theme/santorini-updated/variables';
 @import '@spartacus/styles/scss/core';
 
 // ORDER IMPORTANT: Copy of Bootstrap files next
