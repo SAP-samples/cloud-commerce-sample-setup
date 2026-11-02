@@ -70,10 +70,6 @@
       ],
       "webapps": [
         {
-          "name": "hac",
-          "contextPath": "/hac"
-        },
-        {
           "name": "backoffice",
           "contextPath": "/backoffice"
         },
@@ -91,10 +87,6 @@
       "name": "api",
       "properties": [],
       "webapps": [
-        {
-          "name": "hac",
-          "contextPath": "/hac"
-        }
       ]
     }
   ]
