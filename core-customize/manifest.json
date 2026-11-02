@@ -204,10 +204,6 @@
             ],
             "webapps": [
                 {
-                    "name": "hac",
-                    "contextPath": "/hac"
-                },
-                {
                     "name": "mediaweb",
                     "contextPath": "/medias"
                 },
@@ -344,10 +340,6 @@
                 {
                     "name": "b2bpunchout",
                     "contextPath": "/b2bpunchout"
-                },
-                {
-                    "name": "hac",
-                    "contextPath": "/hac"
                 },
                 {
                     "name": "orbeonweb",
@@ -535,10 +527,6 @@
                 }
             ],
             "webapps": [
-                {
-                    "name": "hac",
-                    "contextPath": "/hac"
-                },
                 {
                     "name": "mediaweb",
                     "contextPath": "/medias"
