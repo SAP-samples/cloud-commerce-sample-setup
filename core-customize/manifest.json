@@ -590,10 +590,6 @@
         ],
         "webapps": [
           {
-            "name": "hac",
-            "contextPath": "/hac"
-          },
-          {
             "name": "mediaweb",
             "contextPath": "/medias"
           },
@@ -989,10 +985,6 @@
         "name": "backgroundProcessing",
         "properties": [],
         "webapps": [
-          {
-            "name": "hac",
-            "contextPath": ""
-          },
           {
             "name": "mediaweb",
             "contextPath": "/medias"
