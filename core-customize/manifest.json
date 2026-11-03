@@ -82,12 +82,6 @@
           "contextPath": "/authorizationserver"
         }
       ]
-    },
-    {
-      "name": "api",
-      "properties": [],
-      "webapps": [
-      ]
     }
   ]
 }
