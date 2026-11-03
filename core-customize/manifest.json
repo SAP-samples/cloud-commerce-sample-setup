@@ -68,10 +68,6 @@
             ],
             "webapps": [
                 {
-                    "name": "hac",
-                    "contextPath": "/hac"
-                },
-                {
                     "name": "backoffice",
                     "contextPath": "/backoffice"
                 },
@@ -82,16 +78,6 @@
                 {
                     "name": "authorizationserver",
                     "contextPath": "/authorizationserver"
-                }
-            ]
-        },
-        {
-            "name": "api",
-            "properties": [],
-            "webapps": [
-                {
-                    "name": "hac",
-                    "contextPath": "/hac"
                 }
             ]
         }
