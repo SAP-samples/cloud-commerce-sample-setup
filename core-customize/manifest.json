@@ -204,10 +204,6 @@
             ],
             "webapps": [
                 {
-                    "name": "hac",
-                    "contextPath": "/hac"
-                },
-                {
                     "name": "mediaweb",
                     "contextPath": "/medias"
                 },
@@ -366,10 +362,6 @@
                     "contextPath": "/b2bpunchout"
                 },
                 {
-                    "name": "hac",
-                    "contextPath": "/hac"
-                },
-                {
                     "name": "orbeonweb",
                     "contextPath": "/web-orbeon"
                 },
@@ -496,10 +488,6 @@
                 }
             ],
             "webapps": [
-                {
-                    "name": "hac",
-                    "contextPath": "/hac"
-                },                
 				{
                     "name": "mediaweb",
                     "contextPath": "/medias"
@@ -567,10 +555,6 @@
                 }
             ],
             "webapps": [
-                {
-                    "name": "hac",
-                    "contextPath": "/hac"
-                },
                 {
                     "name": "mediaweb",
                     "contextPath": "/medias"
