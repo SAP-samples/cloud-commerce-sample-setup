@@ -16,3 +16,6 @@ INSERT_UPDATE OAuthClientDetails; clientId[unique=true]      ;public ;authoritie
 
 INSERT_UPDATE OAuthClientDetails; clientId[unique=true];public ;authorities ;scope ;authorizedGrantTypes;registeredRedirectUri ;loginPageUri
  ; mobile_android_public_electronics-spa     ;true   ;ROLE_CLIENT ;basic ;authorization_code,refresh_token ;https://spartacusstore.fltest4-fltest4-p1-public.model-t.myhybris.cloud/electronics-spa/oauth-callback          ;https://spartacusstore.fltest4-fltest4-p1-public.model-t.myhybris.cloud/electronics-spa/login
+
+INSERT_UPDATE OAuthClientDetails; clientId[unique=true];public ;authorities ;scope ;authorizedGrantTypes;registeredRedirectUri ;loginPageUri
+ ; mobile_android_public_electronics-spa     ;true   ;ROLE_CLIENT ;basic ;authorization_code,refresh_token ;https://spartacusstore.fltest5-fltest5-p1-public.model-t.myhybris.cloud/electronics-spa/oauth-callback          ;https://spartacusstore.fltest5-fltest5-p1-public.model-t.myhybris.cloud/electronics-spa/login
