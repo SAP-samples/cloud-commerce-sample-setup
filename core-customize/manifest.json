@@ -131,15 +131,15 @@
       },
       {
         "key": "mail.from",
-        "value": "testmail9110@gmail.com"
+        "value": ""
       },
       {
         "key": "mail.replyto",
-        "value": "testmail9110@gmail.com"
+        "value": ""
       },
       {
         "key": "mail.smtp.server",
-        "value": "smtp.gmail.com"
+        "value": ""
       },
       {
         "key": "mail.smtp.port",
@@ -147,11 +147,11 @@
       },
       {
         "key": "mail.smtp.user",
-        "value": "testmail9110@gmail.com"
+        "value": ""
       },
       {
         "key": "mail.smtp.password",
-        "value": "PWD11111"
+        "value": ""
       },
       {
         "key": "mail.smtp.starttls.enable",
@@ -171,7 +171,7 @@
       },
       {
         "key": "googleEmbedApiKey",
-        "value": "AIzaSyD34TXbUsiyJnysJ-1Un657elxVy_OYpTs"
+        "value": ""
       },
       {
         "key": "storefront.show.checkout.flows",
